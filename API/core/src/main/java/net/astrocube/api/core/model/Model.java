@@ -1,17 +1,8 @@
 package net.astrocube.api.core.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.Instant;
 
-public interface Model {
-
-    /**
-     * Will return ObjectId linked to the requested model
-     * @return ObjectId as String
-     */
-    @JsonProperty("_id")
-    String getId();
+public interface Model extends Document {
 
     /**
      * Instant where the model was exactly created at
