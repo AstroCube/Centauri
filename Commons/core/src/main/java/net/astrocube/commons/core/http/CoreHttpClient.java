@@ -6,6 +6,10 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.core.concurrent.AsyncResponse;
+import net.astrocube.api.core.concurrent.Response;
+import net.astrocube.api.core.concurrent.SimpleAsyncResponse;
+import net.astrocube.api.core.concurrent.WrappedResponse;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.http.config.HttpClientConfig;
@@ -49,7 +53,7 @@ public class CoreHttpClient implements HttpClient {
 
 
     @Override
-    public <T> T executeRequest(String path, Class<T> returnType, RequestOptions options) throws Exception {
+    public <T> T executeRequestSync(String path, Class<T> returnType, RequestOptions options) throws Exception {
         try {
             HttpRequest request = RequestContentBuilderUtil.build(
                     requestFactory,
@@ -66,6 +70,17 @@ public class CoreHttpClient implements HttpClient {
             logger.log(Level.SEVERE, "Failed to build request to " + path, e);
             throw e;
         }
+    }
+
+    @Override
+    public <T> AsyncResponse<T> executeRequest(String path, Class<T> returnType, RequestOptions options) {
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, executeRequestSync(path, returnType, options), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
 }

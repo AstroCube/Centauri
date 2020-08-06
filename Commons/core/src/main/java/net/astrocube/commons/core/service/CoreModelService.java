@@ -25,8 +25,6 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.api.core.service.update.UpdateService;
 
-import java.util.HashMap;
-
 @Singleton
 public class CoreModelService<Complete extends Model, Partial extends PartialModel> implements
         CreateService<Complete, Partial>,
