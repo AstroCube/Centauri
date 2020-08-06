@@ -1,14 +1,12 @@
 package net.astrocube.api.core.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * Base interface for serializable API documents, including documents stored
+ * in the database ({@link Model}s and {@link PartialModel}s) and directives
+ * exchanged through the API ({@link net.astrocube.api.core.message.Message}s).
+ *
+ * {@link com.fasterxml.jackson.databind.ObjectMapper} is responsible for serializing and deserializing
+ * Registration happens on demand and is entirely automatic.
+ */
 public interface Document {
-
-    /**
-     * Will return ObjectId linked to the requested model
-     * @return ObjectId as String
-     */
-    @JsonProperty("_id")
-    String getId();
-
 }

@@ -2,7 +2,7 @@ package net.astrocube.api.core.model;
 
 import java.time.Instant;
 
-public interface Model extends Document {
+public interface Model extends IdentifiableModel, PartialModel {
 
     /**
      * Instant where the model was exactly created at
