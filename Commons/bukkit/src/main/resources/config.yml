@@ -1,0 +1,13 @@
+server:
+  type: LOBBY                                    # Server type to be authorized by the backend (Eg: LOBBY / GAME / SPECIAL / BUNGEE)
+  cluster: 0123456789abcdefg                     # Cluster that will continue as authorization for the backend
+game:
+  running: 0                                     # Max games running at one (Only applies at GAME mode)
+  total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
+  mode: 0123456789abcdefg                        # Database ID of the desired game
+  subMode: 0123456789abcdefg                     # Database ID of the desired SubGameMode
+api:
+  route: "https://perseus.astrocube.net"         # Base path to be called
+  connect: 1200                                  # Connect Timeout
+  read: 1200                                     # Read Timeout
+  retry: 3                                       # Retry Timeout

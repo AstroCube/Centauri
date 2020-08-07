@@ -42,7 +42,7 @@ public interface UpdateService<Complete extends Model, Partial extends PartialMo
      * @param partial that will be updated
      * @return update request
      */
-    default Complete updateSync(Partial partial) {
+    default Complete updateSync(Partial partial) throws Exception {
         return updateSync(updateRequest(partial));
     }
 
@@ -51,7 +51,7 @@ public interface UpdateService<Complete extends Model, Partial extends PartialMo
      * @param request that will be sent for update
      * @return updated request
      */
-    Complete updateSync(UpdateRequest<Partial> request);
+    Complete updateSync(UpdateRequest<Partial> request) throws Exception;
 
     /**
      * Update request to be called from service

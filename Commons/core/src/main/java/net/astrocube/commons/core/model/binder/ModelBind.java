@@ -1,9 +1,10 @@
-package net.astrocube.api.core.model.binder;
+package net.astrocube.commons.core.model.binder;
 
 import com.google.inject.*;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;
+import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.model.PartialModel;
@@ -123,7 +124,7 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
         return partialTypeLiteral;
     }
 
-    private class PerModel extends AbstractModule {
+    private class PerModel extends ProtectedModule {
         @Override
         protected void configure() {
             final TypeLiteral<ModelMeta<Complete, Partial>> meta = new ResolvableType<ModelMeta<Complete, Partial>>(){}.with(

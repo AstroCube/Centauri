@@ -11,7 +11,7 @@ public interface DeleteService<Complete extends Model> {
      * Will return type of the full model
      * @return TypeToken of complete
      */
-    TypeToken<Complete> completeType();
+    TypeToken<Complete> getCompleteType();
 
     /**
      * Default delete request to be called from service
@@ -26,7 +26,7 @@ public interface DeleteService<Complete extends Model> {
             }
 
             public TypeToken<Complete> getModelType() {
-                return completeType();
+                return getCompleteType();
             }
         };
     }
@@ -36,7 +36,7 @@ public interface DeleteService<Complete extends Model> {
      * @param id of item taht will be deleted
      * @return update request
      */
-    default void deleteSync(String id) {
+    default void deleteSync(String id) throws Exception {
         deleteSync(deleteRequest(id));
     }
 
@@ -44,7 +44,7 @@ public interface DeleteService<Complete extends Model> {
      * Delete final switch
      * @param deleteRequest that will be passed
      */
-    void deleteSync(DeleteRequest<Complete> deleteRequest);
+    void deleteSync(DeleteRequest<Complete> deleteRequest) throws Exception;
 
     /**
      * Default delete request to be called from service

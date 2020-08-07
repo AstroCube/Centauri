@@ -1,12 +1,18 @@
 package net.astrocube.commons.core.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
+import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.concurrent.AsyncResponse;
+import net.astrocube.api.core.concurrent.Response;
+import net.astrocube.api.core.concurrent.SimpleAsyncResponse;
+import net.astrocube.api.core.concurrent.WrappedResponse;
 import net.astrocube.api.core.http.HttpClient;
+import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.model.PartialModel;
@@ -24,8 +30,13 @@ import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.api.core.service.update.UpdateService;
+import net.astrocube.commons.core.http.CoreRequestCallable;
+import net.astrocube.commons.core.http.CoreRequestOptions;
+
+import java.util.HashMap;
 
 @Singleton
+@SuppressWarnings("UnstableApiUsage")
 public class CoreModelService<Complete extends Model, Partial extends PartialModel> implements
         CreateService<Complete, Partial>,
         DeleteService<Complete>,
@@ -37,6 +48,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Inject protected HttpClient httpClient;
     @Inject protected ObjectMapper mapper;
+    @Inject private ListeningExecutorService listeningExecutorService;
 
     protected ModelMeta<Complete, Partial> modelMeta;
     protected TypeToken<QueryResult<Complete>> queryResultTypeToken;
@@ -52,76 +64,157 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public TypeToken<Complete> getCompleteType() {
-        return null;
+        return modelMeta.getCompleteType();
     }
 
     @Override
     public AsyncResponse<QueryResult<Complete>> query(QueryRequest<Complete> queryRequest) {
-        return null;
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, querySync(queryRequest), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
     @Override
-    public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) {
-        return null;
+    public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
+        return this.httpClient.executeRequestSync(
+                modelMeta.getRouteKey() + "/list?page=-1",
+                new CoreRequestCallable<>(this.queryResultTypeToken, mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        queryRequest.getBsonQuery() == null ? "{}" : this.mapper.writeValueAsString(queryRequest.getBsonQuery())
+                )
+        );
     }
 
     @Override
     public TypeToken<Partial> getPartialType() {
-        return null;
+        return modelMeta.getPartialType();
     }
 
     @Override
-    public Complete updateSync(UpdateRequest<Partial> request) {
-        return null;
+    public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
+        return this.httpClient.executeRequestSync(
+                modelMeta.getRouteKey(),
+                new CoreRequestCallable<>(getCompleteType(), mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.PUT,
+                        this.mapper.writeValueAsString(request.getModel())
+                )
+        );
     }
 
     @Override
     public AsyncResponse<Complete> update(UpdateRequest<Partial> request) {
-        return null;
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, updateSync(request), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
     @Override
-    public Complete createSync(CreateRequest<Partial> request) {
-        return null;
+    public Complete createSync(CreateRequest<Partial> request) throws Exception {
+        return this.httpClient.executeRequestSync(
+                modelMeta.getRouteKey(),
+                new CoreRequestCallable<>(getCompleteType(), mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        this.mapper.writeValueAsString(request.getModel())
+                )
+        );
     }
 
     @Override
     public AsyncResponse<Complete> create(CreateRequest<Partial> request) {
-        return null;
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, createSync(request), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
     @Override
-    public TypeToken<Complete> completeType() {
-        return null;
-    }
-
-    @Override
-    public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) {
-        return null;
+    public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
+        return this.httpClient.executeRequestSync(
+                modelMeta.getRouteKey() + "/list",
+                new CoreRequestCallable<>(this.paginateResultTypeToken, mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        paginateRequest.getBsonQuery() == null ? "{}" :
+                                this.mapper.writeValueAsString(paginateRequest.getBsonQuery()),
+                        paginateRequest.getPaginateQuery()
+                )
+        );
     }
 
     @Override
     public AsyncResponse<PaginateResult<Complete>> paginate(PaginateRequest<Complete> paginateRequest) {
-        return null;
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS,paginateSync(paginateRequest), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
     @Override
-    public Complete findSync(FindRequest<Complete> findModelRequest) {
-        return null;
+    public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
+        return this.httpClient.executeRequestSync(
+                modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
+                new CoreRequestCallable<>(this.modelMeta.getCompleteType(), mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.GET,
+                        new HashMap<>(),
+                        null,
+                        null
+                )
+        );
     }
 
     @Override
     public AsyncResponse<Complete> find(FindRequest<Complete> findModelRequest) {
-        return null;
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, findSync(findModelRequest), null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 
     @Override
-    public void deleteSync(DeleteRequest<Complete> deleteRequest) {
-
+    public void deleteSync(DeleteRequest<Complete> deleteRequest) throws Exception {
+        this.httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/" + deleteRequest.getId(),
+                new CoreRequestCallable<>(null, this.mapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.DELETE,
+                        new HashMap<>(),
+                        null,
+                        null
+                )
+        );
     }
 
     @Override
     public AsyncResponse<Void> delete(DeleteRequest<Complete> deleteRequest) {
-        return null;
+        deleteRequest(deleteRequest.getId());
+        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+            try {
+                return new WrappedResponse<>(Response.Status.SUCCESS, null, null);
+            } catch (Exception exception) {
+                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+            }
+        }), listeningExecutorService);
     }
 }

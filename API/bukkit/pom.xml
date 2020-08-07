@@ -18,6 +18,12 @@
             <artifactId>api-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.seocraft</groupId>
+            <artifactId>paperspigot</artifactId>
+            <version>1.8-20200415.053535-5</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

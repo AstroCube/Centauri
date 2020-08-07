@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>commons-parent</artifactId>
+    <artifactId>Commons</artifactId>
     <packaging>pom</packaging>
 
     <modules>

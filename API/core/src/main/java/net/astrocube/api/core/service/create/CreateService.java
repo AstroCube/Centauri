@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.create;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
@@ -43,7 +44,7 @@ public interface CreateService<Complete extends Model, Partial extends PartialMo
      * @param model that will be created
      * @return update request
      */
-    default Complete createSync(Partial model) {
+    default Complete createSync(Partial model) throws Exception {
         return createSync(createRequest(model));
     }
 
@@ -52,7 +53,7 @@ public interface CreateService<Complete extends Model, Partial extends PartialMo
      * @param request that will be sent for creation
      * @return created and serialized object
      */
-    Complete createSync(CreateRequest<Partial> request);
+    Complete createSync(CreateRequest<Partial> request) throws Exception;
 
     /**
      * Default create request to be called from service

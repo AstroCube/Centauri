@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.query;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
@@ -65,7 +66,7 @@ public interface QueryService<Complete extends Model> {
      * @param bsonQuery that will be serialized
      * @return query request
      */
-    default QueryResult<Complete> querySync(ObjectNode bsonQuery) {
+    default QueryResult<Complete> querySync(ObjectNode bsonQuery) throws Exception {
         return querySync(queryRequest(bsonQuery));
     }
 
@@ -74,6 +75,6 @@ public interface QueryService<Complete extends Model> {
      * @param queryRequest that will be sent for update
      * @return updated request
      */
-    QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest);
+    QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception;
 
 }

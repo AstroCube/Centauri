@@ -1,12 +1,15 @@
 package net.astrocube.commons.core;
 
-import com.google.inject.Inject;
-import net.astrocube.api.core.http.HttpClient;
-import net.astrocube.commons.core.http.CoreRequestOptions;
+import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.commons.core.http.HttpModule;
+import net.astrocube.commons.core.virtual.ModelManifest;
 
-public class CommonsModule {
+public class CommonsModule extends ProtectedModule {
 
-
-    public void idk() {
+    @Override
+    protected void configure() {
+        install(new HttpModule());
+        install(new ModelManifest());
     }
+
 }

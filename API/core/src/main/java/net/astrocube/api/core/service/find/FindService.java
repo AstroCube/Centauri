@@ -11,7 +11,7 @@ public interface FindService<Complete extends Model> {
      * Complete type of the request
      * @return TypeToken with the complete type
      */
-    TypeToken<Complete> completeType();
+    TypeToken<Complete> getCompleteType();
 
     /**
      * Final request that will be passed to the API
@@ -26,7 +26,7 @@ public interface FindService<Complete extends Model> {
             }
 
             public TypeToken<Complete> getModelType() {
-                return completeType();
+                return getCompleteType();
             }
         };
     }
@@ -36,7 +36,7 @@ public interface FindService<Complete extends Model> {
      * @param id to be portrayed at the API
      * @return final request
      */
-    default Complete findSync(String id) {
+    default Complete findSync(String id) throws Exception {
         return findSync(findRequest(id));
     }
 
@@ -45,7 +45,7 @@ public interface FindService<Complete extends Model> {
      * @param findModelRequest to be passed
      * @return final request
      */
-    Complete findSync(FindRequest<Complete> findModelRequest);
+    Complete findSync(FindRequest<Complete> findModelRequest) throws Exception;
 
     /**
      * Final request that will be passed to the API

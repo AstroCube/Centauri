@@ -1,9 +1,7 @@
 package net.astrocube.commons.core.http;
 
-import com.google.inject.AbstractModule;
+import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.http.HttpClient;
-import net.astrocube.api.core.http.config.HttpClientConfig;
-import net.astrocube.api.core.http.config.HttpFactoryConfig;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.http.resolver.RequestExceptionHandler;
 import net.astrocube.api.core.http.resolver.RequestExecutorResolver;
@@ -15,7 +13,7 @@ import net.astrocube.commons.core.http.resolver.CoreRequestExecutorResolver;
 import net.astrocube.commons.core.http.resolver.CoreRequestFactoryResolver;
 import net.astrocube.commons.core.http.resolver.CoreTransportLoggerModifier;
 
-public class HttpModule extends AbstractModule {
+public class HttpModule extends ProtectedModule {
 
     @Override
     protected void configure() {
@@ -25,8 +23,6 @@ public class HttpModule extends AbstractModule {
         bind(RequestFactoryResolver.class).to(CoreRequestFactoryResolver.class);
         bind(TransportLoggerModifier.class).to(CoreTransportLoggerModifier.class);
         bind(HttpClient.class).to(CoreHttpClient.class);
-        requireBinding(HttpFactoryConfig.class);
-        requireBinding(HttpClientConfig.class);
     }
 
 }

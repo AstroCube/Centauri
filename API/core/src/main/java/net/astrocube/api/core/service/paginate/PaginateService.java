@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.paginate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
@@ -12,7 +13,7 @@ public interface PaginateService<Complete extends Model> {
      * Complete type of the requested service
      * @return TypeToken of the query
      */
-    TypeToken<Complete> completeType();
+    TypeToken<Complete> getCompleteType();
 
 
     /**
@@ -34,7 +35,7 @@ public interface PaginateService<Complete extends Model> {
             }
 
             public TypeToken<Complete> getModelType() {
-                return completeType();
+                return getCompleteType();
             }
         };
     }
@@ -45,7 +46,7 @@ public interface PaginateService<Complete extends Model> {
      * @param bsonQuery to be used as body
      * @return paginated request
      */
-    default PaginateResult<Complete> paginateSync(String paginateQuery, ObjectNode bsonQuery) {
+    default PaginateResult<Complete> paginateSync(String paginateQuery, ObjectNode bsonQuery) throws Exception {
         return paginateSync(paginateRequest(paginateQuery, bsonQuery));
     }
 
@@ -54,7 +55,7 @@ public interface PaginateService<Complete extends Model> {
      * @param paginateRequest to be used
      * @return paginated request
      */
-    PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest);
+    PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception;
 
     /**
      * Paginated query that will be called from the service

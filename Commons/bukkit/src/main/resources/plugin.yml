@@ -1,0 +1,5 @@
+name: Commons
+main: net.astrocube.commons.bukkit.CommonsBukkit
+version: ${project.version}
+loadbefore: [Lobby]
+author: Astrocube Network
