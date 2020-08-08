@@ -1,0 +1,91 @@
+package net.astrocube.api.core.virtual.user;
+
+import net.astrocube.api.core.model.Model;
+import net.astrocube.api.core.model.PartialModel;
+import net.astrocube.api.core.virtual.group.Group;
+import net.astrocube.api.core.virtual.user.part.GameOptions;
+import net.astrocube.api.core.virtual.user.part.PublicInformation;
+
+import javax.annotation.Nullable;
+import java.util.Set;
+
+public interface UserDoc {
+
+    interface Partial extends PartialModel {}
+
+    
+    interface Login extends Partial {
+
+        String getUsername();
+
+        String getPassword();
+
+    }
+
+    
+    interface UserGroup {
+
+        Group getGroup();
+
+        String getJoinedAt();
+
+        String getRoleComment();
+
+    }
+
+    
+    interface Identity {
+
+        String getDisplay();
+
+        String getMail();
+
+        Set<UserGroup> getGroups();
+
+        @Nullable String getSkin();
+
+        boolean isVerified();
+
+        Session getSession();
+
+        int getExperience();
+
+        Set<Address> getAddresses();
+
+        String getLanguage();
+
+        PublicInformation getPublicInfo();
+
+        GameOptions getSettings();
+
+    }
+
+    
+    interface Session {
+
+        String getLastSeen();
+
+        boolean isOnline();
+
+        String getLastGame();
+
+        String getLastLobby();
+
+        boolean isPremium();
+
+    }
+
+    interface Address {
+
+        String getCountry();
+
+        String getNumber();
+
+        boolean isPrimary();
+
+    }
+
+    
+    interface Complete extends Model, Login, Identity {}
+
+}
