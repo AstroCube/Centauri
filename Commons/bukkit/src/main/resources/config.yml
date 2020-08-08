@@ -11,3 +11,4 @@ api:
   connect: 1200                                  # Connect Timeout
   read: 1200                                     # Read Timeout
   retry: 3                                       # Retry Timeout
+  threads: 2                                     # Max number of thread pools (According to CPU allowance)

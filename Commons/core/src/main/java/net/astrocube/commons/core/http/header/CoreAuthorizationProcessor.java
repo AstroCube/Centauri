@@ -1,6 +1,5 @@
 package net.astrocube.commons.core.http.header;
 
-
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 
 public class CoreAuthorizationProcessor implements AuthorizationProcessor {

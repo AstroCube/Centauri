@@ -23,6 +23,12 @@ public class HttpModule extends ProtectedModule {
         bind(RequestFactoryResolver.class).to(CoreRequestFactoryResolver.class);
         bind(TransportLoggerModifier.class).to(CoreTransportLoggerModifier.class);
         bind(HttpClient.class).to(CoreHttpClient.class);
+        expose(AuthorizationProcessor.class);
+        expose(RequestExceptionHandler.class);
+        expose(RequestExecutorResolver.class);
+        expose(RequestFactoryResolver.class);
+        expose(TransportLoggerModifier.class);
+        expose(HttpClient.class);
     }
 
 }

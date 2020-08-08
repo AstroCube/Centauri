@@ -1,8 +1,5 @@
 package net.astrocube.api.core.http.config;
 
-import com.google.inject.Singleton;
-
-@Singleton
 public interface HttpFactoryConfig {
 
     /**

@@ -1,16 +1,11 @@
 package net.astrocube.commons.core.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Response;
-import net.astrocube.api.core.concurrent.SimpleAsyncResponse;
-import net.astrocube.api.core.concurrent.WrappedResponse;
+import net.astrocube.api.core.concurrent.*;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.Model;
@@ -35,7 +30,6 @@ import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.HashMap;
 
-@Singleton
 @SuppressWarnings("UnstableApiUsage")
 public class CoreModelService<Complete extends Model, Partial extends PartialModel> implements
         CreateService<Complete, Partial>,
@@ -48,15 +42,16 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Inject protected HttpClient httpClient;
     @Inject protected ObjectMapper mapper;
-    @Inject private ListeningExecutorService listeningExecutorService;
+    private final ListeningExecutorService listeningExecutorService;
 
     protected ModelMeta<Complete, Partial> modelMeta;
     protected TypeToken<QueryResult<Complete>> queryResultTypeToken;
     protected TypeToken<PaginateResult<Complete>> paginateResultTypeToken;
 
     public @Inject
-    CoreModelService(ModelMeta<Complete, Partial> modelMeta) {
+    CoreModelService(ModelMeta<Complete, Partial> modelMeta, ExecutorServiceProvider executorServiceProvider) {
         this.modelMeta = modelMeta;
+        this.listeningExecutorService = executorServiceProvider.getRegisteredService();
         this.queryResultTypeToken = new TypeToken<QueryResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
         this.paginateResultTypeToken = new TypeToken<PaginateResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
     }

@@ -1,10 +1,7 @@
 package net.astrocube.api.core.http.resolver;
 
-import com.google.inject.Singleton;
-
 import java.util.logging.Logger;
 
-@Singleton
 public interface TransportLoggerModifier {
 
     /**

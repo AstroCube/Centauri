@@ -1,9 +1,7 @@
 package net.astrocube.api.core.http;
 
-import com.google.inject.Singleton;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 
-@Singleton
 public interface HttpClient {
 
     /**

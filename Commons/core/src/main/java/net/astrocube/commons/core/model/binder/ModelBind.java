@@ -52,9 +52,7 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
         this.partialTypeLiteral = partialTypeLiteral;
 
         this.metas = Multibinder.newSetBinder(binder, ModelMeta.class);
-        this.createServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<CreateService<Complete, Partial>>(){}.with(
-                new TypeArgument<Complete>(this.completeTypeLiteral) {}, new TypeArgument<Partial>(this.partialTypeLiteral) {})
-        );
+        this.createServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<CreateService<Complete, Partial>>(){}.with(new TypeArgument<Complete>(this.completeTypeLiteral) {}, new TypeArgument<Partial>(this.partialTypeLiteral) {}));
         this.deleteServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<DeleteService<Complete>>(){}.with(new TypeArgument<Complete>(this.completeTypeLiteral){}));
         this.findServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<FindService<Complete>>(){}.with(new TypeArgument<Complete>(this.completeTypeLiteral){}));
         this.paginateServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<PaginateService<Complete>>(){}.with(new TypeArgument<Complete>(this.completeTypeLiteral){}));
@@ -132,9 +130,10 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
                     new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
             );
             metas.addBinding().to(meta);
-            bind(meta).in(Singleton.class);
+            bind(meta).in(Scopes.SINGLETON);
             bind(new ResolvableType<ModelMeta<Complete, ?>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){})).to(meta);
             bind(new ResolvableType<ModelMeta<?, Partial>>(){}.with(new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral){})).to(meta);
+            expose(new ResolvableType<DeleteService<Complete>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){}));
         }
     }
 }

@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.loader;
 
-import net.astrocube.commons.core.inject.ProtectedModule;
+import me.fixeddev.inject.ProtectedModule;
 
 public class LoaderModule extends ProtectedModule {
 

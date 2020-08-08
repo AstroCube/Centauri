@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.http.config;
+package net.astrocube.commons.bukkit.core.config;
 
 import net.astrocube.api.core.http.config.HttpClientConfig;
 import org.bukkit.craftbukkit.libs.jline.internal.Configuration;

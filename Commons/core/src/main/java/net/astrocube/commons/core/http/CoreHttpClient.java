@@ -1,11 +1,9 @@
 package net.astrocube.commons.core.http;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Response;
 import net.astrocube.api.core.concurrent.SimpleAsyncResponse;
@@ -24,7 +22,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Singleton
 public class CoreHttpClient implements HttpClient {
 
     private final Logger logger;

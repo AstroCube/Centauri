@@ -1,9 +1,7 @@
 package net.astrocube.api.core.http.resolver;
 
 import com.google.api.client.http.HttpIOExceptionHandler;
-import com.google.inject.Singleton;
 
-@Singleton
 public interface RequestExceptionHandler {
 
     /**
