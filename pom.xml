@@ -8,7 +8,7 @@
     </properties>
 
     <groupId>net.astrocube</groupId>
-    <artifactId>EnhacedCentauri</artifactId>
+    <artifactId>Centauri</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
