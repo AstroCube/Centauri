@@ -12,6 +12,7 @@ public interface QueryRequest<Complete extends Model> extends ModelRequest<Compl
      * Query that will be used as body for the request
      * @return ObjectNode to be serialized
      */
-    @Nullable ObjectNode getBsonQuery();
+    @Nullable
+    ObjectNode getBsonQuery();
 
 }

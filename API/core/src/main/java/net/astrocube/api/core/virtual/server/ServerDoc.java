@@ -77,7 +77,7 @@ public interface ServerDoc {
     /**
      * Complete interface that implements complete model according to {@link PartialModel} schema
      */
-    interface Complete extends Model, Identity, GameBase {}
+    interface Complete extends Model.Stamped, Identity, GameBase {}
 
     /**
      * Server Types to be used

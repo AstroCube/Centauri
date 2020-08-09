@@ -9,7 +9,7 @@ import lombok.Getter;
  * This class will be in charge of containing all the {@link Model} MetaData
  * in order to be obtained later.
  */
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings("All")
 @Getter
 public class ModelMeta <Complete extends Model, Partial extends PartialModel> {
 

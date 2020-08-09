@@ -86,6 +86,6 @@ public interface UserDoc {
     }
 
     
-    interface Complete extends Model, Login, Identity {}
+    interface Complete extends Model.Stamped, Login, Identity {}
 
 }

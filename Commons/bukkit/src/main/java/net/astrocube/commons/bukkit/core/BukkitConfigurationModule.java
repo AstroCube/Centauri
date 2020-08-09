@@ -9,7 +9,7 @@ import net.astrocube.commons.bukkit.core.config.BukkitClientConfig;
 import net.astrocube.commons.bukkit.core.config.BukkitConcurrentProvider;
 import net.astrocube.commons.bukkit.core.config.BukkitFactoryConfig;
 
-public class BukkitModule extends ProtectedModule {
+public class BukkitConfigurationModule extends ProtectedModule {
 
     @Override
     public void configure() {

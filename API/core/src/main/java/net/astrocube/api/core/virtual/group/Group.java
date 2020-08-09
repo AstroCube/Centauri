@@ -1,6 +1,7 @@
 package net.astrocube.api.core.virtual.group;
 
 
+import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelProperties;
 import net.astrocube.api.core.model.PartialModel;
 
@@ -8,7 +9,7 @@ import java.util.Set;
 
 @ModelProperties.RouteKey("group")
 @ModelProperties.Cache()
-public interface Group extends PartialModel {
+public interface Group extends Model.Stamped {
 
     String getName();
 

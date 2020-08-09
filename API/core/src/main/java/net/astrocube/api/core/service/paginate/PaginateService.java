@@ -1,6 +1,5 @@
 package net.astrocube.api.core.service.paginate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;

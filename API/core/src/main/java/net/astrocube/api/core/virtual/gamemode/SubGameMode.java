@@ -1,8 +1,8 @@
 package net.astrocube.api.core.virtual.gamemode;
 
-import net.astrocube.api.core.model.IdentifiableModel;
+import net.astrocube.api.core.model.Model;
 
-public interface SubGameMode extends IdentifiableModel {
+public interface SubGameMode extends Model {
 
     /**
      * Will return the name of the SubGameMode

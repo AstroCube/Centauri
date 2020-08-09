@@ -55,7 +55,7 @@ public interface FriendshipDoc extends Model {
     /**
      * Complete interface that implements complete model according to {@link PartialModel} schema
      */
-    interface Complete extends Model, Creation {}
+    interface Complete extends Model.Stamped, Creation {}
 
     /**
      * Type of friendship

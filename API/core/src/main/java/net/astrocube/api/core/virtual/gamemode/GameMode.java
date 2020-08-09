@@ -5,7 +5,7 @@ import net.astrocube.api.core.model.Model;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public interface GameMode extends Model {
+public interface GameMode extends Model.Stamped {
 
     /**
      * Will return the GameMode name
