@@ -1,8 +1,8 @@
 package net.astrocube.api.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.DateTime;
 
-import java.time.Instant;
 
 public interface Model extends PartialModel {
 
@@ -19,13 +19,13 @@ public interface Model extends PartialModel {
          * Instant where the model was exactly created at
          * @return created at instant
          */
-        Instant getCreatedAt();
+        DateTime getCreatedAt();
 
         /**
          * Instant where the model was exactly updated at
          * @return updated at instant
          */
-        Instant getUpdatedAt();
+        DateTime getUpdatedAt();
 
     }
 

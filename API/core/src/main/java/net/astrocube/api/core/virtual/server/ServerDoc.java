@@ -28,6 +28,7 @@ public interface ServerDoc {
          * Type of the server that should be resolved
          * @return server type
          */
+        @JsonProperty("type")
         Type getServerType();
 
         /**

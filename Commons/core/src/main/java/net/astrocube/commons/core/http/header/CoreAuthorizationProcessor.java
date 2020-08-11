@@ -1,7 +1,9 @@
 package net.astrocube.commons.core.http.header;
 
+import com.google.inject.Singleton;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 
+@Singleton
 public class CoreAuthorizationProcessor implements AuthorizationProcessor {
 
     private char[] authorization = new char[0];

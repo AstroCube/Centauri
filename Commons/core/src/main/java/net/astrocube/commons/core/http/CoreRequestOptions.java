@@ -1,9 +1,7 @@
 package net.astrocube.commons.core.http;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import net.astrocube.api.core.http.RequestOptions;
 
 import java.util.HashMap;

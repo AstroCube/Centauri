@@ -1,5 +1,6 @@
 package net.astrocube.api.core.message;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.reflect.TypeToken;
 
 import java.util.Map;
@@ -14,7 +15,7 @@ public interface Channel<T extends Message> {
 
     TypeToken<T> getType();
 
-    Channel<T> sendMessage(T object, Map<String, Object> headers);
+    Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException;
 
     Channel<T> addHandler(MessageHandler<T> handler);
 
