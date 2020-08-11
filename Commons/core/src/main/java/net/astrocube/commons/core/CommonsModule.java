@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.module.mrbean.MrBeanModule;
 import com.google.inject.Scopes;
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.commons.core.friend.FriendModule;
 import net.astrocube.commons.core.http.HttpModule;
 import net.astrocube.commons.core.message.MessagerModule;
 import net.astrocube.commons.core.redis.RedisModule;
@@ -19,6 +20,7 @@ public class CommonsModule extends ProtectedModule {
 
     @Override
     protected void configure() {
+        install(new FriendModule());
         install(new HttpModule());
         install(new RedisModule());
         install(new MessagerModule());

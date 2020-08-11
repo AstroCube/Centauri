@@ -24,6 +24,7 @@
             <version>1.8-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Install https://github.com/FixedDev/EBCM (branch 2.0) -->
         <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>ebcm-universal</artifactId>
@@ -34,6 +35,13 @@
             <groupId>me.fixeddev</groupId>
             <artifactId>ebcm-bukkit</artifactId>
             <version>2.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Install https://github.com/yusshu/lang-lib -->
+        <dependency>
+            <groupId>me.yushust.message</groupId>
+            <artifactId>core</artifactId>
+            <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

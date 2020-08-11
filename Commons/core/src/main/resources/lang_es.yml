@@ -1,0 +1,9 @@
+friend-help:
+- "%%gold%%============================"
+- "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"
+- "%%gold%%/friend add <player> %%dark_gray%%- %%yellow%%Invita a alguien a ser tu amigo"
+- "%%gold%%/friend deny <player> %%dark_gray%%- %%yellow%%Rechaza una petición de amistad"
+- "%%gold%%/friend help %%dark_gray%%- %%yellow%%Muestra ayuda sobre estos comandos"
+- "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
+- "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
+- "%%gold%%============================"
