@@ -7,4 +7,6 @@ public interface ServerService {
 
     String connect(CreateRequest<ServerDoc.Partial> request) throws Exception;
 
+    void disconnect() throws Exception;
+
 }

@@ -3,7 +3,7 @@ package net.astrocube.commons.bukkit.server;
 import com.google.inject.Inject;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.server.GameServerStartManager;
-import net.astrocube.api.core.server.ServerStartManager;
+import net.astrocube.api.core.server.ServerConnectionManager;
 import net.astrocube.api.core.server.ServerStartResolver;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -18,7 +18,8 @@ import java.util.logging.Level;
 
 public class BukkitStartResolver implements ServerStartResolver {
 
-    private @Inject ServerStartManager serverStartManager;
+    private @Inject
+    ServerConnectionManager serverConnectionManager;
     private @Inject AuthorizationProcessor authorizationProcessor;
     private @Inject GameServerStartManager gameServerStartManager;
     private @Inject FindService<GameMode> gameModeFindService;
@@ -31,7 +32,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             final ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 
             if (type != ServerDoc.Type.GAME) {
-                String token = serverStartManager.createServer(
+                String token = serverConnectionManager.startConnection(
                         Bukkit.getServerName(),
                         type,
                         plugin.getConfig().getString("server.cluster")

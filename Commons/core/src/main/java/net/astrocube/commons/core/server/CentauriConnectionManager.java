@@ -1,22 +1,21 @@
 package net.astrocube.commons.core.server;
 
 import com.google.inject.Inject;
-import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.server.ServerService;
-import net.astrocube.api.core.server.ServerStartManager;
+import net.astrocube.api.core.server.ServerConnectionManager;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 
-public class CentauriStartManager implements ServerStartManager {
+public class CentauriConnectionManager implements ServerConnectionManager {
 
     private final ServerService serverService;
 
     @Inject
-    public CentauriStartManager(ServerService serverService) {
+    public CentauriConnectionManager(ServerService serverService) {
         this.serverService = serverService;
     }
 
     @Override
-    public String createServer(String slug, ServerDoc.Type type, String cluster) throws Exception {
+    public String startConnection(String slug, ServerDoc.Type type, String cluster) throws Exception {
         ServerDoc.Identity identity = new ServerDoc.Identity() {
             @Override
             public String getSlug() {
@@ -34,6 +33,11 @@ public class CentauriStartManager implements ServerStartManager {
             }
         };
         return this.serverService.connect(() -> identity);
+    }
+
+    @Override
+    public void endConnection() throws Exception {
+        serverService.disconnect();
     }
 
 }
