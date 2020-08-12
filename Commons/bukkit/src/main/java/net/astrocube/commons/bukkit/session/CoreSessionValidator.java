@@ -1,16 +1,38 @@
 package net.astrocube.commons.bukkit.session;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.session.InvalidSessionMessageMatcher;
+import net.astrocube.api.bukkit.session.SessionCacheInvalidator;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 @Singleton
 public class CoreSessionValidator implements SessionValidatorHandler {
 
-    private @Inject InvalidSessionMessageMatcher invalidSessionMessageMatcher;
+    private final InvalidSessionMessageMatcher invalidSessionMessageMatcher;
+    private final SessionCacheInvalidator sessionCacheInvalidator;
+    private final Cache<UUID, SessionValidateDoc.Complete> usersBeingValidated;
+
+    @Inject CoreSessionValidator(
+            InvalidSessionMessageMatcher invalidSessionMessageMatcher,
+            SessionCacheInvalidator  sessionCacheInvalidator
+    ) {
+        this.invalidSessionMessageMatcher = invalidSessionMessageMatcher;
+        this.sessionCacheInvalidator = sessionCacheInvalidator;
+        this.usersBeingValidated = CacheBuilder
+                .newBuilder()
+                .expireAfterWrite(1, TimeUnit.MINUTES)
+                .maximumSize(50)
+                .weakValues()
+                .build();
+    }
 
     @Override
     public void validateSession(AsyncPlayerPreLoginEvent event, SessionValidateDoc.Complete authorization) {
@@ -20,8 +42,9 @@ public class CoreSessionValidator implements SessionValidatorHandler {
             return;
         }
 
-        //TODO: Check if user has punishments
+        sessionCacheInvalidator.invalidateSessionCache(authorization.getUser());
 
+        //TODO: Check if user has punishments
 
     }
 
