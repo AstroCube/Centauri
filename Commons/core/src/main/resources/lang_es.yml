@@ -8,3 +8,10 @@ friend-help:
 - "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
 - "%%gold%%============================"
 no-friends: "&cAl parecer no tienes amigos :("
+friends-next-page: "%%yellow%%%%bold%%Página siguiente"
+friends-previous-page: "%%yellow%%%%bold%%Página anterior"
+friend-list:
+    header: "%%gold%%============ %%yellow%%Lista de Amigos %%gold%%============"
+    element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
+online: "%%yellow%%Conectado"
+offline: "%%red%%Desconectado"
