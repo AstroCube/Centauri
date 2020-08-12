@@ -1,12 +1,14 @@
 package net.astrocube.commons.bukkit.server;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.session.net.seocraft.api.bukkit.server.ServerDisconnectHandler;
 import net.astrocube.api.core.server.ServerConnectionManager;
 import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
+@Singleton
 public class CoreServerDisconnectHandler implements ServerDisconnectHandler {
 
     private @Inject ServerConnectionManager serverConnectionManager;
