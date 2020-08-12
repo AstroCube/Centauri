@@ -7,3 +7,4 @@ friend-help:
 - "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
 - "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
 - "%%gold%%============================"
+no-friends: "&cAl parecer no tienes amigos :("

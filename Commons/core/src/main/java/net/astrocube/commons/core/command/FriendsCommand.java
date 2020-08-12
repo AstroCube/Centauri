@@ -36,6 +36,11 @@ public class FriendsCommand implements CommandClass {
                     Friendship[] friendships = paginateResult.getData();
                     PaginateResult.Pagination pagination = paginateResult.getPagination();
 
+                    if (friendships.length == 0) {
+                        player.sendMessage(messageProvider.getMessage(player, "no-friends"));
+                        return;
+                    }
+
                     
 
                 })
