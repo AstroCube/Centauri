@@ -8,7 +8,7 @@ import net.astrocube.api.core.virtual.friend.Friendship;
 import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 import net.astrocube.commons.core.service.CoreModelService;
 
-public class FriendshipModelManifest extends ProtectedModule implements ModelBinderModule {
+public class FriendshipModelModule extends ProtectedModule implements ModelBinderModule {
 
     @Override
     protected void configure() {

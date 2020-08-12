@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.session;
+package net.astrocube.commons.bukkit.session.validation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

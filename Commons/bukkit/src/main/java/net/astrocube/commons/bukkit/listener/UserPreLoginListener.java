@@ -16,13 +16,13 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import java.util.logging.Level;
 
 @Singleton
-public class UserJoinSessionListener implements Listener {
+public class UserPreLoginListener implements Listener {
 
     private @Inject SessionService sessionService;
     private @Inject SessionValidatorHandler sessionValidatorHandler;
 
     @EventHandler
-    public void onUserJoin(AsyncPlayerPreLoginEvent event) {
+    public void onUserPreLogin(AsyncPlayerPreLoginEvent event) {
         try {
             SessionValidateDoc.Complete authorization = sessionService.authenticationCheckSync(
                     () -> LoginEventSessionUtil.retrieveRequestFromEvent(event)

@@ -8,7 +8,7 @@ import net.astrocube.commons.core.model.binder.ModelBinderModule;
 import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.commons.core.service.CoreModelService;
 
-public class ServerModelManifest extends ProtectedModule implements ModelBinderModule {
+public class ServerModelModule extends ProtectedModule implements ModelBinderModule {
 
     @Override
     protected void configure() {

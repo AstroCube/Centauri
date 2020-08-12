@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.session;
+package net.astrocube.commons.bukkit.session.validation;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -10,6 +10,7 @@ import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -43,9 +44,17 @@ public class CoreSessionValidator implements SessionValidatorHandler {
         }
 
         sessionCacheInvalidator.invalidateSessionCache(authorization.getUser());
-
+        usersBeingValidated.put(event.getUniqueId(), authorization);
         //TODO: Check if user has punishments
 
+    }
+
+    @Nullable
+    @Override
+    public SessionValidateDoc.Complete getValidationPendingUser(UUID uuid) {
+        SessionValidateDoc.Complete validator = usersBeingValidated.getIfPresent(uuid);
+        usersBeingValidated.invalidate(uuid);
+        return validator;
     }
 
 }

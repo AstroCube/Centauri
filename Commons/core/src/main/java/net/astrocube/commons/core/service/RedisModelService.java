@@ -29,7 +29,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
     @Inject private Redis redis;
     @Inject private HttpClient httpClient;
-    @Inject private RedisRequestCallabe<Complete> redisRequestCallabe;
+    private RedisRequestCallabe<Complete> redisRequestCallabe;
     @Inject private ObjectMapper objectMapper;
 
     @Inject

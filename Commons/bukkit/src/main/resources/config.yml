@@ -12,3 +12,5 @@ api:
   read: 1200                                     # Read Timeout
   retry: 1                                       # Retry Timeout
   threads: 2                                     # Max number of thread pools (According to CPU allowance)
+authentication:
+  enabled: true

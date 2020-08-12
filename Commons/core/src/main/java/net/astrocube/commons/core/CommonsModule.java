@@ -14,7 +14,7 @@ import net.astrocube.commons.core.message.MessagerModule;
 import net.astrocube.commons.core.redis.RedisModule;
 import net.astrocube.commons.core.server.CoreServerModule;
 import net.astrocube.commons.core.session.SessionModule;
-import net.astrocube.commons.core.virtual.ModelManifest;
+import net.astrocube.commons.core.virtual.ModelModule;
 
 public class CommonsModule extends ProtectedModule {
 
@@ -25,7 +25,7 @@ public class CommonsModule extends ProtectedModule {
         install(new RedisModule());
         install(new MessagerModule());
         install(new SessionModule());
-        install(new ModelManifest());
+        install(new ModelModule());
         install(new CoreServerModule());
 
         bind(ObjectMapper.class).toProvider(() -> {

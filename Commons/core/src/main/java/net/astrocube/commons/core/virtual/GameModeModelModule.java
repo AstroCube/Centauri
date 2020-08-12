@@ -7,7 +7,7 @@ import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.commons.core.service.CoreModelService;
 
-public class GameModeModelManifest extends ProtectedModule implements ModelBinderModule {
+public class GameModeModelModule extends ProtectedModule implements ModelBinderModule {
 
     @Override
     protected void configure() {
