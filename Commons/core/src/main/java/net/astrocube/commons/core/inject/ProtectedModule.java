@@ -64,7 +64,7 @@ public abstract class ProtectedModule implements Module, ForwardingProtectedBind
         final ProtectedBinder old = this.binder;
         this.binder = ProtectedBinderImpl.current(binder);
         try {
-            if(this.binder != null) {
+            if (this.binder != null) {
                 configure();
             } else {
                 binder.skipSources(me.fixeddev.inject.ProtectedModule.class).addError(

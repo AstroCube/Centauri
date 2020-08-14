@@ -15,5 +15,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new ServerModule());
         install(new BukkitSessionModule());
         install(new BukkitConfigurationModule());
+        install(new TranslationModule());
     }
 }
