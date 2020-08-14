@@ -18,12 +18,6 @@
             <artifactId>api-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>net.seocraft</groupId>
-            <artifactId>paperspigot</artifactId>
-            <version>1.8-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- Install https://github.com/FixedDev/EBCM (branch 2.0) -->
         <dependency>
             <groupId>me.fixeddev</groupId>

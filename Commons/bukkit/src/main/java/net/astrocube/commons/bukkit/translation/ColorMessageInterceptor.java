@@ -1,4 +1,4 @@
-package net.astrocube.commons.core.translation;
+package net.astrocube.commons.bukkit.translation;
 
 import me.yushust.message.core.intercept.MessageInterceptor;
 import org.bukkit.ChatColor;

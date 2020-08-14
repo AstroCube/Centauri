@@ -22,7 +22,7 @@ public class EventListenerLoader implements Loader {
     @Override
     public void load() {
 
-        Bukkit.getLogger().log(Level.INFO, "Initializing event listeners");
+        plugin.getLogger().log(Level.INFO, "Initializing event listeners");
 
         registerEvent(userPreLoginListener);
         registerEvent(userLoginListener);

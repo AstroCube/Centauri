@@ -1,7 +1,7 @@
 package net.astrocube.commons.core.virtual;
 
 import com.google.inject.TypeLiteral;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.commons.core.inject.ProtectedModule;
 import net.astrocube.commons.core.model.binder.ModelBinderModule;
 import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.api.core.virtual.gamemode.GameMode;

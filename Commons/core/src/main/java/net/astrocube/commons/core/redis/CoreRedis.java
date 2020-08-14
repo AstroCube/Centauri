@@ -11,6 +11,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.io.IOException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class CoreRedis implements Redis {
@@ -31,7 +32,7 @@ public class CoreRedis implements Redis {
                 listenerConnection.auth(coreRedisConfig.getPassword());
             }
         } catch (JedisConnectionException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "An exception occurred while initializing the needed jedis instances", e);
+            Logger.getLogger("redis").log(Level.SEVERE, "An exception occurred while initializing the needed jedis instances", e);
         }
     }
 

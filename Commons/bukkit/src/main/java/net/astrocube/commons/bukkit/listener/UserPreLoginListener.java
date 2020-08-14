@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
@@ -20,6 +21,7 @@ public class UserPreLoginListener implements Listener {
 
     private @Inject SessionService sessionService;
     private @Inject SessionValidatorHandler sessionValidatorHandler;
+    private @Inject Plugin plugin;
 
     @EventHandler
     public void onUserPreLogin(AsyncPlayerPreLoginEvent event) {
@@ -29,7 +31,7 @@ public class UserPreLoginListener implements Listener {
             );
             sessionValidatorHandler.validateSession(event, authorization);
         } catch (Exception exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "There was an error while authenticating a user", exception);
+            plugin.getLogger().log(Level.SEVERE, "There was an error while authenticating a user", exception);
             event.setKickMessage(ChatColor.RED + "AstroCube authentication servers are down, please try again later.");
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
         }

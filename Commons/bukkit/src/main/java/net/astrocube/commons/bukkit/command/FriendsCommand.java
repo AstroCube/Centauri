@@ -1,4 +1,4 @@
-package net.astrocube.commons.core.command;
+package net.astrocube.commons.bukkit.command;
 
 import com.google.inject.Inject;
 import me.fixeddev.ebcm.parametric.CommandClass;

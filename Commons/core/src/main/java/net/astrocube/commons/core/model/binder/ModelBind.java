@@ -4,7 +4,6 @@ import com.google.inject.*;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;
-import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.model.PartialModel;
@@ -16,6 +15,7 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.api.core.utils.TypeArgument;
+import net.astrocube.commons.core.inject.ProtectedModule;
 
 @SuppressWarnings("all")
 public class ModelBind<Complete extends Model, Partial extends PartialModel> {

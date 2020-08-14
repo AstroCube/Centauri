@@ -67,7 +67,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             );
 
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
+            plugin.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
             Bukkit.shutdown();
         }
     }

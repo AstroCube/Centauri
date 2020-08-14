@@ -1,6 +1,5 @@
 package net.astrocube.commons.core.http;
 
-import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.http.resolver.RequestExceptionHandler;
@@ -12,6 +11,7 @@ import net.astrocube.commons.core.http.resolver.CoreRequestExceptionHandler;
 import net.astrocube.commons.core.http.resolver.CoreRequestExecutorResolver;
 import net.astrocube.commons.core.http.resolver.CoreRequestFactoryResolver;
 import net.astrocube.commons.core.http.resolver.CoreTransportLoggerModifier;
+import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class HttpModule extends ProtectedModule {
 

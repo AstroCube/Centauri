@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ public class UserJoinListener implements Listener {
 
     private @Inject SessionService sessionService;
     private @Inject FindService<User> userFindService;
+    private @Inject Plugin plugin;
 
     @EventHandler
     public void onUserJoin(PlayerJoinEvent event) {
@@ -60,7 +62,7 @@ public class UserJoinListener implements Listener {
 
             } catch (Exception exception) {
                 player.kickPlayer(ChatColor.RED + "There was an error processing your login. Please try again later.");
-                Bukkit.getLogger().log(Level.SEVERE, "Could not process player final join.", exception);
+                plugin.getLogger().log(Level.SEVERE, "Could not process player final join.", exception);
             }
         });
     }

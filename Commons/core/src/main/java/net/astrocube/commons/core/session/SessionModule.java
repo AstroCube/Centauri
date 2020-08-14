@@ -1,7 +1,7 @@
 package net.astrocube.commons.core.session;
 
-import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.session.SessionService;
+import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class SessionModule extends ProtectedModule {
 

@@ -1,8 +1,8 @@
 package net.astrocube.commons.bukkit.server;
 
-import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.session.net.seocraft.api.bukkit.server.ServerDisconnectHandler;
 import net.astrocube.api.core.server.ServerStartResolver;
+import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class ServerModule extends ProtectedModule {
 

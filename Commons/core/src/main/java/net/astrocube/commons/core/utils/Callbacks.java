@@ -2,11 +2,11 @@ package net.astrocube.commons.core.utils;
 
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.concurrent.Response;
-import org.bukkit.Bukkit;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class Callbacks {
 
@@ -32,9 +32,9 @@ public final class Callbacks {
 
             @Override
             public void handleException(Throwable throwable) {
-                Bukkit.getLogger().warning("Process '" + processName + "' has not been completed successfully!");
+                Logger.getLogger("async-pool").warning("Process '" + processName + "' has not been completed successfully!");
                 Optional.ofNullable(throwable).ifPresent(exception -> {
-                    Bukkit.getLogger().log(Level.SEVERE, "'" + processName + "' process exception: ", exception);
+                    Logger.getLogger("async-pool").log(Level.SEVERE, "'" + processName + "' process exception: ", exception);
                 });
             }
 

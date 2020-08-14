@@ -1,12 +1,12 @@
 package net.astrocube.commons.bukkit.session;
 
-import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.session.InvalidSessionMessageMatcher;
 import net.astrocube.api.bukkit.session.SessionCacheInvalidator;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.commons.bukkit.session.validation.CoreInvalidSessionMessageMatcher;
 import net.astrocube.commons.bukkit.session.validation.CoreSessionCacheInvalidator;
 import net.astrocube.commons.bukkit.session.validation.CoreSessionValidator;
+import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class BukkitSessionModule extends ProtectedModule {
 

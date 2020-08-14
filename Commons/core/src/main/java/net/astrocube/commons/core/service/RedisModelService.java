@@ -3,7 +3,6 @@ package net.astrocube.commons.core.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
-import com.google.gson.JsonParseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
@@ -98,7 +97,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
                     jedis.set(key, json);
                     jedis.expire(key, modelMeta.getCache());
                     return model;
-                } catch (JsonParseException exception) {
+                } catch (Exception exception) {
                     throw new Exception("Parsing of " + getCompleteType().getType() + " failed");
                 }
             } else {
