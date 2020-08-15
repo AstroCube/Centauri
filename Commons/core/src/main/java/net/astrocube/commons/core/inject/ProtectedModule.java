@@ -67,8 +67,8 @@ public abstract class ProtectedModule implements Module, ForwardingProtectedBind
             if (this.binder != null) {
                 configure();
             } else {
-                binder.skipSources(me.fixeddev.inject.ProtectedModule.class).addError(
-                        me.fixeddev.inject.ProtectedModule.class.getSimpleName() +
+                binder.skipSources(ProtectedModule.class).addError(
+                        ProtectedModule.class.getSimpleName() +
                                 " must be installed with a " +
                                 ProtectedBinder.class.getSimpleName()
                 );

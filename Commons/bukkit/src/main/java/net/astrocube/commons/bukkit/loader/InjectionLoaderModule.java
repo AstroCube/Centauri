@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.loader;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
+import net.astrocube.commons.bukkit.translation.TranslationModule;
 import net.astrocube.commons.core.CommonsModule;
 import net.astrocube.commons.core.inject.ProtectedModule;
 

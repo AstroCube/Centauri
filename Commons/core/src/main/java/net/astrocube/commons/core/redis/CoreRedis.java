@@ -3,7 +3,6 @@ package net.astrocube.commons.core.redis;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.redis.Redis;
-import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

@@ -18,8 +18,7 @@ import java.util.logging.Level;
 
 public class BukkitStartResolver implements ServerStartResolver {
 
-    private @Inject
-    ServerConnectionManager serverConnectionManager;
+    private @Inject ServerConnectionManager serverConnectionManager;
     private @Inject AuthorizationProcessor authorizationProcessor;
     private @Inject GameServerStartManager gameServerStartManager;
     private @Inject FindService<GameMode> gameModeFindService;

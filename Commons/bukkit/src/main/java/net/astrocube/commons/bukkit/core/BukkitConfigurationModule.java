@@ -16,8 +16,6 @@ public class BukkitConfigurationModule extends ProtectedModule {
         bind(HttpFactoryConfig.class).to(BukkitFactoryConfig.class);
         bind(HttpClientConfig.class).to(BukkitClientConfig.class);
         bind(ExecutorServiceProvider.class).to(BukkitConcurrentProvider.class).in(Scopes.SINGLETON);
-        expose(HttpClientConfig.class);
-        expose(HttpFactoryConfig.class);
     }
 
 }

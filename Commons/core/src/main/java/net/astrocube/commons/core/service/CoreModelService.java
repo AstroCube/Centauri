@@ -56,7 +56,6 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
         this.paginateResultTypeToken = new TypeToken<PaginateResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
     }
 
-
     @Override
     public TypeToken<Complete> getCompleteType() {
         return modelMeta.getCompleteType();
