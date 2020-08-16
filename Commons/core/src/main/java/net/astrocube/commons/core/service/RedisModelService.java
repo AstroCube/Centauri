@@ -37,6 +37,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
             ExecutorServiceProvider executorServiceProvider
     ) {
         super(modelMeta, executorServiceProvider);
+        this.redisRequestCallabe = new RedisRequestCallabe<>();
     }
 
     @Override
@@ -62,7 +63,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         new HashMap<>(),
-                        null,
+                        "",
                         null
                 )
         );
@@ -91,7 +92,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
             int statusCode = response.getStatusCode();
 
             if (statusCode < 400) {
-                try (Jedis jedis = redis.getListenerConnection()) {
+                try (Jedis jedis = redis.getRawConnection().getResource()) {
                     T model = (T) objectMapper.readValue(json, getCompleteType().getRawType());
                     String key = modelMeta.getRouteKey() + ":" + model.getId();
                     jedis.set(key, json);

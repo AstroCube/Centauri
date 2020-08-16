@@ -1,9 +1,9 @@
 package net.astrocube.commons.core.virtual;
 
 import com.google.inject.*;
+import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.server.ServerDoc;
-import net.astrocube.commons.core.inject.ProtectedModule;
 import net.astrocube.commons.core.model.binder.ModelBinderModule;
 import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.commons.core.service.CoreModelService;

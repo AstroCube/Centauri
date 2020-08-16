@@ -1,7 +1,7 @@
 package net.astrocube.commons.core.virtual;
 
 
-import net.astrocube.commons.core.inject.ProtectedModule;
+import me.fixeddev.inject.ProtectedModule;
 
 public class ModelModule extends ProtectedModule {
 

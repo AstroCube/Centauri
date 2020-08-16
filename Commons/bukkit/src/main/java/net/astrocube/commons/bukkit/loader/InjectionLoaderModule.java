@@ -1,11 +1,11 @@
 package net.astrocube.commons.bukkit.loader;
 
+import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.translation.TranslationModule;
 import net.astrocube.commons.core.CommonsModule;
-import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
 

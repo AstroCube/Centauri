@@ -8,6 +8,6 @@ public interface SessionCacheInvalidator {
      * Invalidate cache when user login/logout to prevent data glitching
      * @param user to be invalidated
      */
-    void invalidateSessionCache(User user);
+    void invalidateSessionCache(User user) throws Exception;
 
 }

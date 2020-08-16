@@ -36,7 +36,7 @@ public class CoreSessionValidator implements SessionValidatorHandler {
     }
 
     @Override
-    public void validateSession(AsyncPlayerPreLoginEvent event, SessionValidateDoc.Complete authorization) {
+    public void validateSession(AsyncPlayerPreLoginEvent event, SessionValidateDoc.Complete authorization) throws Exception {
         if (authorization.isMultiAccount()) {
             event.setKickMessage(invalidSessionMessageMatcher.generateSessionMessage(authorization.getUser()));
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);

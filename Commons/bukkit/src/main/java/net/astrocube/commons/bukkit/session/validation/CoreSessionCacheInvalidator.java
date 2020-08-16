@@ -7,20 +7,31 @@ import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+import redis.clients.jedis.Jedis;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class CoreSessionCacheInvalidator implements SessionCacheInvalidator {
 
     private @Inject ModelMeta<User, UserDoc.Partial> modelMeta;
+    private @Inject Plugin plugin;
     private @Inject Redis redis;
 
     @Override
-    public void invalidateSessionCache(User user) {
+    public void invalidateSessionCache(User user) throws Exception {
         /**
          * In order to prevent errors when using {@link User} route we will
          * inject model meta instead of direct route typing.
          */
-        this.redis.getListenerConnection().del(modelMeta.getRouteKey() + ":" + user.getId());
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
+            jedis.del(modelMeta.getRouteKey() + ":" + user.getId());
+        } catch (Exception e) {
+            throw new Exception("Could not invalidate user cache");
+        }
     }
 
 }

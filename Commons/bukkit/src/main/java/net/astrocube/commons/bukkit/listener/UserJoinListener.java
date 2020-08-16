@@ -61,7 +61,8 @@ public class UserJoinListener implements Listener {
                 });
 
             } catch (Exception exception) {
-                player.kickPlayer(ChatColor.RED + "There was an error processing your login. Please try again later.");
+                Bukkit.getScheduler().runTask(plugin, () ->
+                        player.kickPlayer(ChatColor.RED + "There was an error processing your login. Please try again later."));
                 plugin.getLogger().log(Level.SEVERE, "Could not process player final join.", exception);
             }
         });

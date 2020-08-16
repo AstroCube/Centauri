@@ -13,7 +13,7 @@ public interface SessionValidatorHandler {
      * @param event to be compared
      * @param authorization to be provided
      */
-    void validateSession(AsyncPlayerPreLoginEvent event, SessionValidateDoc.Complete authorization);
+    void validateSession(AsyncPlayerPreLoginEvent event, SessionValidateDoc.Complete authorization) throws Exception;
 
     /**
      * Will return specific cached user to complete the validation requirements

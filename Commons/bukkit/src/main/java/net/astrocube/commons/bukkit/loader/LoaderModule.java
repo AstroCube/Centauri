@@ -1,8 +1,8 @@
 package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.name.Names;
+import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.commons.core.inject.ProtectedModule;
 
 public class LoaderModule extends ProtectedModule {
 
