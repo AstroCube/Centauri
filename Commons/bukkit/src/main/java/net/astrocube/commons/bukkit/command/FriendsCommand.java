@@ -9,10 +9,16 @@ import me.yushust.message.core.MessageProvider;
 import net.astrocube.commons.bukkit.command.friends.AddSubCommand;
 import net.astrocube.commons.bukkit.command.friends.ForceSubCommand;
 import net.astrocube.commons.bukkit.command.friends.ListSubCommand;
+import net.astrocube.commons.bukkit.command.friends.RemoveSubCommand;
 import org.bukkit.entity.Player;
 
 @ACommand(names = {"friends", "friend", "f"})
-@SubCommandClasses({ListSubCommand.class, AddSubCommand.class, ForceSubCommand.class})
+@SubCommandClasses({
+        ListSubCommand.class,
+        AddSubCommand.class,
+        ForceSubCommand.class,
+        RemoveSubCommand.class
+})
 public class FriendsCommand implements CommandClass {
 
     private @Inject MessageProvider<Player> messageProvider;

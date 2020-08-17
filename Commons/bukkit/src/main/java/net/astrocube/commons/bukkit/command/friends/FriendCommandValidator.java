@@ -66,6 +66,29 @@ public class FriendCommandValidator {
         return true;
     }
 
+    public boolean checkNotFriends(Player player, User issuer, User receiver) {
+
+        Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
+
+        // why a collection can be null?
+        // in this case, a empty collection
+        // indicates a good case, but,
+        // is possible a a bad case
+        if (friendships == null) {
+            return true;
+        }
+
+        if (friendships.isEmpty()) {
+            ChatAlertLibrary.alertChatError(
+                    player,
+                    messageProvider.getMessage(player, "commons-friend-not-friends")
+            );
+        }
+
+        return friendships.isEmpty();
+
+    }
+
     /**
      * Checks if a friendship of a player and target exists,
      * in that case, an alert is sent to the player
@@ -76,26 +99,13 @@ public class FriendCommandValidator {
      */
     public boolean checkAlreadyFriends(Player player, User issuer, User receiver) {
 
-        ObjectNode filter = objectMapper.createObjectNode();
-        filter.putArray("$or")
-                .add(
-                        objectMapper.createObjectNode()
-                            .put("issuer", issuer.getId())
-                            .put("receiver", receiver.getId())
-                )
-                .add(
-                        objectMapper.createObjectNode()
-                            .put("issuer", receiver.getId())
-                            .put("receiver", issuer.getId())
-                );
+        Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
 
-        Collection<Friendship> friendships;
-
-        try {
-            friendships = friendshipQueryService.querySync(filter).getFoundModels();
-        } catch (Exception exception) {
-            ChatAlertLibrary.alertChatError(player, exception.getMessage());
-            Bukkit.getLogger().log(Level.SEVERE, "An error has appeared while querying friendships", exception);
+        // why a collection can be null?
+        // in this case, a empty collection
+        // indicates a good case, but,
+        // is possible a a bad case
+        if (friendships == null) {
             return true;
         }
 
@@ -107,6 +117,35 @@ public class FriendCommandValidator {
         }
 
         return !friendships.isEmpty();
+
+    }
+
+    private Collection<Friendship> getFriendships(Player player, User issuer, User receiver) {
+
+        ObjectNode filter = objectMapper.createObjectNode();
+        filter.putArray("$or")
+                .add(
+                        objectMapper.createObjectNode()
+                                .put("issuer", issuer.getId())
+                                .put("receiver", receiver.getId())
+                )
+                .add(
+                        objectMapper.createObjectNode()
+                                .put("issuer", receiver.getId())
+                                .put("receiver", issuer.getId())
+                );
+
+        Collection<Friendship> friendships;
+
+        try {
+            friendships = friendshipQueryService.querySync(filter).getFoundModels();
+        } catch (Exception exception) {
+            ChatAlertLibrary.alertChatError(player, exception.getMessage());
+            Bukkit.getLogger().log(Level.SEVERE, "An error has appeared while querying friendships", exception);
+            return null;
+        }
+
+        return friendships;
 
     }
 
