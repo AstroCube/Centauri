@@ -1,6 +1,7 @@
 server:
   type: LOBBY                                    # Server type to be authorized by the backend (Eg: LOBBY / GAME / SPECIAL / BUNGEE)
   cluster: 0123456789abcdefg                     # Cluster that will continue as authorization for the backend
+  realm: "default"
 game:
   running: 0                                     # Max games running at one (Only applies at GAME mode)
   total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)

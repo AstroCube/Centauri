@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.listener;
+package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

@@ -17,7 +17,7 @@ public interface Group extends Model.Stamped {
 
     String getColor();
 
-    Set<String> getFlairs();
+    Set<Flair> getFlairs();
 
     Set<String> getPermissions();
 

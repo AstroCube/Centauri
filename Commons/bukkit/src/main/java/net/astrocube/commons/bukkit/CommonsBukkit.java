@@ -2,9 +2,8 @@ package net.astrocube.commons.bukkit;
 
 import com.google.inject.Inject;
 import me.fixeddev.inject.ProtectedBinder;
-import net.astrocube.api.bukkit.session.net.seocraft.api.bukkit.server.ServerDisconnectHandler;
+import net.astrocube.api.bukkit.server.ServerDisconnectHandler;
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.api.core.server.ServerConnectionManager;
 import net.astrocube.commons.bukkit.loader.InjectionLoaderModule;
 import org.bukkit.plugin.java.JavaPlugin;
 

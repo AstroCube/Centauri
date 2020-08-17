@@ -1,5 +1,6 @@
 package net.astrocube.api.core.virtual.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.virtual.group.Group;
@@ -71,7 +72,15 @@ public interface UserDoc {
 
         String getLastLobby();
 
-        boolean isPremium();
+        @JsonProperty("authorize")
+        Authorization getAuthorizeMethod();
+
+        enum Authorization {
+            @JsonProperty("Password")
+            PASSWORD,
+            @JsonProperty("Premium")
+            PREMIUM
+        }
 
     }
 

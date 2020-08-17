@@ -1,9 +1,9 @@
-package net.astrocube.commons.bukkit.listener;
+package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
-import net.astrocube.commons.bukkit.authentication.event.AuthorizedAuthenticationEvent;
+import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
@@ -30,7 +30,11 @@ public class UserLoginListener implements Listener {
         event.getPlayer().setDatabaseIdentifier(validator.getUser().getId());
         if ( Configuration.getBoolean("authentication.enabled", false))
             Bukkit.getPluginManager().callEvent(
-                    new AuthorizedAuthenticationEvent(validator.isRegistered(), validator.getUser().getId())
+                    new AuthenticationStartEvent(
+                            validator.isRegistered(),
+                            event.getPlayer(),
+                            validator.getUser().getId()
+                    )
             );
 
     }

@@ -1,16 +1,18 @@
-package net.astrocube.commons.bukkit.authentication.event;
+package net.astrocube.api.bukkit.authentication.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 @Getter
 @AllArgsConstructor
-public class AuthorizedAuthenticationEvent extends Event {
+public class AuthenticationStartEvent extends Event {
 
     private final static HandlerList handlerList = new HandlerList();
     private final boolean registered;
+    private final Player player;
     private final String related;
 
     @Override

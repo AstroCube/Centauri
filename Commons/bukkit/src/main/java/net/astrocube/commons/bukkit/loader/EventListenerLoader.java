@@ -2,10 +2,9 @@ package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.commons.bukkit.listener.UserJoinListener;
-import net.astrocube.commons.bukkit.listener.UserLoginListener;
-import net.astrocube.commons.bukkit.listener.UserPreLoginListener;
-import org.bukkit.Bukkit;
+import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
+import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
+import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
