@@ -8,4 +8,8 @@ public interface FriendshipHandler {
 
     AsyncResponse<PaginateResult<Friendship>> paginate(String userId, int page, int perPage);
 
+    boolean existsFriendRequest(String issuer, String receiver);
+
+    void createFriendRequest(String issuer, String receiver);
+
 }

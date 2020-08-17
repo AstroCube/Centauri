@@ -7,6 +7,7 @@ import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.yushust.message.core.MessageProvider;
+import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
@@ -22,6 +23,7 @@ public class AddSubCommand implements CommandClass {
     private @Inject FriendCommandValidator friendCommandValidator;
     private @Inject QueryService<User> userQueryService;
     private @Inject ObjectMapper objectMapper;
+    private @Inject FriendshipHandler friendshipHandler;
 
     @ACommand(names = "")
     public boolean execute(@Injected(true) Player player, OfflinePlayer target) {
@@ -49,7 +51,7 @@ public class AddSubCommand implements CommandClass {
                             return;
                         }
 
-
+                        friendshipHandler.createFriendRequest(user.getId(), targetUser.getId());
                         player.sendMessage(
                                 messageProvider.getMessage(player, "commons-friend-request-sent")
                                     .replace("%%receiver%%", target.getName())

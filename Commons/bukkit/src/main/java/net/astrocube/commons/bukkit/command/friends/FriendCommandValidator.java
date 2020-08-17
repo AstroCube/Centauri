@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.core.MessageProvider;
-import net.astrocube.api.core.redis.Redis;
+import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.friend.Friendship;
 import net.astrocube.api.core.virtual.user.User;
@@ -13,7 +13,6 @@ import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import redis.clients.jedis.Jedis;
 
 import java.util.Collection;
 import java.util.logging.Level;
@@ -24,7 +23,7 @@ public class FriendCommandValidator {
     private @Inject MessageProvider<Player> messageProvider;
     private @Inject QueryService<Friendship> friendshipQueryService;
     private @Inject ObjectMapper objectMapper;
-    private @Inject Redis redis;
+    private @Inject FriendshipHandler friendshipHandler;
 
     /**
      * Checks if the parameter "player" is equals to parameter "target"
@@ -56,10 +55,8 @@ public class FriendCommandValidator {
      */
     public boolean checkAlreadySent(Player player, User issuer, User receiver) {
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            if (jedis.hexists("friendship", issuer.getId() + ":" + receiver.getId())) {
-                return false;
-            }
+        if (!friendshipHandler.existsFriendRequest(issuer.getId(), receiver.getId())) {
+            return false;
         }
 
         ChatAlertLibrary.alertChatError(
