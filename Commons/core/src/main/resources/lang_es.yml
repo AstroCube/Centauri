@@ -15,3 +15,5 @@ friend-list:
     element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
 online: "%%yellow%%Conectado"
 offline: "%%red%%Desconectado"
+commons-friend-not-yourself: "No puedes mandarte o aceptar una solicitud de amistad a/de tí mismo"
+commons-friend-already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
