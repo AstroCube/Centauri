@@ -13,7 +13,7 @@ import net.astrocube.api.core.redis.Redis;
 
 import java.util.Set;
 
-public class MessagerModule extends ProtectedModule {
+public class MessengerModule extends ProtectedModule {
 
     @Override
     protected void configure() {

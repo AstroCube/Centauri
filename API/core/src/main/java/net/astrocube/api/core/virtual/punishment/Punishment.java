@@ -1,4 +1,8 @@
 package net.astrocube.api.core.virtual.punishment;
 
-public class Punishment {
+import net.astrocube.api.core.model.ModelProperties;
+
+@ModelProperties.RouteKey("punishment")
+@ModelProperties.Cache
+public interface Punishment extends PunishmentDoc.Complete {
 }

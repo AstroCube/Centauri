@@ -20,7 +20,7 @@ public class CorePermissionEvaluator implements PermissionEvaluator {
 
         for (
                 Map.Entry<String, Boolean> entry :
-                effectivePermissionsExtractor.extractFromGroup(group).entrySet()
+                this.effectivePermissionsExtractor.extractFromGroup(group).entrySet()
         ) {
 
             if (entry.getKey().equalsIgnoreCase(permission))

@@ -22,7 +22,7 @@ public class CoreRequestCallable<T> implements RequestCallable<T> {
         int statusCode = response.getStatusCode();
 
         if (statusCode == 200) {
-            return (T) mapper.readValue(json, returnType.getRawType());
+            return (T) this.mapper.readValue(json, this.returnType.getRawType());
         } else {
             throw RequestExceptionResolverUtil.generateException(json, statusCode);
         }

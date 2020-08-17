@@ -10,7 +10,7 @@ import com.google.inject.Scopes;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.core.friend.FriendModule;
 import net.astrocube.commons.core.http.HttpModule;
-import net.astrocube.commons.core.message.MessagerModule;
+import net.astrocube.commons.core.message.MessengerModule;
 import net.astrocube.commons.core.permission.CorePermissionsModule;
 import net.astrocube.commons.core.redis.RedisModule;
 import net.astrocube.commons.core.server.CoreServerModule;
@@ -25,7 +25,7 @@ public class CommonsModule extends ProtectedModule {
         install(new FriendModule());
         install(new HttpModule());
         install(new RedisModule());
-        install(new MessagerModule());
+        install(new MessengerModule());
         install(new SessionModule());
         install(new ModelModule());
         install(new CoreServerModule());
