@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class CoreSessionCacheInvalidator implements SessionCacheInvalidator {
 
     private @Inject ModelMeta<User, UserDoc.Partial> modelMeta;
-    private @Inject Plugin plugin;
     private @Inject Redis redis;
 
     @Override

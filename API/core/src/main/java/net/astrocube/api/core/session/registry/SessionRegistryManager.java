@@ -2,7 +2,6 @@ package net.astrocube.api.core.session.registry;
 
 import net.astrocube.api.core.authentication.AuthorizeException;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public interface SessionRegistryManager {

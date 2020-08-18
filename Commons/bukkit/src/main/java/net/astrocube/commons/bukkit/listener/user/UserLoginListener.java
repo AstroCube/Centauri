@@ -10,10 +10,12 @@ import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.plugin.Plugin;
 
 public class UserLoginListener implements Listener {
 
     private @Inject SessionValidatorHandler sessionValidatorHandler;
+    private @Inject Plugin plugin;
 
     @EventHandler
     public void onUserLogin(PlayerLoginEvent event) {
@@ -28,7 +30,7 @@ public class UserLoginListener implements Listener {
         }
 
         event.getPlayer().setDatabaseIdentifier(validator.getUser().getId());
-        if ( Configuration.getBoolean("authentication.enabled", false))
+        if (plugin.getConfig().getBoolean("authentication.enabled"))
             Bukkit.getPluginManager().callEvent(
                     new AuthenticationStartEvent(
                             validator.isRegistered(),
