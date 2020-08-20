@@ -28,3 +28,5 @@ authentication:
     register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
     password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
     password-sub: "%%aqua%%Inicia sesión con %%blue%%/login <contraseña>"
+    password-invalid: "%%red%%¡Ups! Esa no es tu contraseña, tranqui, tienes %%attempts%% intentos más."
+    password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."

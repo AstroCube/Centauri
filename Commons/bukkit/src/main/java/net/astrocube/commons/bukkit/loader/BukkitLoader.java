@@ -9,10 +9,12 @@ public class BukkitLoader implements Loader {
 
     private @Inject @Named("server") Loader serverLoader;
     private @Inject @Named("events") Loader eventLoader;
+    private @Inject @Named("commands") Loader commandLoader;
 
     @Override
     public void load() {
         this.serverLoader.load();
         this.eventLoader.load();
+        this.commandLoader.load();
     }
 }
