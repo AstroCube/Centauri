@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.authentication.gateway;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import me.yushust.message.core.MessageProvider;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.core.virtual.user.User;
@@ -10,6 +11,7 @@ import org.github.paperspigot.Title;
 
 import javax.annotation.Nullable;
 
+@Singleton
 public class RegisterGateway implements AuthenticationGateway {
 
     private @Inject MessageProvider<Player> messageProvider;

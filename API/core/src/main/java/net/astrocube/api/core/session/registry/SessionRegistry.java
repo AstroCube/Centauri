@@ -35,4 +35,10 @@ public interface SessionRegistry extends Document {
      */
     boolean isPending();
 
+    /**
+     * Address which was registered at authentication to generate post-validations.
+     * @return IP address
+     */
+    String getAddress();
+
 }

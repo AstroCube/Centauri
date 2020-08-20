@@ -65,6 +65,11 @@ public class AuthenticationStartListener implements Listener {
                     public boolean isPending() {
                         return true;
                     }
+
+                    @Override
+                    public String getAddress() {
+                        return event.getPlayer().getAddress().getAddress().toString().replace("/", "");
+                    }
                 });
 
                 if (!event.isRegistered()) {

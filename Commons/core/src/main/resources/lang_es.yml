@@ -24,6 +24,7 @@ commons-friend-forced: "%%yellow%%Has forzado la amistad entre tú y %%orange%%%
 commons-friend-removed: "%%yellow%%Has removido a %%receiver%% de tu lista de amigos"
 authentication:
     attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
+    unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
     register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
     register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
     password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
