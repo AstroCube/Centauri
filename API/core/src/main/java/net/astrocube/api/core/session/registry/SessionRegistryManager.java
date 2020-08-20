@@ -20,6 +20,13 @@ public interface SessionRegistryManager {
     Optional<SessionRegistry> getRegistry(String id) throws AuthorizeException;
 
     /**
+     * Generate successful authorization for redis-cached session
+     * @param id to authorize
+     * @param authorizationMethod to mark as authorized
+     */
+    void authorizeSession(String id, String authorizationMethod) throws AuthorizeException;
+
+    /**
      * Unregister a {@link net.astrocube.api.core.virtual.user.User} session
      * @param id of the session to be removed
      */

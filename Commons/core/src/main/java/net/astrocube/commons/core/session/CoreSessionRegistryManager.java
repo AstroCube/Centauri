@@ -7,6 +7,7 @@ import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
+import org.joda.time.DateTime;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Nullable;
@@ -28,7 +29,6 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
         }
     }
 
-    @Nullable
     @Override
     public Optional<SessionRegistry> getRegistry(String id) throws AuthorizeException {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
@@ -39,6 +39,53 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
             ));
         } catch (Exception exception) {
             throw new AuthorizeException("Unable to remove authorization");
+        }
+    }
+
+    @Override
+    public void authorizeSession(String id, String authorizationMethod) throws AuthorizeException {
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
+
+            Optional<SessionRegistry> sessionRegistry = getRegistry(id);
+
+            if (!sessionRegistry.isPresent()) throw new AuthorizeException("Session authorization never pre-fetched");
+
+            SessionRegistry registry = sessionRegistry.get();
+
+            jedis.set("sesion:" + id, objectMapper.writeValueAsString(new SessionRegistry() {
+                @Override
+                public String getUser() {
+                    return registry.getUser();
+                }
+
+                @Override
+                public String getVersion() {
+                    return registry.getVersion();
+                }
+
+                @Override
+                public DateTime getAuthorizationDate() {
+                    return new DateTime();
+                }
+
+                @Override
+                public String getAuthorization() {
+                    return authorizationMethod;
+                }
+
+                @Override
+                public boolean isPending() {
+                    return false;
+                }
+
+                @Override
+                public String getAddress() {
+                    return registry.getAddress();
+                }
+            }));
+
+        } catch (Exception exception) {
+            throw new AuthorizeException("Unable to authorize session");
         }
     }
 
