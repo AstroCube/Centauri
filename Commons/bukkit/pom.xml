@@ -29,17 +29,16 @@
             <version>1.8-20200415.053535-5</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Install https://github.com/yusshu/lang-lib -->
         <dependency>
             <groupId>me.yushust.message</groupId>
             <artifactId>core</artifactId>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.yushust.message</groupId>
             <artifactId>bukkit-formatters</artifactId>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
