@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class CoreLanguageProvider implements LanguageProvider<Player> {
 
-    public static String DEFAULT_LANGUAGE = "lang_es";
+    public static final String DEFAULT_LANGUAGE = "es";
 
     private @Inject FindService<User> userFindService;
 
@@ -25,7 +25,6 @@ public class CoreLanguageProvider implements LanguageProvider<Player> {
             Bukkit.getLogger().log(Level.SEVERE, "Error while finding user data for " + player.getName(), ex);
             return DEFAULT_LANGUAGE;
         }
-
         if (user == null) {
             return DEFAULT_LANGUAGE;
         }
