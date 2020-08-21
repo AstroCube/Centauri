@@ -25,4 +25,11 @@ public interface CooldownKick {
      */
     void clearTries(User user);
 
+    /**
+     * Check actual authorization attempts in a 5 minutes interval
+     * @param user to be checked
+     * @return user interval
+     */
+    int getTries(User user);
+
 }

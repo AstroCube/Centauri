@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.loader;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.loader.Loader;
+import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvalidListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
@@ -17,6 +18,7 @@ public class EventListenerLoader implements Loader {
 
     private @Inject AuthenticationStartListener authenticationStartListener;
     private @Inject AuthenticationSuccessListener authenticationSuccessListener;
+    private @Inject AuthenticationInvalidListener authenticationInvalidListener;
 
     private @Inject UserPreLoginListener userPreLoginListener;
     private @Inject UserLoginListener userLoginListener;
@@ -31,6 +33,7 @@ public class EventListenerLoader implements Loader {
 
         registerEvent(authenticationStartListener);
         registerEvent(authenticationSuccessListener);
+        registerEvent(authenticationInvalidListener);
 
         registerEvent(userPreLoginListener);
         registerEvent(userLoginListener);

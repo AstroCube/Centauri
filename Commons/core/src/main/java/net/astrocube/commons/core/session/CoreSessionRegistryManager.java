@@ -52,7 +52,7 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
 
             SessionRegistry registry = sessionRegistry.get();
 
-            jedis.set("sesion:" + id, objectMapper.writeValueAsString(new SessionRegistry() {
+            jedis.set("session:" + id, objectMapper.writeValueAsString(new SessionRegistry() {
                 @Override
                 public String getUser() {
                     return registry.getUser();

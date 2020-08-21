@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.core.MessageProvider;
 import net.astrocube.api.bukkit.authentication.BasicAuthorization;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
+import net.astrocube.api.bukkit.authentication.event.AuthenticationInvalidEvent;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
@@ -62,6 +63,7 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
 
                 if (httpResponseException.getStatusCode() == 403) {
                     player.sendMessage(messageProvider.getMessage(player, "authentication.password-invalid"));
+                    Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
                     return;
                 }
             }

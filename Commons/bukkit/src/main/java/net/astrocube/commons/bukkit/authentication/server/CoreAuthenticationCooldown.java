@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.authentication.server;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
-import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.commons.bukkit.utils.TimeUtils;
 import redis.clients.jedis.Jedis;
@@ -13,35 +12,29 @@ import java.util.Date;
 @Singleton
 public class CoreAuthenticationCooldown implements AuthenticationCooldown {
 
-    private @Inject Redis redis;
+    private final Jedis jedis;
 
-    @Override
-    public void setCooldownLock(String id) throws AuthorizeException {
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.set("authCooldown:" + id, TimeUtils.addMinutes(new Date(), 5).getTime() + "");
-            jedis.expire("authCooldown:" + id, 300);
-        } catch (Exception exception) {
-            throw new AuthorizeException("Error obtaining cooldown pool");
-        }
+    @Inject
+    public CoreAuthenticationCooldown(Redis redis) {
+        this.jedis = redis.getRawConnection().getResource();
     }
 
     @Override
-    public boolean hasCooldown(String id) throws AuthorizeException {
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            return jedis.exists("authCooldown:" + id);
-        } catch (Exception exception) {
-            throw new AuthorizeException("Error obtaining cooldown pool");
-        }
+    public void setCooldownLock(String id) {
+        jedis.set("authCooldown:" + id, TimeUtils.addMinutes(new Date(), 5).toInstant().toEpochMilli() + "");
+        jedis.expire("authCooldown:" + id, 300);
     }
 
     @Override
-    public Date getRemainingTime(String id) throws AuthorizeException {
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            if (jedis.exists("authCooldown:" + id)) return new Date();
-            return new Date();
-        } catch (Exception exception) {
-            throw new AuthorizeException("Error obtaining cooldown pool");
-        }
+    public boolean hasCooldown(String id) {
+        return jedis.exists("authCooldown:" + id);
+    }
+
+    @Override
+    public Date getRemainingTime(String id) {
+        if (jedis.exists("authCooldown:" + id))
+            return new Date(Long.parseLong(jedis.get("authCooldown:" + id)));
+        return new Date();
     }
 
 }

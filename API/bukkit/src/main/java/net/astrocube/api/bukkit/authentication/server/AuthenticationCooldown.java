@@ -10,20 +10,20 @@ public interface AuthenticationCooldown {
      * Will set an cooldown lock for a certain user login
      * @param id of user to be locked
      */
-    void setCooldownLock(String id) throws AuthorizeException;
+    void setCooldownLock(String id);
 
     /**
      * Check if user has a cooldown preventing his login
      * @param id of cooldown user
      * @return cooldown status
      */
-    boolean hasCooldown(String id) throws AuthorizeException;
+    boolean hasCooldown(String id);
 
     /**
      * Obtain the date where cooldown will expire
      * @param id of cooldown user
      * @return remaining time expiration
      */
-    Date getRemainingTime(String id) throws AuthorizeException;
+    Date getRemainingTime(String id);
 
 }
