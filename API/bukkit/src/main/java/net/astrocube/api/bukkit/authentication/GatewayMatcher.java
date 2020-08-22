@@ -11,4 +11,10 @@ public interface GatewayMatcher {
      */
     AuthenticationGateway getUserAuthentication(UserDoc.Session.Authorization authorizationType);
 
+    /**
+     * Return default gateway performed at register
+     * @return authentication method to used when registered
+     */
+    AuthenticationGateway getRegisterGateway();
+
 }

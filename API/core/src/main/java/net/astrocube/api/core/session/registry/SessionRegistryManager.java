@@ -2,7 +2,6 @@ package net.astrocube.api.core.session.registry;
 
 import net.astrocube.api.core.authentication.AuthorizeException;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public interface SessionRegistryManager {
@@ -19,6 +18,13 @@ public interface SessionRegistryManager {
      * @return user registry
      */
     Optional<SessionRegistry> getRegistry(String id) throws AuthorizeException;
+
+    /**
+     * Generate successful authorization for redis-cached session
+     * @param id to authorize
+     * @param authorizationMethod to mark as authorized
+     */
+    void authorizeSession(String id, String authorizationMethod) throws AuthorizeException;
 
     /**
      * Unregister a {@link net.astrocube.api.core.virtual.user.User} session

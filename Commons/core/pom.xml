@@ -26,6 +26,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>3.2.7.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>Spigot-BungeeBridge</artifactId>
             <version>1.8-20200318.190928-1</version>
