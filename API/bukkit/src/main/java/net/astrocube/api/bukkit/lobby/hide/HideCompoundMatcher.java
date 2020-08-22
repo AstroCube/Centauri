@@ -1,4 +1,4 @@
-package net.astrocube.api.bukkit.lobby.hiding;
+package net.astrocube.api.bukkit.lobby.hide;
 
 import net.astrocube.api.core.virtual.user.User;
 
