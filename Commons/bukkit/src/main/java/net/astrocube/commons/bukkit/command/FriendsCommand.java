@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.command;
 
 import com.google.inject.Inject;
+import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
@@ -24,7 +25,7 @@ public class FriendsCommand implements CommandClass {
     private @Inject MessageProvider<Player> messageProvider;
 
     @ACommand(names = {"", "help"})
-    public boolean onCommand(@Injected(true) Player player) {
+    public boolean onCommand(@Injected(true) @Sender Player player) {
         for (String message : messageProvider.getMessages(player, "friend-help").getContents()) {
             player.sendMessage(message);
         }
