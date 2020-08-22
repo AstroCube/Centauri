@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.translation;
+package net.astrocube.commons.bukkit.translation.interceptor;
 
 import me.yushust.message.core.intercept.MessageInterceptor;
 import org.bukkit.ChatColor;
@@ -8,7 +8,7 @@ public class ColorMessageInterceptor implements MessageInterceptor {
     @Override
     public String intercept(String text) {
         return text
-                .replace("%n%", "")
+                .replace("%n%", "\n")
                 .replace("%%black%%", ChatColor.BLACK + "")
                 .replace("%%dark_blue%%", ChatColor.DARK_BLUE + "")
                 .replace("%%dark_green%%", ChatColor.DARK_GREEN + "")
