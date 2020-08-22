@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.authentication.gateway;
+package net.astrocube.commons.bukkit.authentication.gateway.register;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -12,19 +12,20 @@ import org.github.paperspigot.Title;
 import javax.annotation.Nullable;
 
 @Singleton
-public class PasswordAuthenticationGateway implements AuthenticationGateway {
+public class RegisterGateway implements AuthenticationGateway {
 
     private @Inject MessageProvider<Player> messageProvider;
 
     @Override
     public void startProcessing(User user) {
+
         @Nullable Player player = Bukkit.getPlayer(user.getUsername());
 
         if (player != null) {
             player.sendTitle(
                     new Title(
-                            messageProvider.getMessage(player, "authentication.password-title"),
-                            messageProvider.getMessage(player, "authentication.password-sub")
+                            messageProvider.getMessage(player, "authentication.register-title"),
+                            messageProvider.getMessage(player, "authentication.register-sub")
                     )
             );
         }
@@ -32,7 +33,6 @@ public class PasswordAuthenticationGateway implements AuthenticationGateway {
 
     @Override
     public String getName() {
-        return "Password";
+        return "Registration";
     }
-
 }

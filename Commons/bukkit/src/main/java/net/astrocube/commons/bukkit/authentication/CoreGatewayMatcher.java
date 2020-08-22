@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.core.virtual.user.UserDoc;
-import net.astrocube.commons.bukkit.authentication.gateway.PasswordAuthenticationGateway;
-import net.astrocube.commons.bukkit.authentication.gateway.RegisterGateway;
+import net.astrocube.commons.bukkit.authentication.gateway.password.PasswordGateway;
+import net.astrocube.commons.bukkit.authentication.gateway.register.RegisterGateway;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class CoreGatewayMatcher implements GatewayMatcher {
     private final AuthenticationGateway registerGateway;
 
     @Inject public CoreGatewayMatcher(
-            PasswordAuthenticationGateway passwordGateway,
+            PasswordGateway passwordGateway,
             RegisterGateway registerGateway
     ) {
         this.registerGateway = registerGateway;
