@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.translation;
 
+import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import me.fixeddev.inject.ProtectedModule;
@@ -13,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 public class TranslationModule extends ProtectedModule {
 
-    @Provides @Singleton
+    @Provides @Singleton @Exposed
     public MessageProvider<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
         return MessageProviderBuilder.<Player>create()
                 .withLoadSource(BukkitMessageProviders.createPluginLoadSource(plugin))

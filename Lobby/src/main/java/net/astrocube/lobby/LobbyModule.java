@@ -17,10 +17,6 @@ public class LobbyModule extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-    }
-
-    @Override
     public void configure(ProtectedBinder binder) {
         binder.install(new InjectionLoaderModule());
     }
