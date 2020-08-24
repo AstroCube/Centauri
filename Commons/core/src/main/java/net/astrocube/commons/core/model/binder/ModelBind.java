@@ -134,6 +134,17 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
             bind(new ResolvableType<ModelMeta<Complete, ?>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){})).to(meta);
             bind(new ResolvableType<ModelMeta<?, Partial>>(){}.with(new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral){})).to(meta);
             expose(new ResolvableType<DeleteService<Complete>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){}));
+            expose(new ResolvableType<FindService<Complete>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){}));
+            expose(new ResolvableType<PaginateService<Complete>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){}));
+            expose(new ResolvableType<QueryService<Complete>>(){}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral){}));
+            expose(new ResolvableType<CreateService<Complete, Partial>>(){}.with(
+                    new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {},
+                    new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
+             ));
+            expose(new ResolvableType<UpdateService<Complete, Partial>>(){}.with(
+                    new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {},
+                    new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
+            ));
         }
     }
 }

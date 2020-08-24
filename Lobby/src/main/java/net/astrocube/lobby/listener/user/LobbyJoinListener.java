@@ -16,7 +16,7 @@ public class LobbyJoinListener implements Listener {
     public void onLobbyJoin(LobbyJoinEvent event) {
 
         hideJoinProcessor.process(event.getUser());
-        lobbyHotbarProvider.setup(event.getUser());
+        lobbyHotbarProvider.setup(event.getUser(), event.getPlayer());
 
     }
 
