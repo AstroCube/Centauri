@@ -7,9 +7,11 @@ import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.yushust.message.core.MessageProvider;
+import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.core.service.delete.DeleteService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.friend.Friendship;
+import net.astrocube.commons.bukkit.utils.UserUtils;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,7 +20,8 @@ import org.bukkit.entity.Player;
 public class RemoveSubCommand implements CommandClass {
 
     private @Inject FriendCallbackHelper friendCallbackHelper;
-    private @Inject FriendCommandValidator friendCommandValidator;
+    private @Inject
+    FriendHelper friendHelper;
     private @Inject DeleteService<Friendship> deleteService;
     private @Inject QueryService<Friendship> queryService;
     private @Inject ObjectMapper objectMapper;
@@ -27,13 +30,13 @@ public class RemoveSubCommand implements CommandClass {
     @ACommand(names = "")
     public boolean execute(@Injected(true) Player player, OfflinePlayer target) {
 
-        if (friendCommandValidator.checkSamePlayer(player, target)) {
+        if (UserUtils.checkSamePlayer(player, target, messageProvider)) {
             return true;
         }
 
         friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendCommandValidator.checkNotFriends(player, user, targetUser)) {
+            if (friendHelper.checkNotFriends(player, user, targetUser)) {
                 return;
             }
 

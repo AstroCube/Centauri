@@ -6,7 +6,6 @@ public class LobbyLoader implements Loader {
 
     @Override
     public void load() {
-
     }
 
 }

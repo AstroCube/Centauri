@@ -11,6 +11,7 @@ import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.joda.time.DateTime;
@@ -24,7 +25,7 @@ public class AuthenticationStartListener implements Listener {
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAuthenticationStart(AuthenticationStartEvent event) {
 
         this.findService.find(event.getRelated()).callback(userCallback -> {

@@ -1,5 +1,7 @@
 package net.astrocube.api.core.virtual.user.part;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public interface GameOptions {
 
     AdminChat getAdminChatSettings();
@@ -29,6 +31,17 @@ public interface GameOptions {
         boolean isHidingStatus();
 
         boolean isHidingPlayers();
+
+        HideType getHideType();
+
+        enum HideType {
+            @JsonProperty("Alone")
+            ALONE,
+            @JsonProperty("Friendless")
+            FRIENDLESS,
+            @JsonProperty("Default")
+            DEFAULT
+        }
 
     }
 
