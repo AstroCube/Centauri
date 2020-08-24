@@ -7,9 +7,16 @@ public interface HideStatusModifier {
     /**
      * Applies the selected {@link HideCompound} to the user
      * @param user to be affected
+     */
+    void globalApply(User user);
+
+    /**
+     * Applies the selected {@link HideCompound} to the user
+     * @param user to be affected
+     * @param target to be checked
      * @param compound to be applied
      */
-    void apply(User user, HideCompound compound);
+    void individualApply(User user, User target, HideCompound compound);
 
     /**
      * Restore the user visibility to everyone

@@ -1,12 +1,14 @@
 package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.SessionAliveInterceptor;
 import net.astrocube.api.core.session.SessionService;
 import net.astrocube.api.core.session.registry.SessionRegistry;
+import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.permission.CorePermissible;
@@ -52,11 +54,6 @@ public class UserJoinListener implements Listener {
         this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
             try {
 
-                /*
-                    TODO:
-                     - Incorporate lobby switch
-                */
-
                 if (!response.isSuccessful() || !response.getResponse().isPresent())
                     throw new Exception("User response was not present");
 
@@ -95,6 +92,10 @@ public class UserJoinListener implements Listener {
 
                     if (!registry.getAddress().equalsIgnoreCase(address))
                         throw new AuthorizeException("Matching address not correspond to authorization");
+                }
+
+                if (ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type")) == ServerDoc.Type.LOBBY) {
+                    Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
                 }
 
             } catch (Exception exception) {

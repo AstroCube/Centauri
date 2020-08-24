@@ -3,8 +3,10 @@ package net.astrocube.lobby.hide;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.lobby.hide.HideCompound;
+import net.astrocube.api.bukkit.lobby.hide.HideCompoundMatcher;
 import net.astrocube.api.bukkit.lobby.hide.HideStatusModifier;
 import net.astrocube.api.bukkit.lobby.hide.HideApplier;
+import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,19 +19,44 @@ public class CoreHideStatusModifier implements HideStatusModifier {
     private @Inject @Named("friend") HideApplier friendHide;
     private @Inject @Named("permission") HideApplier permissionHide;
     private @Inject @Named("staff") HideApplier staffHide;
+    private @Inject HideCompoundMatcher hideCompoundMatcher;
+    private @Inject FindService<User> findService;
 
     @Override
-    public void apply(User user, HideCompound compound) {
+    public void globalApply(User user) {
 
         Player player = Bukkit.getPlayer(user.getUsername());
 
         if (player != null) {
+            Bukkit.getOnlinePlayers().forEach(online -> {
+                if (!online.getDatabaseIdentifier().equals(user.getId())) {
+                    findService.find(online.getDatabaseIdentifier()).callback(userResponse -> {
+                        if (userResponse.isSuccessful() && userResponse.getResponse().isPresent())  {
+                            individualApply(
+                                    user,
+                                    userResponse.getResponse().get(),
+                                    hideCompoundMatcher.getUserCompound(user)
+                            );
+                        } else {
+                            player.hidePlayer(online);
+                        }
+                    });
+                }
+            });
+        }
+    }
 
-            Bukkit.getOnlinePlayers().forEach(player::hidePlayer);
-            if (compound.friends()) staffHide.apply(user, player);
-            if (compound.permission()) permissionHide.apply(user, player);
-            if (compound.staff()) friendHide.apply(user, player);
+    @Override
+    public void individualApply(User user, User target, HideCompound compound) {
 
+        Player player = Bukkit.getPlayer(user.getUsername());
+        Player targetPlayer = Bukkit.getPlayer(target.getUsername());
+
+        if (player != null && targetPlayer != null) {
+            player.hidePlayer(targetPlayer);
+            if (compound.friends()) staffHide.apply(user, player, target, targetPlayer);
+            if (compound.permission()) permissionHide.apply(user, player, target, targetPlayer);
+            if (compound.staff()) friendHide.apply(user, player, target, targetPlayer);
         }
 
     }
