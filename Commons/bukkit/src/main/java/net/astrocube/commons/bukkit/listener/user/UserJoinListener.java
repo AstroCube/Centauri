@@ -80,7 +80,10 @@ public class UserJoinListener implements Listener {
 
                 playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
 
-                if (!plugin.getConfig().getBoolean("authentication.enabled")) {
+                if (
+                        !plugin.getConfig().getBoolean("authentication.enabled") &&
+                        !plugin.getConfig().getBoolean("authentication.sandbox")
+                ) {
 
                     Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
 

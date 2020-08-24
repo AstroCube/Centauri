@@ -2,6 +2,7 @@ server:
   type: LOBBY                                    # Server type to be authorized by the backend (Eg: LOBBY / GAME / SPECIAL / BUNGEE)
   cluster: 0123456789abcdefg                     # Cluster that will continue as authorization for the backend
   realm: "default"
+  sandbox: true                                  # Will not verify sessions and directly grants access to the server for developing purposes
 game:
   running: 0                                     # Max games running at one (Only applies at GAME mode)
   total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
@@ -14,7 +15,7 @@ api:
   retry: 1                                       # Retry Timeout
   threads: 2                                     # Max number of thread pools (According to CPU allowance)
 authentication:
-  enabled: true
+  enabled: true                                  # Will enable authentication system at server
   spawn:
     x: 0
     y: 0
