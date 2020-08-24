@@ -17,12 +17,13 @@
             <groupId>net.astrocube</groupId>
             <artifactId>api-bukkit</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.seocraft</groupId>
             <artifactId>paperspigot</artifactId>
             <version>1.8-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -74,7 +74,7 @@ public class UserJoinListener implements Listener {
                     @Nullable
                     @Override
                     public String getLobby() {
-                        return null;
+                        return null; //TODO: Get lobby name
                     }
                 });
 
@@ -82,7 +82,7 @@ public class UserJoinListener implements Listener {
 
                 if (
                         !plugin.getConfig().getBoolean("authentication.enabled") &&
-                        !plugin.getConfig().getBoolean("authentication.sandbox")
+                        !plugin.getConfig().getBoolean("server.sandbox")
                 ) {
 
                     Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
