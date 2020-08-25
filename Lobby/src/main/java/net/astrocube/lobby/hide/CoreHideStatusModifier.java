@@ -10,6 +10,7 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import javax.inject.Named;
 
@@ -20,6 +21,7 @@ public class CoreHideStatusModifier implements HideStatusModifier {
     private @Inject @Named("permission") HideApplier permissionHide;
     private @Inject @Named("staff") HideApplier staffHide;
     private @Inject HideCompoundMatcher hideCompoundMatcher;
+    private @Inject Plugin plugin;
     private @Inject FindService<User> findService;
 
     @Override
@@ -38,7 +40,7 @@ public class CoreHideStatusModifier implements HideStatusModifier {
                                     hideCompoundMatcher.getUserCompound(user)
                             );
                         } else {
-                            player.hidePlayer(online);
+                            Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(online));
                         }
                     });
                 }
@@ -53,10 +55,12 @@ public class CoreHideStatusModifier implements HideStatusModifier {
         Player targetPlayer = Bukkit.getPlayer(target.getUsername());
 
         if (player != null && targetPlayer != null) {
-            player.hidePlayer(targetPlayer);
-            if (compound.friends()) staffHide.apply(user, player, target, targetPlayer);
-            if (compound.permission()) permissionHide.apply(user, player, target, targetPlayer);
-            if (compound.staff()) friendHide.apply(user, player, target, targetPlayer);
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                player.hidePlayer(targetPlayer);
+                if (compound.friends()) staffHide.apply(user, player, target, targetPlayer);
+                if (compound.permission()) permissionHide.apply(user, player, target, targetPlayer);
+                if (compound.staff()) friendHide.apply(user, player, target, targetPlayer);
+            });
         }
 
     }

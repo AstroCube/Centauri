@@ -37,7 +37,11 @@ lobby:
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"
         disabled-gadget: "%%blue%%Ocultar jugadores %%gray%%(Click derecho)"
+        enabled: "%%aqua%%Ahora todos los jugadores están %%red%%ocultos%%aqua%%."
+        disabled: "%%aqua%%Ahora todos los jugadores están %%green%%visibles%%aqua%%."
         gadget-lore:
             - "%%gray%%Al darle clic derecho cambiarás el estado"
             - "%%gray%%de visibilidad de tus jugadores."
         error: "%%red%%Ha ocurrido un error al actualizar la visibilidad de tus jugadores."
+interaction:
+    actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."

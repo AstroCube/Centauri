@@ -1,8 +1,8 @@
-package net.astrocube.lobby.hide.collection;
+package net.astrocube.lobby.hide;
 
 import net.astrocube.api.bukkit.lobby.hide.HideCompound;
 
-public class DefaultCompound {
+public class HideCompoundCollection {
 
     public static HideCompound aloneCompound() {
         return createCompound(true, true, true);

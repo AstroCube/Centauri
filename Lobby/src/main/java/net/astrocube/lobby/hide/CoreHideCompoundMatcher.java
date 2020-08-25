@@ -6,7 +6,6 @@ import net.astrocube.api.bukkit.lobby.hide.HideCompound;
 import net.astrocube.api.bukkit.lobby.hide.HideCompoundMatcher;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.part.GameOptions;
-import net.astrocube.lobby.hide.collection.DefaultCompound;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +18,9 @@ public class CoreHideCompoundMatcher implements HideCompoundMatcher {
     @Inject
     public CoreHideCompoundMatcher() {
         this.compoundMap = new HashMap<>();
-        compoundMap.put(GameOptions.General.HideType.ALONE, DefaultCompound.aloneCompound());
-        compoundMap.put(GameOptions.General.HideType.DEFAULT, DefaultCompound.defaultCompound());
-        compoundMap.put(GameOptions.General.HideType.FRIENDLESS, DefaultCompound.friendlessCompound());
+        compoundMap.put(GameOptions.General.HideType.ALONE, HideCompoundCollection.aloneCompound());
+        compoundMap.put(GameOptions.General.HideType.DEFAULT, HideCompoundCollection.defaultCompound());
+        compoundMap.put(GameOptions.General.HideType.FRIENDLESS, HideCompoundCollection.friendlessCompound());
     }
 
 

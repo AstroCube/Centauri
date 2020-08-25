@@ -9,12 +9,14 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 @Singleton
 public class CoreHideJoinProcessor implements HideJoinProcessor {
 
     private @Inject HideStatusModifier hideStatusModifier;
     private @Inject HideCompoundMatcher hideCompoundMatcher;
+    private @Inject Plugin plugin;
     private @Inject FindService<User> findService;
 
     @Override
@@ -40,7 +42,7 @@ public class CoreHideJoinProcessor implements HideJoinProcessor {
                             );
                         }
                     } else {
-                        player.hidePlayer(userPlayer);
+                        Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(userPlayer));
                     }
 
                 });
