@@ -5,15 +5,15 @@ import net.astrocube.api.bukkit.lobby.hide.HideCompound;
 public class HideCompoundCollection {
 
     public static HideCompound aloneCompound() {
-        return createCompound(true, true, true);
+        return createCompound(false, false, false);
     }
 
     public static HideCompound friendlessCompound() {
-        return createCompound(true, false, false);
+        return createCompound(false, true, true);
     }
 
     public static HideCompound defaultCompound() {
-        return createCompound(false, false, false);
+        return createCompound(true, true, true);
     }
 
     public static HideCompound createCompound(boolean friends, boolean staff, boolean permission) {

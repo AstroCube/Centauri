@@ -31,6 +31,7 @@ public class CoreHideStatusModifier implements HideStatusModifier {
 
         if (player != null) {
             Bukkit.getOnlinePlayers().forEach(online -> {
+                Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(online));
                 if (!online.getDatabaseIdentifier().equals(user.getId())) {
                     findService.find(online.getDatabaseIdentifier()).callback(userResponse -> {
                         if (userResponse.isSuccessful() && userResponse.getResponse().isPresent())  {
@@ -39,8 +40,6 @@ public class CoreHideStatusModifier implements HideStatusModifier {
                                     userResponse.getResponse().get(),
                                     hideCompoundMatcher.getUserCompound(user)
                             );
-                        } else {
-                            Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(online));
                         }
                     });
                 }
