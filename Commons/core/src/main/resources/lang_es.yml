@@ -43,5 +43,7 @@ lobby:
             - "%%gray%%Al darle clic derecho cambiarás el estado"
             - "%%gray%%de visibilidad de tus jugadores."
         error: "%%red%%Ha ocurrido un error al actualizar la visibilidad de tus jugadores."
+    gameSelector:
+
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
