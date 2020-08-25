@@ -40,8 +40,8 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     @Override
     public boolean existsFriendRequest(String issuer, String receiver) {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            return jedis.hexists("friendship:" + issuer + ":" + receiver, "")
-                    || jedis.hexists("friendship:" + receiver + ":" + issuer, "");
+            return jedis.exists("friendship:" + issuer + ":" + receiver)
+                    || jedis.exists("friendship:" + receiver + ":" + issuer);
         }
     }
 
@@ -51,7 +51,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
             return;
         }
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.hset("friendship:" + issuer + ":" + receiver, "", ""); // dummy values
+            jedis.set("friendship:" + issuer + ":" + receiver, ""); // dummy values
             jedis.expire("friendship:" + issuer + ":" + receiver, FRIEND_REQUEST_EXPIRY);
         }
     }
