@@ -1,4 +1,4 @@
-package net.astrocube.lobby.listener.hide;
+package net.astrocube.lobby.listener.gadget;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.lobby.hide.HideItemActionable;

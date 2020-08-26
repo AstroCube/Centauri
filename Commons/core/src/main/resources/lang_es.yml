@@ -33,6 +33,7 @@ authentication:
     password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
+
 lobby:
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"
@@ -44,6 +45,17 @@ lobby:
             - "%%gray%%de visibilidad de tus jugadores."
         error: "%%red%%Ha ocurrido un error al actualizar la visibilidad de tus jugadores."
     gameSelector:
-
+        title: "%%dark_gray%%Menú de juegos"
+        gadget: "%%blue%%Menú de juegos %%gray%%(Click derecho)"
+        gadget-playing: "%%yellow%%\u25B6 Actualmente hay %%players%% jugando \u25C0"
+        error: "%%red%%Ha ocurrido un error al obtener la lista de modalidades."
+        gadget-lore:
+            - "%%gray%%Al darle click derecho encontrarás"
+            - "%%gray%%nuestra nueva colección de juegos."
+        games:
+            0123456789abcdef:
+                title: "Test title"
+                lore:
+                    - ""
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."

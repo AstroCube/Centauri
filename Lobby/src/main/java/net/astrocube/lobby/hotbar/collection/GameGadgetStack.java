@@ -10,8 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class GameGadgetStack {
 
     public static ItemStack get(MessageProvider<Player> provider, Player player) {
-
-        /*
         ItemStack gameMenuBase = NBTUtils.addString(
                 new ItemStack(Material.COMPASS, 1),
                 "actionable",
@@ -20,26 +18,12 @@ public class GameGadgetStack {
 
         ItemMeta gameMenuMeta = gameMenuBase.getItemMeta();
         gameMenuMeta.setDisplayName(
-                ChatColor.YELLOW +
-                        this.translatableField.getField(
-                                l,
-                                "commons_lobby_game_menu"
-                        ) +
-                        ChatColor.GRAY
-                        + "(" +
-                        this.translatableField.getUnspacedField(l, "commons_right_click")
-                        + ")"
+                provider.getMessage(player, "lobby.gameSelector.gadget")
         );
-        loreDisplayArray.add(
-                this.translatableField.getUnspacedField(
-                        l,
-                        "commons_lobby_game_description"
-                ) + ".",
-                ChatColor.GRAY
+        gameMenuMeta.setLore(
+                provider.getMessages(player, "lobby.gameSelector.gadget-lore")
         );
-        gameMenuMeta.setLore(loreDisplayArray);
         gameMenuBase.setItemMeta(gameMenuMeta);
-         */
-        return null;
+        return gameMenuBase;
     }
 }
