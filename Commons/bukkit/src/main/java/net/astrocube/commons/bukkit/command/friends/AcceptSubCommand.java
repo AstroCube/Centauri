@@ -11,8 +11,8 @@ import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-@ACommand(names = "deny")
-public class DenySubCommand implements CommandClass {
+@ACommand(names = "accept")
+public class AcceptSubCommand implements CommandClass {
 
     private @Inject MessageProvider<Player> messageProvider;
     private @Inject FriendCommandValidator friendCommandValidator;
@@ -32,7 +32,7 @@ public class DenySubCommand implements CommandClass {
                 return;
             }
 
-            if (!friendshipHandler.existsFriendRequest(player.getDatabaseIdentifier(), targetUser.getId())) {
+            if (!friendshipHandler.existsFriendRequest(user.getId(), targetUser.getId())) {
                 ChatAlertLibrary.alertChatError(
                         player,
                         messageProvider.getMessage(player, "commons-friend-no-friend-request")
@@ -40,8 +40,11 @@ public class DenySubCommand implements CommandClass {
                 return;
             }
 
-            friendshipHandler.removeFriendRequest(player.getDatabaseIdentifier(), targetUser.getId());
-            messageProvider.sendMessage(player, "commons-friend-request-denied");
+            friendshipHandler.createFriendship(user.getId(), targetUser.getId(), friendship -> {
+                messageProvider.sendMessage(player, "commons-friend-request-accepted");
+            });
+
+            friendshipHandler.removeFriendRequest(user.getId(), targetUser.getId());
 
         });
 
