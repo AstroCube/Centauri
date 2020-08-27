@@ -32,7 +32,7 @@ public class DenySubCommand implements CommandClass {
                 return;
             }
 
-            if (!friendshipHandler.existsFriendRequest(player.getDatabaseIdentifier(), targetUser.getId())) {
+            if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
                 ChatAlertLibrary.alertChatError(
                         player,
                         messageProvider.getMessage(player, "commons-friend-no-friend-request")
@@ -40,7 +40,7 @@ public class DenySubCommand implements CommandClass {
                 return;
             }
 
-            friendshipHandler.removeFriendRequest(player.getDatabaseIdentifier(), targetUser.getId());
+            friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
             messageProvider.sendMessage(player, "commons-friend-request-denied");
 
         });

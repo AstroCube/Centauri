@@ -45,38 +45,32 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     }
 
     @Override
-    public boolean existsFriendRequest(String issuer, String receiver) {
+    public boolean existsFriendRequest(String from, String to) {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            return jedis.exists("friendship:" + issuer + ":" + receiver)
-                    || jedis.exists("friendship:" + receiver + ":" + issuer);
+            return jedis.exists("friendship:" + from + ":" + to);
         }
     }
 
     @Override
-    public void createFriendRequest(String issuer, String receiver) {
-        if (existsFriendRequest(issuer, receiver)) {
+    public void createFriendRequest(String from, String to) {
+        if (existsFriendRequest(from, to)) {
             return;
         }
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.set("friendship:" + issuer + ":" + receiver, ""); // dummy values
-            jedis.expire("friendship:" + issuer + ":" + receiver, FRIEND_REQUEST_EXPIRY);
+            jedis.set("friendship:" + from + ":" + to, ""); // dummy values
+            jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY);
         }
     }
 
     @Override
-    public void removeFriendRequest(String issuer, String receiver) {
-        if (!existsFriendRequest(issuer, receiver)) {
+    public void removeFriendRequest(String from, String to) {
+        if (!existsFriendRequest(from, to)) {
             return;
         }
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            String key = "friendship:" + issuer + ":" + receiver;
+            String key = "friendship:" + from + ":" + to;
             if (jedis.exists(key)) {
                 jedis.del(key);
-            } else {
-                key = "friendship:" + receiver + ":" + issuer;
-                if (jedis.exists(key)) {
-                    jedis.del(key);
-                }
             }
         }
     }

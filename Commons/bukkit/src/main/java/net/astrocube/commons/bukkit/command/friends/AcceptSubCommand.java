@@ -32,7 +32,7 @@ public class AcceptSubCommand implements CommandClass {
                 return;
             }
 
-            if (!friendshipHandler.existsFriendRequest(user.getId(), targetUser.getId())) {
+            if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
                 ChatAlertLibrary.alertChatError(
                         player,
                         messageProvider.getMessage(player, "commons-friend-no-friend-request")
@@ -40,11 +40,11 @@ public class AcceptSubCommand implements CommandClass {
                 return;
             }
 
-            friendshipHandler.createFriendship(user.getId(), targetUser.getId(), friendship -> {
-                messageProvider.sendMessage(player, "commons-friend-request-accepted");
-            });
+            friendshipHandler.createFriendship(user.getId(), targetUser.getId(), friendship ->
+                messageProvider.sendMessage(player, "commons-friend-request-accepted")
+            );
 
-            friendshipHandler.removeFriendRequest(user.getId(), targetUser.getId());
+            friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
 
         });
 
