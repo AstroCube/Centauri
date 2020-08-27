@@ -16,7 +16,8 @@ import org.bukkit.entity.Player;
         AddSubCommand.class,
         ForceSubCommand.class,
         RemoveSubCommand.class,
-        DenySubCommand.class
+        DenySubCommand.class,
+        AcceptSubCommand.class
 })
 public class FriendsCommand implements CommandClass {
 
