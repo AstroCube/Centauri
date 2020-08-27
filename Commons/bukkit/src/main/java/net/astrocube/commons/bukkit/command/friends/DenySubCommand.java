@@ -7,15 +7,9 @@ import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.yushust.message.core.MessageProvider;
 import net.astrocube.api.core.friend.FriendshipHandler;
-import net.astrocube.api.core.service.create.CreateService;
-import net.astrocube.api.core.virtual.friend.Friendship;
-import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
-import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-
-import javax.annotation.Nullable;
 
 @ACommand(names = "add")
 public class DenySubCommand implements CommandClass {
@@ -24,7 +18,6 @@ public class DenySubCommand implements CommandClass {
     private @Inject FriendCommandValidator friendCommandValidator;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;
-    private @Inject CreateService<Friendship, FriendshipDoc.Partial> createService;
 
     @ACommand(names = "")
     public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
@@ -47,7 +40,8 @@ public class DenySubCommand implements CommandClass {
                 return;
             }
 
-            //TODO: Remove friend request
+            friendshipHandler.removeFriendRequest(player.getDatabaseIdentifier(), targetUser.getId());
+            messageProvider.sendMessage(player, "commons-friend-request-denied");
 
         });
 
