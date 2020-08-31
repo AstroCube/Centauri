@@ -21,30 +21,30 @@ public class CoreGameItemExtractor implements GameItemExtractor {
     private @Inject MessageProvider<Player> messageProvider;
 
     @Override
-    public ItemClickable generate(GameMode gameMode, Player player) {
+    public ItemClickable generate(GameMode gameModeDoc, Player player) {
         ItemStack icon = new ItemStack(Material.DIRT);
 
         try {
-            icon = new ItemStack(Material.getMaterial(gameMode.getName()));
+            icon = new ItemStack(Material.getMaterial(gameModeDoc.getName()));
         } catch (IllegalArgumentException exception) {
             plugin.getLogger().log(Level.WARNING, "No parsable item at game menu", exception);
         }
 
         ItemMeta iconMeta = icon.getItemMeta();
-        StringList baseLore = messageProvider.getMessages(player, "lobby.gameSelector.games." + gameMode.getId() + ".lore");
+        StringList baseLore = messageProvider.getMessages(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore");
 
         baseLore.add(" ");
         baseLore.add(messageProvider.getMessage(player, "lobby.gameSelector.gadget-playing"));
 
         iconMeta.setDisplayName(
-                messageProvider.getMessage(player, "lobby.gameSelector.games." + gameMode.getId() + ".title")
+                messageProvider.getMessage(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
         );
         iconMeta.setLore(
-                messageProvider.getMessages(player, "lobby.gameSelector.games." + gameMode.getId() + ".lore")
+                messageProvider.getMessages(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore")
         );
         icon.setItemMeta(iconMeta);
 
         //TODO: Link with cloud system
-        return new DefaultItemClickable(gameMode.getSlot(), icon, (block) -> true);
+        return new DefaultItemClickable(gameModeDoc.getSlot(), icon, (block) -> true);
     }
 }

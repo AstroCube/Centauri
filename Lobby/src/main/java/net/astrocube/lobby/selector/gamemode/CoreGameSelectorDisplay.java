@@ -29,8 +29,8 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                         1
                 );
 
-                for (GameMode gameMode : modesResponse.getResponse().get().getFoundModels()) {
-                    menuBuilder.addItem(gameItemExtractor.generate(gameMode, player));
+                for (GameMode gameModeDoc : modesResponse.getResponse().get().getFoundModels()) {
+                    menuBuilder.addItem(gameItemExtractor.generate(gameModeDoc, player));
                 }
 
                 player.openInventory(menuBuilder.build());

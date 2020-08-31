@@ -8,10 +8,10 @@ public interface GameItemExtractor {
 
     /**
      * Generate {@link ItemClickable} from {@link GameMode} to be used the Game Selector
-     * @param gameMode to be extracted
+     * @param gameModeDoc to be extracted
      * @param player from where translation will be found
      * @return clickable item
      */
-    ItemClickable generate(GameMode gameMode, Player player);
+    ItemClickable generate(GameMode gameModeDoc, Player player);
 
 }
