@@ -1,13 +1,29 @@
 package net.astrocube.commons.bukkit.translation.holder;
 
-import me.yushust.message.core.placeholder.PlaceholderReplacer;
+import me.yushust.message.core.intercept.InterceptContext;
+import me.yushust.message.core.placeholder.PlaceholderProvider;
+
 import org.bukkit.entity.Player;
 
-public class PlayerPlaceholderReplacer implements PlaceholderReplacer<Player> {
+import org.jetbrains.annotations.Nullable;
+
+public class PlayerPlaceholderReplacer implements PlaceholderProvider<Player> {
 
     @Override
-    public String replace(Player player, String s) {
-        return s.replace("%%player%%", player.getName());
+    public String[] getPlaceholders() {
+        return new String[] {
+            "player"
+        };
     }
 
+    @Override
+    public @Nullable String replace(InterceptContext<Player> interceptContext, String message) {
+        Player player = interceptContext.getEntity();
+
+        if ("player".equals(message)) {
+            return player.getName();
+        }
+
+        return "";
+    }
 }

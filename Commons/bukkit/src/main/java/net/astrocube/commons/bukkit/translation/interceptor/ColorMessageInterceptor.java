@@ -1,12 +1,15 @@
 package net.astrocube.commons.bukkit.translation.interceptor;
 
+import me.yushust.message.core.intercept.InterceptContext;
 import me.yushust.message.core.intercept.MessageInterceptor;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-public class ColorMessageInterceptor implements MessageInterceptor {
+public class ColorMessageInterceptor implements MessageInterceptor<Player> {
 
     @Override
-    public String intercept(String text) {
+    public @NotNull String replace(InterceptContext<Player> interceptContext, String text) {
         return text
                 .replace("%n%", "\n")
                 .replace("%%black%%", ChatColor.BLACK + "")
@@ -32,5 +35,4 @@ public class ColorMessageInterceptor implements MessageInterceptor {
                 .replace("%%italic%%", ChatColor.ITALIC + "")
                 .replace("%%reset%%", ChatColor.RESET + "");
     }
-
 }
