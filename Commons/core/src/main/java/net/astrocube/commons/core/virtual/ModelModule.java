@@ -1,6 +1,5 @@
 package net.astrocube.commons.core.virtual;
 
-
 import me.fixeddev.inject.ProtectedModule;
 
 public class ModelModule extends ProtectedModule {
@@ -11,6 +10,7 @@ public class ModelModule extends ProtectedModule {
         install(new GameModeModelModule());
         install(new ServerModelModule());
         install(new UserModelModule());
+        install(new PunishmentsModelModule());
     }
 
 }
