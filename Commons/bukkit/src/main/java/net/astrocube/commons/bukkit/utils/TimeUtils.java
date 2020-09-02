@@ -32,8 +32,6 @@ public class TimeUtils {
         for (char c : duration.toCharArray()) {
             if (Character.isDigit(c)) {
                 stringBuilder.append(c);
-
-                continue;
             }
 
             if (CHRONO_UNITS.containsKey(String.valueOf(c).toLowerCase()) && stringBuilder.length() > 0) {
