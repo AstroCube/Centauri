@@ -12,6 +12,7 @@ import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
 import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import team.unnamed.gui.MenuListeners;
 
 import java.util.logging.Level;
 
@@ -26,6 +27,8 @@ public class EventListenerLoader implements Loader {
     private @Inject UserPreLoginListener userPreLoginListener;
     private @Inject UserLoginListener userLoginListener;
     private @Inject UserJoinListener userJoinListener;
+
+    private @Inject MenuListeners menuListeners;
 
     private @Inject Plugin plugin;
 
@@ -43,6 +46,8 @@ public class EventListenerLoader implements Loader {
         registerEvent(userPreLoginListener);
         registerEvent(userLoginListener);
         registerEvent(userJoinListener);
+
+        registerEvent(menuListeners);
     }
 
     private void registerEvent(Listener listener) {

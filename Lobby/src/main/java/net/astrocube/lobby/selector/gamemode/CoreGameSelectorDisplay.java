@@ -28,6 +28,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                         messageProvider.getMessage(player, "lobby.gameSelector.title"),
                         1
                 );
+                menuBuilder.cancelClick(true);
 
                 for (GameMode gameModeDoc : modesResponse.getResponse().get().getFoundModels()) {
                     menuBuilder.addItem(gameItemExtractor.generate(gameModeDoc, player));

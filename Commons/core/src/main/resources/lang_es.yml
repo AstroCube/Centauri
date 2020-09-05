@@ -44,6 +44,20 @@ lobby:
             - "%%gray%%Al darle clic derecho cambiarás el estado"
             - "%%gray%%de visibilidad de tus jugadores."
         error: "%%red%%Ha ocurrido un error al actualizar la visibilidad de tus jugadores."
+    lobby-selector:
+        title: "%%blue%%Selector de lobby %%gray%%(Click derecho)"
+        gadget-title: "%%dark_gray%%Seleccionar Lobby"
+        error:
+            not-detected: "%%red%%Ha ocurrido un error al detectar la modalidad del lobby. Por favor intentalo nuevamente o contacta a un administrador si el problema persiste."
+            full: "%%red%%¡El lobby al que querías ingresar ya está lleno!"
+            cyclic: "%%red%%Ya te encuentras en este lobby. Te hemos teletransportado el spawn."
+        indicators:
+            connected: "%%gray%%Usuarios conectados: %%users%%/%%total%%"
+            connect: "¡Haz click para conectarte!"
+            full: "¡El lobby se encuentra lleno!"
+            already: "¡Ya te encuentras en este lobby!"
+        gadget-lore:
+            - "%%gray%%Elige el lobby en el que quieres estar"
     gameSelector:
         title: "%%dark_gray%%Menú de juegos"
         gadget: "%%blue%%Menú de juegos %%gray%%(Click derecho)"

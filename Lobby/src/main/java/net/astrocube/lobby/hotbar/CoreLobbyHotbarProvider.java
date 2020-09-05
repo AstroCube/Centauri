@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.lobby.hotbar.LobbyHotbarProvider;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.lobby.hotbar.collection.GameGadgetStack;
 import net.astrocube.lobby.hotbar.collection.HideGadgetStack;
+import net.astrocube.lobby.hotbar.collection.LobbyGadgetStack;
 import org.bukkit.entity.Player;
 
 @Singleton
@@ -26,6 +27,11 @@ public class CoreLobbyHotbarProvider implements LobbyHotbarProvider {
                 messageProvider,
                 player,
                 user.getSettings().getGeneralSettings().isHidingPlayers()
+        ));
+
+        player.getInventory().setItem(8, LobbyGadgetStack.get(
+                messageProvider,
+                player
         ));
     }
 
