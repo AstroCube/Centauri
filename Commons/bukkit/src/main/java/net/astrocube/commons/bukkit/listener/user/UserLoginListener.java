@@ -14,6 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
@@ -26,7 +27,7 @@ public class UserLoginListener implements Listener {
     private @Inject AuthenticationCooldown authenticationCooldown;
     private @Inject Plugin plugin;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onUserLogin(PlayerLoginEvent event) {
 
         SessionValidateDoc.Complete validator =

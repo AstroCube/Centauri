@@ -33,6 +33,7 @@
             <version>1.8-20200415.053535-5</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>me.yushust.message</groupId>
             <artifactId>core</artifactId>

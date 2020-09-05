@@ -1,0 +1,5 @@
+name: Lobby
+main: net.astrocube.lobby.LobbyModule
+version: ${project.version}
+depend: [Commons]
+author: Astrocube Network

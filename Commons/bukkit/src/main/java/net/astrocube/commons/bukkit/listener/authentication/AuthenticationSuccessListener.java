@@ -7,6 +7,7 @@ import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -18,7 +19,7 @@ public class AuthenticationSuccessListener implements Listener {
     private @Inject MessageProvider<Player> messageProvider;
     private @Inject Plugin plugin;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
         try {
 

@@ -30,11 +30,16 @@
             <id>unnamed-releases</id>
             <url>https://repo.unnamed.team/repository/unnamed-releases</url>
         </repository>
+        <repository>
+            <id>unnamed-snapshots</id>
+            <url>https://repo.unnamed.team/repository/unnamed-snapshots</url>
+        </repository>
     </repositories>
 
     <modules>
         <module>API</module>
         <module>Commons</module>
+        <module>Lobby</module>
     </modules>
 
     <build>

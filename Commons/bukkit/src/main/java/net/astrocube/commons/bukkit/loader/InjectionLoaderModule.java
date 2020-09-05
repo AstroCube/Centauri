@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.loader;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
+import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.translation.TranslationModule;
@@ -12,6 +13,7 @@ public class InjectionLoaderModule extends ProtectedModule {
 
     @Override
     public void configure() {
+        install(new FriendsModule());
         install(new CommonsModule());
         install(new AuthenticationModule());
         install(new LoaderModule());

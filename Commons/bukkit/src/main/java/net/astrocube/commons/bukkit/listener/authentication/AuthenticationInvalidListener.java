@@ -10,6 +10,7 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -23,7 +24,7 @@ public class AuthenticationInvalidListener implements Listener {
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInvalidAuthentication(AuthenticationInvalidEvent event) {
 
         findService.find(event.getPlayer().getDatabaseIdentifier()).callback(response -> {
