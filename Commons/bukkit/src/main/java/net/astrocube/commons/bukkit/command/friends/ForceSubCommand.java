@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.command.friends;
 
 import com.google.inject.Inject;
+import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
@@ -26,7 +27,7 @@ public class ForceSubCommand implements CommandClass {
     private @Inject FriendCallbackHelper friendCallbackHelper;
 
     @ACommand(names = "")
-    public boolean execute(@Injected(true) Player player, OfflinePlayer target) {
+    public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
 
         if (UserUtils.checkSamePlayer(player, target, messageProvider)) {
             return true;

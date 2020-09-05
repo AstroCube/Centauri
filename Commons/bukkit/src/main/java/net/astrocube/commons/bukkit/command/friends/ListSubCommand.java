@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.command.friends;
 
 import com.google.inject.Inject;
+import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
@@ -28,7 +29,7 @@ public class ListSubCommand implements CommandClass {
     private @Inject FindService<User> userFindService;
 
     @ACommand(names = "")
-    public boolean execute(@Injected(true) Player player, @Optional Integer providedPage) {
+    public boolean execute(@Injected(true) @Sender Player player, @Optional Integer providedPage) {
         int page = providedPage == null ? 0 : providedPage - 1;
         friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
                 Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {

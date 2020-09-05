@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.command.friends;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
+import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
@@ -28,7 +29,7 @@ public class RemoveSubCommand implements CommandClass {
     private @Inject MessageProvider<Player> messageProvider;
 
     @ACommand(names = "")
-    public boolean execute(@Injected(true) Player player, OfflinePlayer target) {
+    public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
 
         if (UserUtils.checkSamePlayer(player, target, messageProvider)) {
             return true;
