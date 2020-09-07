@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.query.QueryService;
@@ -12,7 +12,6 @@ import net.astrocube.api.core.virtual.friend.Friendship;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -21,7 +20,7 @@ import java.util.logging.Level;
 @Singleton
 public class CoreFriendHelper implements FriendHelper {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject QueryService<Friendship> friendshipQueryService;
     private @Inject ObjectMapper objectMapper;
     private @Inject FriendshipHandler friendshipHandler;
@@ -35,7 +34,7 @@ public class CoreFriendHelper implements FriendHelper {
 
         ChatAlertLibrary.alertChatError(
                 player,
-                messageProvider.getMessage(player, "commons-friend-already-sent")
+                messageHandler.getMessage(player, "commons-friend-already-sent")
         );
         return true;
     }
@@ -56,7 +55,7 @@ public class CoreFriendHelper implements FriendHelper {
         if (friendships.isEmpty()) {
             ChatAlertLibrary.alertChatError(
                     player,
-                    messageProvider.getMessage(player, "commons-friend-not-friends")
+                    messageHandler.getMessage(player, "commons-friend-not-friends")
             );
         }
 
@@ -80,7 +79,7 @@ public class CoreFriendHelper implements FriendHelper {
         if (!friendships.isEmpty()) {
             ChatAlertLibrary.alertChatError(
                     player,
-                    messageProvider.getMessage(player, "commons-friend-already-friends")
+                    messageHandler.getMessage(player, "commons-friend-already-friends")
             );
         }
 

@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.authentication.gateway.register;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
@@ -19,7 +19,7 @@ public class CoreRegisterGatewayProcessor implements RegisterGatewayProcessor {
     private @Inject AuthenticationService authenticationService;
     private @Inject AuthenticationValidator authenticationValidator;
     private @Inject GatewayMatcher gatewayMatcher;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
     @Override
@@ -34,7 +34,7 @@ public class CoreRegisterGatewayProcessor implements RegisterGatewayProcessor {
                     player
             ));
         } catch (Exception exception) {
-            AuthorizationUtils.checkError(player, exception, plugin, messageProvider);
+            AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
         }
 
     }

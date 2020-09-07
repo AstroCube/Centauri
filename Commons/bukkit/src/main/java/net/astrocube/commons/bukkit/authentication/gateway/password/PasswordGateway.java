@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.authentication.gateway.password;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 @Singleton
 public class PasswordGateway implements AuthenticationGateway {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
 
     @Override
     public void startProcessing(User user) {
@@ -23,8 +23,8 @@ public class PasswordGateway implements AuthenticationGateway {
         if (player != null) {
             player.sendTitle(
                     new Title(
-                            messageProvider.getMessage(player, "authentication.password-title"),
-                            messageProvider.getMessage(player, "authentication.password-sub")
+                            messageHandler.getMessage(player, "authentication.password-title"),
+                            messageHandler.getMessage(player, "authentication.password-sub")
                     )
             );
         }

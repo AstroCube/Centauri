@@ -2,7 +2,7 @@ package net.astrocube.lobby.selector.gamemode;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorDisplay;
 import net.astrocube.api.core.service.query.QueryService;
@@ -14,7 +14,7 @@ import team.unnamed.gui.menu.MenuBuilder;
 @Singleton
 public class CoreGameSelectorDisplay implements GameSelectorDisplay {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject QueryService<GameMode> queryService;
     private @Inject GameItemExtractor gameItemExtractor;
 
@@ -25,7 +25,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
             if (modesResponse.isSuccessful() && modesResponse.getResponse().isPresent()) {
 
                 MenuBuilder menuBuilder = MenuBuilder.newBuilder(
-                        messageProvider.getMessage(player, "lobby.gameSelector.title"),
+                        messageHandler.getMessage(player, "lobby.gameSelector.title"),
                         1
                 );
                 menuBuilder.cancelClick(true);
@@ -37,7 +37,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                 player.openInventory(menuBuilder.build());
 
             } else {
-                player.sendMessage(messageProvider.getMessage(player, "lobby.gameSelector.error"));
+                player.sendMessage(messageHandler.getMessage(player, "lobby.gameSelector.error"));
             }
         });
 

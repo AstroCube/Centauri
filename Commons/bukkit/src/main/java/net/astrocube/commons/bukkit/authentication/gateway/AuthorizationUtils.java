@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.authentication.gateway;
 
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.BasicAuthorization;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import org.bukkit.Bukkit;
@@ -30,16 +30,16 @@ public class AuthorizationUtils {
         };
     }
 
-    public static void checkError(Player player, Exception exception, Plugin plugin, MessageProvider<Player> messageProvider) {
+    public static void checkError(Player player, Exception exception, Plugin plugin, MessageHandler<Player> messageHandler) {
         if (exception instanceof AuthorizeException) {
             Bukkit.getScheduler().runTask(plugin, ()-> player.kickPlayer(
-                    messageProvider.getMessage(player, "authentication.unauthorized")
+                    messageHandler.getMessage(player, "authentication.unauthorized")
                             .replace("%%error%%", exception.getMessage())
             ));
             return;
         }
 
-        player.sendMessage(messageProvider.getMessage(player, "authentication.password-error"));
+        player.sendMessage(messageHandler.getMessage(player, "authentication.password-error"));
         plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
     }
 

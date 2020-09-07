@@ -5,24 +5,26 @@ import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
+import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 @ACommand(names = "deny")
 public class DenySubCommand implements CommandClass {
 
-    private @Inject MessageProvider<Player> messageProvider;
-    private @Inject FriendCommandValidator friendCommandValidator;
+    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject FriendHelper friendCommandValidator;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;
 
     @ACommand(names = "")
     public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
 
-        if (friendCommandValidator.checkSamePlayer(player, target)) {
+        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
             return true;
         }
 
@@ -35,13 +37,13 @@ public class DenySubCommand implements CommandClass {
             if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
                 ChatAlertLibrary.alertChatError(
                         player,
-                        messageProvider.getMessage(player, "commons-friend-no-friend-request")
+                        messageHandler.getMessage(player, "commons-friend-no-friend-request")
                 );
                 return;
             }
 
             friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
-            messageProvider.sendMessage(player, "commons-friend-request-denied");
+            messageHandler.sendMessage(player, "commons-friend-request-denied");
 
         });
 

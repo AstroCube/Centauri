@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.listener.authentication;
 
 import com.google.inject.Inject;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
@@ -16,7 +16,7 @@ import java.util.logging.Level;
 public class AuthenticationSuccessListener implements Listener {
 
     private @Inject SessionRegistryManager sessionRegistryManager;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -29,13 +29,13 @@ public class AuthenticationSuccessListener implements Listener {
             );
 
             event.getPlayer().sendMessage(
-                    messageProvider.getMessage(event.getPlayer(), "authentication.success-message")
+                    messageHandler.getMessage(event.getPlayer(), "authentication.success-message")
             );
 
         } catch (AuthorizeException exception) {
             plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
             event.getPlayer().kickPlayer(
-                    messageProvider.getMessage(event.getPlayer(), "authentication.unauthorized")
+                    messageHandler.getMessage(event.getPlayer(), "authentication.unauthorized")
                             .replace("%%error%%", exception.getMessage())
             );
         }

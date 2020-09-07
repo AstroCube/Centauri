@@ -4,10 +4,7 @@ import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import me.fixeddev.inject.ProtectedModule;
-import me.yushust.message.MessageProvider;
-import me.yushust.message.MessageProviderBuilder;
-import me.yushust.message.MessageRepository;
-import me.yushust.message.ProvideStrategy;
+import me.yushust.message.*;
 import me.yushust.message.format.bukkit.BukkitMessageAdapt;
 import net.astrocube.commons.bukkit.translation.interceptor.CenterMessageInterceptor;
 import net.astrocube.commons.bukkit.translation.interceptor.ColorMessageInterceptor;
@@ -18,8 +15,8 @@ import org.bukkit.plugin.Plugin;
 public class TranslationModule extends ProtectedModule {
 
     @Provides @Singleton @Exposed
-    public MessageProvider<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
-        return new MessageProviderBuilder<Player>()
+    public MessageHandler<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
+        return MessageHandler.<Player>builder()
                 .setRepository(
                         MessageRepository.builder()
                                 .setDefaultLanguage("es")

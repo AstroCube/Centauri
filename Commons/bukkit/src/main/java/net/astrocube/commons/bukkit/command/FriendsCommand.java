@@ -6,7 +6,7 @@ import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.fixeddev.ebcm.parametric.annotation.SubCommandClasses;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.commons.bukkit.command.friends.*;
 import org.bukkit.entity.Player;
 
@@ -21,11 +21,11 @@ import org.bukkit.entity.Player;
 })
 public class FriendsCommand implements CommandClass {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
 
     @ACommand(names = {"", "help"})
     public boolean onCommand(@Injected(true) @Sender Player player) {
-        for (String message : messageProvider.getMessages(player, "friend-help").getContents()) {
+        for (String message : messageHandler.getMessages(player, "friend-help").getContents()) {
             player.sendMessage(message);
         }
         return true;

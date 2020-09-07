@@ -3,7 +3,7 @@ package net.astrocube.commons.bukkit.authentication.gateway.password;
 import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationInvalidEvent;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
@@ -23,7 +23,7 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
     private @Inject AuthenticationService authenticationService;
     private @Inject AuthenticationValidator authenticationValidator;
     private @Inject GatewayMatcher gatewayMatcher;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
     @Override
@@ -44,13 +44,13 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
                 HttpResponseException httpResponseException = ((HttpResponseException) exception);
 
                 if (httpResponseException.getStatusCode() == 403) {
-                    player.sendMessage(messageProvider.getMessage(player, "authentication.password-invalid"));
+                    player.sendMessage(messageHandler.getMessage(player, "authentication.password-invalid"));
                     Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
                     return;
                 }
             }
 
-            AuthorizationUtils.checkError(player, exception, plugin, messageProvider);
+            AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
         }
     }
 
