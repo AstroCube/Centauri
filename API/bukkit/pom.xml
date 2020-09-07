@@ -21,7 +21,8 @@
         <dependency>
             <groupId>team.unnamed.gui</groupId>
             <artifactId>gui-core</artifactId>
-            <version>1.3.2</version>
+            <version>1.3.3</version>
+            <classifier>with-dependencies</classifier>
         </dependency>
         <dependency>
             <groupId>net.seocraft</groupId>
