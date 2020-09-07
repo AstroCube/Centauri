@@ -33,18 +33,6 @@
             <version>1.8-20200415.053535-5</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>me.yushust.message</groupId>
-            <artifactId>core</artifactId>
-            <version>0.3.4</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.yushust.message</groupId>
-            <artifactId>bukkit-formatters</artifactId>
-            <version>0.3.4</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>
