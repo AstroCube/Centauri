@@ -3,10 +3,10 @@ package net.astrocube.api.core.punishment;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.service.paginate.PaginateResult;
+import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
-import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 
-import java.util.List;
+import java.util.Set;
 
 public interface PunishmentHandler {
 
@@ -25,10 +25,12 @@ public interface PunishmentHandler {
 
     AsyncResponse<Punishment> getPunishmentById(String id);
 
-    AsyncResponse<List<Punishment>> getPunishments(PunishmentDoc.Identity.Type type, String playerId);
+    AsyncResponse<QueryResult<Punishment>> getPunishments(Punishment.Type type, String playerId);
 
-    AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type  type, String playerId);
+    AsyncResponse<Punishment> updatePunishment(Punishment punishment);
 
-    AsyncResponse<Void> updatePunishment(Punishment punishment);
+    Punishment updatePunishmentSync(Punishment punishment);
+
+    Set<Punishment> getPunishmentsSync(Punishment.Type type, String playerId);
 
 }

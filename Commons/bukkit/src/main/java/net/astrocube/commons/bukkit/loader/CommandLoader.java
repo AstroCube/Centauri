@@ -9,9 +9,11 @@ import me.fixeddev.ebcm.bukkit.BukkitMessenger;
 import me.fixeddev.ebcm.bukkit.parameter.provider.BukkitModule;
 import me.fixeddev.ebcm.parameter.provider.ParameterProviderRegistry;
 import net.astrocube.api.core.loader.Loader;
+import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.bukkit.command.FriendsCommand;
 import net.astrocube.commons.bukkit.command.LoginCommand;
 import net.astrocube.commons.bukkit.command.builder.InjectionParametricCommandBuilder;
+import net.astrocube.commons.bukkit.command.providers.PunishmentTypeProvider;
 import org.bukkit.plugin.Plugin;
 
 public class CommandLoader implements Loader {
@@ -31,6 +33,8 @@ public class CommandLoader implements Loader {
                 new BukkitMessenger(),
                 registry);
         BukkitCommandManager bukkitManager = new BukkitCommandManager(commandManager, plugin.getName());
+
+        registry.registerParameterProvider(PunishmentDoc.Identity.Type.class, new PunishmentTypeProvider());
 
         if (plugin.getConfig().getBoolean("authentication.enabled")) {
             bukkitManager.registerCommands(commandBuilder.fromClass(loginCommand));

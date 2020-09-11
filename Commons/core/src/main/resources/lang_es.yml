@@ -25,6 +25,14 @@ commons-friend-removed: "%%yellow%%Has removido a %%receiver%% de tu lista de am
 commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de parte de este usuario"
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
+
+punishments:
+    warn:
+        issuer: "%%aqua%%Haz %%green%%advertido %%aqua%%al jugador %%receiver%% %%aqua%%por %%cyan%%%%reason%%%%aqua%%."
+        punished:
+            - "%%yellow%%\u26A0 %%red%%ADVERTENCIA %%yellow%%\u26A0"
+            - "%%aqua%%%%reason%%"
+
 authentication:
     attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
     unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
