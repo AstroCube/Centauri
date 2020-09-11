@@ -32,4 +32,19 @@ public class CoreUserMatcher implements UserMatcher {
                 );
     }
 
+    @Override
+    public User findUserByName(String name) {
+        try {
+            return userQueryService
+                    .querySync(objectMapper.createObjectNode()
+                            .put("username", name)
+                    )
+                    .getFoundModels()
+                    .iterator()
+                    .next();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

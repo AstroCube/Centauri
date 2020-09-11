@@ -7,4 +7,6 @@ public interface UserMatcher {
 
     void findUserByName(String name, Callback<User> callback);
 
+    User findUserByName(String name);
+
 }
