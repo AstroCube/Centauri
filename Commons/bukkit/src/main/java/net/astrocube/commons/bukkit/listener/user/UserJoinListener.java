@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
+import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
@@ -33,6 +34,7 @@ public class UserJoinListener implements Listener {
     private @Inject FindService<User> userFindService;
     private @Inject PermissionBalancer permissionBalancer;
     private @Inject SessionAliveInterceptor sessionAliveInterceptor;
+    private @Inject CrossTeleportExchanger crossTeleportExchanger;
     private @Inject Plugin plugin;
 
     private static Field playerField;
@@ -95,6 +97,9 @@ public class UserJoinListener implements Listener {
 
                     if (!registry.getAddress().equalsIgnoreCase(address))
                         throw new AuthorizeException("Matching address not correspond to authorization");
+
+                    crossTeleportExchanger.exchange(user);
+
                 }
 
                 if (ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type")) == ServerDoc.Type.LOBBY) {

@@ -7,6 +7,12 @@ public interface TeleportRange {
      * when the requester is not sharing server with the receiver.
      * @return boolean indicating if cross-teleport is allowed
      */
-    boolean crossTeleport();
+    boolean isCrossAllowed();
+
+    /**
+     * Indicates when the request is cross-server.
+     * @return boolean indicating cross-teleport allowance.
+     */
+    boolean isCrossServer();
 
 }

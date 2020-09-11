@@ -10,6 +10,6 @@ public interface UserTeleportDispatcher {
      * @param receiver to teleport or serve as teleport point.
      * @param self if requester will teleport or receive a teleport.
      */
-    void teleport(User requester, User receiver, boolean self);
+    void teleport(User requester, User receiver, boolean self) throws TeleportRequestException;
 
 }

@@ -6,7 +6,4 @@ public class TeleportRequestException extends Exception {
         super(message);
     }
 
-    enum Cause {
-        RANGE, OFFLINE
-    }
 }
