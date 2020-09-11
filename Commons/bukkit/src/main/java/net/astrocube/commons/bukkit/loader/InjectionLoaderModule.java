@@ -8,6 +8,7 @@ import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
 import net.astrocube.commons.bukkit.translation.TranslationModule;
+import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.core.CommonsModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
@@ -23,5 +24,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new BukkitSessionModule());
         install(new BukkitConfigurationModule());
         install(new TranslationModule());
+        install(new UserModule());
     }
 }
