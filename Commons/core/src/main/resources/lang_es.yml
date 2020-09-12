@@ -32,6 +32,13 @@ punishments:
         punished:
             - "%%yellow%%\u26A0 %%red%%ADVERTENCIA %%yellow%%\u26A0"
             - "%%aqua%%%%reason%%"
+    kick:
+        issuer: "%%aqua%%Haz %%yellow%%expulsado %%aqua%%al jugador %%receiver%% %%aqua%%por %%cyan%%%%reason%%%%aqua%%."
+        punished: "%%red%%Haz sido expulsado %%gold%%\u00BB %%aqua%%%%reason%%"
+
+    ban:
+       issuer: "%%aqua%%Haz %%red%%baneado %%aqua%%al jugador %%receiver%% %%aqua%%por %%cyan%%%%reason%%%%aqua%%."
+       punished: "%%red%%%%duration%% %%gold%%\u00BB %%aqua%%%%reason%% \n%%yellow%%Visit %%gold%%https://astrocube.net/appeal %%yellow%% to appeal"
 
 authentication:
     attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."

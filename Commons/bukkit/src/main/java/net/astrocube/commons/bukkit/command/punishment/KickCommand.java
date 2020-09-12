@@ -15,19 +15,18 @@ import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-@ACommand(names = "warn")
-public class WarnCommand implements CommandClass {
+@ACommand(names = "kick")
+public class KickCommand implements CommandClass {
 
     private @Inject PunishmentHelper punishmentHelper;
     private @Inject MessageHandler<Player> messageHandler;
 
-    @ACommand(names = "")
     public boolean runMainCommand(@Injected(true) @Sender Player issuer, OfflinePlayer punished, String reason) {
         if (UserUtils.checkSamePlayer(issuer, punished, messageHandler)) {
             return true;
         }
 
-        punishmentHelper.createWarn(issuer, punished, reason);
+        punishmentHelper.createKick(issuer, punished, reason);
 
         return true;
     }

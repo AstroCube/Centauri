@@ -21,9 +21,10 @@ public class CorePunishmentAnnouncer implements PunishmentAnnouncer {
 
     @Override
     public void alertWarn(Player issuer, Player punished, String reason) {
-        messageHandler.sendMessage(issuer, "punishments.warn.issuer"
-                .replace("%%receiver%%", getFullPrefix(punished))
-                .replace("%%reason%%", reason)
+        issuer.sendMessage(
+                messageHandler.getMessage(issuer, "punishments.warn.issuer")
+                        .replace("%%receiver%%", getFullPrefix(punished))
+                        .replace("%%reason%%", reason)
         );
 
         if (punished == null) {
@@ -36,12 +37,40 @@ public class CorePunishmentAnnouncer implements PunishmentAnnouncer {
 
     @Override
     public void alertBan(Player issuer, Player punished, String reason, String duration) {
+        issuer.sendMessage(
+                messageHandler.getMessage(issuer, "punishments.ban.issuer")
+                        .replace("%%receiver%%", getFullPrefix(punished))
+                        .replace("%%reason%%", reason)
+                        .replace("%%duration%%", duration)
+        );
 
+        if (punished == null) {
+            return;
+        }
+
+        punished.kickPlayer(
+                messageHandler.getMessage(punished, "punishments.ban.punished")
+                        .replace("%%reason%%", reason)
+                        .replace("%%duration%%", duration)
+        );
     }
 
     @Override
     public void alertKick(Player issuer, Player punished, String reason) {
+        issuer.sendMessage(
+                messageHandler.getMessage(issuer, "punishments.kick.issuer")
+                        .replace("%%receiver%%", getFullPrefix(issuer))
+                        .replace("%%reason%%", reason)
+        );
 
+        if (punished == null) {
+            return;
+        }
+
+        punished.kickPlayer(
+                messageHandler.getMessage(punished, "punishments.kick.punished")
+                        .replace("%%reason%%", reason)
+        );
     }
 
     private String getFullPrefix(Player player) {
