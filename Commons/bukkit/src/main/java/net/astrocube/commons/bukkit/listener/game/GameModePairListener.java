@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.bukkit.game.event.GameModePairEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +23,7 @@ public class GameModePairListener implements Listener {
             gameControlPair.validatePair(event.getGameMode(), event.getSubGameMode());
         } catch (GameControlException e) {
             plugin.getLogger().log(Level.SEVERE, "Error while pairing GameMode", e);
+            Bukkit.shutdown();
         }
 
     }
