@@ -25,7 +25,7 @@ public class CoreCrossTeleportExchanger implements CrossTeleportExchanger {
         //TODO: Teleport player to corresponding server
 
         if (request.getRequester().isPresent()) {
-            jedis.set("request:" + request.getReceiver().getId(),
+            jedis.set("teleportRequest:" + request.getReceiver().getId(),
                     request.getRequester()
                             .get()
                             .getUsername()
@@ -38,11 +38,17 @@ public class CoreCrossTeleportExchanger implements CrossTeleportExchanger {
     public void exchange(User user) {
 
         Player receiver = Bukkit.getPlayer(user.getUsername());
-        Player requester = Bukkit.getPlayer(jedis.get("request:" + user.getId()));
 
-        if (jedis.exists("request:" + user.getId()) && requester != null && receiver != null) {
-            receiver.teleport(requester);
+        if (jedis.exists("teleportRequest:" + user.getId()) && receiver != null) {
+
+            Player requester = Bukkit.getPlayer(jedis.get("teleportRequest:" + user.getId()));
+
+            if (requester != null) {
+                receiver.teleport(requester);
+            }
         }
+
+        jedis.del("teleportRequest:" + user.getId());
 
     }
 
