@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.server;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.server.GameServerStartManager;
 import net.astrocube.api.core.server.ServerConnectionManager;
@@ -21,6 +22,7 @@ public class BukkitStartResolver implements ServerStartResolver {
     private @Inject ServerConnectionManager serverConnectionManager;
     private @Inject AuthorizationProcessor authorizationProcessor;
     private @Inject GameServerStartManager gameServerStartManager;
+    private @Inject GameControlPair gameControlPair;
     private @Inject FindService<GameMode> gameModeFindService;
     private @Inject Plugin plugin;
 
@@ -64,6 +66,8 @@ public class BukkitStartResolver implements ServerStartResolver {
                     gameModeDoc,
                     subGameMode.get()
             );
+
+            gameControlPair.enablePairing();
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
