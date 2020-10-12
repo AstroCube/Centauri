@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.game.map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.astrocube.api.bukkit.game.map.configuration.MapConfiguration;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -25,7 +26,10 @@ public interface GameMap extends Model.Stamped {
      */
     byte[] getFile();
 
-    // TODO: MapConfiguration
+    /**
+     * @return raw JSON configuration to be manually serialized
+     */
+    String getConfiguration();
 
     /**
      * @return map author id to be used with a {@link FindService}
