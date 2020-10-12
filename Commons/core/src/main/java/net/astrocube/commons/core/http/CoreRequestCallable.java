@@ -7,7 +7,6 @@ import com.google.common.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
-import org.graalvm.compiler.core.common.type.TypeReference;
 
 @AllArgsConstructor
 @SuppressWarnings("all")
