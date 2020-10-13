@@ -353,7 +353,7 @@ public class InjectionParametricCommandBuilder implements ParametricCommandBuild
 
     private static class ParameterValueGetter implements ValueGetter{
 
-        private CommandPart part;
+        private final CommandPart part;
 
         public ParameterValueGetter(CommandPart part) {
             this.part = part;

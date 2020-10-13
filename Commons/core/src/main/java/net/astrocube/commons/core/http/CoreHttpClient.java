@@ -31,7 +31,6 @@ public class CoreHttpClient implements HttpClient {
 
     @Inject
     private CoreHttpClient(
-
         RequestFactoryResolver factoryResolver,
         TransportLoggerModifier transportLoggerModifier,
         HttpClientConfig httpClientConfig,

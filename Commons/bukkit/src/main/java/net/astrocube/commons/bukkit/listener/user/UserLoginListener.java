@@ -1,24 +1,20 @@
 package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
-import jdk.jfr.internal.tool.PrettyWriter;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
 import net.astrocube.commons.core.utils.PrettyTimeUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
-import org.ocpsoft.prettytime.PrettyTime;
 
 public class UserLoginListener implements Listener {
 
