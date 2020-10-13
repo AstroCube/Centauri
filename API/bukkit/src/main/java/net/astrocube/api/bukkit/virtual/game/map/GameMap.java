@@ -1,7 +1,6 @@
-package net.astrocube.api.bukkit.game.map;
+package net.astrocube.api.bukkit.virtual.game.map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import net.astrocube.api.bukkit.game.map.configuration.MapConfiguration;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelProperties;
 import net.astrocube.api.core.service.find.FindService;

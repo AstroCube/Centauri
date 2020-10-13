@@ -8,6 +8,7 @@ public class BukkitModelModule extends ProtectedModule {
     @Override
     protected void configure() {
         install(new ModelModule());
+        install(new MatchModule());
         install(new GameMapModelModule());
     }
 

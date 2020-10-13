@@ -1,6 +1,6 @@
-package net.astrocube.api.bukkit.game.map.configuration;
+package net.astrocube.api.bukkit.game.configuration;
 
-import net.astrocube.api.bukkit.game.map.GameMap;
+import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 
 /**
  * Interface providing {@link GameMap} base configuration properties and

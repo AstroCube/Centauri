@@ -1,4 +1,4 @@
-package net.astrocube.api.bukkit.game.map.configuration;
+package net.astrocube.api.bukkit.game.configuration;
 
 import org.bukkit.Location;
 
