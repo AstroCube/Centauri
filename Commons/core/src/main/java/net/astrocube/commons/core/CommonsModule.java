@@ -27,7 +27,6 @@ public class CommonsModule extends ProtectedModule {
         install(new RedisModule());
         install(new MessengerModule());
         install(new SessionModule());
-        install(new ModelModule());
         install(new CoreServerModule());
 
         bind(ObjectMapper.class).toProvider(() -> {

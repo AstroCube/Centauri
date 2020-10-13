@@ -3,6 +3,7 @@ package net.astrocube.api.bukkit.game.map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.bukkit.game.map.configuration.MapConfiguration;
 import net.astrocube.api.core.model.Model;
+import net.astrocube.api.core.model.ModelProperties;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
@@ -14,6 +15,7 @@ import java.util.Set;
  * Map record created at database which store
  * info to work correctly along Game Control.
  */
+@ModelProperties.Cache(3600)
 public interface GameMap extends Model.Stamped {
 
     /**
