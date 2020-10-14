@@ -46,6 +46,11 @@ public interface MatchDoc {
         Status getStatus();
 
         /**
+         * @param status to update match property
+         */
+        void setStatus(Status status);
+
+        /**
          * @return {@link GameMode} id to be used with a {@link FindService}
          */
         @JsonProperty("gamemode")
