@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.virtual.game.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.service.create.CreateService;
@@ -79,6 +80,18 @@ public interface MatchDoc {
          * @return set of {@link User} ids who are identified as match winners.
          */
         Set<String> getWinner();
+
+        /**
+         * @return set of {@link User} ids who are actually spectating the match
+         * without an specified team. (Can be from outside like moderators)
+         */
+        Set<String> getSpectators();
+
+        /**
+         * @return set of {@link MatchAssignable}s that are waiting to the
+         * match start cycle.
+         */
+        Set<MatchAssignable> getPending();
 
     }
 

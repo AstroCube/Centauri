@@ -1,15 +1,12 @@
 package net.astrocube.api.bukkit.game.matchmaking;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import jdk.nashorn.internal.ir.ObjectNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
-import net.astrocube.api.core.virtual.user.User;
 
 import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Matchmaking request to be registered at

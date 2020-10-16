@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.game.matchmaking;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.internal.ir.ObjectNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;

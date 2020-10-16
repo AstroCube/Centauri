@@ -1,11 +1,9 @@
 package net.astrocube.api.bukkit.game.matchmaking;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import jdk.nashorn.internal.ir.ObjectNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.core.redis.Redis;
 
-import java.util.Set;
 
 /**
  * Matchmaking handler who will handle all the requests made
