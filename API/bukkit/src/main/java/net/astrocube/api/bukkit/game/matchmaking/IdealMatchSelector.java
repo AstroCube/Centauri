@@ -2,6 +2,7 @@ package net.astrocube.api.bukkit.game.matchmaking;
 
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -16,6 +17,6 @@ public interface IdealMatchSelector {
      * @param matches to be sorted
      * @return ideal match to be used
      */
-    Match sortAvailableMatches(Set<Match> matches);
+    Optional<Match> sortAvailableMatches(Set<Match> matches);
 
 }
