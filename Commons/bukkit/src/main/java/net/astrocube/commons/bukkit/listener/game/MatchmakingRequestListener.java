@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.game;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
+import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.matchmaking.AvailableMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.IdealMatchSelector;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class MatchmakingRequestListener implements Listener {
 
     private @Inject AvailableMatchProvider availableMatchProvider;
+    private @Inject MatchAssigner matchAssigner;
     private @Inject IdealMatchSelector idealMatchSelector;
 
     @EventHandler
@@ -26,6 +28,7 @@ public class MatchmakingRequestListener implements Listener {
 
             if (match.isPresent()) {
 
+                matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
                 // TODO: Send alert to open new server
 
             } else {
