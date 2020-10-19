@@ -7,6 +7,7 @@ import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvali
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.game.GameModePairListener;
+import net.astrocube.commons.bukkit.listener.game.MatchmakingRequestListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
 import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
@@ -30,6 +31,7 @@ public class EventListenerLoader implements Loader {
     private @Inject UserJoinListener userJoinListener;
 
     private @Inject GameModePairListener gameModePairListener;
+    private @Inject MatchmakingRequestListener matchmakingRequestListener;
 
     private @Inject MenuListeners menuListeners;
 
@@ -51,6 +53,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(userJoinListener);
 
         registerEvent(gameModePairListener);
+        registerEvent(matchmakingRequestListener);
 
         registerEvent(menuListeners);
     }
