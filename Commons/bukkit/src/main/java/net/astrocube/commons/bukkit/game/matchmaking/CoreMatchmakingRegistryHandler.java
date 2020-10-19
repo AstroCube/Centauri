@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.game.matchmaking;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
@@ -19,6 +20,7 @@ public class CoreMatchmakingRegistryHandler implements MatchmakingRegistryHandle
     private final ObjectMapper mapper;
     private final Jedis redis;
 
+    @Inject
     public CoreMatchmakingRegistryHandler(ObjectMapper mapper, Redis redis) {
         this.mapper = mapper;
         this.redis = redis.getRawConnection().getResource();
