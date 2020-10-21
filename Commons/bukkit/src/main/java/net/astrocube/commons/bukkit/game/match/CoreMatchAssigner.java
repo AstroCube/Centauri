@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.game.match;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -19,12 +20,13 @@ public class CoreMatchAssigner implements MatchAssigner {
     }
 
     @Override
-    public void assign(MatchAssignable assignable, Match match) {
+    public void assign(MatchAssignable assignable, Match match) throws GameControlException {
 
         if (!redis.exists("matchmaking:" + assignable.getResponsible())) {
-            redis.del("matchmaking:" + assignable.getResponsible());
+            throw new GameControlException("No matchmaking request found for this assignation");
         }
 
+        redis.del("matchmaking:" + assignable.getResponsible());
         this.setRecord(assignable.getResponsible(), match.getId());
         assignable.getInvolved().forEach(involved -> this.setRecord(involved, match.getId()));
     }

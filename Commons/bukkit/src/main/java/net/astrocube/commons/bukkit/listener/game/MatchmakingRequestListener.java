@@ -29,11 +29,11 @@ public class MatchmakingRequestListener implements Listener {
             if (match.isPresent()) {
 
                 matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
-                // TODO: Send alert to open new server
+                // TODO: Send the player to the server
 
             } else {
 
-                // TODO: Send the player to the server
+                // TODO: Send alert to open new server
 
             }
 
