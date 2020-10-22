@@ -39,14 +39,13 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
 
         if (match.getSpectators().contains(user.getId())) {
             status = Status.SPECTATING;
-        } else if (!match.getTeams().stream().anyMatch(m -> m.getMembers().contains(user.getId()))) {
+        } else if (match.getTeams().stream().noneMatch(m -> m.getMembers().contains(user.getId()))) {
             status = Status.PLAYING;
         } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user.getId()))) {
             throw new GameControlException("There was no assignation found for this user");
         }
 
         Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, status));
-
 
     }
 
