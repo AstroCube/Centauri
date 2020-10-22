@@ -1,4 +1,4 @@
-package net.astrocube.api.bukkit.game.event.control;
+package net.astrocube.api.bukkit.game.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
