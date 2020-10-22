@@ -16,4 +16,12 @@ public interface MatchScheduler {
      */
     void schedule(MatchmakingRequest request);
 
+    /**
+     * Run the {@link Match} scheduler.
+     */
+    void schedule();
+
+
+
+
 }
