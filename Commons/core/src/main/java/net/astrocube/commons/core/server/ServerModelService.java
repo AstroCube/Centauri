@@ -59,4 +59,16 @@ public class ServerModelService extends CoreModelService<Server, Partial> implem
         );
     }
 
+    @Override
+    public Server getActual() throws Exception {
+        return httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/view/me",
+                new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.GET,
+                        null
+                )
+        );
+    }
+
 }
