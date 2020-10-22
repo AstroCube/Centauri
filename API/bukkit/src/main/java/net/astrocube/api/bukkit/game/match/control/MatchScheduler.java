@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.game.match.control;
 
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 
 /**
@@ -11,7 +12,8 @@ public interface MatchScheduler {
 
     /**
      * Run the {@link Match} scheduler.
+     * @param request to generate matchmaking if needed.
      */
-    void schedule();
+    void schedule(MatchmakingRequest request);
 
 }

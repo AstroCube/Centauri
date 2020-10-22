@@ -6,10 +6,15 @@ import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 
 @Getter
 @AllArgsConstructor
-public class MatchControlStartEvent extends Event {
+/**
+ * This will invoke a sanitize request in order to supply the
+ * {@link MatchmakingRequest}s.
+ */
+public class MatchControlSanitizeEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
     private final GameMode gameMode;
