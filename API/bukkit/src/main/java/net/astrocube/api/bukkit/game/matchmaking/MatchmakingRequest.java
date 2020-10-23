@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.game.matchmaking;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
@@ -28,6 +29,11 @@ public interface MatchmakingRequest {
      * @return requested {@link SubGameMode} id.
      */
     String getSubGameMode();
+
+    /**
+     * @return requested {@link GameMap} id.
+     */
+    Optional<String> getMap();
 
     /**
      * @return {@link MatchAssignable} of people to be paired

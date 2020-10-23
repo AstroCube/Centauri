@@ -27,6 +27,7 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
         ObjectNode node = mapper.createObjectNode();
         node.put("gamemode", request.getGameMode());
         node.put("subGamemode", request.getSubGameMode());
+        request.getMap().ifPresent(map -> node.put("map", map));
 
         ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
         ObjectNode operator = mapper.createObjectNode();

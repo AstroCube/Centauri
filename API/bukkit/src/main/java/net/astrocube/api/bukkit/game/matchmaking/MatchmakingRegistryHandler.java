@@ -26,8 +26,18 @@ public interface MatchmakingRegistryHandler {
      * @param requesters of the matchmaking.
      * @param gameMode to be paired.
      * @param subMode to be paired.
-     * @param criteria to be included at the matchmaking request.
+     * @param map to be paired.
      */
-    void generateRequest(MatchAssignable requesters, String gameMode, String subMode, ObjectNode criteria) throws JsonProcessingException;
+    void generateRequest(MatchAssignable requesters, String gameMode, String subMode, String map) throws JsonProcessingException;
+
+    /**
+     * Generate matchmaking request and register it to {@link Redis}.
+     * @param requesters of the matchmaking.
+     * @param gameMode to be paired.
+     * @param subMode to be paired.
+     * @param criteria to be included at the matchmaking request.
+     * @param map to be paired.
+     */
+    void generateRequest(MatchAssignable requesters, String gameMode, String subMode, String map, ObjectNode criteria) throws JsonProcessingException;
 
 }
