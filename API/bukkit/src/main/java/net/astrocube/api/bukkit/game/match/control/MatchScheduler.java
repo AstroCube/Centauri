@@ -14,7 +14,7 @@ public interface MatchScheduler {
      * Run the {@link Match} scheduler.
      * @param request to generate matchmaking if needed.
      */
-    void schedule(MatchmakingRequest request);
+    void schedule(MatchmakingRequest request) throws Exception;
 
     /**
      * Run the {@link Match} scheduler.
