@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.game.match.control;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
@@ -16,8 +17,15 @@ public class CoreMatchScheduler implements MatchScheduler {
     @Override
     public void schedule(MatchmakingRequest request) throws Exception {
 
-        Optional<MatchmakingRequest> optionalMatchmakingRequest = Optional.ofNullable(request);
         Server actual = serverService.getActual();
+
+        if (
+                (request != null && actual != null) &&
+                        actual.getGameMode().equalsIgnoreCase(request.getGameMode()) ||
+                        actual.getSubGameMode().equalsIgnoreCase(request.getSubGameMode())) {
+            throw new GameControlException("Illegal match scheduling. Server not paired for this gamemode");
+        }
+
 
         MatchDoc.Partial match = new MatchDoc.Identity() {
 
@@ -25,7 +33,8 @@ public class CoreMatchScheduler implements MatchScheduler {
 
             @Override
             public String getMap() {
-                return request.getMap().isPresent() ? request.getMap().get() : "";
+                return request == null ? "" :
+                        request.getMap().isPresent() ? request.getMap().get() : "";
             }
 
             @Override
@@ -45,12 +54,12 @@ public class CoreMatchScheduler implements MatchScheduler {
 
             @Override
             public String getGameMode() {
-                return request.getGameMode();
+                return actual.getGameMode();
             }
 
             @Override
             public String getSubMode() {
-                return request.getSubGameMode();
+                return actual.getSubGameMode();
             }
 
         };
