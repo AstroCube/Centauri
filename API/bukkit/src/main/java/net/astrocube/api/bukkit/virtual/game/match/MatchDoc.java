@@ -1,7 +1,9 @@
 package net.astrocube.api.bukkit.virtual.game.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.service.create.CreateService;
@@ -11,6 +13,7 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Color;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -92,6 +95,17 @@ public interface MatchDoc {
          * match start cycle.
          */
         Set<MatchAssignable> getPending();
+
+        /**
+         * @return query of detailed matchmaking.
+         */
+        Optional<ObjectNode> getQuery();
+
+        /**
+         * @return {@link MatchmakingRequest} responsible who requested
+         * a detailed matchmaking.
+         */
+        Optional<String> getRequestedBy();
 
     }
 
