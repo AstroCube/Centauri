@@ -21,7 +21,7 @@ public class CoreMatchScheduler implements MatchScheduler {
 
         if (
                 (request != null && actual != null) &&
-                        actual.getGameMode().equalsIgnoreCase(request.getGameMode()) ||
+                        ac tual.getGameMode().equalsIgnoreCase(request.getGameMode()) ||
                         actual.getSubGameMode().equalsIgnoreCase(request.getSubGameMode())) {
             throw new GameControlException("Illegal match scheduling. Server not paired for this gamemode");
         }
