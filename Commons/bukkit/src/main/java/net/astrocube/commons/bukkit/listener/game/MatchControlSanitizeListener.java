@@ -34,7 +34,13 @@ public class MatchControlSanitizeListener implements Listener {
             Server server = serverService.getActual();
 
             pendingMatchFinder.getPendingMatches(event.getGameMode(), event.getSubGameMode())
-                    .forEach(matchmakingScheduler::schedule);
+                    .forEach(pending -> {
+                        try {
+                            matchmakingScheduler.schedule(pending);
+                        } catch (Exception e) {
+                            //TODO: Send error on pairing
+                        }
+                    });
 
             ObjectNode node = mapper.createObjectNode();
             node.put("server", server.getId());
@@ -52,7 +58,11 @@ public class MatchControlSanitizeListener implements Listener {
                         .getFoundModels()
                         .stream()
                         .anyMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && getRemainingSpace(match) > 0)) {
-                    matchmakingScheduler.schedule();
+                    try {
+                        matchmakingScheduler.schedule();
+                    } catch (Exception e) {
+                        plugin.getLogger().severe("There was an error trying to create match at sanitizing.");
+                    }
                 }
 
             });
