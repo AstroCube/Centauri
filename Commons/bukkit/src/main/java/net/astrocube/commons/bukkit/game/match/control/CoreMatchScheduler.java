@@ -1,29 +1,38 @@
 package net.astrocube.commons.bukkit.game.match.control;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.event.MatchScheduleEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
+import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.server.ServerService;
+import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.virtual.server.Server;
+import org.bukkit.Bukkit;
 
-import java.util.Optional;
+import javax.annotation.Nullable;
 
+@Singleton
 public class CoreMatchScheduler implements MatchScheduler {
 
     private @Inject ServerService serverService;
+    private @Inject CreateService<Match, MatchDoc.Partial> createService;
 
     @Override
-    public void schedule(MatchmakingRequest request) throws Exception {
+    public void schedule(@Nullable MatchmakingRequest request) throws Exception {
 
         Server actual = serverService.getActual();
 
-        if (
-                (request != null && actual != null) &&
-                        ac tual.getGameMode().equalsIgnoreCase(request.getGameMode()) ||
-                        actual.getSubGameMode().equalsIgnoreCase(request.getSubGameMode())) {
-            throw new GameControlException("Illegal match scheduling. Server not paired for this gamemode");
+        if (request != null) {
+            if (
+                    !request.getGameMode().equalsIgnoreCase(actual.getGameMode()) ||
+                    !request.getSubGameMode().equalsIgnoreCase(actual.getSubGameMode())
+            ) {
+                throw new GameControlException("Illegal matchmaking request scheduling");
+            }
         }
 
 
@@ -64,11 +73,12 @@ public class CoreMatchScheduler implements MatchScheduler {
 
         };
 
-
+        Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(createService.createSync(match)));
 
     }
 
     @Override
-    public void schedule() {
+    public void schedule() throws Exception {
+        this.schedule(null);
     }
 }

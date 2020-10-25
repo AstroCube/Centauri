@@ -19,7 +19,7 @@ public interface MatchScheduler {
     /**
      * Run the {@link Match} scheduler.
      */
-    void schedule();
+    void schedule() throws Exception;
 
 
 
