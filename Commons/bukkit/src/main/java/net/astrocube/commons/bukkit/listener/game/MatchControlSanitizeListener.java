@@ -12,6 +12,7 @@ import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.server.Server;
+import net.astrocube.commons.bukkit.game.matchmaking.CoreAvailableMatchProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -57,7 +58,7 @@ public class MatchControlSanitizeListener implements Listener {
                         .get()
                         .getFoundModels()
                         .stream()
-                        .anyMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && getRemainingSpace(match) > 0)) {
+                        .anyMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
                     try {
                         matchmakingScheduler.schedule();
                     } catch (Exception e) {
@@ -73,12 +74,6 @@ public class MatchControlSanitizeListener implements Listener {
 
     }
 
-    private int getRemainingSpace(Match match) {
-        int total = 0;
-        for (MatchAssignable matchAssignable : match.getPending()) {
-            total += matchAssignable.getInvolved().size() + 1;
-        }
-        return total;
-    }
+
 
 }

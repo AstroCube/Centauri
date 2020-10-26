@@ -33,6 +33,7 @@ public class MatchmakingRequestListener implements Listener {
 
             } else {
 
+
                 // TODO: Send alert to open new server
 
             }
