@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -16,6 +17,6 @@ public interface MatchAssigner {
      * @param assignable users to the match
      * @param match to be assigned
      */
-    void assign(MatchAssignable assignable, Match match) throws GameControlException;
+    void assign(MatchAssignable assignable, Match match) throws GameControlException, JsonProcessingException;
 
 }

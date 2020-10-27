@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.event.MatchScheduleEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 public class CoreMatchScheduler implements MatchScheduler {
 
     private @Inject ServerService serverService;
+    private @Inject MatchAssigner matchAssigner;
     private @Inject CreateService<Match, MatchDoc.Partial> createService;
 
     @Override
@@ -73,7 +75,13 @@ public class CoreMatchScheduler implements MatchScheduler {
 
         };
 
-        Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(createService.createSync(match)));
+        Match created = createService.createSync(match);
+
+        Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(created));
+
+        if (request != null) {
+            matchAssigner.assign(request.getRequesters(), created);
+        }
 
     }
 

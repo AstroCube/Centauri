@@ -27,15 +27,9 @@ public class MatchmakingRequestListener implements Listener {
             );
 
             if (match.isPresent()) {
-
                 matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
-                // TODO: Send the player to the server
-
             } else {
-
-
                 // TODO: Send alert to open new server
-
             }
 
         } catch (Exception e) {
