@@ -11,7 +11,6 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
-import net.astrocube.commons.core.message.JedisMessenger;
 import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
@@ -30,6 +29,7 @@ public class CoreMatchAssigner implements MatchAssigner {
         this.redis = redis.getRawConnection().getResource();
         this.plugin = plugin;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
+        this.channel.addHandler(new MatchAssignationHandler());
     }
 
     @Override
