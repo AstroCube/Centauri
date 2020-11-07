@@ -28,11 +28,16 @@ public class CoreMatchmakingRegistryHandler implements MatchmakingRegistryHandle
 
     @Override
     public void generateRequest(MatchAssignable requesters, String gameMode, String subMode) throws JsonProcessingException {
-        generateRequest(requesters, gameMode, subMode, null);
+        generateRequest(requesters, gameMode, subMode, null, null);
     }
 
     @Override
-    public void generateRequest(MatchAssignable requesters, String gameMode, String subMode, ObjectNode criteria) throws JsonProcessingException {
+    public void generateRequest(MatchAssignable requesters, String gameMode, String subMode, String map) throws JsonProcessingException {
+        generateRequest(requesters, gameMode, subMode, map, null);
+    }
+
+    @Override
+    public void generateRequest(MatchAssignable requesters, String gameMode, String subMode, String map, ObjectNode criteria) throws JsonProcessingException {
 
         MatchmakingRequest request = new MatchmakingRequest() {
 
@@ -41,6 +46,11 @@ public class CoreMatchmakingRegistryHandler implements MatchmakingRegistryHandle
             public String getGameMode() { return gameMode; }
 
             public String getSubGameMode() { return subMode; }
+
+            @Override
+            public Optional<String> getMap() {
+                return Optional.ofNullable(map);
+            }
 
             public MatchAssignable getRequesters() { return requesters; }
 

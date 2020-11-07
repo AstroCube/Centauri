@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import net.astrocube.api.bukkit.game.GameControlPair;
+import net.astrocube.api.bukkit.game.event.MatchControlSanitizeEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
@@ -63,6 +64,8 @@ public class CoreGameControlPair implements GameControlPair {
         );
 
         this.paired = true;
+
+        Bukkit.getPluginManager().callEvent(new MatchControlSanitizeEvent(gameMode, subGameMode));
 
     }
 

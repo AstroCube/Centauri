@@ -1,8 +1,10 @@
 package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
+import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
@@ -34,6 +36,7 @@ public class UserJoinListener implements Listener {
     private @Inject FindService<User> userFindService;
     private @Inject PermissionBalancer permissionBalancer;
     private @Inject SessionAliveInterceptor sessionAliveInterceptor;
+    private @Inject UserMatchJoiner userMatchJoiner;
     private @Inject CrossTeleportExchanger crossTeleportExchanger;
     private @Inject Plugin plugin;
 
@@ -52,6 +55,7 @@ public class UserJoinListener implements Listener {
     public void onUserJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
+        ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 
         this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
             try {
@@ -102,8 +106,10 @@ public class UserJoinListener implements Listener {
 
                 }
 
-                if (ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type")) == ServerDoc.Type.LOBBY) {
+                if (type == ServerDoc.Type.LOBBY) {
                     Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
+                } else if (type == ServerDoc.Type.GAME) {
+                    userMatchJoiner.processJoin(user, player);
                 }
 
             } catch (Exception exception) {
