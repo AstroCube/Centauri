@@ -37,6 +37,11 @@ authentication:
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
 
+game:
+    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%)!"
+
+
+
 lobby:
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"

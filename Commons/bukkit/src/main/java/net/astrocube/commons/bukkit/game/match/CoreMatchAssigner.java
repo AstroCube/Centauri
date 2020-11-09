@@ -8,9 +8,12 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
+import net.astrocube.api.core.service.update.UpdateService;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
@@ -22,11 +25,13 @@ public class CoreMatchAssigner implements MatchAssigner {
 
     private final Jedis redis;
     private final Plugin plugin;
+    private final UpdateService<Match, MatchDoc.Partial> updateService;
     private final Channel<SingleMatchAssignation> channel;
 
     @Inject
-    public CoreMatchAssigner(Redis redis, Plugin plugin, Messenger jedisMessenger) {
+    public CoreMatchAssigner(Redis redis, UpdateService<Match, MatchDoc.Partial> updateService, Plugin plugin, Messenger jedisMessenger) {
         this.redis = redis.getRawConnection().getResource();
+        this.updateService = updateService;
         this.plugin = plugin;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
         this.channel.addHandler(new MatchAssignationHandler());
@@ -40,13 +45,24 @@ public class CoreMatchAssigner implements MatchAssigner {
         }
 
         redis.del("matchmaking:" + assignable.getResponsible());
+
+        match.getPending().add(assignable);
         this.setRecord(assignable.getResponsible(), match.getId());
-        assignable.getInvolved().forEach(involved -> {
-            try {
-                this.setRecord(involved, match.getId());
-            } catch (JsonProcessingException e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error assigning a match user", e);
+
+        this.updateService.update(match).callback(updateResponse -> {
+
+            if (!updateResponse.isSuccessful() || !updateResponse.getResponse().isPresent()) {
+                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
             }
+
+            assignable.getInvolved().forEach(involved -> {
+                try {
+                    this.setRecord(involved, match.getId());
+                } catch (JsonProcessingException e) {
+                    plugin.getLogger().log(Level.SEVERE, "There was an error assigning a match user", e);
+                }
+            });
+
         });
     }
 
