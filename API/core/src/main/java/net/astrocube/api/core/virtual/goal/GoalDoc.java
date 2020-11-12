@@ -5,10 +5,6 @@ import net.astrocube.api.core.model.PartialModel;
 
 public interface GoalDoc {
 
-    /**
-     * It represents the punishment identity. Getting properties of this.
-     **/
-
     interface Partial extends PartialModel {}
 
     /**
@@ -34,15 +30,7 @@ public interface GoalDoc {
 
         String gtObjective();
 
-        Object getMeta();
-
-    }
-
-    /**
-     * It represents where the goal is completed
-     */
-
-    interface Where extends Identity {
+        String getMeta();
 
         /**
          * The match where the goal is completed
@@ -74,5 +62,5 @@ public interface GoalDoc {
      * The object the creation of any Goal with all sub-groups
      */
 
-    interface Complete extends Model, Where {}
+    interface Complete extends Model, Identity {}
 }
