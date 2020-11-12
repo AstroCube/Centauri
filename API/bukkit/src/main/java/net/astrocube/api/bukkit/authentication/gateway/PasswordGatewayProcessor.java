@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 public interface PasswordGatewayProcessor {
 
     /**
-     * Performs corresponding steps to comunicate login with
+     * Performs corresponding steps to communicate login with
      * backend.
      * @param player to be validated
      * @param password to be matched

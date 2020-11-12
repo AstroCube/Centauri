@@ -43,7 +43,7 @@ public class DenySubCommand implements CommandClass {
             }
 
             friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
-            messageHandler.sendMessage(player, "commons-friend-request-denied");
+            messageHandler.send(player, "commons-friend-request-denied");
 
         });
 

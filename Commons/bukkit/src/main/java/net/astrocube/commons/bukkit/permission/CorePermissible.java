@@ -32,7 +32,7 @@ public class CorePermissible extends PermissibleBase {
                     user.getGroups().stream().map(UserDoc.UserGroup::getGroup).collect(Collectors.toSet()), s
             );
         } catch (Exception exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "An exception ocurred while getting player " + player.getName() + " permissions", exception);
+            Bukkit.getLogger().log(Level.SEVERE, "An exception occurred while getting player " + player.getName() + " permissions", exception);
         }
         return false;
     }

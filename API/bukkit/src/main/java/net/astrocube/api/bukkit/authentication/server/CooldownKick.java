@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public interface CooldownKick {
 
     /**
-     * Check if user has a cooldown and expulse him
+     * Check if user has a cooldown and eject him
      * @param user to be kicked
      * @param player to be kicked
      */

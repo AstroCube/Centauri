@@ -43,7 +43,7 @@ public class AcceptSubCommand implements CommandClass {
             }
 
             friendshipHandler.createFriendship(user.getId(), targetUser.getId(), friendship ->
-                messageHandler.sendMessage(player, "commons-friend-request-accepted")
+                messageHandler.send(player, "commons-friend-request-accepted")
             );
 
             friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());

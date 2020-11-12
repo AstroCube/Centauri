@@ -4,9 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.core.redis.Redis;
 
-import java.util.Optional;
-
-
 /**
  * Matchmaking handler who will handle all the requests made
  * by users to join a match.

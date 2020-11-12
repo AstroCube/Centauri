@@ -3,7 +3,6 @@ package net.astrocube.api.bukkit.lobby.selector.lobby;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 
 import java.util.List;
-import java.util.Set;
 
 public interface LobbyCloudWrapperGenerator {
 

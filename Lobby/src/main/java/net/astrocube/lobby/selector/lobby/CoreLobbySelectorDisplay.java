@@ -27,7 +27,7 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
         Optional<GameMode> gameMode = lobbyModeProvider.getRegisteredMode();
 
         if (!gameMode.isPresent()) {
-            messageHandler.sendMessage(player, "lobby.lobby-selector.error.not-detected");
+            messageHandler.send(player, "lobby.lobby-selector.error.not-detected");
             return;
         }
 
