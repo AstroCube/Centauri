@@ -28,7 +28,7 @@ public interface GoalDoc {
          * @return The name/type of the goal objective
          */
 
-        String gtObjective();
+        String getObjective();
 
         String getMeta();
 
