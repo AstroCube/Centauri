@@ -17,12 +17,12 @@ package net.astrocube.api.core.model;
  *           |                       v
  *         Model ------------> Thing.Complete
  *
- * The hiearchy for a model called Thing would start with an empty interface
+ * The hierarchy for a model called Thing would start with an empty interface
  * called Thing.Partial that extends {@link PartialModel}. For every sub-group
  * of Thing fields that are sent/received together, there would be an interface
  * extending Thing.Partial that declares getter methods for those fields only.
  *
- * At the bottom of the hiearchy would be an interface called Thing.Complete
+ * At the bottom of the hierarchy would be an interface called Thing.Complete
  * that extends {@link Model} and ALL of the Thing parts. Any fields that are not
  * declared in any of the parts should be declared in the complete model.
  *
