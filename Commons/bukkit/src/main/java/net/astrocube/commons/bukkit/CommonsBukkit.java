@@ -7,7 +7,6 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.loader.InjectionLoaderModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 public class CommonsBukkit extends JavaPlugin {
 
     private @Inject Loader loader;

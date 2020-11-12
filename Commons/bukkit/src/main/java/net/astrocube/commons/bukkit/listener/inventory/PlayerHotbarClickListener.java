@@ -41,7 +41,7 @@ public class PlayerHotbarClickListener implements Listener {
                     ));
                     event.setCancelled(true);
                 } else {
-                    messageHandler.sendMessage(event.getPlayer(), "interaction.actionable-error");
+                    messageHandler.send(event.getPlayer(), "interaction.actionable-error");
                 }
             });
         }

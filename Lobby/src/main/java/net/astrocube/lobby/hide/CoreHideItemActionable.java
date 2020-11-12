@@ -39,10 +39,10 @@ public class CoreHideItemActionable implements HideItemActionable {
                 }
 
                 player.getInventory().setItem(7, HideGadgetStack.get(messageHandler, player, !hide));
-                messageHandler.sendMessage(player, translateAlert);
+                messageHandler.send(player, translateAlert);
 
             } else {
-                messageHandler.sendMessage(player, "lobby.hiding.error");
+                messageHandler.send(player, "lobby.hiding.error");
             }
         });
 

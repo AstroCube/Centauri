@@ -1,21 +1,20 @@
 package net.astrocube.commons.bukkit.translation.holder;
 
-import me.yushust.message.MessageRepository;
-import me.yushust.message.placeholder.PlaceholderProvider;
+import me.yushust.message.ContextRepository;
 
+import me.yushust.message.specific.PlaceholderProvider;
 import org.bukkit.entity.Player;
 
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerPlaceholderReplacer extends PlaceholderProvider<Player> {
+public class PlayerPlaceholderReplacer implements PlaceholderProvider<Player> {
 
     @Override
-    protected @Nullable String replace(MessageRepository messageRepository, Player player, String message) {
-        if ("player".equals(message)) {
+    public @Nullable Object replace(ContextRepository<?> contextRepository, Player player, String s) {
+        if ("player".equals(s)) {
             return player.getName();
         }
 
         return "";
     }
-
 }

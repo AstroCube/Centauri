@@ -21,7 +21,4 @@ public interface MatchScheduler {
      */
     void schedule() throws Exception;
 
-
-
-
 }
