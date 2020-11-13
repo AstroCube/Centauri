@@ -1,4 +1,4 @@
-package net.astrocube.api.core.virtual.goal;
+package net.astrocube.api.bukkit.virtual.goal;
 
 import net.astrocube.api.core.model.ModelProperties;
 

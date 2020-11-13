@@ -11,6 +11,5 @@ public class ModelModule extends ProtectedModule {
         install(new ServerModelModule());
         install(new UserModelModule());
         install(new PunishmentsModelModule());
-        install(new GoalModelModule());
     }
 }

@@ -1,10 +1,10 @@
-package net.astrocube.commons.core.virtual;
+package net.astrocube.commons.bukkit.virtual;
 
 import com.google.inject.TypeLiteral;
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.api.bukkit.virtual.goal.Goal;
+import net.astrocube.api.bukkit.virtual.goal.GoalDoc;
 import net.astrocube.api.core.utils.ResolvableType;
-import net.astrocube.api.core.virtual.goal.Goal;
-import net.astrocube.api.core.virtual.goal.GoalDoc;
 import net.astrocube.commons.core.model.binder.ModelBinderModule;
 import net.astrocube.commons.core.service.CoreModelService;
 
