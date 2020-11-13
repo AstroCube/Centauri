@@ -38,7 +38,7 @@ authentication:
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
 
 game:
-    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%)!"
+    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
 
 
 
