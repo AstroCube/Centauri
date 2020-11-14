@@ -1,0 +1,27 @@
+package net.astrocube.api.bukkit.game.countdown;
+
+import net.astrocube.api.bukkit.virtual.game.match.Match;
+
+public interface CountdownScheduler {
+
+    /**
+     * Schedule a countdown for a certain {@link Match}.
+     * @param match to be started
+     */
+    void scheduleMatchCountdown(Match match);
+
+    /**
+     * Schedule a countdown for a certain {@link Match}.
+     * @param match to be started
+     * @param seconds before the match starts
+     * @param force if the countdown was forced
+     */
+    void scheduleMatchCountdown(Match match, int seconds, boolean force);
+
+    /**
+     * Cancel match countdown until the minimum
+     * players requirement is met.
+     * @param match to be cancelled
+     */
+    void cancelMatchCountdown(Match match);
+}

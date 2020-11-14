@@ -39,8 +39,7 @@ authentication:
 
 game:
     lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
-
-
+    countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
 
 lobby:
     hiding:
