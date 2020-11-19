@@ -24,24 +24,9 @@ public interface GameMap extends Model.Stamped {
     String getName();
 
     /**
-     * @return byte array containing map file in slime format
-     */
-    byte[] getFile();
-
-    /**
-     * @return raw JSON configuration to be manually serialized
-     */
-    String getConfiguration();
-
-    /**
      * @return map author id to be used with a {@link FindService}
      */
     String getAuthor();
-
-    /**
-     * @return semantic versioned map. Generally using (vx.x.x) template
-     */
-    String getVersion();
 
     /**
      * @return set containing registered contributions at database
@@ -68,6 +53,11 @@ public interface GameMap extends Model.Stamped {
      * @return rating set containing every user rate related to the map
      */
     Set<Rating> getRating();
+
+    /**
+     * @return rating set containing every user rate related to the map
+     */
+    Set<Version> getVersions();
 
     /**
      * Interface containing certain methods to determine contributors from map
@@ -104,6 +94,25 @@ public interface GameMap extends Model.Stamped {
          */
         @JsonProperty("user")
         String getAuthor();
+
+    }
+
+    interface Version {
+
+        /**
+         * @return semantic versioned map. Generally using (vx.x.x) template
+         */
+        String getVersion();
+
+        /**
+         * @return byte array containing map file in slime format
+         */
+        String getFile();
+
+        /**
+         * @return raw JSON configuration to be manually serialized
+         */
+        String getConfiguration();
 
     }
 
