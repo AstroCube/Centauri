@@ -4,7 +4,6 @@ import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.core.service.find.FindService;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public interface GameMapService extends FindService<GameMap> {
 
