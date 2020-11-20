@@ -20,9 +20,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.seocraft</groupId>
-            <artifactId>paperspigot</artifactId>
-            <version>1.8-SNAPSHOT</version>
+            <groupId>net.astrocube</groupId>
+            <artifactId>PaperSpigot</artifactId>
+            <version>1.8-20201112.225727-1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

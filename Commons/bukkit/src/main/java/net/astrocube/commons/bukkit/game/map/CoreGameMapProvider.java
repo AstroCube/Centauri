@@ -6,11 +6,11 @@ import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.GameMapProvider;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
-import org.apache.commons.io.FileUtils;
+import net.astrocube.slime.api.world.SlimeWorld;
+import net.astrocube.slime.api.world.properties.SlimePropertyMap;
+import net.astrocube.slime.core.loaders.LoaderUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 public class CoreGameMapProvider implements GameMapProvider {
 
@@ -18,7 +18,7 @@ public class CoreGameMapProvider implements GameMapProvider {
     private @Inject GameMapCache gameMapCache;
 
     @Override
-    public void loadGameMap(GameMap gameMap) throws IOException, GameControlException {
+    public SlimeWorld loadGameMap(GameMap gameMap) throws IOException, GameControlException {
 
         byte[] serializedMap = gameMapCache.exists(gameMap.getId()) ?
                 gameMapCache.getFile(gameMap.getId()) :
@@ -33,32 +33,7 @@ public class CoreGameMapProvider implements GameMapProvider {
             gameMapCache.registerConfiguration(gameMap.getId(), serializedConfig);
         }
 
-        generateEmptyFolder();
-        File file = generateMapFolder(gameMap.getId());
-
-        if (!file.exists()) {
-            file.mkdir();
-            FileUtils.writeByteArrayToFile(new File(file, "map.slime"), serializedMap);
-            FileUtils.writeByteArrayToFile(new File(file, "config.json"), serializedConfig);
-        }
-
-    }
-
-    @Override
-    public Set<GameMap> getAvailableMaps() {
-        return null;
-    }
-
-    private void generateEmptyFolder() {
-        File file = new File("./maps");
-        if (!file.exists()) {
-            file.mkdir();
-        }
-    }
-
-    private File generateMapFolder(String id) {
-        File file = new File("./maps/" + id);
-        return file;
+        return LoaderUtils.deserializeWorld(loader, worldName, serializedWorld, new SlimePropertyMap(), readOnly);
     }
 
 }
