@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.game.map;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
@@ -13,6 +14,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+@Singleton
 public class CoreGameMapService extends CoreModelService<GameMap, GameMap> implements GameMapService {
 
     private final HttpClientConfig httpClientConfig;
