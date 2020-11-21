@@ -6,9 +6,6 @@ import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.GameMapProvider;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
-import net.astrocube.slime.api.world.SlimeWorld;
-import net.astrocube.slime.api.world.properties.SlimePropertyMap;
-import net.astrocube.slime.core.loaders.LoaderUtils;
 
 import java.io.IOException;
 
@@ -18,7 +15,7 @@ public class CoreGameMapProvider implements GameMapProvider {
     private @Inject GameMapCache gameMapCache;
 
     @Override
-    public SlimeWorld loadGameMap(GameMap gameMap) throws IOException, GameControlException {
+    public MapFiles loadGameMap(GameMap gameMap) throws IOException, GameControlException {
 
         byte[] serializedMap = gameMapCache.exists(gameMap.getId()) ?
                 gameMapCache.getFile(gameMap.getId()) :
@@ -33,7 +30,17 @@ public class CoreGameMapProvider implements GameMapProvider {
             gameMapCache.registerConfiguration(gameMap.getId(), serializedConfig);
         }
 
-        return LoaderUtils.deserializeWorld(loader, worldName, serializedWorld, new SlimePropertyMap(), readOnly);
+        return new MapFiles() {
+            @Override
+            public byte[] getMapFile() {
+                return serializedMap;
+            }
+
+            @Override
+            public byte[] getMapConfig() {
+                return serializedConfig;
+            }
+        };
     }
 
 }
