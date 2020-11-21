@@ -125,9 +125,7 @@ public class Methods {
         }
 
         method = findInterfaceMethod(cls, call, true);
-        if(method != null) return method;
-
-        return null;
+        return method;
     }
 
     private static @Nullable Method findClassMethod(@Nullable Class<?> cls, Method call) {

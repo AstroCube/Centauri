@@ -115,7 +115,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     @Override
     public Complete createSync(CreateRequest<Partial> request) throws Exception {
         return this.httpClient.executeRequestSync(
-                modelMeta.getRouteKey(),
+                modelMeta.getRouteKey(), // https://perseus.astrocube.net/api/friend/
                 new CoreRequestCallable<>(getCompleteType(), mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,

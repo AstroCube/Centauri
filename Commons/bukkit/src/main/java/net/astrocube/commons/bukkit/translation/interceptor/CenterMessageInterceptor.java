@@ -1,11 +1,9 @@
 package net.astrocube.commons.bukkit.translation.interceptor;
 
-import me.yushust.message.core.intercept.InterceptContext;
-import me.yushust.message.core.intercept.MessageInterceptor;
-import org.bukkit.entity.Player;
+import me.yushust.message.MessageInterceptor;
 import org.jetbrains.annotations.NotNull;
 
-public class CenterMessageInterceptor implements MessageInterceptor<Player> {
+public class CenterMessageInterceptor implements MessageInterceptor {
 
     private static final String CENTER_KEYWORD = "%%center%%";
 
@@ -18,7 +16,7 @@ public class CenterMessageInterceptor implements MessageInterceptor<Player> {
     }
 
     @Override
-    public @NotNull String replace(InterceptContext<Player> interceptContext, String text) {
+    public @NotNull String intercept(String text) {
         String[] args = text.split("\n");
 
         for (int i = 0; i < args.length; i++) {
@@ -27,4 +25,5 @@ public class CenterMessageInterceptor implements MessageInterceptor<Player> {
 
         return String.join("\n", args);
     }
+
 }

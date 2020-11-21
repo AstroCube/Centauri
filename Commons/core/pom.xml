@@ -22,8 +22,7 @@
         <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>ebcm-universal</artifactId>
-            <version>2.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>2.0.1-20201112.205308-1</version>
         </dependency>
         <dependency>
             <groupId>org.ocpsoft.prettytime</groupId>
@@ -34,13 +33,12 @@
         <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>Spigot-BungeeBridge</artifactId>
-            <version>1.8-20200318.190928-1</version>
+            <version>1.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>ebcm-bukkit</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>2.0.0-20201112.205517-1</version>
         </dependency>
     </dependencies>
 

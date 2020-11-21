@@ -2,7 +2,7 @@ package net.astrocube.lobby.selector.lobby;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorWrapper;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyServerRedirect;
@@ -22,7 +22,7 @@ import java.util.List;
 @Singleton
 public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject LobbyServerRedirect lobbyServerRedirect;
 
     @Override
@@ -53,13 +53,13 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
         meta.setDisplayName(color + wrapper.getName());
 
         loreArray.add(
-                messageProvider.getMessage(player, "lobby.lobby-selector.indicators.connected")
+                messageHandler.getMessage(player, "lobby.lobby-selector.indicators.connected")
                 .replace("%%users%%", wrapper.getConnected() + "")
                 .replace("%%total%%", wrapper.getMax() + "")
         );
         loreArray.add(" ");
         loreArray.add(
-                color + messageProvider.getMessage(player, "lobby.lobby-selector.indicators." + translation)
+                color + messageHandler.getMessage(player, "lobby.lobby-selector.indicators." + translation)
         );
 
         meta.setLore(loreArray);

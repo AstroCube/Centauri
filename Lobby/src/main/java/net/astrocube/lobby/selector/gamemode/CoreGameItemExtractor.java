@@ -1,7 +1,7 @@
 package net.astrocube.lobby.selector.gamemode;
 
 import com.google.inject.Inject;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorRedirect;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CoreGameItemExtractor implements GameItemExtractor {
 
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject GameSelectorRedirect gameSelectorRedirect;
 
     @Override
@@ -28,13 +28,13 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         if (exchangeableMaterial != null) icon = new ItemStack(exchangeableMaterial);
 
         ItemMeta iconMeta = icon.getItemMeta();
-        List<String> baseLore = new ArrayList<>(messageProvider.getMessages(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
+        List<String> baseLore = new ArrayList<>(messageHandler.getMessages(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
 
         baseLore.add(" ");
-        baseLore.add(messageProvider.getMessage(player, "lobby.gameSelector.gadget-playing"));
+        baseLore.add(messageHandler.getMessage(player, "lobby.gameSelector.gadget-playing"));
 
         iconMeta.setDisplayName(
-                messageProvider.getMessage(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
+                messageHandler.getMessage(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
         );
         iconMeta.setLore(
                 baseLore

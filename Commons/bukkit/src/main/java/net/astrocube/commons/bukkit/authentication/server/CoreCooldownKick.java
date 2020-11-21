@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.authentication.server;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
 import net.astrocube.api.bukkit.authentication.server.CooldownKick;
 import net.astrocube.api.core.redis.Redis;
@@ -18,19 +18,19 @@ import redis.clients.jedis.Jedis;
 public class CoreCooldownKick implements CooldownKick {
 
     private final AuthenticationCooldown authenticationCooldown;
-    private final MessageProvider<Player> messageProvider;
+    private final MessageHandler<Player> messageHandler;
     private final Plugin plugin;
     private final Jedis redis;
 
     @Inject
     public CoreCooldownKick(
             AuthenticationCooldown authenticationCooldown,
-            MessageProvider<Player> messageProvider,
+            MessageHandler<Player> messageHandler,
             Plugin plugin,
             Redis redis
     ) {
         this.authenticationCooldown = authenticationCooldown;
-        this.messageProvider = messageProvider;
+        this.messageHandler = messageHandler;
         this.plugin = plugin;
         this.redis = redis.getRawConnection().getResource();
     }
@@ -39,7 +39,7 @@ public class CoreCooldownKick implements CooldownKick {
     public void checkAndKick(User user, Player player) {
         if (authenticationCooldown.hasCooldown(user.getId())) {
             Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(
-                    ChatColor.RED + messageProvider.getMessage(player, "authentication.attempts")
+                    ChatColor.RED + messageHandler.getMessage(player, "authentication.attempts")
             ));
         }
     }

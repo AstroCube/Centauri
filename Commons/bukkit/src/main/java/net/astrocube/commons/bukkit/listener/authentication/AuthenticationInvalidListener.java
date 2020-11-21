@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.listener.authentication;
 
 import com.google.inject.Inject;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationInvalidEvent;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
 import net.astrocube.api.bukkit.authentication.server.CooldownKick;
@@ -20,7 +20,7 @@ public class AuthenticationInvalidListener implements Listener {
 
     private @Inject CooldownKick cooldownKick;
     private @Inject AuthenticationCooldown authenticationCooldown;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 
@@ -46,7 +46,7 @@ public class AuthenticationInvalidListener implements Listener {
             } catch (AuthorizeException exception) {
                 plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
                 event.getPlayer().kickPlayer(
-                        messageProvider.getMessage(event.getPlayer(), "authentication.unauthorized")
+                        messageHandler.getMessage(event.getPlayer(), "authentication.unauthorized")
                                 .replace("%%error%%", exception.getMessage())
                 );
             }

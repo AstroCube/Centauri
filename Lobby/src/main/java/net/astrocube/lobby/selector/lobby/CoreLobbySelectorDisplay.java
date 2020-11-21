@@ -1,7 +1,7 @@
 package net.astrocube.lobby.selector.lobby;
 
 import com.google.inject.Inject;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.gamemode.LobbyModeProvider;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyCloudWrapperGenerator;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
 
     private @Inject LobbyModeProvider lobbyModeProvider;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject LobbyCloudWrapperGenerator lobbyCloudWrapperGenerator;
     private @Inject LobbyIconExtractor lobbyIconExtractor;
 
@@ -27,12 +27,12 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
         Optional<GameMode> gameMode = lobbyModeProvider.getRegisteredMode();
 
         if (!gameMode.isPresent()) {
-            messageProvider.sendMessage(player, "lobby.lobby-selector.error.not-detected");
+            messageHandler.send(player, "lobby.lobby-selector.error.not-detected");
             return;
         }
 
         MenuBuilder menuBuilder = MenuBuilder.newBuilder(
-                messageProvider.getMessage(player, "lobby.lobby-selector.gadget-title"),
+                messageHandler.getMessage(player, "lobby.lobby-selector.gadget-title"),
                 1
         );
         menuBuilder.cancelClick(true);

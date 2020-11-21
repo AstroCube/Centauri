@@ -6,7 +6,7 @@ import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.fixeddev.ebcm.parametric.annotation.Optional;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.paginate.PaginateResult;
@@ -24,7 +24,7 @@ import java.util.logging.Level;
 public class ListSubCommand implements CommandClass {
 
     private static final int FRIENDS_PER_PAGE = 10;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FindService<User> userFindService;
 
@@ -41,12 +41,12 @@ public class ListSubCommand implements CommandClass {
 
                     if (friendships.length == 0 && pageIndicator == -1
                             && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
-                        player.sendMessage(messageProvider.getMessage(player, "no-friends"));
+                        player.sendMessage(messageHandler.getMessage(player, "no-friends"));
                         return;
                     }
 
 
-                    player.sendMessage(messageProvider.getMessage(player, "friend-list.header"));
+                    player.sendMessage(messageHandler.getMessage(player, "friend-list.header"));
                     for (Friendship friendship : friendships) {
 
                         String id = friendship.getIssuer();
@@ -69,9 +69,9 @@ public class ListSubCommand implements CommandClass {
                         }
 
                         player.sendMessage(
-                                messageProvider.getMessage(player, "friend-list.element")
+                                messageHandler.getMessage(player, "friend-list.element")
                                         .replace("%%friend_name%%", user.getUsername())
-                                        .replace("%%status%%", messageProvider.getMessage(player,
+                                        .replace("%%status%%", messageHandler.getMessage(player,
                                                 user.getSession().isOnline() ? "online" : "offline"
                                         ))
                         );
@@ -80,7 +80,7 @@ public class ListSubCommand implements CommandClass {
                     TextComponent clickableComponents = new TextComponent();
 
                     if (pagination.hasPrevPage()) {
-                        String message = messageProvider.getMessage(player, "friends-previous-page");
+                        String message = messageHandler.getMessage(player, "friends-previous-page");
                         clickableComponents.setText(message);
                         clickableComponents.setHoverEvent(new HoverEvent(
                                 HoverEvent.Action.SHOW_TEXT,
@@ -90,7 +90,7 @@ public class ListSubCommand implements CommandClass {
 
                     if (pagination.hasNextPage()) {
                         clickableComponents.addExtra("        "); // just add space to separate that shit
-                        String message = messageProvider.getMessage(player, "friends-next-page");
+                        String message = messageHandler.getMessage(player, "friends-next-page");
                         TextComponent component = new TextComponent(message);
                         component.setHoverEvent(new HoverEvent(
                                 HoverEvent.Action.SHOW_TEXT,

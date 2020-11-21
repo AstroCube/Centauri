@@ -1,7 +1,5 @@
 package net.astrocube.api.bukkit.authentication.server;
 
-import net.astrocube.api.core.authentication.AuthorizeException;
-
 import java.util.Date;
 
 public interface AuthenticationCooldown {

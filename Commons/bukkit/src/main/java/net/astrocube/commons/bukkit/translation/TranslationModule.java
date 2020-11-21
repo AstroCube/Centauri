@@ -4,34 +4,34 @@ import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import me.fixeddev.inject.ProtectedModule;
-import me.yushust.message.core.MessageProvider;
-import me.yushust.message.core.MessageRepository;
-import me.yushust.message.core.ProvideStrategy;
+import me.yushust.message.MessageHandler;
+import me.yushust.message.MessageRepository;
 import me.yushust.message.format.bukkit.BukkitMessageAdapt;
+import me.yushust.message.specific.Messenger;
+import me.yushust.message.strategy.Strategy;
 import net.astrocube.commons.bukkit.translation.interceptor.CenterMessageInterceptor;
 import net.astrocube.commons.bukkit.translation.interceptor.ColorMessageInterceptor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class TranslationModule extends ProtectedModule {
 
     @Provides @Singleton @Exposed
-    public MessageProvider<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
-        return MessageProvider.<Player>builder()
+    public MessageHandler<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
+        return MessageHandler.builder(Player.class)
                 .setRepository(
                         MessageRepository.builder()
                                 .setDefaultLanguage("es")
-                                .setNodeFileLoader(BukkitMessageAdapt.getYamlFileLoader(plugin, null))
+                                .setNodeFileLoader(BukkitMessageAdapt.getYamlFileLoader(plugin))
                                 .setFileFormat("lang_%lang%.yml")
-                                .setProvideStrategy(ProvideStrategy.RETURN_PATH)
+                                .setStrategy(new Strategy())
                                 .setLoadSource(BukkitMessageAdapt.getPluginLoadSource(plugin))
                                 .build()
                 )
                 .setLanguageProvider(languageProvider)
                 .addInterceptor(new ColorMessageInterceptor())
                 .addInterceptor(new CenterMessageInterceptor())
-                .setMessageConsumer(CommandSender::sendMessage)
+                .setMessenger(Messenger.dummy())
                 .build();
     }
 }

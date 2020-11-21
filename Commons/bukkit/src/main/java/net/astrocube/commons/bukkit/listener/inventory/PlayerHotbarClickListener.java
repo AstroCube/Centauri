@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.listener.inventory;
 
 import com.google.inject.Inject;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.inventory.event.ActionableItemEvent;
 import net.astrocube.api.bukkit.user.inventory.nbt.NBTUtils;
 import net.astrocube.api.core.service.find.FindService;
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 public class PlayerHotbarClickListener implements Listener {
 
     private @Inject FindService<User> findService;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
 
     @EventHandler
     public void onHotbarClick(PlayerInteractEvent event) {
@@ -41,7 +41,7 @@ public class PlayerHotbarClickListener implements Listener {
                     ));
                     event.setCancelled(true);
                 } else {
-                    messageProvider.sendMessage(event.getPlayer(), "interaction.actionable-error");
+                    messageHandler.send(event.getPlayer(), "interaction.actionable-error");
                 }
             });
         }

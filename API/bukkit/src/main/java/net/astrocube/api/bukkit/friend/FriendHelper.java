@@ -1,7 +1,6 @@
 package net.astrocube.api.bukkit.friend;
 
 import net.astrocube.api.core.virtual.user.User;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public interface FriendHelper {

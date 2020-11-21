@@ -2,7 +2,7 @@ package net.astrocube.lobby.hide;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import me.yushust.message.core.MessageProvider;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.hide.HideItemActionable;
 import net.astrocube.api.bukkit.lobby.hide.HideStatusModifier;
 import net.astrocube.api.core.service.update.UpdateService;
@@ -18,7 +18,7 @@ public class CoreHideItemActionable implements HideItemActionable {
 
     private @Inject UpdateService<User, UserDoc.Partial> updateService;
     private @Inject HideStatusModifier hideStatusModifier;
-    private @Inject MessageProvider<Player> messageProvider;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
     @Override
@@ -38,11 +38,11 @@ public class CoreHideItemActionable implements HideItemActionable {
                     translateAlert = "lobby.hiding.disabled";
                 }
 
-                player.getInventory().setItem(7, HideGadgetStack.get(messageProvider, player, !hide));
-                messageProvider.sendMessage(player, translateAlert);
+                player.getInventory().setItem(7, HideGadgetStack.get(messageHandler, player, !hide));
+                messageHandler.send(player, translateAlert);
 
             } else {
-                messageProvider.sendMessage(player, "lobby.hiding.error");
+                messageHandler.send(player, "lobby.hiding.error");
             }
         });
 
