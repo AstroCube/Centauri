@@ -57,7 +57,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             if (!subGameMode.isPresent())
                 throw new Exception("Requested subGameMode not found");
 
-            gameServerStartManager.createGameServer(
+            String token = gameServerStartManager.createGameServer(
                     Bukkit.getServerName(),
                     type,
                     plugin.getConfig().getString("server.cluster"),
@@ -66,6 +66,7 @@ public class BukkitStartResolver implements ServerStartResolver {
                     gameModeDoc,
                     subGameMode.get()
             );
+            this.authorizationProcessor.authorizeBackend(token.toCharArray());
 
             gameControlPair.enablePairing();
 
