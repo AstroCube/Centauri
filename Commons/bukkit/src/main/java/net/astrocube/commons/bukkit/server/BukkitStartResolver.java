@@ -43,7 +43,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             }
 
             GameMode gameModeDoc = this.gameModeFindService.findSync(
-                    plugin.getConfig().getString("server.gamemode")
+                    plugin.getConfig().getString("game.mode")
             );
 
             if (gameModeDoc.getSubTypes() == null)
@@ -51,7 +51,7 @@ public class BukkitStartResolver implements ServerStartResolver {
 
             Optional<SubGameMode> subGameMode =
                     Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
-                            s.getId().equalsIgnoreCase(plugin.getConfig().getString("server.subMode"))
+                            s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
                     ).findAny();
 
             if (!subGameMode.isPresent())
