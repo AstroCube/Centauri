@@ -51,7 +51,7 @@ public class ServerModelService extends CoreModelService<Server, Partial> implem
     public void disconnect() throws Exception {
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey(),
-                new CoreRequestCallable<>(null, this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.DELETE,
                         ""
