@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 
 public class MatchControlSanitizeListener implements Listener {
 
@@ -62,7 +64,7 @@ public class MatchControlSanitizeListener implements Listener {
                     try {
                         matchmakingScheduler.schedule();
                     } catch (Exception e) {
-                        plugin.getLogger().severe("There was an error trying to create match at sanitizing.");
+                        plugin.getLogger().log(Level.WARNING, "There was an error trying to create match at sanitizing.", e);
                     }
                 }
 
