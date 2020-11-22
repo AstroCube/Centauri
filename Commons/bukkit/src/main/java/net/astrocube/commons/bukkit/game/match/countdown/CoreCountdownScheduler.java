@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
+import net.astrocube.api.bukkit.game.event.GameTimerOutEvent;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.commons.bukkit.utils.CountdownTimer;
 import org.bukkit.Bukkit;
@@ -43,7 +44,7 @@ public class CoreCountdownScheduler implements CountdownScheduler {
                     plugin,
                     1,
                     (sec) -> countdownAlerter.alertCountdownSecond(match, seconds),
-                    () -> {}
+                    () -> Bukkit.getPluginManager().callEvent(new GameTimerOutEvent(match.getId()))
             );
             runnable.scheduleTimer();
             this.scheduledTimers.put(match.getId(), runnable.getAssignedTaskId());
