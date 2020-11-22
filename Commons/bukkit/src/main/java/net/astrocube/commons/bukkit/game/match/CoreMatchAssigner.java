@@ -10,6 +10,8 @@ import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.ChannelBind;
+import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.update.UpdateService;
@@ -34,7 +36,6 @@ public class CoreMatchAssigner implements MatchAssigner {
         this.updateService = updateService;
         this.plugin = plugin;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
-        this.channel.addHandler(new MatchAssignationHandler());
     }
 
     @Override
