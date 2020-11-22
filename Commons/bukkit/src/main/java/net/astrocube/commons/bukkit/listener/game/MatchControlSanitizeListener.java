@@ -60,7 +60,7 @@ public class MatchControlSanitizeListener implements Listener {
                         .get()
                         .getFoundModels()
                         .stream()
-                        .anyMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
+                        .noneMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
                     try {
                         matchmakingScheduler.schedule();
                     } catch (Exception e) {
@@ -71,7 +71,7 @@ public class MatchControlSanitizeListener implements Listener {
             });
 
         } catch (Exception e) {
-            plugin.getLogger().severe("There was an error trying to sanitize matches.");
+            plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);
         }
 
     }

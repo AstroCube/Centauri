@@ -66,7 +66,7 @@ public class ServerModelService extends CoreModelService<Server, Partial> implem
                 new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
-                        null
+                        ""
                 )
         );
     }
