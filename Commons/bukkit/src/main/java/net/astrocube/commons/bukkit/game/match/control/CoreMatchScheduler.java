@@ -13,6 +13,7 @@ import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.virtual.server.Server;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 
@@ -20,6 +21,7 @@ import javax.annotation.Nullable;
 public class CoreMatchScheduler implements MatchScheduler {
 
     private @Inject ServerService serverService;
+    private @Inject Plugin plugin;
     private @Inject MatchAssigner matchAssigner;
     private @Inject CreateService<Match, MatchDoc.Partial> createService;
 
@@ -76,6 +78,8 @@ public class CoreMatchScheduler implements MatchScheduler {
         };
 
         Match created = createService.createSync(match);
+
+        plugin.getLogger().info("Scheduled new match with ID " + created.getId());
 
         Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(created));
 
