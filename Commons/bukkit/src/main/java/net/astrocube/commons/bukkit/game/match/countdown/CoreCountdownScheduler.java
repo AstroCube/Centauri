@@ -58,4 +58,9 @@ public class CoreCountdownScheduler implements CountdownScheduler {
         this.scheduledTimers.remove(match.getId());
     }
 
+    @Override
+    public boolean hasActiveCountdown(Match match) {
+        return scheduledTimers.containsKey(match.getId());
+    }
+
 }

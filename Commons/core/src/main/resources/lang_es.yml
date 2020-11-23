@@ -40,6 +40,13 @@ authentication:
 game:
     lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
+    admin:
+        match-help:
+            - "%%gold%%============================"
+            - "%%aqua%%/match start <segundos> - Inicia la partida en la que te encuentras en cierta cantidad de segundos"
+            - "%%aqua%%/match cancel - Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
+            - "%%aqua%%/match invalidate - Invalida la partida en la que te encuentras"
+            - "%%gold%%============================"
 
 lobby:
     hiding:

@@ -24,4 +24,11 @@ public interface CountdownScheduler {
      * @param match to be cancelled
      */
     void cancelMatchCountdown(Match match);
+
+    /**
+     * Check if match has an actual countdown running.
+     * @param match to be checked
+     * @return if the match has an active countdown
+     */
+    boolean hasActiveCountdown(Match match);
 }
