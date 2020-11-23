@@ -42,27 +42,10 @@ public class CoreMatchScheduler implements MatchScheduler {
 
         MatchDoc.Partial match = new MatchDoc.Identity() {
 
-            private MatchDoc.Status status = MatchDoc.Status.LOBBY;
-
             @Override
             public String getMap() {
                 return request == null ? "" :
                         request.getMap().isPresent() ? request.getMap().get() : "";
-            }
-
-            @Override
-            public String getServer() {
-                return actual.getId();
-            }
-
-            @Override
-            public MatchDoc.Status getStatus() {
-                return status;
-            }
-
-            @Override
-            public void setStatus(MatchDoc.Status status) {
-                this.status = status;
             }
 
             @Override

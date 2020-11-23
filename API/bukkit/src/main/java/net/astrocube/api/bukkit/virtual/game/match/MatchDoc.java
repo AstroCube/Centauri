@@ -40,21 +40,6 @@ public interface MatchDoc {
         String getMap();
 
         /**
-         * @return server id to be used with a {@link FindService}
-         */
-        String getServer();
-
-        /**
-         * @return certain {@link Status} of the match
-         */
-        Status getStatus();
-
-        /**
-         * @param status to update match property
-         */
-        void setStatus(Status status);
-
-        /**
          * @return {@link GameMode} id to be used with a {@link FindService}
          */
         @JsonProperty("gamemode")
@@ -73,6 +58,11 @@ public interface MatchDoc {
      * assignation at this match.
      */
     interface Assignation {
+
+        /**
+         * @return server id to be used with a {@link FindService}
+         */
+        String getServer();
 
         /**
          * @return set of teams assigned to the match.
@@ -107,6 +97,17 @@ public interface MatchDoc {
          */
         Optional<String> getRequestedBy();
 
+
+        /**
+         * @return certain {@link Status} of the match
+         */
+        Status getStatus();
+
+        /**
+         * @param status to update match property
+         */
+        void setStatus(Status status);
+
     }
 
     /**
@@ -135,7 +136,18 @@ public interface MatchDoc {
      * Enum with options that can be used to determine a match status.
      */
     enum Status {
-        PREPARING, LOBBY, STARTING, RUNNING, FINISHED, INVALIDATED
+        @JsonProperty("Preparing")
+        PREPARING,
+        @JsonProperty("Lobby")
+        LOBBY,
+        @JsonProperty("Starting")
+        STARTING,
+        @JsonProperty("Running")
+        RUNNING,
+        @JsonProperty("Finished")
+        FINISHED,
+        @JsonProperty("Invalidated")
+        INVALIDATED
     }
 
     /**

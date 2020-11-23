@@ -93,12 +93,13 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
             if (statusCode < 400) {
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    T model = (T) objectMapper.readValue(json, getCompleteType().getRawType());
+                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType().getType()));
                     String key = modelMeta.getRouteKey() + ":" + model.getId();
                     jedis.set(key, json);
                     jedis.expire(key, modelMeta.getCache());
                     return model;
                 } catch (Exception exception) {
+                    exception.printStackTrace();
                     throw new Exception("Parsing of " + getCompleteType().getType() + " failed");
                 }
             } else {
