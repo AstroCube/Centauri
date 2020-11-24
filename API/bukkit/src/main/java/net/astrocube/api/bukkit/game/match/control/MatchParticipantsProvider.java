@@ -14,4 +14,11 @@ public interface MatchParticipantsProvider {
      */
     Set<User> getMatchPending(Match match);
 
+    /**
+     * Get all the match spectators.
+     * @param match to be accessed
+     * @return provided users
+     */
+    Set<User> getMatchSpectators(Match match);
+
 }

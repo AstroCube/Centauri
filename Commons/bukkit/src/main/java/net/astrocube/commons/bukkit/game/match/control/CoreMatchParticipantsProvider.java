@@ -17,7 +17,16 @@ public class CoreMatchParticipantsProvider implements MatchParticipantsProvider 
 
     @Override
     public Set<User> getMatchPending(Match match) {
-        return getPendingIds(match).stream()
+        return getUsersFromIds(getPendingIds(match));
+    }
+
+    @Override
+    public Set<User> getMatchSpectators(Match match) {
+        return getUsersFromIds(match.getSpectators());
+    }
+
+    public Set<User> getUsersFromIds(Set<String> users) {
+        return users.stream()
                 .map(user -> {
                     try {
                         return userFindService.findSync(user);

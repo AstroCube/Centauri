@@ -47,6 +47,8 @@ game:
             - "%%aqua%%/match cancel - Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
             - "%%aqua%%/match invalidate - Invalida la partida en la que te encuentras"
             - "%%gold%%============================"
+        not-active: "%%red%%No te encuentras en ninguna partida."
+        force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
 
 lobby:
     hiding:
