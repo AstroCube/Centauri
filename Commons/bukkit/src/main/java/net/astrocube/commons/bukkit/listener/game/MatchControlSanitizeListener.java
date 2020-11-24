@@ -34,6 +34,12 @@ public class MatchControlSanitizeListener implements Listener {
     public void onMatchControlSanitize(MatchControlSanitizeEvent event) {
 
         try {
+
+            if (plugin.getConfig().getBoolean("server.sandbox")) {
+                plugin.getLogger().log(Level.INFO, "Skipping sanitization due to sandbox mode. Starting new temp match.");
+                matchmakingScheduler.schedule();
+            }
+
             Server server = serverService.getActual();
 
             pendingMatchFinder.getPendingMatches(event.getGameMode(), event.getSubGameMode())
@@ -69,6 +75,7 @@ public class MatchControlSanitizeListener implements Listener {
                 }
 
             });
+
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);

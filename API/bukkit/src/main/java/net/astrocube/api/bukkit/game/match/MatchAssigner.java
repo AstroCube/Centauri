@@ -17,6 +17,6 @@ public interface MatchAssigner {
      * @param assignable users to the match
      * @param match to be assigned
      */
-    void assign(MatchAssignable assignable, Match match) throws GameControlException, JsonProcessingException;
+    void assign(MatchAssignable assignable, Match match) throws Exception;
 
 }

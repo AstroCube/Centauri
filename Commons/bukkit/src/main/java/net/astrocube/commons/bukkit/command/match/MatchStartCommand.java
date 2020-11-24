@@ -30,7 +30,7 @@ public class MatchStartCommand implements CommandClass {
 
 
     @ACommand(names = {""})
-    public boolean onCommand(@Injected(true) @Sender Player player, int seconds) {
+    public boolean onCommand(@Injected(true) @Sender Player player, String seconds) {
 
         Optional<Match> matchOptional;
 
@@ -46,7 +46,15 @@ public class MatchStartCommand implements CommandClass {
             return true;
         }
 
-        countdownScheduler.scheduleMatchCountdown(matchOptional.get(), seconds, true);
+        int secondsFixed;
+        try {
+            secondsFixed = Integer.parseInt(seconds);
+        } catch (Exception e) {
+            messageHandler.send(player, "game.admin.error");
+            return true;
+        }
+
+        countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true);
 
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
         involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
