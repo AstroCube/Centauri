@@ -9,46 +9,50 @@ import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @Singleton
 public class CoreCrossTeleportExchanger implements CrossTeleportExchanger {
 
-    private final Jedis jedis;
+    private final JedisPool jedisPool;
 
     @Inject
     public CoreCrossTeleportExchanger(Redis redis) {
-        this.jedis = redis.getRawConnection().getResource();
+        this.jedisPool = redis.getRawConnection();
     }
 
     @Override
     public void schedule(TeleportRequest request) {
         //TODO: Teleport player to corresponding server
 
-        if (request.getRequester().isPresent()) {
-            jedis.set("teleportRequest:" + request.getReceiver().getId(),
-                    request.getRequester()
-                            .get()
-                            .getUsername()
-            );
+        try (Jedis jedis = jedisPool.getResource()) {
+            if (request.getRequester().isPresent()) {
+                jedis.set("teleportRequest:" + request.getReceiver().getId(),
+                        request.getRequester()
+                                .get()
+                                .getUsername()
+                );
+            }
         }
-
     }
 
     @Override
     public void exchange(User user) {
 
-        Player receiver = Bukkit.getPlayer(user.getUsername());
+        try (Jedis jedis = jedisPool.getResource()) {
+            Player receiver = Bukkit.getPlayer(user.getUsername());
 
-        if (jedis.exists("teleportRequest:" + user.getId()) && receiver != null) {
+            if (jedis.exists("teleportRequest:" + user.getId()) && receiver != null) {
 
-            Player requester = Bukkit.getPlayer(jedis.get("teleportRequest:" + user.getId()));
+                Player requester = Bukkit.getPlayer(jedis.get("teleportRequest:" + user.getId()));
 
-            if (requester != null) {
-                receiver.teleport(requester);
+                if (requester != null) {
+                    receiver.teleport(requester);
+                }
             }
-        }
 
-        jedis.del("teleportRequest:" + user.getId());
+            jedis.del("teleportRequest:" + user.getId());
+        }
 
     }
 

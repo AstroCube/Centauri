@@ -11,6 +11,7 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.core.redis.Redis;
 import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
 import java.util.Optional;
@@ -18,12 +19,12 @@ import java.util.Optional;
 public class CoreMatchmakingRegistryHandler implements MatchmakingRegistryHandler {
 
     private final ObjectMapper mapper;
-    private final Jedis redis;
+    private final JedisPool jedisPool;
 
     @Inject
     public CoreMatchmakingRegistryHandler(ObjectMapper mapper, Redis redis) {
         this.mapper = mapper;
-        this.redis = redis.getRawConnection().getResource();
+        this.jedisPool = redis.getRawConnection();
     }
 
     @Override
@@ -39,29 +40,31 @@ public class CoreMatchmakingRegistryHandler implements MatchmakingRegistryHandle
     @Override
     public void generateRequest(MatchAssignable requesters, String gameMode, String subMode, String map, ObjectNode criteria) throws JsonProcessingException {
 
-        MatchmakingRequest request = new MatchmakingRequest() {
+        try (Jedis jedis = jedisPool.getResource()) {
+            MatchmakingRequest request = new MatchmakingRequest() {
 
-            public Date getIssuedDate() { return new Date(); }
+                public Date getIssuedDate() { return new Date(); }
 
-            public String getGameMode() { return gameMode; }
+                public String getGameMode() { return gameMode; }
 
-            public String getSubGameMode() { return subMode; }
+                public String getSubGameMode() { return subMode; }
 
-            @Override
-            public Optional<String> getMap() {
-                return Optional.ofNullable(map);
-            }
+                @Override
+                public Optional<String> getMap() {
+                    return Optional.ofNullable(map);
+                }
 
-            public MatchAssignable getRequesters() { return requesters; }
+                public MatchAssignable getRequesters() { return requesters; }
 
-            public Optional<ObjectNode> getCriteria() { return Optional.ofNullable(criteria); }
+                public Optional<ObjectNode> getCriteria() { return Optional.ofNullable(criteria); }
 
-        };
+            };
 
-        this.redis.set("matchmaking:" + requesters.getResponsible(), mapper.writeValueAsString(request));
-        this.redis.expire("matchmaking:" + requesters.getResponsible(), 60);
+            jedis.set("matchmaking:" + requesters.getResponsible(), mapper.writeValueAsString(request));
+            jedis.expire("matchmaking:" + requesters.getResponsible(), 60);
 
-        Bukkit.getPluginManager().callEvent(new MatchmakingRequestEvent(request));
+            Bukkit.getPluginManager().callEvent(new MatchmakingRequestEvent(request));
+        }
 
     }
 

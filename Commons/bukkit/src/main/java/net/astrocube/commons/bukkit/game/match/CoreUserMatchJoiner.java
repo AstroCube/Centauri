@@ -12,40 +12,43 @@ import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @Singleton
 public class CoreUserMatchJoiner implements UserMatchJoiner {
 
-    private final Jedis redis;
+    private final JedisPool jedisPool;
     private final FindService<Match> findService;
 
     @Inject
     public CoreUserMatchJoiner(Redis redis, FindService<Match> findService) {
-        this.redis = redis.getRawConnection().getResource();
+        this.jedisPool = redis.getRawConnection();
         this.findService = findService;
     }
 
     @Override
     public void processJoin(User user, Player player) throws Exception {
 
-        if (!redis.exists("matchAssign:" + user.getId())) {
-            throw new GameControlException("There was not found any match assignation for this user");
+        try (Jedis jedis = jedisPool.getResource()) {
+            if (!jedis.exists("matchAssign:" + user.getId())) {
+                throw new GameControlException("There was not found any match assignation for this user");
+            }
+
+            jedis.del("matchAssign:" + user.getId());
+
+            Match match = findService.findSync(user.getId());
+            UserMatchJoiner.Status status = Status.WAITING;
+
+            if (match.getSpectators().contains(user.getId())) {
+                status = Status.SPECTATING;
+            } else if (match.getTeams().stream().noneMatch(m -> m.getMembers().contains(user.getId()))) {
+                status = Status.PLAYING;
+            } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user.getId()))) {
+                throw new GameControlException("There was no assignation found for this user");
+            }
+
+            Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, status));
         }
-
-        redis.del("matchAssign:" + user.getId());
-
-        Match match = findService.findSync(user.getId());
-        UserMatchJoiner.Status status = Status.WAITING;
-
-        if (match.getSpectators().contains(user.getId())) {
-            status = Status.SPECTATING;
-        } else if (match.getTeams().stream().noneMatch(m -> m.getMembers().contains(user.getId()))) {
-            status = Status.PLAYING;
-        } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user.getId()))) {
-            throw new GameControlException("There was no assignation found for this user");
-        }
-
-        Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, status));
 
     }
 

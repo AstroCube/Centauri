@@ -7,12 +7,14 @@ import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.fixeddev.ebcm.parametric.annotation.SubCommandClasses;
 import me.yushust.message.MessageHandler;
+import net.astrocube.commons.bukkit.command.match.MatchDebugCommand;
 import net.astrocube.commons.bukkit.command.match.MatchStartCommand;
 import org.bukkit.entity.Player;
 
 @ACommand(names = {"match"})
 @SubCommandClasses({
-        MatchStartCommand.class
+        MatchStartCommand.class,
+        MatchDebugCommand.class
 })
 public class MatchCommand implements CommandClass {
 
@@ -20,9 +22,7 @@ public class MatchCommand implements CommandClass {
 
     @ACommand(names = {"", "help"})
     public boolean onCommand(@Injected(true) @Sender Player player) {
-        for (String message : messageHandler.getMany(player, "friend-help").getContents()) {
-            player.sendMessage(message);
-        }
+        messageHandler.send(player, "game.admin.match-help");
         return true;
     }
 
