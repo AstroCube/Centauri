@@ -108,7 +108,7 @@ public class UserJoinListener implements Listener {
 
                 if (type == ServerDoc.Type.LOBBY) {
                     Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
-                } else if (type == ServerDoc.Type.GAME) {
+                } else if (type == ServerDoc.Type.GAME && !plugin.getConfig().getBoolean("server.sandbox")) {
                     userMatchJoiner.processJoin(user, player);
                 }
 
