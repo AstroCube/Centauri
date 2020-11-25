@@ -24,8 +24,8 @@ public class RegisterGateway implements AuthenticationGateway {
         if (player != null) {
             player.sendTitle(
                     new Title(
-                            messageHandler.getMessage(player, "authentication.register-title"),
-                            messageHandler.getMessage(player, "authentication.register-sub")
+                            messageHandler.get(player, "authentication.register-title"),
+                            messageHandler.get(player, "authentication.register-sub")
                     )
             );
         }

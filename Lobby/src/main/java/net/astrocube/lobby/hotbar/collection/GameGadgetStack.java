@@ -18,10 +18,10 @@ public class GameGadgetStack {
 
         ItemMeta gameMenuMeta = gameMenuBase.getItemMeta();
         gameMenuMeta.setDisplayName(
-                provider.getMessage(player, "lobby.gameSelector.gadget")
+                provider.get(player, "lobby.gameSelector.gadget")
         );
         gameMenuMeta.setLore(
-                provider.getMessages(player, "lobby.gameSelector.gadget-lore")
+                provider.getMany(player, "lobby.gameSelector.gadget-lore")
         );
         gameMenuBase.setItemMeta(gameMenuMeta);
         return gameMenuBase;

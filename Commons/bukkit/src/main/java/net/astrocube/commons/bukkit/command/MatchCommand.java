@@ -20,9 +20,11 @@ public class MatchCommand implements CommandClass {
 
     private @Inject MessageHandler<Player> messageHandler;
 
-    @ACommand(names = {"", "help"})
+    @ACommand(names = {""})
     public boolean onCommand(@Injected(true) @Sender Player player) {
-        messageHandler.send(player, "game.admin.match-help");
+        for (String message : messageHandler.getMany(player, "game.admin.match-help").getContents()) {
+            player.sendMessage(message);
+        }
         return true;
     }
 

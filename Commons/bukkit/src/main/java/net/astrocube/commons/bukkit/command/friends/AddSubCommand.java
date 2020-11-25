@@ -40,7 +40,7 @@ public class AddSubCommand implements CommandClass {
 
             friendshipHandler.createFriendRequest(user.getId(), targetUser.getId());
             player.sendMessage(
-                    messageHandler.getMessage(player, "commons-friend-request-sent")
+                    messageHandler.get(player, "commons-friend-request-sent")
                             .replace("%%receiver%%", target.getName())
             );
 

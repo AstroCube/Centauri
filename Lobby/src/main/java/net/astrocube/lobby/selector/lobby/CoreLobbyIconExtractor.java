@@ -53,13 +53,13 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
         meta.setDisplayName(color + wrapper.getName());
 
         loreArray.add(
-                messageHandler.getMessage(player, "lobby.lobby-selector.indicators.connected")
+                messageHandler.get(player, "lobby.lobby-selector.indicators.connected")
                 .replace("%%users%%", wrapper.getConnected() + "")
                 .replace("%%total%%", wrapper.getMax() + "")
         );
         loreArray.add(" ");
         loreArray.add(
-                color + messageHandler.getMessage(player, "lobby.lobby-selector.indicators." + translation)
+                color + messageHandler.get(player, "lobby.lobby-selector.indicators." + translation)
         );
 
         meta.setLore(loreArray);

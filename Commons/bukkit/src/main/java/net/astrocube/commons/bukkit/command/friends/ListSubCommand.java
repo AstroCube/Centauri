@@ -41,12 +41,12 @@ public class ListSubCommand implements CommandClass {
 
                     if (friendships.length == 0 && pageIndicator == -1
                             && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
-                        player.sendMessage(messageHandler.getMessage(player, "no-friends"));
+                        player.sendMessage(messageHandler.get(player, "no-friends"));
                         return;
                     }
 
 
-                    player.sendMessage(messageHandler.getMessage(player, "friend-list.header"));
+                    player.sendMessage(messageHandler.get(player, "friend-list.header"));
                     for (Friendship friendship : friendships) {
 
                         String id = friendship.getIssuer();
@@ -69,9 +69,9 @@ public class ListSubCommand implements CommandClass {
                         }
 
                         player.sendMessage(
-                                messageHandler.getMessage(player, "friend-list.element")
+                                messageHandler.get(player, "friend-list.element")
                                         .replace("%%friend_name%%", user.getUsername())
-                                        .replace("%%status%%", messageHandler.getMessage(player,
+                                        .replace("%%status%%", messageHandler.get(player,
                                                 user.getSession().isOnline() ? "online" : "offline"
                                         ))
                         );
@@ -80,7 +80,7 @@ public class ListSubCommand implements CommandClass {
                     TextComponent clickableComponents = new TextComponent();
 
                     if (pagination.hasPrevPage()) {
-                        String message = messageHandler.getMessage(player, "friends-previous-page");
+                        String message = messageHandler.get(player, "friends-previous-page");
                         clickableComponents.setText(message);
                         clickableComponents.setHoverEvent(new HoverEvent(
                                 HoverEvent.Action.SHOW_TEXT,
@@ -90,7 +90,7 @@ public class ListSubCommand implements CommandClass {
 
                     if (pagination.hasNextPage()) {
                         clickableComponents.addExtra("        "); // just add space to separate that shit
-                        String message = messageHandler.getMessage(player, "friends-next-page");
+                        String message = messageHandler.get(player, "friends-next-page");
                         TextComponent component = new TextComponent(message);
                         component.setHoverEvent(new HoverEvent(
                                 HoverEvent.Action.SHOW_TEXT,

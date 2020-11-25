@@ -28,13 +28,13 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         if (exchangeableMaterial != null) icon = new ItemStack(exchangeableMaterial);
 
         ItemMeta iconMeta = icon.getItemMeta();
-        List<String> baseLore = new ArrayList<>(messageHandler.getMessages(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
+        List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
 
         baseLore.add(" ");
-        baseLore.add(messageHandler.getMessage(player, "lobby.gameSelector.gadget-playing"));
+        baseLore.add(messageHandler.get(player, "lobby.gameSelector.gadget-playing"));
 
         iconMeta.setDisplayName(
-                messageHandler.getMessage(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
+                messageHandler.get(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
         );
         iconMeta.setLore(
                 baseLore

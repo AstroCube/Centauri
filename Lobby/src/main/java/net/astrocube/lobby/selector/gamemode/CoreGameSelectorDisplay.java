@@ -25,7 +25,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
             if (modesResponse.isSuccessful() && modesResponse.getResponse().isPresent()) {
 
                 MenuBuilder menuBuilder = MenuBuilder.newBuilder(
-                        messageHandler.getMessage(player, "lobby.gameSelector.title"),
+                        messageHandler.get(player, "lobby.gameSelector.title"),
                         1
                 );
                 menuBuilder.cancelClick(true);
@@ -37,7 +37,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                 player.openInventory(menuBuilder.build());
 
             } else {
-                player.sendMessage(messageHandler.getMessage(player, "lobby.gameSelector.error"));
+                player.sendMessage(messageHandler.get(player, "lobby.gameSelector.error"));
             }
         });
 

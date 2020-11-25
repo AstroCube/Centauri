@@ -32,7 +32,7 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
         }
 
         MenuBuilder menuBuilder = MenuBuilder.newBuilder(
-                messageHandler.getMessage(player, "lobby.lobby-selector.gadget-title"),
+                messageHandler.get(player, "lobby.lobby-selector.gadget-title"),
                 1
         );
         menuBuilder.cancelClick(true);

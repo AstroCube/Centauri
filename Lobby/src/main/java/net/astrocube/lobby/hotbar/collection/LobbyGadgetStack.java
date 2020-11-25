@@ -19,9 +19,9 @@ public class LobbyGadgetStack {
 
         ItemMeta lobbyMeta = lobbySelectorBase.getItemMeta();
         lobbyMeta.setDisplayName(
-                provider.getMessage(player, "lobby.lobby-selector.title")
+                provider.get(player, "lobby.lobby-selector.title")
         );
-        lobbyMeta.setLore(provider.getMessages(player, "lobby.lobby-selector.gadget-lore"));
+        lobbyMeta.setLore(provider.getMany(player, "lobby.lobby-selector.gadget-lore"));
         lobbySelectorBase.setItemMeta(lobbyMeta);
         return lobbySelectorBase;
 

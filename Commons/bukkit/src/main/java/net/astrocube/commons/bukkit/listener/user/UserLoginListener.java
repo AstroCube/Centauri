@@ -41,7 +41,7 @@ public class UserLoginListener implements Listener {
 
             if (authenticationCooldown.hasCooldown(event.getPlayer().getDatabaseIdentifier())) {
                 event.setKickMessage(
-                        messageHandler.getMessage(
+                        messageHandler.get(
                                 event.getPlayer(),
                                 "cooldown-await"
                         ).replace(

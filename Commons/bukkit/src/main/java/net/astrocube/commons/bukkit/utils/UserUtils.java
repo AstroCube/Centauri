@@ -14,7 +14,7 @@ public class UserUtils {
 
         ChatAlertLibrary.alertChatError(
                 player,
-                messageHandler.getMessage(player, "commons-friend-not-yourself")
+                messageHandler.get(player, "commons-friend-not-yourself")
         );
         return true;
     }

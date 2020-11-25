@@ -44,7 +44,7 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
                 HttpResponseException httpResponseException = ((HttpResponseException) exception);
 
                 if (httpResponseException.getStatusCode() == 403) {
-                    player.sendMessage(messageHandler.getMessage(player, "authentication.password-invalid"));
+                    player.sendMessage(messageHandler.get(player, "authentication.password-invalid"));
                     Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
                     return;
                 }

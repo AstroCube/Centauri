@@ -29,13 +29,13 @@ public class AuthenticationSuccessListener implements Listener {
             );
 
             event.getPlayer().sendMessage(
-                    messageHandler.getMessage(event.getPlayer(), "authentication.success-message")
+                    messageHandler.get(event.getPlayer(), "authentication.success-message")
             );
 
         } catch (AuthorizeException exception) {
             plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
             event.getPlayer().kickPlayer(
-                    messageHandler.getMessage(event.getPlayer(), "authentication.unauthorized")
+                    messageHandler.get(event.getPlayer(), "authentication.unauthorized")
                             .replace("%%error%%", exception.getMessage())
             );
         }

@@ -34,7 +34,7 @@ public class CoreFriendHelper implements FriendHelper {
 
         ChatAlertLibrary.alertChatError(
                 player,
-                messageHandler.getMessage(player, "commons-friend-already-sent")
+                messageHandler.get(player, "commons-friend-already-sent")
         );
         return true;
     }
@@ -55,7 +55,7 @@ public class CoreFriendHelper implements FriendHelper {
         if (friendships.isEmpty()) {
             ChatAlertLibrary.alertChatError(
                     player,
-                    messageHandler.getMessage(player, "commons-friend-not-friends")
+                    messageHandler.get(player, "commons-friend-not-friends")
             );
         }
 
@@ -79,7 +79,7 @@ public class CoreFriendHelper implements FriendHelper {
         if (!friendships.isEmpty()) {
             ChatAlertLibrary.alertChatError(
                     player,
-                    messageHandler.getMessage(player, "commons-friend-already-friends")
+                    messageHandler.get(player, "commons-friend-already-friends")
             );
         }
 

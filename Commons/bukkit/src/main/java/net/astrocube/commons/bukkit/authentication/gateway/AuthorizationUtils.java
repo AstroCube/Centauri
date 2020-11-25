@@ -33,13 +33,13 @@ public class AuthorizationUtils {
     public static void checkError(Player player, Exception exception, Plugin plugin, MessageHandler<Player> messageHandler) {
         if (exception instanceof AuthorizeException) {
             Bukkit.getScheduler().runTask(plugin, ()-> player.kickPlayer(
-                    messageHandler.getMessage(player, "authentication.unauthorized")
+                    messageHandler.get(player, "authentication.unauthorized")
                             .replace("%%error%%", exception.getMessage())
             ));
             return;
         }
 
-        player.sendMessage(messageHandler.getMessage(player, "authentication.password-error"));
+        player.sendMessage(messageHandler.get(player, "authentication.password-error"));
         plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
     }
 

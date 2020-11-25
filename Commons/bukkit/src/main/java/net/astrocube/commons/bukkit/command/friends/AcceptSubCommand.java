@@ -37,7 +37,7 @@ public class AcceptSubCommand implements CommandClass {
             if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
                 ChatAlertLibrary.alertChatError(
                         player,
-                        messageHandler.getMessage(player, "commons-friend-no-friend-request")
+                        messageHandler.get(player, "commons-friend-no-friend-request")
                 );
                 return;
             }

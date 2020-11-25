@@ -29,15 +29,15 @@ public class HideGadgetStack {
         ItemMeta hidingMenuMeta = hidingMenuBase.getItemMeta();
         if (active) {
             hidingMenuMeta.setDisplayName(
-                    provider.getMessage(player, "lobby.hiding.active-gadget")
+                    provider.get(player, "lobby.hiding.active-gadget")
             );
         } else {
             hidingMenuMeta.setDisplayName(
-                    provider.getMessage(player, "lobby.hiding.disabled-gadget")
+                    provider.get(player, "lobby.hiding.disabled-gadget")
             );
         }
 
-        hidingMenuMeta.setLore(provider.getMessages(player, "lobby.hiding.gadget-lore"));
+        hidingMenuMeta.setLore(provider.getMany(player, "lobby.hiding.gadget-lore"));
         hidingMenuBase.setItemMeta(hidingMenuMeta);
         return hidingMenuBase;
     }
