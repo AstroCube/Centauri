@@ -13,7 +13,6 @@ import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-@ACommand(names = "accept")
 public class AcceptSubCommand implements CommandClass {
 
     private @Inject MessageHandler<Player> messageHandler;
@@ -21,7 +20,7 @@ public class AcceptSubCommand implements CommandClass {
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;
 
-    @ACommand(names = "")
+    @ACommand(names = "accept")
     public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
 
         if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
