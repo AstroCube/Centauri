@@ -28,7 +28,7 @@ public class CoreMatchmakingSandboxProvider implements MatchmakingSandboxProvide
 
         Server server = serverService.getActual();
 
-        if (plugin.getConfig().getBoolean("server.sandbox")) {
+        if (!plugin.getConfig().getBoolean("server.sandbox")) {
             messageHandler.send(player, "game.admin.no-sandbox");
             return;
         }

@@ -23,22 +23,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-@ACommand(names = "debug")
 public class MatchDebugCommand implements CommandClass {
 
     private @Inject MatchmakingSandboxProvider matchmakingSandboxProvider;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
-    @ACommand(names = {""})
-    public boolean onCommand(@Injected(true) @Sender Player player) {
-        try {
-            matchmakingSandboxProvider.pairMatch(player);
-        } catch (Exception e) {
-            messageHandler.send(player, "game.admin.error");
-            plugin.getLogger().log(Level.SEVERE, "There was an error pairing to matchmaking");
-        }
-        return true;
-    }
+
 
 }
