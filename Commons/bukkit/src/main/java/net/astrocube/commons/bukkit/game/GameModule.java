@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.game;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.bukkit.game.match.control.PendingMatchFinder;
+import net.astrocube.commons.bukkit.game.map.GameMapModule;
 import net.astrocube.commons.bukkit.game.match.MatchModule;
 import net.astrocube.commons.bukkit.game.match.control.CorePendingMatchFinder;
 import net.astrocube.commons.bukkit.game.matchmaking.MatchmakingModule;

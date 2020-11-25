@@ -76,6 +76,8 @@ public class CoreGameControlPair implements GameControlPair {
             throw new GameControlException("Server not in GAME mode");
         }
 
+        plugin.getLogger().log(Level.INFO, "Starting game pairing, the server will shut down if no game can be paired during grace time..");
+
         this.stopSchedule = Bukkit.getScheduler().runTaskLater(
                 plugin,
                 () -> {

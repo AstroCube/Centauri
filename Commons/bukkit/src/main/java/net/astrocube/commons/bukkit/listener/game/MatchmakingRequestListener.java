@@ -29,7 +29,7 @@ public class MatchmakingRequestListener implements Listener {
             if (match.isPresent()) {
                 matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
             } else {
-                // TODO: Send alert to open new server
+                // TODO: Send alert to open new server. Skip if debugging
             }
 
         } catch (Exception e) {

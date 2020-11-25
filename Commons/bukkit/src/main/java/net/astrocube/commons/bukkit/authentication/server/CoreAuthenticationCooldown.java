@@ -6,35 +6,44 @@ import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.commons.bukkit.utils.TimeUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
 
 @Singleton
 public class CoreAuthenticationCooldown implements AuthenticationCooldown {
 
-    private final Jedis jedis;
+    private final JedisPool jedisPool;
 
     @Inject
     public CoreAuthenticationCooldown(Redis redis) {
-        this.jedis = redis.getRawConnection().getResource();
+        this.jedisPool = redis.getRawConnection();
     }
 
     @Override
     public void setCooldownLock(String id) {
-        jedis.set("authCooldown:" + id, TimeUtils.addMinutes(new Date(), 5).toInstant().toEpochMilli() + "");
-        jedis.expire("authCooldown:" + id, 300);
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.set("authCooldown:" + id, TimeUtils.addMinutes(new Date(), 5).toInstant().toEpochMilli() + "");
+            jedis.expire("authCooldown:" + id, 300);
+        }
+
     }
 
     @Override
     public boolean hasCooldown(String id) {
-        return jedis.exists("authCooldown:" + id);
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.exists("authCooldown:" + id);
+        }
     }
 
     @Override
     public Date getRemainingTime(String id) {
-        if (jedis.exists("authCooldown:" + id))
-            return new Date(Long.parseLong(jedis.get("authCooldown:" + id)));
-        return new Date();
+        try (Jedis jedis = jedisPool.getResource()) {
+            if (jedis.exists("authCooldown:" + id))
+                return new Date(Long.parseLong(jedis.get("authCooldown:" + id)));
+            return new Date();
+        }
     }
 
 }

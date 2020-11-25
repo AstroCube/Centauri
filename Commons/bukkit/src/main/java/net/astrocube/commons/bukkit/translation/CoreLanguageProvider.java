@@ -25,6 +25,7 @@ public class CoreLanguageProvider implements LanguageProvider<Player> {
             Bukkit.getLogger().log(Level.SEVERE, "Error while finding user data for " + player.getName(), ex);
             return null;
         }
+
         if (user == null) {
             return null;
         }

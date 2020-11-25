@@ -43,7 +43,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             }
 
             GameMode gameModeDoc = this.gameModeFindService.findSync(
-                    plugin.getConfig().getString("server.gamemode")
+                    plugin.getConfig().getString("game.mode")
             );
 
             if (gameModeDoc.getSubTypes() == null)
@@ -51,13 +51,13 @@ public class BukkitStartResolver implements ServerStartResolver {
 
             Optional<SubGameMode> subGameMode =
                     Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
-                            s.getId().equalsIgnoreCase(plugin.getConfig().getString("server.subMode"))
+                            s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
                     ).findAny();
 
             if (!subGameMode.isPresent())
                 throw new Exception("Requested subGameMode not found");
 
-            gameServerStartManager.createGameServer(
+            String token = gameServerStartManager.createGameServer(
                     Bukkit.getServerName(),
                     type,
                     plugin.getConfig().getString("server.cluster"),
@@ -66,6 +66,7 @@ public class BukkitStartResolver implements ServerStartResolver {
                     gameModeDoc,
                     subGameMode.get()
             );
+            this.authorizationProcessor.authorizeBackend(token.toCharArray());
 
             gameControlPair.enablePairing();
 

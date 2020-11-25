@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 
 public class MatchControlSanitizeListener implements Listener {
 
@@ -32,6 +34,12 @@ public class MatchControlSanitizeListener implements Listener {
     public void onMatchControlSanitize(MatchControlSanitizeEvent event) {
 
         try {
+
+            if (plugin.getConfig().getBoolean("server.sandbox")) {
+                plugin.getLogger().log(Level.INFO, "Skipping sanitization due to sandbox mode. Starting new temp match.");
+                matchmakingScheduler.schedule();
+            }
+
             Server server = serverService.getActual();
 
             pendingMatchFinder.getPendingMatches(event.getGameMode(), event.getSubGameMode())
@@ -58,18 +66,19 @@ public class MatchControlSanitizeListener implements Listener {
                         .get()
                         .getFoundModels()
                         .stream()
-                        .anyMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
+                        .noneMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
                     try {
                         matchmakingScheduler.schedule();
                     } catch (Exception e) {
-                        plugin.getLogger().severe("There was an error trying to create match at sanitizing.");
+                        plugin.getLogger().log(Level.WARNING, "There was an error trying to create match at sanitizing.", e);
                     }
                 }
 
             });
 
+
         } catch (Exception e) {
-            plugin.getLogger().severe("There was an error trying to sanitize matches.");
+            plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);
         }
 
     }

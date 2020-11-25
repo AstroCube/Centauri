@@ -9,6 +9,10 @@ game:
   total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
   mode: 0123456789abcdefg                        # Database ID of the desired game
   subMode: 0123456789abcdefg                     # Database ID of the desired SubGameMode
+  lobby:
+    x: 0
+    y: 0
+    z: 0
 api:
   route: "https://perseus.astrocube.net/api/"    # Base path to be called
   connect: 1200                                  # Connect Timeout

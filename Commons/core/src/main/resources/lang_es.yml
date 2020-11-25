@@ -37,6 +37,21 @@ authentication:
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
 
+game:
+    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
+    countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
+    admin:
+        match-help:
+            - "%%gold%%============================"
+            - "%%aqua%%/match start <segundos> - Inicia la partida en la que te encuentras en cierta cantidad de segundos"
+            - "%%aqua%%/match cancel - Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
+            - "%%aqua%%/match invalidate - Invalida la partida en la que te encuentras"
+            - "%%gold%%============================"
+        not-active: "%%red%%No te encuentras en ninguna partida."
+        force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
+        error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
+        no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
+
 lobby:
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"

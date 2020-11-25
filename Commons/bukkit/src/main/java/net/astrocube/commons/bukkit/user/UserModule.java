@@ -11,7 +11,7 @@ public class UserModule extends ProtectedModule {
     @Override
     protected void configure() {
         bind(DisplayMatcher.class).to(CoreDisplayMatcher.class);
-        bind(UserMatcher.class).to(UserMatcher.class);
+        bind(UserMatcher.class).to(CoreUserMatcher.class);
 
         expose(DisplayMatcher.class);
         expose(UserMatcher.class);
