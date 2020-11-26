@@ -30,7 +30,7 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
         ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
         ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
 
-        criteria.putObject("server").putArray("$in").add(serverArray);
+        criteria.put("server", serverArray);
         criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
         return matchQueryService.querySync(criteria).getFoundModels()
