@@ -6,28 +6,28 @@ import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
-import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
-import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
-import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
-import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingSandboxProvider;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.core.virtual.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Level;
 
 public class MatchDebugCommand implements CommandClass {
 
     private @Inject MatchmakingSandboxProvider matchmakingSandboxProvider;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
+
+    @ACommand(names = "debug")
+    public boolean execute(@Injected(true) @Sender Player player) {
+
+        try {
+            matchmakingSandboxProvider.pairMatch(player);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 
 
 

@@ -75,11 +75,14 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     @Override
     public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
         return this.httpClient.executeRequestSync(
-                modelMeta.getRouteKey() + "/list?page=-1",
+                modelMeta.getRouteKey() + "/list",
                 new CoreRequestCallable<>(this.queryResultTypeToken, mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
-                        queryRequest.getBsonQuery() == null ? "{}" : this.mapper.writeValueAsString(queryRequest.getBsonQuery())
+                        new HashMap<>(),
+                        queryRequest.getBsonQuery() == null ? "{}"
+                                : this.mapper.writeValueAsString(queryRequest.getBsonQuery()),
+                        "?page=-1"
                 )
         );
     }

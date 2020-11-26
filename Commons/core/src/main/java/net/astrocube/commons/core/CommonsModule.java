@@ -15,7 +15,6 @@ import net.astrocube.commons.core.permission.CorePermissionsModule;
 import net.astrocube.commons.core.redis.RedisModule;
 import net.astrocube.commons.core.server.CoreServerModule;
 import net.astrocube.commons.core.session.SessionModule;
-import net.astrocube.commons.core.virtual.ModelModule;
 
 public class CommonsModule extends ProtectedModule {
 

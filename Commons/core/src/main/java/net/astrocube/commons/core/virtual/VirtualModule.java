@@ -2,7 +2,7 @@ package net.astrocube.commons.core.virtual;
 
 import me.fixeddev.inject.ProtectedModule;
 
-public class ModelModule extends ProtectedModule {
+public class VirtualModule extends ProtectedModule {
 
     @Override
     protected void configure() {

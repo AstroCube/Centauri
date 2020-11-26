@@ -25,6 +25,8 @@ public class ModelMeta <Complete extends Model, Partial extends PartialModel> {
         final ModelProperties.Cache cache = completeType.getRawType().getAnnotation(ModelProperties.Cache.class);
         this.routeKey = routeKey == null ? completeType.getRawType().getSimpleName() : routeKey.value();
         this.cache = cache == null ? 0 : cache.value();
+
+        System.out.println("Complete shit: " + this.completeType.getType().getTypeName());
     }
 
 }

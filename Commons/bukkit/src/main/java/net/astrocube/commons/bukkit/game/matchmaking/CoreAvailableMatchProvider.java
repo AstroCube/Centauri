@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.match.AvailableMatchServerProvider;
 import net.astrocube.api.bukkit.game.matchmaking.AvailableMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
@@ -19,31 +20,18 @@ import java.util.stream.Collectors;
 @Singleton
 public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 
-    private @Inject QueryService<Server> serverQueryService;
     private @Inject QueryService<Match> matchQueryService;
+    private @Inject AvailableMatchServerProvider availableMatchServerProvider;
     private @Inject ObjectMapper mapper;
 
     @Override
     public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
 
-        ObjectNode node = mapper.createObjectNode();
-        node.put("gamemode", request.getGameMode());
-        node.put("subGamemode", request.getSubGameMode());
-        request.getMap().ifPresent(map -> node.put("map", map));
-
+        ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
         ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
-        ObjectNode operator = mapper.createObjectNode();
-        ArrayNode serverArray = mapper.createArrayNode();
 
-        for (Server server : serverQueryService.querySync(node).getFoundModels()) {
-            serverArray.add(server.getId());
-        }
-
-        MatchDoc.Status lobby = MatchDoc.Status.LOBBY;
-
-        operator.put("$in", serverArray);
-        criteria.put("server", operator);
-        criteria.put("status", lobby.toString().substring(0, 1).toUpperCase() + lobby.toString().substring(1));
+        criteria.putObject("server").putArray("$in").add(serverArray);
+        criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
         return matchQueryService.querySync(criteria).getFoundModels()
                 .stream()

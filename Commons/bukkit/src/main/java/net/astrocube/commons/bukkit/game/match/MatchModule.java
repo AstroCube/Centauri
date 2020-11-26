@@ -4,10 +4,7 @@ import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
-import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
-import net.astrocube.api.bukkit.game.match.MatchAssigner;
-import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
-import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
+import net.astrocube.api.bukkit.game.match.*;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
@@ -27,6 +24,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
 
         bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
         bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
+        bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
 
         bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
 

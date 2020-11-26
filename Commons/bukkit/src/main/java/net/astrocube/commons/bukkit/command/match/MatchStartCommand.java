@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-@ACommand(names = "start")
 public class MatchStartCommand implements CommandClass {
 
     private @Inject ActualMatchProvider actualMatchProvider;
@@ -29,7 +28,7 @@ public class MatchStartCommand implements CommandClass {
     private @Inject Plugin plugin;
 
 
-    @ACommand(names = {""})
+    @ACommand(names = {"start"})
     public boolean onCommand(@Injected(true) @Sender Player player, String seconds) {
 
         Optional<Match> matchOptional;
