@@ -34,9 +34,7 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
                 throw new GameControlException("There was not found any match assignation for this user");
             }
 
-            jedis.del("matchAssign:" + user.getId());
-
-            Match match = findService.findSync(user.getId());
+            Match match = findService.findSync(jedis.get("matchAssign:" + user.getId()));
             UserMatchJoiner.Status status = Status.WAITING;
 
             if (match.getSpectators().contains(user.getId())) {
@@ -46,6 +44,8 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
             } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user.getId()))) {
                 throw new GameControlException("There was no assignation found for this user");
             }
+
+            jedis.del("matchAssign:" + user.getId());
 
             Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, status));
         }
