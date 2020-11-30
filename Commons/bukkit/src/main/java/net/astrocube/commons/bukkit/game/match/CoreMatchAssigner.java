@@ -56,23 +56,19 @@ public class CoreMatchAssigner implements MatchAssigner {
             jedis.del("matchmaking:" + assignable.getResponsible());
 
             match.getPending().add(assignable);
+
+            Match updated = this.updateService.updateSync(match);
+
             this.setRecord(assignable.getResponsible(), match.getId());
 
-            this.updateService.update(match).callback(updateResponse -> {
-
-                if (!updateResponse.isSuccessful() || !updateResponse.getResponse().isPresent()) {
-                    Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+            assignable.getInvolved().forEach(involved -> {
+                try {
+                    this.setRecord(involved, match.getId());
+                } catch (Exception e) {
+                    plugin.getLogger().log(Level.SEVERE, "There was an error assigning a match user", e);
                 }
-
-                assignable.getInvolved().forEach(involved -> {
-                    try {
-                        this.setRecord(involved, match.getId());
-                    } catch (Exception e) {
-                        plugin.getLogger().log(Level.SEVERE, "There was an error assigning a match user", e);
-                    }
-                });
-
             });
+
         }
     }
 
