@@ -47,7 +47,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/spectator",
-                new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -66,7 +66,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/teams",
-                new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -77,7 +77,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
     }
 
     @Override
-    public void assignPending(Set<MatchAssignable> pendingRequests, String match) throws Exception {
+    public void assignPending(MatchAssignable pendingRequests, String match) throws Exception {
         ObjectNode node = objectMapper.createObjectNode();
 
         node.putPOJO("pending", pendingRequests);
@@ -85,7 +85,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/pending",
-                new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -99,7 +99,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
     public void matchCleanup() throws Exception {
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/cleanup",
-                new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         new HashMap<>(),

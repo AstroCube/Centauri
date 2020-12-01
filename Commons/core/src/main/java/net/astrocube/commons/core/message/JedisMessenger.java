@@ -72,8 +72,6 @@ public class JedisMessenger implements Messenger {
             JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), "", TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
 
             this.channels.put(channelMeta.type(), channel);
-
-            System.out.println(channelMeta.type() + " " + channelMeta.name());
         });
 
         handlers.forEach(handler -> {

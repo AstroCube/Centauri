@@ -25,6 +25,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
         bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
         bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
         bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
+        bind(MatchService.class).to(CoreMatchService.class);
 
         bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
 

@@ -54,14 +54,9 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 
         return matchQueryService.querySync(criteria).getFoundModels()
                 .stream()
-                .filter(match -> {
-                    System.out.println(match.getStatus() == MatchDoc.Status.LOBBY &&
-                            (subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
-                                    (request.getRequesters().getInvolved().size() + 1));
-                    return match.getStatus() == MatchDoc.Status.LOBBY &&
-                            (subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
-                                    (request.getRequesters().getInvolved().size() + 1);
-                })
+                .filter(match -> match.getStatus() == MatchDoc.Status.LOBBY &&
+                        (subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
+                                (request.getRequesters().getInvolved().size() + 1))
                 .collect(Collectors.toSet());
     }
 

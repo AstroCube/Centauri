@@ -41,7 +41,8 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
                 status = Status.SPECTATING;
             } if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(user.getId()))) {
                 status = Status.PLAYING;
-            } else if (match.getPending().stream().noneMatch(m -> m.getInvolved().contains(user.getId()))) {
+            } else if (match.getPending().stream().noneMatch(m -> m.getInvolved().contains(user.getId())
+                    || m.getResponsible().equalsIgnoreCase(user.getId()))) {
                 throw new GameControlException("There was no assignation found for this user");
             }
 

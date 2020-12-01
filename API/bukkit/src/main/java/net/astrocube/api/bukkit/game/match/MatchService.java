@@ -12,7 +12,7 @@ public interface MatchService {
 
     void assignTeams(Set<MatchDoc.Team> teams, String match) throws Exception;
 
-    void assignPending(Set<MatchAssignable> pendingRequests, String match) throws Exception;
+    void assignPending(MatchAssignable pendingRequests, String match) throws Exception;
 
     void matchCleanup() throws Exception;
 

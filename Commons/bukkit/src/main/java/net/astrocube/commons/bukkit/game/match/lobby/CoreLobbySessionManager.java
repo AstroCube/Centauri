@@ -12,6 +12,7 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
     private @Inject FindService<GameMode> findService;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject CountdownScheduler countdownScheduler;
+    private @Inject Plugin plugin;
 
     @Override
     public void connectUser(Player player, Match match) {
@@ -47,8 +49,10 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                 return;
             }
 
-            player.teleport(LobbyLocationParser.getLobby());
-            player.setGameMode(org.bukkit.GameMode.ADVENTURE);
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                player.teleport(LobbyLocationParser.getLobby());
+                player.setGameMode(org.bukkit.GameMode.ADVENTURE);
+            });
 
             Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 

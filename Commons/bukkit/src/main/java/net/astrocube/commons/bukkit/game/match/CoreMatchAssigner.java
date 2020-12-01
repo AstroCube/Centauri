@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.game.match;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
@@ -32,16 +33,19 @@ public class CoreMatchAssigner implements MatchAssigner {
     private final UpdateService<Match, MatchDoc.Partial> updateService;
     private final UserMatchJoiner userMatchJoiner;
     private final FindService<User> findService;
+    private final MatchService matchService;
     private final Channel<SingleMatchAssignation> channel;
 
     @Inject
     public CoreMatchAssigner(Redis redis, UpdateService<Match, MatchDoc.Partial> updateService,
-                             Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner, FindService<User> findService) {
+                             Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
+                             FindService<User> findService, MatchService matchService) {
         this.jedisPool = redis.getRawConnection();
         this.updateService = updateService;
         this.plugin = plugin;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
         this.userMatchJoiner = userMatchJoiner;
+        this.matchService = matchService;
         this.findService = findService;
     }
 
@@ -56,9 +60,7 @@ public class CoreMatchAssigner implements MatchAssigner {
             jedis.del("matchmaking:" + assignable.getResponsible());
 
             match.getPending().add(assignable);
-
-            Match updated = this.updateService.updateSync(match);
-
+            matchService.assignPending(assignable, match.getId());
             this.setRecord(assignable.getResponsible(), match.getId());
 
             assignable.getInvolved().forEach(involved -> {
