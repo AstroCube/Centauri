@@ -101,7 +101,7 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
                 this.modelMeta.getRouteKey() + "/cleanup",
                 new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
-                        RequestOptions.Type.GET,
+                        RequestOptions.Type.POST,
                         new HashMap<>(),
                         "",
                         null
