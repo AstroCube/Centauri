@@ -44,29 +44,32 @@ public class CoreLobbySessionManager implements LobbySessionManager {
             Bukkit.getScheduler().runTask(plugin, () -> {
                 player.teleport(LobbyLocationParser.getLobby());
                 player.setGameMode(org.bukkit.GameMode.ADVENTURE);
-            });
 
-            Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
-            Bukkit.getOnlinePlayers().forEach(online -> {
-                if (waitingIds.contains(online.getDatabaseIdentifier())) {
+                Bukkit.getOnlinePlayers().forEach(online -> {
+                    if (waitingIds.contains(online.getDatabaseIdentifier())) {
 
-                    player.sendMessage(
-                            messageHandler.getMessage("game.lobby-join")
-                            .replace("%%player%%", online.getDisplayName())
-                            .replace("%%%actual%%", waitingIds.size() + "")
-                            .replace("%%max%%", subGameMode.getMaxPlayers() + "")
-                    );
+                        player.sendMessage(
+                                messageHandler.getMessage("game.lobby-join")
+                                        .replace("%%player%%", online.getDisplayName())
+                                        .replace("%%actual%%", waitingIds.size() + "")
+                                        .replace("%%max%%", subGameMode.getMaxPlayers() + "")
+                        );
 
-                } else {
-                    online.hidePlayer(player);
-                    player.hidePlayer(online);
+                    } else {
+                        online.hidePlayer(player);
+                        player.hidePlayer(online);
+                    }
+                });
+
+                if (waitingIds.size() >= subGameMode.getMinPlayers()) {
+                    countdownScheduler.scheduleMatchCountdown(match);
                 }
+
             });
 
-            if (waitingIds.size() >= subGameMode.getMinPlayers()) {
-                countdownScheduler.scheduleMatchCountdown(match);
-            }
+
 
         });
 
@@ -106,9 +109,9 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                         if (waitingIds.contains(online.getDatabaseIdentifier())) {
 
                             player.sendMessage(
-                                    messageHandler.getMessage("game.lobby-join")
+                                    messageHandler.getMessage("game.lobby-leave")
                                             .replace("%%player%%", online.getDisplayName())
-                                            .replace("%%%actual%%", waitingIds.size() + "")
+                                            .replace("%%actual%%", (waitingIds.size() + 1) + "")
                                             .replace("%%max%%", subGameMode.getMaxPlayers() + "")
                             );
 
@@ -119,6 +122,8 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                     });
 
                 });
+
+            } else if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(player.getDatabaseIdentifier()))) {
 
             }
 
