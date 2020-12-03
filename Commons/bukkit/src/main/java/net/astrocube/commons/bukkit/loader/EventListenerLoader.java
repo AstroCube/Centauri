@@ -8,6 +8,7 @@ import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartL
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.game.*;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
+import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
 import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
 import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
@@ -28,6 +29,7 @@ public class EventListenerLoader implements Loader {
     private @Inject UserPreLoginListener userPreLoginListener;
     private @Inject UserLoginListener userLoginListener;
     private @Inject UserJoinListener userJoinListener;
+    private @Inject UserDisconnectListener userDisconnectListener;
 
     private @Inject GameModePairListener gameModePairListener;
     private @Inject GameTimerOutListener gameTimerOutListener;
@@ -55,6 +57,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(userPreLoginListener);
         registerEvent(userLoginListener);
         registerEvent(userJoinListener);
+        registerEvent(userDisconnectListener);
 
         registerEvent(gameModePairListener);
         registerEvent(gameTimerOutListener);
