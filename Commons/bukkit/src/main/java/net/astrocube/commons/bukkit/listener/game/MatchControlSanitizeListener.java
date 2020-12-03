@@ -38,6 +38,7 @@ public class MatchControlSanitizeListener implements Listener {
             if (plugin.getConfig().getBoolean("server.sandbox")) {
                 plugin.getLogger().log(Level.INFO, "Skipping sanitization due to sandbox mode. Starting new temp match.");
                 matchmakingScheduler.schedule();
+                return;
             }
 
             Server server = serverService.getActual();
