@@ -25,11 +25,11 @@ public class CoreActualMatchProvider implements ActualMatchProvider {
         //TODO: Do this in a better way may maybe
         ObjectNode query = (ObjectNode) objectMapper.readTree("{\n" +
                 "\"$or\": [" +
-                "{\"spectators\": " + id + "}," +
+                "{\"spectators\": \"" + id + "\"}," +
                 "{\"pending\":" +
-                "{\"responsible\": " + id + "}" +
+                "{\"responsible\": \"" + id + "\"}" +
                 "},\n" +
-                "{\"pending\": {\"involved\": " + id + "}}" +
+                "{\"pending\": {\"involved\": \"" + id + "\"}}" +
                 "],\n" +
                 "\"status\": {\"$nin\": [\"Finished\", \"Invalidated\"]}" +
                 "}");

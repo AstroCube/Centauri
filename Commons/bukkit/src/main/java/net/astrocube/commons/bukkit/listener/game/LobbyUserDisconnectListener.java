@@ -24,7 +24,7 @@ public class LobbyUserDisconnectListener implements Listener {
         try {
             lobbySessionManager.disconnectUser(event.getPlayer(), event.getMatch());
         } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting user");
+            plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting user", e);
         }
     }
 
