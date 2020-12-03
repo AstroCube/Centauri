@@ -33,6 +33,11 @@
             <version>1.8-20201112.225727-1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>team.unnamed.gui</groupId>
+            <artifactId>gui-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

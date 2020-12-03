@@ -12,6 +12,7 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.FriendsCommand;
 import net.astrocube.commons.bukkit.command.LoginCommand;
 import net.astrocube.commons.bukkit.command.MatchCommand;
+import net.astrocube.commons.bukkit.command.PunishCommand;
 import net.astrocube.commons.bukkit.command.builder.InjectionParametricCommandBuilder;
 import org.bukkit.plugin.Plugin;
 
@@ -22,6 +23,7 @@ public class CommandLoader implements Loader {
     private @Inject LoginCommand loginCommand;
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
+    private @Inject PunishCommand punishCommand;
 
     @Override
     public void load() {
@@ -40,7 +42,7 @@ public class CommandLoader implements Loader {
 
         bukkitManager.registerCommands(commandBuilder.fromClass(friendsCommand));
         bukkitManager.registerCommands(commandBuilder.fromClass(matchCommand));
+        bukkitManager.registerCommands(commandBuilder.fromClass(punishCommand));
 
     }
-
 }
