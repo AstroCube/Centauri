@@ -34,6 +34,7 @@ public class EventListenerLoader implements Loader {
     private @Inject MatchControlSanitizeListener matchControlSanitizeListener;
     private @Inject MatchmakingRequestListener matchmakingRequestListener;
     private @Inject LobbyUserJoinListener lobbyUserJoinListener;
+    private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchAssignationListener matchAssignationListener;
 
     private @Inject MenuListeners menuListeners;
@@ -60,6 +61,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(matchControlSanitizeListener);
         registerEvent(matchmakingRequestListener);
         registerEvent(lobbyUserJoinListener);
+        registerEvent(lobbyUserDisconnectListener);
         registerEvent(matchAssignationListener);
 
         registerEvent(menuListeners);

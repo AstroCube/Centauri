@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
+import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -12,6 +13,7 @@ import net.astrocube.api.core.concurrent.Response;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,10 +26,9 @@ import java.util.Set;
 public class CoreLobbySessionManager implements LobbySessionManager {
 
     private @Inject FindService<GameMode> findService;
-    private @Inject MessageHandler<Player> messageHandler;
-    private @Inject ActualMatchProvider actualMatchProvider;
-    private @Inject MatchService matchService;
+    private @Inject FindService<User> userFindService;
     private @Inject CountdownScheduler countdownScheduler;
+    private @Inject LobbySessionModifier lobbySessionModifier;
     private @Inject Plugin plugin;
 
     @Override
@@ -35,128 +36,54 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
         findService.find(match.getGameMode()).callback(gameModeResponse -> {
 
-            if (ensureInvalidation(gameModeResponse, match)) {
+            Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
+
+            if (!subMode.isPresent()) {
+                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+                //TODO: Expulse user
                 return;
             }
 
-            SubGameMode subGameMode = getAssignedMode(gameModeResponse.getResponse().get(), match).get();
+            User user = userFindService.findSync(player.getDatabaseIdentifier());
+            Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                player.teleport(LobbyLocationParser.getLobby());
-                player.setGameMode(org.bukkit.GameMode.ADVENTURE);
-
-                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
-
-                Bukkit.getOnlinePlayers().forEach(online -> {
-                    if (waitingIds.contains(online.getDatabaseIdentifier())) {
-
-                        player.sendMessage(
-                                messageHandler.getMessage("game.lobby-join")
-                                        .replace("%%player%%", online.getDisplayName())
-                                        .replace("%%actual%%", waitingIds.size() + "")
-                                        .replace("%%max%%", subGameMode.getMaxPlayers() + "")
-                        );
-
-                    } else {
-                        online.hidePlayer(player);
-                        player.hidePlayer(online);
-                    }
-                });
-
-                if (waitingIds.size() >= subGameMode.getMinPlayers()) {
-                    countdownScheduler.scheduleMatchCountdown(match);
-                }
-
-            });
+            Bukkit.getScheduler().runTask(plugin, () ->
+                    lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
 
 
+            if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+                countdownScheduler.scheduleMatchCountdown(match);
+            }
 
         });
 
     }
 
     @Override
-    public void disconnectUser(Player player) throws Exception {
+    public void disconnectUser(Player player, Match match) {
 
-        Optional<Match> matchOptional = actualMatchProvider.provide(player.getDatabaseIdentifier());
+        findService.find(match.getGameMode()).callback(gameModeResponse -> {
 
-        if (matchOptional.isPresent()) {
+            Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
 
-            Match match = matchOptional.get();
-
-            if (match.getSpectators().contains(player.getDatabaseIdentifier())) {
-                matchService.assignSpectator(player.getDatabaseIdentifier(), match.getId(), false);
-            } else if (match.getPending().stream().anyMatch(pending ->
-                    pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
-                    pending.getInvolved().contains(player.getDatabaseIdentifier()))
-            ) {
-
-                //TODO: Perform disconnect in Database
-
-
-
-                findService.find(match.getGameMode()).callback(gameModeResponse -> {
-
-                    if (ensureInvalidation(gameModeResponse, match)) {
-                        return;
-                    }
-
-                    SubGameMode subGameMode = getAssignedMode(gameModeResponse.getResponse().get(), match).get();
-
-                    Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
-
-                    Bukkit.getOnlinePlayers().forEach(online -> {
-                        if (waitingIds.contains(online.getDatabaseIdentifier())) {
-
-                            player.sendMessage(
-                                    messageHandler.getMessage("game.lobby-leave")
-                                            .replace("%%player%%", online.getDisplayName())
-                                            .replace("%%actual%%", (waitingIds.size() + 1) + "")
-                                            .replace("%%max%%", subGameMode.getMaxPlayers() + "")
-                            );
-
-                        } else {
-                            online.hidePlayer(player);
-                            player.hidePlayer(online);
-                        }
-                    });
-
-                });
-
-            } else if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(player.getDatabaseIdentifier()))) {
-
+            if (!subMode.isPresent()) {
+                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+                return;
             }
 
-        }
+            User user = userFindService.findSync(player.getDatabaseIdentifier());
+            Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+            Bukkit.getScheduler().runTask(plugin, () ->
+                    lobbySessionModifier.ensureDisconnect(user, player, match, subMode.get()));
+
+            if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+                countdownScheduler.cancelMatchCountdown(match);
+            }
+
+        });
 
     }
 
-    public boolean ensureInvalidation(Response<GameMode> gameMode, Match match) {
-
-        if (!gameMode.isSuccessful() || !gameMode.getResponse().isPresent()) {
-            Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-            //TODO: Expulse user
-            return true;
-        }
-
-        Optional<SubGameMode> subGameMode = getAssignedMode(gameMode.getResponse().get(), match);
-
-        if (!subGameMode.isPresent()) {
-            Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-            //TODO: Expulse user
-            return true;
-        }
-
-        return false;
-    }
-
-    public Optional<SubGameMode> getAssignedMode(GameMode mode, Match match) {
-        return mode
-                .getSubTypes()
-                .stream()
-                .filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()))
-                .findFirst();
-    }
 
 
 }

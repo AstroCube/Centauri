@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public interface Callback<T> {
 
-    void call(T object);
+    void call(T object) throws Exception;
 
     default void handleException(Throwable throwable) {
         Logger.getGlobal().log(Level.SEVERE, "Error executing callback.", throwable);

@@ -2,7 +2,9 @@ package net.astrocube.commons.bukkit.game.match;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.event.GameUserDisconnectEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
@@ -23,6 +25,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Level;
 
 @Singleton
@@ -30,19 +33,19 @@ public class CoreMatchAssigner implements MatchAssigner {
 
     private final JedisPool jedisPool;
     private final Plugin plugin;
-    private final UpdateService<Match, MatchDoc.Partial> updateService;
+    private final ActualMatchProvider actualMatchProvider;
     private final UserMatchJoiner userMatchJoiner;
     private final FindService<User> findService;
     private final MatchService matchService;
     private final Channel<SingleMatchAssignation> channel;
 
     @Inject
-    public CoreMatchAssigner(Redis redis, UpdateService<Match, MatchDoc.Partial> updateService,
+    public CoreMatchAssigner(Redis redis, ActualMatchProvider actualMatchProvider,
                              Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
                              FindService<User> findService, MatchService matchService) {
         this.jedisPool = redis.getRawConnection();
-        this.updateService = updateService;
         this.plugin = plugin;
+        this.actualMatchProvider = actualMatchProvider;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
         this.userMatchJoiner = userMatchJoiner;
         this.matchService = matchService;
@@ -72,6 +75,31 @@ public class CoreMatchAssigner implements MatchAssigner {
             });
 
         }
+    }
+
+    @Override
+    public void unAssign(Player player) throws Exception {
+
+        Optional<Match> matchOptional = actualMatchProvider.provide(player.getDatabaseIdentifier());
+
+        if (matchOptional.isPresent()) {
+
+            Match match = matchOptional.get();
+
+            if (match.getSpectators().contains(player.getDatabaseIdentifier())) {
+                matchService.assignSpectator(player.getDatabaseIdentifier(), match.getId(), false);
+            } else if (match.getPending().stream().anyMatch(pending ->
+                    pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
+                            pending.getInvolved().contains(player.getDatabaseIdentifier()))
+            ) {
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match, player));
+            } else if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(player.getDatabaseIdentifier()))) {
+
+            }
+
+        }
+
+
     }
 
     private void setRecord(String id, String matchId) throws Exception {

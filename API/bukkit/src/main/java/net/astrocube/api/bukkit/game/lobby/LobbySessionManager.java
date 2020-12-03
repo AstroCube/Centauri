@@ -16,7 +16,8 @@ public interface LobbySessionManager {
     /**
      * Disconnect user from the match.
      * @param player to be disconnected
+     * @param match where the player is located.
      */
-    void disconnectUser(Player player) throws Exception;
+    void disconnectUser(Player player, Match match) throws Exception;
 
 }
