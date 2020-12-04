@@ -1,10 +1,9 @@
 package net.astrocube.commons.bukkit.command.match;
 
 import com.google.inject.Inject;
-import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
-import me.fixeddev.ebcm.parametric.CommandClass;
-import me.fixeddev.ebcm.parametric.annotation.ACommand;
-import me.fixeddev.ebcm.parametric.annotation.Injected;
+import me.fixeddev.commandflow.annotated.CommandClass;
+import me.fixeddev.commandflow.annotated.annotation.Command;
+import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
@@ -28,8 +27,8 @@ public class MatchStartCommand implements CommandClass {
     private @Inject Plugin plugin;
 
 
-    @ACommand(names = {"start"})
-    public boolean onCommand(@Injected(true) @Sender Player player, String seconds) {
+    @Command(names = {"start"})
+    public boolean onCommand(@Sender Player player, String seconds) {
 
         Optional<Match> matchOptional;
 
