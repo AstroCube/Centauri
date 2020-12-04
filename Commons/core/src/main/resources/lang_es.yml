@@ -123,3 +123,16 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
+
+commands:
+    translation:
+        argument:
+            no-more: "asdsd"
+        command:
+            subcommand-invalid: "asd"
+            no-permission: "asdasd"
+        sender:
+            unknown: "asdasd"
+            only-player: "asd"
+        player:
+            offline: "asd"
