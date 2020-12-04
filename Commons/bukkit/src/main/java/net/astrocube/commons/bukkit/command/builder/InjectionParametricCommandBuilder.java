@@ -2,30 +2,6 @@ package net.astrocube.commons.bukkit.command.builder;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import me.fixeddev.ebcm.Command;
-import me.fixeddev.ebcm.CommandAction;
-import me.fixeddev.ebcm.CommandContext;
-import me.fixeddev.ebcm.CommandData;
-import me.fixeddev.ebcm.ImmutableCommand;
-import me.fixeddev.ebcm.exception.CommandException;
-import me.fixeddev.ebcm.parametric.CommandClass;
-import me.fixeddev.ebcm.parametric.ParametricCommandBuilder;
-import me.fixeddev.ebcm.parametric.annotation.ACommand;
-import me.fixeddev.ebcm.parametric.annotation.ConsumedArgs;
-import me.fixeddev.ebcm.parametric.annotation.Flag;
-import me.fixeddev.ebcm.parametric.annotation.Injected;
-import me.fixeddev.ebcm.parametric.annotation.ModifierAnnotation;
-import me.fixeddev.ebcm.parametric.annotation.Named;
-import me.fixeddev.ebcm.parametric.annotation.Optional;
-import me.fixeddev.ebcm.parametric.annotation.ParentArg;
-import me.fixeddev.ebcm.parametric.annotation.Required;
-import me.fixeddev.ebcm.parametric.annotation.SubCommandClasses;
-import me.fixeddev.ebcm.parametric.annotation.Usage;
-import me.fixeddev.ebcm.part.ArgumentPart;
-import me.fixeddev.ebcm.part.CommandPart;
-import me.fixeddev.ebcm.part.FlagPart;
-import me.fixeddev.ebcm.part.InjectedValuePart;
-import me.fixeddev.ebcm.part.SubCommandPart;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -37,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InjectionParametricCommandBuilder implements ParametricCommandBuilder {
 

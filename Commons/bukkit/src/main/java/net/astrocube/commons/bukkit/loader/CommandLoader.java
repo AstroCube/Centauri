@@ -1,13 +1,11 @@
 package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
-import me.fixeddev.ebcm.CommandManager;
-import me.fixeddev.ebcm.SimpleCommandManager;
-import me.fixeddev.ebcm.bukkit.BukkitAuthorizer;
-import me.fixeddev.ebcm.bukkit.BukkitCommandManager;
-import me.fixeddev.ebcm.bukkit.BukkitMessenger;
-import me.fixeddev.ebcm.bukkit.parameter.provider.BukkitModule;
-import me.fixeddev.ebcm.parameter.provider.ParameterProviderRegistry;
+import me.fixeddev.commandflow.CommandManager;
+import me.fixeddev.commandflow.SimpleCommandManager;
+import me.fixeddev.commandflow.bukkit.BukkitAuthorizer;
+import me.fixeddev.commandflow.bukkit.BukkitCommandManager;
+import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.FriendsCommand;
 import net.astrocube.commons.bukkit.command.LoginCommand;
@@ -25,6 +23,7 @@ public class CommandLoader implements Loader {
 
     @Override
     public void load() {
+
 
         ParameterProviderRegistry registry = ParameterProviderRegistry.createRegistry();
         registry.installModule(new BukkitModule());
