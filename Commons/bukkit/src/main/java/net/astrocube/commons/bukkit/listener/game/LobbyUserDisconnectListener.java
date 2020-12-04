@@ -17,15 +17,19 @@ import java.util.logging.Level;
 public class LobbyUserDisconnectListener implements Listener {
 
     private @Inject LobbySessionManager lobbySessionManager;
+    private @Inject FindService<Match> findService;
     private @Inject Plugin plugin;
 
     @EventHandler
     public void onGameUserJoin(GameUserDisconnectEvent event) {
-        try {
-            lobbySessionManager.disconnectUser(event.getPlayer(), event.getMatch());
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting user", e);
-        }
+        findService.find(event.getMatch()).callback(matchResponse -> {
+
+            if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+                plugin.getLogger().warning("There was an error while updating the match assignation.");
+            }
+
+            lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
+        });
     }
 
 }

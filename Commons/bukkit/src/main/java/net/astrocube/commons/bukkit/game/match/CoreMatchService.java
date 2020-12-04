@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
@@ -77,10 +78,29 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
     }
 
     @Override
-    public void assignPending(MatchAssignable pendingRequests, String match) throws Exception {
+    public void unAssignPending(String user, String match) throws Exception {
         ObjectNode node = objectMapper.createObjectNode();
 
-        node.putPOJO("pending", pendingRequests);
+        node.put("user", user);
+        node.put("match",  match);
+
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/unassign-pending",
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(node),
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void assignPending(MatchAssignable pendingRequest, String match) throws Exception {
+        ObjectNode node = objectMapper.createObjectNode();
+
+        node.putPOJO("pending", pendingRequest);
         node.put("match",  match);
 
         httpClient.executeRequestSync(
