@@ -13,10 +13,8 @@ import org.bukkit.plugin.Plugin;
 public class MatchDebugCommand implements CommandClass {
 
     private @Inject MatchmakingSandboxProvider matchmakingSandboxProvider;
-    private @Inject MessageHandler<Player> messageHandler;
-    private @Inject Plugin plugin;
 
-    @Command(names = "debug")
+    @Command(names = "sandbox")
     public boolean execute(@Sender Player player) {
 
         try {

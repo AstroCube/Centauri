@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.command.match;
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
-import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
@@ -15,7 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.Optional;
 import java.util.Set;
 
-public class MatchStartCommand implements CommandClass {
+public class MatchCancelCommand implements CommandClass {
 
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject CountdownScheduler countdownScheduler;
@@ -23,8 +22,8 @@ public class MatchStartCommand implements CommandClass {
     private @Inject MatchMessageHelper matchMessageHelper;
 
 
-    @Command(names = {"start"}, permission = "commons.match.cancel")
-    public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
+    @Command(names = {"cancel"}, permission = "commons.match.cancel")
+    public boolean onCommand(@Sender Player player) {
 
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
@@ -33,25 +32,9 @@ public class MatchStartCommand implements CommandClass {
             return true;
         }
 
-        int secondsFixed;
-        try {
-            secondsFixed = Integer.parseInt(seconds);
-        } catch (Exception e) {
-            messageHandler.send(player, "game.admin.error");
-            return true;
-        }
-
-
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
-
-        if (involved.size() < 2) {
-            player.sendMessage(messageHandler.get(player, "game.admin.insufficient"));
-            return true;
-        }
-
-        countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true);
-        involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
-        matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.force");
+        countdownScheduler.cancelMatchCountdown(matchOptional.get());
+        matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.stop");
 
         return true;
     }
