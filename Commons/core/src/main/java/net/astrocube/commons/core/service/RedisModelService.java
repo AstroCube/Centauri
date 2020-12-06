@@ -22,7 +22,6 @@ import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 
-@Singleton
 @SuppressWarnings("All")
 public class RedisModelService<Complete extends Model, Partial extends PartialModel> extends CoreModelService<Complete, Partial> {
 

@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.listener.game;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.GameUserDisconnectEvent;
 import net.astrocube.api.bukkit.game.event.GameUserJoinEvent;
+import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -24,11 +25,16 @@ public class LobbyUserDisconnectListener implements Listener {
     public void onGameUserJoin(GameUserDisconnectEvent event) {
         findService.find(event.getMatch()).callback(matchResponse -> {
 
-            if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+            try {
+
+                if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+                    throw new GameControlException("Unsuccessful query at error update");
+                }
+
+                lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
+            } catch (Exception e) {
                 plugin.getLogger().warning("There was an error while updating the match assignation.");
             }
-
-            lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
         });
     }
 

@@ -21,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 
 @Singleton
 public class CoreLobbySessionManager implements LobbySessionManager {
@@ -44,16 +45,24 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                 return;
             }
 
-            User user = userFindService.findSync(player.getDatabaseIdentifier());
-            Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+            User user;
+            try {
+                user = userFindService.findSync(player.getDatabaseIdentifier());
 
-            Bukkit.getScheduler().runTask(plugin, () ->
-                    lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
+                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+
+                Bukkit.getScheduler().runTask(plugin, () ->
+                        lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
 
 
-            if (waitingIds.size() >= subMode.get().getMinPlayers()) {
-                countdownScheduler.scheduleMatchCountdown(match);
+                if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+                    countdownScheduler.scheduleMatchCountdown(match);
+                }
+
+            } catch (Exception e) {
+                Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
             }
+
 
         });
 
@@ -71,13 +80,23 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                 return;
             }
 
-            User user = userFindService.findSync(player.getDatabaseIdentifier());
-            Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
-            Bukkit.getScheduler().runTask(plugin, () ->
-                    lobbySessionModifier.ensureDisconnect(user, player, match, subMode.get()));
+            User user;
+            try {
 
-            if (waitingIds.size() >= subMode.get().getMinPlayers()) {
-                countdownScheduler.cancelMatchCountdown(match);
+                user = userFindService.findSync(player.getDatabaseIdentifier());
+
+                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+                Bukkit.getScheduler().runTask(plugin, () ->
+                        lobbySessionModifier.ensureDisconnect(user, player, match, subMode.get()));
+
+                if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+                    countdownScheduler.cancelMatchCountdown(match);
+                }
+
+
+            } catch (Exception e) {
+                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+                return;
             }
 
         });

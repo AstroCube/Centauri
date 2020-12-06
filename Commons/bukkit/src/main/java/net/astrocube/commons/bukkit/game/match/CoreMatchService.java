@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.game.match;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
@@ -15,26 +14,15 @@ import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.service.CoreModelService;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> implements MatchService {
+public class CoreMatchService implements MatchService {
 
-    private final ObjectMapper objectMapper;
-
-    @Inject
-    CoreMatchService(
-            ModelMeta<Match, MatchDoc.Partial> modelMeta,
-            HttpClient httpClient,
-            ObjectMapper mapper,
-            ExecutorServiceProvider executorServiceProvider
-    ) {
-        super(modelMeta, executorServiceProvider);
-        this.httpClient = httpClient;
-        this.objectMapper = mapper;
-    }
+    private @Inject ObjectMapper objectMapper;
+    private @Inject HttpClient httpClient;
+    private @Inject ModelMeta<Match, MatchDoc.Partial> modelMeta;
 
 
     @Override

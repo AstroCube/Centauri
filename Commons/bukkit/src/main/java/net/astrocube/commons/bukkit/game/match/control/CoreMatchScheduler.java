@@ -49,6 +49,11 @@ public class CoreMatchScheduler implements MatchScheduler {
             }
 
             @Override
+            public void setMap(String map) {
+                
+            }
+
+            @Override
             public String getGameMode() {
                 return actual.getGameMode();
             }
