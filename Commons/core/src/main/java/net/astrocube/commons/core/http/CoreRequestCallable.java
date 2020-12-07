@@ -1,5 +1,6 @@
 package net.astrocube.commons.core.http;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
@@ -22,7 +23,12 @@ public class CoreRequestCallable<T> implements RequestCallable<T> {
         int statusCode = response.getStatusCode();
 
         if (statusCode == 200) {
-            return (T) this.mapper.readValue(json, mapper.constructType(returnType.getType()));
+
+            JavaType type = mapper.constructType(returnType.getType());
+            T returnable = this.mapper.readValue(json, type);
+            System.out.println(returnType.getType().getTypeName());
+
+            return returnable;
         } else {
             throw RequestExceptionResolverUtil.generateException(json, statusCode);
         }

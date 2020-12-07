@@ -54,8 +54,6 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
         this.listeningExecutorService = executorServiceProvider.getRegisteredService();
         this.queryResultTypeToken = new TypeToken<QueryResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
         this.paginateResultTypeToken = new TypeToken<PaginateResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
-
-        System.out.println(modelMeta.getCompleteType().getType().getTypeName() + ":" + this);
     }
 
     @Override
