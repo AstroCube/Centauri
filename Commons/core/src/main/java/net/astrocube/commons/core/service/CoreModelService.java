@@ -1,5 +1,6 @@
 package net.astrocube.commons.core.service;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
@@ -41,19 +42,20 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 {
 
     @Inject protected HttpClient httpClient;
-    @Inject protected ObjectMapper mapper;
+    protected final ObjectMapper mapper;
     private final ListeningExecutorService listeningExecutorService;
 
     protected ModelMeta<Complete, Partial> modelMeta;
-    protected TypeToken<QueryResult<Complete>> queryResultTypeToken;
-    protected TypeToken<PaginateResult<Complete>> paginateResultTypeToken;
+    protected JavaType queryResultTypeToken;
+    protected JavaType paginateResultTypeToken;
 
     public @Inject
-    CoreModelService(ModelMeta<Complete, Partial> modelMeta, ExecutorServiceProvider executorServiceProvider) {
+    CoreModelService(ObjectMapper mapper, ModelMeta<Complete, Partial> modelMeta, ExecutorServiceProvider executorServiceProvider) {
         this.modelMeta = modelMeta;
         this.listeningExecutorService = executorServiceProvider.getRegisteredService();
-        this.queryResultTypeToken = new TypeToken<QueryResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
-        this.paginateResultTypeToken = new TypeToken<PaginateResult<Complete>>(){}.where(new TypeParameter<Complete>(){}, this.modelMeta.getCompleteType());
+        this.mapper = mapper;
+        this.queryResultTypeToken = mapper.getTypeFactory().constructParametricType(QueryResult.class, modelMeta.getCompleteType().getRawType());
+        this.paginateResultTypeToken = mapper.getTypeFactory().constructParametricType(PaginateResult.class, modelMeta.getCompleteType().getRawType());
     }
 
     @Override
@@ -193,7 +195,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     public void deleteSync(DeleteRequest<Complete> deleteRequest) throws Exception {
         this.httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/" + deleteRequest.getId(),
-                new CoreRequestCallable<>(null, this.mapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.DELETE,
                         new HashMap<>(),

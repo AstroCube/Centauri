@@ -32,10 +32,11 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
     @Inject
     RedisModelService(
+            ObjectMapper mapper,
             ModelMeta<Complete, Partial> modelMeta,
             ExecutorServiceProvider executorServiceProvider
     ) {
-        super(modelMeta, executorServiceProvider);
+        super(mapper, modelMeta, executorServiceProvider);
         this.redisRequestCallabe = new RedisRequestCallabe<>();
     }
 

@@ -13,8 +13,13 @@ import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 @SuppressWarnings("all")
 public class CoreRequestCallable<T> implements RequestCallable<T> {
 
-    private final TypeToken<T> returnType;
+    private final JavaType returnType;
     private final ObjectMapper mapper;
+
+    public CoreRequestCallable(TypeToken<T> type, ObjectMapper mapper) {
+        this.returnType = mapper.constructType(type.getType());
+        this.mapper = mapper;
+    }
 
     @Override
     public T call(HttpRequest request) throws Exception {
@@ -24,9 +29,8 @@ public class CoreRequestCallable<T> implements RequestCallable<T> {
 
         if (statusCode == 200) {
 
-            JavaType type = mapper.constructType(returnType.getType());
-            T returnable = this.mapper.readValue(json, type);
-            System.out.println(returnType.getType().getTypeName());
+            T returnable = this.mapper.readValue(json, returnType);
+            System.out.println(returnType.getTypeName());
 
             return returnable;
         } else {
