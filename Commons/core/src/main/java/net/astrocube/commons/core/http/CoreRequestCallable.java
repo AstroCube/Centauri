@@ -28,6 +28,7 @@ public class CoreRequestCallable<T> implements RequestCallable<T> {
         int statusCode = response.getStatusCode();
 
         if (statusCode == 200) {
+            System.out.println("Return type: " + returnType);
             T returnable = this.mapper.readValue(json, returnType);
             return returnable;
         } else {
