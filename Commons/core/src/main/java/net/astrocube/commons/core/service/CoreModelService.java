@@ -54,12 +54,12 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
         this.modelMeta = modelMeta;
         this.listeningExecutorService = executorServiceProvider.getRegisteredService();
         this.mapper = mapper;
-        this.queryResultTypeToken = mapper.getTypeFactory().constructParametricType(QueryResult.class, modelMeta.getCompleteType().getRawType());
-        this.paginateResultTypeToken = mapper.getTypeFactory().constructParametricType(PaginateResult.class, modelMeta.getCompleteType().getRawType());
+        this.queryResultTypeToken = mapper.getTypeFactory().constructParametricType(QueryResult.class, modelMeta.getCompleteType());
+        this.paginateResultTypeToken = mapper.getTypeFactory().constructParametricType(PaginateResult.class, modelMeta.getCompleteType());
     }
 
     @Override
-    public TypeToken<Complete> getCompleteType() {
+    public JavaType getCompleteType() {
         return modelMeta.getCompleteType();
     }
 
@@ -90,7 +90,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     }
 
     @Override
-    public TypeToken<Partial> getPartialType() {
+    public JavaType getPartialType() {
         return modelMeta.getPartialType();
     }
 

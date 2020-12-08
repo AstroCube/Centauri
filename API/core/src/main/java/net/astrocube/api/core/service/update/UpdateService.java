@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.update;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
@@ -12,13 +13,13 @@ public interface UpdateService<Complete extends Model, Partial extends PartialMo
      * Will return type of the full model
      * @return TypeToken of complete
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
     /**
      * Will return type of the partial model
      * @return TypeToken of partial
      */
-    TypeToken<Partial> getPartialType();
+    JavaType getPartialType();
 
     /**
      * Default update request to be called from service
@@ -26,15 +27,7 @@ public interface UpdateService<Complete extends Model, Partial extends PartialMo
      * @return update request
      */
     default UpdateRequest<Partial> updateRequest(Partial partial) {
-        return new UpdateRequest<Partial>() {
-            @Override
-            public Partial getModel() {
-                return partial;
-            }
-            public TypeToken<Partial> getModelType() {
-                return getPartialType();
-            }
-        };
+        return () -> partial;
     }
 
     /**

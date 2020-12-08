@@ -4,22 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.inject.TypeLiteral;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
-import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.config.HttpClientConfig;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.paginate.PaginateService;
-import net.astrocube.api.core.service.query.QueryService;
-import net.astrocube.commons.core.service.CoreModelService;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.Set;
 
 @Singleton
 public class CoreGameMapService implements GameMapService {
