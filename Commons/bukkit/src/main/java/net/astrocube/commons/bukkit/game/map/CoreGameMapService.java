@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 
 @Singleton
 public class CoreGameMapService implements GameMapService {
@@ -40,9 +41,9 @@ public class CoreGameMapService implements GameMapService {
         node.put("gamemode", gameMode);
         node.put("subGamemode", subGameMode);
 
-        GameMap[] paginate = queryService.paginateSync("?page=1&perPage=-1", node).getData();
+        Set<GameMap> paginate = queryService.paginateSync("?page=1&perPage=-1", node).getData();
 
-        return Arrays.stream(paginate).findAny();
+        return paginate.stream().findAny();
     }
 
     private byte[] getBytesFromFile(String route) throws IOException {

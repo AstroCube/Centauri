@@ -17,6 +17,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Set;
 import java.util.logging.Level;
 
 @Command(names = "list")
@@ -33,12 +34,12 @@ public class ListSubCommand implements CommandClass {
         friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
                 Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
 
-                    Friendship[] friendships = paginateResult.getData();
+                    Set<Friendship> friendships = paginateResult.getData();
                     PaginateResult.Pagination pagination = paginateResult.getPagination();
 
                     int pageIndicator = pagination.page().orElse(-1);
 
-                    if (friendships.length == 0 && pageIndicator == -1
+                    if (friendships.size() == 0 && pageIndicator == -1
                             && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
                         player.sendMessage(messageHandler.get(player, "no-friends"));
                         return;

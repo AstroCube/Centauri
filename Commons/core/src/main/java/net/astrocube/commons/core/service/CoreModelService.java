@@ -1,5 +1,6 @@
 package net.astrocube.commons.core.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeParameter;
@@ -18,9 +19,11 @@ import net.astrocube.api.core.service.delete.DeleteRequest;
 import net.astrocube.api.core.service.delete.DeleteService;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.service.paginate.PaginateBaseResult;
 import net.astrocube.api.core.service.paginate.PaginateRequest;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.service.paginate.PaginateService;
+import net.astrocube.api.core.service.query.QueryBaseResult;
 import net.astrocube.api.core.service.query.QueryRequest;
 import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.query.QueryService;
@@ -30,6 +33,8 @@ import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CoreModelService<Complete extends Model, Partial extends PartialModel> implements
@@ -76,9 +81,10 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
-        return this.httpClient.executeRequestSync(
+
+        QueryBaseResult queryResult = this.httpClient.executeRequestSync(
                 modelMeta.getRouteKey() + "/list",
-                new CoreRequestCallable<>(this.queryResultTypeToken, mapper),
+                new CoreRequestCallable<>(mapper.constructType(QueryBaseResult.class), mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -87,6 +93,18 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
                         "?page=-1"
                 )
         );
+
+        return () -> {
+            try {
+                return mapper.readValue(
+                        queryResult.getFoundModels().toString(),
+                        mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
+                );
+            } catch (JsonProcessingException e) {
+                return new HashSet<>();
+            }
+        };
+
     }
 
     @Override
@@ -142,7 +160,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
-        return this.httpClient.executeRequestSync(
+        PaginateBaseResult paginateResult = this.httpClient.executeRequestSync(
                 modelMeta.getRouteKey() + "/list",
                 new CoreRequestCallable<>(this.paginateResultTypeToken, mapper),
                 new CoreRequestOptions(
@@ -153,6 +171,25 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
                         paginateRequest.getPaginateQuery()
                 )
         );
+
+        return new PaginateResult<Complete>() {
+            @Override
+            public Set<Complete> getData() {
+                try {
+                    return mapper.readValue(
+                            paginateResult.getData().toString(),
+                            mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
+                    );
+                } catch (JsonProcessingException e) {
+                    return new HashSet<>();
+                }
+            }
+
+            @Override
+            public Pagination getPagination() {
+                return paginateResult.getPagination();
+            }
+        };
     }
 
     @Override
