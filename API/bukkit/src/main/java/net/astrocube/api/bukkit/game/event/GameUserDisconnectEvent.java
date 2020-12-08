@@ -11,9 +11,9 @@ import org.bukkit.event.player.PlayerEvent;
 public class GameUserDisconnectEvent extends PlayerEvent {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final Match match;
+    private final String match;
 
-    public GameUserDisconnectEvent(Match match, Player player) {
+    public GameUserDisconnectEvent(String match, Player player) {
         super(player);
         this.match = match;
     }

@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.query;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
@@ -14,7 +15,7 @@ public interface QueryService<Complete extends Model> {
      * Will return type of the full model
      * @return TypeToken of complete
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
     /**
      * Query that will be called from the service
@@ -26,10 +27,6 @@ public interface QueryService<Complete extends Model> {
             @Override
             public @Nullable ObjectNode getBsonQuery() {
                 return bsonQuery;
-            }
-
-            public TypeToken<Complete> getModelType() {
-                return getCompleteType();
             }
         };
     }

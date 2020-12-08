@@ -14,26 +14,15 @@ import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.service.CoreModelService;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> implements MatchService {
+public class CoreMatchService implements MatchService {
 
-    private final ObjectMapper objectMapper;
-
-    @Inject
-    CoreMatchService(
-            ModelMeta<Match, MatchDoc.Partial> modelMeta,
-            HttpClient httpClient,
-            ObjectMapper mapper,
-            ExecutorServiceProvider executorServiceProvider
-    ) {
-        super(modelMeta, executorServiceProvider);
-        this.httpClient = httpClient;
-        this.objectMapper = mapper;
-    }
+    private @Inject ObjectMapper objectMapper;
+    private @Inject HttpClient httpClient;
+    private @Inject ModelMeta<Match, MatchDoc.Partial> modelMeta;
 
 
     @Override
@@ -77,10 +66,29 @@ public class CoreMatchService extends CoreModelService<Match, MatchDoc.Partial> 
     }
 
     @Override
-    public void assignPending(MatchAssignable pendingRequests, String match) throws Exception {
+    public void unAssignPending(String user, String match) throws Exception {
         ObjectNode node = objectMapper.createObjectNode();
 
-        node.putPOJO("pending", pendingRequests);
+        node.put("user", user);
+        node.put("match",  match);
+
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/unassign-pending",
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(node),
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void assignPending(MatchAssignable pendingRequest, String match) throws Exception {
+        ObjectNode node = objectMapper.createObjectNode();
+
+        node.putPOJO("pending", pendingRequest);
         node.put("match",  match);
 
         httpClient.executeRequestSync(

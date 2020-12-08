@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.delete;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
@@ -11,7 +12,7 @@ public interface DeleteService<Complete extends Model> {
      * Will return type of the full model
      * @return TypeToken of complete
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
     /**
      * Default delete request to be called from service
@@ -19,16 +20,7 @@ public interface DeleteService<Complete extends Model> {
      * @return update request
      */
     default DeleteRequest<Complete> deleteRequest(String id) {
-        return new DeleteRequest<Complete>() {
-            @Override
-            public String getId() {
-                return id;
-            }
-
-            public TypeToken<Complete> getModelType() {
-                return getCompleteType();
-            }
-        };
+        return () -> id;
     }
 
     /**

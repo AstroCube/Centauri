@@ -10,6 +10,7 @@ import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.virtual.server.Server;
+import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.server.ServerDoc.Partial;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
@@ -18,22 +19,11 @@ import net.astrocube.commons.core.service.CoreModelService;
 import java.util.HashMap;
 
 @SuppressWarnings("UnstableApiUsage")
-public class ServerModelService extends CoreModelService<Server, Partial> implements ServerService {
+public class ServerModelService implements ServerService {
 
-    private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
-
-    @Inject
-    ServerModelService(
-            ModelMeta<Server, Partial> modelMeta,
-            HttpClient httpClient,
-            ObjectMapper mapper,
-            ExecutorServiceProvider executorServiceProvider
-    ) {
-        super(modelMeta, executorServiceProvider);
-        this.httpClient = httpClient;
-        this.objectMapper = mapper;
-    }
+    private @Inject ModelMeta<Server, ServerDoc.Partial> modelMeta;
+    private @Inject HttpClient httpClient;
+    private @Inject ObjectMapper objectMapper;
 
     public String connect(CreateRequest<Partial> request) throws Exception {
         return httpClient.executeRequestSync(

@@ -40,6 +40,11 @@ public interface MatchDoc {
         String getMap();
 
         /**
+         * @param map to be updated
+         */
+        void setMap(String map);
+
+        /**
          * @return {@link GameMode} id to be used with a {@link FindService}
          */
         @JsonProperty("gamemode")
