@@ -1,0 +1,68 @@
+punishment-reason-menu:
+  title: "Punishment reason chooser menu"
+ban-reasons:
+  reason-1:
+    slot: 11
+    name: "Misbehavior"
+    lore:
+      - "The player is"
+      - "misbehaving!"
+    punish-reason: "You're behaving bad!"
+  reason-2:
+    slot: 13
+    name: "You don't know"
+    lore:
+      - "Ban with not reason, but you like"
+      - "Ok? Perfect."
+    punish-reason: "You has been banned without reason, gay."
+  reason-3:
+    slot: 15
+    name: "You don't know, but x2"
+    lore:
+      - "Do you need another explanation?"
+      - "Nice, good day!"
+    punish-reason: "You has been banned without reason, but get happy, the reason is same as the first!"
+kick-reasons:
+  reason-1:
+    slot: 11
+    name: "Misbehavior"
+    lore:
+      - "The player is"
+      - "misbehaving!"
+    punish-reason: "You're behaving bad!"
+  reason-2:
+    slot: 13
+    name: "You don't know"
+    lore:
+      - "Kick with not reason, but you like"
+      - "Ok? Perfect."
+    punish-reason: "You has been kicked without reason, gay."
+  reason-3:
+    slot: 15
+    name: "You don't know, but x2"
+    lore:
+      - "Do you need another explanation?"
+      - "Nice, good day!"
+    punish-reason: "You has been kicked without reason, but get happy, the reason is same as the first!"
+warn-reasons:
+  reason-1:
+    slot: 11
+    name: "Misbehavior"
+    lore:
+      - "The player is"
+      - "misbehaving!"
+    punish-reason: "You're behaving bad!"
+  reason-2:
+    slot: 13
+    name: "You don't know"
+    lore:
+      - "Warn with not reason, but you like"
+      - "Ok? Perfect."
+    punish-reason: "You has been warned without reason, gay."
+  reason-3:
+    slot: 15
+    name: "You don't know, but x2"
+    lore:
+      - "Do you need another explanation?"
+      - "Nice, good day!"
+    punish-reason: "You has been warned without reason, but get happy, the reason is same as the first!"

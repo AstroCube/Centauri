@@ -5,6 +5,7 @@ import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.game.GameModule;
+import net.astrocube.commons.bukkit.menu.MenuModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
@@ -29,5 +30,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new BukkitConfigurationModule());
         install(new TranslationModule());
         install(new UserModule());
+        install(new MenuModule());
     }
 }

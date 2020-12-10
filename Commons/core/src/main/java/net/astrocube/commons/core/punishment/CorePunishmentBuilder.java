@@ -23,15 +23,30 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
     }
 
     @Override
+    public String getReason() {
+        return reason;
+    }
+
+    @Override
     public CorePunishmentBuilder setReason(String reason) {
         this.reason = reason;
         return this;
     }
 
     @Override
+    public long getDuration() {
+        return duration;
+    }
+
+    @Override
     public CorePunishmentBuilder setDuration(long duration) {
         this.duration = duration;
         return this;
+    }
+
+    @Override
+    public PunishmentDoc.Identity.Type getType() {
+        return type;
     }
 
     @Override

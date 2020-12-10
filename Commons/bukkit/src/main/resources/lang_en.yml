@@ -2,17 +2,17 @@ punish-menu:
   title: "Sanctions menu"
   items:
     ban:
-      name: "Ban %player%"
+      name: "Ban %punished_name%"
       lore:
         - "Click here to choose the"
         - "reason to ban this player!"
     kick:
-      name: "Kick %player%"
+      name: "Kick %punished_name%"
       lore:
         - "Click here to choose the"
         - "reason to kick this player!"
     warn:
-      name: "Warn %player%"
+      name: "Warn %punished_name%"
       lore:
         - "Click here to choose the"
         - "reason to warn this player!"
