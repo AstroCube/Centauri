@@ -15,6 +15,7 @@ import javax.inject.Named;
 public class PunishmentReasonChooserMenu {
 
     @Inject @Named("menus") private FileConfiguration menus;
+    @Inject PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
 
     public Inventory createPunishmentReasonChooserMenu(Player player,
                                                        PunishmentBuilder punishmentBuilder) {
@@ -34,7 +35,7 @@ public class PunishmentReasonChooserMenu {
                                     .build())
                             .setAction(inventoryClickEvent -> {
                                 punishmentBuilder.setReason(s + ".punish-reason");
-                                //Open the menu to choose the time, and
+                                player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
                             })
                             .build());
@@ -52,6 +53,7 @@ public class PunishmentReasonChooserMenu {
                                     .build())
                             .setAction(inventoryClickEvent -> {
                                 punishmentBuilder.setReason(s + ".punish-reason");
+                                player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
                             })
                             .build());
@@ -69,6 +71,7 @@ public class PunishmentReasonChooserMenu {
                                     .build())
                             .setAction(inventoryClickEvent -> {
                                 punishmentBuilder.setReason(s + ".punish-reason");
+                                player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
                             })
                             .build());
