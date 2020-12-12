@@ -1,11 +1,10 @@
 package net.astrocube.commons.bukkit.command.friends;
 
 import com.google.inject.Inject;
-import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
-import me.fixeddev.ebcm.parametric.CommandClass;
-import me.fixeddev.ebcm.parametric.annotation.ACommand;
-import me.fixeddev.ebcm.parametric.annotation.Injected;
-import me.fixeddev.ebcm.parametric.annotation.Optional;
+import me.fixeddev.commandflow.annotated.CommandClass;
+import me.fixeddev.commandflow.annotated.annotation.Command;
+import me.fixeddev.commandflow.annotated.annotation.OptArg;
+import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.find.FindService;
@@ -18,9 +17,10 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Set;
 import java.util.logging.Level;
 
-@ACommand(names = "list")
+@Command(names = "list")
 public class ListSubCommand implements CommandClass {
 
     private static final int FRIENDS_PER_PAGE = 10;
@@ -28,18 +28,18 @@ public class ListSubCommand implements CommandClass {
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FindService<User> userFindService;
 
-    @ACommand(names = "")
-    public boolean execute(@Injected(true) @Sender Player player, @Optional Integer providedPage) {
+    @Command(names = "")
+    public boolean execute(@Sender Player player, @OptArg Integer providedPage) {
         int page = providedPage == null ? 0 : providedPage - 1;
         friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
                 Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
 
-                    Friendship[] friendships = paginateResult.getData();
+                    Set<Friendship> friendships = paginateResult.getData();
                     PaginateResult.Pagination pagination = paginateResult.getPagination();
 
                     int pageIndicator = pagination.page().orElse(-1);
 
-                    if (friendships.length == 0 && pageIndicator == -1
+                    if (friendships.size() == 0 && pageIndicator == -1
                             && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
                         player.sendMessage(messageHandler.get(player, "no-friends"));
                         return;

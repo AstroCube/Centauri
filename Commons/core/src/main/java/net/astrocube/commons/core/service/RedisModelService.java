@@ -22,7 +22,6 @@ import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 
-@Singleton
 @SuppressWarnings("All")
 public class RedisModelService<Complete extends Model, Partial extends PartialModel> extends CoreModelService<Complete, Partial> {
 
@@ -33,10 +32,11 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
     @Inject
     RedisModelService(
+            ObjectMapper mapper,
             ModelMeta<Complete, Partial> modelMeta,
             ExecutorServiceProvider executorServiceProvider
     ) {
-        super(modelMeta, executorServiceProvider);
+        super(mapper, modelMeta, executorServiceProvider);
         this.redisRequestCallabe = new RedisRequestCallabe<>();
     }
 
@@ -93,14 +93,14 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
             if (statusCode < 400) {
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType().getType()));
+                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
                     String key = modelMeta.getRouteKey() + ":" + model.getId();
                     jedis.set(key, json);
                     jedis.expire(key, modelMeta.getCache());
                     return model;
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    throw new Exception("Parsing of " + getCompleteType().getType() + " failed");
+                    throw new Exception("Parsing of " + getCompleteType() + " failed");
                 }
             } else {
                 throw RequestExceptionResolverUtil.generateException(json, statusCode);

@@ -3,10 +3,9 @@ package net.astrocube.commons.bukkit.command.friends;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
-import me.fixeddev.ebcm.parametric.CommandClass;
-import me.fixeddev.ebcm.parametric.annotation.ACommand;
-import me.fixeddev.ebcm.parametric.annotation.Injected;
+import me.fixeddev.commandflow.annotated.CommandClass;
+import me.fixeddev.commandflow.annotated.annotation.Command;
+import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.core.service.delete.DeleteService;
@@ -17,7 +16,7 @@ import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-@ACommand(names = {"remove", "rm", "delete", "del"})
+@Command(names = {"remove", "rm", "delete", "del"})
 public class RemoveSubCommand implements CommandClass {
 
     private @Inject FriendCallbackHelper friendCallbackHelper;
@@ -27,8 +26,8 @@ public class RemoveSubCommand implements CommandClass {
     private @Inject ObjectMapper objectMapper;
     private @Inject MessageHandler<Player> messageHandler;
 
-    @ACommand(names = "")
-    public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
+    @Command(names = "")
+    public boolean execute(@Sender Player player, OfflinePlayer target) {
 
         if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
             return true;

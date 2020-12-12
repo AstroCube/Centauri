@@ -1,10 +1,9 @@
 package net.astrocube.commons.bukkit.command.friends;
 
 import com.google.inject.Inject;
-import me.fixeddev.ebcm.bukkit.parameter.provider.annotation.Sender;
-import me.fixeddev.ebcm.parametric.CommandClass;
-import me.fixeddev.ebcm.parametric.annotation.ACommand;
-import me.fixeddev.ebcm.parametric.annotation.Injected;
+import me.fixeddev.commandflow.annotated.CommandClass;
+import me.fixeddev.commandflow.annotated.annotation.Command;
+import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.core.friend.FriendshipHandler;
@@ -21,8 +20,8 @@ public class AcceptSubCommand implements CommandClass {
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;
 
-    @ACommand(names = "accept")
-    public boolean execute(@Injected(true) @Sender Player player, OfflinePlayer target) {
+    @Command(names = "accept")
+    public boolean execute(@Sender Player player, OfflinePlayer target) {
 
         if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
             return true;

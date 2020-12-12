@@ -5,10 +5,11 @@ import net.astrocube.api.core.model.Document;
 import net.astrocube.api.core.model.Model;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface PaginateResult<Complete extends Model> extends Message {
 
-    Complete[] getData();
+    Set<Complete> getData();
 
     Pagination getPagination();
 

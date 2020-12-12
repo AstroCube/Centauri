@@ -12,6 +12,7 @@ import net.astrocube.commons.core.friend.FriendModule;
 import net.astrocube.commons.core.http.HttpModule;
 import net.astrocube.commons.core.message.MessengerModule;
 import net.astrocube.commons.core.permission.CorePermissionsModule;
+import net.astrocube.commons.core.punishment.PunishmentModule;
 import net.astrocube.commons.core.redis.RedisModule;
 import net.astrocube.commons.core.server.CoreServerModule;
 import net.astrocube.commons.core.session.SessionModule;
@@ -27,6 +28,7 @@ public class CommonsModule extends ProtectedModule {
         install(new MessengerModule());
         install(new SessionModule());
         install(new CoreServerModule());
+        install(new PunishmentModule());
 
         bind(ObjectMapper.class).toProvider(() -> {
             ObjectMapper mapper = new ObjectMapper();

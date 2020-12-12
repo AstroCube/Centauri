@@ -13,8 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import team.unnamed.gui.api.item.ItemClickable;
-import team.unnamed.gui.item.DefaultItemClickable;
+import team.unnamed.gui.abstraction.item.ItemClickable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,8 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
         loreArray.add(
                 messageHandler.get(player, "lobby.lobby-selector.indicators.connected")
-                .replace("%%users%%", wrapper.getConnected() + "")
-                .replace("%%total%%", wrapper.getMax() + "")
+                        .replace("%%users%%", wrapper.getConnected() + "")
+                        .replace("%%total%%", wrapper.getMax() + "")
         );
         loreArray.add(" ");
         loreArray.add(
@@ -66,11 +65,12 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
         itemStack.setItemMeta(meta);
 
         LobbySwitchStatus finalStatus = status;
-        return new DefaultItemClickable(position, itemStack, (event) -> {
-            event.getWhoClicked().closeInventory();
-            lobbyServerRedirect.redirectPlayer(player, wrapper, finalStatus);
-            return true;
-        });
+        return ItemClickable.builder(position)
+                .setItemStack(itemStack)
+                .setAction((event) -> {
+                    event.getWhoClicked().closeInventory();
+                    lobbyServerRedirect.redirectPlayer(player, wrapper, finalStatus);
+                    return true;
+                }).build();
     }
-
 }

@@ -35,15 +35,19 @@ public class CoreCountdownScheduler implements CountdownScheduler {
     @Override
     public void scheduleMatchCountdown(Match match, int seconds, boolean force) {
 
-        if (force) {
+        if (force && hasActiveCountdown(match)) {
             cancelMatchCountdown(match);
         }
 
         if (force || !scheduledTimers.containsKey(match.getId())) {
             CountdownTimer runnable = new CountdownTimer(
                     plugin,
-                    1,
-                    (sec) -> countdownAlerter.alertCountdownSecond(match, seconds),
+                    seconds,
+                    (sec) -> {
+                        if (sec.isImportantSecond()) {
+                            countdownAlerter.alertCountdownSecond(match, sec.getSecondsLeft());
+                        }
+                    },
                     () -> Bukkit.getPluginManager().callEvent(new GameTimerOutEvent(match.getId()))
             );
             runnable.scheduleTimer();

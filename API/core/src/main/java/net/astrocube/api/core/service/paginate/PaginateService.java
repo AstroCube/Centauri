@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.paginate;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
@@ -12,7 +13,7 @@ public interface PaginateService<Complete extends Model> {
      * Complete type of the requested service
      * @return TypeToken of the query
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
 
     /**
@@ -31,10 +32,6 @@ public interface PaginateService<Complete extends Model> {
             @Override
             public ObjectNode getBsonQuery() {
                 return bsonQuery;
-            }
-
-            public TypeToken<Complete> getModelType() {
-                return getCompleteType();
             }
         };
     }

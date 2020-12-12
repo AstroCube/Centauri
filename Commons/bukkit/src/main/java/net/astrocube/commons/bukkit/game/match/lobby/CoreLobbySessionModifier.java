@@ -50,10 +50,10 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
         Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
         Bukkit.getOnlinePlayers().forEach(online -> {
             if (waitingIds.contains(online.getDatabaseIdentifier())) {
-                player.sendMessage(
+                online.sendMessage(
                         messageHandler.getMessage("game.lobby-leave")
                                 .replace("%%player%%", online.getDisplayName())
-                                .replace("%%actual%%", (waitingIds.size() + 1) + "")
+                                .replace("%%actual%%", waitingIds.size() + "")
                                 .replace("%%max%%", subGameMode.getMaxPlayers() + "")
                 );
             }

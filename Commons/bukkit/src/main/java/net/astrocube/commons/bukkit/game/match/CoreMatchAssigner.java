@@ -11,12 +11,10 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -92,7 +90,8 @@ public class CoreMatchAssigner implements MatchAssigner {
                     pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
                             pending.getInvolved().contains(player.getDatabaseIdentifier()))
             ) {
-                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match, player));
+                matchService.unAssignPending(player.getDatabaseIdentifier(), match.getId());
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player));
             } else if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(player.getDatabaseIdentifier()))) {
 
             }

@@ -1,6 +1,6 @@
 package net.astrocube.api.core.service.create;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
@@ -13,13 +13,13 @@ public interface CreateService<Complete extends Model, Partial extends PartialMo
      * Will return type of the full model
      * @return TypeToken of complete
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
     /**
      * Will return type of the partial model
      * @return TypeToken of partial
      */
-    TypeToken<Partial> getPartialType();
+    JavaType getPartialType();
 
     /**
      * Default create request to be called from service
@@ -27,16 +27,7 @@ public interface CreateService<Complete extends Model, Partial extends PartialMo
      * @return update request
      */
     default CreateRequest<Partial> createRequest(Partial partial) {
-        return new CreateRequest<Partial>() {
-            @Override
-            public Partial getModel() {
-                return partial;
-            }
-
-            public TypeToken<Partial> getModelType() {
-                return getPartialType();
-            }
-        };
+        return () -> partial;
     }
 
     /**

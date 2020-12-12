@@ -2,7 +2,7 @@ package net.astrocube.api.bukkit.lobby.selector.lobby;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import team.unnamed.gui.api.item.ItemClickable;
+import team.unnamed.gui.abstraction.item.ItemClickable;
 
 public interface LobbyIconExtractor {
 

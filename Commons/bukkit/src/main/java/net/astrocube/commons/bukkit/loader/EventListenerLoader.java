@@ -1,19 +1,19 @@
 package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvalidListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.game.*;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
+import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
 import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
 import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.MenuListeners;
+import team.unnamed.gui.core.GUIListeners;
 
 import java.util.logging.Level;
 
@@ -28,6 +28,7 @@ public class EventListenerLoader implements Loader {
     private @Inject UserPreLoginListener userPreLoginListener;
     private @Inject UserLoginListener userLoginListener;
     private @Inject UserJoinListener userJoinListener;
+    private @Inject UserDisconnectListener userDisconnectListener;
 
     private @Inject GameModePairListener gameModePairListener;
     private @Inject GameTimerOutListener gameTimerOutListener;
@@ -37,7 +38,7 @@ public class EventListenerLoader implements Loader {
     private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchAssignationListener matchAssignationListener;
 
-    private @Inject MenuListeners menuListeners;
+    private @Inject GUIListeners guiListeners;
 
     private @Inject Plugin plugin;
 
@@ -55,6 +56,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(userPreLoginListener);
         registerEvent(userLoginListener);
         registerEvent(userJoinListener);
+        registerEvent(userDisconnectListener);
 
         registerEvent(gameModePairListener);
         registerEvent(gameTimerOutListener);
@@ -64,7 +66,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(lobbyUserDisconnectListener);
         registerEvent(matchAssignationListener);
 
-        registerEvent(menuListeners);
+        registerEvent(guiListeners);
     }
 
     private void registerEvent(Listener listener) {

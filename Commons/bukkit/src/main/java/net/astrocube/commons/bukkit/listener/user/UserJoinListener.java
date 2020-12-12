@@ -56,6 +56,7 @@ public class UserJoinListener implements Listener {
 
         Player player = event.getPlayer();
         ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+        event.setJoinMessage("");
 
         this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
             try {

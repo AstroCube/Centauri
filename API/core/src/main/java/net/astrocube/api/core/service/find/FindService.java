@@ -1,5 +1,6 @@
 package net.astrocube.api.core.service.find;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
@@ -11,7 +12,7 @@ public interface FindService<Complete extends Model> {
      * Complete type of the request
      * @return TypeToken with the complete type
      */
-    TypeToken<Complete> getCompleteType();
+    JavaType getCompleteType();
 
     /**
      * Final request that will be passed to the API
@@ -19,16 +20,7 @@ public interface FindService<Complete extends Model> {
      * @return final request
      */
     default FindRequest<Complete> findRequest(String id) {
-        return new FindRequest<Complete>() {
-            @Override
-            public String getId() {
-                return id;
-            }
-
-            public TypeToken<Complete> getModelType() {
-                return getCompleteType();
-            }
-        };
+        return () -> id;
     }
 
     /**
