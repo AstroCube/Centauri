@@ -139,3 +139,40 @@ commands:
             only-player: "asd"
         player:
             offline: "asd"
+punish-menu:
+    title: "%%white%%Sanctions menu"
+    items:
+        ban:
+            name: "%%dark_red%%Ban %punished_name%"
+            lore:
+                - "%%white%%Click here to choose the"
+                - "%%white%%reason to ban this player!"
+        kick:
+            name: "%%red%%Kick %punished_name%"
+            lore:
+                - "%%white%%Click here to choose the"
+                - "%%white%%reason to kick this player!"
+        warn:
+            name: "%%yellow%%Warn %punished_name%"
+            lore:
+                - "%%white%%Click here to choose the"
+                - "%%white%%reason to warn this player!"
+punishment-expiration-menu:
+    title: "%%white%%Punishment expiration chooser"
+    items:
+        confirm:
+            name: "%%green%%Confirm the punishment!"
+            lore:
+                - "%%white%%Click on this bottom and finish the punishment"
+                - "%%white%%Remember, if you don't specify the time, the punishment expiration is never"
+                - "%%white%%But, if you specify there, the punishment will be temporary with the minutes specified."
+        increase:
+            name: "%%green%%Increase the time in minutes"
+            lore:
+                - "%%white%%This only adds a minute to the total time"
+                - "%%white%%Warning! Don't break te bottom."
+        decrease:
+            name: "%%red%%Decrease the time in minutes"
+            lore:
+                - "%%white%%This only subtracts a minute to the total time."
+                - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"

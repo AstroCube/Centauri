@@ -1,25 +1,27 @@
 package net.astrocube.commons.bukkit.menu;
 
 import net.astrocube.api.core.punishment.PunishmentBuilder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.type.GUIBuilder;
+import team.unnamed.gui.core.gui.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class PunishmentReasonChooserMenu {
 
     @Inject private Plugin plugin;
-    @Inject PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
+    @Inject private PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
 
     public Inventory createPunishmentReasonChooserMenu(Player player,
                                                        PunishmentBuilder punishmentBuilder) {
 
-        GUIBuilder<ItemClickable> guiBuilder = GUIBuilder.builder(plugin.getConfig().getString("punishment-reason-menu.title"), 3);
+        GUIBuilder guiBuilder = GUIBuilder.builder(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("punishment-reason-menu.title")), 3);
 
         switch (punishmentBuilder.getType()) {
 
@@ -27,13 +29,13 @@ public class PunishmentReasonChooserMenu {
 
                 for (String s : plugin.getConfig().getConfigurationSection("ban-reasons").getKeys(false)) {
 
-                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt(s + ".slot"))
+                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt("ban-reasons." + s + ".slot"))
                             .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                    .setName(plugin.getConfig().getString(s + ".name"))
-                                    .setLore(plugin.getConfig().getStringList(s + ".lore"))
+                                    .setName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ban-reasons." + s + ".name")))
+                                    .setLore(colorize(plugin.getConfig().getStringList("ban-reasons." + s + ".lore")))
                                     .build())
                             .setAction(inventoryClickEvent -> {
-                                punishmentBuilder.setReason(s + ".punish-reason");
+                                punishmentBuilder.setReason("ban-reasons." + s + ".punish-reason");
                                 player.openInventory(punishmentExpirationChooserMenu
                                         .createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
@@ -46,13 +48,13 @@ public class PunishmentReasonChooserMenu {
 
                 for (String s : plugin.getConfig().getConfigurationSection("kick-reasons").getKeys(false)) {
 
-                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt(s + ".slot"))
+                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt("kick-reasons." + s + ".slot"))
                             .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                    .setName(plugin.getConfig().getString(s + ".name"))
-                                    .setLore(plugin.getConfig().getStringList(s + ".lore"))
+                                    .setName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("kick-reasons." + s + ".name")))
+                                    .setLore(colorize(plugin.getConfig().getStringList("kick-reasons." + s + ".lore")))
                                     .build())
                             .setAction(inventoryClickEvent -> {
-                                punishmentBuilder.setReason(s + ".punish-reason");
+                                punishmentBuilder.setReason("kick-reasons." + s + ".punish-reason");
                                 player.openInventory(punishmentExpirationChooserMenu
                                         .createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
@@ -65,13 +67,13 @@ public class PunishmentReasonChooserMenu {
 
                 for (String s : plugin.getConfig().getConfigurationSection("warn-reasons").getKeys(false)) {
 
-                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt(s + ".slot"))
+                    guiBuilder.addItem(ItemClickable.builder(plugin.getConfig().getInt("warn-reasons." + s + ".slot"))
                             .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                    .setName(plugin.getConfig().getString(s + ".name"))
-                                    .setLore(plugin.getConfig().getStringList(s + ".lore"))
+                                    .setName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("warn-reasons." + s + ".name")))
+                                    .setLore(colorize(plugin.getConfig().getStringList("warn-reasons." + s + ".lore")))
                                     .build())
                             .setAction(inventoryClickEvent -> {
-                                punishmentBuilder.setReason(s + ".punish-reason");
+                                punishmentBuilder.setReason("warn-reasons." + s + ".punish-reason");
                                 player.openInventory(punishmentExpirationChooserMenu
                                         .createPunishmentExpirationChooserMenu(player, punishmentBuilder));
                                 return true;
@@ -84,5 +86,10 @@ public class PunishmentReasonChooserMenu {
                 guiBuilder.build();
         }
         return guiBuilder.build();
+    }
+
+    private List<String> colorize(List<String> list) {
+        list.replaceAll(line -> ChatColor.translateAlternateColorCodes('&', line));
+        return list;
     }
 }

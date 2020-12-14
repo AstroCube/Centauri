@@ -10,8 +10,7 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorWrapper;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.entity.Player;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.type.GUIBuilder;
-
+import team.unnamed.gui.core.gui.GUIBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +31,7 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
             return;
         }
 
-        GUIBuilder<ItemClickable> menuBuilder = GUIBuilder.builder(
+        GUIBuilder menuBuilder = GUIBuilder.builder(
                 messageHandler.get(player, "lobby.lobby-selector.gadget-title"),
                 1
         );
