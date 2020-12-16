@@ -8,13 +8,13 @@ import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.match.AvailableMatchServerProvider;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.core.service.paginate.PaginateService;
+import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.server.Server;
 
 @Singleton
 public class CoreAvailableMatchServerProvider implements AvailableMatchServerProvider {
 
-    private @Inject
-    PaginateService<Server> serverQueryService;
+    private @Inject QueryService<Server> serverQueryService;
     private @Inject ObjectMapper mapper;
 
     @Override
@@ -31,7 +31,7 @@ public class CoreAvailableMatchServerProvider implements AvailableMatchServerPro
 
         ArrayNode serverArray = mapper.createArrayNode();
 
-        for (Server server: serverQueryService.paginateSync("?page=-1", node).getData()) {
+        for (Server server: serverQueryService.querySync(node).getFoundModels()) {
             serverArray.add(server.getId());
         }
 

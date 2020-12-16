@@ -34,6 +34,7 @@ import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -187,7 +188,42 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
             @Override
             public Pagination getPagination() {
-                return paginateResult.getPagination();
+                return new Pagination() {
+                    @Override
+                    public int perPage() {
+                        return paginateResult.getPagination().perPage();
+                    }
+
+                    @Override
+                    public boolean hasPrevPage() {
+                        return paginateResult.getPagination().hasPrevPage();
+                    }
+
+                    @Override
+                    public boolean hasNextPage() {
+                        return paginateResult.getPagination().hasNextPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> prevPage() {
+                        return paginateResult.getPagination().prevPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> nextPage() {
+                        return paginateResult.getPagination().nextPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> page() {
+                        return paginateResult.getPagination().page();
+                    }
+
+                    @Override
+                    public Optional<Integer> totalPages() {
+                        return paginateResult.getPagination().totalPages();
+                    }
+                };
             }
         };
     }

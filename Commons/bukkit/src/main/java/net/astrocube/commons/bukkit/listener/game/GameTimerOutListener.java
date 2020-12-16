@@ -9,7 +9,9 @@ import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.game.map.MatchMapLoader;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.service.update.UpdateService;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class GameTimerOutListener implements Listener {
 
     private @Inject FindService<Match> findService;
+    private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
     private @Inject MatchMapLoader matchMapLoader;
     private @Inject GameMapCache gameMapCache;
     private @Inject GameMapService gameMapService;
@@ -45,9 +48,10 @@ public class GameTimerOutListener implements Listener {
                     }
 
                     match.setMap(gameMap.get().getId());
+                    updateService.update(match);
                 }
 
-                matchMapLoader.loadMatchMap(matchCallback.getResponse().get());
+                matchMapLoader.loadMatchMap(match);
 
                 String configuration = new String(gameMapCache.getConfiguration(event.getMatch()));
                 Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration));

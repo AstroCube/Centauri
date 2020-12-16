@@ -7,11 +7,14 @@ import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.core.http.config.HttpClientConfig;
+import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.paginate.PaginateService;
+import net.astrocube.api.core.service.query.QueryService;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
@@ -21,9 +24,10 @@ import java.util.Set;
 public class CoreGameMapService implements GameMapService {
 
     private @Inject ObjectMapper mapper;
-    private @Inject PaginateService<GameMap> queryService;
+    private @Inject QueryService<GameMap> queryService;
     private @Inject HttpClientConfig httpClientConfig;
-    private @Inject ModelMeta<GameMap, GameMap>  modelMeta;
+    private @Inject ModelMeta<GameMap, GameMap> modelMeta;
+    private @Inject AuthorizationProcessor authorizationProcessor;
 
     @Override
     public byte[] getMapWorld(String id) throws IOException {
@@ -41,16 +45,24 @@ public class CoreGameMapService implements GameMapService {
         node.put("gamemode", gameMode);
         node.put("subGamemode", subGameMode);
 
-        Set<GameMap> paginate = queryService.paginateSync("?page=1&perPage=-1", node).getData();
+        Set<GameMap> paginate = queryService.querySync(node).getFoundModels();
 
         return paginate.stream().findAny();
     }
 
     private byte[] getBytesFromFile(String route) throws IOException {
+
+        URL url = new URL(
+                httpClientConfig.getBaseURL() + this.modelMeta.getRouteKey() + "/" + route
+        );
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.addRequestProperty("User-Agent", "Mozilla/4.0");
+        con.setRequestProperty("Authorization", "Bearer " + new String(authorizationProcessor.getAuthorizationToken()));
+
+
         BufferedInputStream in = new BufferedInputStream(
-                new URL(
-                        httpClientConfig.getBaseURL() + this.modelMeta.getRouteKey() + "/" + route
-                ).openStream()
+                con.getInputStream()
         );
 
         byte[] targetArray = new byte[in.available()];
