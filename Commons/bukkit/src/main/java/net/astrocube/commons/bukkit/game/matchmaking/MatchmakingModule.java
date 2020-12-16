@@ -5,6 +5,8 @@ import net.astrocube.api.bukkit.game.matchmaking.AvailableMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.IdealMatchSelector;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingSandboxProvider;
+import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingErrorBroadcaster;
+import net.astrocube.commons.bukkit.game.matchmaking.error.CoreMatchmakingErrorBroadcaster;
 
 public class MatchmakingModule extends ProtectedModule {
 
@@ -13,6 +15,7 @@ public class MatchmakingModule extends ProtectedModule {
         bind(MatchmakingSandboxProvider.class).to(CoreMatchmakingSandboxProvider.class);
         bind(MatchmakingRegistryHandler.class).to(CoreMatchmakingRegistryHandler.class);
         bind(IdealMatchSelector.class).to(CoreIdealMatchSelector.class);
+        bind(MatchmakingErrorBroadcaster.class).to(CoreMatchmakingErrorBroadcaster.class);
         bind(AvailableMatchProvider.class).to(CoreAvailableMatchProvider.class);
     }
 

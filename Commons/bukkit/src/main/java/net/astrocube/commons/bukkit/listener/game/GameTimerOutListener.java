@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.listener.game;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.GameReadyEvent;
 import net.astrocube.api.bukkit.game.event.GameTimerOutEvent;
+import net.astrocube.api.bukkit.game.event.MatchInvalidateEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.GameMapService;
@@ -15,8 +16,10 @@ import net.astrocube.api.core.service.update.UpdateService;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class GameTimerOutListener implements Listener {
 
@@ -25,6 +28,7 @@ public class GameTimerOutListener implements Listener {
     private @Inject MatchMapLoader matchMapLoader;
     private @Inject GameMapCache gameMapCache;
     private @Inject GameMapService gameMapService;
+    private @Inject Plugin plugin;
 
     @EventHandler
     public void onGameTimeOut(GameTimerOutEvent event) {
@@ -41,7 +45,8 @@ public class GameTimerOutListener implements Listener {
 
                 if (match.getMap() == null) {
 
-                    Optional<GameMap> gameMap = gameMapService.getRandomMap(match.getGameMode(), match.getSubMode());
+                    Optional<GameMap> gameMap = gameMapService
+                            .getRandomMap(match.getGameMode(), match.getSubMode());
 
                     if (!gameMap.isPresent()) {
                         throw new GameControlException("Unable to assign a map for this match");
@@ -57,12 +62,12 @@ public class GameTimerOutListener implements Listener {
                 Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration));
 
             } catch (Exception e) {
-                // TODO: Throw error and call invalidation event
-                e.printStackTrace();
+                Bukkit.getPluginManager().callEvent(
+                        new MatchInvalidateEvent(event.getMatch(), false));
+                plugin.getLogger().log(Level.SEVERE, "There was an error starting a match", e);
             }
 
         });
-
 
     }
 

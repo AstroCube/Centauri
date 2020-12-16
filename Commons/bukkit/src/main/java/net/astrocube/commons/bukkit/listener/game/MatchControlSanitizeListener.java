@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.listener.game;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
@@ -7,8 +8,10 @@ import net.astrocube.api.bukkit.game.event.MatchControlSanitizeEvent;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
 import net.astrocube.api.bukkit.game.match.control.PendingMatchFinder;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
+import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingErrorBroadcaster;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
+import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.server.Server;
@@ -28,6 +31,7 @@ public class MatchControlSanitizeListener implements Listener {
     private @Inject ServerService serverService;
     private @Inject ObjectMapper mapper;
     private @Inject QueryService<Match> queryService;
+    private @Inject MatchmakingErrorBroadcaster matchmakingErrorBroadcaster;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -48,7 +52,12 @@ public class MatchControlSanitizeListener implements Listener {
                         try {
                             matchmakingScheduler.schedule(pending);
                         } catch (Exception e) {
-                            //TODO: Send error on pairing
+                            plugin.getLogger().log(Level.WARNING, "Can not assign a match", e);
+                            try {
+                                matchmakingErrorBroadcaster.broadcastError(pending, e.getMessage());
+                            } catch (JsonProcessingException ex) {
+                                plugin.getLogger().log(Level.SEVERE, "Error serializing error for broadcasting", e);
+                            }
                         }
                     });
 
