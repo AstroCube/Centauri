@@ -2,10 +2,13 @@ package net.astrocube.commons.bukkit.listener.game;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.event.MatchmakingErrorEvent;
 import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.matchmaking.AvailableMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.IdealMatchSelector;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
+import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
@@ -43,21 +46,19 @@ public class MatchmakingRequestListener implements Listener {
             }
 
         } catch (Exception e) {
+            Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(
+                    new MatchmakingError() {
+                        @Override
+                        public MatchmakingRequest getRequest() {
+                            return event.getMatchmakingRequest();
+                        }
 
-            findService.find(event.getMatchmakingRequest().getRequesters().getResponsible()).callback(response -> {
-
-                if (response.isSuccessful() && response.getResponse().isPresent()) {
-
-                    Player player = Bukkit.getPlayer(response.getResponse().get().getUsername());
-
-                    player.sendMessage(messageHandler.format(player,
-                            messageHandler.get(player, "game.matchmaking.error")));
-
-                } else {
-                    plugin.getLogger().log(Level.SEVERE, "Could not find user for error alerting");
-                }
-
-            });
+                        @Override
+                        public String getReason() {
+                            return e.getMessage();
+                        }
+                    }
+            ));
         }
     }
 
