@@ -126,6 +126,13 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
+lookup:
+    information-message:
+        - "Information about %player_name%"
+        - "Country: %player_country%"
+        - "IP: %player_ip%"
+        - "Last seen: %player_last_seen%"
+        - "Punishments: %player_punishments%"
 
 commands:
     translation:
