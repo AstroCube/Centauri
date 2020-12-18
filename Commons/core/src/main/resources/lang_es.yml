@@ -128,11 +128,16 @@ interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
 lookup:
     information-message:
-        - "Information about %player_name%"
-        - "Country: %player_country%"
+        - "Información acerca de %player_name%"
+        - "País: %player_country%"
         - "IP: %player_ip%"
-        - "Last seen: %player_last_seen%"
-        - "Punishments: %player_punishments%"
+        - "Ultima vez: %player_last_seen%"
+        - "Sanciones: %player_punishments%"
+    punishments-format:
+        - "Tipo: %punishment_type%"
+        - "Aplicado por: %punishment_pusher%"
+        - "Aplicado el: %punishment_created_at%"
+        - "Razón: %punishment_reason%"
 
 commands:
     translation:

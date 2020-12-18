@@ -41,14 +41,13 @@ public class PlayerLookCommand implements CommandClass {
         ObjectNode objectNode = objectMapper.createObjectNode()
                 .put("username", offlineTarget.getName());
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder punishmentBuilder = new StringBuilder();
 
-        // TODO: 18/12/2020 Make this configurable
-
-        queryService.querySync(objectNode).getFoundModels().forEach(punishment ->
-                stringBuilder.append("Type: ").append(punishment.getType()).append("\n")
-                .append("Reason: ").append(punishment.getReason()).append("\n")
-                .append("Applied: ").append(punishment.getCreatedAt()));
+        queryService.querySync(objectNode).getFoundModels().forEach(punishment -> punishmentBuilder.append(messageHandler.get(player, "lookup.punishments-format")
+                .replace("%punishment_type%", punishment.getType().toString())
+                .replace("%punishment_pusher%", punishment.getIssuer())
+                .replace("%punishment_created_at%", punishment.getCreatedAt().toString())
+                .replace("%punishment_reason%", punishment.getReason())));
 
         messageHandler.sendReplacing(player,
                 "lookup.information-message",
@@ -56,7 +55,7 @@ public class PlayerLookCommand implements CommandClass {
                 "%player_country%", targetUser.getPublicInfo().getLocation(),
                 "%player_last_seen%", targetUser.getSession().getLastSeen(),
                 "%player_ip%", offlineTarget.getPlayer().getAddress().getAddress().getHostAddress(),
-                "%player_punishments%", stringBuilder.toString());
+                "%player_punishments%", punishmentBuilder.toString());
 
         return true;
     }
