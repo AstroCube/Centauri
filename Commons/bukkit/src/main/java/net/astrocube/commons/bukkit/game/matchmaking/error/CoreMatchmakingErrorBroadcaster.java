@@ -14,11 +14,11 @@ import java.util.HashMap;
 @Singleton
 public class CoreMatchmakingErrorBroadcaster implements MatchmakingErrorBroadcaster {
 
-    private @Inject Channel<MatchmakingError> channel;
+    private final Channel<MatchmakingError> channel;
 
     @Inject
     public CoreMatchmakingErrorBroadcaster(Messenger messenger) {
-        messenger.getChannel(MatchmakingError.class);
+        this.channel = messenger.getChannel(MatchmakingError.class);
     }
 
     @Override

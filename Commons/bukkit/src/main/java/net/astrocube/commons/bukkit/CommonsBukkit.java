@@ -16,43 +16,10 @@ public class CommonsBukkit extends JavaPlugin {
     private @Inject Loader loader;
     private @Inject ServerDisconnectHandler serverDisconnectHandler;
 
-    private @Inject QueryService<Match> matchQueryService;
-    private @Inject QueryService<Server> serverQueryService;
-    private @Inject QueryService<GameMap> gameMapQueryService;
-
     @Override
     public void onEnable() {
         this.loader.load();
         copyDefaults();
-
-        gameMapQueryService.getAll().callback(maps -> {
-
-            System.out.println("GameMap");
-
-            maps.getResponse().get().getFoundModels().forEach(map -> {
-                System.out.println(map.getId());
-            });
-        });
-
-
-        matchQueryService.getAll().callback(matches -> {
-
-            System.out.println("Matches");
-
-            matches.getResponse().get().getFoundModels().forEach(match -> {
-                System.out.println(match.getId());
-            });
-        });
-
-        serverQueryService.getAll().callback(servers -> {
-
-            System.out.println("Servers");
-
-            servers.getResponse().get().getFoundModels().forEach(server -> {
-                System.out.println(server.getId());
-            });
-        });
-
     }
 
     @Override

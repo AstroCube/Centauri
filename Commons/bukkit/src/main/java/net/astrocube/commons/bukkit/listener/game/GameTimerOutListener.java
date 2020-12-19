@@ -58,7 +58,7 @@ public class GameTimerOutListener implements Listener {
 
                 matchMapLoader.loadMatchMap(match);
 
-                String configuration = new String(gameMapCache.getConfiguration(event.getMatch()));
+                String configuration = new String(gameMapCache.getConfiguration(match.getMap()));
                 Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration));
 
             } catch (Exception e) {
