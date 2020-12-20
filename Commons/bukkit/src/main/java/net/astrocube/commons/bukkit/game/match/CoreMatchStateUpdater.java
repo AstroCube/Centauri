@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.game.match;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.event.MatchInvalidateEvent;
 import net.astrocube.api.bukkit.game.event.MatchStateUpdateEvent;
 import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -16,20 +17,10 @@ public class CoreMatchStateUpdater implements MatchStateUpdater {
     private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
 
     @Override
-    public void updateMatch(Match match, MatchDoc.Status status) {
-
+    public void updateMatch(Match match, MatchDoc.Status status) throws Exception {
         match.setStatus(status);
-
-        updateService.update(match).callback(updateResponse -> {
-
-            if (!updateResponse.isSuccessful() || !updateResponse.getResponse().isPresent()) {
-                //TODO: Handle error
-            }
-
-            Bukkit.getPluginManager().callEvent(new MatchStateUpdateEvent(match.getId(), status));
-
-        });
-
+        updateService.updateSync(match);
+        Bukkit.getPluginManager().callEvent(new MatchStateUpdateEvent(match.getId(), status));
     }
 
 }

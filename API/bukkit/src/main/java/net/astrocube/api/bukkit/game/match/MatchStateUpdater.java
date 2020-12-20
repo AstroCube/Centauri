@@ -11,6 +11,6 @@ public interface MatchStateUpdater {
      * @param match to be updated
      * @param status to be updated
      */
-    void updateMatch(Match match, MatchDoc.Status status);
+    void updateMatch(Match match, MatchDoc.Status status) throws Exception;
 
 }
