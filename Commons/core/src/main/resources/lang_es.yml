@@ -169,6 +169,9 @@ punish-menu:
             lore:
                 - "%%white%%Click here to choose the"
                 - "%%white%%reason to warn this player!"
+punishment-expiration:
+    title: "Punishment Expiration"
+    invalid-number: "Invalid number"
 punishment-expiration-menu:
     title: "%%white%%Punishment expiration chooser"
     items:
