@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
+import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;

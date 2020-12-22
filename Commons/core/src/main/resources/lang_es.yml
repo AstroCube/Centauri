@@ -60,7 +60,9 @@ game:
         error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
         no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
         started: "%%red%%La partida ya ha iniciado, disfruta de ella o puedes invalidarla en caso de que sea necesario."
-
+        invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
+        invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
+        invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
 lobby:
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"

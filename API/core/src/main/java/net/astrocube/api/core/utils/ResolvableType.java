@@ -17,7 +17,6 @@ public abstract class ResolvableType<T> extends TypeLiteral<T> {
      */
     public TypeLiteral<T> in(Class<?> declaringClass) {
         return Types.assertFullySpecified(Types.resolve(this, declaringClass));
-        return Types.assertFullySpecified(Types.resolve(this, declaringClass));
     }
 
     /**

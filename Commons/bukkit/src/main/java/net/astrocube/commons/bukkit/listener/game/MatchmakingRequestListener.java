@@ -2,8 +2,8 @@ package net.astrocube.commons.bukkit.listener.game;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.event.MatchmakingErrorEvent;
-import net.astrocube.api.bukkit.game.event.MatchmakingRequestEvent;
+import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
+import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.matchmaking.AvailableMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.IdealMatchSelector;
@@ -19,7 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
-import java.util.logging.Level;
 
 public class MatchmakingRequestListener implements Listener {
 

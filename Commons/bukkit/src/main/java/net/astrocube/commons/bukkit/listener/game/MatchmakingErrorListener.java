@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.listener.game;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.event.MatchmakingErrorEvent;
+import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;

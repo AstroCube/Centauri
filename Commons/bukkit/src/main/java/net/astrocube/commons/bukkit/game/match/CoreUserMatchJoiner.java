@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.game.match;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import net.astrocube.api.bukkit.game.event.GameUserJoinEvent;
+import net.astrocube.api.bukkit.game.event.game.GameUserJoinEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;

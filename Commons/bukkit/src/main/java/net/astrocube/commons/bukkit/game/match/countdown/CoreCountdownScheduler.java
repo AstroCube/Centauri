@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
-import net.astrocube.api.bukkit.game.event.GameTimerOutEvent;
+import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.commons.bukkit.utils.CountdownTimer;
 import org.bukkit.Bukkit;

@@ -1,9 +1,9 @@
 package net.astrocube.commons.bukkit.listener.game;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.game.event.GameReadyEvent;
-import net.astrocube.api.bukkit.game.event.GameTimerOutEvent;
-import net.astrocube.api.bukkit.game.event.MatchInvalidateEvent;
+import net.astrocube.api.bukkit.game.event.game.GameReadyEvent;
+import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
+import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.GameMapService;

@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.matchmaking.error;
 
-import net.astrocube.api.bukkit.game.event.MatchmakingErrorEvent;
+import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
 import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.core.message.MessageHandler;
 import net.astrocube.api.core.message.Metadata;

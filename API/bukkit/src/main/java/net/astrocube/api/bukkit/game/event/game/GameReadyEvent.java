@@ -1,19 +1,17 @@
-package net.astrocube.api.bukkit.game.event;
+package net.astrocube.api.bukkit.game.event.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 @Getter
 @AllArgsConstructor
-public class GameModePairEvent extends Event {
+public class GameReadyEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final GameMode gameMode;
-    private final SubGameMode subGameMode;
+    private final String match;
+    private final String configuration;
 
     @Override
     public HandlerList getHandlers() {

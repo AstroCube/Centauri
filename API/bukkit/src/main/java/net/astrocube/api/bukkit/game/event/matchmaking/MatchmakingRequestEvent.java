@@ -1,17 +1,17 @@
-package net.astrocube.api.bukkit.game.event;
+package net.astrocube.api.bukkit.game.event.matchmaking;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 @Getter
 @AllArgsConstructor
-public class MatchScheduleEvent extends Event {
+public class MatchmakingRequestEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final Match match;
+    private final MatchmakingRequest matchmakingRequest;
 
     @Override
     public HandlerList getHandlers() {

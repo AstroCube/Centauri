@@ -36,19 +36,19 @@ public class MatchMessageHelper {
         }
     }
 
-    public boolean checkCountdownnAvailability(Optional<Match> match, Player player) {
+    public boolean getCountAvailability(Optional<Match> providedMatch, Player player) {
 
-        if (!match.isPresent()) {
+        if (!providedMatch.isPresent()) {
             messageHandler.send(player, "game.admin.not-active");
-            return false;
+            return true;
         }
 
-        if (match.get().getStatus() != MatchDoc.Status.LOBBY) {
+        if (providedMatch.get().getStatus() != MatchDoc.Status.LOBBY) {
             messageHandler.send(player, "game.admin.started");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public void alertInvolved(Set<User> involved, Match match, Player player, String message) {

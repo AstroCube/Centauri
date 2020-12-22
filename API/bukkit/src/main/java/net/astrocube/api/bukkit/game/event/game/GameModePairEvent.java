@@ -1,4 +1,4 @@
-package net.astrocube.api.bukkit.game.event;
+package net.astrocube.api.bukkit.game.event.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList;
 
 @Getter
 @AllArgsConstructor
-public class MatchControlSanitizeEvent extends Event {
+public class GameModePairEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
     private final GameMode gameMode;
