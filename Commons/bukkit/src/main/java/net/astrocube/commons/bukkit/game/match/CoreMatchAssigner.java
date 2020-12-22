@@ -90,10 +90,16 @@ public class CoreMatchAssigner implements MatchAssigner {
                     pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
                             pending.getInvolved().contains(player.getDatabaseIdentifier()))
             ) {
+
                 matchService.unAssignPending(player.getDatabaseIdentifier(), match.getId());
                 Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player));
-            } else if (match.getTeams().stream().anyMatch(m -> m.getMembers().contains(player.getDatabaseIdentifier()))) {
 
+            } else if (match.getTeams().stream()
+                    .anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
+                            teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
+                    )
+            ) {
+                //TODO: Handle disconnection
             }
 
         }

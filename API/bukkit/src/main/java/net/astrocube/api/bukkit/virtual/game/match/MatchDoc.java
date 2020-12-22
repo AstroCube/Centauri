@@ -13,6 +13,7 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Color;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -128,12 +129,22 @@ public interface MatchDoc {
         /**
          * @return set of {@link User} ids who are identified as team members.
          */
-        Set<String> getMembers();
+        Set<TeamMember> getMembers();
 
         /**
          * @return {@link Color} in string form.
          */
         String getColor();
+
+    }
+
+    interface TeamMember {
+
+        String getUser();
+
+        boolean isActive();
+
+        Date getJoinedAt();
 
     }
 
