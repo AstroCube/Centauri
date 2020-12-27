@@ -22,6 +22,7 @@ public class CoreGameControlPair implements GameControlPair {
     private final Plugin plugin;
     private ServerDoc.Type type;
     private int stopSchedule;
+    private int repeatingSchedule;
     private @Getter boolean paired;
 
     @Inject
@@ -29,6 +30,7 @@ public class CoreGameControlPair implements GameControlPair {
         this.plugin = plugin;
         this.type = ServerDoc.Type.SPECIAL;
         this.stopSchedule = -1;
+        this.repeatingSchedule = -1;
         this.paired = false;
 
         try {
@@ -58,6 +60,7 @@ public class CoreGameControlPair implements GameControlPair {
         }
 
         Bukkit.getScheduler().cancelTask(stopSchedule);
+        Bukkit.getScheduler().cancelTask(repeatingSchedule);
 
         plugin.getLogger().log(Level.INFO,
                 "Successfully paired GameMode {0} (ID: {1}) and SubGameMode {2} (ID: {3})",
@@ -78,7 +81,8 @@ public class CoreGameControlPair implements GameControlPair {
         }
 
         plugin.getLogger().log(Level.INFO, "Starting game pairing, the server will shut down if no game can be paired during grace time..");
-        Bukkit.getPluginManager().callEvent(new GamePairEnableEvent());
+
+        this.repeatingSchedule = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> Bukkit.getPluginManager().callEvent(new GamePairEnableEvent()), 40L, 100L).getTaskId();
 
         this.stopSchedule = Bukkit.getScheduler().runTaskLater(
                 plugin,
