@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import net.astrocube.api.bukkit.game.GameControlPair;
+import net.astrocube.api.bukkit.game.event.game.GamePairEnableEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchControlSanitizeEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -77,6 +78,7 @@ public class CoreGameControlPair implements GameControlPair {
         }
 
         plugin.getLogger().log(Level.INFO, "Starting game pairing, the server will shut down if no game can be paired during grace time..");
+        Bukkit.getPluginManager().callEvent(new GamePairEnableEvent());
 
         this.stopSchedule = Bukkit.getScheduler().runTaskLater(
                 plugin,
