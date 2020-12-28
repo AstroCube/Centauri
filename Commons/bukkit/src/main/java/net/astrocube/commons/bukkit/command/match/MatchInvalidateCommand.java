@@ -29,12 +29,13 @@ public class MatchInvalidateCommand implements CommandClass {
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
         if (!matchOptional.isPresent()) {
+            player.sendMessage(messageHandler.get(player, "game.admin.not-active"));
             messageHandler.send(player, "game.admin.not-active");
             return true;
         }
 
         if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
-            messageHandler.send(player, "game.admin.invalidate-not-stared");
+            player.sendMessage(messageHandler.get(player, "game.admin.invalidate-not-stared"));
             return true;
         }
 

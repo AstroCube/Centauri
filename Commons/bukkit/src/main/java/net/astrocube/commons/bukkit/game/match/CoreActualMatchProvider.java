@@ -29,12 +29,11 @@ public class CoreActualMatchProvider implements ActualMatchProvider {
                 "{\"pending\":" +
                 "{\"responsible\": \"" + id + "\"}" +
                 "},\n" +
-                "{\"pending\": {\"involved\": \"" + id + "\"}}" +
+                "{\"pending\": {\"involved\": \"" + id + "\"}}," +
+                "{\"teams.members.user\": \"" + id + "\", \"teams.members.active\": true}" +
                 "],\n" +
                 "\"status\": {\"$nin\": [\"Finished\", \"Invalidated\"]}" +
                 "}");
-
-        ;
 
         return findService.querySync(query)
                 .getFoundModels()
