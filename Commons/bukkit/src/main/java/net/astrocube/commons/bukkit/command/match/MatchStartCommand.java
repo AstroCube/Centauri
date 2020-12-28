@@ -44,7 +44,7 @@ public class MatchStartCommand implements CommandClass {
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
 
         if (involved.size() < 2) {
-            player.sendMessage(messageHandler.get(player, "game.admin.insufficient"));
+            messageHandler.send(player, "game.admin.insufficient");
             return true;
         }
 

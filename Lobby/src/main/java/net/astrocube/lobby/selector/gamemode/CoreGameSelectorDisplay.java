@@ -37,7 +37,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                 player.openInventory(menuBuilder.build());
 
             } else {
-                player.sendMessage(messageHandler.get(player, "lobby.gameSelector.error"));
+                messageHandler.send(player, "lobby.gameSelector.error");
             }
         });
 

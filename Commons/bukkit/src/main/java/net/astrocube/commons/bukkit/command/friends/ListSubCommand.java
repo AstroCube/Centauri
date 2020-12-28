@@ -41,12 +41,12 @@ public class ListSubCommand implements CommandClass {
 
                     if (friendships.size() == 0 && pageIndicator == -1
                             && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
-                        player.sendMessage(messageHandler.get(player, "no-friends"));
+                        messageHandler.send(player, "no-friends");
                         return;
                     }
 
 
-                    player.sendMessage(messageHandler.get(player, "friend-list.header"));
+                    messageHandler.send(player, "friend-list.header");
                     for (Friendship friendship : friendships) {
 
                         String id = friendship.getIssuer();

@@ -28,6 +28,7 @@ public class TranslationModule extends ProtectedModule {
                                 .setLoadSource(BukkitMessageAdapt.getPluginLoadSource(plugin))
                                 .build()
                 )
+                .setMessenger((receiver, mode, message) -> receiver.sendMessage(message))
                 .setLanguageProvider(languageProvider)
                 .addInterceptor(new ColorMessageInterceptor())
                 .addInterceptor(new CenterMessageInterceptor())

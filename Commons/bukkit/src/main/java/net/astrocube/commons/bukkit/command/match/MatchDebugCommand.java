@@ -31,14 +31,14 @@ public class MatchDebugCommand implements CommandClass {
             Optional<Match> match = actualMatchProvider.provide(player.getDatabaseIdentifier());
 
             if (match.isPresent()) {
-                player.sendMessage(messageHandler.format(player, "game.matchmaking.already"));
+                messageHandler.send(player, "game.matchmaking.already");
             }
 
             matchmakingSandboxProvider.pairMatch(player);
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error pairing user with a sandbox match.", e);
-            player.sendMessage(messageHandler.format(player, "game.matchmaking.error"));
+            messageHandler.send(player, "game.matchmaking.error");
         }
 
         return true;

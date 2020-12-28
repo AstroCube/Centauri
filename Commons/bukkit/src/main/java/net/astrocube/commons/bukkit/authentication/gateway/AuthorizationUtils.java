@@ -39,7 +39,7 @@ public class AuthorizationUtils {
             return;
         }
 
-        player.sendMessage(messageHandler.get(player, "authentication.password-error"));
+        messageHandler.send(player, "authentication.password-error");
         plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
     }
 
