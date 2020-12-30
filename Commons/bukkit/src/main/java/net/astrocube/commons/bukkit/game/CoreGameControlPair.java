@@ -53,7 +53,7 @@ public class CoreGameControlPair implements GameControlPair {
         FileConfiguration config = plugin.getConfig();
         plugin.getLogger().log(Level.INFO, "Attempting to pair provided GameMode");
 
-        GameMode mode = findService.findSync(plugin.getConfig().getString("centauri.mode"));
+        GameMode mode = findService.findSync(gameMode);
 
         if (mode.getSubTypes() == null) {
             plugin.getLogger().log(Level.SEVERE, "The requested GameMode does not have any SubMode");
@@ -61,7 +61,7 @@ public class CoreGameControlPair implements GameControlPair {
         }
 
         Optional<SubGameMode> subMode = mode.getSubTypes().stream()
-                .filter(g -> g.getId().equalsIgnoreCase(plugin.getConfig().getString("centauri.subMode")))
+                .filter(g -> g.getId().equalsIgnoreCase(subGameMode))
                 .findFirst();
 
         if (!subMode.isPresent()) {
