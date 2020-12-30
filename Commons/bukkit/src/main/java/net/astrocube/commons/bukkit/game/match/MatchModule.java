@@ -42,6 +42,8 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
 
         bind(UserMatchJoiner.class).to(CoreUserMatchJoiner.class);
 
+        expose(ActualMatchProvider.class);
+
     }
 
 }
