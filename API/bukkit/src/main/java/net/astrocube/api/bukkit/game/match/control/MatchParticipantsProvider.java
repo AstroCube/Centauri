@@ -21,4 +21,11 @@ public interface MatchParticipantsProvider {
      */
     Set<User> getMatchSpectators(Match match);
 
+    /**
+     * Get all the match active players.
+     * @param match to be accessed
+     * @return provided users
+     */
+    Set<User> getMatchUsers(Match match);
+
 }
