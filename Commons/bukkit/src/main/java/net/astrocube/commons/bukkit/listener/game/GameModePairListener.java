@@ -21,7 +21,7 @@ public class GameModePairListener implements Listener {
 
         try {
             gameControlPair.validatePair(event.getGameMode(), event.getSubGameMode());
-        } catch (GameControlException e) {
+        } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error while pairing GameMode", e);
             Bukkit.shutdown();
         }
