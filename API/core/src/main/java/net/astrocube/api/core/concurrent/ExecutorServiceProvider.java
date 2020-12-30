@@ -1,6 +1,6 @@
 package net.astrocube.api.core.concurrent;
 
-import com.google.common.util.concurrent.ListeningExecutorService;
+import java.util.concurrent.ExecutorService;
 
 public interface ExecutorServiceProvider {
 
@@ -8,7 +8,7 @@ public interface ExecutorServiceProvider {
      * Executor service to be used for any asynchronous implementations
      * @return executor service
      */
-    ListeningExecutorService getRegisteredService();
+    ExecutorService getRegisteredService();
 
     /**
      * Will provide the number of configured threads from any implementation

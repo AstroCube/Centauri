@@ -22,7 +22,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.Optional;
 import java.util.logging.Level;
 
-public class GameTimerOutListener implements Listener {
+public class    GameTimerOutListener implements Listener {
 
     private @Inject FindService<Match> findService;
     private @Inject UpdateService<Match, MatchDoc.Partial> updateService;

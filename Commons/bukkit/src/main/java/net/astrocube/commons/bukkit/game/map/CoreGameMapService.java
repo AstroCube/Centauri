@@ -11,6 +11,7 @@ import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.paginate.PaginateService;
 import net.astrocube.api.core.service.query.QueryService;
+import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -60,14 +61,7 @@ public class CoreGameMapService implements GameMapService {
         con.addRequestProperty("User-Agent", "Mozilla/4.0");
         con.setRequestProperty("Authorization", "Bearer " + new String(authorizationProcessor.getAuthorizationToken()));
 
-
-        BufferedInputStream in = new BufferedInputStream(
-                con.getInputStream()
-        );
-
-        byte[] targetArray = new byte[in.available()];
-        in.read(targetArray);
-        return targetArray;
+        return IOUtils.toByteArray(con.getInputStream());
     }
 
 }

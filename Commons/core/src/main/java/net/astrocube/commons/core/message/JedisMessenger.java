@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 @SuppressWarnings("All")
 public class JedisMessenger implements Messenger {
@@ -26,7 +27,7 @@ public class JedisMessenger implements Messenger {
 
     public JedisMessenger(Redis redis,
                           ObjectMapper mapper,
-                          ListeningExecutorService executorService,
+                          ExecutorService executorService,
                           Set<ChannelMeta> channelMetas,
                           Set<MessageHandler> handlers
     ) {

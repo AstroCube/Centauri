@@ -2,7 +2,6 @@ package net.astrocube.commons.core.session;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
-import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
 import net.astrocube.api.core.concurrent.*;
 import net.astrocube.api.core.http.HttpClient;
@@ -13,12 +12,15 @@ import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+
 @SuppressWarnings("UnstableApiUsage")
 public class CoreSessionService implements SessionService {
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
-    private final ListeningExecutorService listeningExecutorService;
+    private final ExecutorService executorService;
 
     @Inject CoreSessionService(
             HttpClient httpClient,
@@ -27,18 +29,18 @@ public class CoreSessionService implements SessionService {
     ) {
         this.httpClient = httpClient;
         this.objectMapper = objectMapper;
-        this.listeningExecutorService  = executorServiceProvider.getRegisteredService();
+        this.executorService = executorServiceProvider.getRegisteredService();
     }
 
     @Override
     public AsyncResponse<SessionValidateDoc.Complete> authenticationCheck(CreateRequest<SessionValidateDoc.Request> validate) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS, authenticationCheckSync(validate), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
 
     }
 
