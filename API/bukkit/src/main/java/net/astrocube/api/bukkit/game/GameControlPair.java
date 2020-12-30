@@ -17,7 +17,7 @@ public interface GameControlPair {
      * @throws GameControlException when provided values do not correspond with
      * the configuration ones or {@link ServerDoc.Type} is not GAME.
      */
-    void validatePair(GameMode gameMode, SubGameMode subGameMode) throws GameControlException;
+    void validatePair(String gameMode, String subGameMode) throws Exception;
 
     /**
      * Schedules a task that will close prematurely the server if

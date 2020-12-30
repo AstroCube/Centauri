@@ -12,8 +12,8 @@ import org.bukkit.event.HandlerList;
 public class GameModePairEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final GameMode gameMode;
-    private final SubGameMode subGameMode;
+    private final String gameMode;
+    private final String subGameMode;
 
     @Override
     public HandlerList getHandlers() {
