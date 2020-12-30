@@ -13,6 +13,6 @@ public interface MapConfigurationProvider {
      * @return parsed configuration
      * @throws JsonProcessingException
      */
-    GameMapConfiguration parseConfiguration(String map, Class<? extends GameMapConfiguration> type) throws JsonProcessingException;
+    <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws JsonProcessingException;
 
 }

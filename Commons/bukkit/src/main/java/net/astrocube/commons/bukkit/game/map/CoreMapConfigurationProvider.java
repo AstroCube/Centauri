@@ -13,7 +13,7 @@ public class CoreMapConfigurationProvider implements MapConfigurationProvider {
     private @Inject ObjectMapper mapper;
 
     @Override
-    public GameMapConfiguration parseConfiguration(String map, Class<? extends GameMapConfiguration> type) throws JsonProcessingException {
+    public <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws JsonProcessingException {
         return mapper.readValue(map, type);
     }
 }
