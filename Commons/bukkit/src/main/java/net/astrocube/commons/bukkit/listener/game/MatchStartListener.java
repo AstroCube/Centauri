@@ -19,7 +19,6 @@ import java.util.logging.Level;
 public class MatchStartListener implements Listener {
 
     private @Inject FindService<Match> findService;
-    private @Inject MatchService matchService;
     private @Inject MatchStateUpdater matchStateUpdater;
     private @Inject Plugin plugin;
 
@@ -35,8 +34,6 @@ public class MatchStartListener implements Listener {
                  }
 
                  Match match = callback.getResponse().get();
-
-                 matchService.assignTeams(event.getTeams(), match.getId());
                  matchStateUpdater.updateMatch(match, MatchDoc.Status.RUNNING);
 
              } catch (Exception e) {

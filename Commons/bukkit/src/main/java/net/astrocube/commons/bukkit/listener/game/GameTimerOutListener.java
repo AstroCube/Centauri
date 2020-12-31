@@ -8,7 +8,9 @@ import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.GameMapService;
 import net.astrocube.api.bukkit.game.map.MatchMapLoader;
+import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
+import net.astrocube.api.bukkit.game.match.control.TeamBalancer;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
@@ -19,7 +21,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class    GameTimerOutListener implements Listener {
@@ -27,6 +31,8 @@ public class    GameTimerOutListener implements Listener {
     private @Inject FindService<Match> findService;
     private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
     private @Inject MatchStateUpdater matchStateUpdater;
+    private @Inject MatchService matchService;
+    private @Inject TeamBalancer teamBalancer;
     private @Inject MatchMapLoader matchMapLoader;
     private @Inject GameMapCache gameMapCache;
     private @Inject GameMapService gameMapService;
@@ -62,7 +68,12 @@ public class    GameTimerOutListener implements Listener {
 
                 String configuration = new String(gameMapCache.getConfiguration(match.getMap()));
                 matchStateUpdater.updateMatch(match, MatchDoc.Status.STARTING);
-                Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration));
+
+                Set<MatchDoc.Team> balanced = teamBalancer.balanceTeams(match.getPending());
+
+                matchService.assignTeams(balanced, match.getId());
+
+                Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration, balanced));
 
             } catch (Exception e) {
                 Bukkit.getPluginManager().callEvent(

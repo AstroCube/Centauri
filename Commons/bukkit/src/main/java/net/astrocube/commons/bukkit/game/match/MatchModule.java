@@ -8,10 +8,12 @@ import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
 import net.astrocube.api.bukkit.game.match.*;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.match.control.MatchScheduler;
+import net.astrocube.api.bukkit.game.match.control.TeamBalancer;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.commons.bukkit.game.map.GameMapModule;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
+import net.astrocube.commons.bukkit.game.match.control.CoreTeamBalancer;
 import net.astrocube.commons.bukkit.game.match.countdown.CoreCountdownAlerter;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchScheduler;
 import net.astrocube.commons.bukkit.game.match.countdown.CoreCountdownScheduler;
@@ -29,6 +31,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
         bind(LobbySessionModifier.class).to(CoreLobbySessionModifier.class);
         bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
         bind(MatchService.class).to(CoreMatchService.class);
+        bind(TeamBalancer.class).to(CoreTeamBalancer.class);
 
         bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
 

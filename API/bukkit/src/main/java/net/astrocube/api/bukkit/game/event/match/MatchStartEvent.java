@@ -16,7 +16,6 @@ public class MatchStartEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
     private final String match;
-    private final Set<MatchDoc.Team> teams;
 
     @Override
     public HandlerList getHandlers() {
