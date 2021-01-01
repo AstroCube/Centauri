@@ -14,9 +14,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.seocraft</groupId>
+            <artifactId>waterfall-api</artifactId>
+            <version>1.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>net.astrocube</groupId>
             <artifactId>api-core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.fixeddev</groupId>
+            <artifactId>Spigot-BungeeBridge</artifactId>
+            <version>1.8-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
