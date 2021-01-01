@@ -50,6 +50,11 @@ public interface SubGameMode extends Model {
      */
     PairingType getPairing();
 
+    /**
+     * @return if users can rejoin game.
+     */
+    boolean hasRejoin();
+
     public enum PairingType {
         SUBSTRACTION, LIMIT, MULTIPLUS, SOLO
     }

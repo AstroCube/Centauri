@@ -22,7 +22,7 @@ public class LobbyUserJoinListener implements Listener {
     @EventHandler
     public void onGameUserJoin(GameUserJoinEvent event) {
 
-        if (event.getStatus().equals(UserMatchJoiner.Status.WAITING)) {
+        if (event.getOrigin().equals(UserMatchJoiner.Origin.WAITING)) {
             findService.find(event.getMatch()).callback(matchResponse -> {
 
                 if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {

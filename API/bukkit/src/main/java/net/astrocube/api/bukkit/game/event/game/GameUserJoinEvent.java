@@ -10,13 +10,13 @@ import org.bukkit.event.player.PlayerEvent;
 public class GameUserJoinEvent extends PlayerEvent {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final UserMatchJoiner.Status status;
+    private final UserMatchJoiner.Origin origin;
     private final String match;
 
-    public GameUserJoinEvent(String match, Player player, UserMatchJoiner.Status status) {
+    public GameUserJoinEvent(String match, Player player, UserMatchJoiner.Origin origin) {
         super(player);
         this.match = match;
-        this.status = status;
+        this.origin = origin;
     }
 
     @Override

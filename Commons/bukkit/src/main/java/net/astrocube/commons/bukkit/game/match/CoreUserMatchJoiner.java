@@ -35,22 +35,10 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
             }
 
             Match match = findService.findSync(jedis.get("matchAssign:" + user.getId()));
-            UserMatchJoiner.Status status = Status.WAITING;
-
-            if (match.getSpectators().contains(user.getId())) {
-                status = Status.SPECTATING;
-            } if (match.getTeams().stream().anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
-                    teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
-            )) {
-                status = Status.PLAYING;
-            } else if (match.getPending().stream().noneMatch(m -> m.getInvolved().contains(user.getId())
-                    || m.getResponsible().equalsIgnoreCase(user.getId()))) {
-                throw new GameControlException("There was no assignation found for this user");
-            }
-
+            Origin origin = UserMatchJoiner.checkOrigin(user, match);
             jedis.del("matchAssign:" + user.getId());
 
-            Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, status));
+            Bukkit.getPluginManager().callEvent(new GameUserJoinEvent(match.getId(), player, origin));
         }
 
     }
