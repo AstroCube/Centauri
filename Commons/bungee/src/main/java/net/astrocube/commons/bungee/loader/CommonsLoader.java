@@ -14,8 +14,8 @@ public class CommonsLoader implements Loader {
 
     @Override
     public void load() {
-        serverLoader.load();
         configLoader.load();
+        serverLoader.load();
     }
 
 }

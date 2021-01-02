@@ -1,4 +1,4 @@
-package net.astrocube.commons.core.friend;
+package net.astrocube.commons.bukkit.friend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

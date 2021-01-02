@@ -12,6 +12,7 @@ public class CoreServerModule extends ProtectedModule {
         bind(ServerConnectionManager.class).to(CentauriConnectionManager.class);
         bind(GameServerStartManager.class).to(CentauriGameStartManager.class);
         bind(ServerService.class).to(ServerModelService.class);
+        expose(ServerConnectionManager.class);
     }
 
 }

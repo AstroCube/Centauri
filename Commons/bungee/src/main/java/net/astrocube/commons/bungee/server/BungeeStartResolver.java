@@ -5,14 +5,13 @@ import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.server.ServerConnectionManager;
 import net.astrocube.api.core.server.ServerStartResolver;
 import net.astrocube.api.core.virtual.server.ServerDoc;
+import net.astrocube.commons.bungee.configuration.PluginConfigurationHelper;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
-
 import java.util.logging.Level;
 
 public class BungeeStartResolver implements ServerStartResolver {
 
-    private @Inject Configuration configuration;
+    private @Inject PluginConfigurationHelper configurationHelper;
     private @Inject Plugin plugin;
     private @Inject ServerConnectionManager serverConnectionManager;
     private @Inject AuthorizationProcessor authorizationProcessor;
@@ -24,7 +23,7 @@ public class BungeeStartResolver implements ServerStartResolver {
             String token = serverConnectionManager.startConnection(
                     plugin.getProxy().getName(),
                     ServerDoc.Type.BUNGEE,
-                    configuration.getString("api.cluster")
+                    configurationHelper.get().getString("api.cluster")
             );
             authorizationProcessor.authorizeBackend(token.toCharArray());
         } catch (Exception e) {
