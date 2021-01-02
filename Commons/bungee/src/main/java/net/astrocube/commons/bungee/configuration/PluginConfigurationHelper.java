@@ -6,6 +6,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ public class PluginConfigurationHelper {
 
     private @Inject Plugin plugin;
 
-    public Configuration get() {
+    public @Nullable Configuration get() {
         try {
             return ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(plugin.getDataFolder(), "config.yml"));
         } catch (IOException e) {
