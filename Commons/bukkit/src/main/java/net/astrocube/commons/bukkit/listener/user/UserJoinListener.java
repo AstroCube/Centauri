@@ -14,6 +14,7 @@ import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.game.match.lobby.LobbyLocationParser;
 import net.astrocube.commons.bukkit.permission.CorePermissible;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -84,6 +85,10 @@ public class UserJoinListener implements Listener {
                         return null; //TODO: Get lobby name
                     }
                 });
+
+                if (plugin.getConfig().getBoolean("server.sandbox")) {
+                    player.teleport(LobbyLocationParser.getLobby());
+                }
 
                 playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
 
