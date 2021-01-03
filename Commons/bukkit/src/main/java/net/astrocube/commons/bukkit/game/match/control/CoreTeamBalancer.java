@@ -33,14 +33,14 @@ public class CoreTeamBalancer implements TeamBalancer {
             throw new GameControlException("Not maximum players can be parsed");
         }
 
-        Set<SizedTeam> teams = mapConfigurationProvider.parseConfiguration(
+        List<SizedTeam> teams = mapConfigurationProvider.parseConfiguration(
                 new String(gameMapCache.getConfiguration(match.getMap())),
                 GameMapConfiguration.class
         )
                 .getTeams()
                 .stream()
                 .map(mapTeam -> new SizedTeam(mapTeam.getName(), mapTeam.getColor(), maxPerTeam.get()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         joinRemainingAssignations(assignations, teams, maxPerTeam.get());
 
@@ -55,7 +55,7 @@ public class CoreTeamBalancer implements TeamBalancer {
      * @param teams where assignations will be placed
      * @param maxMembers allowed for every team.
      */
-    private void joinRemainingAssignations(Set<MatchAssignable> assignations, Set<SizedTeam> teams, int maxMembers) {
+    private void joinRemainingAssignations(Set<MatchAssignable> assignations, List<SizedTeam> teams, int maxMembers) {
         for (MatchAssignable assignable : assignations) {
 
             Set<MatchDoc.TeamMember> members = getProcessedMembers(assignable);
@@ -64,6 +64,10 @@ public class CoreTeamBalancer implements TeamBalancer {
             for (SizedTeam team : teams) {
 
                 int playersThatCanJoin = maxMembers - team.getMembers().size();
+
+
+                Comparator<MatchDoc.Team> teamComparator = Comparator.comparingInt(value -> value.getMembers().size());
+                teams.sort(teamComparator);
 
                 if (playersThatCanJoin >= remaining) {
                     members.forEach(team::addMember);

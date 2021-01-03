@@ -86,14 +86,6 @@ public class UserJoinListener implements Listener {
                     }
                 });
 
-                if (plugin.getConfig().getBoolean("server.sandbox")) {
-                    player.teleport(LobbyLocationParser.getLobby());
-                    Bukkit.getOnlinePlayers().forEach(p -> {
-                        p.hidePlayer(player);
-                        player.hidePlayer(p);
-                    });
-                }
-
                 playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
 
                 if (
@@ -120,6 +112,16 @@ public class UserJoinListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
                 } else if (type == ServerDoc.Type.GAME && !plugin.getConfig().getBoolean("server.sandbox")) {
                     userMatchJoiner.processJoin(user, player);
+                }
+
+                if (type == ServerDoc.Type.GAME && plugin.getConfig().getBoolean("server.sandbox")) {
+                    Bukkit.getScheduler().runTask(plugin, () -> {
+                        player.teleport(LobbyLocationParser.getLobby());
+                        Bukkit.getOnlinePlayers().forEach(p -> {
+                            p.hidePlayer(player);
+                            player.hidePlayer(p);
+                        });
+                    });
                 }
 
             } catch (Exception exception) {

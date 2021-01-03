@@ -38,7 +38,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
                 );
 
                 online.showPlayer(player);
-                player.showPlayer(player);
+                player.showPlayer(online);
 
             } else {
                 online.hidePlayer(player);
