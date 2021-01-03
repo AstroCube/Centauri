@@ -88,6 +88,10 @@ public class UserJoinListener implements Listener {
 
                 if (plugin.getConfig().getBoolean("server.sandbox")) {
                     player.teleport(LobbyLocationParser.getLobby());
+                    Bukkit.getOnlinePlayers().forEach(p -> {
+                        p.hidePlayer(player);
+                        player.hidePlayer(p);
+                    });
                 }
 
                 playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
