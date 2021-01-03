@@ -42,9 +42,7 @@ public class CoreTeamBalancer implements TeamBalancer {
                 .map(mapTeam -> new SizedTeam(mapTeam.getName(), mapTeam.getColor(), maxPerTeam.get()))
                 .collect(Collectors.toList());
 
-        joinRemainingAssignations(assignations, teams, maxPerTeam.get());
-
-        return new HashSet<>(teams);
+        return new HashSet<>(joinRemainingAssignations(assignations, teams, maxPerTeam.get()));
     }
 
     /**
@@ -55,19 +53,21 @@ public class CoreTeamBalancer implements TeamBalancer {
      * @param teams where assignations will be placed
      * @param maxMembers allowed for every team.
      */
-    private void joinRemainingAssignations(Set<MatchAssignable> assignations, List<SizedTeam> teams, int maxMembers) {
+    private List<SizedTeam> joinRemainingAssignations(Set<MatchAssignable> assignations, List<SizedTeam> teams, int maxMembers) {
+
+        List<SizedTeam> sizedTeams = new ArrayList<>(teams);
+
         for (MatchAssignable assignable : assignations) {
 
             Set<MatchDoc.TeamMember> members = getProcessedMembers(assignable);
             int remaining = members.size();
 
-            for (SizedTeam team : teams) {
+            Comparator<SizedTeam> teamComparator = Comparator.comparingInt(value -> value.getMembers().size());
+            sizedTeams.sort(teamComparator);
+
+            for (SizedTeam team : sizedTeams) {
 
                 int playersThatCanJoin = maxMembers - team.getMembers().size();
-
-
-                Comparator<MatchDoc.Team> teamComparator = Comparator.comparingInt(value -> value.getMembers().size());
-                teams.sort(teamComparator);
 
                 if (playersThatCanJoin >= remaining) {
                     members.forEach(team::addMember);
@@ -79,7 +79,7 @@ public class CoreTeamBalancer implements TeamBalancer {
                     Iterator<MatchDoc.TeamMember> memberIterator = members.iterator();
 
                     int used = 0;
-                    while (memberIterator.hasNext() && used < playersThatCanJoin){
+                    while (memberIterator.hasNext() && used < playersThatCanJoin) {
                         MatchDoc.TeamMember member = memberIterator.next();
 
                         team.addMember(member);
@@ -95,6 +95,8 @@ public class CoreTeamBalancer implements TeamBalancer {
 
             }
         }
+
+        return sizedTeams;
     }
 
     /**

@@ -42,4 +42,18 @@ public class SizedTeam implements MatchDoc.Team {
         return color;
     }
 
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Team members: ");
+
+        getMembers().forEach(member -> sb.append(member.getUser()).append(", "));
+
+        sb.append("Full: ").append(isFull());
+
+        return sb.toString();
+
+    }
+
 }
