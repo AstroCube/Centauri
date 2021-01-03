@@ -20,7 +20,7 @@ public interface GameMapConfiguration {
     /**
      * @return base teams to be used at {@link MatchDoc.Team} balancing.
      */
-    Set<MapTeam> getTeams();
+    Set<? extends MapTeam> getTeams();
 
     interface MapTeam {
 
