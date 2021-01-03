@@ -69,7 +69,7 @@ public class    GameTimerOutListener implements Listener {
                 String configuration = new String(gameMapCache.getConfiguration(match.getMap()));
                 matchStateUpdater.updateMatch(match, MatchDoc.Status.STARTING);
 
-                Set<MatchDoc.Team> balanced = teamBalancer.balanceTeams(match.getPending());
+                Set<MatchDoc.Team> balanced = teamBalancer.balanceTeams(match, match.getPending());
 
                 matchService.assignTeams(balanced, match.getId());
 
