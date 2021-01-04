@@ -30,6 +30,12 @@
             <artifactId>commons-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cloud.timo.TimoCloud</groupId>
+            <artifactId>TimoCloud-API</artifactId>
+            <version>6.2.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

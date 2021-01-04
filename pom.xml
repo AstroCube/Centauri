@@ -45,6 +45,11 @@
             <url>https://repo.unnamed.team/repository/unnamed-snapshots</url>
         </repository>
 
+        <repository>
+            <id>TimoCloud-API</id>
+            <url>https://maven.timo.cloud/repository/TimoCloud-API/</url>
+        </repository>
+
     </repositories>
 
     <modules>
