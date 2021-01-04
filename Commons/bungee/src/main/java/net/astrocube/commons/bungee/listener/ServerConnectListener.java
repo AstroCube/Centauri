@@ -1,9 +1,11 @@
 package net.astrocube.commons.bungee.listener;
 
+import cloud.timo.TimoCloud.api.objects.ServerObject;
 import com.google.inject.Inject;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bungee.configuration.PluginConfigurationHelper;
 import net.astrocube.commons.bungee.user.UserProvideHelper;
+import net.astrocube.commons.core.cloud.CloudUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -35,12 +37,21 @@ public class ServerConnectListener implements Listener {
 
                 if (configuration.isPresent()) {
 
-                    Optional<ServerInfo> instance = Optional.ofNullable(
-                            ProxyServer.getInstance().getServerInfo(configuration.get().getString("redirect.authentication"))
-                    );
+                    Optional<ServerObject> instance =
+                            CloudUtils.getServerFromGroup(configuration.get().getString("redirect.authentication"));
 
-                    instance.ifPresent(event::setTarget);
-                    instance.orElseThrow(() -> new RuntimeException("Unable to get connectable from group"));
+                    if (instance.isPresent()) {
+
+                        Optional<ServerInfo> connectable =
+                                Optional.of(ProxyServer.getInstance().getServerInfo(instance.get().getName()));
+
+                        connectable.ifPresent(event::setTarget);
+
+                        connectable.orElseThrow(() -> new Exception("Unable to get connectable from cloud instance"));
+
+                    }
+
+                    instance.orElseThrow(() -> new Exception("Unable to get available instance"));
 
                 }
 
