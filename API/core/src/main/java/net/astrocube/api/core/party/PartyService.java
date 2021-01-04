@@ -1,4 +1,6 @@
-package net.astrocube.api.bukkit.party;
+package net.astrocube.api.core.party;
+
+import net.astrocube.api.core.virtual.party.Party;
 
 import java.util.Optional;
 
