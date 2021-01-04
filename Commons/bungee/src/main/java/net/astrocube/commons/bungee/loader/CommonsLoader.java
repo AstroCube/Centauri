@@ -11,11 +11,13 @@ public class CommonsLoader implements Loader {
 
     private @Inject @Named("server") Loader serverLoader;
     private @Inject @Named("config") Loader configLoader;
+    private @Inject @Named("listener") Loader listenerLoader;
 
     @Override
     public void load() {
         configLoader.load();
         serverLoader.load();
+        listenerLoader.load();
     }
 
 }
