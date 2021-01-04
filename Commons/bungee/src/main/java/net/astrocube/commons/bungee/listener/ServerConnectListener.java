@@ -39,7 +39,7 @@ public class ServerConnectListener implements Listener {
                             ProxyServer.getInstance().getServerInfo(configuration.get().getString("redirect.authentication"))
                     );
 
-                    instance.ifPresent(server -> event.getPlayer().connect(server));
+                    instance.ifPresent(event::setTarget);
                     instance.orElseThrow(() -> new RuntimeException("Unable to get connectable from group"));
 
                 }
