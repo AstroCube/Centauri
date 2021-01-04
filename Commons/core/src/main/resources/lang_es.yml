@@ -1,3 +1,21 @@
+####################
+# Parties messages #
+####################
+party-help:
+- "%%gold%%============================"
+- "%%gold%%/party accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de grupo"
+- "%%gold%%/party invite <player> %%dark_gray%%- %%yellow%Invita a alguien a tu grupo"
+- "%%gold%%/party reject <player> %%dark_gray%%- %%yellow%Rechaza la petición de grupo de un jugador"
+- "%%gold%%/party kick <player> %%dark_gray%%- %%yellow%Elimina a alguien de tu grupo"
+- "%%gold%%/party kickoffline %%dark_gray%%- %%yellow%%Elimina a todos los miembros desconectados de tu grupo"
+- "%%gold%%/party promote <player> %%dark_gray%%- %%yellow%%Otorga el 'lider' del grupo a un jugador"
+- "%%gold%%/party disband %%dark_gray%%- %%yellow%%Deshaz tu grupo"
+- "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
+- "%%gold%%============================"
+
+####################
+# Friends messages #
+####################
 friend-help:
 - "%%gold%%============================"
 - "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"

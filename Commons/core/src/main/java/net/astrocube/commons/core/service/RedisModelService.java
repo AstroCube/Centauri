@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.api.core.http.RequestOptions;
@@ -23,28 +21,32 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 
 @SuppressWarnings("All")
-public class RedisModelService<Complete extends Model, Partial extends PartialModel> extends CoreModelService<Complete, Partial> {
+public class RedisModelService<Complete extends Model, Partial extends PartialModel>
+        extends CoreModelService<Complete, Partial> {
 
     @Inject private Redis redis;
     @Inject private HttpClient httpClient;
-    private RedisRequestCallabe<Complete> redisRequestCallabe;
+    private RedisRequestCallable<Complete> redisRequestCallable;
     @Inject private ObjectMapper objectMapper;
 
     @Inject
     RedisModelService(
             ObjectMapper mapper,
-            ModelMeta<Complete, Partial> modelMeta,
-            ExecutorServiceProvider executorServiceProvider
+            ModelMeta<Complete, Partial> modelMeta
     ) {
-        super(mapper, modelMeta, executorServiceProvider);
-        this.redisRequestCallabe = new RedisRequestCallabe<>();
+        super(mapper, modelMeta);
+    }
+
+    @Inject
+    public void constructCallable() {
+        this.redisRequestCallable = new RedisRequestCallable<>();
     }
 
     @Override
     public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
         return httpClient.executeRequestSync(
                 modelMeta.getRouteKey(),
-                redisRequestCallabe,
+                redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.PUT,
                         new HashMap<>(),
@@ -59,7 +61,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
     public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
         return httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
-                this.redisRequestCallabe,
+                this.redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         new HashMap<>(),
@@ -73,7 +75,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
     public Complete createSync(CreateRequest<Partial> request) throws Exception {
         return httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey(),
-                this.redisRequestCallabe,
+                this.redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -83,7 +85,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
         );
     }
 
-    private class RedisRequestCallabe<T extends Model> implements RequestCallable<T> {
+    private class RedisRequestCallable<T extends Model> implements RequestCallable<T> {
 
         @Override
         public T call(HttpRequest request) throws Exception {

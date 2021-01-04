@@ -7,7 +7,6 @@ import me.fixeddev.inject.ProtectedModule;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.MessageRepository;
 import me.yushust.message.format.bukkit.BukkitMessageAdapt;
-import me.yushust.message.specific.Messenger;
 import me.yushust.message.strategy.Strategy;
 import net.astrocube.commons.bukkit.translation.interceptor.CenterMessageInterceptor;
 import net.astrocube.commons.bukkit.translation.interceptor.ColorMessageInterceptor;
@@ -32,7 +31,6 @@ public class TranslationModule extends ProtectedModule {
                 .setLanguageProvider(languageProvider)
                 .addInterceptor(new ColorMessageInterceptor())
                 .addInterceptor(new CenterMessageInterceptor())
-                .setMessenger(Messenger.dummy())
                 .build();
     }
 }
