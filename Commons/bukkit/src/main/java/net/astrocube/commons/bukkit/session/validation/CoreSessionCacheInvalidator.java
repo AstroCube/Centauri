@@ -24,6 +24,7 @@ public class CoreSessionCacheInvalidator implements SessionCacheInvalidator {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.del(modelMeta.getRouteKey() + ":" + user.getId());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Could not invalidate user cache");
         }
     }

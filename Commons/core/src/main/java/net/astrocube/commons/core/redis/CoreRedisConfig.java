@@ -8,7 +8,7 @@ public class CoreRedisConfig implements RedisConfiguration {
     private static final int PORT = 6379;
     private static final int TIMEOUT = 2000;
     private static final int DATABASE = 0;
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "&g4MErwHo#Yx6A(RLw*Ci3K&[hyn%9A@";
 
     public String getAddress() {
         return ADDRESS;
