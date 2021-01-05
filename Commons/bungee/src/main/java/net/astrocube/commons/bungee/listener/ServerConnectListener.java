@@ -1,5 +1,6 @@
 package net.astrocube.commons.bungee.listener;
 
+import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import cloud.timo.TimoCloud.api.objects.ServerObject;
 import com.google.inject.Inject;
 import net.astrocube.api.core.virtual.user.User;
@@ -46,9 +47,6 @@ public class ServerConnectListener implements Listener {
                                 Optional.of(ProxyServer.getInstance().getServerInfo(instance.get().getName()));
 
                         connectable.ifPresent(event::setTarget);
-
-                        connectable.orElseThrow(() -> new Exception("Unable to get connectable from cloud instance"));
-
                     }
 
                     instance.orElseThrow(() -> new Exception("Unable to get available instance"));
