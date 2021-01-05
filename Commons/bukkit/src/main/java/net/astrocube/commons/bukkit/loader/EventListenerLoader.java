@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvalidListener;
+import net.astrocube.commons.bukkit.listener.authentication.AuthenticationRestrictionListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.game.*;
@@ -23,6 +24,7 @@ public class EventListenerLoader implements Loader {
     private @Inject AuthenticationStartListener authenticationStartListener;
     private @Inject AuthenticationSuccessListener authenticationSuccessListener;
     private @Inject AuthenticationInvalidListener authenticationInvalidListener;
+    private @Inject AuthenticationRestrictionListener authenticationRestrictionListener;
 
     private @Inject PlayerHotbarClickListener playerHotbarClickListener;
 
@@ -51,9 +53,12 @@ public class EventListenerLoader implements Loader {
 
         plugin.getLogger().log(Level.INFO, "Initializing event listeners");
 
-        registerEvent(authenticationStartListener);
-        registerEvent(authenticationSuccessListener);
-        registerEvent(authenticationInvalidListener);
+        if (plugin.getConfig().getBoolean("authentication.enabled")) {
+            registerEvent(authenticationStartListener);
+            registerEvent(authenticationSuccessListener);
+            registerEvent(authenticationInvalidListener);
+            registerEvent(authenticationRestrictionListener);
+        }
 
         registerEvent(playerHotbarClickListener);
 

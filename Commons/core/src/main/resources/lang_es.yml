@@ -36,7 +36,7 @@ authentication:
     password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
-
+    chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
 game:
     lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
