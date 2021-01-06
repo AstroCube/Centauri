@@ -10,6 +10,8 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.authentication.AuthenticationUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -77,6 +79,13 @@ public class AuthenticationStartListener implements Listener {
                     gatewayMatcher.getRegisterGateway().startProcessing(user);
                     return;
                 }
+
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.hidePlayer(event.getPlayer());
+                    event.getPlayer().hidePlayer(player);
+                });
+
+                event.getPlayer().teleport(AuthenticationUtils.generateAuthenticationSpawn(plugin.getConfig()));
 
                 gateway.startProcessing(user);
 

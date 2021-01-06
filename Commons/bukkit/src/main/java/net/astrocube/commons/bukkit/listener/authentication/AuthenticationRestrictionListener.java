@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class AuthenticationRestrictionListener implements Listener {
 
@@ -40,6 +41,16 @@ public class AuthenticationRestrictionListener implements Listener {
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
+        if (
+                !event.getMessage().equalsIgnoreCase("login") ||
+                !event.getMessage().equalsIgnoreCase("register")
+        ) {
+            event.setCancelled(true);
+        }
     }
 
 }
