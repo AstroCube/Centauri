@@ -32,7 +32,6 @@ public class TranslationModule extends ProtectedModule {
                 .setLanguageProvider(languageProvider)
                 .addInterceptor(new ColorMessageInterceptor())
                 .addInterceptor(new CenterMessageInterceptor())
-                .setMessenger(Messenger.dummy())
                 .build();
     }
 }

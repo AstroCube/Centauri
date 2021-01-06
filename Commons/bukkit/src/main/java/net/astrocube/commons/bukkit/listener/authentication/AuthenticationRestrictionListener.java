@@ -41,9 +41,4 @@ public class AuthenticationRestrictionListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent event) {
-        event.setCancelled(true);
-    }
-
 }
