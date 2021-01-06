@@ -24,7 +24,7 @@ public class PasswordGateway implements AuthenticationGateway {
             player.sendTitle(
                     new Title(
                             messageHandler.get(player, "authentication.password-title").replace(
-                                    "%%player", user.getDisplay()),
+                                    "%%player%%", user.getDisplay()),
                             messageHandler.get(player, "authentication.password-sub")
                     )
             );
