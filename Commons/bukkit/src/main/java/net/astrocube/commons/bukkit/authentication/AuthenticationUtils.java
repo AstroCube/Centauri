@@ -12,8 +12,8 @@ public class AuthenticationUtils {
                 configuration.getDouble("authentication.spawn.x"),
                 configuration.getDouble("authentication.spawn.y"),
                 configuration.getDouble("authentication.spawn.z"),
-                configuration.getFloat("authentication.spawn.yaw"),
-                configuration.getFloat("authentication.spawn.pitch")
+                (float) configuration.getDouble("authentication.spawn.yaw"),
+                (float) configuration.getDouble("authentication.spawn.pitch")
         );
     }
 
