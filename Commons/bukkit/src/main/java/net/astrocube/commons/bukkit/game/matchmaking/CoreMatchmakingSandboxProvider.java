@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingSandboxProvider;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.virtual.server.Server;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -29,7 +30,7 @@ public class CoreMatchmakingSandboxProvider implements MatchmakingSandboxProvide
         Server server = serverService.getActual();
 
         if (!plugin.getConfig().getBoolean("server.sandbox")) {
-            messageHandler.send(player, "game.admin.no-sandbox");
+            messageHandler.send(player, AlertMode.ERROR,"game.admin.no-sandbox");
             return;
         }
 

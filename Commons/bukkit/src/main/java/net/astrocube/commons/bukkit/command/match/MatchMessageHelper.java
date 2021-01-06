@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -39,12 +40,12 @@ public class MatchMessageHelper {
     public boolean getCountAvailability(Optional<Match> providedMatch, Player player) {
 
         if (!providedMatch.isPresent()) {
-            messageHandler.send(player, "game.admin.not-active");
+            messageHandler.send(player, AlertMode.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (providedMatch.get().getStatus() != MatchDoc.Status.LOBBY) {
-            messageHandler.send(player, "game.admin.started");
+            messageHandler.send(player, AlertMode.ERROR, "game.admin.started");
             return true;
         }
 

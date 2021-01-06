@@ -3,20 +3,16 @@ package net.astrocube.commons.bukkit.command.match;
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
-import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
-import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
-import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
-import java.util.Set;
 
 public class MatchInvalidateCommand implements CommandClass {
 
@@ -29,12 +25,12 @@ public class MatchInvalidateCommand implements CommandClass {
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
         if (!matchOptional.isPresent()) {
-            messageHandler.send(player, "game.admin.not-active");
+            messageHandler.send(player, AlertMode.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
-            messageHandler.send(player, "game.admin.invalidate-not-stared");
+            messageHandler.send(player, AlertMode.ERROR, "game.admin.invalidate-not-stared");
             return true;
         }
 

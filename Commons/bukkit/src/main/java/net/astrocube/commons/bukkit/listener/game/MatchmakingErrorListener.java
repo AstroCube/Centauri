@@ -5,6 +5,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +30,7 @@ public class MatchmakingErrorListener implements Listener {
 
                 Player player = Bukkit.getPlayer(response.getResponse().get().getUsername());
 
-                messageHandler.send(player, "game.matchmaking.error");
+                messageHandler.send(player, AlertMode.ERROR, "game.matchmaking.error");
 
             } else {
                 plugin.getLogger().log(Level.SEVERE, "Could not find user for error alerting");

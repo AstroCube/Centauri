@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.translation.mode;
+package net.astrocube.api.bukkit.translation.mode;
 
 import me.yushust.message.mode.Mode;
 import me.yushust.message.specific.Messenger;

@@ -8,7 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingSandboxProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import org.bukkit.Bukkit;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -31,14 +31,14 @@ public class MatchDebugCommand implements CommandClass {
             Optional<Match> match = actualMatchProvider.provide(player.getDatabaseIdentifier());
 
             if (match.isPresent()) {
-                messageHandler.send(player, "game.matchmaking.already");
+                messageHandler.send(player, AlertMode.ERROR,"game.matchmaking.already");
             }
 
             matchmakingSandboxProvider.pairMatch(player);
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error pairing user with a sandbox match.", e);
-            messageHandler.send(player, "game.matchmaking.error");
+            messageHandler.send(player, AlertMode.ERROR, "game.matchmaking.error");
         }
 
         return true;

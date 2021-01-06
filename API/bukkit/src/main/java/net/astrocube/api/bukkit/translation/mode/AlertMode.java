@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.translation.mode;
+package net.astrocube.api.bukkit.translation.mode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
