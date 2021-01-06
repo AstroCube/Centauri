@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.listener.user;
 
+import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
@@ -82,7 +83,7 @@ public class UserJoinListener implements Listener {
                     @Nullable
                     @Override
                     public String getLobby() {
-                        return null; //TODO: Get lobby name
+                        return TimoCloudAPI.getBukkitAPI().getThisServer().getGroup().getName();
                     }
                 });
 

@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.server;
 
+import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
@@ -58,7 +59,7 @@ public class BukkitStartResolver implements ServerStartResolver {
                 throw new Exception("Requested subGameMode not found");
 
             String token = gameServerStartManager.createGameServer(
-                    Bukkit.getServerName(),
+                    TimoCloudAPI.getBukkitAPI().getThisServer().getId(),
                     type,
                     plugin.getConfig().getString("server.cluster"),
                     plugin.getConfig().getInt("game.running"),

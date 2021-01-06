@@ -4,6 +4,7 @@ server:
   realm: "default"
   sandbox: true                                  # Will not verify sessions and directly grants access to the server for developing purposes
   cross-teleport: true                           # Will allow teleport requests to be cross-server
+  fallback: "main-lobby"                         # Will store as fallback when re-login
 game:
   running: 0                                     # Max games running at one (Only applies at GAME mode)
   total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
