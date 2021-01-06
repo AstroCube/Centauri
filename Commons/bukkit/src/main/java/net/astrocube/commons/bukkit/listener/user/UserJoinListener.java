@@ -77,13 +77,13 @@ public class UserJoinListener implements Listener {
 
                     @Override
                     public String getServer() {
-                        return address;
+                        return TimoCloudAPI.getBukkitAPI().getThisServer().getGroup().getName();
                     }
 
                     @Nullable
                     @Override
                     public String getLobby() {
-                        return TimoCloudAPI.getBukkitAPI().getThisServer().getGroup().getName();
+                        return plugin.getConfig().getString("server.fallback", "main-lobby");
                     }
                 });
 
