@@ -49,7 +49,7 @@ public class AuthenticationSuccessListener implements Listener {
             if (cloudServer.isPresent()) {
                 cloudPlayer.sendToServer(cloudServer.get());
             } else {
-                throw new AuthorizeException("Unable to find player registry at cloud.");
+                throw new AuthorizeException("Unable to get available register server.");
             }
 
         } catch (Exception exception) {
