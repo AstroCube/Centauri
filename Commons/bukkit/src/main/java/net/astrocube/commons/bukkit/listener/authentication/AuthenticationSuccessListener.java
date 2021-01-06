@@ -30,6 +30,7 @@ public class AuthenticationSuccessListener implements Listener {
 
             event.getPlayer().sendMessage(
                     messageHandler.get(event.getPlayer(), "authentication.success-message")
+                    .replace("%%player%%", event.getPlayer().getName())
             );
 
         } catch (AuthorizeException exception) {
