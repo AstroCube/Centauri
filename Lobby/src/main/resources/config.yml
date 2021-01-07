@@ -7,3 +7,5 @@ spawn:
 gamemode: ""
 ambiental:
   time: 1000
+  effects:
+    - "NIGHT_VISION"
