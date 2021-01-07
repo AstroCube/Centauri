@@ -96,14 +96,19 @@ public class UserJoinListener implements Listener {
 
                     Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
 
-                    if (!registryOptional.isPresent()) throw new AuthorizeException("Not authorized session");
+                    if (!registryOptional.isPresent()) {
+                        throw new AuthorizeException("Not authorized session");
+                    }
 
                     SessionRegistry registry = registryOptional.get();
 
-                    if (registry.isPending()) throw new AuthorizeException("Session is pending of authorization");
+                    if (registry.isPending()) {
+                        throw new AuthorizeException("Session is pending of authorization");
+                    }
 
-                    if (!registry.getAddress().equalsIgnoreCase(address))
+                    if (!registry.getAddress().equalsIgnoreCase(address)) {
                         throw new AuthorizeException("Matching address not correspond to authorization");
+                    }
 
                     crossTeleportExchanger.exchange(user);
 
