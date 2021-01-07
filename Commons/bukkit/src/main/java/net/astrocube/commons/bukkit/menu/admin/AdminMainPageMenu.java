@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.menu.admin;
 
+import net.astrocube.commons.bukkit.menu.admin.selector.AdminGameModeSelectorMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -7,7 +8,12 @@ import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
+import javax.inject.Inject;
+
 public class AdminMainPageMenu {
+
+    @Inject
+    private AdminGameModeSelectorMenu adminGameModeSelectorMenu;
 
     public Inventory createAdminPanel(Player player) {
 
@@ -20,7 +26,7 @@ public class AdminMainPageMenu {
                                 .setLore("lore")
                                 .build())
                         .setAction(event -> {
-                            player.sendMessage("Open the match panel");
+                            player.openInventory(adminGameModeSelectorMenu.createGameModeSelectorMenu(player));
                             return true;
                         })
                         .build())

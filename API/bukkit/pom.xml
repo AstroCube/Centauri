@@ -40,11 +40,6 @@
             <version>4.3.2</version>
         </dependency>
         <dependency>
-            <groupId>me.yushust.message</groupId>
-            <artifactId>bukkit-message-dispatch</artifactId>
-            <version>4.3.2</version>
-        </dependency>
-        <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>commandflow-bukkit</artifactId>
             <version>0.1.1-SNAPSHOT</version>
