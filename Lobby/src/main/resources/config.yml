@@ -5,3 +5,5 @@ spawn:
   yaw: 0
   pitch: 0
 gamemode: ""
+ambiental:
+  time: 1000

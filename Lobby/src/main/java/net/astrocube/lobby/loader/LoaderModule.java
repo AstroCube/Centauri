@@ -10,6 +10,7 @@ public class LoaderModule extends ProtectedModule {
     public void configure() {
         bind(Loader.class).to(LobbyLoader.class);
         bind(Loader.class).annotatedWith(Names.named("events")).to(EventListenerLoader.class);
+        bind(Loader.class).annotatedWith(Names.named("world")).to(WorldLoader.class);
     }
 
 }
