@@ -67,7 +67,7 @@ public class UserJoinListener implements Listener {
                     throw new Exception("User response was not present");
 
                 User user = response.getResponse().get();
-                String address = Bukkit.getServerName().split("-")[0];
+                String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
                 sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
                     @Override
