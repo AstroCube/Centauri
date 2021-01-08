@@ -3,6 +3,7 @@ package net.astrocube.commons.core.service;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
@@ -121,7 +122,7 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
             // TODO: Tomato me dijo que lo dejara asi, yo creo k no deberia ser asi pero weno -Yushu
             client.set(
-                    id,
+                    modelMeta.getRouteKey() + ':' + id,
                     mapper.writeValueAsString(partial)
             );
             @SuppressWarnings("unchecked")
@@ -132,6 +133,18 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
     @Override
     public Complete createSync(CreateRequest<Partial> request) throws Exception {
+        String id = UUID.randomUUID().toString();
+        ObjectNode node = (ObjectNode) mapper.readTree(
+                mapper.writeValueAsString(request.getModel())
+        );
+        node.put("_id", id);
+        try (Jedis client = openResource()) {
+            client.set(
+                    modelMeta.getRouteKey() + ':' + id,
+                    node.asText()
+            );
+        }
+        // TODO: Flex termina esta monda
         return null;
     }
 
