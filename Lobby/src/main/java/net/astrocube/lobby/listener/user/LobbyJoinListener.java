@@ -39,17 +39,19 @@ public class LobbyJoinListener implements Listener {
                 )
         );
 
-        plugin.getConfig().getStringList("ambiental.effects").forEach(effect -> {
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            plugin.getConfig().getStringList("ambiental.effects").forEach(effect -> {
 
-            try {
-                PotionEffectType potionEffectType = PotionEffectType.getByName(effect);
-                player.addPotionEffect(
-                        new PotionEffect(potionEffectType, Integer.MAX_VALUE, 1, true, false)
-                );
-            } catch (IllegalArgumentException e) {
-                plugin.getLogger().warning("Could not find effect type " + effect);
-            }
+                try {
+                    PotionEffectType potionEffectType = PotionEffectType.getByName(effect);
+                    player.addPotionEffect(
+                            new PotionEffect(potionEffectType, Integer.MAX_VALUE, 1, true, false)
+                    );
+                } catch (IllegalArgumentException e) {
+                    plugin.getLogger().warning("Could not find effect type " + effect);
+                }
 
+            });
         });
 
     }

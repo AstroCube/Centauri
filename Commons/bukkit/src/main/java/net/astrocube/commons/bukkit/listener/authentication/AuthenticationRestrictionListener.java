@@ -51,7 +51,7 @@ public class AuthenticationRestrictionListener implements Listener {
     public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
         String[] command = event.getMessage().split(" ");
 
-        if (command.length == 1) {
+        if (command.length == 2) {
 
             if (command[0].equals("/login") || command[0].equals("/register")) {
                 return;
