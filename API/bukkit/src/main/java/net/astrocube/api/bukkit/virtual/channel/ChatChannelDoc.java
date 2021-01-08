@@ -1,12 +1,13 @@
 package net.astrocube.api.bukkit.virtual.channel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 
-import java.util.Optional;
+import javax.annotation.Nullable;
 import java.util.Set;
 
-public interface ChannelDoc {
+public interface ChatChannelDoc {
 
     interface Creation extends PartialModel {
 
@@ -20,10 +21,12 @@ public interface ChannelDoc {
 
         Set<String> getParticipants();
 
-        Optional<String> getPermission();
+        @Nullable String getPermission();
 
         enum Visibility {
-            PUBLIC, PRIVATE, PERMISSIONS
+            @JsonProperty("Public") PUBLIC,
+            @JsonProperty("Private") PRIVATE,
+            @JsonProperty("Permission") PERMISSION
         }
 
     }

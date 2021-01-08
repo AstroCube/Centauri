@@ -59,7 +59,7 @@ public class BukkitStartResolver implements ServerStartResolver {
                 throw new Exception("Requested subGameMode not found");
 
             String token = gameServerStartManager.createGameServer(
-                    TimoCloudAPI.getBukkitAPI().getThisServer().getId(),
+                    Bukkit.getServerName(),
                     type,
                     plugin.getConfig().getString("server.cluster"),
                     plugin.getConfig().getInt("game.running"),
@@ -76,5 +76,7 @@ public class BukkitStartResolver implements ServerStartResolver {
             Bukkit.shutdown();
         }
     }
+
+
 
 }

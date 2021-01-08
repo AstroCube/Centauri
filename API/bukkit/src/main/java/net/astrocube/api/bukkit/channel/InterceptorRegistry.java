@@ -1,7 +1,11 @@
 package net.astrocube.api.bukkit.channel;
 
-public interface HandlerRegistry {
+import java.util.Set;
 
-    ChannelMessageInterceptor getHandler(String channelName);
+public interface InterceptorRegistry {
+
+    Set<ChatMessageInterceptor> getInterceptors();
+
+    void register(ChatMessageInterceptor interceptor);
 
 }

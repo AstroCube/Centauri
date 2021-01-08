@@ -1,11 +1,11 @@
-package net.astrocube.api.bukkit.channel.admin;
+package net.astrocube.api.bukkit.user.staff;
 
 import net.astrocube.api.core.virtual.user.User;
 
 import java.util.Set;
 
-public interface StaffParticipantsProvider {
+public interface OnlineStaffProvider {
 
-    Set<User> provideParticipants();
+    Set<User> provide() throws Exception;
 
 }

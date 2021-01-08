@@ -6,4 +6,4 @@ import net.astrocube.api.core.model.ModelProperties;
 
 @MessageDefaults.ChannelName("channel-message")
 @ModelProperties.RouteKey("channel-message")
-public interface ChannelMessage extends ChannelMessageDoc.Complete, Message {}
+public interface ChatChannelMessage extends ChatChannelMessageDoc.Complete, Message {}

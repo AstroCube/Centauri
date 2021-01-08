@@ -5,7 +5,7 @@ import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.channel.InterceptorRegistry;
 import net.astrocube.commons.bukkit.channel.admin.StaffChannelModule;
 
-public class ChannelModule extends ProtectedModule {
+public class ChatChannelModule extends ProtectedModule {
 
     @Override
     protected void configure() {

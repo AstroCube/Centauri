@@ -1,5 +1,6 @@
 package net.astrocube.commons.core.message;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
@@ -10,10 +11,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 @SuppressWarnings("All")
@@ -39,13 +37,10 @@ public class JedisMessenger implements Messenger {
             @Override
             public void onMessage(String channel, String message) {
                 try {
-                    ObjectNode jsonMessage = (ObjectNode) mapper.readTree(message);
+                    JsonNode jsonMessage = (ObjectNode) mapper.readTree(message);
 
                     if (jsonMessage.get("metadata") != null) {
-                        Metadata metadata = mapper.readValue(
-                                mapper.writeValueAsString(jsonMessage.get("metadata")),
-                                Metadata.class
-                        );
+                        Metadata metadata = mapper.readValue(jsonMessage.get("metadata").toString(), Metadata.class);
 
                         Optional<JedisChannel<? extends Message>> channelOptional =
                                 channels.values().stream()
@@ -58,11 +53,15 @@ public class JedisMessenger implements Messenger {
 
                         JedisChannel channelObject = channelOptional.get();
 
+                        if (metadata.getInstanceId().equals(channelObject.getId())) {
+                            return;
+                        }
 
                         Message messageObject = (Message) mapper.readValue(
                                 mapper.writeValueAsString(jsonMessage.get("message")),
                                 channelObject.getType().getRawType()
                         );
+
                         channelObject.callListeners(messageObject, metadata);
                     }
                 } catch (Exception ignore) {}
@@ -70,7 +69,7 @@ public class JedisMessenger implements Messenger {
         };
 
         channelMetas.forEach(channelMeta -> {
-            JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), "", TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
+            JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), UUID.randomUUID().toString(), TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
 
             this.channels.put(channelMeta.type(), channel);
         });

@@ -34,7 +34,7 @@ public class JedisChannel<T extends Message> implements Channel<T> {
     @Override
     public Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException {
 
-        String meta = mapper.writeValueAsString(new Metadata() {
+        Metadata metadata = new Metadata() {
             @Override
             public Map<String, Object> getHeaders() {
                 return headers;
@@ -59,12 +59,12 @@ public class JedisChannel<T extends Message> implements Channel<T> {
             public DateTime getTimestamp() {
                 return DateTime.now();
             }
-        });
+        };
 
         ObjectNode message = mapper.createObjectNode();
 
-        message.put("metadata", meta);
-        message.put("message", mapper.writeValueAsString(object));
+        message.putPOJO("metadata", metadata);
+        message.putPOJO("message", object);
 
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.publish("centauri_redis", mapper.writeValueAsString(message));
@@ -92,5 +92,4 @@ public class JedisChannel<T extends Message> implements Channel<T> {
             listener.handleDelivery(object, metadata);
         }
     }
-
 }

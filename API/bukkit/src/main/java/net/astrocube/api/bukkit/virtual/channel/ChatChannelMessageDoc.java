@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 
+import java.util.Map;
 import java.util.Set;
 
-public interface ChannelMessageDoc {
+public interface ChatChannelMessageDoc {
 
     interface Creation extends PartialModel {
 
@@ -18,9 +19,7 @@ public interface ChannelMessageDoc {
 
         Origin getOrigin();
 
-        Meta getMeta();
-
-        interface Meta {}
+        Map<String, Object> getMeta();
 
         enum Origin {
             @JsonProperty("InGame") INGAME,

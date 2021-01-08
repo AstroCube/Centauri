@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.loader;
 
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
+import net.astrocube.commons.bukkit.channel.ChatChannelModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.game.GameModule;
@@ -29,5 +30,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new BukkitConfigurationModule());
         install(new TranslationModule());
         install(new UserModule());
+        install(new ChatChannelModule());
     }
 }

@@ -23,11 +23,11 @@ public final class Callbacks {
 
             @Override
             public void call(Response<T> object) {
-                if (!object.isSuccessful() || object.getResponse().isPresent()) {
+                if (!object.isSuccessful()) {
                     handleException(object.getThrownException().orElse(null));
                     return;
                 }
-                callback.call(object.getResponse().get());
+                callback.call(object.getResponse().orElse(null));
             }
 
             @Override

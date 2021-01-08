@@ -67,7 +67,7 @@ public class UserJoinListener implements Listener {
                     throw new Exception("User response was not present");
 
                 User user = response.getResponse().get();
-                String address = Bukkit.getServerName().split("-")[0];
+                String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
                 sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
                     @Override
@@ -91,19 +91,24 @@ public class UserJoinListener implements Listener {
 
                 if (
                         !plugin.getConfig().getBoolean("authentication.enabled") &&
-                        !plugin.getConfig().getBoolean("server.sandbox")
+                                !plugin.getConfig().getBoolean("server.sandbox")
                 ) {
 
                     Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
 
-                    if (!registryOptional.isPresent()) throw new AuthorizeException("Not authorized session");
+                    if (!registryOptional.isPresent()) {
+                        throw new AuthorizeException("Not authorized session");
+                    }
 
                     SessionRegistry registry = registryOptional.get();
 
-                    if (registry.isPending()) throw new AuthorizeException("Session is pending of authorization");
+                    if (registry.isPending()) {
+                        throw new AuthorizeException("Session is pending of authorization");
+                    }
 
-                    if (!registry.getAddress().equalsIgnoreCase(address))
+                    if (!registry.getAddress().equalsIgnoreCase(address)) {
                         throw new AuthorizeException("Matching address not correspond to authorization");
+                    }
 
                     crossTeleportExchanger.exchange(user);
 

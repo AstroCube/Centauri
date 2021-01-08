@@ -15,6 +15,7 @@ import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
 import me.fixeddev.commandflow.translator.DefaultTranslator;
 
 import net.astrocube.api.core.loader.Loader;
+import net.astrocube.commons.bukkit.command.AdminChatCommand;
 import net.astrocube.commons.bukkit.command.FriendsCommand;
 import net.astrocube.commons.bukkit.command.LoginCommand;
 import net.astrocube.commons.bukkit.command.MatchCommand;
@@ -30,12 +31,12 @@ public class CommandLoader implements Loader {
     private @Inject LoginCommand loginCommand;
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
+    private @Inject AdminChatCommand adminChatCommand;
 
     @Override
     public void load() {
-
-        CommandManager commandManager = new BukkitCommandManager(plugin.getName());
-        commandManager.setTranslator(new DefaultTranslator(coreCommandLanguageProvider));
+        CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
+        commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
 
         PartInjector partInjector = new SimplePartInjector();
 
@@ -44,16 +45,15 @@ public class CommandLoader implements Loader {
 
         AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
                 new AnnotatedCommandBuilderImpl(partInjector),
-                (clazz, parent) -> injector.getInstance(clazz)
+                (clazz, parent) -> this.injector.getInstance(clazz)
         );
 
-        commandManager.registerCommands(treeBuilder.fromClass(friendsCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(matchCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
 
-        if (plugin.getConfig().getBoolean("authentication.enabled")) {
-            commandManager.registerCommands(treeBuilder.fromClass(loginCommand));
+        if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
+            commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
         }
-
     }
-
 }

@@ -11,6 +11,6 @@ public class VirtualModule extends ProtectedModule {
         install(new ServerModelModule());
         install(new UserModelModule());
         install(new PunishmentsModelModule());
+        install(new GroupModelModule());
     }
-
 }
