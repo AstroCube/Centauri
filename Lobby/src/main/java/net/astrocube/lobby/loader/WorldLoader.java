@@ -29,7 +29,7 @@ public class WorldLoader implements Loader {
         world.setGameRuleValue("keepInventory", "true");
         world.setGameRuleValue("mobGriefing", "false");
 
-        world.setTime(plugin.getConfig().getInt("ambiental.night", 1000));
+        world.setTime(plugin.getConfig().getInt("ambiental.time", 1000));
 
     }
 
