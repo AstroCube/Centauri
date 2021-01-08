@@ -74,7 +74,7 @@ public class AuthenticationStartListener implements Listener {
 
                     @Override
                     public String getAddress() {
-                        return event.getPlayer().getAddress().getAddress().toString().replace("/", "");
+                        return event.getPlayer().getAddress().getAddress().getHostAddress();
                     }
                 });
 
