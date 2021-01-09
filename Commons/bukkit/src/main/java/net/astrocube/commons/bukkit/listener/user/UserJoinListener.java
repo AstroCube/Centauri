@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.authentication.AuthorizeException;
+import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.SessionAliveInterceptor;
@@ -39,6 +40,7 @@ public class UserJoinListener implements Listener {
     private @Inject PermissionBalancer permissionBalancer;
     private @Inject SessionAliveInterceptor sessionAliveInterceptor;
     private @Inject UserMatchJoiner userMatchJoiner;
+    private @Inject InstanceNameProvider instanceNameProvider;
     private @Inject CrossTeleportExchanger crossTeleportExchanger;
     private @Inject Plugin plugin;
 
@@ -77,7 +79,7 @@ public class UserJoinListener implements Listener {
 
                     @Override
                     public String getServer() {
-                        return TimoCloudAPI.getBukkitAPI().getThisServer().getGroup().getName();
+                        return instanceNameProvider.getName();
                     }
 
                     @Nullable
