@@ -10,6 +10,8 @@ public class CloudModule extends ProtectedModule {
     public void configure() {
         bind(InstanceNameProvider.class).to(BukkitNameProvider.class);
         bind(CloudStatusProvider.class).to(BukkitCloudStatusProvider.class);
+        expose(InstanceNameProvider.class);
+        expose(CloudStatusProvider.class);
     }
 
 }
