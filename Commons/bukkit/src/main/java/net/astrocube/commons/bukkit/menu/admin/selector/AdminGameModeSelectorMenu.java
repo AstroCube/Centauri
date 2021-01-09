@@ -15,7 +15,7 @@ public class AdminGameModeSelectorMenu {
     @Inject
     private MessageHandler<Player> messageHandler;
     @Inject
-    private QueryService<GameMode> gameModeFindService;
+    private QueryService<GameMode> gameModeQueryService;
     @Inject
     private GameModeItemExtractor gameModeItemExtractor;
 
@@ -24,7 +24,7 @@ public class AdminGameModeSelectorMenu {
         GUIBuilder guiBuilder = GUIBuilder
                 .builder(messageHandler.get(player, ""), 3);
 
-        gameModeFindService
+        gameModeQueryService
                 .getAll()
                 .callback(response -> {
 

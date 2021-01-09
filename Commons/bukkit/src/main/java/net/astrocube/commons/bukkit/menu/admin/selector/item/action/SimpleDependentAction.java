@@ -25,7 +25,7 @@ public class SimpleDependentAction implements DependentAction {
 
             case LEFT:
 
-                player.openInventory(adminSubGameModeSelectorMenu.createSubGameModeSelectorMenu(player));
+                player.openInventory(adminSubGameModeSelectorMenu.createSubGameModeSelectorMenu(player, gameMode));
                 return true;
 
             case RIGHT:
