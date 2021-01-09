@@ -13,7 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
         <dependency>
             <groupId>net.seocraft</groupId>
             <artifactId>waterfall-api</artifactId>
