@@ -7,10 +7,12 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.authentication.AuthorizeException;
+import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.cloud.CloudUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,6 +27,7 @@ public class AuthenticationSuccessListener implements Listener {
     private @Inject SessionRegistryManager sessionRegistryManager;
     private @Inject FindService<User> findService;
     private @Inject MessageHandler<Player> messageHandler;
+    private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -43,13 +46,15 @@ public class AuthenticationSuccessListener implements Listener {
                     .replace("%%player%%", event.getPlayer().getName())
             );
 
-            PlayerObject cloudPlayer = TimoCloudAPI.getUniversalAPI().getPlayer(user.getUsername());
-            Optional<ServerObject> cloudServer = CloudUtils.getServerFromGroup(user.getSession().getLastLobby());
+            if (cloudStatusProvider.hasCloudHooked()) {
+                PlayerObject cloudPlayer = TimoCloudAPI.getUniversalAPI().getPlayer(user.getUsername());
+                Optional<ServerObject> cloudServer = CloudUtils.getServerFromGroup(user.getSession().getLastLobby());
 
-            if (cloudServer.isPresent()) {
-                cloudPlayer.sendToServer(cloudServer.get());
-            } else {
-                throw new AuthorizeException("Unable to get available register server.");
+                if (cloudServer.isPresent()) {
+                    cloudPlayer.sendToServer(cloudServer.get());
+                } else {
+                    throw new AuthorizeException("Unable to get available register server.");
+                }
             }
 
         } catch (Exception exception) {
