@@ -64,7 +64,7 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
                                 player, "prefix",
                                 "%%color%%", (color + ""),
                                 "%%prefix%%", flair.getSymbol().toUpperCase()
-                        )
+                        ) + ChatColor.RESET
                 )
                 .build();
 
