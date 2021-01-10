@@ -4,6 +4,7 @@ import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
+import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.authentication.AuthorizeException;
@@ -35,13 +36,17 @@ import java.util.logging.Level;
 
 public class UserJoinListener implements Listener {
 
-    private @Inject SessionService sessionService;
-    private @Inject FindService<User> userFindService;
-    private @Inject PermissionBalancer permissionBalancer;
-    private @Inject SessionAliveInterceptor sessionAliveInterceptor;
     private @Inject UserMatchJoiner userMatchJoiner;
+    private @Inject FindService<User> userFindService;
+
     private @Inject InstanceNameProvider instanceNameProvider;
     private @Inject CrossTeleportExchanger crossTeleportExchanger;
+    private @Inject TablistCompoundApplier tablistCompoundApplier;
+
+    private @Inject SessionAliveInterceptor sessionAliveInterceptor;
+    private @Inject SessionService sessionService;
+
+    private @Inject PermissionBalancer permissionBalancer;
     private @Inject Plugin plugin;
 
     private static Field playerField;
@@ -131,6 +136,8 @@ public class UserJoinListener implements Listener {
                         });
                     });
                 }
+
+                tablistCompoundApplier.apply(player);
 
             } catch (Exception exception) {
 
