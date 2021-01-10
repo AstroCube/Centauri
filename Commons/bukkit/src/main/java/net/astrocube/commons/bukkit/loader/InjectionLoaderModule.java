@@ -7,6 +7,7 @@ import net.astrocube.commons.bukkit.cloud.CloudModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.game.GameModule;
+import net.astrocube.commons.bukkit.nametag.NametagModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
@@ -33,5 +34,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new TranslationModule());
         install(new UserModule());
         install(new ChatChannelModule());
+        install(new NametagModule());
     }
 }

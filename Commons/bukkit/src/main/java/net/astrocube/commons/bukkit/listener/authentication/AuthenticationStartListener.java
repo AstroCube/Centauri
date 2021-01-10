@@ -83,12 +83,16 @@ public class AuthenticationStartListener implements Listener {
                     return;
                 }
 
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.hidePlayer(event.getPlayer());
-                    event.getPlayer().hidePlayer(player);
-                });
+                Bukkit.getScheduler().runTask(plugin, () -> {
 
-                event.getPlayer().teleport(AuthenticationUtils.generateAuthenticationSpawn(plugin.getConfig()));
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        player.hidePlayer(event.getPlayer());
+                        event.getPlayer().hidePlayer(player);
+                    });
+
+                    event.getPlayer().teleport(AuthenticationUtils.generateAuthenticationSpawn(plugin.getConfig()));
+
+                });
 
                 gateway.startProcessing(user);
 

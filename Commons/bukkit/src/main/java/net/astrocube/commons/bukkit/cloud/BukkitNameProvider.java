@@ -29,7 +29,7 @@ public class BukkitNameProvider implements InstanceNameProvider {
             this.verified = true;
 
             if (cloudStatusProvider.hasCloudHooked()) {
-                this.name = TimoCloudAPI.getBukkitAPI().getThisServer().getName();
+                this.name = TimoCloudAPI.getBukkitAPI().getThisServer().getId();
             } else {
                 this.name = Bukkit.getServerName();
             }
