@@ -21,8 +21,7 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
 
     @Override
     public void register(SessionRegistry registry) throws AuthorizeException {
-        try {
-            Jedis jedis = redis.getRawConnection().getResource();
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.set("session:" + registry.getUser(), objectMapper.writeValueAsString(registry));
         } catch (Exception exception) {
             throw new AuthorizeException("Unable to generate authorization");
