@@ -3,6 +3,7 @@ package net.astrocube.commons.core.service;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import net.astrocube.api.core.model.Model;
@@ -75,6 +76,23 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
             return false;
         } else if (root.isValueNode()) {
             return node.isValueNode() && root.equals(node);
+        } else if (root.isArray()) {
+            if (node.isArray()) {
+                ArrayNode containerArray = (ArrayNode) root;
+                ArrayNode nodeArray = (ArrayNode) node;
+                Set<JsonNode> containedElements = new HashSet<>();
+                for (JsonNode content : containerArray) {
+                    containedElements.add(content);
+                }
+                for (JsonNode element : nodeArray) {
+                    if (!containedElements.contains(element)) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
         Iterator<Map.Entry<String, JsonNode>> fields = node.fields();
         while (fields.hasNext()) {
