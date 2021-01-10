@@ -56,7 +56,7 @@ public class LobbyJoinListener implements Listener {
 
         }));
 
-        lobbyNametagHandler.render(player, event.getUser());
+        //lobbyNametagHandler.render(player, event.getUser());
 
     }
 
