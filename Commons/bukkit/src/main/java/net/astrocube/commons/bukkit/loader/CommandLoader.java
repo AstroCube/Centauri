@@ -15,10 +15,7 @@ import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
 import me.fixeddev.commandflow.translator.DefaultTranslator;
 
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.commons.bukkit.command.AdminChatCommand;
-import net.astrocube.commons.bukkit.command.FriendsCommand;
-import net.astrocube.commons.bukkit.command.LoginCommand;
-import net.astrocube.commons.bukkit.command.MatchCommand;
+import net.astrocube.commons.bukkit.command.*;
 import net.astrocube.commons.bukkit.command.flow.CoreCommandLanguageProvider;
 
 import org.bukkit.plugin.Plugin;
@@ -32,6 +29,7 @@ public class CommandLoader implements Loader {
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
     private @Inject AdminChatCommand adminChatCommand;
+    private @Inject PlayCommand playCommand;
 
     @Override
     public void load() {
@@ -51,6 +49,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
         commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
         commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
