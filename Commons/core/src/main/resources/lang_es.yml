@@ -136,13 +136,12 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
-
+prefix: "%%color%%%%bold%%%%prefix%% %%dark_gray%%\u00BB %%white%%"
 staff:
     chat:
         permission: ":monda: no tenes permisos"
         disabled: ":monda: lo tenes desactivado"
         reminder-click: "klik"
-
 commands:
     translation:
         argument:

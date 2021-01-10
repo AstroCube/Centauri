@@ -25,8 +25,7 @@ public class LobbyNametag extends AbstractNametag {
         @Override
         public LobbyNametag build() {
             String playerName = this.recipient.getName();
-            String tag = this.prefix + " " + playerName;
-
+            String tag = this.prefix + playerName;
 
             return new LobbyNametag(
                     this.recipient,
