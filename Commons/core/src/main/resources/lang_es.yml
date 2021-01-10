@@ -12,6 +12,17 @@ party-help:
 - "%%gold%%/party disband %%dark_gray%%- %%yellow%%Deshaz tu grupo"
 - "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
 - "%%gold%%============================"
+created-party: "&aHas creado un nuevo grupo"
+party-invited:
+- "%%gold%%============================"
+- "%%yellow%%Has sido invitado al grupo de %%inviter%%"
+- "%%yellow%%Tienes 2 minutos para aceptar"
+- "%%yellow%%Escribe %%gold%%/p accept %%yellow%%para aceptar o"
+- "%%gold%%/p reject %%yellow%% para rechazar"
+- "%%gold%%============================"
+cannot-invite:
+    not-leader: "&cNo puedes invitar a jugadores a tu grupo, debes ser el líder del grupo para esto."
+    already-invited: "&cNo puedes invitar al jugador %%target%% a tu grupo porque este jugador ya tiene un grupo o ya ha sido invitado a otro grupo."
 
 ####################
 # Friends messages #
