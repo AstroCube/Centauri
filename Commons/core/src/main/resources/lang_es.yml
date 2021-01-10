@@ -136,7 +136,7 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
-prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%>"
+prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%> %%reset%%"
 staff:
     chat:
         permission: ":monda: no tenes permisos"

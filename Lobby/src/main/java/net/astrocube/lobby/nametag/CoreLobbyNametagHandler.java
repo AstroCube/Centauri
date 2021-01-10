@@ -68,6 +68,8 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
                 )
                 .build();
 
+        player.setPlayerListName(userTag.getTag());
+
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             tagList.values().forEach(tag ->
                     nametagRegistry.submit(lobbyNametagRenderer.render(tag, player)));
