@@ -15,7 +15,7 @@ public interface PartyService {
     /**
      * Fetches the current invite for the specified {@code playerName}
      * @param playerName The player that you're checking for
-     * @return The current inviter of the user
+     * @return The current inviter id of the user
      */
     Optional<String> getPartyInviter(String playerName);
 

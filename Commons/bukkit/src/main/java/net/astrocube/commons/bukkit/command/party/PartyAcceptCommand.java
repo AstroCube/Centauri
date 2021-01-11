@@ -21,6 +21,11 @@ public class PartyAcceptCommand implements CommandClass {
             @Sender Player player
     ) {
         Optional<String> inviter = partyService.getPartyInviter(player.getDatabaseIdentifier());
+        if (!inviter.isPresent()) {
+            messageHandler.send(player, "no-party-invitation");
+        } else {
+            String inviterName = inviter.get();
+        }
     }
 
 }

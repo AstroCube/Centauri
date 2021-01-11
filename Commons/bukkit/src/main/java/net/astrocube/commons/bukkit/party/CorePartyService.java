@@ -65,7 +65,7 @@ public class CorePartyService implements PartyService {
 
         try (Jedis client = redis.getRawConnection().getResource()) {
             String key = "party-invites:" + invited.getName();
-            client.set(key, inviter.getName());
+            client.set(key, inviter.getDatabaseIdentifier());
             client.expire(key, INVITATION_EXPIRY);
         }
     }
