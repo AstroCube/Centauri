@@ -33,9 +33,9 @@ public class CorePartyService implements PartyService {
     private @Inject MessageHandler<Player> messageHandler;
 
     @Override
-    public Optional<String> getPartyInviter(String userId) {
+    public Optional<String> getPartyInviter(String playerName) {
         try (Jedis client = redis.getRawConnection().getResource()) {
-            return Optional.ofNullable(client.get("party-invites:" + userId));
+            return Optional.ofNullable(client.get("party-invites:" + playerName));
         }
     }
 
@@ -64,8 +64,8 @@ public class CorePartyService implements PartyService {
         );
 
         try (Jedis client = redis.getRawConnection().getResource()) {
-            String key = "party-invites:" + invited.getDatabaseIdentifier();
-            client.set(key, inviter.getDatabaseIdentifier());
+            String key = "party-invites:" + invited.getName();
+            client.set(key, inviter.getName());
             client.expire(key, INVITATION_EXPIRY);
         }
     }

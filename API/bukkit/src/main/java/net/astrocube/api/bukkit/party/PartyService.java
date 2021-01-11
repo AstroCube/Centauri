@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface PartyService {
 
     /**
-     * Fetches the current invite for the specified {@code userId}
-     * @param userId The user that you're checking for
+     * Fetches the current invite for the specified {@code playerName}
+     * @param playerName The player that you're checking for
      * @return The current inviter of the user
      */
-    Optional<String> getPartyInviter(String userId);
+    Optional<String> getPartyInviter(String playerName);
 
     /**
      * Handles the invitation made by {@code inviter}
