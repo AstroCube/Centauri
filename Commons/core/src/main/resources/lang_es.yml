@@ -12,11 +12,13 @@ party-help:
 - "%%gold%%/party disband %%dark_gray%%- %%yellow%%Deshaz tu grupo"
 - "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
 - "%%gold%%============================"
+party-offline-inviter: "%%red%%No puedes unirte a este grupo porque el lider no está en línea."
 created-party: "&aHas creado un nuevo grupo"
 already-in-party: "%%red%%Ya estás en un grupo."
 no-party-invitation: "%%red%%No tienes invitaciones a grupos pendientes."
 no-party-now: "%%red%%El jugador ya no tiene un grupo."
 joined-party: "%%yellow%%Te has unido a un grupo"
+other-joined-party: "%%gold%%%%player%%%%yellow%% se ha unido a tu grupo"
 party-invited:
 - "%%gold%%============================"
 - "%%yellow%%Has sido invitado al grupo de %%inviter%%"
