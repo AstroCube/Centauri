@@ -25,7 +25,6 @@ public class MessengerModule extends ProtectedModule {
     @Singleton
     Messenger messenger(Redis redis, ObjectMapper mapper,
                         ExecutorServiceProvider executorServiceProvider, Set<ChannelMeta> channelMetas, Set<MessageHandler> handlers) {
-        System.out.println(executorServiceProvider.getRegisteredService());
         return new JedisMessenger(redis, mapper, executorServiceProvider.getRegisteredService(), channelMetas, handlers);
     }
 }

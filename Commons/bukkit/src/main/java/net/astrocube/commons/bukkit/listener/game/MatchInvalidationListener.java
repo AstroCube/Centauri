@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,7 +58,7 @@ public class MatchInvalidationListener implements Listener {
                 Bukkit.getOnlinePlayers().stream().filter
                         (p -> involved.contains(p.getDatabaseIdentifier())).forEach(player -> {
                     if (event.isGraceTime()) {
-                        messageHandler.send(player, "game.admin.invalidate-forced");
+                        messageHandler.send(player, AlertMode.ERROR, "game.admin.invalidate-forced");
                         Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(player, match.getId()));
                     } else {
                         Bukkit.getScheduler().runTask(plugin, () ->

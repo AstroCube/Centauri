@@ -69,8 +69,12 @@ authentication:
     password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
-
+    chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
+    time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
 game:
+    play:
+        error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
+        unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
     lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
@@ -168,7 +172,20 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
-
+prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%> %%reset%%"
+tablist:
+    header:
+        - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
+        - " "
+    footer:
+        - " "
+        - "%%white%%Página web: %%aqua%%%%bold%%astrocube.net"
+        - "%%white%%Tienda: %%aqua%%%%bold%%store.astrocube.net"
+staff:
+    chat:
+        permission: ":monda: no tenes permisos"
+        disabled: ":monda: lo tenes desactivado"
+        reminder-click: "klik"
 commands:
     translation:
         argument:

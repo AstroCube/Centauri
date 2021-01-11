@@ -6,7 +6,7 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.lobby.loader.InjectionLoaderModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class LobbyModule extends JavaPlugin {
+public class Lobby extends JavaPlugin {
 
     private @Inject Loader loader;
 

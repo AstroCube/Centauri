@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
@@ -31,12 +32,12 @@ public class CoreMatchRejoiner implements MatchRejoiner {
             UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user, match.get());
 
             if (origin != UserMatchJoiner.Origin.WAITING) {
-                messageHandler.send(player, "game.rejoin.not-active");
+                messageHandler.send(player, AlertMode.ERROR,"game.rejoin.not-active");
                 return;
             }
 
         } else {
-            messageHandler.send(player, "game.admin.not-active");
+            messageHandler.send(player, AlertMode.ERROR,"game.admin.not-active");
         }
     }
 

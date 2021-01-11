@@ -1,11 +1,14 @@
 package net.astrocube.commons.bukkit.listener.user;
 
+import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
+import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.authentication.AuthorizeException;
+import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.SessionAliveInterceptor;
@@ -33,12 +36,17 @@ import java.util.logging.Level;
 
 public class UserJoinListener implements Listener {
 
-    private @Inject SessionService sessionService;
-    private @Inject FindService<User> userFindService;
-    private @Inject PermissionBalancer permissionBalancer;
-    private @Inject SessionAliveInterceptor sessionAliveInterceptor;
     private @Inject UserMatchJoiner userMatchJoiner;
+    private @Inject FindService<User> userFindService;
+
+    private @Inject InstanceNameProvider instanceNameProvider;
     private @Inject CrossTeleportExchanger crossTeleportExchanger;
+    private @Inject TablistCompoundApplier tablistCompoundApplier;
+
+    private @Inject SessionAliveInterceptor sessionAliveInterceptor;
+    private @Inject SessionService sessionService;
+
+    private @Inject PermissionBalancer permissionBalancer;
     private @Inject Plugin plugin;
 
     private static Field playerField;
@@ -66,7 +74,7 @@ public class UserJoinListener implements Listener {
                     throw new Exception("User response was not present");
 
                 User user = response.getResponse().get();
-                String address = Bukkit.getServerName().split("-")[0];
+                String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
                 sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
                     @Override
@@ -76,13 +84,13 @@ public class UserJoinListener implements Listener {
 
                     @Override
                     public String getServer() {
-                        return address;
+                        return instanceNameProvider.getName();
                     }
 
                     @Nullable
                     @Override
                     public String getLobby() {
-                        return null; //TODO: Get lobby name
+                        return plugin.getConfig().getString("server.fallback", "main-lobby");
                     }
                 });
 
@@ -90,19 +98,24 @@ public class UserJoinListener implements Listener {
 
                 if (
                         !plugin.getConfig().getBoolean("authentication.enabled") &&
-                        !plugin.getConfig().getBoolean("server.sandbox")
+                                !plugin.getConfig().getBoolean("server.sandbox")
                 ) {
 
                     Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
 
-                    if (!registryOptional.isPresent()) throw new AuthorizeException("Not authorized session");
+                    if (!registryOptional.isPresent()) {
+                        throw new AuthorizeException("Not authorized session");
+                    }
 
                     SessionRegistry registry = registryOptional.get();
 
-                    if (registry.isPending()) throw new AuthorizeException("Session is pending of authorization");
+                    if (registry.isPending()) {
+                        throw new AuthorizeException("Session is pending of authorization");
+                    }
 
-                    if (!registry.getAddress().equalsIgnoreCase(address))
+                    if (!registry.getAddress().equalsIgnoreCase(address)) {
                         throw new AuthorizeException("Matching address not correspond to authorization");
+                    }
 
                     crossTeleportExchanger.exchange(user);
 
@@ -123,6 +136,8 @@ public class UserJoinListener implements Listener {
                         });
                     });
                 }
+
+                tablistCompoundApplier.apply(player);
 
             } catch (Exception exception) {
 

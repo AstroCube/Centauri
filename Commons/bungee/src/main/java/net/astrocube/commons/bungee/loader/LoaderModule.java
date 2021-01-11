@@ -11,6 +11,7 @@ public class LoaderModule extends ProtectedModule {
         bind(Loader.class).to(CommonsLoader.class);
         bind(Loader.class).annotatedWith(Names.named("config")).to(ConfigurationLoader.class);
         bind(Loader.class).annotatedWith(Names.named("server")).to(ServerLoader.class);
+        bind(Loader.class).annotatedWith(Names.named("listener")).to(ListenerLoader.class);
     }
 
 }

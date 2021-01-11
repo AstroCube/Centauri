@@ -28,11 +28,18 @@
             <groupId>me.fixeddev</groupId>
             <artifactId>Spigot-BungeeBridge</artifactId>
             <version>1.8-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cloud.timo.TimoCloud</groupId>
+            <artifactId>TimoCloud-API</artifactId>
+            <version>6.2.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

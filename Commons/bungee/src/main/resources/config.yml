@@ -5,3 +5,5 @@ api:
   connect: 1200
   read: 1200
   retry: 1
+redirect:
+  authentication: "ac-auth"

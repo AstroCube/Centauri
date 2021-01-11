@@ -7,12 +7,7 @@ import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Singleton
 public class CoreSessionCacheInvalidator implements SessionCacheInvalidator {
@@ -29,6 +24,7 @@ public class CoreSessionCacheInvalidator implements SessionCacheInvalidator {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.del(modelMeta.getRouteKey() + ":" + user.getId());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Could not invalidate user cache");
         }
     }

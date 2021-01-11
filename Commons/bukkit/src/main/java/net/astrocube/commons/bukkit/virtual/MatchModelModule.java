@@ -9,7 +9,7 @@ import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.commons.core.model.binder.ModelBinderModule;
 import net.astrocube.commons.core.service.RedisModelService;
 
-public class MatchModule extends ProtectedModule implements ModelBinderModule {
+public class MatchModelModule extends ProtectedModule implements ModelBinderModule {
 
     @Override
     protected void configure() {

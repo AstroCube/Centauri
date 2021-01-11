@@ -12,7 +12,7 @@ import net.astrocube.api.bukkit.authentication.gateway.PasswordGatewayProcessor;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationValidator;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import net.astrocube.commons.bukkit.authentication.gateway.AuthorizationUtils;
-import net.astrocube.commons.bukkit.authentication.gateway.register.CoreRegisterGatewayProcessor;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -44,7 +44,7 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
                 HttpResponseException httpResponseException = ((HttpResponseException) exception);
 
                 if (httpResponseException.getStatusCode() == 403) {
-                    messageHandler.send(player, "authentication.password-invalid");
+                    messageHandler.send(player, AlertMode.ERROR,"authentication.password-invalid");
                     Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
                     return;
                 }
