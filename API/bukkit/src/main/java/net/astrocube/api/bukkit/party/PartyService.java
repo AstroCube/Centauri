@@ -12,6 +12,9 @@ import java.util.Optional;
  */
 public interface PartyService {
 
+    /** Removes the invite of the specified {@code playerName} */
+    void removeInvite(String playerName);
+
     /**
      * Fetches the current invite for the specified {@code playerName}
      * @param playerName The player that you're checking for

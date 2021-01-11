@@ -13,7 +13,10 @@ party-help:
 - "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
 - "%%gold%%============================"
 created-party: "&aHas creado un nuevo grupo"
-no-party-invitation: "%%red%%"
+already-in-party: "%%red%%Ya estás en un grupo."
+no-party-invitation: "%%red%%No tienes invitaciones a grupos pendientes."
+no-party-now: "%%red%%El jugador ya no tiene un grupo."
+joined-party: "%%yellow%%Te has unido a un grupo"
 party-invited:
 - "%%gold%%============================"
 - "%%yellow%%Has sido invitado al grupo de %%inviter%%"
