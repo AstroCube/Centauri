@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.party;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
+import com.google.inject.Key;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.redis.Redis;
@@ -31,6 +32,13 @@ public class CorePartyService implements PartyService {
     private @Inject Redis redis;
 
     private @Inject MessageHandler<Player> messageHandler;
+
+    @Override
+    public void removeInvite(String playerName) {
+        try (Jedis client = redis.getRawConnection().getResource()) {
+            client.del("party-invites:" + playerName);
+        }
+    }
 
     @Override
     public Optional<String> getPartyInviter(String playerName) {

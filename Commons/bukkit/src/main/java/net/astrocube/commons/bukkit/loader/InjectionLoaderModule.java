@@ -8,6 +8,7 @@ import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.game.GameModule;
 import net.astrocube.commons.bukkit.nametag.NametagModule;
+import net.astrocube.commons.bukkit.party.PartyModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.tablist.TablistModule;
@@ -37,5 +38,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new ChatChannelModule());
         install(new NametagModule());
         install(new TablistModule());
+        install(new PartyModule());
     }
 }
