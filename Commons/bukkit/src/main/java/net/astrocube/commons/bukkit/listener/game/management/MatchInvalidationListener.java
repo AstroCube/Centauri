@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.listener.game;
+package net.astrocube.commons.bukkit.listener.game.management;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;

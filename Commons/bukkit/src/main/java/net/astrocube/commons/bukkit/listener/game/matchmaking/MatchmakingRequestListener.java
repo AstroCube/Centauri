@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.listener.game;
+package net.astrocube.commons.bukkit.listener.game.matchmaking;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;

@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.listener.game;
+package net.astrocube.commons.bukkit.listener.game.management;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

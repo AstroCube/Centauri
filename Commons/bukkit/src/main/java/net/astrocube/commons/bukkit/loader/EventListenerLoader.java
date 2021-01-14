@@ -6,7 +6,11 @@ import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvali
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationRestrictionListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
-import net.astrocube.commons.bukkit.listener.game.*;
+import net.astrocube.commons.bukkit.listener.game.management.*;
+import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingErrorListener;
+import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingRequestListener;
+import net.astrocube.commons.bukkit.listener.game.session.GameServerJoinListener;
+import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
@@ -32,18 +36,25 @@ public class EventListenerLoader implements Loader {
     private @Inject UserJoinListener userJoinListener;
     private @Inject UserDisconnectListener userDisconnectListener;
 
-    private @Inject GameModePairListener gameModePairListener;
-    private @Inject GameTimerOutListener gameTimerOutListener;
+    private @Inject
+    GameModePairListener gameModePairListener;
+    private @Inject
+    GameTimerOutListener gameTimerOutListener;
     private @Inject MatchControlSanitizeListener matchControlSanitizeListener;
-    private @Inject MatchmakingRequestListener matchmakingRequestListener;
+    private @Inject
+    MatchmakingRequestListener matchmakingRequestListener;
     private @Inject
     GameServerJoinListener gameServerJoinListener;
-    private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
+    private @Inject
+    LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchInvalidationListener matchInvalidationListener;
-    private @Inject MatchmakingErrorListener matchmakingErrorListener;
+    private @Inject
+    MatchmakingErrorListener matchmakingErrorListener;
     private @Inject MatchAssignationListener matchAssignationListener;
-    private @Inject MatchStartListener matchStartListener;
-    private @Inject MatchFinishListener matchFinishListener;
+    private @Inject
+    MatchStartListener matchStartListener;
+    private @Inject
+    MatchFinishListener matchFinishListener;
 
     private @Inject MenuListeners menuListeners;
 
