@@ -32,6 +32,10 @@ public class SimpleDependentAction implements DependentAction {
 
                 List<SubGameMode> gameModes = new ArrayList<>(gameMode.getSubTypes());
 
+                if(gameModes.isEmpty()) {
+                    return false;
+                }
+
                 int i = ThreadLocalRandom.current().nextInt(gameModes.size());
 
                 SubGameMode subGameMode = gameModes.get(i); // TODO: 6/1/2021 Send to this sub-gamemode, but first I need the cloud

@@ -31,10 +31,9 @@ public class CoreGameModeItemExtractor implements GameModeItemExtractor {
         }
 
         ItemMeta iconMeta = icon.getItemMeta();
-        List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameMode.getId() + ".lore").getContents());
+        List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents());
 
         baseLore.add(" ");
-        baseLore.add(messageHandler.get(player, "lobby.gameSelector.gadget-playing"));
 
         iconMeta.setDisplayName(
                 messageHandler.get(player, "lobby.gameSelector.games." + gameMode.getId() + ".title")
@@ -42,6 +41,7 @@ public class CoreGameModeItemExtractor implements GameModeItemExtractor {
         iconMeta.setLore(
                 baseLore
         );
+
         icon.setItemMeta(iconMeta);
 
         return ItemClickable

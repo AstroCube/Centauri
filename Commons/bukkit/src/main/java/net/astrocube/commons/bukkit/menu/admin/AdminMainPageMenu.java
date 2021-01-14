@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.menu.admin;
 
+import me.yushust.message.MessageHandler;
 import net.astrocube.commons.bukkit.menu.admin.selector.AdminGameModeSelectorMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,27 +15,29 @@ public class AdminMainPageMenu {
 
     @Inject
     private AdminGameModeSelectorMenu adminGameModeSelectorMenu;
+    @Inject
+    private MessageHandler<Player> playerMessageHandler;
 
     public Inventory createAdminPanel(Player player) {
 
         return GUIBuilder
-                .builder("Admin Panel", 3)
+                .builder(playerMessageHandler.get(player, "admin-panel.main.title"), 3)
                 .addItem(ItemClickable
                         .builder(11)
                         .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                .setName("Find match name")
-                                .setLore("lore")
+                                .setName(playerMessageHandler.get(player, "admin-panel.main.items.match-teleport.name"))
+                                .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.match-teleport.lore"))
                                 .build())
                         .setAction(event -> {
-                            player.openInventory(adminGameModeSelectorMenu.createGameModeSelectorMenu(player));
+                            adminGameModeSelectorMenu.createGameModeSelectorMenu(player);
                             return true;
                         })
                         .build())
 
                 .addItem(ItemClickable.builder(13)
                         .setItemStack(ItemBuilder.newBuilder(Material.COMPASS)
-                                .setName("Lobby TP")
-                                .setLore("lore")
+                                .setName(playerMessageHandler.get(player, "admin-panel.main.items.lobby-teleport.name"))
+                                .setLore(playerMessageHandler.get(player, "admin-panel.main.items.lobby-teleport.name"))
                                 .build())
                         .setAction(event -> {
                             player.sendMessage("Open the lobby TP panel");

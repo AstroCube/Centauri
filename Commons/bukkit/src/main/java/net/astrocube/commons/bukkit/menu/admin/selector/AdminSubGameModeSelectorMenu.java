@@ -19,24 +19,23 @@ public class AdminSubGameModeSelectorMenu {
 
     public Inventory createSubGameModeSelectorMenu(Player player, GameMode gameMode) {
 
-        GUIBuilder guiBuilder = GUIBuilder.builder(playerMessageHandler.get(player, ""), 3); // TODO: 6/1/2021 Start and finish this gui
+        GUIBuilder guiBuilder = GUIBuilder.builder(playerMessageHandler.get(player, "admin-panel.subgamemode.title"), 3); // TODO: 6/1/2021 Start and finish this gui
 
+        int index = 0;
         for (SubGameMode subGameMode : gameMode.getSubTypes()) {
-
             guiBuilder
-                    .addItem(ItemClickable.builder(0)
+                    .addItem(ItemClickable.builder(index++)
                             .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                    .setName(playerMessageHandler.get(player, ""))
-                                    .setLore(playerMessageHandler.getMany(player, ""))
+                                    .setName(playerMessageHandler.get(player, "admin-panel.subgamemode.items.subgamemode-layout.name")
+                                            .replace("%subgamemode_name%", subGameMode.getName()))
+                                    .setLore(playerMessageHandler.getMany(player, "admin-panel.subgamemode.items.subgamemode-layout.lore"))
                                     .build())
                             .setAction(InventoryClickEvent -> {
                                 // TODO: 9/1/2021 Send to the requested sub-gamemode
                                 return true;
                             })
                             .build());
-
         }
-
         return guiBuilder.build();
     }
 }
