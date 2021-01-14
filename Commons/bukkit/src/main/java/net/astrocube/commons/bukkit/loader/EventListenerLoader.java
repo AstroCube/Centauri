@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvalidListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationRestrictionListener;
@@ -37,7 +36,8 @@ public class EventListenerLoader implements Loader {
     private @Inject GameTimerOutListener gameTimerOutListener;
     private @Inject MatchControlSanitizeListener matchControlSanitizeListener;
     private @Inject MatchmakingRequestListener matchmakingRequestListener;
-    private @Inject LobbyUserJoinListener lobbyUserJoinListener;
+    private @Inject
+    GameServerJoinListener gameServerJoinListener;
     private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchInvalidationListener matchInvalidationListener;
     private @Inject MatchmakingErrorListener matchmakingErrorListener;
@@ -72,7 +72,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(gameTimerOutListener);
         registerEvent(matchControlSanitizeListener);
         registerEvent(matchmakingRequestListener);
-        registerEvent(lobbyUserJoinListener);
+        registerEvent(gameServerJoinListener);
         registerEvent(lobbyUserDisconnectListener);
         registerEvent(matchInvalidationListener);
         registerEvent(matchAssignationListener);
