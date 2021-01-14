@@ -48,4 +48,11 @@ public interface MatchService {
      */
     void matchCleanup() throws Exception;
 
+    /**
+     * Performs a victory state and updates the match with final winners.
+     * @param match to be updated
+     * @param winners to be listed
+     */
+    void assignVictory(String match, Set<String> winners) throws Exception;
+
 }
