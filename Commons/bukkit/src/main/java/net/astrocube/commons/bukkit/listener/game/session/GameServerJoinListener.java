@@ -3,9 +3,8 @@ package net.astrocube.commons.bukkit.listener.game.session;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.game.GameUserJoinEvent;
-import net.astrocube.api.bukkit.game.event.spectator.SpectatorAssignEvent;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
-import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
+import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import org.bukkit.Bukkit;
@@ -18,6 +17,7 @@ public class GameServerJoinListener implements Listener {
 
     private @Inject FindService<Match> findService;
     private @Inject LobbySessionManager lobbySessionManager;
+    private @Inject SpectatorSessionManager spectatorSessionManager;
     private @Inject MessageHandler<Player> messageHandler;
 
     @EventHandler
@@ -36,7 +36,7 @@ public class GameServerJoinListener implements Listener {
                     break;
                 }
                 case SPECTATING: {
-                    Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(event.getPlayer(), event.getMatch()));
+                    spectatorSessionManager.provideFunctions(event.getPlayer(), matchResponse.getResponse().get());
                     break;
                 }
                 default: {

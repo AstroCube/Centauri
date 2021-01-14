@@ -11,6 +11,7 @@ import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingErrorLi
 import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingRequestListener;
 import net.astrocube.commons.bukkit.listener.game.session.GameServerJoinListener;
 import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectListener;
+import net.astrocube.commons.bukkit.listener.game.spectator.SpectatorAssignListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
@@ -36,25 +37,18 @@ public class EventListenerLoader implements Loader {
     private @Inject UserJoinListener userJoinListener;
     private @Inject UserDisconnectListener userDisconnectListener;
 
-    private @Inject
-    GameModePairListener gameModePairListener;
-    private @Inject
-    GameTimerOutListener gameTimerOutListener;
+    private @Inject GameModePairListener gameModePairListener;
+    private @Inject GameTimerOutListener gameTimerOutListener;
     private @Inject MatchControlSanitizeListener matchControlSanitizeListener;
-    private @Inject
-    MatchmakingRequestListener matchmakingRequestListener;
-    private @Inject
-    GameServerJoinListener gameServerJoinListener;
-    private @Inject
-    LobbyUserDisconnectListener lobbyUserDisconnectListener;
+    private @Inject MatchmakingRequestListener matchmakingRequestListener;
+    private @Inject GameServerJoinListener gameServerJoinListener;
+    private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchInvalidationListener matchInvalidationListener;
-    private @Inject
-    MatchmakingErrorListener matchmakingErrorListener;
+    private @Inject MatchmakingErrorListener matchmakingErrorListener;
     private @Inject MatchAssignationListener matchAssignationListener;
-    private @Inject
-    MatchStartListener matchStartListener;
-    private @Inject
-    MatchFinishListener matchFinishListener;
+    private @Inject MatchStartListener matchStartListener;
+    private @Inject MatchFinishListener matchFinishListener;
+    private @Inject SpectatorAssignListener spectatorAssignListener;
 
     private @Inject MenuListeners menuListeners;
 
@@ -89,6 +83,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(matchAssignationListener);
         registerEvent(matchStartListener);
         registerEvent(matchFinishListener);
+        registerEvent(spectatorAssignListener);
 
         registerEvent(matchmakingErrorListener);
         registerEvent(menuListeners);
