@@ -12,12 +12,14 @@ import net.astrocube.commons.bukkit.game.match.MatchModule;
 import net.astrocube.commons.bukkit.game.match.control.CorePendingMatchFinder;
 import net.astrocube.commons.bukkit.game.matchmaking.MatchmakingModule;
 import net.astrocube.commons.bukkit.game.matchmaking.error.MatchmakingErrorHandler;
+import net.astrocube.commons.bukkit.game.spectator.SpectatorModule;
 
 public class GameModule extends ProtectedModule implements ChannelBinder {
 
     @Override
     public void configure() {
         install(new MatchmakingModule());
+        install(new SpectatorModule());
         install(new MatchModule());
         bindChannel(MatchmakingError.class).registerHandler(new MatchmakingErrorHandler());
         bind(GameControlPair.class).to(CoreGameControlPair.class);

@@ -11,6 +11,7 @@ import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingErrorLi
 import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingRequestListener;
 import net.astrocube.commons.bukkit.listener.game.session.GameServerJoinListener;
 import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectListener;
+import net.astrocube.commons.bukkit.listener.game.spectator.LobbyReturnListener;
 import net.astrocube.commons.bukkit.listener.game.spectator.SpectatorAssignListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
@@ -48,7 +49,9 @@ public class EventListenerLoader implements Loader {
     private @Inject MatchAssignationListener matchAssignationListener;
     private @Inject MatchStartListener matchStartListener;
     private @Inject MatchFinishListener matchFinishListener;
+
     private @Inject SpectatorAssignListener spectatorAssignListener;
+    private @Inject LobbyReturnListener lobbyReturnListener;
 
     private @Inject MenuListeners menuListeners;
 
@@ -83,7 +86,9 @@ public class EventListenerLoader implements Loader {
         registerEvent(matchAssignationListener);
         registerEvent(matchStartListener);
         registerEvent(matchFinishListener);
+
         registerEvent(spectatorAssignListener);
+        registerEvent(lobbyReturnListener);
 
         registerEvent(matchmakingErrorListener);
         registerEvent(menuListeners);
