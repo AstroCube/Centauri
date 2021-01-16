@@ -207,14 +207,29 @@ admin-panel:
           - "%%gray%%Teleport to the Lobby of any GameMode."
           - "%%gray%% But, if you are in a match while"
           - "%%gray%% you select the lobby"
+      online-staff:
+        name: "%%blue%%View online staff"
+        lore:
+          - "%%gray%%View the online staff in"
+          - "%%gray%%all the network, and their last"
+          - "%%gray%%connection."
   gamemode:
     lore:
       - "%%yellow%%Left click to select a SubGameMode!"
       - "%%yellow%%Right click to enter to a random SubGameMode!"
   subgamemode:
-    title: "SubGamemode Selector"
+    title: "%%gold%%SubGamemode Selector"
     items:
       subgamemode-layout:
         name: "%%green%%Teleport to SubGamemode %subgamemode_name%"
         lore:
           - "%%gray%%Teleport to this SubGameMode!"
+  online-staff:
+    title: "%%blue%%Online staff"
+    item-layout:
+      name: "%%green%%%player_name%"
+      lore:
+        - "%%gray%%State: %state%"
+        - "%%gray%%Last seen: %last_seen%"
+    next-name: ""
+    previous-name: ""

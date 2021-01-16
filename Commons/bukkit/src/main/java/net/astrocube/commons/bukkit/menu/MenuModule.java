@@ -5,6 +5,7 @@ import com.google.inject.Module;
 import com.google.inject.Scopes;
 import net.astrocube.commons.bukkit.menu.admin.AdminMainPageMenu;
 import net.astrocube.commons.bukkit.menu.admin.selector.AdminGameModeSelectorMenu;
+import net.astrocube.commons.bukkit.menu.admin.selector.AdminOnlineStaffMenu;
 import net.astrocube.commons.bukkit.menu.admin.selector.AdminSubGameModeSelectorMenu;
 import net.astrocube.commons.bukkit.menu.admin.selector.item.CoreGameModeItemExtractor;
 import net.astrocube.commons.bukkit.menu.admin.selector.item.GameModeItemExtractor;
@@ -22,6 +23,7 @@ public class MenuModule implements Module {
         binder.bind(PunishmentReasonChooserMenu.class).in(Scopes.SINGLETON);
         binder.bind(PunishmentExpirationChooserMenu.class).in(Scopes.SINGLETON);
         binder.bind(AdminMainPageMenu.class).in(Scopes.SINGLETON);
+        binder.bind(AdminOnlineStaffMenu.class).in(Scopes.SINGLETON);
 
         binder.bind(AdminMainPageMenu.class).in(Scopes.SINGLETON);
         binder.bind(AdminGameModeSelectorMenu.class).in(Scopes.SINGLETON);
