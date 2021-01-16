@@ -16,6 +16,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 public class PlayerLookCommand implements CommandClass {
 
@@ -42,8 +43,14 @@ public class PlayerLookCommand implements CommandClass {
                 .put("username", offlineTarget.getName());
 
         StringBuilder punishmentBuilder = new StringBuilder();
+        Set<Punishment> punishments = queryService.querySync(objectNode).getFoundModels();
 
-        queryService.querySync(objectNode).getFoundModels().forEach(punishment -> punishmentBuilder.append(messageHandler.get(player, "lookup.punishments-format")
+        if (punishments.isEmpty()) {
+            messageHandler.send(player, "punishment-expiration-menu.empty");
+            return true;
+        }
+
+        punishments.forEach(punishment -> punishmentBuilder.append(messageHandler.get(player, "lookup.punishments-format")
                 .replace("%punishment_type%", punishment.getType().toString())
                 .replace("%punishment_pusher%", punishment.getIssuer())
                 .replace("%punishment_created_at%", punishment.getCreatedAt().toString())
