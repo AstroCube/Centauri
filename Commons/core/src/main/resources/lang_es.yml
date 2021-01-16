@@ -26,6 +26,11 @@ party-invited:
 - "%%yellow%%Escribe %%gold%%/p accept %%yellow%%para aceptar o"
 - "%%gold%%/p reject %%yellow%% para rechazar"
 - "%%gold%%============================"
+left-party: "%%yellow%%Has abandonado tu grupo"
+other-left-party: "%%gold%%%%player%%%%yellow%% ha abandonado el grupo."
+cannot-leave:
+    leader: "%%red%%No puedes abandonar tu grupo porque eres el líder. Debes dejar el liderazgo o deshacer el grupo."
+    not-in-party: "%%red%%No puedes dejar tu grupo, ya que no estás en uno"
 cannot-invite:
     not-leader: "&cNo puedes invitar a jugadores a tu grupo, debes ser el líder del grupo para esto."
     already-invited: "&cNo puedes invitar al jugador %%target%% a tu grupo porque este jugador ya tiene un grupo o ya ha sido invitado a otro grupo."

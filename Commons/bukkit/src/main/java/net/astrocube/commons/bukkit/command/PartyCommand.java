@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.command;
 
+import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.SubCommandClasses;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 @SubCommandClasses({
         PartyInviteCommand.class
 })
-public class PartyCommand {
+public class PartyCommand implements CommandClass {
 
     private @Inject MessageHandler<Player> messageHandler;
 

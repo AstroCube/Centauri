@@ -30,6 +30,7 @@ public class CommandLoader implements Loader {
     private @Inject MatchCommand matchCommand;
     private @Inject AdminChatCommand adminChatCommand;
     private @Inject PlayCommand playCommand;
+    private @Inject PartyCommand partyCommand;
 
     @Override
     public void load() {
@@ -50,6 +51,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
         commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
         commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.partyCommand));
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
