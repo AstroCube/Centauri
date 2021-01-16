@@ -24,7 +24,7 @@ public class PlayCommand implements CommandClass {
     private @Inject QueryService<GameMode> queryService;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject ActualMatchProvider actualMatchProvider;
-    private @Inject @Named("default") MatchmakingGenerator matchmakingGenerator;
+    private @Inject @Named("core") MatchmakingGenerator matchmakingGenerator;
     private @Inject Plugin plugin;
 
     @Command(names = {"play"})

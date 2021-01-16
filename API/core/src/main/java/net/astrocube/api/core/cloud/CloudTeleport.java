@@ -16,4 +16,6 @@ public interface CloudTeleport {
      */
     void teleportToGroup(String group, String player);
 
+    String getServerFromGroup(String group);
+
 }

@@ -1,12 +1,10 @@
 package net.astrocube.commons.bukkit.listener.user;
 
-import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.permission.PermissionBalancer;
