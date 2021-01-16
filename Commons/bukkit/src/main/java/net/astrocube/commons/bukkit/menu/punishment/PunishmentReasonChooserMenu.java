@@ -12,15 +12,19 @@ import javax.inject.Inject;
 
 public class PunishmentReasonChooserMenu {
 
-    @Inject private Plugin plugin;
-    @Inject private PunishmentReasonChooserHelper punishmentReasonChooserHelper;
+    @Inject
+    private Plugin plugin;
+    @Inject
+    private PunishmentReasonChooserHelper punishmentReasonChooserHelper;
 
     public Inventory createPunishmentReasonChooserMenu(Player player,
                                                        PunishmentBuilder punishmentBuilder) {
-        return GUIBuilder
-                .builder(ChatColor
-                        .translateAlternateColorCodes('&', plugin.getConfig().getString("punishment-reason-menu.title")), 3)
-                .setItems(punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder))
-                .build();
+        GUIBuilder guiBuilder = GUIBuilder
+                .builder(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("punishment-reason-menu.title")), 3);
+
+        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder)
+                .forEach(guiBuilder::addItem);
+
+        return guiBuilder.build();
     }
 }

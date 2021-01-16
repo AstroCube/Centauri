@@ -38,22 +38,22 @@ public class AdminOnlineStaffMenu {
 
                     if (response.isSuccessful() && response.getResponse().isPresent()) {
 
-                        Set<User> users = response.getResponse().get().getFoundModels();
-
-                        Pagination<User> userPagination = new SimplePagination<>(36, users);
+                        Pagination<User> userPagination = new SimplePagination<>(36, response.getResponse().get().getFoundModels());
 
                         int currentIndex = 0;
 
                         for (User user : userPagination.getPage(page)) {
 
-                            Player staff = Bukkit.getPlayerByIdentifier(user.getId());
+                            if(user == null) {
+                                continue;
+                            }
 
                             guiBuilder
                                     .addItem(ItemClickable.builder(currentIndex++)
                                             .setItemStack(ItemBuilder
                                                     .newBuilder(Material.SKULL_ITEM)
                                                     .setName(playerMessageHandler.get(player, "admin-panel.online-staff.item-layout.name")
-                                                            .replace("%player_name%", staff.getName()))
+                                                            .replace("%player_name%", user.getUsername()))
                                                     .setLore(colorizeAndReplace(playerMessageHandler.getMany(player, "admin-panel.online-staff.item-layout.lore").getContents(), user))
                                                     .build())
                                             .build());

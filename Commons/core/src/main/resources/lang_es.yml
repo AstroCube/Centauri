@@ -174,7 +174,6 @@ punishment-expiration:
   invalid-number: "Invalid number"
 punishment-expiration-menu:
   title: "%%white%%Punishment expiration chooser"
-  empty: "%%red%%El jugador no tiene sanciones"
   items:
     confirm:
       name: "%%green%%Confirm the punishment!"
@@ -197,7 +196,7 @@ admin-panel:
     title: "Admin Panel del Pornmax"
     items:
       match-teleport:
-        name: "%%orange%%Teleport to GameMode/SubGameMode"
+        name: "%%gold%%Teleport to GameMode/SubGameMode"
         lore:
           - "%%gray%%Teleport to any GameMode or"
           - "%%gray%% you can select any SubGameMode"
@@ -232,5 +231,5 @@ admin-panel:
       lore:
         - "%%gray%%State: %state%"
         - "%%gray%%Last seen: %last_seen%"
-    next-name: ""
-    previous-name: ""
+    next-name: "%%green%%Next page"
+    previous-name: "%%red%%Previous page"

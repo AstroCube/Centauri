@@ -31,6 +31,7 @@ public class CommandLoader implements Loader {
     private @Inject PunishCommand punishCommand;
     private @Inject PlayerLookCommand playerLookCommand;
     private @Inject AdminCommand adminCommand;
+    private @Inject FreezeCommand freezeCommand;
 
     @Override
     public void load() {
@@ -53,6 +54,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(punishCommand));
         commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
 
         if (plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(loginCommand));

@@ -31,7 +31,7 @@ public class PunishmentReasonChooserHelper {
             ItemClickable itemClickable = ItemClickable.builder(plugin.getConfig().getInt(type + "-reasons." + key + ".slot"))
                     .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
 
-                            .setName(plugin.getConfig().getString(type + "-reasons." + key + ".name"))
+                            .setName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(type + "-reasons." + key + ".name")))
                             .setLore(colorize(plugin.getConfig().getStringList(type + "-reasons." + key + ".lore")))
                             .build())
 

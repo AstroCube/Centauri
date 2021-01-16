@@ -4,6 +4,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -15,8 +16,10 @@ import javax.inject.Inject;
 
 public class PunishmentChooserMenu {
 
-    @Inject private MessageHandler<Player> messageHandler;
-    @Inject private PunishmentReasonChooserMenu punishmentReasonChooserMenu;
+    @Inject
+    private MessageHandler<Player> messageHandler;
+    @Inject
+    private PunishmentReasonChooserMenu punishmentReasonChooserMenu;
 
     public Inventory createPunishmentChooserMenu(Player player, String punished) {
 
@@ -53,6 +56,18 @@ public class PunishmentChooserMenu {
                         .setAction(inventoryClickEvent -> {
                             PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), punished, PunishmentDoc.Identity.Type.WARN);
                             player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder));
+                            return true;
+                        })
+                        .build()
+                )
+                .addItem(ItemClickable.builder(18)
+                        .setItemStack(ItemBuilder.newBuilder(Material.ICE)
+                                .setName(messageHandler.replacing(player, "punish-menu.items.freeze.name", "%punished_name%", punished))
+                                .setLore(messageHandler.replacingMany(player, "punish-menu.items.freeze.lore", "%punished_name%", punished))
+                                .build())
+                        .setAction(inventoryClickEvent -> {
+
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/freeze " + punished);
                             return true;
                         })
                         .build()
