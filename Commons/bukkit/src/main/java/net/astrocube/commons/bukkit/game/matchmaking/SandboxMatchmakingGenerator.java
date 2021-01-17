@@ -29,8 +29,7 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
     private @Inject Plugin plugin;
 
     @Override
-    public void pairMatch(Player player, GameMode gameMode, SubGameMode subMode) throws Exception {
-
+    public void pairMatch(Player player) throws Exception {
         Server server = serverService.getActual();
 
         if (!plugin.getConfig().getBoolean("server.sandbox")) {
@@ -55,10 +54,15 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 
         matchmakingRegistryHandler.generateRequest(
                 assignable,
-                gameMode.getId(),
-                subMode.getId(),
+                plugin.getConfig().getString("game.mode"),
+                plugin.getConfig().getString("game.subMode"),
                 "",
                 node
         );
+    }
+
+    @Override
+    public void pairMatch(Player player, GameMode gameMode, SubGameMode subMode) throws Exception {
+        pairMatch(player);
     }
 }

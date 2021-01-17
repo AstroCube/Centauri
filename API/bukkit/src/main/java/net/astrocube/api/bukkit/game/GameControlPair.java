@@ -2,8 +2,6 @@ package net.astrocube.api.bukkit.game;
 
 import net.astrocube.api.bukkit.game.event.game.GameModePairEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
-import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 
 public interface GameControlPair {
