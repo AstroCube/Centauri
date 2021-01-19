@@ -5,14 +5,20 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.SubCommandClasses;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
+import net.astrocube.commons.bukkit.command.party.PartyAcceptCommand;
+import net.astrocube.commons.bukkit.command.party.PartyDisbandCommand;
 import net.astrocube.commons.bukkit.command.party.PartyInviteCommand;
+import net.astrocube.commons.bukkit.command.party.PartyLeaveCommand;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
 @Command(names = {"party", "p"})
 @SubCommandClasses({
-        PartyInviteCommand.class
+        PartyInviteCommand.class,
+        PartyAcceptCommand.class,
+        PartyLeaveCommand.class,
+        PartyDisbandCommand.class
 })
 public class PartyCommand implements CommandClass {
 

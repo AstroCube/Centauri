@@ -28,6 +28,10 @@ party-invited:
 - "%%gold%%============================"
 left-party: "%%yellow%%Has abandonado tu grupo"
 other-left-party: "%%gold%%%%player%%%%yellow%% ha abandonado el grupo."
+party-disbanded: "%%gold%%%%player%%%%yellow%% ha deshecho el grupo"
+cannot-disband:
+    not-leader: "%%red%%No puedes deshacer tu grupo porque no eres el líder."
+    not-in-party: "%%red%%No tienes un grupo para deshacer."
 cannot-leave:
     leader: "%%red%%No puedes abandonar tu grupo porque eres el líder. Debes dejar el liderazgo o deshacer el grupo."
     not-in-party: "%%red%%No puedes dejar tu grupo, ya que no estás en uno"
