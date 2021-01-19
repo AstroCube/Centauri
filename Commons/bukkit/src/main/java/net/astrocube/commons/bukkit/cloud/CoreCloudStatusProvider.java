@@ -5,7 +5,7 @@ import net.astrocube.api.core.cloud.CloudStatusProvider;
 import org.bukkit.Bukkit;
 
 @Singleton
-public class BukkitCloudStatusProvider implements CloudStatusProvider {
+public class CoreCloudStatusProvider implements CloudStatusProvider {
 
     @Override
     public boolean hasCloudHooked() {

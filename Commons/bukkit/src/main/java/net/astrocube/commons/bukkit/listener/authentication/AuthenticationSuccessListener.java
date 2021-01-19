@@ -1,30 +1,26 @@
 package net.astrocube.commons.bukkit.listener.authentication;
 
-import cloud.timo.TimoCloud.api.TimoCloudAPI;
-import cloud.timo.TimoCloud.api.objects.PlayerObject;
-import cloud.timo.TimoCloud.api.objects.ServerObject;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
+import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.commons.core.cloud.CloudUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Optional;
 import java.util.logging.Level;
 
 public class AuthenticationSuccessListener implements Listener {
 
     private @Inject SessionRegistryManager sessionRegistryManager;
+    private @Inject CloudTeleport cloudTeleport;
     private @Inject FindService<User> findService;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject CloudStatusProvider cloudStatusProvider;
@@ -47,14 +43,9 @@ public class AuthenticationSuccessListener implements Listener {
             );
 
             if (cloudStatusProvider.hasCloudHooked()) {
-                PlayerObject cloudPlayer = TimoCloudAPI.getUniversalAPI().getPlayer(user.getUsername());
-                Optional<ServerObject> cloudServer = CloudUtils.getServerFromGroup(user.getSession().getLastLobby());
-
-                if (cloudServer.isPresent()) {
-                    cloudPlayer.sendToServer(cloudServer.get());
-                } else {
-                    throw new AuthorizeException("Unable to get available register server.");
-                }
+                cloudTeleport.teleportToGroup(user.getSession().getLastLobby(), user.getUsername());
+            } else {
+                throw new AuthorizeException("Unable to get available register server.");
             }
 
         } catch (Exception exception) {

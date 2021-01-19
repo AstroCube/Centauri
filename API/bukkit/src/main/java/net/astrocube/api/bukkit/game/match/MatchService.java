@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 
@@ -47,5 +48,19 @@ public interface MatchService {
      * @throws Exception when a backend error is thrown
      */
     void matchCleanup() throws Exception;
+
+    /**
+     * Performs a victory state and updates the match with final winners.
+     * @param match to be updated
+     * @param winners to be listed
+     */
+    void assignVictory(String match, Set<String> winners) throws Exception;
+
+    /**
+     * Disqualify a user from a match marking him as "not active".
+     * @param match to be queried
+     * @param user to be disauqlified
+     */
+    void disqualify(String match, String user) throws Exception;
 
 }

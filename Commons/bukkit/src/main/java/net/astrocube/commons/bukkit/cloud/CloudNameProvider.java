@@ -10,14 +10,14 @@ import org.bukkit.Bukkit;
 import java.util.Date;
 
 @Singleton
-public class BukkitNameProvider implements InstanceNameProvider {
+public class CloudNameProvider implements InstanceNameProvider {
 
     private final CloudStatusProvider cloudStatusProvider;
     private boolean verified;
     private String name;
 
     @Inject
-    public BukkitNameProvider(CloudStatusProvider cloudStatusProvider) {
+    public CloudNameProvider(CloudStatusProvider cloudStatusProvider) {
         this.cloudStatusProvider = cloudStatusProvider;
         this.verified = false;
         this.name = "";

@@ -6,7 +6,7 @@ import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.commons.bukkit.utils.CountdownTimer;
+import net.astrocube.api.bukkit.util.CountdownTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

@@ -95,6 +95,11 @@ game:
     matchmaking:
         error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
         already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
+    spectator:
+        return:
+            title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
+            lore:
+                - "%%gray%%Vuelve a la central espacial."
     admin:
         match-help:
             - "%%yellow%%============================"

@@ -1,13 +1,18 @@
 package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationInvalidListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationRestrictionListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
-import net.astrocube.commons.bukkit.listener.game.*;
+import net.astrocube.commons.bukkit.listener.game.management.*;
+import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingErrorListener;
+import net.astrocube.commons.bukkit.listener.game.matchmaking.MatchmakingRequestListener;
+import net.astrocube.commons.bukkit.listener.game.session.GameServerJoinListener;
+import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectListener;
+import net.astrocube.commons.bukkit.listener.game.spectator.LobbyReturnListener;
+import net.astrocube.commons.bukkit.listener.game.spectator.SpectatorAssignListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
@@ -37,12 +42,16 @@ public class EventListenerLoader implements Loader {
     private @Inject GameTimerOutListener gameTimerOutListener;
     private @Inject MatchControlSanitizeListener matchControlSanitizeListener;
     private @Inject MatchmakingRequestListener matchmakingRequestListener;
-    private @Inject LobbyUserJoinListener lobbyUserJoinListener;
+    private @Inject GameServerJoinListener gameServerJoinListener;
     private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
     private @Inject MatchInvalidationListener matchInvalidationListener;
     private @Inject MatchmakingErrorListener matchmakingErrorListener;
     private @Inject MatchAssignationListener matchAssignationListener;
     private @Inject MatchStartListener matchStartListener;
+    private @Inject MatchFinishListener matchFinishListener;
+
+    private @Inject SpectatorAssignListener spectatorAssignListener;
+    private @Inject LobbyReturnListener lobbyReturnListener;
 
     private @Inject MenuListeners menuListeners;
 
@@ -71,11 +80,15 @@ public class EventListenerLoader implements Loader {
         registerEvent(gameTimerOutListener);
         registerEvent(matchControlSanitizeListener);
         registerEvent(matchmakingRequestListener);
-        registerEvent(lobbyUserJoinListener);
+        registerEvent(gameServerJoinListener);
         registerEvent(lobbyUserDisconnectListener);
         registerEvent(matchInvalidationListener);
         registerEvent(matchAssignationListener);
         registerEvent(matchStartListener);
+        registerEvent(matchFinishListener);
+
+        registerEvent(spectatorAssignListener);
+        registerEvent(lobbyReturnListener);
 
         registerEvent(matchmakingErrorListener);
         registerEvent(menuListeners);

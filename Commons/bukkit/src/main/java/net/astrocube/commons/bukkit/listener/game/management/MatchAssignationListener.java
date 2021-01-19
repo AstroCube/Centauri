@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.listener.game;
+package net.astrocube.commons.bukkit.listener.game.management;
 
 import net.astrocube.api.bukkit.game.event.match.MatchAssignationEvent;
 import org.bukkit.event.EventHandler;

@@ -1,12 +1,9 @@
 package net.astrocube.commons.bungee.listener;
 
-import cloud.timo.TimoCloud.api.TimoCloudAPI;
-import cloud.timo.TimoCloud.api.objects.ServerObject;
 import com.google.inject.Inject;
-import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.core.cloud.CloudStatusProvider;
+import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.commons.bungee.configuration.PluginConfigurationHelper;
-import net.astrocube.commons.bungee.user.UserProvideHelper;
-import net.astrocube.commons.core.cloud.CloudUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,8 +19,8 @@ import java.util.logging.Level;
 
 public class ServerConnectListener implements Listener {
 
-
-    private @Inject UserProvideHelper userProvideHelper;
+    private @Inject CloudTeleport cloudTeleport;
+    private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject PluginConfigurationHelper configurationHelper;
     private @Inject Plugin plugin;
 
@@ -33,23 +30,22 @@ public class ServerConnectListener implements Listener {
         if (event.getReason() == ServerConnectEvent.Reason.JOIN_PROXY) {
             try {
 
-                Optional<User> userOptional = userProvideHelper.getUserByName(event.getPlayer().getName().toLowerCase());
                 Optional<Configuration> configuration = Optional.ofNullable(configurationHelper.get());
 
                 if (configuration.isPresent()) {
 
-                    Optional<ServerObject> instance =
-                            CloudUtils.getServerFromGroup(configuration.get().getString("redirect.authentication"));
-
-                    if (instance.isPresent()) {
+                    if (cloudStatusProvider.hasCloudHooked()) {
 
                         Optional<ServerInfo> connectable =
-                                Optional.of(ProxyServer.getInstance().getServerInfo(instance.get().getName()));
+                                Optional.of(ProxyServer.getInstance().getServerInfo(
+                                        cloudTeleport.getServerFromGroup(
+                                                configuration.get().getString("redirect.authentication")
+                                        )
+                                ));
 
                         connectable.ifPresent(event::setTarget);
-                    }
 
-                    instance.orElseThrow(() -> new Exception("Unable to get available instance"));
+                    }
 
                 }
 

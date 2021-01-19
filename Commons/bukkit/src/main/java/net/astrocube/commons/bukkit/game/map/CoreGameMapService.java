@@ -32,12 +32,12 @@ public class CoreGameMapService implements GameMapService {
 
     @Override
     public byte[] getMapWorld(String id) throws IOException {
-        return getBytesFromFile("file/" + id);
+        return getBytesFromFile("files/file/" + id);
     }
 
     @Override
     public byte[] getMapConfiguration(String id) throws IOException {
-        return getBytesFromFile("config/" + id);
+        return getBytesFromFile("files/config/" + id);
     }
 
     @Override

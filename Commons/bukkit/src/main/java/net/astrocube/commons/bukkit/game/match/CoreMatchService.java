@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -113,6 +114,40 @@ public class CoreMatchService implements MatchService {
                         RequestOptions.Type.POST,
                         new HashMap<>(),
                         "",
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void assignVictory(String match, Set<String> winners) throws Exception {
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/validate-winners",
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(winners),
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void disqualify(String match, String user) throws Exception {
+
+        ObjectNode node = objectMapper.createObjectNode();
+
+        node.put("user", user);
+        node.put("match",  match);
+
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/disqualify",
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(node),
                         null
                 )
         );

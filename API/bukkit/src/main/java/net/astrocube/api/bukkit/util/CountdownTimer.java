@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.utils;
+package net.astrocube.api.bukkit.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
