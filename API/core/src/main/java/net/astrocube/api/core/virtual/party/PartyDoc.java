@@ -24,6 +24,10 @@ public interface PartyDoc extends Model {
     }
 
     /** Complete interface that implements complete model according to {@link PartialModel} schema */
-    interface Complete extends Model.Stamped, Creation {}
+    interface Complete extends Model.Stamped, Creation {
+
+        void setLeader(String leader);
+
+    }
 
 }

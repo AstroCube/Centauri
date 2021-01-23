@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.party;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import com.google.inject.Key;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.redis.Redis;

@@ -5,7 +5,9 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
+import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.party.Party;
+import net.astrocube.api.core.virtual.party.PartyDoc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -18,6 +20,7 @@ public class PartyPromoteCommand
 
     @Inject private PartyService partyService;
     @Inject private MessageHandler<Player> messageHandler;
+    @Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
 
     @Command(names = "")
     public void execute(
@@ -40,6 +43,9 @@ public class PartyPromoteCommand
             messageHandler.send(player, "cannot-promote.not-same-party");
             return;
         }
+
+        party.setLeader(targetId);
+        partyUpdateService.update(party);
 
         for (String memberId : party.getMembers()) {
             Player member = Bukkit.getPlayer(memberId);
