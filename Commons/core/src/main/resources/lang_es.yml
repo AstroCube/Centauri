@@ -33,6 +33,13 @@ rejected-party-invitation: "%%gold%%%%player%%%%yellow%% ha rechazado tu invitac
 rejected-invitation: "%%yellow%%Has rechazado una invitación a grupo correctamente"
 kicked-offline: "%%yellow%%Has removido a los miembros desconectados."
 other-kicked-offline: "%%yellow%%El líder %%gold%%%%player%%%% %%yellow%%ha removido a los miembros desconectados"
+invoker-promoted: "%%yellow%%Has promovido al miembro %%gold%%%%player%%"
+promoted: "%%yellow%%Has sido promovido a líder de tu grupo."
+other-promoted: "%%gold%%%%player%% %%yellow%%ha promovido a %%gold%%%%target%% %%yellow%%a líder de grupo."
+cannot-promote:
+    not-leader: "%%red%%No eres el líder de tu grupo. No puedes promover a otro miembro."
+    not-in-party: "%%red%%No tienes un grupo. No puedes promover a otro miembro."
+    not-same-party: "%%red%%El jugador al que intentas promover no está en tu grupo."
 cannot-kickoffline:
     not-leader: "%%red%%No puedes remover a los miembros desconectados. No eres el líder del grupo."
     not-in-party: "%%red%%No tienes un grupo. No puedes remover a los miembros desconectados."
