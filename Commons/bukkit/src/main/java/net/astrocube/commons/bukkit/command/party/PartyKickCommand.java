@@ -5,7 +5,9 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
+import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.party.Party;
+import net.astrocube.api.core.virtual.party.PartyDoc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,6 +19,7 @@ public class PartyKickCommand implements CommandClass {
 
     @Inject private PartyService partyService;
     @Inject private MessageHandler<Player> messageHandler;
+    @Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
 
     @Command(names = "")
     public void execute(
@@ -58,6 +61,9 @@ public class PartyKickCommand implements CommandClass {
                     "%%target%%", target.getName()
             );
         }
+
+        party.getMembers().remove(targetId);
+        partyUpdateService.update(party);
     }
 
 }
