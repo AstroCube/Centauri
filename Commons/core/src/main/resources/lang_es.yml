@@ -31,6 +31,11 @@ other-left-party: "%%gold%%%%player%%%%yellow%% ha abandonado el grupo."
 party-disbanded: "%%gold%%%%player%%%%yellow%% ha deshecho el grupo"
 rejected-party-invitation: "%%gold%%%%player%%%%yellow%% ha rechazado tu invitación a tu grupo."
 rejected-invitation: "%%yellow%%Has rechazado una invitación a grupo correctamente"
+kicked-offline: "%%yellow%%Has removido a los miembros desconectados."
+other-kicked-offline: "%%yellow%%El líder %%gold%%%%player%%%% %%yellow%%ha removido a los miembros desconectados"
+cannot-kickoffline:
+    not-leader: "%%red%%No puedes remover a los miembros desconectados. No eres el líder del grupo."
+    not-in-party: "%%red%%No tienes un grupo. No puedes remover a los miembros desconectados."
 cannot-disband:
     not-leader: "%%red%%No puedes deshacer tu grupo porque no eres el líder."
     not-in-party: "%%red%%No tienes un grupo para deshacer."

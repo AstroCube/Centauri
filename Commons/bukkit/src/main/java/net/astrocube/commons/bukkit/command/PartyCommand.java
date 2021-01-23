@@ -16,7 +16,8 @@ import javax.inject.Inject;
         PartyAcceptCommand.class,
         PartyLeaveCommand.class,
         PartyDisbandCommand.class,
-        PartyRejectCommand.class
+        PartyRejectCommand.class,
+        PartyKickOfflineCommand.class
 })
 public class PartyCommand implements CommandClass {
 
