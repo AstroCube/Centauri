@@ -122,7 +122,7 @@ public class CoreMatchService implements MatchService {
     @Override
     public void assignVictory(String match, Set<String> winners) throws Exception {
         httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey() + "/validate-winners",
+                this.modelMeta.getRouteKey() + "/validate-winners/" + match,
                 new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
