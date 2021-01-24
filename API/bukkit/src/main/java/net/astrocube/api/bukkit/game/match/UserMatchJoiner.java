@@ -19,16 +19,16 @@ public interface UserMatchJoiner {
         WAITING, PLAYING, SPECTATING
     }
 
-    static Origin checkOrigin(User user, Match match) throws GameControlException {
+    static Origin checkOrigin(String user, Match match) throws GameControlException {
 
-        if (match.getSpectators().contains(user.getId())) {
+        if (match.getSpectators().contains(user)) {
             return Origin.SPECTATING;
         } if (match.getTeams().stream().anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
-                teamMember.getUser().equalsIgnoreCase(user.getId())))
+                teamMember.getUser().equalsIgnoreCase(user)))
         ) {
             return Origin.PLAYING;
-        } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user.getId())
-                || m.getResponsible().equalsIgnoreCase(user.getId()))) {
+        } else if (match.getPending().stream().anyMatch(m -> m.getInvolved().contains(user)
+                || m.getResponsible().equalsIgnoreCase(user))) {
             return Origin.WAITING;
         }
 

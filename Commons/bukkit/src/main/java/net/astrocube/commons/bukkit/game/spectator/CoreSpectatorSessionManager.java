@@ -8,6 +8,9 @@ import net.astrocube.api.bukkit.game.map.GameMapCache;
 import net.astrocube.api.bukkit.game.map.MapConfigurationProvider;
 import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
 import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
+import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
+import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
+import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import org.bukkit.Bukkit;
@@ -20,6 +23,8 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 
     private @Inject MapConfigurationProvider mapConfigurationProvider;
     private @Inject GameMapCache gameMapCache;
+    private @Inject LobbyItemProvider lobbyItemProvider;
+    private @Inject GhostEffectControl ghostEffectControl;
 
     @Override
     public void provideFunctions(Player player, Match match) throws GameControlException, JsonProcessingException {
@@ -36,7 +41,24 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
             throw new GameControlException("Match world could not be found");
         }
 
+        lobbyItemProvider.provide(player, 8);
+        ghostEffectControl.addPlayer(match.getId(), player);
+
+        Bukkit.getOnlinePlayers().forEach(online -> {
+            if (!MatchParticipantsProvider.getSpectatingPlayers(match).contains(online)) {
+                online.hidePlayer(player);
+                if (!MatchParticipantsProvider.getOnlinePlayers(match).contains(online)) {
+                    player.hidePlayer(online);
+                }
+            }
+        });
+
         player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
+
+        player.setHealth(20);
+        player.setFoodLevel(20);
+        player.setAllowFlight(true);
+        player.setFlying(true);
 
     }
 

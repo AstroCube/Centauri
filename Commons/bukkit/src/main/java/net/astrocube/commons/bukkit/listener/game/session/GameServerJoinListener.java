@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 public class GameServerJoinListener implements Listener {
 
     private @Inject FindService<Match> findService;
@@ -28,31 +30,33 @@ public class GameServerJoinListener implements Listener {
 
         findService.find(event.getMatch()).callback(matchResponse -> {
 
-            try {
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                try {
 
-                if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
-                    throw new GameControlException("Match not found");
+                    if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+                        throw new GameControlException("Match not found");
+                    }
+
+                    switch (event.getOrigin()) {
+                        case WAITING: {
+                            lobbySessionManager.connectUser(event.getPlayer(), matchResponse.getResponse().get());
+                            break;
+                        }
+                        case SPECTATING: {
+                            spectatorSessionManager.provideFunctions(event.getPlayer(), matchResponse.getResponse().get());
+                            break;
+                        }
+                        default: {
+                            kickPlayer(event.getPlayer());
+                            break;
+                        }
+                    }
+
+                } catch (Exception exception) {
+                    plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", exception);
+                    kickPlayer(event.getPlayer());
                 }
-
-                switch (event.getOrigin()) {
-                    case WAITING: {
-                        lobbySessionManager.connectUser(event.getPlayer(), matchResponse.getResponse().get());
-                        break;
-                    }
-                    case SPECTATING: {
-                        spectatorSessionManager.provideFunctions(event.getPlayer(), matchResponse.getResponse().get());
-                        break;
-                    }
-                    default: {
-                        kickPlayer(event.getPlayer());
-                        break;
-                    }
-                }
-
-            } catch (Exception exception) {
-                plugin.getLogger().warning("There was an error while updating the match assignation.");
-                kickPlayer(event.getPlayer());
-            }
+            });
 
         });
 

@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 public class LobbyUserDisconnectListener implements Listener {
 
     private @Inject LobbySessionManager lobbySessionManager;
@@ -28,7 +30,7 @@ public class LobbyUserDisconnectListener implements Listener {
 
                 lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
             } catch (Exception e) {
-                plugin.getLogger().warning("There was an error while updating the match assignation.");
+                plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
             }
         });
     }

@@ -29,7 +29,7 @@ public class CoreMatchRejoiner implements MatchRejoiner {
 
         if (match.isPresent()) {
 
-            UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user, match.get());
+            UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user.getId(), match.get());
 
             if (origin != UserMatchJoiner.Origin.WAITING) {
                 messageHandler.send(player, AlertMode.ERROR,"game.rejoin.not-active");
