@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.translation;
+package net.astrocube.api.bukkit.translation;
 
 import com.google.inject.Inject;
 import me.yushust.message.specific.LanguageProvider;

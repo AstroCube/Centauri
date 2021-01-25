@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.translation.holder;
+package net.astrocube.api.bukkit.translation.holder;
 
 import me.yushust.message.ContextRepository;
 import me.yushust.message.specific.PlaceholderProvider;

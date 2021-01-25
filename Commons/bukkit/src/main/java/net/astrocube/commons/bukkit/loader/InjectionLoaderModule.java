@@ -12,7 +12,7 @@ import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.tablist.TablistModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
-import net.astrocube.commons.bukkit.translation.TranslationModule;
+import net.astrocube.api.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.core.CommonsModule;
