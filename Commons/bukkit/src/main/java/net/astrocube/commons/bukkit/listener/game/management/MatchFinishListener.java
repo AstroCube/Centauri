@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.match.MatchFinishEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
@@ -23,6 +24,7 @@ public class MatchFinishListener implements Listener {
     private @Inject MatchService matchService;
     private @Inject FindService<Match> findService;
     private @Inject GhostEffectControl ghostEffectControl;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -39,6 +41,7 @@ public class MatchFinishListener implements Listener {
                 matchService.assignVictory(event.getMatch(), event.getWinners());
                 Set<Player> players = MatchParticipantsProvider.getInvolved(match);
                 ghostEffectControl.clearMatch(match.getId());
+                MatchParticipantsProvider.getInvolved(match).forEach(p -> actualMatchCache.remove(p.getDatabaseIdentifier()));
                 Bukkit.getScheduler().runTaskLater(plugin, () -> players.forEach(player -> player.kickPlayer("")), 200L);
 
             } catch (Exception e) {
