@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.translation.interceptor;
 
 import me.yushust.message.MessageInterceptor;
-
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 

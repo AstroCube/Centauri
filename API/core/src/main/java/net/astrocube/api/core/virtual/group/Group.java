@@ -4,7 +4,6 @@ package net.astrocube.api.core.virtual.group;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelProperties;
-import net.astrocube.api.core.model.PartialModel;
 
 import java.util.Set;
 

@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchStartEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
-import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;

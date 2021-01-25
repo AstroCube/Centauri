@@ -3,9 +3,6 @@ package net.astrocube.api.core.service.query;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import net.astrocube.api.core.message.Message;
-import net.astrocube.api.core.model.Model;
-
-import java.util.Set;
 
 public interface QueryBaseResult extends Message {
 

@@ -3,11 +3,7 @@ package net.astrocube.commons.bukkit;
 import com.google.inject.Inject;
 import me.fixeddev.inject.ProtectedBinder;
 import net.astrocube.api.bukkit.server.ServerDisconnectHandler;
-import net.astrocube.api.bukkit.virtual.game.map.GameMap;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.api.core.service.query.QueryService;
-import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.commons.bukkit.loader.InjectionLoaderModule;
 import org.bukkit.plugin.java.JavaPlugin;
 

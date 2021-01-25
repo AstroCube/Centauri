@@ -1,7 +1,6 @@
 package net.astrocube.api.core.service.update;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.google.common.reflect.TypeToken;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;

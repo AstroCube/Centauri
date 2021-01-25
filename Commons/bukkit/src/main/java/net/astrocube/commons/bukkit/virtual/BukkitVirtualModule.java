@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.virtual;
 
 import me.fixeddev.inject.ProtectedModule;
-import net.astrocube.commons.core.virtual.*;
+import net.astrocube.commons.core.virtual.VirtualModule;
 
 public class BukkitVirtualModule extends ProtectedModule {
 

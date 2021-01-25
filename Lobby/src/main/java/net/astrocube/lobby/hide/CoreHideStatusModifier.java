@@ -2,10 +2,10 @@ package net.astrocube.lobby.hide;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.lobby.hide.HideApplier;
 import net.astrocube.api.bukkit.lobby.hide.HideCompound;
 import net.astrocube.api.bukkit.lobby.hide.HideCompoundMatcher;
 import net.astrocube.api.bukkit.lobby.hide.HideStatusModifier;
-import net.astrocube.api.bukkit.lobby.hide.HideApplier;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;

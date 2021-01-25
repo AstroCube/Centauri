@@ -1,6 +1,5 @@
 package net.astrocube.api.core.session;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;

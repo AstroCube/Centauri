@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.listener.game.management;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.bukkit.game.event.game.GameModePairEvent;
-import net.astrocube.api.bukkit.game.exception.GameControlException;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

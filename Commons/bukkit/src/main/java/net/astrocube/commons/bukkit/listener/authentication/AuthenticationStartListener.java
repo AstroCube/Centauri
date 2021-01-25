@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.listener.authentication;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;

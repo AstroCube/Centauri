@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.virtual;
 
 import com.google.inject.TypeLiteral;
 import me.fixeddev.inject.ProtectedModule;
-import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.utils.ResolvableType;

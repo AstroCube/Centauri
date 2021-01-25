@@ -1,14 +1,11 @@
 package net.astrocube.lobby.listener.user;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.lobby.hide.HideJoinProcessor;
 import net.astrocube.api.bukkit.lobby.hotbar.LobbyHotbarProvider;
 import net.astrocube.api.bukkit.lobby.nametag.LobbyNametagHandler;
-import net.astrocube.api.bukkit.packet.PacketHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,8 +1,6 @@
 package net.astrocube.api.bukkit.game.map;
 
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
-import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.service.query.QueryService;
 
 import java.io.IOException;
 import java.util.Optional;

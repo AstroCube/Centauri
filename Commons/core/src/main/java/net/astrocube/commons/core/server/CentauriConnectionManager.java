@@ -1,8 +1,8 @@
 package net.astrocube.commons.core.server;
 
 import com.google.inject.Inject;
-import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.server.ServerConnectionManager;
+import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 
 public class CentauriConnectionManager implements ServerConnectionManager {

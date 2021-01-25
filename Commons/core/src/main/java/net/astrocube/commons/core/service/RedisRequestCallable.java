@@ -1,12 +1,9 @@
 package net.astrocube.commons.core.service;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
-import com.google.common.reflect.TypeToken;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;

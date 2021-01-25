@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.channel;
 
-import net.astrocube.api.bukkit.channel.InterceptorRegistry;
 import net.astrocube.api.bukkit.channel.ChatMessageInterceptor;
+import net.astrocube.api.bukkit.channel.InterceptorRegistry;
 
 import java.util.HashSet;
 import java.util.Set;

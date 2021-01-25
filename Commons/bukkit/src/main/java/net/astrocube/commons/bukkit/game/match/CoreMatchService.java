@@ -1,23 +1,17 @@
 package net.astrocube.commons.bukkit.game.match;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
-import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.redis.Redis;
-import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.service.RedisModelService;
 import net.astrocube.commons.core.service.RedisRequestCallable;
 
 import java.util.HashMap;

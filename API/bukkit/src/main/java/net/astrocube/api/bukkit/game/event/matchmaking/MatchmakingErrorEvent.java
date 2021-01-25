@@ -2,7 +2,6 @@ package net.astrocube.api.bukkit.game.event.matchmaking;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

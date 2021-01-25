@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-
 import me.fixeddev.commandflow.CommandManager;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilder;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilderImpl;
@@ -13,11 +12,9 @@ import me.fixeddev.commandflow.annotated.part.defaults.DefaultsModule;
 import me.fixeddev.commandflow.bukkit.BukkitCommandManager;
 import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
 import me.fixeddev.commandflow.translator.DefaultTranslator;
-
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.*;
 import net.astrocube.commons.bukkit.command.flow.CoreCommandLanguageProvider;
-
 import org.bukkit.plugin.Plugin;
 
 public class CommandLoader implements Loader {

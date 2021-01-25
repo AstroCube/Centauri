@@ -16,7 +16,6 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
-import net.astrocube.api.core.virtual.server.Server;
 
 import java.util.Optional;
 import java.util.Set;

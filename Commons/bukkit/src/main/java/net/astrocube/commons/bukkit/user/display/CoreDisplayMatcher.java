@@ -4,7 +4,6 @@ import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
-
 import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 
 import java.util.Comparator;

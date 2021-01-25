@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import net.astrocube.api.bukkit.game.GameControlPair;
-import net.astrocube.api.bukkit.game.event.game.GameModePairEvent;
 import net.astrocube.api.bukkit.game.event.game.GamePairEnableEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchControlSanitizeEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;

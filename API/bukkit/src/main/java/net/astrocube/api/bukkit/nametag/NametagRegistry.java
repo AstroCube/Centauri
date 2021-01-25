@@ -3,8 +3,6 @@ package net.astrocube.api.bukkit.nametag;
 import com.google.common.collect.Multimap;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
 public interface NametagRegistry {
 
     Multimap<String, Nametag.Rendered> getRenderedNametags();

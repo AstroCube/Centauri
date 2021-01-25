@@ -1,9 +1,7 @@
 package net.astrocube.commons.bukkit.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.google.inject.Inject;
-
 import net.astrocube.api.bukkit.user.UserMatcher;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.service.query.QueryService;

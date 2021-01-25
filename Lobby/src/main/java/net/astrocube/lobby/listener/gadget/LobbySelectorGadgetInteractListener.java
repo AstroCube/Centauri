@@ -1,7 +1,6 @@
 package net.astrocube.lobby.listener.gadget;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorDisplay;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorDisplay;
 import net.astrocube.api.bukkit.user.inventory.event.ActionableItemEvent;
 import org.bukkit.event.EventHandler;

@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.match.AvailableMatchServerProvider;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
-import net.astrocube.api.core.service.paginate.PaginateService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.server.Server;
 

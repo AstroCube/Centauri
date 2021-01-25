@@ -1,8 +1,8 @@
 package net.astrocube.commons.bukkit.authentication;
 
 import me.fixeddev.inject.ProtectedModule;
-import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
+import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
 import net.astrocube.api.bukkit.authentication.gateway.PasswordGatewayProcessor;
 import net.astrocube.api.bukkit.authentication.gateway.RegisterGatewayProcessor;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;

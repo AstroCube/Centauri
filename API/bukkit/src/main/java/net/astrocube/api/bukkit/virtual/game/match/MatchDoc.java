@@ -12,7 +12,6 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
-import org.bukkit.Color;
 
 import java.util.Date;
 import java.util.Optional;

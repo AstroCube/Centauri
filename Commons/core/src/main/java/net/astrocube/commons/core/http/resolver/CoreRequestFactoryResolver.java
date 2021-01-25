@@ -3,9 +3,9 @@ package net.astrocube.commons.core.http.resolver;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.inject.Inject;
+import net.astrocube.api.core.http.config.HttpFactoryConfig;
 import net.astrocube.api.core.http.resolver.RequestExceptionHandler;
 import net.astrocube.api.core.http.resolver.RequestFactoryResolver;
-import net.astrocube.api.core.http.config.HttpFactoryConfig;
 
 public class CoreRequestFactoryResolver implements RequestFactoryResolver {
 

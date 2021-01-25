@@ -7,6 +7,7 @@ import net.astrocube.api.core.server.ServerStartResolver;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.commons.bungee.configuration.PluginConfigurationHelper;
 import net.md_5.bungee.api.plugin.Plugin;
+
 import java.util.logging.Level;
 
 public class BungeeStartResolver implements ServerStartResolver {

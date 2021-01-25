@@ -3,7 +3,6 @@ package net.astrocube.commons.bungee.configuration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
-import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 
 import java.util.Optional;

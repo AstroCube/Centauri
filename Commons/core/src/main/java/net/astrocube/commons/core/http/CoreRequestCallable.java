@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.common.reflect.TypeToken;
-import lombok.AllArgsConstructor;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 

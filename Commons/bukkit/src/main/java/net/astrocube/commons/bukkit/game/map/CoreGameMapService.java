@@ -9,15 +9,12 @@ import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.core.http.config.HttpClientConfig;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.model.ModelMeta;
-import net.astrocube.api.core.service.paginate.PaginateService;
 import net.astrocube.api.core.service.query.QueryService;
 import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 

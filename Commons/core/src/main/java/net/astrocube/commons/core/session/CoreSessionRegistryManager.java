@@ -10,7 +10,6 @@ import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import org.joda.time.DateTime;
 import redis.clients.jedis.Jedis;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 @Singleton

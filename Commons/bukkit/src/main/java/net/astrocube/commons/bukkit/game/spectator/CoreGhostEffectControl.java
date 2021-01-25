@@ -9,7 +9,6 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Singleton
 public class CoreGhostEffectControl implements GhostEffectControl {

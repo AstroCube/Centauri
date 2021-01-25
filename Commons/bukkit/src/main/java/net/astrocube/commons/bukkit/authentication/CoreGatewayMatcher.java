@@ -1,8 +1,8 @@
 package net.astrocube.commons.bukkit.authentication;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
+import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import net.astrocube.commons.bukkit.authentication.gateway.password.PasswordGateway;
 import net.astrocube.commons.bukkit.authentication.gateway.register.RegisterGateway;

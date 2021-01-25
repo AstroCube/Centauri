@@ -6,13 +6,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
-import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.server.Server;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

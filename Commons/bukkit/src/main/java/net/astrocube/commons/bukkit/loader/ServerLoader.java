@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.loader;
 import com.google.inject.Inject;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.server.ServerStartResolver;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;

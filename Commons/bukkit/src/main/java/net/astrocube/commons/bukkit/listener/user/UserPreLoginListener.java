@@ -2,13 +2,10 @@ package net.astrocube.commons.bukkit.listener.user;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.session.SessionService;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
-import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.session.LoginEventSessionUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -1,6 +1,9 @@
 package net.astrocube.commons.core.model.binder;
 
-import com.google.inject.*;
+import com.google.inject.Binder;
+import com.google.inject.Scope;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;

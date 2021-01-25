@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.translation;
 
-import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import me.fixeddev.inject.ProtectedModule;
@@ -8,9 +7,9 @@ import me.yushust.message.MessageHandler;
 import me.yushust.message.MessageRepository;
 import me.yushust.message.format.bukkit.BukkitMessageAdapt;
 import me.yushust.message.strategy.Strategy;
+import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
 import net.astrocube.commons.bukkit.translation.interceptor.CenterMessageInterceptor;
 import net.astrocube.commons.bukkit.translation.interceptor.ColorMessageInterceptor;
-import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

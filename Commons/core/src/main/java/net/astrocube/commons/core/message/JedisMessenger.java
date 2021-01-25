@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
-import com.google.common.util.concurrent.ListeningExecutorService;
 import net.astrocube.api.core.message.*;
 import net.astrocube.api.core.redis.Redis;
 import redis.clients.jedis.Jedis;

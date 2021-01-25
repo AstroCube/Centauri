@@ -2,8 +2,6 @@ package net.astrocube.api.bukkit.game.event.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

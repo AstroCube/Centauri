@@ -5,7 +5,6 @@ import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.slime.api.world.SlimeWorld;
 
 import java.io.IOException;
-import java.util.Set;
 
 public interface GameMapProvider {
 

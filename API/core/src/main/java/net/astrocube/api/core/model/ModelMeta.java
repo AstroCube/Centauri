@@ -2,7 +2,6 @@ package net.astrocube.api.core.model;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 import lombok.Getter;

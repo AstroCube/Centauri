@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.server;
 
-import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.core.cloud.InstanceNameProvider;

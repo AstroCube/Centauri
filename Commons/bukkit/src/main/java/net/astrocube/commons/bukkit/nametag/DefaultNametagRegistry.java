@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.nametag.NametagRegistry;
 import net.astrocube.api.core.utils.MultimapCollector;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 public class DefaultNametagRegistry implements NametagRegistry {

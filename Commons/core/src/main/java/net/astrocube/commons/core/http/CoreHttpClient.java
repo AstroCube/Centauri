@@ -2,23 +2,16 @@ package net.astrocube.commons.core.http;
 
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
-import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
-import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Response;
-import net.astrocube.api.core.concurrent.SimpleAsyncResponse;
-import net.astrocube.api.core.concurrent.WrappedResponse;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.http.config.HttpClientConfig;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
-import net.astrocube.api.core.http.resolver.RequestExecutorResolver;
 import net.astrocube.api.core.http.resolver.RequestFactoryResolver;
 import net.astrocube.api.core.http.resolver.TransportLoggerModifier;
 import net.astrocube.commons.core.http.request.RequestContentBuilderUtil;
 
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

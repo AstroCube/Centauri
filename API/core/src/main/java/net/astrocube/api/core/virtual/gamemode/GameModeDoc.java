@@ -1,7 +1,6 @@
 package net.astrocube.api.core.virtual.gamemode;
 
 import net.astrocube.api.core.model.Model;
-import net.astrocube.api.core.model.ModelProperties;
 import net.astrocube.api.core.model.PartialModel;
 
 import javax.annotation.Nullable;

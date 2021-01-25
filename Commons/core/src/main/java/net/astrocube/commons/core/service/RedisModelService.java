@@ -1,17 +1,9 @@
 package net.astrocube.commons.core.service;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpResponse;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
-import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
@@ -21,8 +13,6 @@ import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
-import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 
