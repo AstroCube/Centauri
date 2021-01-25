@@ -19,18 +19,21 @@ import java.util.HashMap;
 @SuppressWarnings("All")
 public class RedisModelService<Complete extends Model, Partial extends PartialModel> extends CoreModelService<Complete, Partial> {
 
-    @Inject private Redis redis;
+    private Redis redis;
     @Inject private HttpClient httpClient;
     private RedisRequestCallable<Complete> redisRequestCallabe;
-    @Inject private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Inject
     RedisModelService(
             ObjectMapper mapper,
             ModelMeta<Complete, Partial> modelMeta,
-            ExecutorServiceProvider executorServiceProvider
+            ExecutorServiceProvider executorServiceProvider,
+            Redis redis
     ) {
         super(mapper, modelMeta, executorServiceProvider);
+        this.redis = redis;
+        this.objectMapper = mapper;
         this.redisRequestCallabe =
                 new RedisRequestCallable<>(objectMapper, redis, modelMeta);
     }
