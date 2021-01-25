@@ -39,7 +39,7 @@ public class MatchFinishListener implements Listener {
                 matchService.assignVictory(event.getMatch(), event.getWinners());
                 Set<Player> players = MatchParticipantsProvider.getInvolved(match);
                 ghostEffectControl.clearMatch(match.getId());
-                Bukkit.getScheduler().runTaskLater(plugin, () -> players.forEach(player -> player.kickPlayer("")), 60L);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> players.forEach(player -> player.kickPlayer("")), 200L);
 
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "Error while adjudicating match victory", e);

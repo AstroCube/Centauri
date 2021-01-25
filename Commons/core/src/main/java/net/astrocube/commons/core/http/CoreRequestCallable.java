@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 
-@AllArgsConstructor
 @SuppressWarnings("all")
 public class CoreRequestCallable<T> implements RequestCallable<T> {
 

@@ -14,8 +14,11 @@ import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
+import net.astrocube.api.core.redis.Redis;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
+import net.astrocube.commons.core.service.RedisModelService;
+import net.astrocube.commons.core.service.RedisRequestCallable;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -25,7 +28,7 @@ public class CoreMatchService implements MatchService {
     private @Inject ObjectMapper objectMapper;
     private @Inject HttpClient httpClient;
     private @Inject ModelMeta<Match, MatchDoc.Partial> modelMeta;
-
+    private @Inject Redis redis;
 
     @Override
     public void assignSpectator(String user, String match, boolean join) throws Exception {
@@ -38,7 +41,7 @@ public class CoreMatchService implements MatchService {
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/spectator",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -57,7 +60,7 @@ public class CoreMatchService implements MatchService {
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/teams",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -76,7 +79,7 @@ public class CoreMatchService implements MatchService {
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/unassign-pending",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -95,7 +98,7 @@ public class CoreMatchService implements MatchService {
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/pending",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -109,7 +112,7 @@ public class CoreMatchService implements MatchService {
     public void matchCleanup() throws Exception {
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/cleanup",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -123,7 +126,7 @@ public class CoreMatchService implements MatchService {
     public void assignVictory(String match, Set<String> winners) throws Exception {
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/validate-winners/" + match,
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -143,7 +146,7 @@ public class CoreMatchService implements MatchService {
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/disqualify",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),

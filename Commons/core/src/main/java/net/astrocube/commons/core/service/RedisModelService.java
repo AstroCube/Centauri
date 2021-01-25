@@ -1,10 +1,14 @@
 package net.astrocube.commons.core.service;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
+import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestCallable;
@@ -27,7 +31,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
     @Inject private Redis redis;
     @Inject private HttpClient httpClient;
-    private RedisRequestCallabe<Complete> redisRequestCallabe;
+    private RedisRequestCallable<Complete> redisRequestCallabe;
     @Inject private ObjectMapper objectMapper;
 
     @Inject
@@ -37,7 +41,8 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
             ExecutorServiceProvider executorServiceProvider
     ) {
         super(mapper, modelMeta, executorServiceProvider);
-        this.redisRequestCallabe = new RedisRequestCallabe<>();
+        this.redisRequestCallabe =
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta);
     }
 
     @Override
@@ -83,28 +88,4 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
         );
     }
 
-    private class RedisRequestCallabe<T extends Model> implements RequestCallable<T> {
-
-        @Override
-        public T call(HttpRequest request) throws Exception {
-            final HttpResponse response = request.execute();
-            final String json = response.parseAsString();
-            int statusCode = response.getStatusCode();
-
-            if (statusCode < 400) {
-                try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
-                    String key = modelMeta.getRouteKey() + ":" + model.getId();
-                    jedis.set(key, json);
-                    jedis.expire(key, modelMeta.getCache());
-                    return model;
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    throw new Exception("Parsing of " + getCompleteType() + " failed");
-                }
-            } else {
-                throw RequestExceptionResolverUtil.generateException(json, statusCode);
-            }
-        }
-    }
 }
