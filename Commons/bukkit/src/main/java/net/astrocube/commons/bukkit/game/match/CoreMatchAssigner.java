@@ -110,6 +110,7 @@ public class CoreMatchAssigner implements MatchAssigner {
     private void setRecord(String id, String matchId) throws Exception {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.set("matchAssign:" + id, matchId);
+            jedis.expire("matchAssign:" + id, 30);
             if (plugin.getConfig().getBoolean("server.sandbox")) {
 
                 User user = findService.findSync(id);
