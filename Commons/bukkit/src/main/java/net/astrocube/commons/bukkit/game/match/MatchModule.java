@@ -42,9 +42,11 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
         bind(MatchParticipantsProvider.class).to(CoreMatchParticipantsProvider.class);
         bind(MatchStateUpdater.class).to(CoreMatchStateUpdater.class);
         bind(MatchScheduler.class).to(CoreMatchScheduler.class);
+        bind(ActualMatchCache.class).to(CoreActualMatchCache.class);
 
         bind(UserMatchJoiner.class).to(CoreUserMatchJoiner.class);
 
+        expose(ActualMatchCache.class);
         expose(ActualMatchProvider.class);
 
     }
