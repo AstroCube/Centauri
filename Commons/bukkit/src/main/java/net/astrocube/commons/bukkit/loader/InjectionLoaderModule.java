@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.loader;
 
-import lombok.AllArgsConstructor;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
 import net.astrocube.commons.bukkit.channel.ChatChannelModule;
@@ -17,14 +16,16 @@ import net.astrocube.commons.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.core.CommonsModule;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
     @Override
     public void configure() {
         install(new BukkitVirtualModule());
-        install(new CloudModule());
         install(new FriendsModule());
+        install(new CloudModule());
         install(new TeleportModule());
         install(new CommonsModule());
         install(new AuthenticationModule());
@@ -39,4 +40,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new NametagModule());
         install(new TablistModule());
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.cloud.dummy;
+package net.astrocube.commons.core.cloud.dummy;
 
 import com.google.inject.Singleton;
 import net.astrocube.api.core.cloud.CloudStatusProvider;

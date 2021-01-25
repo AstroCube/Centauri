@@ -25,6 +25,7 @@ public class CommonsModule extends ProtectedModule {
         install(new MessengerModule());
         install(new SessionModule());
         install(new CoreServerModule());
+        install(new CloudModule());
 
         bind(ObjectMapper.class).toProvider(() -> {
             ObjectMapper mapper = new ObjectMapper();

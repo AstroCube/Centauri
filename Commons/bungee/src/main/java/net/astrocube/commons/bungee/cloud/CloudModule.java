@@ -1,22 +1,22 @@
-package net.astrocube.commons.bukkit.cloud;
+package net.astrocube.commons.bungee.cloud;
 
-import lombok.AllArgsConstructor;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
+import net.astrocube.commons.core.cloud.CoreCloudTeleport;
 import net.astrocube.commons.core.cloud.dummy.DummyCloudTeleport;
 import net.astrocube.commons.core.cloud.dummy.DummyNameProvider;
 import net.astrocube.commons.core.cloud.dummy.DummyStatusProvider;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.plugin.Plugin;
 
 public class CloudModule extends ProtectedModule {
 
     @Override
     public void configure() {
 
-        if (hasCloudDeploy()) {
+        if (hasCloudHooked()) {
             bind(InstanceNameProvider.class).to(CloudNameProvider.class);
             bind(CloudStatusProvider.class).to(CoreCloudStatusProvider.class);
             bind(CloudTeleport.class).to(CoreCloudTeleport.class);
@@ -32,9 +32,9 @@ public class CloudModule extends ProtectedModule {
 
     }
 
-    public boolean hasCloudDeploy() {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (plugin.getName().equalsIgnoreCase("TimoCloud")) {
+    public boolean hasCloudHooked() {
+        for (Plugin plugin : ProxyServer.getInstance().getPluginManager().getPlugins()) {
+            if (plugin.getDescription().getName().equalsIgnoreCase("TimoCloud")) {
                 return true;
             }
         }
