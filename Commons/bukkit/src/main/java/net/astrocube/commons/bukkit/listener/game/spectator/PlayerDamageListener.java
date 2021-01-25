@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.listener.game.spectator;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
-import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import org.bukkit.entity.Player;

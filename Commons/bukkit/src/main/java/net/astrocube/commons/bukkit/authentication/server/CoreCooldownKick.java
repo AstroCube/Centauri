@@ -12,7 +12,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 
 @Singleton

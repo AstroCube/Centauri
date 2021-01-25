@@ -16,8 +16,6 @@ import net.astrocube.commons.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.core.CommonsModule;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
