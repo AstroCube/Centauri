@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.find.FindService;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 @Singleton
 public class CoreActualMatchCache implements ActualMatchCache {
 
-    private @Inject ActualMatchCache actualMatchCache;
+    private @Inject ActualMatchProvider actualMatchProvider;
     private @Inject FindService<Match> findService;
     private @Inject Plugin plugin;
     private @Inject Redis redis;
@@ -29,6 +30,7 @@ public class CoreActualMatchCache implements ActualMatchCache {
             if (jedis.exists("actualMatch:" + id)) {
 
                 String matchId = jedis.get("actualMatch:" + id);
+
                 return Optional.of(findService.findSync(matchId));
 
             } else {
@@ -58,7 +60,7 @@ public class CoreActualMatchCache implements ActualMatchCache {
      */
     private Optional<Match> obtainFromProvider(String id, Jedis jedis) throws Exception {
 
-        Optional<Match> match = actualMatchCache.get(id);
+        Optional<Match> match = actualMatchProvider.provide(id);
 
         if (match.isPresent()) {
             jedis.set("actualMatch:" + id, match.get().getId());
