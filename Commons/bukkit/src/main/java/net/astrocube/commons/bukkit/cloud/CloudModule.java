@@ -7,18 +7,19 @@ import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.commons.bukkit.cloud.dummy.DummyCloudTeleport;
 import net.astrocube.commons.bukkit.cloud.dummy.DummyNameProvider;
 import net.astrocube.commons.bukkit.cloud.dummy.DummyStatusProvider;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 public class CloudModule extends ProtectedModule {
 
     @Override
     public void configure() {
 
-        try {
-            Class.forName("TimoCloudAPI");
+        if (hasCloudDeploy()) {
             bind(InstanceNameProvider.class).to(CloudNameProvider.class);
             bind(CloudStatusProvider.class).to(CoreCloudStatusProvider.class);
             bind(CloudTeleport.class).to(CoreCloudTeleport.class);
-        } catch (ClassNotFoundException e) {
+        } else {
             bind(InstanceNameProvider.class).to(DummyNameProvider.class);
             bind(CloudStatusProvider.class).to(DummyStatusProvider.class);
             bind(CloudTeleport.class).to(DummyCloudTeleport.class);
@@ -28,6 +29,15 @@ public class CloudModule extends ProtectedModule {
         expose(CloudStatusProvider.class);
         expose(CloudTeleport.class);
 
+    }
+
+    private boolean hasCloudDeploy() {
+        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+            if (plugin.getName().equalsIgnoreCase("TimoCloud")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

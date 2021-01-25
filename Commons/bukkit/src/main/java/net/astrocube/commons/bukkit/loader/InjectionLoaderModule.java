@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.loader;
 
+import lombok.AllArgsConstructor;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
 import net.astrocube.commons.bukkit.channel.ChatChannelModule;
