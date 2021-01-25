@@ -19,4 +19,9 @@ public interface SingleMatchAssignation extends Message {
      */
     String getMatch();
 
+    /**
+     * @return server
+     */
+    String getServer();
+
 }

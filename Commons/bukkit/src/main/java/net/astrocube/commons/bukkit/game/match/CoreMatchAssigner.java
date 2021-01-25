@@ -15,6 +15,7 @@ import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,24 +35,28 @@ public class CoreMatchAssigner implements MatchAssigner {
     private final ActualMatchCache actualMatchCache;
     private final UserMatchJoiner userMatchJoiner;
     private final FindService<User> findService;
+    private final FindService<Server> serverFindService;
     private final MatchService matchService;
     private final Channel<SingleMatchAssignation> channel;
 
     @Inject
     public CoreMatchAssigner(Redis redis, ActualMatchCache actualMatchProvider,
                              Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
-                             FindService<User> findService, MatchService matchService) {
+                             FindService<User> findService, FindService<Server> serverFindService, MatchService matchService) {
         this.jedisPool = redis.getRawConnection();
         this.plugin = plugin;
         this.actualMatchCache = actualMatchProvider;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
         this.userMatchJoiner = userMatchJoiner;
         this.matchService = matchService;
+        this.serverFindService = serverFindService;
         this.findService = findService;
     }
 
     @Override
     public void assign(MatchAssignable assignable, Match match) throws Exception {
+
+        Server matchServer = serverFindService.findSync(match.getServer());
 
         try (Jedis jedis = jedisPool.getResource()) {
             if (!jedis.exists("matchmaking:" + assignable.getResponsible())) {
@@ -62,11 +67,11 @@ public class CoreMatchAssigner implements MatchAssigner {
 
             match.getPending().add(assignable);
             matchService.assignPending(assignable, match.getId());
-            this.setRecord(assignable.getResponsible(), match.getId());
+            this.setRecord(assignable.getResponsible(), match.getId(), matchServer.getSlug());
 
             assignable.getInvolved().forEach(involved -> {
                 try {
-                    this.setRecord(involved, match.getId());
+                    this.setRecord(involved, match.getId(), matchServer.getSlug());
                 } catch (Exception e) {
                     plugin.getLogger().log(Level.SEVERE, "There was an error assigning a match user", e);
                 }
@@ -107,7 +112,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 
     }
 
-    private void setRecord(String id, String matchId) throws Exception {
+    private void setRecord(String id, String matchId, String server) throws Exception {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.set("matchAssign:" + id, matchId);
             jedis.expire("matchAssign:" + id, 30);
@@ -128,6 +133,11 @@ public class CoreMatchAssigner implements MatchAssigner {
                     @Override
                     public String getMatch() {
                         return matchId;
+                    }
+
+                    @Override
+                    public String getServer() {
+                        return server;
                     }
                 }, new HashMap<>());
             }
