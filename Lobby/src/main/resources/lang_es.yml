@@ -66,3 +66,4 @@ lobby:
           - "%%gray%%Protege la cama junto a tus"
           - "%%gray%%compañeros y destruye las"
           - "%%gray%%camas enemigas para ganar."
+prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%> %%reset%%"
