@@ -7,6 +7,8 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
 import net.astrocube.api.core.server.ServerService;
+import net.astrocube.api.core.virtual.gamemode.GameMode;
+import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.server.Server;
 import org.bukkit.entity.Player;
 
@@ -17,14 +19,11 @@ import java.util.Set;
 public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
     private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
-    private @Inject ServerService serverService;
 
     private @Inject ObjectMapper mapper;
 
     @Override
-    public void pairMatch(Player player) throws Exception {
-
-        Server server = serverService.getActual();
+    public void pairMatch(Player player, GameMode mode, SubGameMode subMode) throws Exception {
 
         MatchAssignable assignable = new MatchAssignable() {
             @Override
@@ -40,8 +39,8 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
         matchmakingRegistryHandler.generateRequest(
                 assignable,
-                server.getGameMode(),
-                server.getSubGameMode(),
+                mode.getId(),
+                subMode.getId(),
                 "",
                 mapper.createObjectNode()
         );
