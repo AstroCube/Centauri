@@ -11,8 +11,8 @@ public class RegisterCommand implements CommandClass {
 
     private @Inject RegisterGatewayProcessor registerGatewayProcessor;
 
-    @Command(names = {"login"})
-    public boolean onLogin(@Sender Player player, String password) {
+    @Command(names = {"register"})
+    public boolean onRegister(@Sender Player player, String password) {
         registerGatewayProcessor.validateRegister(player, password);
         return true;
     }

@@ -23,6 +23,7 @@ public class CommandLoader implements Loader {
     private @Inject CoreCommandLanguageProvider coreCommandLanguageProvider;
     private @Inject Injector injector;
     private @Inject LoginCommand loginCommand;
+    private @Inject RegisterCommand registerCommand;
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
     private @Inject AdminChatCommand adminChatCommand;
@@ -50,6 +51,7 @@ public class CommandLoader implements Loader {
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
+            commandManager.registerCommands(treeBuilder.fromClass(this.registerCommand));
         }
     }
 }
