@@ -19,12 +19,6 @@ public class RedisRequestCallable<T extends Model> implements RequestCallable<T>
     private final Redis redis;
     private final ModelMeta<T, ?> modelMeta;
 
-    public RedisRequestCallable(ObjectMapper mapper, Redis redis, ModelMeta<T, ?> meta) {
-        this.mapper = mapper;
-        this.redis = redis;
-        this.modelMeta = meta;
-    }
-
     @Override
     public T call(HttpRequest request) throws Exception {
         final HttpResponse response = request.execute();
