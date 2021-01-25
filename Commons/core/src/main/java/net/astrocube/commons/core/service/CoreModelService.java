@@ -85,7 +85,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
         QueryBaseResult queryResult = this.httpClient.executeRequestSync(
                 modelMeta.getRouteKey() + "/list",
-                new CoreRequestCallable<>(mapper.constructType(QueryBaseResult.class), mapper),
+                new CoreRequestCallable<>(TypeToken.of(QueryBaseResult.class), mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -243,7 +243,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
         return this.httpClient.executeRequestSync(
                 modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
-                new CoreRequestCallable<>(this.modelMeta.getCompleteType(), mapper),
+                new CoreRequestCallable<>(getCompleteType(), mapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         new HashMap<>(),
