@@ -18,23 +18,10 @@ import redis.clients.jedis.JedisPool;
 @Singleton
 public class CoreCooldownKick implements CooldownKick {
 
-    private final AuthenticationCooldown authenticationCooldown;
-    private final MessageHandler<Player> messageHandler;
-    private final Plugin plugin;
-    private final JedisPool jedisPool;
-
-    @Inject
-    public CoreCooldownKick(
-            AuthenticationCooldown authenticationCooldown,
-            MessageHandler<Player> messageHandler,
-            Plugin plugin,
-            Redis redis
-    ) {
-        this.authenticationCooldown = authenticationCooldown;
-        this.messageHandler = messageHandler;
-        this.plugin = plugin;
-        this.jedisPool = redis.getRawConnection();
-    }
+    private @Inject AuthenticationCooldown authenticationCooldown;
+    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject Plugin plugin;
+    private @Inject Redis redis;
 
     @Override
     public void checkAndKick(User user, Player player) {
@@ -47,21 +34,21 @@ public class CoreCooldownKick implements CooldownKick {
 
     @Override
     public void addTry(User user) {
-        try (Jedis jedis = jedisPool.getResource()) {
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.set("authAttempts:" + user.getId(), getTries(user) + 1 + "");
         }
     }
 
     @Override
     public void clearTries(User user) {
-        try (Jedis jedis = jedisPool.getResource()) {
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.del("authAttempts:" + user.getId());
         }
     }
 
     @Override
     public int getTries(User user) {
-        try (Jedis jedis = jedisPool.getResource()) {
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
             return  jedis.exists("authAttempts:" + user.getId()) ?
                     Integer.parseInt(jedis.get("authAttempts:" + user.getId())) : 0;
         }
