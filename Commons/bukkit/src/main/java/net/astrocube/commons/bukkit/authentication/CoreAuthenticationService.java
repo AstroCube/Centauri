@@ -21,7 +21,7 @@ public class CoreAuthenticationService implements AuthenticationService {
     @Override
     public void register(BasicAuthorization authorization) throws Exception {
         httpClient.executeRequestSync(
-                "authentication/register",
+                "authentication/register-server",
                 new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
