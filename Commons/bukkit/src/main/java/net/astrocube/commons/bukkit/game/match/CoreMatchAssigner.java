@@ -4,10 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.event.game.GameUserDisconnectEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
-import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
-import net.astrocube.api.bukkit.game.match.MatchAssigner;
-import net.astrocube.api.bukkit.game.match.MatchService;
-import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
+import net.astrocube.api.bukkit.game.match.*;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -31,19 +28,19 @@ public class CoreMatchAssigner implements MatchAssigner {
 
     private final JedisPool jedisPool;
     private final Plugin plugin;
-    private final ActualMatchProvider actualMatchProvider;
+    private final ActualMatchCache actualMatchCache;
     private final UserMatchJoiner userMatchJoiner;
     private final FindService<User> findService;
     private final MatchService matchService;
     private final Channel<SingleMatchAssignation> channel;
 
     @Inject
-    public CoreMatchAssigner(Redis redis, ActualMatchProvider actualMatchProvider,
+    public CoreMatchAssigner(Redis redis, ActualMatchCache actualMatchProvider,
                              Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
                              FindService<User> findService, MatchService matchService) {
         this.jedisPool = redis.getRawConnection();
         this.plugin = plugin;
-        this.actualMatchProvider = actualMatchProvider;
+        this.actualMatchCache = actualMatchProvider;
         this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
         this.userMatchJoiner = userMatchJoiner;
         this.matchService = matchService;
@@ -78,7 +75,7 @@ public class CoreMatchAssigner implements MatchAssigner {
     @Override
     public void unAssign(Player player) throws Exception {
 
-        Optional<Match> matchOptional = actualMatchProvider.provide(player.getDatabaseIdentifier());
+        Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
         if (matchOptional.isPresent()) {
 

@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.command.match;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertMode;
@@ -25,12 +26,12 @@ public class MatchMessageHelper {
     private @Inject FindService<User> findService;
     private @Inject DisplayMatcher displayMatcher;
     private @Inject MessageHandler<Player> messageHandler;
-    private @Inject ActualMatchProvider actualMatchProvider;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
 
     public Optional<Match> checkInvolvedMatch(String playerId) {
         try {
-            return actualMatchProvider.provide(playerId);
+            return actualMatchCache.get(playerId);
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error obtaining optional match");
             return Optional.empty();

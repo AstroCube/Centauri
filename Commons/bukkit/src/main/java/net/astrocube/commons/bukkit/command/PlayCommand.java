@@ -6,6 +6,7 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertMode;
@@ -23,7 +24,7 @@ public class PlayCommand implements CommandClass {
 
     private @Inject QueryService<GameMode> queryService;
     private @Inject MessageHandler<Player> messageHandler;
-    private @Inject ActualMatchProvider actualMatchProvider;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject @Named("core") MatchmakingGenerator matchmakingGenerator;
     private @Inject Plugin plugin;
 
@@ -60,7 +61,7 @@ public class PlayCommand implements CommandClass {
 
             try {
 
-                Optional<Match> match = actualMatchProvider.provide(player.getDatabaseIdentifier());
+                Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 
                 if (match.isPresent()) {
                     messageHandler.send(player, AlertMode.ERROR,"game.matchmaking.already");

@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.game.spectator;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -17,7 +18,7 @@ import java.util.logging.Level;
 
 public class PlayerDamageListener implements Listener {
 
-    private @Inject ActualMatchProvider actualMatchProvider;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -30,7 +31,7 @@ public class PlayerDamageListener implements Listener {
         Player player = (Player) event.getEntity();
 
         try {
-            Optional<Match> matchOptional = actualMatchProvider.provide(player.getDatabaseIdentifier());
+            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
             matchOptional.ifPresent(match -> {
                 try {

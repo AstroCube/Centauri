@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.game.match;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
 import net.astrocube.api.bukkit.game.match.MatchRejoiner;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
@@ -18,14 +19,14 @@ import java.util.Optional;
 @Singleton
 public class CoreMatchRejoiner implements MatchRejoiner {
 
-    private @Inject ActualMatchProvider actualMatchProvider;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject MessageHandler<Player> messageHandler;
     private @Inject FindService<GameMode> findService;
 
     @Override
     public void rejoinMatch(User user, Player player) throws Exception {
 
-        Optional<Match> match = actualMatchProvider.provide(user.getId());
+        Optional<Match> match = actualMatchCache.get(user.getId());
 
         if (match.isPresent()) {
 
