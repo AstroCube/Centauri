@@ -4,6 +4,7 @@ import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
+import net.astrocube.commons.core.cloud.CoreCloudTeleport;
 import net.astrocube.commons.core.cloud.dummy.DummyCloudTeleport;
 import net.astrocube.commons.core.cloud.dummy.DummyNameProvider;
 import net.astrocube.commons.core.cloud.dummy.DummyStatusProvider;

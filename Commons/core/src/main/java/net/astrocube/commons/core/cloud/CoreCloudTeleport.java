@@ -37,4 +37,9 @@ public class CoreCloudTeleport implements CloudTeleport {
                 .findAny().orElse("");
     }
 
+    @Override
+    public void teleportToActual(String player) {
+        TimoCloudAPI.getUniversalAPI().getPlayer(player).sendToServer(TimoCloudAPI.getBukkitAPI().getThisServer());
+    }
+
 }

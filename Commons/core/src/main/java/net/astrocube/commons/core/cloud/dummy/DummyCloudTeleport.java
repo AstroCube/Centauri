@@ -17,4 +17,9 @@ public class DummyCloudTeleport implements CloudTeleport {
     public String getServerFromGroup(String group) {
         return "";
     }
+
+    @Override
+    public void teleportToActual(String player) {
+
+    }
 }

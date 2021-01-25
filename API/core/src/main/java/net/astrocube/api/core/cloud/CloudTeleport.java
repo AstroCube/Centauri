@@ -18,4 +18,10 @@ public interface CloudTeleport {
 
     String getServerFromGroup(String group);
 
+    /**
+     * Teleport player to actual server
+     * @param player to be teleported
+     */
+    void teleportToActual(String player);
+
 }
