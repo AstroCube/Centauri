@@ -48,11 +48,8 @@ public class CommandLoader implements Loader {
                 (clazz, parent) -> this.injector.getInstance(clazz)
         );
 
-        commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
-
+        commandManager.registerCommands(treeBuilder.fromClass(adminChatCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(playCommand));
         commandManager.registerCommands(treeBuilder.fromClass(friendsCommand));
         commandManager.registerCommands(treeBuilder.fromClass(matchCommand));
         commandManager.registerCommands(treeBuilder.fromClass(punishCommand));
