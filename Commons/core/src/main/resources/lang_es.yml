@@ -176,7 +176,10 @@ admin-panel:
     lore:
       - " "
       - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
-      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
+      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"+
+    lore-solo:
+      - " "
+      - "%%aqua%%Click Izquierdo: %%gray%%Ir a una partida"
     items:
       5d5a11f35f1de46c232babae: "%%aqua%%SkyWars"
       5db64666df034f2e9a3b4800: "%%red%%TNT Games"

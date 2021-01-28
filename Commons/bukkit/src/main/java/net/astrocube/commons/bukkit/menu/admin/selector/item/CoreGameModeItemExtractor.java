@@ -32,7 +32,11 @@ public class CoreGameModeItemExtractor implements GameModeItemExtractor {
         }
 
         ItemMeta iconMeta = icon.getItemMeta();
-        List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents());
+        List<String> baseLore = new ArrayList<>(
+                gameMode.getSubTypes() != null && !gameMode.getSubTypes().isEmpty() ?
+                        messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents() :
+                        messageHandler.getMany(player, "admin-panel.gamemode.lore-solo").getContents()
+        );
 
         iconMeta.setDisplayName(messageHandler.get(player, "admin-panel.gamemode.items." + gameMode.getId()));
         iconMeta.setLore(baseLore);
