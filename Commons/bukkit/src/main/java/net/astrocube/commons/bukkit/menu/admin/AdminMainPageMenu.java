@@ -19,7 +19,7 @@ public class AdminMainPageMenu {
     @Inject
     private AdminOnlineStaffMenu adminOnlineStaffMenu;
     @Inject
-    private MessageHandler<Player> playerMessageHandler;
+    private MessageHandler playerMessageHandler;
 
     public Inventory createAdminPanel(Player player) {
 

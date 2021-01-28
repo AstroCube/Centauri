@@ -21,6 +21,7 @@ public class UserDisconnectListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onUserLeave(PlayerQuitEvent event) {
+
             try {
 
                 Player player = event.getPlayer();
@@ -34,6 +35,6 @@ public class UserDisconnectListener implements Listener {
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting a player from game.", e);
             }
-        }
+
     }
 }

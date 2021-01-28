@@ -19,7 +19,7 @@ public class CoreHideItemActionable implements HideItemActionable {
 
     private @Inject UpdateService<User, UserDoc.Partial> updateService;
     private @Inject HideStatusModifier hideStatusModifier;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @Override

@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 public class AdminGameModeSelectorMenu {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject QueryService<GameMode> gameModeQueryService;
     private @Inject GameModeItemExtractor gameModeItemExtractor;
     private @Inject Plugin plugin;

@@ -21,7 +21,7 @@ import java.util.List;
 @Singleton
 public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject LobbyServerRedirect lobbyServerRedirect;
 
     @Override

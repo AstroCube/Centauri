@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreLobbyServerRedirect implements LobbyServerRedirect {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void redirectPlayer(Player player, LobbySelectorWrapper wrapper, LobbySwitchStatus status) {

@@ -1,7 +1,7 @@
 package net.astrocube.api.bukkit.translation;
 
 import com.google.inject.Inject;
-import me.yushust.message.specific.LanguageProvider;
+import me.yushust.message.specific.Linguist;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.logging.Level;
 
-public class CoreLanguageProvider implements LanguageProvider<Player> {
+public class CoreLanguageProvider implements Linguist<Player> {
 
     private @Inject FindService<User> userFindService;
 

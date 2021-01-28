@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class LobbyGadgetStack {
 
-    public static ItemStack get(MessageHandler<Player> provider, Player player) {
+    public static ItemStack get(MessageHandler provider, Player player) {
 
         ItemStack lobbySelectorBase = NBTUtils.addString(
                 new ItemStack(Material.NETHER_STAR, 1),

@@ -17,7 +17,7 @@ import java.util.List;
 public class CoreGameModeItemExtractor implements GameModeItemExtractor {
 
     @Inject
-    private MessageHandler<Player> messageHandler;
+    private MessageHandler messageHandler;
     @Inject
     private DependentAction dependentAction;
 

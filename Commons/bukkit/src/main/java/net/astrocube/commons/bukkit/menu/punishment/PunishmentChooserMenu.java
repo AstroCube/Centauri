@@ -17,7 +17,7 @@ import javax.inject.Inject;
 public class PunishmentChooserMenu {
 
     @Inject
-    private MessageHandler<Player> messageHandler;
+    private MessageHandler messageHandler;
     @Inject
     private PunishmentReasonChooserMenu punishmentReasonChooserMenu;
 

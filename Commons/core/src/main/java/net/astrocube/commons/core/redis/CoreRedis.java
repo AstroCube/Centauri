@@ -31,6 +31,7 @@ public class CoreRedis implements Redis {
                 listenerConnection.auth(coreRedisConfig.getPassword());
             }
         } catch (JedisConnectionException e) {
+            e.printStackTrace();
             Logger.getLogger("redis").log(Level.SEVERE, "An exception occurred while initializing the needed jedis instances", e);
         }
     }

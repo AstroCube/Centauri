@@ -15,7 +15,7 @@ import team.unnamed.gui.core.gui.GUIBuilder;
 @Singleton
 public class CoreGameSelectorDisplay implements GameSelectorDisplay {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject QueryService<GameMode> queryService;
     private @Inject GameItemExtractor gameItemExtractor;
 

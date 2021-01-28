@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CoreGameItemExtractor implements GameItemExtractor {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject GameSelectorRedirect gameSelectorRedirect;
 
     @Override

@@ -25,7 +25,7 @@ public class AdminOnlineStaffMenu {
     @Inject
     private QueryService<User> userQueryService;
     @Inject
-    private MessageHandler<Player> playerMessageHandler;
+    private MessageHandler playerMessageHandler;
 
     public void createOnlineStaffMenu(Player player, int page) {
 

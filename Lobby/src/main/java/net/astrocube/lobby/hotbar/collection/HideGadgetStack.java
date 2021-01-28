@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class HideGadgetStack {
 
-    public static ItemStack get(MessageHandler<Player> provider, Player player, boolean active) {
+    public static ItemStack get(MessageHandler provider, Player player, boolean active) {
 
         ItemStack hidingMenuBase;
         if (active) {

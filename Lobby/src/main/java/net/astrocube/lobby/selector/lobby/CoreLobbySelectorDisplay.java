@@ -18,7 +18,7 @@ import java.util.Optional;
 public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
 
     private @Inject LobbyModeProvider lobbyModeProvider;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject LobbyCloudWrapperGenerator lobbyCloudWrapperGenerator;
     private @Inject LobbyIconExtractor lobbyIconExtractor;
 

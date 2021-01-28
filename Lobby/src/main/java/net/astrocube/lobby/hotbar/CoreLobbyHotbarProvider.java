@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreLobbyHotbarProvider implements LobbyHotbarProvider {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void setup(User user, Player player) {

@@ -23,7 +23,7 @@ public class PlayerLookCommand implements CommandClass {
     @Inject
     private FindService<User> userFindService;
     @Inject
-    private MessageHandler<Player> messageHandler;
+    private MessageHandler messageHandler;
     @Inject
     private QueryService<Punishment> queryService;
     @Inject

@@ -1,8 +1,11 @@
 package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpResponse;
 import com.google.inject.Inject;
 import net.astrocube.api.core.http.HttpClient;
+import net.astrocube.api.core.http.RequestCallable;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
@@ -12,6 +15,8 @@ import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.commons.core.http.CoreRequestOptions;
+import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
+import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 
@@ -19,7 +24,7 @@ import java.util.HashMap;
 public class RedisModelService<Complete extends Model, Partial extends PartialModel>
         extends CoreModelService<Complete, Partial> {
 
-    private Redis redis;
+    @Inject private Redis redis;
     @Inject private HttpClient httpClient;
     private RedisRequestCallable<Complete> redisRequestCallable;
     @Inject private ObjectMapper objectMapper;
@@ -50,7 +55,6 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
                 )
         );
     }
-
 
     @Override
     public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
@@ -84,8 +88,11 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
         @Override
         public T call(HttpRequest request) throws Exception {
+
+
             final HttpResponse response = request.execute();
             final String json = response.parseAsString();
+
             int statusCode = response.getStatusCode();
 
             if (statusCode < 400) {

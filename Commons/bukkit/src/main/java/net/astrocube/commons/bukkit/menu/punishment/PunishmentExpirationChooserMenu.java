@@ -19,7 +19,7 @@ public class PunishmentExpirationChooserMenu {
     @Inject
     private PunishmentHandler punishmentHandler;
     @Inject
-    private MessageHandler<Player> messageHandler;
+    private MessageHandler messageHandler;
     @Inject
     private Plugin plugin;
 

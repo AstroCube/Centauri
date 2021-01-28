@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class GameGadgetStack {
 
-    public static ItemStack get(MessageHandler<Player> provider, Player player) {
+    public static ItemStack get(MessageHandler provider, Player player) {
         ItemStack gameMenuBase = NBTUtils.addString(
                 new ItemStack(Material.COMPASS, 1),
                 "actionable",

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 public class AdminSubGameModeSelectorMenu {
 
-    private @Inject MessageHandler<Player> playerMessageHandler;
+    private @Inject MessageHandler playerMessageHandler;
 
     public Inventory createSubGameModeSelectorMenu(Player player, GameMode gameMode) {
 

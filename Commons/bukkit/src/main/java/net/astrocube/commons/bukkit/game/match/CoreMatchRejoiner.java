@@ -19,7 +19,6 @@ import java.util.Optional;
 public class CoreMatchRejoiner implements MatchRejoiner {
 
     private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MessageHandler<Player> messageHandler;
     private @Inject MessageHandler messageHandler;
     private @Inject FindService<GameMode> findService;
 

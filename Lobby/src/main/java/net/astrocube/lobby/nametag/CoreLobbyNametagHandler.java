@@ -29,13 +29,13 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
     private final PacketHandler packetHandler;
     private final LobbyNametagRenderer lobbyNametagRenderer;
     private final Plugin plugin;
-    private final MessageHandler<Player> messageHandler;
+    private final MessageHandler messageHandler;
 
     @Inject
     public CoreLobbyNametagHandler(
             DisplayMatcher displayMatcher, NametagRegistry nametagRegistry,
             LobbyNametagRenderer lobbyNametagRenderer, @Named("nametag") PacketHandler nametagPacketHandler,
-            Plugin plugin, MessageHandler<Player> messageHandler
+            Plugin plugin, MessageHandler messageHandler
     ) {
         this.tagList = new HashMap<>();
         this.displayMatcher = displayMatcher;
