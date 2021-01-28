@@ -28,6 +28,10 @@ authentication:
     z: 0
     yaw: 0
     pitch: 0
+admin:
+  teleport:
+    disabled:
+      - ""
 punishment-reason-menu:
   title: "&fPunishment reason chooser menu"
 ban-reasons:

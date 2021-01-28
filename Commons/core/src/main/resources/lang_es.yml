@@ -25,6 +25,7 @@ commons-friend-removed: "%%yellow%%Has removido a %%receiver%% de tu lista de am
 commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de parte de este usuario"
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
+
 authentication:
   attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
   unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
@@ -38,6 +39,7 @@ authentication:
   cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
   chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
   time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
+
 game:
   play:
     error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
@@ -74,6 +76,7 @@ game:
     invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
     invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
     invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
+
 interaction:
   actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
 tablist:
@@ -89,6 +92,7 @@ staff:
     permission: ":monda: no tenes permisos"
     disabled: ":monda: lo tenes desactivado"
     reminder-click: "klik"
+
 commands:
   translation:
     argument:
@@ -101,6 +105,7 @@ commands:
       only-player: "asd"
     player:
       offline: "asd"
+
 punish-menu:
   title: "%%white%%Sanctions menu"
   items:
@@ -141,16 +146,19 @@ punishment-expiration-menu:
       lore:
         - "%%white%%This only subtracts a minute to the total time."
         - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
+
 admin-panel:
   main:
-    title: "Admin Panel del Pornmax"
+    title: "AstroCube Admin Panel"
     items:
       match-teleport:
-        name: "%%gold%%Teleport to GameMode/SubGameMode"
+        name: "%%gold%%Espectar juegos"
         lore:
-          - "%%gray%%Teleport to any GameMode or"
-          - "%%gray%% you can select any SubGameMode"
-          - "%%gray%% after select the GameMode type."
+          - "%%gray%%Teletransportarse a cualquier"
+          - "%%gray%%modalidad o sub-modalidad en"
+          - "%%gray%%el servidor."
+          - " "
+          - "%%blue%%¡Click izquierdo para ver más!"
       lobby-teleport:
         name: "%%yellow%%Teleport to lobby"
         lore:
@@ -164,16 +172,29 @@ admin-panel:
           - "%%gray%%all the network, and their last"
           - "%%gray%%connection."
   gamemode:
+    title: "%%gray%%Seleccionar Modo"
     lore:
-      - "%%yellow%%Left click to select a SubGameMode!"
-      - "%%yellow%%Right click to enter to a random SubGameMode!"
-  subgamemode:
-    title: "%%gold%%SubGamemode Selector"
+      - ""
+      - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
+      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
     items:
-      subgamemode-layout:
-        name: "%%green%%Teleport to SubGamemode %subgamemode_name%"
-        lore:
-          - "%%gray%%Teleport to this SubGameMode!"
+      5d5a11f35f1de46c232babae: "%%aqua%%SkyWars"
+      5db64666df034f2e9a3b4800: "%%red%%TNT Games"
+      5e14f49eff6607e52a32ed02: "%%purple%%The Dungeon"
+      5e14f4e5ff6607e52a32ed48: "%%red%%BedWars"
+  subGamemode:
+    title: "%%gray%%Seleccionr Sub-Modo"
+    lore:
+      - " "
+      - "%%aqua%%¡Especta una partida!"
+    items:
+      5db645eea534664c62702cbe: "TNT Run"
+      5e7c266e2e25d63c747474e7: "Bow Spleef"
+      5eecebe7cea0ef21da0a6312: "TNT Tag"
+      5e2dd6b99536bff847f528af: "SOLO Normal"
+      5e2dd6e5b3103ffc426ee82c: "TEAMS Normal"
+      5e2dd73f75629822a5c97c79: "SOLO Insane"
+      5e2dd7470fba1ccc89993a9e: "TEAMS Insane"
   online-staff:
     title: "%%blue%%Online staff"
     item-layout:

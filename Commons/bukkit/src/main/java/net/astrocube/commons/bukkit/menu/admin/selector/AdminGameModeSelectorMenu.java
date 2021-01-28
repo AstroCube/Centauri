@@ -13,19 +13,15 @@ import javax.inject.Inject;
 
 public class AdminGameModeSelectorMenu {
 
-    @Inject
-    private MessageHandler<Player> messageHandler;
-    @Inject
-    private QueryService<GameMode> gameModeQueryService;
-    @Inject
-    private GameModeItemExtractor gameModeItemExtractor;
-    @Inject
-    private Plugin plugin;
+    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject QueryService<GameMode> gameModeQueryService;
+    private @Inject GameModeItemExtractor gameModeItemExtractor;
+    private @Inject Plugin plugin;
 
     public void createGameModeSelectorMenu(Player player) {
 
         GUIBuilder guiBuilder = GUIBuilder
-                .builder(messageHandler.get(player, "lobby.gameSelector.title"), 3);
+                .builder(messageHandler.get(player, "lobby.gameSelector.title"), 1);
 
         gameModeQueryService
                 .getAll()
@@ -35,7 +31,10 @@ public class AdminGameModeSelectorMenu {
 
                         for (GameMode gameMode : response.getResponse().get().getFoundModels()) {
 
-                            guiBuilder.addItem(gameModeItemExtractor.generateGameMode(gameMode, player));
+                            if (!plugin.getConfig().getStringList("admin.teleport.disabled").contains(gameMode.getId())) {
+                                guiBuilder.addItem(gameModeItemExtractor.generateGameMode(gameMode, player));
+                            }
+
                         }
 
                         Bukkit.getScheduler().runTask(plugin, () -> player.openInventory(guiBuilder.build()));

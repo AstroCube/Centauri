@@ -35,12 +35,8 @@ public class CoreGameModeItemExtractor implements GameModeItemExtractor {
 
         baseLore.add(" ");
 
-        iconMeta.setDisplayName(
-                messageHandler.get(player, "lobby.gameSelector.games." + gameMode.getId() + ".title")
-        );
-        iconMeta.setLore(
-                baseLore
-        );
+        iconMeta.setDisplayName(messageHandler.get(player, "admin-panel.gamemode.items." + gameMode.getId()));
+        iconMeta.setLore(baseLore);
 
         icon.setItemMeta(iconMeta);
 
