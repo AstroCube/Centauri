@@ -5,6 +5,7 @@ import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.commons.bukkit.menu.admin.selector.item.action.DependentAction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import team.unnamed.gui.abstraction.item.ItemClickable;
@@ -33,10 +34,9 @@ public class CoreGameModeItemExtractor implements GameModeItemExtractor {
         ItemMeta iconMeta = icon.getItemMeta();
         List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents());
 
-        baseLore.add(" ");
-
         iconMeta.setDisplayName(messageHandler.get(player, "admin-panel.gamemode.items." + gameMode.getId()));
         iconMeta.setLore(baseLore);
+        iconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         icon.setItemMeta(iconMeta);
 

@@ -186,7 +186,8 @@ admin-panel:
     title: "%%gray%%Seleccionar Sub-Modo"
     lore:
       - " "
-      - "%%aqua%%¡Click izquierdo para espectar una partida!"
+      - "%%aqua%%¡Click izquierdo para espectar"
+      - "%%aqua%%una partida!"
     items:
       5db645eea534664c62702cbe: "TNT Run"
       5e7c266e2e25d63c747474e7: "Bow Spleef"
