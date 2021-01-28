@@ -32,6 +32,7 @@ public class CommandLoader implements Loader {
     private @Inject PlayerLookCommand playerLookCommand;
     private @Inject AdminCommand adminCommand;
     private @Inject FreezeCommand freezeCommand;
+    private @Inject PartyCommand partyCommand;
 
     private @Inject TestCommand testCommand;
 
@@ -58,6 +59,11 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
         commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.partyCommand));
 
         commandManager.registerCommands(treeBuilder.fromClass(testCommand));
 

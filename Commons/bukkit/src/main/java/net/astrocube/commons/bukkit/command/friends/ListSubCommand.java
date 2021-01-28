@@ -24,7 +24,7 @@ import java.util.logging.Level;
 public class ListSubCommand implements CommandClass {
 
     private static final int FRIENDS_PER_PAGE = 10;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FindService<User> userFindService;
 

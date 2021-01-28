@@ -16,7 +16,7 @@ import java.util.Set;
 @Singleton
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {

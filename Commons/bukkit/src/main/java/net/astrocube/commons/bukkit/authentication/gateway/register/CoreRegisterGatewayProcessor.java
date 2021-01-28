@@ -19,7 +19,7 @@ public class CoreRegisterGatewayProcessor implements RegisterGatewayProcessor {
     private @Inject AuthenticationService authenticationService;
     private @Inject AuthenticationValidator authenticationValidator;
     private @Inject GatewayMatcher gatewayMatcher;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @Override

@@ -36,8 +36,13 @@
         </dependency>
         <dependency>
             <groupId>me.yushust.message</groupId>
+            <artifactId>message-dispatch-core</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>me.yushust.message</groupId>
             <artifactId>bukkit-message-dispatch</artifactId>
-            <version>4.3.2</version>
+            <version>5.0.1</version>
         </dependency>
         <dependency>
             <groupId>me.fixeddev</groupId>

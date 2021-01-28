@@ -2,7 +2,6 @@ package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.Model;
@@ -17,32 +16,32 @@ import net.astrocube.commons.core.http.CoreRequestOptions;
 import java.util.HashMap;
 
 @SuppressWarnings("All")
-public class RedisModelService<Complete extends Model, Partial extends PartialModel> extends CoreModelService<Complete, Partial> {
+public class RedisModelService<Complete extends Model, Partial extends PartialModel>
+        extends CoreModelService<Complete, Partial> {
 
     private Redis redis;
     @Inject private HttpClient httpClient;
-    private RedisRequestCallable<Complete> redisRequestCallabe;
-    private ObjectMapper objectMapper;
+    private RedisRequestCallable<Complete> redisRequestCallable;
+    @Inject private ObjectMapper objectMapper;
 
     @Inject
     RedisModelService(
             ObjectMapper mapper,
-            ModelMeta<Complete, Partial> modelMeta,
-            ExecutorServiceProvider executorServiceProvider,
-            Redis redis
+            ModelMeta<Complete, Partial> modelMeta
     ) {
-        super(mapper, modelMeta, executorServiceProvider);
-        this.redis = redis;
-        this.objectMapper = mapper;
-        this.redisRequestCallabe =
-                new RedisRequestCallable<>(objectMapper, redis, modelMeta);
+        super(mapper, modelMeta);
+    }
+
+    @Inject
+    public void constructCallable() {
+        this.redisRequestCallable = new RedisRequestCallable<>();
     }
 
     @Override
     public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
         return httpClient.executeRequestSync(
                 modelMeta.getRouteKey(),
-                redisRequestCallabe,
+                redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.PUT,
                         new HashMap<>(),
@@ -57,7 +56,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
     public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
         return httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
-                this.redisRequestCallabe,
+                this.redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         new HashMap<>(),
@@ -71,7 +70,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
     public Complete createSync(CreateRequest<Partial> request) throws Exception {
         return httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey(),
-                this.redisRequestCallabe,
+                this.redisRequestCallable,
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),
@@ -81,4 +80,28 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
         );
     }
 
+    private class RedisRequestCallable<T extends Model> implements RequestCallable<T> {
+
+        @Override
+        public T call(HttpRequest request) throws Exception {
+            final HttpResponse response = request.execute();
+            final String json = response.parseAsString();
+            int statusCode = response.getStatusCode();
+
+            if (statusCode < 400) {
+                try (Jedis jedis = redis.getRawConnection().getResource()) {
+                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
+                    String key = modelMeta.getRouteKey() + ":" + model.getId();
+                    jedis.set(key, json);
+                    jedis.expire(key, modelMeta.getCache());
+                    return model;
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    throw new Exception("Parsing of " + getCompleteType() + " failed");
+                }
+            } else {
+                throw RequestExceptionResolverUtil.generateException(json, statusCode);
+            }
+        }
+    }
 }

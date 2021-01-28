@@ -18,7 +18,7 @@ import redis.clients.jedis.Jedis;
 public class CoreCooldownKick implements CooldownKick {
 
     private @Inject AuthenticationCooldown authenticationCooldown;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
     private @Inject Redis redis;
 

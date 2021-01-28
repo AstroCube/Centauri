@@ -22,7 +22,7 @@ import java.util.logging.Level;
 public class SpectatorAssignListener implements Listener {
 
     private @Inject FindService<Match> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject MatchService matchService;
     private @Inject Plugin plugin;
 

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 @Singleton
 public class RegisterGateway implements AuthenticationGateway {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void startProcessing(User user) {

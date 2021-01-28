@@ -24,7 +24,7 @@ public class RemoveSubCommand implements CommandClass {
     private @Inject DeleteService<Friendship> deleteService;
     private @Inject QueryService<Friendship> queryService;
     private @Inject ObjectMapper objectMapper;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public boolean execute(@Sender Player player, OfflinePlayer target) {

@@ -24,8 +24,8 @@ public class MatchMessageHelper {
     private @Inject MatchParticipantsProvider matchParticipantsProvider;
     private @Inject FindService<User> findService;
     private @Inject DisplayMatcher displayMatcher;
-    private @Inject MessageHandler<Player> messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     public Optional<Match> checkInvolvedMatch(String playerId) {

@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 @Command(names = "force")
 public class ForceSubCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject CreateService<Friendship, FriendshipDoc.Partial> createService;
     private @Inject FriendHelper friendHelper;
     private @Inject FriendCallbackHelper friendCallbackHelper;

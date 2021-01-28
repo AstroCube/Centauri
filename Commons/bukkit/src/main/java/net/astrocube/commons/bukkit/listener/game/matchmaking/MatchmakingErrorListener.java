@@ -17,7 +17,7 @@ import java.util.logging.Level;
 public class MatchmakingErrorListener implements Listener {
 
     private @Inject FindService<User> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler

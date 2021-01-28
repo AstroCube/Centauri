@@ -22,7 +22,7 @@ import java.util.Set;
 @Singleton
 public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
     private @Inject ObjectMapper mapper;
     private @Inject ServerService serverService;

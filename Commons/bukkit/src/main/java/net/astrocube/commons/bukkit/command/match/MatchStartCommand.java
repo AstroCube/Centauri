@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class MatchStartCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject CountdownScheduler countdownScheduler;
     private @Inject MatchParticipantsProvider matchParticipantsProvider;
     private @Inject MatchMessageHelper matchMessageHelper;

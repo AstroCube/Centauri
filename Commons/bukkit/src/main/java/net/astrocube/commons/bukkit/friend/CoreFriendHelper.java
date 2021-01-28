@@ -20,7 +20,7 @@ import java.util.logging.Level;
 @Singleton
 public class CoreFriendHelper implements FriendHelper {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject QueryService<Friendship> friendshipQueryService;
     private @Inject ObjectMapper objectMapper;
     private @Inject FriendshipHandler friendshipHandler;

@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
 })
 public class FriendsCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = {""})
     public boolean onCommand(@Sender Player player) {

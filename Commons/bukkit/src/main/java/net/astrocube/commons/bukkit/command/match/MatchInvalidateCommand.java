@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class MatchInvalidateCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject MatchMessageHelper matchMessageHelper;
 
     @Command(names = {"invalidate"}, permission = "commons.match.invalidate")
