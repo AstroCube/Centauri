@@ -3,7 +3,6 @@ package net.astrocube.api.core.virtual.gamemode;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 
 public interface GameModeDoc {
@@ -22,7 +21,7 @@ public interface GameModeDoc {
          * WIll return the SubGameMode object Set
          * @return subGameMode types
          */
-        @Nullable Set<SubGameMode> getSubTypes();
+        Set<SubGameMode> getSubTypes();
 
     }
 

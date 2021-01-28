@@ -14,8 +14,10 @@ import java.util.logging.Level;
 
 public class UserDisconnectListener implements Listener {
 
-    private @Inject Plugin plugin;
-    private @Inject MatchAssigner matchAssigner;
+    private @Inject
+    Plugin plugin;
+    private @Inject
+    MatchAssigner matchAssigner;
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onUserLeave(PlayerQuitEvent event) {
@@ -31,7 +33,5 @@ public class UserDisconnectListener implements Listener {
                 plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting a player from game.", e);
             }
         }
-
     }
-
 }

@@ -15,6 +15,9 @@ import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectLis
 import net.astrocube.commons.bukkit.listener.game.spectator.LobbyReturnListener;
 import net.astrocube.commons.bukkit.listener.game.spectator.PlayerDamageListener;
 import net.astrocube.commons.bukkit.listener.game.spectator.SpectatorAssignListener;
+import net.astrocube.commons.bukkit.listener.freeze.PlayerMoveListener;
+import net.astrocube.commons.bukkit.listener.freeze.PlayerQuitListener;
+import net.astrocube.commons.bukkit.listener.game.*;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
@@ -22,7 +25,7 @@ import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
 import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.MenuListeners;
+import team.unnamed.gui.core.GUIListeners;
 
 import java.util.logging.Level;
 
@@ -49,6 +52,7 @@ public class EventListenerLoader implements Loader {
     private @Inject MatchInvalidationListener matchInvalidationListener;
     private @Inject MatchmakingErrorListener matchmakingErrorListener;
     private @Inject MatchAssignationListener matchAssignationListener;
+
     private @Inject MatchStartListener matchStartListener;
     private @Inject MatchFinishListener matchFinishListener;
 
@@ -57,7 +61,10 @@ public class EventListenerLoader implements Loader {
     private @Inject LobbyReturnListener lobbyReturnListener;
     private @Inject LobbyActionListener lobbyActionListener;
 
-    private @Inject MenuListeners menuListeners;
+    private @Inject PlayerMoveListener playerMoveListener;
+    private @Inject PlayerQuitListener playerQuitListener;
+
+    private @Inject GUIListeners guiListeners;
 
     private @Inject Plugin plugin;
 
@@ -98,6 +105,9 @@ public class EventListenerLoader implements Loader {
 
         registerEvent(matchmakingErrorListener);
         registerEvent(menuListeners);
+        registerEvent(guiListeners);
+        registerEvent(playerMoveListener);
+        registerEvent(playerQuitListener);
     }
 
     private void registerEvent(Listener listener) {

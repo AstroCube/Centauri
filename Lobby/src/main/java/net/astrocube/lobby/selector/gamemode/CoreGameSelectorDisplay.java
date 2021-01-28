@@ -10,7 +10,7 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
-import team.unnamed.gui.menu.MenuBuilder;
+import team.unnamed.gui.core.gui.GUIBuilder;
 
 @Singleton
 public class CoreGameSelectorDisplay implements GameSelectorDisplay {
@@ -25,11 +25,10 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
         queryService.getAll().callback(modesResponse -> {
             if (modesResponse.isSuccessful() && modesResponse.getResponse().isPresent()) {
 
-                MenuBuilder menuBuilder = MenuBuilder.newBuilder(
+                GUIBuilder menuBuilder = GUIBuilder.builder(
                         messageHandler.get(player, "lobby.gameSelector.title"),
                         1
                 );
-                menuBuilder.cancelClick(true);
 
                 for (GameMode gameModeDoc : modesResponse.getResponse().get().getFoundModels()) {
                     menuBuilder.addItem(gameItemExtractor.generate(gameModeDoc, player));
@@ -41,7 +40,5 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                 messageHandler.send(player, AlertMode.ERROR, "lobby.gameSelector.error");
             }
         });
-
     }
-
 }

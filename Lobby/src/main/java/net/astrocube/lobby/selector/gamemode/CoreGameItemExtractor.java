@@ -9,8 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import team.unnamed.gui.api.item.ItemClickable;
-import team.unnamed.gui.item.DefaultItemClickable;
+import team.unnamed.gui.abstraction.item.ItemClickable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +41,11 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         icon.setItemMeta(iconMeta);
 
         //TODO: Link with cloud system with online number
-        return new DefaultItemClickable(gameModeDoc.getSlot(), icon, (block) -> {
-            gameSelectorRedirect.redirectPlayer(gameModeDoc, player);
-            return true;
-        });
+        return ItemClickable.builder(gameModeDoc.getSlot())
+                .setItemStack(icon)
+                .setAction((block) -> {
+                    gameSelectorRedirect.redirectPlayer(gameModeDoc, player);
+                    return true;
+                }).build();
     }
 }

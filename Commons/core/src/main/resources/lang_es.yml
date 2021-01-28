@@ -1,18 +1,18 @@
 friend-help:
-- "%%gold%%============================"
-- "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"
-- "%%gold%%/friend add <player> %%dark_gray%%- %%yellow%%Invita a alguien a ser tu amigo"
-- "%%gold%%/friend deny <player> %%dark_gray%%- %%yellow%%Rechaza una petición de amistad"
-- "%%gold%%/friend help %%dark_gray%%- %%yellow%%Muestra ayuda sobre estos comandos"
-- "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
-- "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
-- "%%gold%%============================"
+  - "%%gold%%============================"
+  - "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"
+  - "%%gold%%/friend add <player> %%dark_gray%%- %%yellow%%Invita a alguien a ser tu amigo"
+  - "%%gold%%/friend deny <player> %%dark_gray%%- %%yellow%%Rechaza una petición de amistad"
+  - "%%gold%%/friend help %%dark_gray%%- %%yellow%%Muestra ayuda sobre estos comandos"
+  - "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
+  - "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
+  - "%%gold%%============================"
 no-friends: "&cAl parecer no tienes amigos :("
 friends-next-page: "%%yellow%%%%bold%%Página siguiente"
 friends-previous-page: "%%yellow%%%%bold%%Página anterior"
 friend-list:
-    header: "%%gold%%============ %%yellow%%Lista de Amigos %%gold%%============"
-    element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
+  header: "%%gold%%============ %%yellow%%Lista de Amigos %%gold%%============"
+  element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
 online: "%%yellow%%Conectado"
 offline: "%%red%%Desconectado"
 commons-friend-not-yourself: "No puedes hacer esto contigo mismo!"
@@ -74,8 +74,6 @@ game:
         invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
         invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
         invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
-interaction:
-    actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
 tablist:
     header:
         - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
@@ -89,15 +87,121 @@ staff:
         permission: ":monda: no tenes permisos"
         disabled: ":monda: lo tenes desactivado"
         reminder-click: "klik"
+  attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
+  unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
+  register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
+  register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
+  password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
+  password-sub: "%%aqua%%Inicia sesión con %%blue%%/login <contraseña>"
+  password-invalid: "%%red%%¡Ups! Esa no es tu contraseña, tranqui, aún te quedan más intentos."
+  password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
+  success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
+  cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
+interaction:
+  actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
+lookup:
+  information-message:
+    - "Información acerca de %player_name%"
+    - "País: %player_country%"
+    - "IP: %player_ip%"
+    - "Ultima vez: %player_last_seen%"
+    - "Sanciones: %player_punishments%"
+  punishments-format:
+    - "Tipo: %punishment_type%"
+    - "Aplicado por: %punishment_pusher%"
+    - "Aplicado el: %punishment_created_at%"
+    - "Razón: %punishment_reason%"
 commands:
-    translation:
-        argument:
-            no-more: "asdsd"
-        command:
-            subcommand-invalid: "asd"
-            no-permission: "asdasd"
-        sender:
-            unknown: "asdasd"
-            only-player: "asd"
-        player:
-            offline: "asd"
+  translation:
+    argument:
+      no-more: "asdsd"
+    command:
+      subcommand-invalid: "asd"
+      no-permission: "asdasd"
+    sender:
+      unknown: "asdasd"
+      only-player: "asd"
+    player:
+      offline: "asd"
+punish-menu:
+  title: "%%white%%Sanctions menu"
+  items:
+    ban:
+      name: "%%dark_red%%Ban %punished_name%"
+      lore:
+        - "%%white%%Click here to choose the"
+        - "%%white%%reason to ban this player!"
+    kick:
+      name: "%%red%%Kick %punished_name%"
+      lore:
+        - "%%white%%Click here to choose the"
+        - "%%white%%reason to kick this player!"
+    warn:
+      name: "%%yellow%%Warn %punished_name%"
+      lore:
+        - "%%white%%Click here to choose the"
+        - "%%white%%reason to warn this player!"
+punishment-expiration:
+  title: "Punishment Expiration"
+  invalid-number: "Invalid number"
+punishment-expiration-menu:
+  title: "%%white%%Punishment expiration chooser"
+  items:
+    confirm:
+      name: "%%green%%Confirm the punishment!"
+      lore:
+        - "%%white%%Click on this bottom and finish the punishment"
+        - "%%white%%Remember, if you don't specify the time, the punishment expiration is never"
+        - "%%white%%But, if you specify there, the punishment will be temporary with the minutes specified."
+    increase:
+      name: "%%green%%Increase the time in minutes"
+      lore:
+        - "%%white%%This only adds a minute to the total time"
+        - "%%white%%Warning! Don't break te bottom."
+    decrease:
+      name: "%%red%%Decrease the time in minutes"
+      lore:
+        - "%%white%%This only subtracts a minute to the total time."
+        - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
+admin-panel:
+  main:
+    title: "Admin Panel del Pornmax"
+    items:
+      match-teleport:
+        name: "%%gold%%Teleport to GameMode/SubGameMode"
+        lore:
+          - "%%gray%%Teleport to any GameMode or"
+          - "%%gray%% you can select any SubGameMode"
+          - "%%gray%% after select the GameMode type."
+      lobby-teleport:
+        name: "%%yellow%%Teleport to lobby"
+        lore:
+          - "%%gray%%Teleport to the Lobby of any GameMode."
+          - "%%gray%% But, if you are in a match while"
+          - "%%gray%% you select the lobby"
+      online-staff:
+        name: "%%blue%%View online staff"
+        lore:
+          - "%%gray%%View the online staff in"
+          - "%%gray%%all the network, and their last"
+          - "%%gray%%connection."
+  gamemode:
+    lore:
+      - "%%yellow%%Left click to select a SubGameMode!"
+      - "%%yellow%%Right click to enter to a random SubGameMode!"
+  subgamemode:
+    title: "%%gold%%SubGamemode Selector"
+    items:
+      subgamemode-layout:
+        name: "%%green%%Teleport to SubGamemode %subgamemode_name%"
+        lore:
+          - "%%gray%%Teleport to this SubGameMode!"
+  online-staff:
+    title: "%%blue%%Online staff"
+    item-layout:
+      name: "%%green%%%player_name%"
+      lore:
+        - "%%gray%%State: %state%"
+        - "%%gray%%Last seen: %last_seen%"
+    next-name: "%%green%%Next page"
+    previous-name: "%%red%%Previous page"
