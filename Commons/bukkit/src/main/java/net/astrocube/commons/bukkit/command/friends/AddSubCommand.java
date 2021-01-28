@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 @Command(names = "add")
 public class AddSubCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject
     FriendHelper friendHelper;
     private @Inject FriendshipHandler friendshipHandler;

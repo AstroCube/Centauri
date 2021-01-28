@@ -24,7 +24,7 @@ import java.util.List;
 })
 public class MatchCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @Command(names = {"", "help"})

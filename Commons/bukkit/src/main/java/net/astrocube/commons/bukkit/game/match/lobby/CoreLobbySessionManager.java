@@ -31,7 +31,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
     private @Inject FindService<User> userFindService;
     private @Inject CountdownScheduler countdownScheduler;
     private @Inject LobbySessionModifier lobbySessionModifier;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @Override

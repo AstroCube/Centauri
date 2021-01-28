@@ -21,7 +21,7 @@ public class AuthenticationInvalidListener implements Listener {
 
     private @Inject CooldownKick cooldownKick;
     private @Inject AuthenticationCooldown authenticationCooldown;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 

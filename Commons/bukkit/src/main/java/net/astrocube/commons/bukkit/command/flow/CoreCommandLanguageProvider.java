@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 public class CoreCommandLanguageProvider implements TranslationProvider {
 
-    private @Inject MessageHandler<Player> playerMessageHandler;
+    private @Inject MessageHandler playerMessageHandler;
 
     @Override
     public String getTranslation(Namespace namespace, String key) {

@@ -12,7 +12,7 @@ import java.util.List;
 @Singleton
 public class CoreTablistGenerator implements TablistGenerator {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public TablistCompound generate(Player player) {

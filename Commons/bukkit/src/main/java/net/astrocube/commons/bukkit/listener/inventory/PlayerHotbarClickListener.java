@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 public class PlayerHotbarClickListener implements Listener {
 
     private @Inject FindService<User> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @EventHandler
     public void onHotbarClick(PlayerInteractEvent event) {

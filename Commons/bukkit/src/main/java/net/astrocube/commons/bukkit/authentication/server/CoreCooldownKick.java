@@ -19,14 +19,14 @@ import redis.clients.jedis.JedisPool;
 public class CoreCooldownKick implements CooldownKick {
 
     private final AuthenticationCooldown authenticationCooldown;
-    private final MessageHandler<Player> messageHandler;
+    private final MessageHandler messageHandler;
     private final Plugin plugin;
     private final JedisPool jedisPool;
 
     @Inject
     public CoreCooldownKick(
             AuthenticationCooldown authenticationCooldown,
-            MessageHandler<Player> messageHandler,
+            MessageHandler messageHandler,
             Plugin plugin,
             Redis redis
     ) {

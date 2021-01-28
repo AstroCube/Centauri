@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 
 public class AuthenticationRestrictionListener implements Listener {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler

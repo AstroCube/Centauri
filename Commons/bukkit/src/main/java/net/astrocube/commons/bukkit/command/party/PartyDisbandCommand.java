@@ -18,7 +18,7 @@ public class PartyDisbandCommand implements CommandClass {
 
     private @Inject PartyService partyService;
     private @Inject DeleteService<Party> partyDeleteService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public void disband(

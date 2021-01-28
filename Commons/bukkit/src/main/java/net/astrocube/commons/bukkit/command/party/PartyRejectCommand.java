@@ -15,7 +15,7 @@ import java.util.Optional;
 public class PartyRejectCommand implements CommandClass {
 
     private @Inject PartyService partyService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public void reject(

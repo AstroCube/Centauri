@@ -14,12 +14,12 @@ import org.bukkit.entity.Player;
 public class CoreCountdownAlerter implements CountdownAlerter {
 
     private final MatchParticipantsProvider matchParticipantsProvider;
-    private final MessageHandler<Player> messageHandler;
+    private final MessageHandler messageHandler;
 
     @Inject
     public CoreCountdownAlerter(
             MatchParticipantsProvider matchParticipantsProvider,
-            MessageHandler<Player> messageHandler
+            MessageHandler messageHandler
     ) {
         this.matchParticipantsProvider = matchParticipantsProvider;
         this.messageHandler = messageHandler;

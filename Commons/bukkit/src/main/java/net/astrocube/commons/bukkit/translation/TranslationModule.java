@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 public class TranslationModule extends ProtectedModule {
 
     @Provides @Singleton
-    public MessageHandler<Player> provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
+    public MessageHandler provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
         return MessageHandler.builder(Player.class)
                 .setRepository(
                         MessageRepository.builder()

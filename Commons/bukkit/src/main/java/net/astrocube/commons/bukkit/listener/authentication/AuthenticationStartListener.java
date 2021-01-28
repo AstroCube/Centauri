@@ -25,7 +25,7 @@ import java.util.logging.Level;
 public class AuthenticationStartListener implements Listener {
 
     private @Inject SessionRegistryManager sessionRegistryManager;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject GatewayMatcher gatewayMatcher;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;

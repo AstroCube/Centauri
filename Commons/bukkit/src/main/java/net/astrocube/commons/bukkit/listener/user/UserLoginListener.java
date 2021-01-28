@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 public class UserLoginListener implements Listener {
 
     private @Inject SessionValidatorHandler sessionValidatorHandler;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject AuthenticationCooldown authenticationCooldown;
     private @Inject Plugin plugin;
 

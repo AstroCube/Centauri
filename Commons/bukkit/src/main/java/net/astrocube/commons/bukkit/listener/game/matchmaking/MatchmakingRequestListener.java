@@ -26,7 +26,7 @@ public class MatchmakingRequestListener implements Listener {
     private @Inject MatchAssigner matchAssigner;
     private @Inject IdealMatchSelector idealMatchSelector;
     private @Inject FindService<User> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler

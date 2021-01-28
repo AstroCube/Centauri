@@ -21,7 +21,7 @@ public class PartyKickOfflineCommand
 
     @Inject private PartyService partyService;
     @Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
-    @Inject private MessageHandler<Player> messageHandler;
+    @Inject private MessageHandler messageHandler;
 
     @Command(names = "")
     public void execute(

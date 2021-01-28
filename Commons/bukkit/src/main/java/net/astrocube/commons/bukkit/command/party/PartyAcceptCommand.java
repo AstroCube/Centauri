@@ -19,7 +19,7 @@ public class PartyAcceptCommand implements CommandClass {
 
     private @Inject PartyService partyService;
     private @Inject UpdateService<Party, PartyDoc.Partial> updateService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public void execute(

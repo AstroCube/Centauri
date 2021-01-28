@@ -19,7 +19,7 @@ import java.util.Optional;
 public class CoreMatchRejoiner implements MatchRejoiner {
 
     private @Inject ActualMatchProvider actualMatchProvider;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject FindService<GameMode> findService;
 
     @Override
