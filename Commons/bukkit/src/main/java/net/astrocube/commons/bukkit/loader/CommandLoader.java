@@ -33,6 +33,8 @@ public class CommandLoader implements Loader {
     private @Inject AdminCommand adminCommand;
     private @Inject FreezeCommand freezeCommand;
 
+    private @Inject TestCommand testCommand;
+
     @Override
     public void load() {
         CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
@@ -56,6 +58,8 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
         commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
+
+        commandManager.registerCommands(treeBuilder.fromClass(testCommand));
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
