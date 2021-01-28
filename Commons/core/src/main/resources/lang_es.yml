@@ -176,7 +176,7 @@ admin-panel:
     lore:
       - " "
       - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
-      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"+
+      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
     lore-solo:
       - " "
       - "%%aqua%%Click Izquierdo: %%gray%%Ir a una partida"
