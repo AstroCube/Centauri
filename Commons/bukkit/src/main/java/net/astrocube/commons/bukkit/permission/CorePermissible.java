@@ -29,7 +29,10 @@ public class CorePermissible extends PermissibleBase {
         try {
             User user = findService.findSync(player.getDatabaseIdentifier());
             return balancer.evaluate(
-                    user.getGroups().stream().map(UserDoc.UserGroup::getGroup).collect(Collectors.toSet()), s
+                    user.getGroups().stream()
+                            .map(UserDoc.UserGroup::getGroup)
+                            .filter(g -> !g.getPermissions().isEmpty())
+                            .collect(Collectors.toSet()), s
             );
         } catch (Exception exception) {
             Bukkit.getLogger().log(Level.SEVERE, "An exception occurred while getting player " + player.getName() + " permissions", exception);
