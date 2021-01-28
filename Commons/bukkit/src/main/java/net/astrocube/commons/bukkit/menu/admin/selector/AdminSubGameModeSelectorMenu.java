@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
@@ -22,7 +23,7 @@ public class AdminSubGameModeSelectorMenu {
         GUIBuilder guiBuilder = GUIBuilder.builder(
                 playerMessageHandler.get(
                         player,
-                        "admin-panel.subgamemode.title"
+                        "admin-panel.subGamemode.title"
                 ),
                 1
         ); // TODO: 6/1/2021 Start and finish this gui
@@ -33,7 +34,7 @@ public class AdminSubGameModeSelectorMenu {
                     .addItem(ItemClickable.builder(index++)
                             .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
                                     .setName(
-                                            ChatColor.AQUA +
+                                            ChatColor.BLUE +
                                             playerMessageHandler.get(
                                                     player,
                                                     "admin-panel.subGamemode.items." + subGameMode.getId()
@@ -45,6 +46,7 @@ public class AdminSubGameModeSelectorMenu {
                                                     "admin-panel.subGamemode.lore"
                                             )
                                     )
+                                    .addFlag(ItemFlag.HIDE_ATTRIBUTES)
                                     .build())
                             .setAction(InventoryClickEvent -> {
                                 // TODO: 9/1/2021 Send to the requested sub-gamemode

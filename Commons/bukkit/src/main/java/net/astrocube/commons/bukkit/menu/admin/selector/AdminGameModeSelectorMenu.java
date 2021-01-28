@@ -21,7 +21,7 @@ public class AdminGameModeSelectorMenu {
     public void createGameModeSelectorMenu(Player player) {
 
         GUIBuilder guiBuilder = GUIBuilder
-                .builder(messageHandler.get(player, "lobby.gameSelector.title"), 1);
+                .builder(messageHandler.get(player, "admin-panel.gamemode.title"), 1);
 
         gameModeQueryService
                 .getAll()

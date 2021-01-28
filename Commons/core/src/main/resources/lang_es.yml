@@ -174,19 +174,19 @@ admin-panel:
   gamemode:
     title: "%%gray%%Seleccionar Modo"
     lore:
-      - ""
+      - " "
       - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
       - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
     items:
       5d5a11f35f1de46c232babae: "%%aqua%%SkyWars"
       5db64666df034f2e9a3b4800: "%%red%%TNT Games"
-      5e14f49eff6607e52a32ed02: "%%purple%%The Dungeon"
-      5e14f4e5ff6607e52a32ed48: "%%red%%BedWars"
+      5e14f49eff6607e52a32ed02: "%%light_purple%%The Dungeon"
+      5e14f4e5ff6607e52a32ed48: "%%green%%BedWars"
   subGamemode:
-    title: "%%gray%%Seleccionr Sub-Modo"
+    title: "%%gray%%Seleccionar Sub-Modo"
     lore:
       - " "
-      - "%%aqua%%¡Especta una partida!"
+      - "%%aqua%%¡Click izquierdo para espectar una partida!"
     items:
       5db645eea534664c62702cbe: "TNT Run"
       5e7c266e2e25d63c747474e7: "Bow Spleef"
