@@ -26,67 +26,6 @@ commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de par
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
 authentication:
-    attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
-    unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
-    register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
-    register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
-    password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
-    password-sub: "%%aqua%%Inicia sesión con %%blue%%/login <contraseña>"
-    password-invalid: "%%red%%¡Ups! Esa no es tu contraseña, tranqui, aún te quedan más intentos."
-    password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
-    success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
-    cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
-    chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
-    time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
-game:
-    play:
-        error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
-        unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
-    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
-    lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
-    lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
-    countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
-    rejoin:
-        not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
-    matchmaking:
-        error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
-        already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
-    spectator:
-        return:
-            title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
-            lore:
-                - "%%gray%%Vuelve a la central espacial."
-    admin:
-        match-help:
-            - "%%yellow%%============================"
-            - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"
-            - "%%aqua%%/match cancel %%gold%%- %%yellow%%Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
-            - "%%aqua%%/match invalidate %%gold%%- %%yellow%%Invalida la partida en la que te encuentras"
-            - "%%aqua%%/match sandbox %%gold%%- %%yellow%%Si el servidor está en modo sandbox, podrás ingresar a una partida directamente"
-            - "%%yellow%%============================"
-        not-active: "%%red%%No te encuentras en ninguna partida."
-        force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
-        insufficient: "%%red%%No hay jugadores suficientes para empezar la partida."
-        stop: "%%yellow%%¡El administrador %%player%% %%yellow%%ha detenido la partida! Se iniciará nuevamente si ingresa/sale otro jugador y la cantidad mínima del juego se cumple."
-        error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
-        no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
-        started: "%%red%%La partida ya ha iniciado, disfruta de ella o puedes invalidarla en caso de que sea necesario."
-        invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
-        invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
-        invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
-tablist:
-    header:
-        - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
-        - " "
-    footer:
-        - " "
-        - "%%white%%Página web: %%aqua%%%%bold%%astrocube.net"
-        - "%%white%%Tienda: %%aqua%%%%bold%%store.astrocube.net"
-staff:
-    chat:
-        permission: ":monda: no tenes permisos"
-        disabled: ":monda: lo tenes desactivado"
-        reminder-click: "klik"
   attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
   unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
   register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
@@ -97,20 +36,59 @@ staff:
   password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
   success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
   cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
+  chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
+  time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
+game:
+  play:
+    error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
+    unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
+  lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
+  lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
+  lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
+  countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
+  rejoin:
+    not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
+  matchmaking:
+    error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
+    already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
+  spectator:
+    return:
+      title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
+      lore:
+        - "%%gray%%Vuelve a la central espacial."
+  admin:
+    match-help:
+      - "%%yellow%%============================"
+      - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"
+      - "%%aqua%%/match cancel %%gold%%- %%yellow%%Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
+      - "%%aqua%%/match invalidate %%gold%%- %%yellow%%Invalida la partida en la que te encuentras"
+      - "%%aqua%%/match sandbox %%gold%%- %%yellow%%Si el servidor está en modo sandbox, podrás ingresar a una partida directamente"
+      - "%%yellow%%============================"
+    not-active: "%%red%%No te encuentras en ninguna partida."
+    force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
+    insufficient: "%%red%%No hay jugadores suficientes para empezar la partida."
+    stop: "%%yellow%%¡El administrador %%player%% %%yellow%%ha detenido la partida! Se iniciará nuevamente si ingresa/sale otro jugador y la cantidad mínima del juego se cumple."
+    error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
+    no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
+    started: "%%red%%La partida ya ha iniciado, disfruta de ella o puedes invalidarla en caso de que sea necesario."
+    invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
+    invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
+    invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
 interaction:
   actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
-lookup:
-  information-message:
-    - "Información acerca de %player_name%"
-    - "País: %player_country%"
-    - "IP: %player_ip%"
-    - "Ultima vez: %player_last_seen%"
-    - "Sanciones: %player_punishments%"
-  punishments-format:
-    - "Tipo: %punishment_type%"
-    - "Aplicado por: %punishment_pusher%"
-    - "Aplicado el: %punishment_created_at%"
-    - "Razón: %punishment_reason%"
+tablist:
+  header:
+    - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
+    - " "
+  footer:
+    - " "
+    - "%%white%%Página web: %%aqua%%%%bold%%astrocube.net"
+    - "%%white%%Tienda: %%aqua%%%%bold%%store.astrocube.net"
+staff:
+  chat:
+    permission: ":monda: no tenes permisos"
+    disabled: ":monda: lo tenes desactivado"
+    reminder-click: "klik"
 commands:
   translation:
     argument:
