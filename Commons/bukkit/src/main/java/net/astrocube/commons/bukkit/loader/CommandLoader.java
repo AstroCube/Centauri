@@ -28,10 +28,14 @@ public class CommandLoader implements Loader {
     private @Inject MatchCommand matchCommand;
     private @Inject AdminChatCommand adminChatCommand;
     private @Inject PlayCommand playCommand;
+<<<<<<< HEAD
     private @Inject PunishCommand punishCommand;
     private @Inject PlayerLookCommand playerLookCommand;
     private @Inject AdminCommand adminCommand;
     private @Inject FreezeCommand freezeCommand;
+=======
+    private @Inject PartyCommand partyCommand;
+>>>>>>> 182b4cdfc15025f906cebb11c6854c1819bc1582
 
     @Override
     public void load() {
@@ -48,6 +52,7 @@ public class CommandLoader implements Loader {
                 (clazz, parent) -> this.injector.getInstance(clazz)
         );
 
+<<<<<<< HEAD
         commandManager.registerCommands(treeBuilder.fromClass(adminChatCommand));
         commandManager.registerCommands(treeBuilder.fromClass(playCommand));
         commandManager.registerCommands(treeBuilder.fromClass(friendsCommand));
@@ -56,6 +61,13 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
         commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
+=======
+        commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.partyCommand));
+>>>>>>> 182b4cdfc15025f906cebb11c6854c1819bc1582
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));

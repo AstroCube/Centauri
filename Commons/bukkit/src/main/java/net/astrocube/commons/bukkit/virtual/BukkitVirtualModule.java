@@ -11,5 +11,6 @@ public class BukkitVirtualModule extends ProtectedModule {
         install(new MatchModelModule());
         install(new GameMapModelModule());
         install(new ChannelModelModule());
+        install(new PartyModelModule());
     }
 }
