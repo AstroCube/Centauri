@@ -97,14 +97,13 @@ public class EventListenerLoader implements Loader {
         registerEvent(matchAssignationListener);
         registerEvent(matchStartListener);
         registerEvent(matchFinishListener);
+        registerEvent(matchmakingErrorListener);
 
         registerEvent(spectatorAssignListener);
         registerEvent(playerDamageListener);
         registerEvent(lobbyReturnListener);
         registerEvent(lobbyActionListener);
 
-        registerEvent(matchmakingErrorListener);
-        registerEvent(menuListeners);
         registerEvent(guiListeners);
         registerEvent(playerMoveListener);
         registerEvent(playerQuitListener);
