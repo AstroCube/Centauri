@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class AdminChatCommand implements CommandClass {
 
     private @Inject FindService<User> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject StaffMessageManager messageManager;
 
     @Command(names = {"adminchat", "ac", "staffchat", "sc"}, permission = "commons.staff.chat")

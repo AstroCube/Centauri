@@ -18,7 +18,7 @@ import java.util.Optional;
 public class PartyKickCommand implements CommandClass {
 
     @Inject private PartyService partyService;
-    @Inject private MessageHandler<Player> messageHandler;
+    @Inject private MessageHandler messageHandler;
     @Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
 
     @Command(names = "")

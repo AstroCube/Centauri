@@ -30,7 +30,7 @@ public class CorePartyService implements PartyService {
     private @Inject ObjectMapper objectMapper;
     private @Inject Redis redis;
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void removeInvite(String playerName) {

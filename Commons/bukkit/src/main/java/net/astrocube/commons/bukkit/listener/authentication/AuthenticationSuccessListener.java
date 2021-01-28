@@ -22,7 +22,7 @@ public class AuthenticationSuccessListener implements Listener {
     private @Inject SessionRegistryManager sessionRegistryManager;
     private @Inject CloudTeleport cloudTeleport;
     private @Inject FindService<User> findService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject Plugin plugin;
 

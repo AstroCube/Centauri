@@ -22,7 +22,7 @@ public class GameServerJoinListener implements Listener {
     private @Inject FindService<Match> findService;
     private @Inject LobbySessionManager lobbySessionManager;
     private @Inject SpectatorSessionManager spectatorSessionManager;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler

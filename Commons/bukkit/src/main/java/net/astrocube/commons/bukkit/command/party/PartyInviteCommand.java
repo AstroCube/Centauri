@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class PartyInviteCommand implements CommandClass {
 
     private @Inject PartyService partyService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public void invite(

@@ -18,7 +18,7 @@ import java.util.Optional;
 public class PartyLeaveCommand implements CommandClass {
 
     private @Inject PartyService partyService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject UpdateService<Party, PartyDoc.Partial> partyUpdateService;
 
     @Command(names = "")

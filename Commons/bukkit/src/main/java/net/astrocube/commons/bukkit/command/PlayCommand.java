@@ -22,8 +22,8 @@ import java.util.logging.Level;
 public class PlayCommand implements CommandClass {
 
     private @Inject QueryService<GameMode> queryService;
-    private @Inject MessageHandler<Player> messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
+    private @Inject MessageHandler messageHandler;
     private @Inject @Named("core") MatchmakingGenerator matchmakingGenerator;
     private @Inject Plugin plugin;
 

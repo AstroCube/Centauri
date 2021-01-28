@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 @Command(names = "deny")
 public class DenySubCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject FriendHelper friendCommandValidator;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;

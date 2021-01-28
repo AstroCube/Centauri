@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Singleton
 public class CoreLobbyItemProvider implements LobbyItemProvider {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void provide(Player player, int slot) {

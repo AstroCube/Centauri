@@ -22,7 +22,7 @@ import javax.inject.Inject;
 })
 public class PartyCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
 
     @Command(names = "")
     public void onCommand(@Sender Player player) {

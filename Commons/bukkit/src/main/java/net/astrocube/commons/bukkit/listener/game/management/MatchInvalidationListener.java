@@ -24,7 +24,7 @@ public class MatchInvalidationListener implements Listener {
 
     private @Inject MatchStateUpdater matchStateUpdater;
     private @Inject FindService<Match> matchFindService;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @EventHandler

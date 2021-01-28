@@ -21,7 +21,7 @@ public class MatchDebugCommand implements CommandClass {
 
     private @Inject @Named("sandbox") MatchmakingGenerator matchmakingGenerator;
     private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MessageHandler<Player> messageHandler;
+    private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
     @Command(names = "sandbox", permission = "commons.match.sandbox")
