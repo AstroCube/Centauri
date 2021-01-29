@@ -7,10 +7,9 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyCloudWrapperGenerator;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorDisplay;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorWrapper;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.entity.Player;
-import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
         Optional<GameMode> gameMode = lobbyModeProvider.getRegisteredMode();
 
         if (!gameMode.isPresent()) {
-            messageHandler.send(player, AlertMode.ERROR, "lobby.lobby-selector.error.not-detected");
+            messageHandler.send(player, AlertModes.ERROR, "lobby.lobby-selector.error.not-detected");
             return;
         }
 

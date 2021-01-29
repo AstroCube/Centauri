@@ -1,6 +1,6 @@
 package net.astrocube.api.bukkit.translation.interceptor;
 
-import me.yushust.message.MessageInterceptor;
+import me.yushust.message.format.MessageInterceptor;
 import org.jetbrains.annotations.NotNull;
 
 public class CenterMessageInterceptor implements MessageInterceptor {

@@ -6,7 +6,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import net.astrocube.commons.bukkit.utils.UserUtils;
@@ -43,7 +43,7 @@ public class DenySubCommand implements CommandClass {
             }
 
             friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
-            messageHandler.send(player, AlertMode.ERROR, "commons-friend-request-denied");
+            messageHandler.send(player, AlertModes.ERROR, "commons-friend-request-denied");
 
         });
 

@@ -1,25 +1,21 @@
 package net.astrocube.api.bukkit.translation.mode;
 
-import me.yushust.message.mode.Mode;
-import me.yushust.message.specific.Messenger;
+import me.yushust.message.send.MessageSender;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-public class CoreMessenger implements Messenger<Player> {
+public class CoreMessenger implements MessageSender<Player> {
 
     @Override
-    public void send(Player player, Mode mode, String s) {
+    public void send(Player player, String mode, String message) {
 
-        if (mode instanceof AlertMode) {
+        Sound sound = AlertModes.SOUNDS.get(mode);
 
-            AlertMode alertMode = (AlertMode) mode;
-
-            if (alertMode.getSound() != null) {
-                player.playSound(player.getLocation(), ((AlertMode) mode).getSound(), 1f, 1f);
-            }
-
+        if (sound != null) {
+            player.playSound(player.getLocation(), sound, 1F, 1F);
         }
 
-        player.sendMessage(s);
+        player.sendMessage(message);
     }
 
 }

@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorDisplay;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.user.User;
@@ -37,7 +37,7 @@ public class CoreGameSelectorDisplay implements GameSelectorDisplay {
                 player.openInventory(menuBuilder.build());
 
             } else {
-                messageHandler.send(player, AlertMode.ERROR, "lobby.gameSelector.error");
+                messageHandler.send(player, AlertModes.ERROR, "lobby.gameSelector.error");
             }
         });
     }

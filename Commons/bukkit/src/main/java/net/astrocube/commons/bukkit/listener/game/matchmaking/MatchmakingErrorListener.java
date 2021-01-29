@@ -3,7 +3,7 @@ package net.astrocube.commons.bukkit.listener.game.matchmaking;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -30,7 +30,7 @@ public class MatchmakingErrorListener implements Listener {
 
                 Player player = Bukkit.getPlayer(response.getResponse().get().getUsername());
 
-                messageHandler.send(player, AlertMode.ERROR, "game.matchmaking.error");
+                messageHandler.send(player, AlertModes.ERROR, "game.matchmaking.error");
 
             } else {
                 plugin.getLogger().log(Level.SEVERE, "Could not find user for error alerting");

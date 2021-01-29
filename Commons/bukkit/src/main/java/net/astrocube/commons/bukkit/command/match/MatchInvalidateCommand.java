@@ -6,7 +6,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import org.bukkit.Bukkit;
@@ -25,12 +25,12 @@ public class MatchInvalidateCommand implements CommandClass {
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
         if (!matchOptional.isPresent()) {
-            messageHandler.send(player, AlertMode.ERROR, "game.admin.not-active");
+            messageHandler.send(player, AlertModes.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
-            messageHandler.send(player, AlertMode.ERROR, "game.admin.invalidate-not-stared");
+            messageHandler.send(player, AlertModes.ERROR, "game.admin.invalidate-not-stared");
             return true;
         }
 

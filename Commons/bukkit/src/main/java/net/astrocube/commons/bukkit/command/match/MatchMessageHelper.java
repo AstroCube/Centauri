@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
@@ -40,12 +40,12 @@ public class MatchMessageHelper {
     public boolean getCountAvailability(Optional<Match> providedMatch, Player player) {
 
         if (!providedMatch.isPresent()) {
-            messageHandler.send(player, AlertMode.ERROR, "game.admin.not-active");
+            messageHandler.send(player, AlertModes.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (providedMatch.get().getStatus() != MatchDoc.Status.LOBBY) {
-            messageHandler.send(player, AlertMode.ERROR, "game.admin.started");
+            messageHandler.send(player, AlertModes.ERROR, "game.admin.started");
             return true;
         }
 

@@ -2,9 +2,8 @@ package net.astrocube.commons.bukkit.listener.authentication;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -23,7 +22,7 @@ public class AuthenticationRestrictionListener implements Listener {
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        messageHandler.send(event.getPlayer(), AlertMode.ERROR, "authentication.chat");
+        messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
         event.setCancelled(true);
     }
 
@@ -59,7 +58,7 @@ public class AuthenticationRestrictionListener implements Listener {
 
         }
 
-        messageHandler.send(event.getPlayer(), AlertMode.ERROR, "authentication.chat");
+        messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
         event.setCancelled(true);
 
     }

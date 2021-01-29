@@ -1,7 +1,7 @@
 package net.astrocube.api.bukkit.translation;
 
 import com.google.inject.Inject;
-import me.yushust.message.specific.Linguist;
+import me.yushust.message.language.Linguist;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;

@@ -2,14 +2,13 @@ package net.astrocube.commons.bukkit.listener.inventory;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.user.inventory.event.ActionableItemEvent;
 import net.astrocube.api.bukkit.user.inventory.nbt.NBTUtils;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -42,7 +41,7 @@ public class PlayerHotbarClickListener implements Listener {
                     ));
                     event.setCancelled(true);
                 } else {
-                    messageHandler.send(event.getPlayer(), AlertMode.ERROR, "interaction.actionable-error");
+                    messageHandler.send(event.getPlayer(), AlertModes.ERROR, "interaction.actionable-error");
                 }
             });
         }

@@ -8,7 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRegistryHandler;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.server.ServerService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
@@ -33,7 +33,7 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
         Server server = serverService.getActual();
 
         if (!plugin.getConfig().getBoolean("server.sandbox")) {
-            messageHandler.send(player, AlertMode.ERROR,"game.admin.no-sandbox");
+            messageHandler.send(player, AlertModes.ERROR,"game.admin.no-sandbox");
             return;
         }
 

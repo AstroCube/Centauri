@@ -8,7 +8,7 @@ import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class MatchStartCommand implements CommandClass {
         try {
             secondsFixed = Integer.parseInt(seconds);
         } catch (Exception e) {
-            messageHandler.send(player, AlertMode.ERROR,"game.admin.error");
+            messageHandler.send(player, AlertModes.ERROR,"game.admin.error");
             return true;
         }
 
@@ -45,7 +45,7 @@ public class MatchStartCommand implements CommandClass {
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
 
         if (involved.size() < 2) {
-            messageHandler.send(player, AlertMode.ERROR, "game.admin.insufficient");
+            messageHandler.send(player, AlertModes.ERROR, "game.admin.insufficient");
             return true;
         }
 

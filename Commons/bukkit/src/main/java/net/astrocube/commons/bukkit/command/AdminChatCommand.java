@@ -5,7 +5,7 @@ import me.fixeddev.commandflow.annotated.annotation.*;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.channel.admin.StaffMessageManager;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.utils.MessageUtils;
@@ -39,7 +39,7 @@ public class AdminChatCommand implements CommandClass {
                 .callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
                         user -> {
                             if (important && !player.hasPermission("commons.staff.chat.important")) {
-                                this.messageHandler.send(player, AlertMode.ERROR, "staff.chat.permission");
+                                this.messageHandler.send(player, AlertModes.ERROR, "staff.chat.permission");
                                 return;
                             }
 

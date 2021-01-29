@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.hide.HideItemActionable;
 import net.astrocube.api.bukkit.lobby.hide.HideStatusModifier;
-import net.astrocube.api.bukkit.translation.mode.AlertMode;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
@@ -43,7 +43,7 @@ public class CoreHideItemActionable implements HideItemActionable {
                 messageHandler.send(player, translateAlert);
 
             } else {
-                messageHandler.send(player, AlertMode.ERROR, "lobby.hiding.error");
+                messageHandler.send(player, AlertModes.ERROR, "lobby.hiding.error");
             }
         });
 
