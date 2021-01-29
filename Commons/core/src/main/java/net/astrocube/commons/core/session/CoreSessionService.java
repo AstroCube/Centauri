@@ -72,7 +72,7 @@ public class CoreSessionService implements SessionService {
     public void serverDisconnect(String user) throws Exception {
         httpClient.executeRequestSync(
                 "session/user-disconnect/" + user,
-                new CoreRequestCallable<>(TypeToken.of(Boolean.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.GET,
                         ""
