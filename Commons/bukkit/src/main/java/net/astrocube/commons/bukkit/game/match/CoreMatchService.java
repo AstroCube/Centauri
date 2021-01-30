@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.game.match;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
@@ -11,6 +12,7 @@ import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.redis.Redis;
+import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
 import net.astrocube.commons.core.service.RedisRequestCallable;
 
@@ -106,7 +108,7 @@ public class CoreMatchService implements MatchService {
     public void matchCleanup() throws Exception {
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/cleanup",
-                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         new HashMap<>(),

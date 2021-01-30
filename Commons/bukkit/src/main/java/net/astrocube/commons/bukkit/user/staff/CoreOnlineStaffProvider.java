@@ -26,8 +26,6 @@ public class CoreOnlineStaffProvider implements OnlineStaffProvider {
 
         Set<String> foundGroups = this.groupQueryService.querySync(staffQuery).getFoundModels().stream().map(Model::getId).collect(Collectors.toSet());
 
-        System.out.println(foundGroups);
-
         ObjectNode userQuery = this.mapper.createObjectNode();
         userQuery.put("session.online", true);
 

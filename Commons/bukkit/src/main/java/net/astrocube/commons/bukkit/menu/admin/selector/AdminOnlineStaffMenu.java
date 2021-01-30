@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.menu.admin.selector;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.utils.Pagination;
@@ -20,87 +21,76 @@ import java.util.Set;
 
 public class AdminOnlineStaffMenu {
 
-    @Inject
-    private Plugin plugin;
-    @Inject
-    private QueryService<User> userQueryService;
-    @Inject
-    private MessageHandler playerMessageHandler;
+    private @Inject Plugin plugin;
+    private @Inject OnlineStaffProvider onlineStaffProvider;
+    private @Inject MessageHandler playerMessageHandler;
 
     public void createOnlineStaffMenu(Player player, int page) {
 
         GUIBuilder guiBuilder = GUIBuilder
-                .builder(playerMessageHandler.get(player, "admin-panel.online-staff.title"), 5);
+                .builder(playerMessageHandler.get(player, "admin-panel.online-staff.title"), 6);
 
-        userQueryService
-                .getAll()
-                .callback(response -> {
 
-                    if (response.isSuccessful() && response.getResponse().isPresent()) {
+        try {
+            Pagination<User> userPagination  = new SimplePagination<>(36, onlineStaffProvider.provide());
 
-                        Pagination<User> userPagination = new SimplePagination<>(36, response.getResponse().get().getFoundModels());
+            int currentIndex = 0;
 
-                        int currentIndex = 0;
+            for (User user : userPagination.getPage(page)) {
 
-                        for (User user : userPagination.getPage(page)) {
+                guiBuilder
+                        .addItem(ItemClickable.builder(currentIndex++)
+                                .setItemStack(ItemBuilder
+                                        .newBuilder(Material.SKULL_ITEM)
+                                        .setName(playerMessageHandler.get(player, "admin-panel.online-staff.item-layout.name")
+                                                .replace("%player_name%", user.getUsername() == null ? "" : user.getUsername()))
+                                        .setLore(colorizeAndReplace(playerMessageHandler.getMany(player, "admin-panel.online-staff.item-layout.lore").getContents(), user))
+                                        .build())
+                                .build());
+            }
 
-                            if(user == null) {
-                                continue;
-                            }
+            int possibleNextPage = page + 1;
+            if (userPagination.pageExists(possibleNextPage)) {
 
-                            guiBuilder
-                                    .addItem(ItemClickable.builder(currentIndex++)
-                                            .setItemStack(ItemBuilder
-                                                    .newBuilder(Material.SKULL_ITEM)
-                                                    .setName(playerMessageHandler.get(player, "admin-panel.online-staff.item-layout.name")
-                                                            .replace("%player_name%", user.getUsername()))
-                                                    .setLore(colorizeAndReplace(playerMessageHandler.getMany(player, "admin-panel.online-staff.item-layout.lore").getContents(), user))
-                                                    .build())
-                                            .build());
-                        }
+                guiBuilder
+                        .addItem(ItemClickable
+                                .builder(54)
+                                .setItemStack(ItemBuilder
+                                        .newBuilder(Material.ARROW)
+                                        .setName(playerMessageHandler.get(player, "admin-panel.online-staff.next-name"))
+                                        .build())
+                                .setAction(event -> {
+                                    createOnlineStaffMenu(player, possibleNextPage);
+                                    return true;
+                                })
+                                .build());
+            }
 
-                        int possibleNextPage = page + 1;
-                        if (userPagination.pageExists(possibleNextPage)) {
+            int possiblePreviousPage = page - 1;
+            if (userPagination.pageExists(possiblePreviousPage)) {
 
-                            guiBuilder
-                                    .addItem(ItemClickable
-                                            .builder(54)
-                                            .setItemStack(ItemBuilder
-                                                    .newBuilder(Material.ARROW)
-                                                    .setName(playerMessageHandler.get(player, "admin-panel.online-staff.next-name"))
-                                                    .build())
-                                            .setAction(event -> {
+                guiBuilder
+                        .addItem(ItemClickable
+                                .builder(54)
+                                .setItemStack(ItemBuilder
+                                        .newBuilder(Material.REDSTONE)
+                                        .setName(playerMessageHandler.get(player, "admin-panel.online-staff.previous-name"))
+                                        .build())
+                                .setAction(event -> {
+                                    createOnlineStaffMenu(player, possiblePreviousPage);
+                                    return true;
+                                })
+                                .build());
+            }
 
-                                                createOnlineStaffMenu(player, possibleNextPage);
+            Bukkit.getScheduler()
+                    .runTask(plugin, () -> player.openInventory(guiBuilder.build()));
 
-                                                return true;
-                                            })
-                                            .build());
-                        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-                        int possiblePreviousPage = page - 1;
-                        if (userPagination.pageExists(possiblePreviousPage)) {
 
-                            guiBuilder
-                                    .addItem(ItemClickable
-                                            .builder(54)
-                                            .setItemStack(ItemBuilder
-                                                    .newBuilder(Material.REDSTONE)
-                                                    .setName(playerMessageHandler.get(player, "admin-panel.online-staff.previous-name"))
-                                                    .build())
-                                            .setAction(event -> {
-
-                                                createOnlineStaffMenu(player, possiblePreviousPage);
-
-                                                return true;
-                                            })
-                                            .build());
-                        }
-
-                        Bukkit.getScheduler()
-                                .runTask(plugin, () -> player.openInventory(guiBuilder.build()));
-                    }
-                });
     }
 
     private List<String> colorizeAndReplace(List<String> list, User user) {

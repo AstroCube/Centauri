@@ -54,7 +54,6 @@ public class AdminMainPageMenu {
                                 .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.online-staff.lore"))
                                 .build())
                         .setAction(event -> {
-
                             adminOnlineStaffMenu.createOnlineStaffMenu(player, 1);
                             return true;
                         })

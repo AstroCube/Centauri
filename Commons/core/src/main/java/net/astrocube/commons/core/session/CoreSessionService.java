@@ -60,7 +60,7 @@ public class CoreSessionService implements SessionService {
     public void serverSwitch(CreateRequest<SessionValidateDoc.ServerSwitch> user) throws Exception {
         httpClient.executeRequestSync(
                 "session/server-switch",
-                new CoreRequestCallable<>(TypeToken.of(Boolean.class), this.objectMapper),
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
                         this.objectMapper.writeValueAsString(user.getModel())
