@@ -267,11 +267,9 @@ admin-panel:
       5e2dd73f75629822a5c97c79: "SOLO Insane"
       5e2dd7470fba1ccc89993a9e: "TEAMS Insane"
   online-staff:
-    title: "%%blue%%Online staff"
+    title: "Staff Conectado"
     item-layout:
-      name: "%%green%%%player_name%"
       lore:
-        - "%%gray%%State: %state%"
-        - "%%gray%%Last seen: %last_seen%"
+        - "%%gray%%Actualmente en: %connected%"
     next-name: "%%green%%Next page"
     previous-name: "%%red%%Previous page"

@@ -24,6 +24,7 @@ public class AdminOnlineStaffMenu {
     private @Inject Plugin plugin;
     private @Inject OnlineStaffProvider onlineStaffProvider;
     private @Inject MessageHandler playerMessageHandler;
+    private @Inject UserSkullGenerator userSkullGenerator;
 
     public void createOnlineStaffMenu(Player player, int page) {
 
@@ -37,15 +38,9 @@ public class AdminOnlineStaffMenu {
             int currentIndex = 0;
 
             for (User user : userPagination.getPage(page)) {
-
                 guiBuilder
                         .addItem(ItemClickable.builder(currentIndex++)
-                                .setItemStack(ItemBuilder
-                                        .newBuilder(Material.SKULL_ITEM)
-                                        .setName(playerMessageHandler.get(player, "admin-panel.online-staff.item-layout.name")
-                                                .replace("%player_name%", user.getUsername() == null ? "" : user.getUsername()))
-                                        .setLore(colorizeAndReplace(playerMessageHandler.getMany(player, "admin-panel.online-staff.item-layout.lore").getContents(), user))
-                                        .build())
+                                .setItemStack(userSkullGenerator.generateSkull(user, player))
                                 .build());
             }
 
@@ -54,7 +49,7 @@ public class AdminOnlineStaffMenu {
 
                 guiBuilder
                         .addItem(ItemClickable
-                                .builder(54)
+                                .builder(53)
                                 .setItemStack(ItemBuilder
                                         .newBuilder(Material.ARROW)
                                         .setName(playerMessageHandler.get(player, "admin-panel.online-staff.next-name"))
@@ -71,7 +66,7 @@ public class AdminOnlineStaffMenu {
 
                 guiBuilder
                         .addItem(ItemClickable
-                                .builder(54)
+                                .builder(52)
                                 .setItemStack(ItemBuilder
                                         .newBuilder(Material.REDSTONE)
                                         .setName(playerMessageHandler.get(player, "admin-panel.online-staff.previous-name"))
