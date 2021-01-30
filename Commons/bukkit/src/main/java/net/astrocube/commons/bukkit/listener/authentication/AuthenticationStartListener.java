@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.authentication;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
@@ -10,6 +11,9 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.authentication.AuthenticationUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,6 +25,7 @@ import java.util.logging.Level;
 public class AuthenticationStartListener implements Listener {
 
     private @Inject SessionRegistryManager sessionRegistryManager;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject GatewayMatcher gatewayMatcher;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
@@ -69,7 +74,7 @@ public class AuthenticationStartListener implements Listener {
 
                     @Override
                     public String getAddress() {
-                        return event.getPlayer().getAddress().getAddress().toString().replace("/", "");
+                        return event.getPlayer().getAddress().getAddress().getHostAddress();
                     }
                 });
 
@@ -78,7 +83,22 @@ public class AuthenticationStartListener implements Listener {
                     return;
                 }
 
+                Bukkit.getScheduler().runTask(plugin, () -> {
+
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        player.hidePlayer(event.getPlayer());
+                        event.getPlayer().hidePlayer(player);
+                    });
+
+                    event.getPlayer().teleport(AuthenticationUtils.generateAuthenticationSpawn(plugin.getConfig()));
+
+                });
+
                 gateway.startProcessing(user);
+
+                Bukkit.getScheduler().runTaskLater(plugin, () ->
+                        event.getPlayer().kickPlayer(messageHandler.get(event.getPlayer(), "authentication.time-exceeded")),
+                        20 * 15);
 
             } catch (Exception exception) {
                 plugin.getLogger().log(Level.SEVERE, "Could not generate authorization for user", exception);

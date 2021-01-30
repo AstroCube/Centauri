@@ -22,6 +22,8 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
     public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
         player.teleport(LobbyLocationParser.getLobby());
         player.setGameMode(org.bukkit.GameMode.ADVENTURE);
+        player.setHealth(20);
+        player.setFoodLevel(20);
 
         Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
@@ -36,7 +38,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
                 );
 
                 online.showPlayer(player);
-                player.showPlayer(player);
+                player.showPlayer(online);
 
             } else {
                 online.hidePlayer(player);

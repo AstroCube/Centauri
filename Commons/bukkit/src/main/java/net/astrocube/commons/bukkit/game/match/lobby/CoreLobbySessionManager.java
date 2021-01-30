@@ -16,6 +16,7 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -30,6 +31,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
     private @Inject FindService<User> userFindService;
     private @Inject CountdownScheduler countdownScheduler;
     private @Inject LobbySessionModifier lobbySessionModifier;
+    private @Inject MessageHandler<Player> messageHandler;
     private @Inject Plugin plugin;
 
     @Override
@@ -41,7 +43,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
             if (!subMode.isPresent()) {
                 Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-                //TODO: Expulse user
+                player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
                 return;
             }
 
@@ -61,8 +63,8 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
+                player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
             }
-
 
         });
 
@@ -96,7 +98,6 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
             } catch (Exception e) {
                 Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-                return;
             }
 
         });

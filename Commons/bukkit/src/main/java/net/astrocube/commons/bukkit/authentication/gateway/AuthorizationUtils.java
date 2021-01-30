@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.authentication.gateway;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.BasicAuthorization;
 import net.astrocube.api.core.authentication.AuthorizeException;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -39,7 +40,7 @@ public class AuthorizationUtils {
             return;
         }
 
-        player.sendMessage(messageHandler.get(player, "authentication.password-error"));
+        messageHandler.send(player, AlertMode.ERROR,"authentication.password-error");
         plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
     }
 

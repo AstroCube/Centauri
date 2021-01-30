@@ -1,6 +1,6 @@
 package net.astrocube.api.bukkit.game;
 
-import net.astrocube.api.bukkit.game.event.GameModePairEvent;
+import net.astrocube.api.bukkit.game.event.game.GameModePairEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
@@ -17,7 +17,7 @@ public interface GameControlPair {
      * @throws GameControlException when provided values do not correspond with
      * the configuration ones or {@link ServerDoc.Type} is not GAME.
      */
-    void validatePair(GameMode gameMode, SubGameMode subGameMode) throws GameControlException;
+    void validatePair(String gameMode, String subGameMode) throws Exception;
 
     /**
      * Schedules a task that will close prematurely the server if

@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.game.match;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
@@ -29,12 +28,11 @@ public class CoreActualMatchProvider implements ActualMatchProvider {
                 "{\"pending\":" +
                 "{\"responsible\": \"" + id + "\"}" +
                 "},\n" +
-                "{\"pending\": {\"involved\": \"" + id + "\"}}" +
+                "{\"pending\": {\"involved\": \"" + id + "\"}}," +
+                "{\"teams.members.user\": \"" + id + "\", \"teams.members.active\": true}" +
                 "],\n" +
                 "\"status\": {\"$nin\": [\"Finished\", \"Invalidated\"]}" +
                 "}");
-
-        ;
 
         return findService.querySync(query)
                 .getFoundModels()

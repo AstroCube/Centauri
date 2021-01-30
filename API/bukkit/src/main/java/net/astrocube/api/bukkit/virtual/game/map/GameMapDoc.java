@@ -43,7 +43,7 @@ public interface GameMapDoc {
          * @return map {@link SubGameMode} id to be filtered from {@link GameMode} registry
          */
         @JsonProperty("subGamemode")
-        String getSubMode();
+        Set<String> getSubMode();
 
         /**
          * @return simple description created by map makers

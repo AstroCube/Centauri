@@ -8,8 +8,8 @@ public class BukkitVirtualModule extends ProtectedModule {
     @Override
     protected void configure() {
         install(new VirtualModule());
-        install(new MatchModule());
+        install(new MatchModelModule());
         install(new GameMapModelModule());
+        install(new ChannelModelModule());
     }
-
 }

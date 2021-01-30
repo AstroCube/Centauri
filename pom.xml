@@ -46,8 +46,8 @@
         </repository>
 
         <repository>
-            <id>codemc-snapshots</id>
-            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+            <id>TimoCloud-API</id>
+            <url>https://maven.timo.cloud/repository/TimoCloud-API/</url>
         </repository>
 
     </repositories>

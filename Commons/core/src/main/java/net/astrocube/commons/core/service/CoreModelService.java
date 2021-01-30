@@ -3,9 +3,7 @@ package net.astrocube.commons.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
-import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
 import net.astrocube.api.core.concurrent.*;
 import net.astrocube.api.core.http.HttpClient;
@@ -34,7 +32,10 @@ import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CoreModelService<Complete extends Model, Partial extends PartialModel> implements
@@ -48,7 +49,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Inject protected HttpClient httpClient;
     protected final ObjectMapper mapper;
-    private final ListeningExecutorService listeningExecutorService;
+    private final ExecutorService executorService;
 
     protected ModelMeta<Complete, Partial> modelMeta;
     protected JavaType queryResultTypeToken;
@@ -57,7 +58,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
     public @Inject
     CoreModelService(ObjectMapper mapper, ModelMeta<Complete, Partial> modelMeta, ExecutorServiceProvider executorServiceProvider) {
         this.modelMeta = modelMeta;
-        this.listeningExecutorService = executorServiceProvider.getRegisteredService();
+        this.executorService = executorServiceProvider.getRegisteredService();
         this.mapper = mapper;
         this.queryResultTypeToken = mapper.getTypeFactory().constructParametricType(QueryResult.class, modelMeta.getCompleteType());
         this.paginateResultTypeToken = mapper.getTypeFactory().constructParametricType(PaginateResult.class, modelMeta.getCompleteType());
@@ -70,13 +71,13 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public AsyncResponse<QueryResult<Complete>> query(QueryRequest<Complete> queryRequest) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS, querySync(queryRequest), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }), listeningExecutorService);
+           }
+        }, executorService));
     }
 
     @Override
@@ -126,13 +127,13 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public AsyncResponse<Complete> update(UpdateRequest<Partial> request) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS, updateSync(request), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
     }
 
     @Override
@@ -149,13 +150,13 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public AsyncResponse<Complete> create(CreateRequest<Partial> request) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS, createSync(request), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
     }
 
     @Override
@@ -187,20 +188,55 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
             @Override
             public Pagination getPagination() {
-                return paginateResult.getPagination();
+                return new Pagination() {
+                    @Override
+                    public int perPage() {
+                        return paginateResult.getPagination().perPage();
+                    }
+
+                    @Override
+                    public boolean hasPrevPage() {
+                        return paginateResult.getPagination().hasPrevPage();
+                    }
+
+                    @Override
+                    public boolean hasNextPage() {
+                        return paginateResult.getPagination().hasNextPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> prevPage() {
+                        return paginateResult.getPagination().prevPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> nextPage() {
+                        return paginateResult.getPagination().nextPage();
+                    }
+
+                    @Override
+                    public Optional<Integer> page() {
+                        return paginateResult.getPagination().page();
+                    }
+
+                    @Override
+                    public Optional<Integer> totalPages() {
+                        return paginateResult.getPagination().totalPages();
+                    }
+                };
             }
         };
     }
 
     @Override
     public AsyncResponse<PaginateResult<Complete>> paginate(PaginateRequest<Complete> paginateRequest) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS,paginateSync(paginateRequest), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
     }
 
     @Override
@@ -219,13 +255,13 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public AsyncResponse<Complete> find(FindRequest<Complete> findModelRequest) {
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
                 return new WrappedResponse<>(Response.Status.SUCCESS, findSync(findModelRequest), null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
     }
 
     @Override
@@ -244,13 +280,13 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
     @Override
     public AsyncResponse<Void> delete(DeleteRequest<Complete> deleteRequest) {
-        deleteRequest(deleteRequest.getId());
-        return new SimpleAsyncResponse<>(this.listeningExecutorService.submit(() -> {
+        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
             try {
+                this.deleteSync(deleteRequest);
                 return new WrappedResponse<>(Response.Status.SUCCESS, null, null);
             } catch (Exception exception) {
                 return new WrappedResponse<>(Response.Status.ERROR, null, exception);
             }
-        }), listeningExecutorService);
+        }, executorService));
     }
 }

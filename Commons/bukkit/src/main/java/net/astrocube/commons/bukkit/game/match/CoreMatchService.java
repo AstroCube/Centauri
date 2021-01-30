@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.game.match;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
@@ -112,6 +113,20 @@ public class CoreMatchService implements MatchService {
                         RequestOptions.Type.POST,
                         new HashMap<>(),
                         "",
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void assignVictory(String match, Set<String> winners) throws Exception {
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/validate-winners",
+                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(winners),
                         null
                 )
         );

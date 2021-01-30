@@ -10,6 +10,7 @@ import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -28,8 +29,7 @@ public class MatchStartCommand implements CommandClass {
 
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
-        if (!matchOptional.isPresent()) {
-            messageHandler.send(player, "game.admin.not-active");
+        if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
             return true;
         }
 
@@ -37,7 +37,7 @@ public class MatchStartCommand implements CommandClass {
         try {
             secondsFixed = Integer.parseInt(seconds);
         } catch (Exception e) {
-            messageHandler.send(player, "game.admin.error");
+            messageHandler.send(player, AlertMode.ERROR,"game.admin.error");
             return true;
         }
 
@@ -45,7 +45,7 @@ public class MatchStartCommand implements CommandClass {
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
 
         if (involved.size() < 2) {
-            player.sendMessage(messageHandler.get(player, "game.admin.insufficient"));
+            messageHandler.send(player, AlertMode.ERROR, "game.admin.insufficient");
             return true;
         }
 

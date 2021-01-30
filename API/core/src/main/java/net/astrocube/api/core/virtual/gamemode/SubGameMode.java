@@ -40,5 +40,24 @@ public interface SubGameMode extends Model {
      */
     String getGroup();
 
+    /**
+     * @return size of the mode teams
+     */
+    int getTeamSize();
+
+    /**
+     * @return pairing type.
+     */
+    PairingType getPairing();
+
+    /**
+     * @return if users can rejoin game.
+     */
+    boolean hasRejoin();
+
+    public enum PairingType {
+        SUBSTRACTION, LIMIT, MULTIPLUS, SOLO
+    }
+
 
 }

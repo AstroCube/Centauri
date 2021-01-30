@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.user.inventory.event.ActionableItemEvent;
 import net.astrocube.api.bukkit.user.inventory.nbt.NBTUtils;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.bukkit.translation.mode.AlertMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,7 +42,7 @@ public class PlayerHotbarClickListener implements Listener {
                     ));
                     event.setCancelled(true);
                 } else {
-                    messageHandler.send(event.getPlayer(), "interaction.actionable-error");
+                    messageHandler.send(event.getPlayer(), AlertMode.ERROR, "interaction.actionable-error");
                 }
             });
         }

@@ -28,16 +28,13 @@ public class CommandLoader implements Loader {
     private @Inject LoginCommand loginCommand;
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
-    private @Inject PunishCommand punishCommand;
-    private @Inject PlayerLookCommand playerLookCommand;
-    private @Inject AdminCommand adminCommand;
-    private @Inject FreezeCommand freezeCommand;
+    private @Inject AdminChatCommand adminChatCommand;
+    private @Inject PlayCommand playCommand;
 
     @Override
     public void load() {
-
-        CommandManager commandManager = new BukkitCommandManager(plugin.getName());
-        commandManager.setTranslator(new DefaultTranslator(coreCommandLanguageProvider));
+        CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
+        commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
 
         PartInjector partInjector = new SimplePartInjector();
 
@@ -46,18 +43,16 @@ public class CommandLoader implements Loader {
 
         AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
                 new AnnotatedCommandBuilderImpl(partInjector),
-                (clazz, parent) -> injector.getInstance(clazz)
+                (clazz, parent) -> this.injector.getInstance(clazz)
         );
 
-        commandManager.registerCommands(treeBuilder.fromClass(friendsCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(matchCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(punishCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.friendsCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.matchCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.adminChatCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(this.playCommand));
 
-        if (plugin.getConfig().getBoolean("authentication.enabled")) {
-            commandManager.registerCommands(treeBuilder.fromClass(loginCommand));
+        if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
+            commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
         }
     }
 }

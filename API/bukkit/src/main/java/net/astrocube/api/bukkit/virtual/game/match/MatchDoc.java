@@ -2,6 +2,7 @@ package net.astrocube.api.bukkit.virtual.game.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.core.model.Model;
@@ -13,6 +14,7 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Color;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -118,22 +120,22 @@ public interface MatchDoc {
     /**
      * Interface that store base team-related data.
      */
-    interface Team {
-
-        /**
-         * @return name of the team
-         */
-        String getName();
+    interface Team extends GameMapConfiguration.MapTeam {
 
         /**
          * @return set of {@link User} ids who are identified as team members.
          */
-        Set<String> getMembers();
+        Set<TeamMember> getMembers();
 
-        /**
-         * @return {@link Color} in string form.
-         */
-        String getColor();
+    }
+
+    interface TeamMember {
+
+        String getUser();
+
+        boolean isActive();
+
+        Date getJoinedAt();
 
     }
 

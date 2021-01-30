@@ -1,6 +1,6 @@
 package net.astrocube.api.core.http.resolver;
 
-import com.google.common.util.concurrent.ListeningExecutorService;
+import java.util.concurrent.ExecutorService;
 
 public interface RequestExecutorResolver {
 
@@ -8,6 +8,6 @@ public interface RequestExecutorResolver {
      * Will resolve between a cached thread pool or concurrent defined pool
      * @return resolved executor
      */
-    ListeningExecutorService getExecutor();
+    ExecutorService getExecutor();
 
 }

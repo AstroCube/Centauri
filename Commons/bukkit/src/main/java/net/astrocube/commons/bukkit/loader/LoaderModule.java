@@ -12,6 +12,6 @@ public class LoaderModule extends ProtectedModule {
         bind(Loader.class).annotatedWith(Names.named("server")).to(ServerLoader.class);
         bind(Loader.class).annotatedWith(Names.named("events")).to(EventListenerLoader.class);
         bind(Loader.class).annotatedWith(Names.named("commands")).to(CommandLoader.class);
+        bind(Loader.class).annotatedWith(Names.named("channels")).to(ChannelLoader.class);
     }
-
 }

@@ -2,12 +2,15 @@ package net.astrocube.commons.bukkit.loader;
 
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
+import net.astrocube.commons.bukkit.channel.ChatChannelModule;
+import net.astrocube.commons.bukkit.cloud.CloudModule;
 import net.astrocube.commons.bukkit.core.BukkitConfigurationModule;
 import net.astrocube.commons.bukkit.friend.FriendsModule;
 import net.astrocube.commons.bukkit.game.GameModule;
-import net.astrocube.commons.bukkit.menu.MenuModule;
+import net.astrocube.commons.bukkit.nametag.NametagModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
+import net.astrocube.commons.bukkit.tablist.TablistModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
 import net.astrocube.commons.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.user.UserModule;
@@ -19,6 +22,7 @@ public class InjectionLoaderModule extends ProtectedModule {
     @Override
     public void configure() {
         install(new BukkitVirtualModule());
+        install(new CloudModule());
         install(new FriendsModule());
         install(new TeleportModule());
         install(new CommonsModule());
@@ -30,6 +34,8 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new BukkitConfigurationModule());
         install(new TranslationModule());
         install(new UserModule());
-        install(new MenuModule());
+        install(new ChatChannelModule());
+        install(new NametagModule());
+        install(new TablistModule());
     }
 }

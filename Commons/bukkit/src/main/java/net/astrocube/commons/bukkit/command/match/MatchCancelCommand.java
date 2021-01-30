@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -16,7 +15,6 @@ import java.util.Set;
 
 public class MatchCancelCommand implements CommandClass {
 
-    private @Inject MessageHandler<Player> messageHandler;
     private @Inject CountdownScheduler countdownScheduler;
     private @Inject MatchParticipantsProvider matchParticipantsProvider;
     private @Inject MatchMessageHelper matchMessageHelper;
@@ -27,8 +25,7 @@ public class MatchCancelCommand implements CommandClass {
 
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
-        if (!matchOptional.isPresent()) {
-            messageHandler.send(player, "game.admin.not-active");
+        if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
             return true;
         }
 

@@ -1,0 +1,9 @@
+api:
+  cluster: "0123456789abcdef"
+  threads: 2
+  route: "https://perseus.astrocube.net/api/"
+  connect: 1200
+  read: 1200
+  retry: 1
+redirect:
+  authentication: "ac-auth"

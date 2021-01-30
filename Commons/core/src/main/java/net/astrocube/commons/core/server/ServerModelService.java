@@ -3,7 +3,6 @@ package net.astrocube.commons.core.server;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
-import net.astrocube.api.core.concurrent.*;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.model.ModelMeta;
@@ -14,7 +13,6 @@ import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.server.ServerDoc.Partial;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.service.CoreModelService;
 
 import java.util.HashMap;
 

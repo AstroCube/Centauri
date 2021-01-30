@@ -1,10 +1,7 @@
 package net.astrocube.commons.bukkit.game.map;
 
 import me.fixeddev.inject.ProtectedModule;
-import net.astrocube.api.bukkit.game.map.GameMapCache;
-import net.astrocube.api.bukkit.game.map.GameMapProvider;
-import net.astrocube.api.bukkit.game.map.GameMapService;
-import net.astrocube.api.bukkit.game.map.MatchMapLoader;
+import net.astrocube.api.bukkit.game.map.*;
 
 public class GameMapModule extends ProtectedModule {
 
@@ -14,6 +11,8 @@ public class GameMapModule extends ProtectedModule {
         bind(GameMapProvider.class).to(CoreGameMapProvider.class);
         bind(GameMapService.class).to(CoreGameMapService.class);
         bind(MatchMapLoader.class).to(CoreMatchMapLoader.class);
+        bind(MapConfigurationProvider.class).to(CoreMapConfigurationProvider.class);
+        expose(MapConfigurationProvider.class);
     }
 
 }

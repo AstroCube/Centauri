@@ -6,6 +6,8 @@ import net.astrocube.lobby.listener.gadget.GameGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.HideGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.LobbySelectorGadgetInteractListener;
 import net.astrocube.lobby.listener.user.LobbyJoinListener;
+import net.astrocube.lobby.listener.user.PlayerQuitListener;
+import net.astrocube.lobby.listener.user.UserBasicActionsListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -18,6 +20,8 @@ public class EventListenerLoader implements Loader {
     private @Inject LobbySelectorGadgetInteractListener lobbySelectorGadgetInteractListener;
 
     private @Inject LobbyJoinListener lobbyJoinListener;
+    private @Inject PlayerQuitListener playerQuitListener;
+    private @Inject UserBasicActionsListener userBasicActionsListener;
 
     private @Inject Plugin plugin;
 
@@ -30,6 +34,8 @@ public class EventListenerLoader implements Loader {
         registerEvent(lobbySelectorGadgetInteractListener);
 
         registerEvent(lobbyJoinListener);
+        registerEvent(playerQuitListener);
+        registerEvent(userBasicActionsListener);
 
     }
 
