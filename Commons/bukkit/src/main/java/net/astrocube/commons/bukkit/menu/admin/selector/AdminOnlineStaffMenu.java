@@ -30,7 +30,7 @@ public class AdminOnlineStaffMenu {
     public void createOnlineStaffMenu(Player player, int page) {
 
         GUIBuilder guiBuilder = GUIBuilder
-                .builder(playerMessageHandler.get(player, "admin-panel.online-staff.title"), 5);
+                .builder(playerMessageHandler.get(player, "admin-panel.online-staff.title"), 6);
 
         userQueryService
                 .getAll()
@@ -43,10 +43,6 @@ public class AdminOnlineStaffMenu {
                         int currentIndex = 0;
 
                         for (User user : userPagination.getPage(page)) {
-
-                            if(user == null) {
-                                continue;
-                            }
 
                             guiBuilder
                                     .addItem(ItemClickable.builder(currentIndex++)
@@ -64,7 +60,7 @@ public class AdminOnlineStaffMenu {
 
                             guiBuilder
                                     .addItem(ItemClickable
-                                            .builder(54)
+                                            .builder(36)
                                             .setItemStack(ItemBuilder
                                                     .newBuilder(Material.ARROW)
                                                     .setName(playerMessageHandler.get(player, "admin-panel.online-staff.next-name"))
@@ -83,7 +79,7 @@ public class AdminOnlineStaffMenu {
 
                             guiBuilder
                                     .addItem(ItemClickable
-                                            .builder(54)
+                                            .builder(27)
                                             .setItemStack(ItemBuilder
                                                     .newBuilder(Material.REDSTONE)
                                                     .setName(playerMessageHandler.get(player, "admin-panel.online-staff.previous-name"))
