@@ -4,13 +4,10 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.FlairFormatter;
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.commons.core.utils.PrettyTimeUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 

@@ -174,23 +174,32 @@ commands:
       offline: "asd"
 
 punish-menu:
-  title: "%%white%%Sanctions menu"
+  title: "Menú de sanciones"
+  error: "Ha ocurrido un error al abrir el menú de sanciones."
   items:
     ban:
-      name: "%%dark_red%%Ban %punished_name%"
+      name: "%%dark_red%%Suspender a %punished_name%"
       lore:
-        - "%%white%%Click here to choose the"
-        - "%%white%%reason to ban this player!"
+        - "%%white%%Click aquí para elegir una"
+        - "%%white%%razón para %%red%%banear%%white%% a este"
+        - "%%white%%jugador."
     kick:
-      name: "%%red%%Kick %punished_name%"
+      name: "%%yellow%%Expulsar a %punished_name%"
       lore:
-        - "%%white%%Click here to choose the"
-        - "%%white%%reason to kick this player!"
+        - "%%white%%Click aquí para elegir una"
+        - "%%white%%razón para %%yellow%%expulsar%%white%% a este"
+        - "%%white%%jugador."
     warn:
-      name: "%%yellow%%Warn %punished_name%"
+      name: "%%green%%Advertir a %punished_name%"
       lore:
-        - "%%white%%Click here to choose the"
-        - "%%white%%reason to warn this player!"
+        - "%%white%%Click aquí para elegir una"
+        - "%%white%%razón para %%green%%advertir%%white%% a este"
+        - "%%white%%jugador."
+    freeze:
+      name: "%%aqua%%Congelar"
+      lore:
+        - "%%white%%Congela al usuario actual"
+        - "%%white%%para poderlo inspeccionar."
 punishment-expiration:
   title: "Punishment Expiration"
   invalid-number: "Invalid number"
