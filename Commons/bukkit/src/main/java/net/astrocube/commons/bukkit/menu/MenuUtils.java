@@ -35,8 +35,8 @@ public class MenuUtils {
         Field profileField;
         SkullMeta meta = (SkullMeta) head.getItemMeta();
 
-        AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "");
-        profile.getProperties().add(new CoreProperty("texture", library.getBase64()));
+        AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "head");
+        profile.getProperties().add(new CoreProperty("textures", library.getBase64()));
 
         try {
             profileField = meta.getClass().getDeclaredField("profile");

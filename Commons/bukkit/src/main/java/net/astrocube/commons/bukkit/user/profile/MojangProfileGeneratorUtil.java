@@ -12,7 +12,7 @@ public class MojangProfileGeneratorUtil {
 
         profile.getProperties().forEach(
                 property -> mojangProfile.getProperties().put(
-                        property.getName(), new Property(property.getName(), property.getSignature())
+                        property.getName(), new Property(property.getName(), property.getValue(), property.getSignature())
                 )
         );
 

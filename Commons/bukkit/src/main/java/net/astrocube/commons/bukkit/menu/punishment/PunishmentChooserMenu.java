@@ -43,7 +43,7 @@ public class PunishmentChooserMenu {
                                 .build())
                         .setAction(inventoryClickEvent -> {
                             PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.BAN);
-                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder));
+                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })
                         .build()
@@ -55,7 +55,7 @@ public class PunishmentChooserMenu {
                                 .build())
                         .setAction(inventoryClickEvent -> {
                             PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.KICK);
-                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder));
+                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })
                         .build()
@@ -67,7 +67,7 @@ public class PunishmentChooserMenu {
                                 .build())
                         .setAction(inventoryClickEvent -> {
                             PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.WARN);
-                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder));
+                            player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })
                         .build()

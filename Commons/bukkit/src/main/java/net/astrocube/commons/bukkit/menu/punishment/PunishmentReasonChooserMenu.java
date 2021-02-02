@@ -23,7 +23,7 @@ public class PunishmentReasonChooserMenu {
     private @Inject PresetPunishmentCache presetPunishmentCache;
     private @Inject MessageHandler messageHandler;
 
-    public Inventory createPunishmentReasonChooserMenu(Player player, PunishmentBuilder punishmentBuilder) {
+    public Inventory createPunishmentReasonChooserMenu(Player player, PunishmentBuilder punishmentBuilder, int page) {
 
         GUIBuilder guiBuilder = GUIBuilder
                 .builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6);
@@ -38,7 +38,7 @@ public class PunishmentReasonChooserMenu {
             }
         }
 
-        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder, presetPunishment, 1)
+        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder, presetPunishment, page)
                 .forEach(guiBuilder::addItem);
 
         return guiBuilder.build();
