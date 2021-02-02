@@ -29,11 +29,13 @@ authentication:
     yaw: 0
     pitch: 0
 admin:
+  punishments:
+    reasons:
+    - name: "Gei"
+      type: "BAN"
   teleport:
     disabled:
       - ""
-punishment-reason-menu:
-  title: "&fPunishment reason chooser menu"
 ban-reasons:
   reason-1:
     slot: 11
