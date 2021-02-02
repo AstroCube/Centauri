@@ -2,16 +2,16 @@
 # Parties messages #
 ####################
 party-help:
-- "%%gold%%============================"
-- "%%gold%%/party accept %%dark_gray%%- %%yellow%%Acepta una petición de grupo"
-- "%%gold%%/party invite <player> %%dark_gray%%- %%yellow%Invita a alguien a tu grupo"
-- "%%gold%%/party reject %%dark_gray%%- %%yellow%Rechaza la petición de grupo de un jugador"
-- "%%gold%%/party kick <player> %%dark_gray%%- %%yellow%Elimina a alguien de tu grupo"
-- "%%gold%%/party kickoffline %%dark_gray%%- %%yellow%%Elimina a todos los miembros desconectados de tu grupo"
-- "%%gold%%/party promote <player> %%dark_gray%%- %%yellow%%Otorga el 'lider' del grupo a un jugador"
-- "%%gold%%/party disband %%dark_gray%%- %%yellow%%Deshaz tu grupo"
-- "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
-- "%%gold%%============================"
+    - "%%gold%%============================"
+    - "%%gold%%/party accept %%dark_gray%%- %%yellow%%Acepta una petición de grupo"
+    - "%%gold%%/party invite <player> %%dark_gray%%- %%yellow%Invita a alguien a tu grupo"
+    - "%%gold%%/party reject %%dark_gray%%- %%yellow%Rechaza la petición de grupo de un jugador"
+    - "%%gold%%/party kick <player> %%dark_gray%%- %%yellow%Elimina a alguien de tu grupo"
+    - "%%gold%%/party kickoffline %%dark_gray%%- %%yellow%%Elimina a todos los miembros desconectados de tu grupo"
+    - "%%gold%%/party promote <player> %%dark_gray%%- %%yellow%%Otorga el 'lider' del grupo a un jugador"
+    - "%%gold%%/party disband %%dark_gray%%- %%yellow%%Deshaz tu grupo"
+    - "%%gold%%/party leave %%dark_gray%%- %%yellow%%Deja tu grupo actual"
+    - "%%gold%%============================"
 party-offline-inviter: "%%red%%No puedes unirte a este grupo porque el lider no está en línea."
 created-party: "&aHas creado un nuevo grupo"
 already-in-party: "%%red%%Ya estás en un grupo."
@@ -20,12 +20,12 @@ no-party-now: "%%red%%El jugador ya no tiene un grupo."
 joined-party: "%%yellow%%Te has unido a un grupo"
 other-joined-party: "%%gold%%%%player%%%%yellow%% se ha unido a tu grupo"
 party-invited:
-- "%%gold%%============================"
-- "%%yellow%%Has sido invitado al grupo de %%inviter%%"
-- "%%yellow%%Tienes 2 minutos para aceptar"
-- "%%yellow%%Escribe %%gold%%/p accept %%yellow%%para aceptar o"
-- "%%gold%%/p reject %%yellow%% para rechazar"
-- "%%gold%%============================"
+    - "%%gold%%============================"
+    - "%%yellow%%Has sido invitado al grupo de %%inviter%%"
+    - "%%yellow%%Tienes 2 minutos para aceptar"
+    - "%%yellow%%Escribe %%gold%%/p accept %%yellow%%para aceptar o"
+    - "%%gold%%/p reject %%yellow%% para rechazar"
+    - "%%gold%%============================"
 left-party: "%%yellow%%Has abandonado tu grupo"
 other-left-party: "%%gold%%%%player%%%%yellow%% ha abandonado el grupo."
 party-disbanded: "%%gold%%%%player%%%%yellow%% ha deshecho el grupo"
@@ -66,20 +66,20 @@ cannot-invite:
 # Friends messages #
 ####################
 friend-help:
-  - "%%gold%%============================"
-  - "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"
-  - "%%gold%%/friend add <player> %%dark_gray%%- %%yellow%%Invita a alguien a ser tu amigo"
-  - "%%gold%%/friend deny <player> %%dark_gray%%- %%yellow%%Rechaza una petición de amistad"
-  - "%%gold%%/friend help %%dark_gray%%- %%yellow%%Muestra ayuda sobre estos comandos"
-  - "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
-  - "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
-  - "%%gold%%============================"
+    - "%%gold%%============================"
+    - "%%gold%%/friend accept <player> %%dark_gray%%- %%yellow%%Acepta una petición de amistad"
+    - "%%gold%%/friend add <player> %%dark_gray%%- %%yellow%%Invita a alguien a ser tu amigo"
+    - "%%gold%%/friend deny <player> %%dark_gray%%- %%yellow%%Rechaza una petición de amistad"
+    - "%%gold%%/friend help %%dark_gray%%- %%yellow%%Muestra ayuda sobre estos comandos"
+    - "%%gold%%/friend list [page] %%dark_gray%%- %%yellow%%Muestra a todos tus amigos"
+    - "%%gold%%/friend remove <player> %%dark_gray%%- %%yellow%%Elimina a alguien de tu lista de amigos"
+    - "%%gold%%============================"
 no-friends: "&cAl parecer no tienes amigos :("
 friends-next-page: "%%yellow%%%%bold%%Página siguiente"
 friends-previous-page: "%%yellow%%%%bold%%Página anterior"
 friend-list:
-  header: "%%gold%%============ %%yellow%%Lista de Amigos %%gold%%============"
-  element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
+    header: "%%gold%%============ %%yellow%%Lista de Amigos %%gold%%============"
+    element: "%%gold%%%%friend_name%% %%dark_gray%%- %%status%%"
 online: "%%yellow%%Conectado"
 offline: "%%red%%Desconectado"
 commons-friend-not-yourself: "No puedes hacer esto contigo mismo!"
@@ -94,198 +94,198 @@ commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad d
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
 
 authentication:
-  attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
-  unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
-  register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
-  register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
-  password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
-  password-sub: "%%aqua%%Inicia sesión con %%blue%%/login <contraseña>"
-  password-invalid: "%%red%%¡Ups! Esa no es tu contraseña, tranqui, aún te quedan más intentos."
-  password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
-  success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
-  cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
-  chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
-  time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
+    attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
+    unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"
+    register-title: "%%aqua%%¡Bienvenido a %%blue%%Astro%%white%%Cubano%%aqua%%!"
+    register-sub: "%%aqua%%Registrate con el comando %%blue%%/register <contraseña>"
+    password-title: "%%aqua%%¡Hola, %%player%%%%aqua%%!"
+    password-sub: "%%aqua%%Inicia sesión con %%blue%%/login <contraseña>"
+    password-invalid: "%%red%%¡Ups! Esa no es tu contraseña, tranqui, aún te quedan más intentos."
+    password-error: "%%red%%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
+    success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
+    cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
+    chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
+    time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
 
 game:
-  play:
-    error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
-    unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
-  lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
-  lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
-  lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
-  countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
-  rejoin:
-    not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
-  matchmaking:
-    error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
-    already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
-  spectator:
-    return:
-      title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
-      lore:
-        - "%%gray%%Vuelve a la central espacial."
-  admin:
-    match-help:
-      - "%%yellow%%============================"
-      - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"
-      - "%%aqua%%/match cancel %%gold%%- %%yellow%%Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
-      - "%%aqua%%/match invalidate %%gold%%- %%yellow%%Invalida la partida en la que te encuentras"
-      - "%%aqua%%/match sandbox %%gold%%- %%yellow%%Si el servidor está en modo sandbox, podrás ingresar a una partida directamente"
-      - "%%yellow%%============================"
-    not-active: "%%red%%No te encuentras en ninguna partida."
-    force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
-    insufficient: "%%red%%No hay jugadores suficientes para empezar la partida."
-    stop: "%%yellow%%¡El administrador %%player%% %%yellow%%ha detenido la partida! Se iniciará nuevamente si ingresa/sale otro jugador y la cantidad mínima del juego se cumple."
-    error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
-    no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
-    started: "%%red%%La partida ya ha iniciado, disfruta de ella o puedes invalidarla en caso de que sea necesario."
-    invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
-    invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
-    invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
+    play:
+        error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
+        unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
+    lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
+    lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
+    lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
+    countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
+    rejoin:
+        not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
+    matchmaking:
+        error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
+        already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
+    spectator:
+        return:
+            title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
+            lore:
+                - "%%gray%%Vuelve a la central espacial."
+    admin:
+        match-help:
+            - "%%yellow%%============================"
+            - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"
+            - "%%aqua%%/match cancel %%gold%%- %%yellow%%Cancela la cuenta regresiva de la partida hasta que decidas empezarla o te retires"
+            - "%%aqua%%/match invalidate %%gold%%- %%yellow%%Invalida la partida en la que te encuentras"
+            - "%%aqua%%/match sandbox %%gold%%- %%yellow%%Si el servidor está en modo sandbox, podrás ingresar a una partida directamente"
+            - "%%yellow%%============================"
+        not-active: "%%red%%No te encuentras en ninguna partida."
+        force: "%%yellow%%¡El administrador %%player%% %%yellow%%ha iniciado la partida!"
+        insufficient: "%%red%%No hay jugadores suficientes para empezar la partida."
+        stop: "%%yellow%%¡El administrador %%player%% %%yellow%%ha detenido la partida! Se iniciará nuevamente si ingresa/sale otro jugador y la cantidad mínima del juego se cumple."
+        error:  "%%red%%Ha ocurrido un error al modificar el estado de la partida."
+        no-sandbox: "%%red%%El servidor no se encuentra en modo sandbox, so significa que no podrás realizar pruebas."
+        started: "%%red%%La partida ya ha iniciado, disfruta de ella o puedes invalidarla en caso de que sea necesario."
+        invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
+        invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
+        invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
 
 interaction:
-  actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
+    actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
 tablist:
-  header:
-    - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
-    - " "
-  footer:
-    - " "
-    - "%%white%%Página web: %%aqua%%%%bold%%astrocube.net"
-    - "%%white%%Tienda: %%aqua%%%%bold%%store.astrocube.net"
+    header:
+        - "%%white%%%%bold%%Estás jugando en %%blue%%%%bold%%ASTRO%%aqua%%%%bold%%CUBE%%reset%% %%white%%%%bold%%NETWORK"
+        - " "
+    footer:
+        - " "
+        - "%%white%%Página web: %%aqua%%%%bold%%astrocube.net"
+        - "%%white%%Tienda: %%aqua%%%%bold%%store.astrocube.net"
 staff:
-  chat:
-    permission: ":monda: no tenes permisos"
-    disabled: ":monda: lo tenes desactivado"
-    reminder-click: "klik"
+    chat:
+        permission: ":monda: no tenes permisos"
+        disabled: ":monda: lo tenes desactivado"
+        reminder-click: "klik"
 
 commands:
-  translation:
-    argument:
-      no-more: "asdsd"
-    command:
-      subcommand-invalid: "asd"
-      no-permission: "asdasd"
-    sender:
-      unknown: "asdasd"
-      only-player: "asd"
-    player:
-      offline: "asd"
+    translation:
+        argument:
+            no-more: "asdsd"
+        command:
+            subcommand-invalid: "asd"
+            no-permission: "asdasd"
+        sender:
+            unknown: "asdasd"
+            only-player: "asd"
+        player:
+            offline: "asd"
 
 punish-menu:
-  title: "Menú de sanciones"
-  error: "Ha ocurrido un error al abrir el menú de sanciones."
-  reasons:
-    demo:
-        title: "Demo"
-        reason: "Alguna maricada"
-        lore:
-          - ""
-  items:
-    ban:
-      name: "%%dark_red%%Suspender a %punished_name%"
-      lore:
-        - "%%white%%Click aquí para elegir una"
-        - "%%white%%razón para %%red%%banear%%white%% a este"
-        - "%%white%%jugador."
-    kick:
-      name: "%%yellow%%Expulsar a %punished_name%"
-      lore:
-        - "%%white%%Click aquí para elegir una"
-        - "%%white%%razón para %%yellow%%expulsar%%white%% a este"
-        - "%%white%%jugador."
-    warn:
-      name: "%%green%%Advertir a %punished_name%"
-      lore:
-        - "%%white%%Click aquí para elegir una"
-        - "%%white%%razón para %%green%%advertir%%white%% a este"
-        - "%%white%%jugador."
-    freeze:
-      name: "%%aqua%%Congelar"
-      lore:
-        - "%%white%%Congela al usuario actual"
-        - "%%white%%para poderlo inspeccionar."
+    title: "Menú de sanciones"
+    error: "Ha ocurrido un error al abrir el menú de sanciones."
+    reasons:
+        demo:
+            title: "Demo"
+            reason: "Alguna maricada"
+            lore:
+                - ""
+    items:
+        ban:
+            name: "%%dark_red%%Suspender a %punished_name%"
+            lore:
+                - "%%white%%Click aquí para elegir una"
+                - "%%white%%razón para %%red%%banear%%white%% a este"
+                - "%%white%%jugador."
+        kick:
+            name: "%%yellow%%Expulsar a %punished_name%"
+            lore:
+                - "%%white%%Click aquí para elegir una"
+                - "%%white%%razón para %%yellow%%expulsar%%white%% a este"
+                - "%%white%%jugador."
+        warn:
+            name: "%%green%%Advertir a %punished_name%"
+            lore:
+                - "%%white%%Click aquí para elegir una"
+                - "%%white%%razón para %%green%%advertir%%white%% a este"
+                - "%%white%%jugador."
+        freeze:
+            name: "%%aqua%%Congelar"
+            lore:
+                - "%%white%%Congela al usuario actual"
+                - "%%white%%para poderlo inspeccionar."
 punishment-expiration:
-  title: "Punishment Expiration"
-  invalid-number: "Invalid number"
+    title: "Punishment Expiration"
+    invalid-number: "Invalid number"
 punishment-expiration-menu:
-  title: "Elegir sanción"
-  items:
-    confirm:
-      name: "%%green%%Confirmar sanción"
-      lore:
-        - " "
-        - "%%aqua%%Recuerda:%%white%% si no especificas la duración,"
-        - "%%white%%esta sanción será permanente."
-        - " "
-        - "%%yellow%%¡Click izquierdo para sancionar!"
-    increase:
-      name: "%%green%%Increase the time in minutes"
-      lore:
-        - "%%white%%This only adds a minute to the total time"
-        - "%%white%%Warning! Don't break te bottom."
-    decrease:
-      name: "%%red%%Decrease the time in minutes"
-      lore:
-        - "%%white%%This only subtracts a minute to the total time."
-        - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
+    title: "Elegir sanción"
+    items:
+        confirm:
+            name: "%%green%%Confirmar sanción"
+            lore:
+                - " "
+                - "%%aqua%%Recuerda:%%white%% si no especificas la duración,"
+                - "%%white%%esta sanción será permanente."
+                - " "
+                - "%%yellow%%¡Click izquierdo para sancionar!"
+        increase:
+            name: "%%green%%Increase the time in minutes"
+            lore:
+                - "%%white%%This only adds a minute to the total time"
+                - "%%white%%Warning! Don't break te bottom."
+        decrease:
+            name: "%%red%%Decrease the time in minutes"
+            lore:
+                - "%%white%%This only subtracts a minute to the total time."
+                - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
 admin-panel:
-  main:
-    title: "AstroCube Admin Panel"
-    items:
-      match-teleport:
-        name: "%%gold%%Espectar juegos"
+    main:
+        title: "AstroCube Admin Panel"
+        items:
+            match-teleport:
+                name: "%%gold%%Espectar juegos"
+                lore:
+                    - "%%gray%%Teletransportarse a cualquier"
+                    - "%%gray%%modalidad o sub-modalidad en"
+                    - "%%gray%%el servidor."
+                    - " "
+                    - "%%blue%%¡Click izquierdo para ver más!"
+            lobby-teleport:
+                name: "%%yellow%%Teleport to lobby"
+                lore:
+                    - "%%gray%%Teleport to the Lobby of any GameMode."
+                    - "%%gray%% But, if you are in a match while"
+                    - "%%gray%% you select the lobby"
+            online-staff:
+                name: "%%blue%%View online staff"
+                lore:
+                    - "%%gray%%View the online staff in"
+                    - "%%gray%%all the network, and their last"
+                    - "%%gray%%connection."
+    gamemode:
+        title: "%%gray%%Seleccionar Modo"
         lore:
-          - "%%gray%%Teletransportarse a cualquier"
-          - "%%gray%%modalidad o sub-modalidad en"
-          - "%%gray%%el servidor."
-          - " "
-          - "%%blue%%¡Click izquierdo para ver más!"
-      lobby-teleport:
-        name: "%%yellow%%Teleport to lobby"
+            - " "
+            - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
+            - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
+        lore-solo:
+            - " "
+            - "%%aqua%%Click Izquierdo: %%gray%%Ir a una partida"
+        items:
+            5d5a11f35f1de46c232babae: "%%aqua%%SkyWars"
+            5db64666df034f2e9a3b4800: "%%red%%TNT Games"
+            5e14f49eff6607e52a32ed02: "%%light_purple%%The Dungeon"
+            5e14f4e5ff6607e52a32ed48: "%%green%%BedWars"
+    subGamemode:
+        title: "%%gray%%Seleccionar Sub-Modo"
         lore:
-          - "%%gray%%Teleport to the Lobby of any GameMode."
-          - "%%gray%% But, if you are in a match while"
-          - "%%gray%% you select the lobby"
-      online-staff:
-        name: "%%blue%%View online staff"
-        lore:
-          - "%%gray%%View the online staff in"
-          - "%%gray%%all the network, and their last"
-          - "%%gray%%connection."
-  gamemode:
-    title: "%%gray%%Seleccionar Modo"
-    lore:
-      - " "
-      - "%%blue%%Click Izquierdo: %%gray%%Ver los sub-modos"
-      - "%%aqua%%Click Derecho: %%gray%%Ir a una partida"
-    lore-solo:
-      - " "
-      - "%%aqua%%Click Izquierdo: %%gray%%Ir a una partida"
-    items:
-      5d5a11f35f1de46c232babae: "%%aqua%%SkyWars"
-      5db64666df034f2e9a3b4800: "%%red%%TNT Games"
-      5e14f49eff6607e52a32ed02: "%%light_purple%%The Dungeon"
-      5e14f4e5ff6607e52a32ed48: "%%green%%BedWars"
-  subGamemode:
-    title: "%%gray%%Seleccionar Sub-Modo"
-    lore:
-      - " "
-      - "%%aqua%%¡Click izquierdo para espectar"
-      - "%%aqua%%una partida!"
-    items:
-      5db645eea534664c62702cbe: "TNT Run"
-      5e7c266e2e25d63c747474e7: "Bow Spleef"
-      5eecebe7cea0ef21da0a6312: "TNT Tag"
-      5e2dd6b99536bff847f528af: "SOLO Normal"
-      5e2dd6e5b3103ffc426ee82c: "TEAMS Normal"
-      5e2dd73f75629822a5c97c79: "SOLO Insane"
-      5e2dd7470fba1ccc89993a9e: "TEAMS Insane"
-  online-staff:
-    title: "Staff Conectado"
-    item-layout:
-      lore:
-        - "%%gray%%Actualmente en: %connected%"
-    next-name: "%%green%%Next page"
-    previous-name: "%%red%%Previous page"
+            - " "
+            - "%%aqua%%¡Click izquierdo para espectar"
+            - "%%aqua%%una partida!"
+        items:
+            5db645eea534664c62702cbe: "TNT Run"
+            5e7c266e2e25d63c747474e7: "Bow Spleef"
+            5eecebe7cea0ef21da0a6312: "TNT Tag"
+            5e2dd6b99536bff847f528af: "SOLO Normal"
+            5e2dd6e5b3103ffc426ee82c: "TEAMS Normal"
+            5e2dd73f75629822a5c97c79: "SOLO Insane"
+            5e2dd7470fba1ccc89993a9e: "TEAMS Insane"
+    online-staff:
+        title: "Staff Conectado"
+        item-layout:
+            lore:
+                - "%%gray%%Actualmente en: %connected%"
+        next-name: "%%green%%Next page"
+        previous-name: "%%red%%Previous page"
