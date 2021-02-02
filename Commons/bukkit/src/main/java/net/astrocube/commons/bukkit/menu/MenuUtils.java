@@ -1,10 +1,17 @@
 package net.astrocube.commons.bukkit.menu;
 
+import net.astrocube.api.bukkit.user.profile.AbstractGameProfile;
+import net.astrocube.commons.bukkit.user.profile.CoreGameProfile;
+import net.astrocube.commons.bukkit.user.profile.CoreProperty;
+import net.astrocube.commons.bukkit.user.profile.MojangProfileGeneratorUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class MenuUtils {
 
@@ -20,6 +27,27 @@ public class MenuUtils {
         meta.setDisplayName(" ");
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    public static ItemStack generateHead(HeadLibrary library) {
+
+        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        Field profileField;
+        SkullMeta meta = (SkullMeta) head.getItemMeta();
+
+        AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "");
+        profile.getProperties().add(new CoreProperty("texture", library.getBase64()));
+
+        try {
+            profileField = meta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(meta, MojangProfileGeneratorUtil.generateProfile(profile));
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+
+        head.setItemMeta(meta);
+        return head;
     }
 
 }

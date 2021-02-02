@@ -10,6 +10,7 @@ import net.astrocube.commons.bukkit.game.GameModule;
 import net.astrocube.commons.bukkit.nametag.NametagModule;
 import net.astrocube.commons.bukkit.menu.MenuModule;
 import net.astrocube.commons.bukkit.party.PartyModule;
+import net.astrocube.commons.bukkit.punishment.PunishmentModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.tablist.TablistModule;
@@ -41,5 +42,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new TablistModule());
         install(new MenuModule());
         install(new PartyModule());
+        install(new PunishmentModule());
     }
 }

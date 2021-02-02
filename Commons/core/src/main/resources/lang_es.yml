@@ -230,6 +230,10 @@ punishment-expiration-menu:
             lore:
                 - "%%white%%This only subtracts a minute to the total time."
                 - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
+pagination:
+    previous: "%%blue%%Página anterior (%%white%%%%page%%%%blue%%)"
+    actual: "%%gold%%\u00AB %%blue%%Página actual (%%white%%%%page%%%%blue%%)"
+    next: "%%blue%%Página siguiente (%%white%%%%page%%%%blue%%) %%gold%%\u00BB"
 admin-panel:
     main:
         title: "AstroCube Admin Panel"

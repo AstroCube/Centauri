@@ -1,0 +1,14 @@
+package net.astrocube.commons.bukkit.menu;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum HeadLibrary {
+    LEFT_ARROW_PC("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmE2Y2FhMWUxZTlkOWFlZjU5Mjc4NzExNDIyNzg3YTAxNzk5M2M1YjI5MjUxOGM5ZjYzMmQ0MTJmNWE2NTkifX19"),
+    RIGHT_ARROW_PC("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTk5YWI0NDFmYzk3ZjYwOTA4MWFkM2NlMzNkNTk4MjkxZDUxYmVmOGNiN2FkMjQ4NGI1YzEzODdjN2E4NCJ9fX0="),
+    BOOK_LEFT("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzAyODlkNWQxMzAxYjRlMTk2N2FmZWYzMWNjZjkyNmQ4MTk1MWE2YTY1OGU5YTYyYzU0Yzk5MmYxYjlhOTg5NCJ9fX0=");
+
+    private final String base64;
+}

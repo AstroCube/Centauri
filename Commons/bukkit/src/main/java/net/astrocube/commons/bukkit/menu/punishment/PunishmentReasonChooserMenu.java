@@ -1,9 +1,13 @@
 package net.astrocube.commons.bukkit.menu.punishment;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.punishment.PresetPunishment;
+import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.commons.bukkit.menu.MenuUtils;
 import net.astrocube.commons.bukkit.menu.punishment.helper.PunishmentReasonChooserHelper;
+import net.astrocube.commons.core.utils.Pagination;
+import net.astrocube.commons.core.utils.SimplePagination;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,12 +20,17 @@ import javax.inject.Inject;
 public class PunishmentReasonChooserMenu {
 
     private @Inject PunishmentReasonChooserHelper punishmentReasonChooserHelper;
+    private @Inject PresetPunishmentCache presetPunishmentCache;
     private @Inject MessageHandler messageHandler;
 
-    public Inventory createPunishmentReasonChooserMenu(Player player,
-                                                       PunishmentBuilder punishmentBuilder) {
+    public Inventory createPunishmentReasonChooserMenu(Player player, PunishmentBuilder punishmentBuilder) {
+
         GUIBuilder guiBuilder = GUIBuilder
                 .builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6);
+
+
+        Pagination<PresetPunishment> presetPunishment =
+                new SimplePagination<>(28, presetPunishmentCache.getPunishments(punishmentBuilder.getType()));
 
         for (int i = 0; i < 54; i++) {
             if (MenuUtils.isMarkedSlot(i)) {
@@ -29,7 +38,7 @@ public class PunishmentReasonChooserMenu {
             }
         }
 
-        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder)
+        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder, presetPunishment, 1)
                 .forEach(guiBuilder::addItem);
 
         return guiBuilder.build();

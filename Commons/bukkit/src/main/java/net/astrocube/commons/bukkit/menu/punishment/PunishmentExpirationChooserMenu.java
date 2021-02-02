@@ -16,12 +16,9 @@ import javax.inject.Inject;
 
 public class PunishmentExpirationChooserMenu {
 
-    @Inject
-    private PunishmentHandler punishmentHandler;
-    @Inject
-    private MessageHandler messageHandler;
-    @Inject
-    private Plugin plugin;
+    private @Inject PunishmentHandler punishmentHandler;
+    private @Inject MessageHandler messageHandler;
+    private @Inject Plugin plugin;
 
     public Inventory createPunishmentExpirationChooserMenu(Player player, PunishmentBuilder punishmentBuilder) {
 
