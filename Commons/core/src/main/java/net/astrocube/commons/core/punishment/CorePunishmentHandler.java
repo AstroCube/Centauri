@@ -13,6 +13,8 @@ import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.joda.time.DateTime;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +53,13 @@ public class CorePunishmentHandler implements PunishmentHandler {
 
             @Override
             public DateTime getExpiration() {
-                return null;
+
+                Calendar timeout = Calendar.getInstance();
+                timeout.setTimeInMillis(
+                        new Date().getTime() + expiration
+                );
+
+                return new DateTime(timeout);
             }
 
             @Override

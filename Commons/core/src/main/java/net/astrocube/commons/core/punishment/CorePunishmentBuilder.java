@@ -20,6 +20,7 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
         this.issuer = issuer;
         this.punished = punished;
         this.type = type;
+        this.duration = -1;
     }
 
     @Override

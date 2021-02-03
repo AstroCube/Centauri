@@ -207,8 +207,9 @@ punish-menu:
                 - "%%white%%Congela al usuario actual"
                 - "%%white%%para poderlo inspeccionar."
 punishment-expiration:
-    title: "Punishment Expiration"
-    invalid-number: "Invalid number"
+    title: "Expiración de la sanción"
+    holder: "Ej. 3d2h10m"
+    invalid-number: "Número inválido"
 punishment-expiration-menu:
     title: "Elegir sanción"
     items:

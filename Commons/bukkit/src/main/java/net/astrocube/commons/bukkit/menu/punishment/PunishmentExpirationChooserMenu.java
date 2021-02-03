@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.menu.punishment;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.util.TimeParser;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -32,13 +33,12 @@ public class PunishmentExpirationChooserMenu {
                             player.closeInventory();
 
                             new AnvilGUI.Builder()
-                                    .text(messageHandler.get(player, "punishment-expiration.title"))
-
+                                    .title(messageHandler.get(player, "punishment-expiration.title"))
+                                    .text(messageHandler.get(player, "punishment-expiration.holder"))
                                     .onComplete((playerIgnored, text) -> {
-                                        long punishmentExpiration;
-                                        try {
-                                            punishmentExpiration = Long.parseLong(text);
-                                        } catch (NumberFormatException ignored) {
+                                        long punishmentExpiration = TimeParser.parseStringDuration(text);
+
+                                        if (punishmentExpiration == -1) {
                                             return AnvilGUI.Response.text(messageHandler.get(player, "punishment-expiration.invalid-number"));
                                         }
 
