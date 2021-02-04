@@ -2,6 +2,9 @@ package net.astrocube.api.bukkit.user.display;
 
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
+import org.bukkit.ChatColor;
+
+import java.util.Locale;
 
 public interface DisplayMatcher {
 
@@ -11,5 +14,12 @@ public interface DisplayMatcher {
      * @return flair to be processed
      */
     Group.Flair getRealmDisplay(User user);
+
+    static ChatColor getColor(Group.Flair flair) {
+        try {
+            return ChatColor.valueOf(flair.getColor().toUpperCase(Locale.ROOT));
+        } catch (Exception ignore) {}
+        return ChatColor.GRAY;
+    }
 
 }

@@ -12,4 +12,9 @@ public class CoreCloudStatusProvider implements CloudStatusProvider {
         return ProxyServer.getInstance().getPluginManager().getPlugin("TimoCloud") != null;
     }
 
+    @Override
+    public int getOnline() {
+        return -1;
+    }
+
 }

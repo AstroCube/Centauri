@@ -9,4 +9,9 @@ public class DummyStatusProvider implements CloudStatusProvider {
     public boolean hasCloudHooked() {
         return false;
     }
+
+    @Override
+    public int getOnline() {
+        return -1;
+    }
 }

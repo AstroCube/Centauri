@@ -7,4 +7,9 @@ public interface CloudStatusProvider {
      */
     boolean hasCloudHooked();
 
+    /**
+     * @return online number at the cloud
+     */
+    int getOnline();
+
 }
