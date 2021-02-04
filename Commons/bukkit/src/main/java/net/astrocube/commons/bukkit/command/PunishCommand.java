@@ -9,6 +9,7 @@ import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.menu.punishment.PunishmentChooserMenu;
@@ -21,7 +22,8 @@ public class PunishCommand implements CommandClass {
     private @Inject PunishmentChooserMenu punishmentChooserMenu;
     private @Inject MessageHandler messageHandler;
     private @Inject ObjectMapper objectMapper;
-    private @Inject QueryService<User> findService;
+    private @Inject QueryService<User> queryService;
+    private @Inject FindService<User> findService;
 
     @Command(names = "punish")
     public boolean punish(@Sender Player player, String punished) {
@@ -29,26 +31,38 @@ public class PunishCommand implements CommandClass {
         ObjectNode nodes = objectMapper.createObjectNode();
         nodes.put("username", punished);
 
-        findService.query(nodes).callback(response -> {
+        findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
 
-            if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+            if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
                 messageHandler.send(player, AlertModes.ERROR, "punish-menu.error");
                 return;
             }
 
-            Optional<User> online = response.getResponse().get().getFoundModels().stream().findFirst();
+            queryService.query(nodes).callback(response -> {
 
-            if (!online.isPresent()) {
-                messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
-                return;
-            }
+                if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+                    messageHandler.send(player, AlertModes.ERROR, "punish-menu.error");
+                    return;
+                }
 
-            if (!online.get().getSession().isOnline()) {
-                messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
-                return;
-            }
+                Optional<User> online = response.getResponse().get().getFoundModels().stream().findFirst();
 
-            player.openInventory(punishmentChooserMenu.createPunishmentChooserMenu(player, online.get()));
+                if (!online.isPresent()) {
+                    messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
+                    return;
+                }
+
+                if (!online.get().getSession().isOnline()) {
+                    messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
+                    return;
+                }
+
+                player.openInventory(
+                        punishmentChooserMenu.createPunishmentChooserMenu(
+                                player, userResponse.getResponse().get(), online.get())
+                );
+
+            });
 
         });
 

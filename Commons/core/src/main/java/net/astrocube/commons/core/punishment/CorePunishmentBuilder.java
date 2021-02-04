@@ -5,18 +5,19 @@ import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
+import net.astrocube.api.core.virtual.user.User;
 
 public class CorePunishmentBuilder implements PunishmentBuilder {
 
-    private final String issuer;
-    private final String punished;
+    private final User issuer;
+    private final User punished;
     private final PunishmentDoc.Identity.Type type;
 
     private String reason;
 
     private long duration;
 
-    private CorePunishmentBuilder(String issuer, String punished, PunishmentDoc.Identity.Type type) {
+    private CorePunishmentBuilder(User issuer, User punished, PunishmentDoc.Identity.Type type) {
         this.issuer = issuer;
         this.punished = punished;
         this.type = type;
@@ -46,6 +47,11 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
     }
 
     @Override
+    public User getIssuer() {
+        return issuer;
+    }
+
+    @Override
     public PunishmentDoc.Identity.Type getType() {
         return type;
     }
@@ -53,8 +59,8 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
     @Override
     public void build(PunishmentHandler punishmentHandler, Callback<Punishment> punishmentCallback) {
         punishmentHandler.createPunishment(
-                issuer,
-                punished,
+                issuer.getId(),
+                punished.getId(),
                 reason,
                 type,
                 duration,
@@ -63,7 +69,7 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
                 punishmentCallback);
     }
 
-    public static PunishmentBuilder newBuilder(String issuer, String punished, PunishmentDoc.Identity.Type type) {
+    public static PunishmentBuilder newBuilder(User issuer, User punished, PunishmentDoc.Identity.Type type) {
         return new CorePunishmentBuilder(issuer, punished, type);
     }
 }

@@ -3,6 +3,7 @@ package net.astrocube.api.core.punishment;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
+import net.astrocube.api.core.virtual.user.User;
 
 public interface PunishmentBuilder {
 
@@ -13,6 +14,8 @@ public interface PunishmentBuilder {
     long getDuration();
 
     PunishmentBuilder setDuration(long duration);
+
+    User getIssuer();
 
     PunishmentDoc.Identity.Type getType();
 

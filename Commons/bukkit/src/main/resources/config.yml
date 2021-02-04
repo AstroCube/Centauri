@@ -33,6 +33,8 @@ admin:
     reasons:
     - name: "Gei"
       type: "BAN"
+    - name: "Gei"
+      type: "BAN"
   teleport:
     disabled:
       - ""

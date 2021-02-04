@@ -25,7 +25,7 @@ public class PunishmentChooserMenu {
     private @Inject PunishmentReasonChooserMenu punishmentReasonChooserMenu;
     private @Inject DisplayMatcher displayMatcher;
 
-    public Inventory createPunishmentChooserMenu(Player player, User target) {
+    public Inventory createPunishmentChooserMenu(Player player, User issuer, User target) {
 
         Group.Flair flair = displayMatcher.getRealmDisplay(target);
         String resumedName = ChatColor.GRAY + target.getDisplay();
@@ -42,7 +42,7 @@ public class PunishmentChooserMenu {
                                 .setLore(messageHandler.replacingMany(player, "punish-menu.items.ban.lore", "%punished_name%", resumedName))
                                 .build())
                         .setAction(inventoryClickEvent -> {
-                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.BAN);
+                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.BAN);
                             player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })
@@ -54,7 +54,7 @@ public class PunishmentChooserMenu {
                                 .setLore(messageHandler.replacingMany(player, "punish-menu.items.kick.lore", "%punished_name%", resumedName))
                                 .build())
                         .setAction(inventoryClickEvent -> {
-                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.KICK);
+                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.KICK);
                             player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })
@@ -66,7 +66,7 @@ public class PunishmentChooserMenu {
                                 .setLore(messageHandler.replacingMany(player, "punish-menu.items.warn.lore", "%punished_name%", resumedName))
                                 .build())
                         .setAction(inventoryClickEvent -> {
-                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(inventoryClickEvent.getWhoClicked().getName(), target.getUsername(), PunishmentDoc.Identity.Type.WARN);
+                            PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.WARN);
                             player.openInventory(punishmentReasonChooserMenu.createPunishmentReasonChooserMenu(player, punishmentBuilder, 1));
                             return true;
                         })

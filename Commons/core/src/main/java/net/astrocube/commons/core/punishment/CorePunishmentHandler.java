@@ -53,13 +53,7 @@ public class CorePunishmentHandler implements PunishmentHandler {
 
             @Override
             public DateTime getExpiration() {
-
-                Calendar timeout = Calendar.getInstance();
-                timeout.setTimeInMillis(
-                        new Date().getTime() + expiration
-                );
-
-                return new DateTime(timeout);
+                return PunishmentHandler.generateFromExpiration(expiration);
             }
 
             @Override

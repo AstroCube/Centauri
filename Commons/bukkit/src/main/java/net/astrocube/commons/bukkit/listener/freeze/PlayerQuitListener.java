@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.freeze;
 
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
+import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
 import org.bukkit.entity.Player;
@@ -25,12 +26,14 @@ public class PlayerQuitListener implements Listener {
             return;
         }
 
+        /*
         CorePunishmentBuilder.newBuilder(
                 "server",
-                player.getName(),
+                player,
                 PunishmentDoc.Identity.Type.BAN)
                 .setDuration(Long.MAX_VALUE)
                 .setReason("Disconnection while was freezed.")
                 .build(punishmentHandler, (punishmentIgnored) -> {});
+         */
     }
 }

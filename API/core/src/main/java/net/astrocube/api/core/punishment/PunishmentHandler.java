@@ -5,7 +5,10 @@ import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
+import org.joda.time.DateTime;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public interface PunishmentHandler {
@@ -30,5 +33,14 @@ public interface PunishmentHandler {
     AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type  type, String playerId);
 
     AsyncResponse<Void> updatePunishment(Punishment punishment);
+
+    static DateTime generateFromExpiration(long expiration) {
+        Calendar timeout = Calendar.getInstance();
+        timeout.setTimeInMillis(
+                new Date().getTime() + expiration
+        );
+
+        return new DateTime(timeout);
+    }
 
 }

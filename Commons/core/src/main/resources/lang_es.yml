@@ -210,6 +210,7 @@ punishment-expiration:
     title: "Expiración de la sanción"
     holder: "Ej. 3d2h10m"
     invalid-number: "Número inválido"
+    never: "Permanente"
 punishment-expiration-menu:
     title: "Elegir sanción"
     items:
@@ -222,11 +223,13 @@ punishment-expiration-menu:
                 - "%%white%%esta sanción será permanente."
                 - " "
                 - "%%yellow%%¡Click izquierdo para sancionar!"
-        increase:
-            name: "%%green%%Increase the time in minutes"
+        edit:
+            name: "%%blue%%Editar duración"
             lore:
-                - "%%white%%This only adds a minute to the total time"
-                - "%%white%%Warning! Don't break te bottom."
+                - "%%white%%Edita la duración de la sanción aplicada."
+                - " "
+                - "%%white%%Duración actual:"
+                - "%%blue%%%%duration%%"
         decrease:
             name: "%%red%%Decrease the time in minutes"
             lore:
