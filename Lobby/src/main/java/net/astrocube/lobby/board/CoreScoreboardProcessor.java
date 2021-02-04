@@ -31,7 +31,7 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "lobby.scoreboard.lore",
                 "%%player%%", user.getDisplay(),
-                "%%rank%%", DisplayMatcher.getColor(displayMatcher.getRealmDisplay(user)),
+                "%%rank%%", DisplayMatcher.getColor(displayMatcher.getRealmDisplay(user)) + displayMatcher.getRealmDisplay(user).getSymbol(),
                 "%%lobby%%", 1,
                 "%%online%%", cloudStatusProvider.getOnline()
         );
