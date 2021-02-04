@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.punishment.PresetPunishment;
 import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
+import net.astrocube.api.bukkit.util.TimeParser;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import org.bukkit.plugin.Plugin;
 
@@ -51,6 +52,11 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
                     @Override
                     public PunishmentDoc.Identity.Type getType() {
                         return PunishmentDoc.Identity.Type.valueOf((String) linkedKey.get("type"));
+                    }
+
+                    @Override
+                    public long getExpiration() {
+                        return TimeParser.parseStringDuration((String) linkedKey.get("expiration"));
                     }
                 });
 

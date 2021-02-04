@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import team.unnamed.gui.abstraction.item.ItemClickable;
+import team.unnamed.gui.core.gui.GUIBuilder;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -27,6 +29,14 @@ public class MenuUtils {
         meta.setDisplayName(" ");
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    public static void generateFrame(GUIBuilder builder) {
+        for (int i = 0; i < 54; i++) {
+            if (MenuUtils.isMarkedSlot(i)) {
+                builder.addItem(ItemClickable.builder(i).setItemStack(MenuUtils.generateStainedPane()).build());
+            }
+        }
     }
 
     public static ItemStack generateHead(HeadLibrary library) {

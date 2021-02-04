@@ -14,4 +14,9 @@ public interface PresetPunishment {
      */
     PunishmentDoc.Identity.Type getType();
 
+    /**
+     * @return expiration in milis of the punishment (-1 for permanent)
+     */
+    long getExpiration();
+
 }

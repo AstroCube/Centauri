@@ -8,14 +8,12 @@ import net.astrocube.commons.bukkit.menu.MenuUtils;
 import net.astrocube.commons.bukkit.menu.punishment.helper.PunishmentReasonChooserHelper;
 import net.astrocube.commons.core.utils.Pagination;
 import net.astrocube.commons.core.utils.SimplePagination;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
 import javax.inject.Inject;
+import java.util.stream.Collectors;
 
 public class PunishmentReasonChooserMenu {
 
@@ -23,24 +21,42 @@ public class PunishmentReasonChooserMenu {
     private @Inject PresetPunishmentCache presetPunishmentCache;
     private @Inject MessageHandler messageHandler;
 
-    public Inventory createPunishmentReasonChooserMenu(Player player, PunishmentBuilder punishmentBuilder, int page) {
+    public Inventory createFilter(Player player, PunishmentBuilder builder, int page) {
+
+        Pagination<PresetPunishment> presetPunishment =
+                new SimplePagination<>(28, presetPunishmentCache.getPunishments(builder.getType()));
+
+        return createChooser(player, builder, presetPunishment, "", false, page);
+    }
+
+    public Inventory createSearch(Player player, PunishmentBuilder builder, String search, int page) {
+
+        Pagination<PresetPunishment> presetPunishment =
+                new SimplePagination<>(
+                        28,
+                        presetPunishmentCache.getPunishments()
+                                .stream()
+                                .filter(p ->
+                                        messageHandler.get(
+                                                player,
+                                                "punish-menu.reasons." + p.getId() + ".title"
+                                        ).contains(search))
+                                .collect(Collectors.toSet())
+                );
+
+
+        return createChooser(player, builder, presetPunishment, search, true, page);
+    }
+
+    private Inventory createChooser(Player player, PunishmentBuilder builder, Pagination<PresetPunishment> preset, String criteria, boolean search, int page) {
 
         GUIBuilder guiBuilder = GUIBuilder
                 .builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6);
-
-
-        Pagination<PresetPunishment> presetPunishment =
-                new SimplePagination<>(28, presetPunishmentCache.getPunishments(punishmentBuilder.getType()));
-
-        for (int i = 0; i < 54; i++) {
-            if (MenuUtils.isMarkedSlot(i)) {
-                guiBuilder.addItem(ItemClickable.builder(i).setItemStack(MenuUtils.generateStainedPane()).build());
-            }
-        }
-
-        punishmentReasonChooserHelper.buildPunishReasons(player, punishmentBuilder, presetPunishment, page)
+        MenuUtils.generateFrame(guiBuilder);
+        punishmentReasonChooserHelper.buildPunishReasons(player, builder, preset, criteria, search, page)
                 .forEach(guiBuilder::addItem);
 
         return guiBuilder.build();
     }
+
 }

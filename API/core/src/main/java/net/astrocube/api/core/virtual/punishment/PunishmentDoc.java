@@ -1,6 +1,8 @@
 package net.astrocube.api.core.virtual.punishment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import org.joda.time.DateTime;
@@ -36,6 +38,8 @@ public interface PunishmentDoc extends Model {
         /**
          * It represents the type of punishment that can be.
          */
+        @Getter
+        @AllArgsConstructor
         enum Type {
             @JsonProperty("Ban") BAN,
             @JsonProperty("Kick") KICK,

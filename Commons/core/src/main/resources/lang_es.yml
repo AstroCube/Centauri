@@ -176,12 +176,28 @@ commands:
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."
-    reasons:
-        demo:
-            title: "Demo"
-            reason: "Alguna maricada"
+    search:
+        item:
+            title: "%%aqua%%Buscar por nombre"
             lore:
-                - ""
+                - "%%yellow%%¡Click izquierdo para buscar"
+                - "%%yellow%%una sanción!"
+        title: "Buscar"
+        write: "Escribe algo..."
+    type:
+        ban: "%%red%%Suspensión"
+        warn: "%%green%%Advertencia"
+        kick: "%%yellow%%Expulsión"
+    lore:
+        - " "
+        - "%%aqua%%Razón: %%white%%%%reason%%"
+        - "%%aqua%%Expira: %%white%%%%expire%%"
+        - " "
+        - "%%yellow%%¡Click izquierdo para aplicar!"
+    reasons:
+        cheating:
+            title: "Uso de hacks"
+            reason: "Uso de hacks - cheating"
     items:
         ban:
             name: "%%dark_red%%Suspender a %punished_name%"
@@ -215,6 +231,12 @@ punishment-expiration-menu:
     title: "Elegir sanción"
     items:
         empty: "%%red%%No hay sanciones predefinidas :("
+        actual:
+            lore:
+                - " "
+                - "%%blue%%Sanción: %%white%%%%reason%%"
+                - "%%blue%%Tipo: %%type%%"
+                - "%%blue%%Expira: %%white%%%%expires%%"
         confirm:
             name: "%%green%%Confirmar sanción"
             lore:
@@ -235,10 +257,12 @@ punishment-expiration-menu:
             lore:
                 - "%%white%%This only subtracts a minute to the total time."
                 - "%%white%%NOTE: If the value was set in -1 the punishment will be permanently"
-pagination:
-    previous: "%%gold%%\u00AB %%blue%%Página anterior (%%white%%%%page%%%%blue%%)"
-    actual: "%%blue%%Página actual (%%white%%%%page%%%%blue%%)"
-    next: "%%blue%%Página siguiente (%%white%%%%page%%%%blue%%) %%gold%%\u00BB"
+menus:
+    pagination:
+        previous: "%%gold%%\u00AB %%blue%%Página anterior (%%white%%%%page%%%%blue%%)"
+        actual: "%%blue%%Página actual (%%white%%%%page%%%%blue%%)"
+        next: "%%blue%%Página siguiente (%%white%%%%page%%%%blue%%) %%gold%%\u00BB"
+    back: "%%red%%\u00AB Volver"
 admin-panel:
     main:
         title: "AstroCube Admin Panel"

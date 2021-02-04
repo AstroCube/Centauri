@@ -17,7 +17,12 @@ public interface PunishmentBuilder {
 
     User getIssuer();
 
+    User getTarget();
+
     PunishmentDoc.Identity.Type getType();
 
+    void setType(PunishmentDoc.Identity.Type type);
+
     void build(PunishmentHandler punishmentHandler, Callback<Punishment> punishmentCallback);
+
 }

@@ -11,7 +11,7 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
 
     private final User issuer;
     private final User punished;
-    private final PunishmentDoc.Identity.Type type;
+    private PunishmentDoc.Identity.Type type;
 
     private String reason;
 
@@ -52,8 +52,18 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
     }
 
     @Override
+    public User getTarget() {
+        return punished;
+    }
+
+    @Override
     public PunishmentDoc.Identity.Type getType() {
         return type;
+    }
+
+    @Override
+    public void setType(PunishmentDoc.Identity.Type type) {
+        this.type = type;
     }
 
     @Override

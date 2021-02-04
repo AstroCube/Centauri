@@ -31,10 +31,9 @@ authentication:
 admin:
   punishments:
     reasons:
-    - name: "Gei"
+    - name: "cheating"
       type: "BAN"
-    - name: "Gei"
-      type: "BAN"
+      time: "-1"
   teleport:
     disabled:
       - ""
