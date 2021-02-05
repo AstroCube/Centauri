@@ -17,7 +17,6 @@ public class UserDisconnectListener implements Listener {
 
     private @Inject Plugin plugin;
     private @Inject MatchAssigner matchAssigner;
-    private @Inject SessionService sessionService;
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onUserLeave(PlayerQuitEvent event) {
@@ -26,7 +25,6 @@ public class UserDisconnectListener implements Listener {
 
                 Player player = event.getPlayer();
                 ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
-                sessionService.serverDisconnect(player.getDatabaseIdentifier());
                 event.setQuitMessage("");
 
                 if (type == ServerDoc.Type.GAME) {
