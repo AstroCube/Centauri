@@ -106,6 +106,7 @@ public class PunishmentExpirationChooserMenu {
                                         if (error != null) {
                                             messageHandler.send(player, AlertModes.ERROR, "punish.error");
                                         }
+                                        player.closeInventory();
                                     });
                             return true;
                         })

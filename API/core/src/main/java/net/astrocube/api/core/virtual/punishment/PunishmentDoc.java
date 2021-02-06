@@ -24,6 +24,13 @@ public interface PunishmentDoc extends Model {
         String getIssuer();
 
         /**
+         * Gets the server where punishment was issued.
+         *
+         * @return Server where punishment was issued.
+         */
+        String getServer();
+
+        /**
          * Gets the id of the player punished.
          *
          * @return The if of the player punished.

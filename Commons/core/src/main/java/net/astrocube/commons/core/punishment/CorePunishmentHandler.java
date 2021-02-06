@@ -1,6 +1,7 @@
 package net.astrocube.commons.core.punishment;
 
 import com.google.inject.Inject;
+import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.punishment.PunishmentHandler;
@@ -16,6 +17,7 @@ import java.util.function.BiConsumer;
 public class CorePunishmentHandler implements PunishmentHandler {
 
     private @Inject CreateService<Punishment, PunishmentDoc.Partial> createService;
+    private @Inject InstanceNameProvider instanceNameProvider;
 
     @Override
     public AsyncResponse<PaginateResult<Punishment>> paginate(String userId, int page, int perPage) {
@@ -58,6 +60,11 @@ public class CorePunishmentHandler implements PunishmentHandler {
             @Override
             public String getIssuer() {
                 return issuer;
+            }
+
+            @Override
+            public String getServer() {
+                return instanceNameProvider.getName();
             }
 
             @Override
