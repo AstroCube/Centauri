@@ -1,28 +1,22 @@
 package net.astrocube.commons.core.punishment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.paginate.PaginateResult;
-import net.astrocube.api.core.service.paginate.PaginateService;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.joda.time.DateTime;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class CorePunishmentHandler implements PunishmentHandler {
 
     private @Inject CreateService<Punishment, PunishmentDoc.Partial> createService;
-    private @Inject PaginateService<Punishment> paginateService;
-    private @Inject ObjectMapper objectMapper;
 
     @Override
     public AsyncResponse<PaginateResult<Punishment>> paginate(String userId, int page, int perPage) {
@@ -40,16 +34,7 @@ public class CorePunishmentHandler implements PunishmentHandler {
             boolean silent,
             Callback<Punishment> callback
     ) {
-        Punishment punishment = new Punishment() {
-            @Override
-            public boolean isAppealed() {
-                return false;
-            }
-
-            @Override
-            public boolean isActive() {
-                return true;
-            }
+        PunishmentDoc.Partial punishment = new PunishmentDoc.Creation() {
 
             @Override
             public DateTime getExpiration() {
