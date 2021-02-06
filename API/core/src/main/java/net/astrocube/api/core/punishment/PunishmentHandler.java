@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public interface PunishmentHandler {
 
@@ -23,7 +24,7 @@ public interface PunishmentHandler {
             long expiration,
             boolean automatic,
             boolean silent,
-            Callback<Punishment> callback
+            BiConsumer<Punishment, Exception> callback
     );
 
     AsyncResponse<Punishment> getPunishmentById(String id);

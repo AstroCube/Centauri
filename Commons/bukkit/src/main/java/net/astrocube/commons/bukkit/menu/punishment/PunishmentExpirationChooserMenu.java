@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.menu.punishment;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.util.TimeParser;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
@@ -99,7 +100,13 @@ public class PunishmentExpirationChooserMenu {
                                 .setLore(messageHandler.getMany(player, "punishment-expiration-menu.items.confirm.lore"))
                                 .build())
                         .setAction(inventoryClickEvent -> {
-                            punishmentBuilder.build(punishmentHandler, (ignoredPunishment) -> {});
+                            punishmentBuilder.build(
+                                    punishmentHandler,
+                                    (punishment, error) -> {
+                                        if (error != null) {
+                                            messageHandler.send(player, AlertModes.ERROR, "punish.error");
+                                        }
+                                    });
                             return true;
                         })
                         .build()

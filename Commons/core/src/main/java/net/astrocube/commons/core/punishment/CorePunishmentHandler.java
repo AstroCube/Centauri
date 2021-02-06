@@ -8,11 +8,10 @@ import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
-import net.astrocube.commons.core.utils.Callbacks;
 import org.joda.time.DateTime;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.function.BiConsumer;
 
 public class CorePunishmentHandler implements PunishmentHandler {
 
@@ -32,28 +31,13 @@ public class CorePunishmentHandler implements PunishmentHandler {
             long expiration,
             boolean automatic,
             boolean silent,
-            Callback<Punishment> callback
+            BiConsumer<Punishment, Exception> callback
     ) {
-        PunishmentDoc.Partial punishment = new PunishmentDoc.Creation() {
+        PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
             @Override
             public DateTime getExpiration() {
                 return PunishmentHandler.generateFromExpiration(expiration);
-            }
-
-            @Override
-            public DateTime getCreatedAt() {
-                return new DateTime();
-            }
-
-            @Override
-            public DateTime getUpdatedAt() {
-                return new DateTime();
-            }
-
-            @Override
-            public String getId() {
-                return UUID.randomUUID().toString();
             }
 
             @Override
@@ -85,11 +69,15 @@ public class CorePunishmentHandler implements PunishmentHandler {
             public Type getType() {
                 return type;
             }
+
         };
 
-        createService.create(punishment).callback(
-                Callbacks.applyCommonErrorHandler("Punishment creation", callback)
-        );
+        try {
+            callback.accept(createService.createSync(partial), null);
+        } catch (Exception e) {
+            callback.accept(null, e);
+        }
+
     }
 
     @Override

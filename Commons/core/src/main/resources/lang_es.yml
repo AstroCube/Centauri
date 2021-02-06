@@ -172,7 +172,8 @@ commands:
             only-player: "asd"
         player:
             offline: "asd"
-
+punish:
+    error: "%%red%%Ha ocurrido un error al crear la sanción, inténtalo de nuevo o contacta con un administrador."
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."

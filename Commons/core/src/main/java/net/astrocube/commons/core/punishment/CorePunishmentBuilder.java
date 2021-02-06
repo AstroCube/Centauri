@@ -1,11 +1,14 @@
 package net.astrocube.commons.core.punishment;
 
+import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.api.core.virtual.user.User;
+
+import java.util.function.BiConsumer;
 
 public class CorePunishmentBuilder implements PunishmentBuilder {
 
@@ -67,7 +70,7 @@ public class CorePunishmentBuilder implements PunishmentBuilder {
     }
 
     @Override
-    public void build(PunishmentHandler punishmentHandler, Callback<Punishment> punishmentCallback) {
+    public void build(PunishmentHandler punishmentHandler, BiConsumer<Punishment, Exception> punishmentCallback) {
         punishmentHandler.createPunishment(
                 issuer.getId(),
                 punished.getId(),

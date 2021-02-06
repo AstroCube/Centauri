@@ -76,7 +76,7 @@ public interface PunishmentDoc extends Model {
      *
      * See {@linkplain Model.Stamped}.
      */
-    interface Expiration extends Identity, Model.Stamped {
+    interface Expiration extends Identity {
 
         /**
          * @return The data time that the punishment will expire.

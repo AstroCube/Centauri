@@ -5,6 +5,8 @@ import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.api.core.virtual.user.User;
 
+import java.util.function.BiConsumer;
+
 public interface PunishmentBuilder {
 
     String getReason();
@@ -23,6 +25,6 @@ public interface PunishmentBuilder {
 
     void setType(PunishmentDoc.Identity.Type type);
 
-    void build(PunishmentHandler punishmentHandler, Callback<Punishment> punishmentCallback);
+    void build(PunishmentHandler punishmentHandler, BiConsumer<Punishment, Exception> punishmentCallback);
 
 }
