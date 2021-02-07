@@ -61,7 +61,9 @@ public class LobbyActionListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryInteract(InventoryClickEvent event) {
-        event.setCancelled(true);
+        if (isCancellable((Player) event.getWhoClicked())) {
+            event.setCancelled(true);
+        }
     }
 
     public boolean isCancellable(Player player) {
