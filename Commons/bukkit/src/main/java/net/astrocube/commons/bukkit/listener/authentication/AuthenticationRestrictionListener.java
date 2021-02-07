@@ -48,19 +48,14 @@ public class AuthenticationRestrictionListener implements Listener {
 
     @EventHandler
     public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
-        String[] command = event.getMessage().split(" ");
+        String command = event.getMessage().toLowerCase();
 
-        if (command.length == 2) {
-
-            if (command[0].equals("/login") || command[0].equals("/register")) {
-                return;
-            }
-
+        if (command.startsWith("/login") || command.startsWith("/register")) {
+            return;
         }
 
-        messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
+        this.messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
         event.setCancelled(true);
-
     }
 
     @EventHandler
