@@ -19,6 +19,7 @@ import net.astrocube.commons.bukkit.listener.freeze.PlayerMoveListener;
 import net.astrocube.commons.bukkit.listener.freeze.PlayerQuitListener;
 import net.astrocube.commons.bukkit.listener.game.*;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
+import net.astrocube.commons.bukkit.listener.punishment.PunishmentIssueActionsListener;
 import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
 import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
@@ -64,6 +65,8 @@ public class EventListenerLoader implements Loader {
     private @Inject PlayerMoveListener playerMoveListener;
     private @Inject PlayerQuitListener playerQuitListener;
 
+    private @Inject PunishmentIssueActionsListener punishmentIssueActionsListener;
+
     private @Inject GUIListeners guiListeners;
 
     private @Inject Plugin plugin;
@@ -103,6 +106,8 @@ public class EventListenerLoader implements Loader {
         registerEvent(playerDamageListener);
         registerEvent(lobbyReturnListener);
         registerEvent(lobbyActionListener);
+
+        registerEvent(punishmentIssueActionsListener);
 
         registerEvent(guiListeners);
         registerEvent(playerMoveListener);

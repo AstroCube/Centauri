@@ -36,6 +36,11 @@ public interface PunishmentHandler {
     AsyncResponse<Void> updatePunishment(Punishment punishment);
 
     static DateTime generateFromExpiration(long expiration) {
+
+        if (expiration == -1) {
+            return null;
+        }
+
         Calendar timeout = Calendar.getInstance();
         timeout.setTimeInMillis(
                 new Date().getTime() + expiration

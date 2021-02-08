@@ -7,6 +7,8 @@ import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import org.joda.time.DateTime;
 
+import javax.annotation.Nullable;
+
 public interface PunishmentDoc extends Model {
 
     interface Partial extends PartialModel {}
@@ -88,7 +90,7 @@ public interface PunishmentDoc extends Model {
         /**
          * @return The data time that the punishment will expire.
          */
-        DateTime getExpiration();
+        @Nullable DateTime getExpiration();
 
     }
 

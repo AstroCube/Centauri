@@ -14,6 +14,7 @@ import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import org.bukkit.Bukkit;
 import org.joda.time.DateTime;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -48,7 +49,7 @@ public class CorePunishmentHandler implements PunishmentHandler {
         PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
             @Override
-            public DateTime getExpiration() {
+            public @Nullable DateTime getExpiration() {
                 return PunishmentHandler.generateFromExpiration(expiration);
             }
 
