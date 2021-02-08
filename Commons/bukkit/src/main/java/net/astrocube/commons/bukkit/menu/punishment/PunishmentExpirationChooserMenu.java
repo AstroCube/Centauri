@@ -35,46 +35,6 @@ public class PunishmentExpirationChooserMenu {
     public Inventory createPunishmentExpirationChooserMenu(Player player, PunishmentBuilder punishmentBuilder, String criteria, boolean search) {
 
         GUIBuilder guiBuilder = GUIBuilder.builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6)
-                .addItem(ItemClickable.builder(20)
-                        .setItemStack(ItemBuilder.newBuilder(Material.WORKBENCH)
-                                .setName(messageHandler.get(player, "punishment-expiration-menu.items.edit.name"))
-                                .setLore(
-                                        messageHandler.replacingMany(
-                                                player, "punishment-expiration-menu.items.edit.lore",
-                                                "%%duration%%",
-                                                punishmentBuilder.getDuration() == -1 ?
-                                                        messageHandler.get(player, "punishment-expiration.never") :
-                                                        PrettyTimeUtils.getHumanDate(
-                                                                PunishmentHandler.generateFromExpiration(
-                                                                        punishmentBuilder.getDuration()
-                                                                ).toDate(),
-                                                                punishmentBuilder.getIssuer().getLanguage()
-                                                        )
-                                        )
-                                )
-                                .build())
-                        .setAction(inventoryClickEvent -> {
-                            player.closeInventory();
-                            new AnvilGUI.Builder()
-                                    .title(messageHandler.get(player, "punishment-expiration.title"))
-                                    .onClose(p -> player.openInventory(createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search)))
-                                    .text(messageHandler.get(player, "punishment-expiration.holder"))
-                                    .onComplete((playerIgnored, text) -> {
-                                        long punishmentExpiration = TimeParser.parseStringDuration(text);
-
-                                        if (punishmentExpiration == -1) {
-                                            return AnvilGUI.Response.text(messageHandler.get(player, "punishment-expiration.invalid-number"));
-                                        }
-
-                                        punishmentBuilder.setDuration(punishmentExpiration);
-                                        createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search);
-                                        return AnvilGUI.Response.close();
-                                    })
-                                    .plugin(plugin)
-                                    .open(player);
-                            return true;
-                        }).build()
-                )
                 .addItem(
                         genericHeadHelper.generateDecorator(
                                 genericHeadHelper.generateSkull(
@@ -114,6 +74,49 @@ public class PunishmentExpirationChooserMenu {
                 );
 
         MenuUtils.generateFrame(guiBuilder);
+
+        if (punishmentBuilder.getType() == PunishmentDoc.Identity.Type.BAN) {
+            guiBuilder.addItem(ItemClickable.builder(20)
+                    .setItemStack(ItemBuilder.newBuilder(Material.WORKBENCH)
+                            .setName(messageHandler.get(player, "punishment-expiration-menu.items.edit.name"))
+                            .setLore(
+                                    messageHandler.replacingMany(
+                                            player, "punishment-expiration-menu.items.edit.lore",
+                                            "%%duration%%",
+                                            punishmentBuilder.getDuration() == -1 ?
+                                                    messageHandler.get(player, "punishment-expiration.never") :
+                                                    PrettyTimeUtils.getHumanDate(
+                                                            PunishmentHandler.generateFromExpiration(
+                                                                    punishmentBuilder.getDuration()
+                                                            ).toDate(),
+                                                            punishmentBuilder.getIssuer().getLanguage()
+                                                    )
+                                    )
+                            )
+                            .build())
+                    .setAction(inventoryClickEvent -> {
+                        player.closeInventory();
+                        new AnvilGUI.Builder()
+                                .title(messageHandler.get(player, "punishment-expiration.title"))
+                                .onClose(p -> player.openInventory(createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search)))
+                                .text(messageHandler.get(player, "punishment-expiration.holder"))
+                                .onComplete((playerIgnored, text) -> {
+                                    long punishmentExpiration = TimeParser.parseStringDuration(text);
+
+                                    if (punishmentExpiration == -1) {
+                                        return AnvilGUI.Response.text(messageHandler.get(player, "punishment-expiration.invalid-number"));
+                                    }
+
+                                    punishmentBuilder.setDuration(punishmentExpiration);
+                                    createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search);
+                                    return AnvilGUI.Response.close();
+                                })
+                                .plugin(plugin)
+                                .open(player);
+                        return true;
+                    }).build()
+            );
+        }
 
         guiBuilder.addItem(genericHeadHelper.generateDefaultClickable(
                 genericHeadHelper.backButton(player),

@@ -174,6 +174,7 @@ commands:
             offline: "asd"
 punish:
     error: "%%red%%Ha ocurrido un error al crear la sanción, inténtalo de nuevo o contacta con un administrador."
+    lower: "%%red%%No peudes sancionar a alguien con permisos mayores a ti."
     kick:
         message:
             - "%%red%%Expulsión %%gold%%\u00BB %%aqua%%%%reason%%"

@@ -43,6 +43,8 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
 
             try {
 
+                PunishmentDoc.Identity.Type type = PunishmentDoc.Identity.Type.valueOf((String) linkedKey.get("type"));
+
                 punishments.add(new PresetPunishment() {
                     @Override
                     public String getId() {
@@ -51,12 +53,13 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
 
                     @Override
                     public PunishmentDoc.Identity.Type getType() {
-                        return PunishmentDoc.Identity.Type.valueOf((String) linkedKey.get("type"));
+                        return type;
                     }
 
                     @Override
                     public long getExpiration() {
-                        return TimeParser.parseStringDuration((String) linkedKey.get("expiration"));
+                        return type == PunishmentDoc.Identity.Type.BAN ?
+                            TimeParser.parseStringDuration((String) linkedKey.get("expiration")) : -1;
                     }
                 });
 

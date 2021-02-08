@@ -11,6 +11,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
+import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.menu.punishment.PunishmentChooserMenu;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class PunishCommand implements CommandClass {
     private @Inject QueryService<User> queryService;
     private @Inject FindService<User> findService;
 
-    @Command(names = "punish")
+    @Command(names = "punish", permission = "commons.staff.punish.menu")
     public boolean punish(@Sender Player player, String punished) {
 
         ObjectNode nodes = objectMapper.createObjectNode();
@@ -54,6 +55,13 @@ public class PunishCommand implements CommandClass {
 
                 if (!online.get().getSession().isOnline()) {
                     messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
+                    return;
+                }
+
+                if (
+                        Group.getLowestPriority(online.get().getGroups()) <=
+                        Group.getLowestPriority(userResponse.getResponse().get().getGroups())) {
+                    messageHandler.send(player, AlertModes.ERROR, "punish.lower");
                     return;
                 }
 
