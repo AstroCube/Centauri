@@ -1,5 +1,7 @@
 package net.astrocube.api.core.model;
 
+import net.astrocube.api.core.message.Message;
+
 /**
  * A subset of the fields in some {@link Model} serving some particular use case.
  *
@@ -34,5 +36,5 @@ package net.astrocube.api.core.model;
  * and only implement the interfaces containing the fields that they use, avoiding
  * empty fields and nulls.
  */
-public interface PartialModel {
+public interface PartialModel extends Message {
 }

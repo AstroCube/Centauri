@@ -1,7 +1,5 @@
 package net.astrocube.commons.core.punishment;
 
-import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.virtual.punishment.Punishment;

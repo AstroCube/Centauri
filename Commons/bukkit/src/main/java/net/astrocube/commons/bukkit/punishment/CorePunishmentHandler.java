@@ -1,16 +1,20 @@
-package net.astrocube.commons.core.punishment;
+package net.astrocube.commons.bukkit.punishment;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.punishment.event.PunishmentIssueEvent;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Callback;
+import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
+import org.bukkit.Bukkit;
 import org.joda.time.DateTime;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -18,6 +22,12 @@ public class CorePunishmentHandler implements PunishmentHandler {
 
     private @Inject CreateService<Punishment, PunishmentDoc.Partial> createService;
     private @Inject InstanceNameProvider instanceNameProvider;
+    private final Channel<Punishment> punishmentChannel;
+
+    @Inject
+    public CorePunishmentHandler(Messenger jedisMessenger) {
+        punishmentChannel = jedisMessenger.getChannel(Punishment.class);
+    }
 
     @Override
     public AsyncResponse<PaginateResult<Punishment>> paginate(String userId, int page, int perPage) {
@@ -80,7 +90,10 @@ public class CorePunishmentHandler implements PunishmentHandler {
         };
 
         try {
-            callback.accept(createService.createSync(partial), null);
+            Punishment punishment = createService.createSync(partial);
+            punishmentChannel.sendMessage(punishment, new HashMap<>());
+            Bukkit.getPluginManager().callEvent(new PunishmentIssueEvent(punishment));
+            callback.accept(punishment, null);
         } catch (Exception e) {
             callback.accept(null, e);
         }
