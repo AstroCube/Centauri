@@ -86,7 +86,6 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
         node.put("punished", user.getId());
         node.put("active", true);
 
-
         Optional<Punishment> activePunishment = queryService.querySync(node).getFoundModels().stream().filter(
                 punishment -> punishment.getExpiration() == null || punishment.getExpiration().isAfter(new DateTime(new Date()))
         ).collect(Collectors.toSet()).stream().findFirst();
