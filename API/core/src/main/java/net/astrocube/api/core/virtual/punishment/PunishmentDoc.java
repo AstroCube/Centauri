@@ -90,6 +90,7 @@ public interface PunishmentDoc extends Model {
         /**
          * @return The data time that the punishment will expire.
          */
+        @JsonProperty("expires")
         @Nullable DateTime getExpiration();
 
     }
