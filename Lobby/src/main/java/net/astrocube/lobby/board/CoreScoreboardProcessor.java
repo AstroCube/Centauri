@@ -40,8 +40,6 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
                 "%%online%%", cloudStatusProvider.getOnline()
         );
 
-        Collections.reverse(scoreTranslation);
-
         for (int i = 0; i < scoreTranslation.size(); i++) {
             builder.addLine(scoreTranslation.get(i));
         }
