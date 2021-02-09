@@ -58,6 +58,21 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 
     @Override
     public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
+
+        String key = modelMeta.getRouteKey() + ":" + findModelRequest.getId();
+
+        try (Jedis jedis = redis.getRawConnection().getResource()) {
+
+            if (jedis.exists(key)) {
+                return (Complete) objectMapper.readValue(
+                        jedis.get(key),
+                        mapper.constructType(getCompleteType())
+                );
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         return httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
                 this.redisRequestCallable,

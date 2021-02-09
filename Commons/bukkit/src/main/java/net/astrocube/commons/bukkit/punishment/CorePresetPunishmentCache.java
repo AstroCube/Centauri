@@ -35,7 +35,8 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
         return getPunishments().stream().filter(p -> p.getType() == type).collect(Collectors.toSet());
     }
 
-    private void generateCache() {
+    @Override
+    public void generateCache() {
 
         for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
 

@@ -17,4 +17,9 @@ public interface PresetPunishmentCache {
      */
     Set<PresetPunishment> getPunishments(PunishmentDoc.Identity.Type type);
 
+    /**
+     * Load punishments to a local cache
+     */
+    void generateCache();
+
 }

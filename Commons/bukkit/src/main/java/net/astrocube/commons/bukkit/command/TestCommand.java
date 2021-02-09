@@ -34,8 +34,6 @@ public class TestCommand implements CommandClass {
 
             for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
                 Map<String, Object> linkedKey = (Map<String, Object>) key;
-                System.out.println(linkedKey.get("name"));
-                System.out.println(linkedKey.get("type"));
             }
 
         } catch (Exception e) {

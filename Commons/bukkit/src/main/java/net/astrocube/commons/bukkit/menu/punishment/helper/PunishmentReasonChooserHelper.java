@@ -82,6 +82,8 @@ public class PunishmentReasonChooserHelper {
                     )
             );
 
+            index++;
+
         }
 
         clickableArray.add(
