@@ -60,7 +60,7 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
                     @Override
                     public long getExpiration() {
                         return type == PunishmentDoc.Identity.Type.BAN &&
-                                ((String) linkedKey.get("expiration")).equalsIgnoreCase("-1") ?
+                                !((String) linkedKey.get("expiration")).equalsIgnoreCase("-1") ?
                             TimeParser.parseStringDuration((String) linkedKey.get("expiration")) : -1;
                     }
                 });
