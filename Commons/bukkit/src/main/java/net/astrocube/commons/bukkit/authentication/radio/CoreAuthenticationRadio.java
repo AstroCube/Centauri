@@ -14,7 +14,7 @@ public class CoreAuthenticationRadio implements AuthenticationRadio {
     @Override
     public void addPlayer(Player player) {
 
-        if (authenticationSongLoader.getBroadcaster().getQueue().size() == 0) {
+        if (!authenticationSongLoader.getBroadcaster().isPlaying()) {
             authenticationSongLoader.getBroadcaster().setPlaying(true);
         }
 

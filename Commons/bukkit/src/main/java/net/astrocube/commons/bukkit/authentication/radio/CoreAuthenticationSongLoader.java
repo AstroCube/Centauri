@@ -46,6 +46,8 @@ public class CoreAuthenticationSongLoader implements AuthenticationSongLoader {
             file.mkdir();
         }
 
+
+        plugin.getLogger().log(Level.INFO, "Reading broadcast songs.");
         for (File songFile : file.listFiles()) {
             try {
 
@@ -61,6 +63,8 @@ public class CoreAuthenticationSongLoader implements AuthenticationSongLoader {
                 plugin.getLogger().log(Level.WARNING, "Could not decode {0} file. ({1})", new String[]{songFile.getName(), e.getMessage()});
             }
         }
+
+        plugin.getLogger().log(Level.INFO, "Loaded {0} broadcast songs", songs.size());
 
         if (broadcaster.getQueue().size() > 0) {
             broadcaster.setLoop(true);
