@@ -49,7 +49,7 @@ public class CoreAuthenticationSongLoader implements AuthenticationSongLoader {
         for (File songFile : file.listFiles()) {
             try {
 
-                if (!FilenameUtils.getExtension(songFile.getName()).equalsIgnoreCase(".nbs")) {
+                if (!FilenameUtils.getExtension(songFile.getName()).equalsIgnoreCase("nbs")) {
                     throw new IOException("Invalid file format");
                 }
 
