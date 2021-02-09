@@ -1,106 +1,172 @@
 server:
-  type: LOBBY                                    # Server type to be authorized by the backend (Eg: LOBBY / GAME / SPECIAL / BUNGEE)
-  cluster: 0123456789abcdefg                     # Cluster that will continue as authorization for the backend
-  realm: "default"
-  sandbox: true                                  # Will not verify sessions and directly grants access to the server for developing purposes
-  cross-teleport: true                           # Will allow teleport requests to be cross-server
-  fallback: "main-lobby"                         # Will store as fallback when re-login
+    type: LOBBY                                    # Server type to be authorized by the backend (Eg: LOBBY / GAME / SPECIAL / BUNGEE)
+    cluster: 0123456789abcdefg                     # Cluster that will continue as authorization for the backend
+    realm: "default"
+    sandbox: true                                  # Will not verify sessions and directly grants access to the server for developing purposes
+    cross-teleport: true                           # Will allow teleport requests to be cross-server
+    fallback: "main-lobby"                         # Will store as fallback when re-login
 game:
-  running: 0                                     # Max games running at one (Only applies at GAME mode)
-  total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
-  mode: 0123456789abcdefg                        # Database ID of the desired game
-  subMode: 0123456789abcdefg                     # Database ID of the desired SubGameMode
-  lobby:
-    x: 0
-    y: 0
-    z: 0
+    running: 0                                     # Max games running at one (Only applies at GAME mode)
+    total: 0                                       # Max game running at server lifecycle (Only applies at GAME mode)
+    mode: 0123456789abcdefg                        # Database ID of the desired game
+    subMode: 0123456789abcdefg                     # Database ID of the desired SubGameMode
+    lobby:
+        x: 0
+        y: 0
+        z: 0
 api:
-  route: "https://perseus.astrocube.net/api/"    # Base path to be called
-  connect: 1200                                  # Connect Timeout
-  read: 1200                                     # Read Timeout
-  retry: 1                                       # Retry Timeout
-  threads: 2                                     # Max number of thread pools (According to CPU allowance)
+    route: "https://perseus.astrocube.net/api/"    # Base path to be called
+    connect: 1200                                  # Connect Timeout
+    read: 1200                                     # Read Timeout
+    retry: 1                                       # Retry Timeout
+    threads: 2                                     # Max number of thread pools (According to CPU allowance)
 authentication:
-  enabled: true                                  # Will enable authentication system at server
-  broadcast: true                                # Reproduce in loop all the NBS songs inside /songs folder
-  spawn:
-    x: 0
-    y: 0
-    z: 0
-    yaw: 0
-    pitch: 0
+    enabled: true                                  # Will enable authentication system at server
+    broadcast: true                                # Reproduce in loop all the NBS songs inside /songs folder
+    spawn:
+        x: 0
+        y: 0
+        z: 0
+        yaw: 0
+        pitch: 0
 admin:
-  punishments:
-    reasons:
-    - name: "cheating"
-      type: "BAN"
-      time: "-1"
-  teleport:
-    disabled:
-      - ""
-ban-reasons:
-  reason-1:
-    slot: 11
-    name: "&cMisbehavior"
-    lore:
-      - "&fThe player is"
-      - "&fmisbehaving!"
-    punish-reason: "You're behaving bad!"
-  reason-2:
-    slot: 13
-    name: "&cYou don't know"
-    lore:
-      - "&fBan with not reason, but you like"
-      - "&fOk? Perfect."
-    punish-reason: "You has been banned without reason, gay."
-  reason-3:
-    slot: 15
-    name: "&cYou don't know, but x2"
-    lore:
-      - "&fDo you need another explanation?"
-      - "&fNice, good day!"
-    punish-reason: "You has been banned without reason, but get happy, the reason is same as the first!"
-kick-reasons:
-  reason-1:
-    slot: 11
-    name: "&cMisbehavior"
-    lore:
-      - "&fThe player is"
-      - "&fmisbehaving!"
-    punish-reason: "You're behaving bad!"
-  reason-2:
-    slot: 13
-    name: "&cYou don't know"
-    lore:
-      - "&fKick with not reason, but you like"
-      - "&fOk? Perfect."
-    punish-reason: "You has been kicked without reason, gay."
-  reason-3:
-    slot: 15
-    name: "&cYou don't know, but x2"
-    lore:
-      - "&fDo you need another explanation?"
-      - "&fNice, good day!"
-    punish-reason: "You has been kicked without reason, but get happy, the reason is same as the first!"
-warn-reasons:
-  reason-1:
-    slot: 11
-    name: "&cMisbehavior"
-    lore:
-      - "&fThe player is"
-      - "&fmisbehaving!"
-    punish-reason: "You're behaving bad!"
-  reason-2:
-    slot: 13
-    name: "&cYou don't know"
-    lore:
-      - "&fWarn with not reason, but you like"
-      - "&fOk? Perfect."
-    punish-reason: "You has been warned without reason, gay."
-  reason-3:
-    slot: 15
-    name: "&cYou don't know, but x2"
-    lore:
-      - "&fDo you need another explanation?"
-      - "&fNice, good day!"
-    punish-reason: "You has been warned without reason, but get happy, the reason is same as the first!"
+    punishments:
+        reasons:
+            -   name: "ip"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "ip-3"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "cursing"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "cursing-2"
+                type: "BAN"
+                expiration: "3d"
+            -   name: "cursing-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "crossteam-1"
+                type: "BAN"
+                expiration: "1d"
+            -   name: "crossteam-2"
+                type: "BAN"
+                expiration: "3d"
+            -   name: "crossteam-3"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "crossteam-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "destructive-criticism-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "destructive-criticism-3"
+                type: "BAN"
+                expiration: "3d"
+            -   name: "destructive-criticism-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "fraud-1"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "fraud-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "deceit-1"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "deceit-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "cheats-1"
+                type: "BAN"
+                expiration: "30"
+            -   name: "cheats-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "sales-1"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "sales-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "multi-accounts-1"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "multi-accounts-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "bugs-advantage-1"
+                type: "BAN"
+                expiration: "7d"
+            -   name: "bugs-advantage-2"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "bugs-advantage-3"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "threats-1"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "threats-2"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "offensive-1"
+                type: "BAN"
+                expiration: "7d"
+            -   name: "offensive-2"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "offensive-3"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "capital-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "capital-3"
+                type: "BAN"
+                expiration: "1d"
+            -   name: "capital-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "public-accusation-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "public-accusation-3"
+                type: "BAN"
+                expiration: "3d"
+            -   name: "public-accusation-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "spam-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "spam-3"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "spam-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "bullying-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "bullying-3"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "bullying-4"
+                type: "BAN"
+                expiration: "-1"
+            -   name: "flood-1"
+                type: "WARN"
+                expiration: "-1"
+            -   name: "flood-3"
+                type: "BAN"
+                expiration: "30d"
+            -   name: "flood-4"
+                type: "BAN"
+                expiration: "-1"
+    teleport:
+        disabled:
+            - ""
