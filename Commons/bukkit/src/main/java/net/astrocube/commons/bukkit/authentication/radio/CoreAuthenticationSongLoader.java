@@ -22,18 +22,18 @@ public class CoreAuthenticationSongLoader implements AuthenticationSongLoader {
 
     private final Plugin plugin;
     private final Set<Song> songs;
-    private @Getter final Broadcaster broadcaster;
+    private @Getter Broadcaster broadcaster;
 
     @Inject
     public CoreAuthenticationSongLoader(Plugin plugin) {
         this.plugin = plugin;
         this.songs = new HashSet<>();
-        this.broadcaster = new RadioBroadcaster(plugin);
     }
 
     @Override
     public void generateBroadcaster() {
 
+        this.broadcaster = new RadioBroadcaster(plugin);
         File file = new File("songs");
 
         if (!plugin.getConfig().getBoolean("authentication.broadcast")) {
