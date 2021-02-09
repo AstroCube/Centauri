@@ -14,4 +14,14 @@ public class DummyStatusProvider implements CloudStatusProvider {
     public int getOnline() {
         return -1;
     }
+
+    @Override
+    public boolean hasAliveSession(String player) {
+        return true;
+    }
+
+    @Override
+    public String getPlayerServer(String player) {
+        return "";
+    }
 }

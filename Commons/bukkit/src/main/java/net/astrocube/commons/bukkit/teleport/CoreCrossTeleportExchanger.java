@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.teleport.request.TeleportRequest;
+import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -15,16 +16,16 @@ import redis.clients.jedis.JedisPool;
 public class CoreCrossTeleportExchanger implements CrossTeleportExchanger {
 
     private final JedisPool jedisPool;
+    private final CloudTeleport cloudTeleport;
 
     @Inject
-    public CoreCrossTeleportExchanger(Redis redis) {
+    public CoreCrossTeleportExchanger(Redis redis, CloudTeleport cloudTeleport) {
         this.jedisPool = redis.getRawConnection();
+        this.cloudTeleport = cloudTeleport;
     }
 
     @Override
     public void schedule(TeleportRequest request) {
-        //TODO: Teleport player to corresponding server
-
         try (Jedis jedis = jedisPool.getResource()) {
             if (request.getRequester().isPresent()) {
                 jedis.set("teleportRequest:" + request.getReceiver().getId(),
@@ -34,6 +35,9 @@ public class CoreCrossTeleportExchanger implements CrossTeleportExchanger {
                 );
             }
         }
+
+        request.getServer().ifPresent(server -> cloudTeleport.teleportToServer(server, request.getReceiver().getUsername()));
+
     }
 
     @Override

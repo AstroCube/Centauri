@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.lobby.selector.lobby;
 
+import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.abstraction.item.ItemClickable;
@@ -13,6 +14,6 @@ public interface LobbyIconExtractor {
      * @param position to be placed
      * @return configured icon
      */
-    ItemClickable getLobbyIcon(LobbySelectorWrapper wrapper, Player player, int position);
+    ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position);
 
 }

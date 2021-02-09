@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorRedirect;
+import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 
     private @Inject MessageHandler messageHandler;
     private @Inject GameSelectorRedirect gameSelectorRedirect;
+    private @Inject CloudModeConnectedProvider cloudModeConnectedProvider;
 
     @Override
     public ItemClickable generate(GameMode gameModeDoc, Player player) {
@@ -30,7 +32,12 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
 
         baseLore.add(" ");
-        baseLore.add(messageHandler.get(player, "lobby.gameSelector.gadget-playing"));
+        baseLore.add(
+                messageHandler.replacing(
+                        player, "lobby.gameSelector.gadget-playing",
+                        "%%players%%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
+                )
+        );
 
         iconMeta.setDisplayName(
                 messageHandler.get(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
@@ -40,7 +47,6 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         );
         icon.setItemMeta(iconMeta);
 
-        //TODO: Link with cloud system with online number
         return ItemClickable.builder(gameModeDoc.getSlot())
                 .setItemStack(icon)
                 .setAction((block) -> {

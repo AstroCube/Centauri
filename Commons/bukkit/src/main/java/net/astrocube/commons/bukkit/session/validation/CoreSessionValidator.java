@@ -45,8 +45,6 @@ public class CoreSessionValidator implements SessionValidatorHandler {
 
         sessionCacheInvalidator.invalidateSessionCache(authorization.getUser());
         usersBeingValidated.put(event.getUniqueId(), authorization);
-        //TODO: Check if user has punishments
-
     }
 
     @Nullable

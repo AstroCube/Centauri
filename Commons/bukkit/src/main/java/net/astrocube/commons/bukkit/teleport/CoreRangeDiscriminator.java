@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.teleport.RangeDiscriminator;
 import net.astrocube.api.bukkit.teleport.request.TeleportRange;
+import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.plugin.Plugin;
 
@@ -11,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 public class CoreRangeDiscriminator implements RangeDiscriminator {
 
     private @Inject Plugin plugin;
+    private @Inject CloudStatusProvider cloudStatusProvider;
 
     @Override
     public TeleportRange discriminate(User requester, User receiver) {
@@ -24,11 +26,10 @@ public class CoreRangeDiscriminator implements RangeDiscriminator {
             @Override
             public boolean isCrossServer() {
 
-                //TODO: Check requester-receiver server
-                String requesterServer = "";
-                String receiverServer = "";
+                String requesterServer = cloudStatusProvider.getPlayerServer(requester.getUsername());
+                String receiverServer = cloudStatusProvider.getPlayerServer(receiver.getUsername());
 
-                return true;
+                return requesterServer.equalsIgnoreCase(receiverServer);
             }
         };
 

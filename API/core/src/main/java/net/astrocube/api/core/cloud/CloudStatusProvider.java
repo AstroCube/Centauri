@@ -12,4 +12,15 @@ public interface CloudStatusProvider {
      */
     int getOnline();
 
+    /**
+     * @return if player is online
+     */
+    boolean hasAliveSession(String player);
+
+    /**
+     * @param player to be checked
+     * @return server of the player
+     */
+    String getPlayerServer(String player);
+
 }

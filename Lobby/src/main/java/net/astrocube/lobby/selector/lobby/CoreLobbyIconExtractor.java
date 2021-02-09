@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
-import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorWrapper;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySwitchStatus;
+import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,7 +25,7 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
     private @Inject LobbyServerRedirect lobbyServerRedirect;
 
     @Override
-    public ItemClickable getLobbyIcon(LobbySelectorWrapper wrapper, Player player, int position) {
+    public ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position) {
 
         ChatColor color = ChatColor.YELLOW;
         LobbySwitchStatus status = LobbySwitchStatus.SUCCESS;

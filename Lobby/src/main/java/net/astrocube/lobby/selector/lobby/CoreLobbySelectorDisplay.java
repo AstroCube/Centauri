@@ -6,8 +6,8 @@ import net.astrocube.api.bukkit.lobby.gamemode.LobbyModeProvider;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyCloudWrapperGenerator;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorDisplay;
-import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorWrapper;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.entity.Player;
 import team.unnamed.gui.core.gui.GUIBuilder;
@@ -35,7 +35,7 @@ public class CoreLobbySelectorDisplay implements LobbySelectorDisplay {
                 messageHandler.get(player, "lobby.lobby-selector.gadget-title"),
                 1
         );
-        List<LobbySelectorWrapper> wrappers = lobbyCloudWrapperGenerator.getGameModeLobbies(gameMode.get());
+        List<CloudInstanceProvider.Instance> wrappers = lobbyCloudWrapperGenerator.getGameModeLobbies(gameMode.get());
 
         int externalCount = 0;
         for (int i = 10; i < wrappers.size() + 10; i++) {

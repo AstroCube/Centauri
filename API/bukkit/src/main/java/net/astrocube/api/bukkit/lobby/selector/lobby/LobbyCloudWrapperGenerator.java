@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.lobby.selector.lobby;
 
+import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 
 import java.util.List;
@@ -11,6 +12,6 @@ public interface LobbyCloudWrapperGenerator {
      * @param gameMode to search
      * @return collection containing lobbies
      */
-    List<LobbySelectorWrapper> getGameModeLobbies(GameMode gameMode);
+    List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode);
 
 }

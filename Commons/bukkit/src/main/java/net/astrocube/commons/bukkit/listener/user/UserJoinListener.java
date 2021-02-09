@@ -99,7 +99,7 @@ public class UserJoinListener implements Listener {
                                 !plugin.getConfig().getBoolean("server.sandbox")
                 ) {
 
-                    Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user.getId());
+                    Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user);
 
                     if (!registryOptional.isPresent()) {
                         throw new AuthorizeException("Not authorized session");
