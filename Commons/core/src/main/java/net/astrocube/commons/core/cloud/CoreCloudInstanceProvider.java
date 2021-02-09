@@ -20,6 +20,8 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
         ServerGroupObject groupObject = TimoCloudAPI.getUniversalAPI().getServerGroup(name);
 
+        System.out.println(groupObject);
+
         if (groupObject == null) {
             return new HashSet<>();
         }
