@@ -17,7 +17,8 @@ public class CoreLobbyCloudWrapperGenerator implements LobbyCloudWrapperGenerato
 
     @Override
     public List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode) {
-        return cloudInstanceProvider.getGroupInstances(gameMode.getName()).stream()
+
+        return cloudInstanceProvider.getGroupInstances(gameMode.getLobby()).stream()
                 .sorted(Comparator.comparingInt(CloudInstanceProvider.Instance::getNumber))
                 .collect(Collectors.toList());
     }
