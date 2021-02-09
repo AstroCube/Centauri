@@ -33,7 +33,7 @@ public class PlayCommand implements CommandClass {
         queryService.getAll().callback(queryResponse -> {
 
             if (!queryResponse.isSuccessful() || !queryResponse.getResponse().isPresent()) {
-                messageHandler.send(player, AlertModes.ERROR, "game.play.error");
+                messageHandler.sendIn(player, AlertModes.ERROR, "game.play.error");
                 return;
             }
 
@@ -44,7 +44,7 @@ public class PlayCommand implements CommandClass {
                     .findAny();
 
             if (!foundMode.isPresent() || foundMode.get().getSubTypes() == null) {
-                messageHandler.send(player, AlertModes.MUTED, "game.play.unknown");
+                messageHandler.sendIn(player, AlertModes.MUTED, "game.play.unknown");
                 return;
             }
 
@@ -54,7 +54,7 @@ public class PlayCommand implements CommandClass {
                     .findAny();
 
             if (!foundSubMode.isPresent() || foundMode.get().getSubTypes() == null) {
-                messageHandler.send(player, AlertModes.MUTED, "game.play.unknown");
+                messageHandler.sendIn(player, AlertModes.MUTED, "game.play.unknown");
                 return;
             }
 
@@ -63,13 +63,13 @@ public class PlayCommand implements CommandClass {
                 Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 
                 if (match.isPresent()) {
-                    messageHandler.send(player, AlertModes.ERROR,"game.matchmaking.already");
+                    messageHandler.sendIn(player, AlertModes.ERROR,"game.matchmaking.already");
                 }
 
                 matchmakingGenerator.pairMatch(player, foundMode.get(), foundSubMode.get());
 
             } catch (Exception e) {
-                messageHandler.send(player, AlertModes.MUTED, "game.play.error");
+                messageHandler.sendIn(player, AlertModes.MUTED, "game.play.error");
                 plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual match", e);
             }
 

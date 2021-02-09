@@ -40,12 +40,12 @@ public class MatchMessageHelper {
     public boolean getCountAvailability(Optional<Match> providedMatch, Player player) {
 
         if (!providedMatch.isPresent()) {
-            messageHandler.send(player, AlertModes.ERROR, "game.admin.not-active");
+            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (providedMatch.get().getStatus() != MatchDoc.Status.LOBBY) {
-            messageHandler.send(player, AlertModes.ERROR, "game.admin.started");
+            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.started");
             return true;
         }
 

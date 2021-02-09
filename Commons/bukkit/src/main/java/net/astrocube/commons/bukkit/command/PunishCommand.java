@@ -35,33 +35,33 @@ public class PunishCommand implements CommandClass {
         findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
 
             if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
-                messageHandler.send(player, AlertModes.ERROR, "punish-menu.error");
+                messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
                 return;
             }
 
             queryService.query(nodes).callback(response -> {
 
                 if (!response.isSuccessful() || !response.getResponse().isPresent()) {
-                    messageHandler.send(player, AlertModes.ERROR, "punish-menu.error");
+                    messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
                     return;
                 }
 
                 Optional<User> online = response.getResponse().get().getFoundModels().stream().findFirst();
 
                 if (!online.isPresent()) {
-                    messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
+                    messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
                     return;
                 }
 
                 if (!online.get().getSession().isOnline()) {
-                    messageHandler.send(player, AlertModes.ERROR, "commands.player.offline");
+                    messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
                     return;
                 }
 
                 if (
                         Group.getLowestPriority(online.get().getGroups()) <=
                         Group.getLowestPriority(userResponse.getResponse().get().getGroups())) {
-                    messageHandler.send(player, AlertModes.ERROR, "punish.lower");
+                    messageHandler.sendIn(player, AlertModes.ERROR, "punish.lower");
                     return;
                 }
 

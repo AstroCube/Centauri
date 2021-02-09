@@ -43,7 +43,7 @@ public class CoreHideItemActionable implements HideItemActionable {
                 messageHandler.send(player, translateAlert);
 
             } else {
-                messageHandler.send(player, AlertModes.ERROR, "lobby.hiding.error");
+                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.hiding.error");
             }
         });
 

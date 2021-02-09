@@ -39,7 +39,7 @@ public class AdminChatCommand implements CommandClass {
                 .callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
                         user -> {
                             if (important && !player.hasPermission("commons.staff.chat.important")) {
-                                this.messageHandler.send(player, AlertModes.ERROR, "staff.chat.permission");
+                                this.messageHandler.sendIn(player, AlertModes.ERROR, "staff.chat.permission");
                                 return;
                             }
 

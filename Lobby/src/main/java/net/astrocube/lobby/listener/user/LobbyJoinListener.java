@@ -44,8 +44,6 @@ public class LobbyJoinListener implements Listener {
                 )
         );
 
-
-
         Bukkit.getScheduler().runTask(plugin, () -> {
 
             try {
@@ -53,7 +51,6 @@ public class LobbyJoinListener implements Listener {
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "Could not process user board", e);
             }
-
 
             plugin.getConfig().getStringList("ambiental.effects").forEach(effect -> {
 

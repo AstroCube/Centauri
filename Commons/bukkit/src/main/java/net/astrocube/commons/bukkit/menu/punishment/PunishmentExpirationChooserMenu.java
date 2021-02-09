@@ -64,7 +64,7 @@ public class PunishmentExpirationChooserMenu {
                                     punishmentHandler,
                                     (punishment, error) -> {
                                         if (error != null) {
-                                            messageHandler.send(player, AlertModes.ERROR, "punish.error");
+                                            messageHandler.sendIn(player, AlertModes.ERROR, "punish.error");
                                         }
                                         player.closeInventory();
                                     });

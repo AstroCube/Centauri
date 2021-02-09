@@ -21,11 +21,11 @@ public class CoreLobbyServerRedirect implements LobbyServerRedirect {
 
         switch (status) {
             case FULL: {
-                messageHandler.send(player, AlertModes.ERROR, "lobby.lobby-selector.error.full");
+                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.full");
                 break;
             }
             case CYCLIC: {
-                messageHandler.send(player, AlertModes.ERROR, "lobby.lobby-selector.error.cyclic");
+                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.cyclic");
                 break;
             }
             default: {

@@ -33,7 +33,7 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
         Server server = serverService.getActual();
 
         if (!plugin.getConfig().getBoolean("server.sandbox")) {
-            messageHandler.send(player, AlertModes.ERROR,"game.admin.no-sandbox");
+            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.no-sandbox");
             return;
         }
 

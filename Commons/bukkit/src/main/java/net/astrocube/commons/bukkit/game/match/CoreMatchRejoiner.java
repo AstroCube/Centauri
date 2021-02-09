@@ -32,12 +32,12 @@ public class CoreMatchRejoiner implements MatchRejoiner {
             UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user.getId(), match.get());
 
             if (origin != UserMatchJoiner.Origin.WAITING) {
-                messageHandler.send(player, AlertModes.ERROR,"game.rejoin.not-active");
+                messageHandler.sendIn(player, AlertModes.ERROR,"game.rejoin.not-active");
                 return;
             }
 
         } else {
-            messageHandler.send(player, AlertModes.ERROR,"game.admin.not-active");
+            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.not-active");
         }
     }
 

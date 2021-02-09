@@ -30,7 +30,7 @@ public class MatchmakingErrorListener implements Listener {
 
                 Player player = Bukkit.getPlayer(response.getResponse().get().getUsername());
 
-                messageHandler.send(player, AlertModes.ERROR, "game.matchmaking.error");
+                messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.error");
 
             } else {
                 plugin.getLogger().log(Level.SEVERE, "Could not find user for error alerting");

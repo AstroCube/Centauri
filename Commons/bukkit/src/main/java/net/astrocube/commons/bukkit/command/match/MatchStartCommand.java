@@ -37,7 +37,7 @@ public class MatchStartCommand implements CommandClass {
         try {
             secondsFixed = Integer.parseInt(seconds);
         } catch (Exception e) {
-            messageHandler.send(player, AlertModes.ERROR,"game.admin.error");
+            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.error");
             return true;
         }
 
@@ -45,7 +45,7 @@ public class MatchStartCommand implements CommandClass {
         Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
 
         if (involved.size() < 2) {
-            messageHandler.send(player, AlertModes.ERROR, "game.admin.insufficient");
+            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.insufficient");
             return true;
         }
 

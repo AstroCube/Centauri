@@ -22,7 +22,7 @@ public class AuthenticationRestrictionListener implements Listener {
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
+        messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
         event.setCancelled(true);
     }
 
@@ -54,7 +54,7 @@ public class AuthenticationRestrictionListener implements Listener {
             return;
         }
 
-        this.messageHandler.send(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
+        this.messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
         event.setCancelled(true);
     }
 

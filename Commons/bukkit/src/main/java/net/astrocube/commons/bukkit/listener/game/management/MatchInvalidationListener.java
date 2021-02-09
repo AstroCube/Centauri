@@ -57,7 +57,7 @@ public class MatchInvalidationListener implements Listener {
                 Bukkit.getOnlinePlayers().stream().filter
                         (p -> involved.contains(p.getDatabaseIdentifier())).forEach(player -> {
                     if (event.isGraceTime()) {
-                        messageHandler.send(player, AlertModes.ERROR, "game.admin.invalidate-forced");
+                        messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-forced");
                         Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(player, match.getId()));
                     } else {
                         Bukkit.getScheduler().runTask(plugin, () ->

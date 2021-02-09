@@ -25,12 +25,12 @@ public class MatchInvalidateCommand implements CommandClass {
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
         if (!matchOptional.isPresent()) {
-            messageHandler.send(player, AlertModes.ERROR, "game.admin.not-active");
+            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
             return true;
         }
 
         if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
-            messageHandler.send(player, AlertModes.ERROR, "game.admin.invalidate-not-stared");
+            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-not-stared");
             return true;
         }
 

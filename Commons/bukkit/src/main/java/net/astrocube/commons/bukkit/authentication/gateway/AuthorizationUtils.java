@@ -40,7 +40,7 @@ public class AuthorizationUtils {
             return;
         }
 
-        messageHandler.send(player, AlertModes.ERROR,"authentication.password-error");
+        messageHandler.sendIn(player, AlertModes.ERROR,"authentication.password-error");
         plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
     }
 

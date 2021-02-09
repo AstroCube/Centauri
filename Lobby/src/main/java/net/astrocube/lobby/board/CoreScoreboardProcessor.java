@@ -11,7 +11,11 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.craftbukkit.v1_8_R3.scoreboard.CraftGameBoard;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.GameBoard;
+import team.unnamed.uboard.ScoreboardManager;
+import team.unnamed.uboard.SimpleScoreboardManager;
+import team.unnamed.uboard.builder.ScoreboardBuilder;
 
 import java.util.Collections;
 
@@ -22,12 +26,16 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
     private @Inject FindService<User> findService;
     private @Inject DisplayMatcher displayMatcher;
     private @Inject CloudStatusProvider cloudStatusProvider;
+    private @Inject ScoreboardManager scoreboardManager;
 
     @Override
     public void generateBoard(Player player) throws Exception {
 
+        ScoreboardBuilder builder = scoreboardManager.newScoreboard(player.getDatabaseIdentifier());
+        builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
+
         User user = findService.findSync(player.getDatabaseIdentifier());
-        GameBoard board = new CraftGameBoard(messageHandler.get(player, "lobby.scoreboard.title"));
+
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "lobby.scoreboard.lore",
                 "%%player%%", user.getDisplay(),
@@ -39,16 +47,11 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
         Collections.reverse(scoreTranslation);
 
         for (int i = 0; i < scoreTranslation.size(); i++) {
-            board.addLine(i, scoreTranslation.get(i));
+            builder.addLine(scoreTranslation.get(i));
         }
 
-        if (player.hasAttachedBoard()) {
-            player.removeScoreboard();
-        }
-
-        player.setAttachedBoard(board);
+        scoreboardManager.setToPlayer(player, builder.build());
 
     }
-
 
 }
