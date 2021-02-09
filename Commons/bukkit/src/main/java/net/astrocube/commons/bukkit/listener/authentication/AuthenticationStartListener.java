@@ -5,6 +5,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
+import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistry;
@@ -26,6 +27,7 @@ public class AuthenticationStartListener implements Listener {
     private @Inject SessionRegistryManager sessionRegistryManager;
     private @Inject MessageHandler messageHandler;
     private @Inject GatewayMatcher gatewayMatcher;
+    private @Inject AuthenticationRadio authenticationRadio;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 
@@ -94,6 +96,7 @@ public class AuthenticationStartListener implements Listener {
                 });
 
                 gateway.startProcessing(user);
+                authenticationRadio.addPlayer(event.getPlayer());
 
                 Bukkit.getScheduler().runTaskLater(plugin, () ->
                         event.getPlayer().kickPlayer(messageHandler.get(event.getPlayer(), "authentication.time-exceeded")),

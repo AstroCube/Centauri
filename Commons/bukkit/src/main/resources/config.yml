@@ -22,6 +22,7 @@ api:
   threads: 2                                     # Max number of thread pools (According to CPU allowance)
 authentication:
   enabled: true                                  # Will enable authentication system at server
+  broadcast: true                                # Reproduce in loop all the NBS songs inside /songs folder
   spawn:
     x: 0
     y: 0
