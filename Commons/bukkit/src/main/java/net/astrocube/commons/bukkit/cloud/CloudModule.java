@@ -31,6 +31,8 @@ public class CloudModule extends ProtectedModule {
         expose(InstanceNameProvider.class);
         expose(CloudStatusProvider.class);
         expose(CloudTeleport.class);
+        expose(CloudModeConnectedProvider.class);
+        expose(CloudInstanceProvider.class);
 
     }
 
