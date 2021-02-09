@@ -82,7 +82,7 @@ admin:
                 expiration: "-1"
             -   name: "cheats-1"
                 type: "BAN"
-                expiration: "30"
+                expiration: "30d"
             -   name: "cheats-2"
                 type: "BAN"
                 expiration: "-1"

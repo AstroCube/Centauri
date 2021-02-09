@@ -59,7 +59,8 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
 
                     @Override
                     public long getExpiration() {
-                        return type == PunishmentDoc.Identity.Type.BAN ?
+                        return type == PunishmentDoc.Identity.Type.BAN &&
+                                ((String) linkedKey.get("expiration")).equalsIgnoreCase("-1") ?
                             TimeParser.parseStringDuration((String) linkedKey.get("expiration")) : -1;
                     }
                 });
@@ -67,6 +68,7 @@ public class CorePresetPunishmentCache implements PresetPunishmentCache {
             } catch (IllegalArgumentException ignore) {}
 
         }
+
 
         cached = true;
     }
