@@ -10,4 +10,9 @@ public class DummyModeConnectedProvider implements CloudModeConnectedProvider {
     public int getGlobalOnline(GameMode gameMode) {
         return 0;
     }
+
+    @Override
+    public int getGroupOnline(String group) {
+        return 0;
+    }
 }
