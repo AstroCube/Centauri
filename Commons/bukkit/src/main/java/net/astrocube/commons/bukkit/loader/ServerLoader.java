@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.loader;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationSongLoader;
+import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.server.ServerStartResolver;
@@ -15,6 +16,7 @@ public class ServerLoader implements Loader {
     private @Inject Plugin plugin;
     private @Inject AuthenticationSongLoader authenticationSongLoader;
     private @Inject PresetPunishmentCache presetPunishmentCache;
+    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
 
     @Override
     public void load() {
@@ -26,6 +28,7 @@ public class ServerLoader implements Loader {
         }
 
         presetPunishmentCache.generateCache();
+        scoreboardManagerProvider.setupManager();
 
     }
 
