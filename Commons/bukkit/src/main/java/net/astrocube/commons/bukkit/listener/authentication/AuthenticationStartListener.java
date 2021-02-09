@@ -100,7 +100,7 @@ public class AuthenticationStartListener implements Listener {
 
                 Bukkit.getScheduler().runTaskLater(plugin, () ->
                         event.getPlayer().kickPlayer(messageHandler.get(event.getPlayer(), "authentication.time-exceeded")),
-                        20 * 15);
+                        20 * 20);
 
             } catch (Exception exception) {
                 plugin.getLogger().log(Level.SEVERE, "Could not generate authorization for user", exception);
