@@ -6,7 +6,6 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentIconGenerator;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.FlairFormatter;
-import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.user.User;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.abstraction.item.ItemClickable;
 
 import java.util.logging.Level;
 

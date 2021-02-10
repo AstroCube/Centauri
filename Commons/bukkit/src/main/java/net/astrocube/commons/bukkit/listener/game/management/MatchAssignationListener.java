@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.listener.game.management;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.match.MatchAssignationEvent;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.service.find.FindService;

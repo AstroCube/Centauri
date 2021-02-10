@@ -1,7 +1,6 @@
 package net.astrocube.api.core.punishment;
 
 import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;

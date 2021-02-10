@@ -8,9 +8,9 @@ import me.yushust.message.MessageProvider;
 import me.yushust.message.bukkit.BukkitMessageAdapt;
 import me.yushust.message.source.MessageSource;
 import me.yushust.message.source.MessageSourceDecorator;
-import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
 import net.astrocube.api.bukkit.translation.interceptor.CenterMessageInterceptor;
 import net.astrocube.api.bukkit.translation.interceptor.ColorMessageInterceptor;
+import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

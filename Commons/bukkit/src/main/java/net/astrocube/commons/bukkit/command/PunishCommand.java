@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
-import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;

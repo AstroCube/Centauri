@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentLookupMenu;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
@@ -13,7 +12,6 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.user.User;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

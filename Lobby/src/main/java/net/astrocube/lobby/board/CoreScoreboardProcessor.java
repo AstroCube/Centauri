@@ -13,8 +13,6 @@ import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
 import team.unnamed.uboard.builder.ScoreboardBuilder;
 
-import java.util.Collections;
-
 @Singleton
 public class CoreScoreboardProcessor implements ScoreboardProcessor {
 

@@ -1,7 +1,6 @@
 package net.astrocube.commons.bungee.listener;
 
 import com.google.inject.Inject;
-import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.SessionService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bungee.user.UserProvideHelper;

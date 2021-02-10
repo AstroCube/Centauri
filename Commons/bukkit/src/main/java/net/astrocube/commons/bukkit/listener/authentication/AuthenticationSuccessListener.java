@@ -10,7 +10,6 @@ import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

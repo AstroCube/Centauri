@@ -1,10 +1,6 @@
 package net.astrocube.commons.bukkit.listener.freeze;
 
-import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
-import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
-import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

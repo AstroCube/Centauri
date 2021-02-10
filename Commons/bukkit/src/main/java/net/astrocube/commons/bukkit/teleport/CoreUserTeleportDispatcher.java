@@ -8,7 +8,6 @@ import net.astrocube.api.bukkit.teleport.UserTeleportDispatcher;
 import net.astrocube.api.bukkit.teleport.event.TeleportRequestEvent;
 import net.astrocube.api.bukkit.teleport.request.TeleportRange;
 import net.astrocube.api.bukkit.teleport.request.TeleportRequest;
-import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;

@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.menu.admin.selector;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
-import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.utils.Pagination;
 import net.astrocube.commons.core.utils.SimplePagination;
@@ -17,7 +16,6 @@ import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 public class AdminOnlineStaffMenu {
 

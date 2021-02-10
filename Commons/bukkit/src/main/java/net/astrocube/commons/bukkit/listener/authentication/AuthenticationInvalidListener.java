@@ -8,7 +8,6 @@ import net.astrocube.api.bukkit.authentication.server.CooldownKick;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
