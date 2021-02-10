@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.punishment.lookup;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.punishment.PresetPunishment;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentIconGenerator;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentLookupMenu;
 import net.astrocube.api.core.virtual.punishment.Punishment;
