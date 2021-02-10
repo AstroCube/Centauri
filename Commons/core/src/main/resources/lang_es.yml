@@ -501,8 +501,80 @@ groups:
         message:
             join: ""
             leave: ""
+    5deaca21e2b2efe25f5281e1:
+        name: "%%gold%%Chief"
+        prefix: "%%gold%%%%bold%%CHIEF"
+        message:
+            join: ""
+            leave: ""
+    5e73e2826c0fc523c054a5cf:
+        name: "%%blue%%Constructor Trial"
+        prefix: "%%blue%%%%bold%%T. BUILD"
+        message:
+            join: ""
+            leave: ""
+    5e73e2916c0fc523c054a5d0:
+        name: "%%dark_red%%Mod Senior"
+        prefix: "%%dark_red%%%%bold%%S. MOD"
+        message:
+            join: ""
+            leave: ""
+    5b52b2048284865491b1f56a:
+        name: "%%green%%Beta Tester"
+        prefix: "%%green%%%%bold%%BETA"
+        message:
+            join: ""
+            leave: ""
+    5e73e2a26c0fc523c054a5d2:
+        name: "%%blue%%Constructor Senior"
+        prefix: "%%blue%%%%bold%%S. BUILD"
+        message:
+            join: ""
+            leave: ""
+    5e73e2ae6c0fc523c054a5d3:
+        name: "%%dark_green%%Moderador"
+        prefix: "%%dark_green%%%%bold%%MOD"
+        message:
+            join: ""
+            leave: ""
+    5e73e2b76c0fc523c054a5d4:
+        name: "%%green%%Mercadeo"
+        prefix: "%%green%%%%bold%%MARKETING"
+        message:
+            join: ""
+            leave: ""
+    5e73e2c06c0fc523c054a5d5:
+        name: "%%green%%Junior Dev"
+        prefix: "%%dark_purple%%%%bold%%JR. DEV"
+        message:
+            join: ""
+            leave: ""
+    5e73e2d16c0fc523c054a5d6:
+        name: "%%blue%%Jefe Constructor"
+        prefix: "%%blue%%%%bold%%J. BUILD"
+        message:
+            join: ""
+            leave: ""
+    5e73e2d96c0fc523c054a5d7:
+        name: "%%light_purple%%Ayudante"
+        prefix: "%%light_purple%%%%bold%%AYUDANTE"
+        message:
+            join: ""
+            leave: ""
+    5e73e2e16c0fc523c054a5d8:
+        name: "%%dark_purple%%Developer"
+        prefix: "%%dark_purple%%%%bold%%DEV"
+        message:
+            join: ""
+            leave: ""
+    5e73e2e76c0fc523c054a5d9:
+        name: "%%blue%%Constructor"
+        prefix: "%%blue%%%%bold%%BUILD"
+        message:
+            join: ""
+            leave: ""
     5e73e2996c0fc523c054a5d1:
-        name: "%%dark_purple%%SR. DEV"
+        name: "%%dark_purple%%Senior Dev"
         prefix: "%%dark_purple%%%%bold%%SR. DEV"
         message:
             join: ""
