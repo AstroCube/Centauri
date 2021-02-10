@@ -9,8 +9,10 @@ import net.astrocube.api.bukkit.punishment.lookup.PunishmentLookupMenu;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -28,10 +30,19 @@ public class CorePunishmentLookupMenu implements PunishmentLookupMenu {
                         player, "punish-menu.lookup.menu",
                         "%%player%%", target.getDisplay()
                 ),
-                (p) -> {},
                 null,
                 punishments.stream()
-                        .map(p -> punishmentIconGenerator.generateFromPunishment(p, player, issuer))
+                        .map(p -> new ShapedMenuGenerator.BaseClickable() {
+                            @Override
+                            public Consumer<Player> getClick() {
+                                return (clicker) -> {};
+                            }
+
+                            @Override
+                            public ItemStack getStack() {
+                                return punishmentIconGenerator.generateFromPunishment(p, player, issuer);
+                            }
+                        })
                         .collect(Collectors.toSet())
         ));
     }

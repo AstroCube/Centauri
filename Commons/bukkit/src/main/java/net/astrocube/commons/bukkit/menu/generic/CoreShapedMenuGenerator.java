@@ -10,7 +10,7 @@ import net.astrocube.commons.core.utils.SimplePagination;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
 import javax.annotation.Nullable;
@@ -22,37 +22,37 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
 
     private @Inject GenericHeadHelper genericHeadHelper;
 
-    @Override
-    public Inventory generate(Player player, String title, Consumer<Player> itemClick, Set<ItemStack> items, @Nullable Consumer<Player> backClick, int page) {
 
-        Pagination<ItemStack> pagination = new SimplePagination<>(28, items);
+    @Override
+    public Inventory generate(Player player, String title, @Nullable Consumer<Player> backClick, Set<BaseClickable> items) {
+        return generate(player, title, backClick, items, 1);
+    }
+
+    @Override
+    public Inventory generate(Player player, String title, @Nullable Consumer<Player> backClick, Set<BaseClickable> items, int page) {
+
+
+        Pagination<BaseClickable> pagination = new SimplePagination<>(28, items);
 
         GUIBuilder builder = GUIBuilder.builder(title);
 
         int index = 10;
-        for (ItemStack stack: pagination.getPage(page)) {
+        for (BaseClickable stack: pagination.getPage(page)) {
 
             while (MenuUtils.isMarkedSlot(index)) {
                 index++;
             }
 
-            builder.addItem(
-                    genericHeadHelper.generateDefaultClickable(
-                            stack,
-                            index,
-                            ClickType.LEFT,
-                            itemClick
-                    )
-            );
+            builder.addItem(generateClick(stack, index));
         }
 
         if (pagination.pageExists(page - 1) && (page - 1) != 0) {
             builder.addItem(
                     genericHeadHelper.generateDefaultClickable(
                             genericHeadHelper.getPreviousHead(player, page),
-                            49,
+                            48,
                             ClickType.LEFT,
-                            clicker -> generate(player, title, itemClick, items, backClick, (page - 1))
+                            clicker -> generate(player, title, backClick, items, (page - 1))
                     )
             );
         }
@@ -87,22 +87,23 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
                             genericHeadHelper.getNextHead(player, page),
                             50,
                             ClickType.LEFT,
-                            (p) -> generate(player, title, itemClick, items, backClick, (page + 1))
+                            clicker -> generate(player, title, backClick, items, (page + 1))
                     )
             );
         }
 
 
         return builder.build();
+
     }
 
-    @Override
-    public Inventory generate(Player player, String title, Consumer<Player> itemClick, @Nullable Consumer<Player> backClick, Set<ItemStack> items) {
-        return generate(player, title, itemClick, items, backClick, 1);
+    private ItemClickable generateClick(BaseClickable baseClickable, int slot) {
+        return genericHeadHelper.generateDefaultClickable(
+                baseClickable.getStack(),
+                slot,
+                ClickType.LEFT,
+                baseClickable.getClick()
+        );
     }
 
-    @Override
-    public Inventory generate(Player player, String title, @org.jetbrains.annotations.Nullable Consumer<Player> backClick, Set<BaseClickable> items) {
-        return null;
-    }
 }

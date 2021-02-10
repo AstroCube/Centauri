@@ -13,25 +13,16 @@ public interface ShapedMenuGenerator {
     Inventory generate(
             Player player,
             String title,
-            Consumer<Player> itemClick,
-            Set<ItemStack> items,
-            @Nullable Consumer<Player> backClick,
-            int page
-    );
-
-    Inventory generate(
-            Player player,
-            String title,
-            Consumer<Player> itemClick,
-            @Nullable Consumer<Player> backClick,
-            Set<ItemStack> items
-    );
-
-    Inventory generate(
-            Player player,
-            String title,
             @Nullable Consumer<Player> backClick,
             Set<BaseClickable> items
+    );
+
+    Inventory generate(
+            Player player,
+            String title,
+            @Nullable Consumer<Player> backClick,
+            Set<BaseClickable> items,
+            int page
     );
 
     interface BaseClickable {
