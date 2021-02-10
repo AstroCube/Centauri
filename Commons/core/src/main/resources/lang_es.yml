@@ -234,31 +234,31 @@ punish-menu:
     reasons:
         ip:
             title: "Compartir IP"
-            reason: "Pasar IP o otra info relacionada con otros servidores"
+            reason: "Pasar IP/Info de otros servidores"
         ip-3:
             title: "Compartir IP %%gray%%(3)"
-            reason: "Pasar IP o otra info relacionada con otros servidores (3)"
+            reason: "Pasar IP/Info de otros servidores (3)"
         cursing:
             title: "Insultos"
-            reason: "Usar lenguaje ofensivo"
+            reason: "Lenguaje ofensivo"
         cursing-3:
             title: "Insultos %%gray%%(3)"
-            reason: "Usar lenguaje ofensivo (3)"
+            reason: "Lenguaje ofensivo (3)"
         cursing-4:
             title: "Insultos %%gray%%(4)"
-            reason: "Usar lenguaje ofensivo (4)"
+            reason: "Lenguaje ofensivo (4)"
         crossteam-1:
             title: "Cross-Team"
-            reason: "Hacer team en modalidades solitarias"
+            reason: "Team en modalidades solitarias"
         crossteam-2:
             title: "Cross-Team %%gray%%(2)"
-            reason: "Hacer team en modalidades solitarias (2)"
+            reason: "Team en modalidades solitarias (2)"
         crossteam-3:
             title: "Cross-Team %%gray%%(3)"
-            reason: "Hacer team en modalidades solitarias (3)"
+            reason: "Team en modalidades solitarias (3)"
         crossteam-4:
             title: "Cross-Team %%gray%%(4)"
-            reason: "Hacer team en modalidades solitarias (4)"
+            reason: "Team en modalidades solitarias (4)"
         destructive-criticism-1:
             title: "Críticas Destructivas"
             reason: "Críticas Destructivas"
@@ -285,10 +285,10 @@ punish-menu:
             reason: "Engaño hacia el usuario o staff (2)"
         cheats-1:
             title: "Hacks"
-            reason: "Cualquier tipo de hacks o mod ilegal"
+            reason: "Uso de hacks / mod ilegal"
         cheats-2:
             title: "Hacks %%gray%%(2)"
-            reason: "Cualquier tipo de hacks o mod ilegal (2)"
+            reason: "Uso de hacks / mod ilegal (2)"
         sales-1:
             title: "Ventas"
             reason: "Ventas sin autorización"
@@ -297,19 +297,19 @@ punish-menu:
             reason: "Ventas sin autorización (2)"
         multi-accounts-1:
             title: "Multicuenta"
-            reason: "El uso de multicuentas In-Game"
+            reason: "Multicuentas In-Game"
         multi-accounts-2:
             title: "Multicuenta %%gray%%(2)"
-            reason: "El uso de multicuentas In-Game (2)"
+            reason: "Multicuentas In-Game (2)"
         bugs-advantage-1:
             title: "Abuso de bugs"
-            reason: "Aprovecharse de bugs o fallos In-Game"
+            reason: "Abuso de bugs o fallos In-Game"
         bugs-advantage-2:
             title: "Abuso de bugs %%gray%%(2)"
-            reason: "Aprovecharse de bugs o fallos In-Game (2)"
+            reason: "Abuso de bugs o fallos In-Game (2)"
         bugs-advantage-3:
             title: "Abuso de bugs %%gray%%(3)"
-            reason: "Aprovecharse de bugs o fallos In-Game (3)"
+            reason: "Abuso de bugs o fallos In-Game (3)"
         threats-1:
             title: "Amenazas"
             reason: "Amenazas In-Game"
@@ -318,22 +318,22 @@ punish-menu:
             reason: "Amenazas In-Game (2)"
         offensive-1:
             title: "Perfil Ofensivo"
-            reason: "Usar nicks y skins ofensivos"
+            reason: "Nicks y skins ofensivos"
         offensive-2:
             title: "Perfil Ofensivo %%gray%%(2)"
-            reason: "Usar nicks y skins ofensivos (2)"
+            reason: "Nicks y skins ofensivos (2)"
         offensive-3:
             title: "Perfil Ofensivo %%gray%%(3)"
-            reason: "Usar nicks y skins ofensivos (3)"
+            reason: "Nicks y skins ofensivos (3)"
         capital-1:
             title: "Mayúsculas"
-            reason: "Uso excesivo de mayúsculas"
+            reason: "Exceso de mayúsculas"
         capital-3:
             title: "Mayúsculas %%gray%%(3)"
-            reason: "Uso excesivo de mayúsculas (3)"
+            reason: "Exceso de mayúsculas (3)"
         capital-4:
             title: "Mayúsculas %%gray%%(4)"
-            reason: "Uso excesivo de mayúsculas (4)"
+            reason: "Exceso de mayúsculas (4)"
         public-accusation-1:
             title: "Acusaciones de hack"
             reason: "Acusar de hacks en chat global"
@@ -345,31 +345,31 @@ punish-menu:
             reason: "Acusar de hacks en chat global (4)"
         spam-1:
             title: "Spam"
-            reason: "Hacer spam por chat global o msg"
+            reason: "Spam por chat global/DM"
         spam-3:
             title: "Spam %%gray%%(3)"
-            reason: "Hacer spam por chat global o msg (3)"
+            reason: "Spam por chat global/DM (3)"
         spam-4:
             title: "Spam %%gray%%(4)"
-            reason: "Hacer spam por chat global o msg (4)"
+            reason: "Spam por chat global/DM (4)"
         bullying:
             title: "Acoso / Bullying"
-            reason: "Acoso de cualquier indole in-game"
+            reason: "Acoso In-Game"
         bullying-3:
             title: "Acoso / Bullying %%gray%%(3)"
-            reason: "Acoso de cualquier indole in-game (3)"
+            reason: "Acoso In-Game (3)"
         bullying-4:
             title: "Acoso / Bullying %%gray%%(4)"
-            reason: "Acoso de cualquier indole in-game (4)"
+            reason: "Acoso In-Game (4)"
         flood-1:
             title: "Flood"
-            reason: "Flood en cualquier chat in-game"
+            reason: "Flood In-Game"
         flood-3:
             title: "Flood %%gray%%(3)"
-            reason: "Flood en cualquier chat in-game (3)"
+            reason: "Flood In-Game (3)"
         flood-4:
             title: "Flood %%gray%%(4)"
-            reason: "Flood en cualquier chat in-game (4)"
+            reason: "Flood In-Game (4)"
     items:
         ban:
             name: "%%dark_red%%Suspender a %punished_name%"
