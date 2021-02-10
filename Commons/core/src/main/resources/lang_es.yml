@@ -232,7 +232,7 @@ punish-menu:
         - " "
         - "%%yellow%%¡Click izquierdo para aplicar!"
     reasons:
-        ip-1:
+        ip:
             title: "Compartir IP"
             reason: "Pasar IP o otra info relacionada con otros servidores"
         ip-3:
