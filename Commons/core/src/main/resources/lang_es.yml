@@ -205,6 +205,14 @@ punish:
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."
+    lookup:
+        menu: "Sanciones de %%player%%"
+        title: "%%type%%"
+        lore:
+            - "%%aqua%%Emisor: %%issuer%%"
+            - "%%aqua%%Razón: %%white%%%%reason%%"
+            - "%%aqua%%Expira: %%white%%%%expires%%"
+            - "%%aqua%%Fecha: %%white%%%%date%%"
     search:
         item:
             title: "%%aqua%%Buscar por nombre"
