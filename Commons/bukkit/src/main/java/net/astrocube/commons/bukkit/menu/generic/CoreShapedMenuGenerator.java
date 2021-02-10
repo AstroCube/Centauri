@@ -36,6 +36,8 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
 
         GUIBuilder builder = GUIBuilder.builder(title);
 
+        MenuUtils.generateFrame(builder);
+
         int index = 10;
         for (BaseClickable stack: pagination.getPage(page)) {
 
@@ -44,6 +46,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
             }
 
             builder.addItem(generateClick(stack, index));
+            index++;
         }
 
         if (pagination.pageExists(page - 1) && (page - 1) != 0) {
