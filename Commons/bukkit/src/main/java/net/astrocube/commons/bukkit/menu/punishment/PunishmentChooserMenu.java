@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.menu.punishment;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
@@ -37,13 +38,8 @@ public class PunishmentChooserMenu {
 
     public Inventory createPunishmentChooserMenu(Player player, User issuer, User target) {
 
-        Group.Flair flair = displayMatcher.getRealmDisplay(target);
-        String resumedName = ChatColor.GRAY + target.getDisplay();
-
-        try {
-            ChatColor color = ChatColor.valueOf(flair.getColor().toUpperCase(Locale.ROOT));
-            resumedName = color + target.getDisplay();
-        } catch (IllegalArgumentException ignore) {}
+        TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, target);
+        String resumedName = flairFormat.getColor() + target.getDisplay();
 
         return GUIBuilder.builder(messageHandler.get(player, "punish-menu.title"), 3)
                 .addItem(ItemClickable.builder(11)

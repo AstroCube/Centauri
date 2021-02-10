@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.menu.admin.selector;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
-import net.astrocube.api.bukkit.user.display.FlairFormatter;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,7 +12,6 @@ import javax.inject.Inject;
 
 public class UserSkullGenerator {
 
-    private @Inject FlairFormatter flairFormatter;
     private @Inject DisplayMatcher displayMatcher;
     private @Inject MessageHandler messageHandler;
 
@@ -25,7 +23,7 @@ public class UserSkullGenerator {
 
         meta.setOwner(user.getSkin());
 
-        meta.setDisplayName(flairFormatter.format(displayMatcher.getRealmDisplay(user), user.getDisplay()));
+        meta.setDisplayName(displayMatcher.getDisplay(player, user).getColor() + user.getDisplay());
 
         meta.setLore(
                 messageHandler.replacingMany(

@@ -1,53 +1,32 @@
 package net.astrocube.commons.bukkit.user.display;
 
+import com.google.inject.Inject;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
+import net.astrocube.api.bukkit.user.display.TranslatedGroupProvider;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
-import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.Comparator;
 import java.util.Optional;
 
 public class CoreDisplayMatcher implements DisplayMatcher {
 
+    private @Inject TranslatedGroupProvider translatedFlairFormat;
+
     @Override
-    public Group.Flair getRealmDisplay(User user) {
-
-        Group.Flair flair = new Group.Flair() {
-            @Override
-            public String getRealm() {
-                return "default";
-            }
-
-            @Override
-            public String getColor() {
-                return "GRAY";
-            }
-
-            @Override
-            public String getSymbol() {
-                return "";
-            }
-        };
-
+    public TranslatedFlairFormat getDisplay(Player player, User user) {
         Optional<Group> flairGroup = user.getGroups().stream()
                 .map(UserDoc.UserGroup::getGroup)
-                .filter(group -> group.getFlairs().stream().anyMatch(
-                        f -> f.getRealm().equalsIgnoreCase(
-                                Configuration.getString("server.realm", "default")
-                        ))
-                ).min(Comparator.comparingInt(Group::getPriority));
-
-        if (!flairGroup.isPresent()) return flair;
-
-        Optional<Group.Flair> finalFlair = flairGroup.get().getFlairs().stream()
-                .filter(f -> f.getRealm().equalsIgnoreCase(
-                        Configuration.getString("server.realm", "default")
-                )).findAny();
-
-        return finalFlair.orElse(flair);
-
+                .min(Comparator.comparingInt(Group::getPriority));
+        return translatedFlairFormat.getGroupTranslations(
+                player,
+                flairGroup.isPresent() ? flairGroup.get().getId() : "default",
+                flairGroup.isPresent() ? DisplayMatcher.getColor(flairGroup.get()) : ChatColor.GRAY
+        );
     }
 
 }

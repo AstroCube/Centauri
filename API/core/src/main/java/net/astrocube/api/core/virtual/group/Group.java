@@ -19,8 +19,8 @@ public interface Group extends Model.Stamped {
     @JsonProperty("html_color")
     String getColor();
 
-    @JsonProperty("minecraft_flair")
-    Set<Flair> getFlairs();
+    @JsonProperty("minecraft_color")
+    String getMinecraftColor();
 
     @JsonProperty("minecraft_permissions")
     Set<String> getPermissions();
@@ -32,16 +32,6 @@ public interface Group extends Model.Stamped {
 
     @JsonProperty("discord_role")
     String getDiscordRole();
-
-    interface Flair {
-
-        String getRealm();
-
-        String getColor();
-
-        String getSymbol();
-
-    }
 
     static int getLowestPriority(Set<UserDoc.UserGroup> groups) {
 

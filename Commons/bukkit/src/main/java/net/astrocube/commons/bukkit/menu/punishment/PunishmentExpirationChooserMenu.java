@@ -35,6 +35,7 @@ public class PunishmentExpirationChooserMenu {
                 .addItem(
                         genericHeadHelper.generateDecorator(
                                 genericHeadHelper.generateSkull(
+                                        player,
                                         punishmentBuilder.getTarget(),
                                         messageHandler.replacingMany(
                                                 player, "punishment-expiration-menu.items.actual.lore",

@@ -2,10 +2,8 @@ package net.astrocube.commons.bukkit.channel.admin;
 
 import net.astrocube.api.bukkit.channel.admin.StaffMessageDelivery;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
-import net.astrocube.api.bukkit.user.display.FlairFormatter;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.Bukkit;
@@ -20,7 +18,6 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
     private @Inject FindService<User> findService;
     private @Inject DisplayMatcher displayMatcher;
-    private @Inject FlairFormatter flairFormatter;
 
     @Override
     public void deliver(ChatChannelMessage message) {
@@ -30,14 +27,15 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
         this.findService.find(message.getSender()).callback(Callbacks.applyCommonErrorHandler("Find userdata of " + message.getSender(),
                 sender -> {
-                    Group.Flair flair = this.displayMatcher.getRealmDisplay(sender);
-                    String prefix = this.flairFormatter.format(flair, sender.getDisplay());
 
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         if (player.hasPermission("commons.staff.chat")) {
                             this.findService.find(player.getDatabaseIdentifier()).callback(response -> response.ifSuccessful(onlineUser -> {
 
+                                String prefix = displayMatcher.getDisplay(player, sender).getPrefix();
+
                                 if (onlineUser.getSettings().getAdminChatSettings().isActive() && !important) {
+
 
                                     player.sendMessage(
                                             ChatColor.AQUA + "[STAFF] " +

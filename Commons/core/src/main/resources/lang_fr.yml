@@ -502,8 +502,8 @@ groups:
             join: ""
             leave: ""
     5e73e2996c0fc523c054a5d1:
-        name: "%%dark_purple%%SR. DEV"
-        prefix: "%%dark_purple%%%%bold%%SR. DEV"
+        name: "%%dark_purple%%Le SR. DEV"
+        prefix: "%%dark_purple%%%%bold%%Le SR. DEV"
         message:
             join: ""
             leave: ""

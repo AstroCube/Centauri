@@ -7,6 +7,7 @@ import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 import net.astrocube.api.bukkit.lobby.board.ScoreboardProcessor;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
@@ -30,18 +31,17 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
 
         User user = findService.findSync(player.getDatabaseIdentifier());
 
+        TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
+
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "lobby.scoreboard.lore",
                 "%%player%%", user.getDisplay(),
-                "%%rank%%", DisplayMatcher.getColor(displayMatcher.getRealmDisplay(user)) + displayMatcher.getRealmDisplay(user).getSymbol(),
+                "%%rank%%", flairFormat.getColor() + flairFormat.getName(),
                 "%%lobby%%", 1,
                 "%%online%%", cloudStatusProvider.getOnline()
         );
 
-        for (int i = 0; i < scoreTranslation.size(); i++) {
-            builder.addLine(scoreTranslation.get(i));
-        }
-
+        scoreTranslation.forEach(builder::addLine);
         scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
 
     }

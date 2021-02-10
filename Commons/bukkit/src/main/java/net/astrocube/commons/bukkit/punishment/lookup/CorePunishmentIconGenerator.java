@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentIconGenerator;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
-import net.astrocube.api.bukkit.user.display.FlairFormatter;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.user.User;
@@ -23,7 +22,6 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
 
     private @Inject MessageHandler messageHandler;
     private @Inject DisplayMatcher displayMatcher;
-    private @Inject FlairFormatter flairFormatter;
     private @Inject FindService<User> findService;
     private @Inject Plugin plugin;
 
@@ -53,7 +51,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
         String issuer = "Error";
         try {
             User issuerRecord = findService.findSync(punishment.getIssuer());
-            issuer = flairFormatter.format(displayMatcher.getRealmDisplay(issuerRecord), issuerRecord.getDisplay());
+            issuer = displayMatcher.getDisplay(player, user).getColor() + user.getDisplay();
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Could not retrieve user data", e);
         }

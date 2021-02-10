@@ -42,12 +42,12 @@ public class GenericHeadHelper {
         return generateMetaAndPlace(HeadLibrary.SAD_FACE, messageHandler.get(player, translation));
     }
 
-    public ItemStack generateSkull(User user, List<String> lore) {
+    public ItemStack generateSkull(Player player, User user, List<String> lore) {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta.setOwner(user.getUsername());
         meta.setLore(lore);
-        meta.setDisplayName(ChatColor.valueOf(displayMatcher.getRealmDisplay(user).getColor().toUpperCase()) + user.getDisplay());
+        meta.setDisplayName(displayMatcher.getDisplay(player, user) + user.getDisplay());
         skull.setItemMeta(meta);
         return skull;
     }

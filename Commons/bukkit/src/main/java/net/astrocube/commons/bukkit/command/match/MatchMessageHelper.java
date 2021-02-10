@@ -57,18 +57,21 @@ public class MatchMessageHelper {
 
         findService.find(player.getDatabaseIdentifier()).callback(involvedUser -> {
 
-            ChatColor color = ChatColor.YELLOW;
-            if (involvedUser.isSuccessful() && involvedUser.getResponse().isPresent()) {
-                color = ChatColor.valueOf(displayMatcher
-                        .getRealmDisplay(involvedUser.getResponse().get()).getColor().toUpperCase());
-            }
-
-            ChatColor finalColor = color;
             involved.forEach(user -> {
+
                 Player involvedPlayer = Bukkit.getPlayer(user.getUsername());
+
+                String rawName = player.getName();
+                if (involvedUser.isSuccessful() && involvedUser.getResponse().isPresent()) {
+                    rawName = displayMatcher.getDisplay(
+                            involvedPlayer,
+                            involvedUser.getResponse().get()
+                    ).getColor() + player.getName();
+                }
+
                 involvedPlayer.sendMessage(
                         messageHandler.get(involvedPlayer, message)
-                                .replace("%%player%%", finalColor + player.getName())
+                                .replace("%%player%%", rawName)
                 );
             });
         });
