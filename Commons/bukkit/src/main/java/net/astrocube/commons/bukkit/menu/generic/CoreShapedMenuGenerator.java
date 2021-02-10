@@ -100,4 +100,9 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
     public Inventory generate(Player player, String title, Consumer<Player> itemClick, @Nullable Consumer<Player> backClick, Set<ItemStack> items) {
         return generate(player, title, itemClick, items, backClick, 1);
     }
+
+    @Override
+    public Inventory generate(Player player, String title, @org.jetbrains.annotations.Nullable Consumer<Player> backClick, Set<BaseClickable> items) {
+        return null;
+    }
 }
