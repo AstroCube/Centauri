@@ -212,7 +212,7 @@ punish-menu:
             - "%%aqua%%Emisor: %%issuer%%"
             - "%%aqua%%Razón: %%white%%%%reason%%"
             - "%%aqua%%Expira: %%white%%%%expires%%"
-            - "%%aqua%%Fecha: %%white%%%%date%%"
+            - "%%aqua%%Emitido: %%white%%%%date%%"
     search:
         item:
             title: "%%aqua%%Buscar por nombre"
