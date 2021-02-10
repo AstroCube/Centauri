@@ -13,7 +13,7 @@ public class CoreAnimatedNametagRenderer implements AnimatedNametagRenderer {
 
     @Override
     public RenderedAnimatedNametag render(AnimatedNametag nametag, Player player) {
-        Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag, player);
+        Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag);
         RenderedAnimatedNametag animatedNametag = new CoreRenderedAnimatedNametag(nametag, spawnedEntities, player);
         animatedNametag.show();
 
