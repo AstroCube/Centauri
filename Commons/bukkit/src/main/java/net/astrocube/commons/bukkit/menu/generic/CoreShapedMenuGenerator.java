@@ -55,7 +55,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
                             genericHeadHelper.getPreviousHead(player, page),
                             48,
                             ClickType.LEFT,
-                            clicker -> generate(player, title, backClick, items, (page - 1))
+                            clicker -> clicker.openInventory(generate(clicker, title, backClick, items, (page - 1)))
                     )
             );
         }
@@ -90,7 +90,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
                             genericHeadHelper.getNextHead(player, page),
                             50,
                             ClickType.LEFT,
-                            clicker -> generate(player, title, backClick, items, (page + 1))
+                            clicker -> clicker.openInventory(generate(clicker, title, backClick, items, (page + 1)))
                     )
             );
         }
