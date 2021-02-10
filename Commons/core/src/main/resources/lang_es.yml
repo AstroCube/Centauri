@@ -291,10 +291,10 @@ punish-menu:
             reason: "Cualquier tipo de hacks o mod ilegal (2)"
         sales-1:
             title: "Ventas"
-            reason: "Ventas dentro del servidor sin previa aprobación del staff"
+            reason: "Ventas sin autorización"
         sales-2:
             title: "Ventas %%gray%%(2)"
-            reason: "Ventas dentro del servidor sin previa aprobación del staff (2)"
+            reason: "Ventas sin autorización (2)"
         multi-accounts-1:
             title: "Multicuenta"
             reason: "El uso de multicuentas In-Game"
