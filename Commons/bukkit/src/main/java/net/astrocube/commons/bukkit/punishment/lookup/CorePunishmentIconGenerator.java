@@ -48,7 +48,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
             }
         }
 
-        ItemStack stack = new ItemStack(Material.HARD_CLAY, 1, id);
+        ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, id);
         ItemMeta meta = stack.getItemMeta();
         String title = messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase());
 
@@ -77,7 +77,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
                         "%%issuer%%", issuer,
                         "%%reason%%", punishment.getReason(),
                         "%%expires%%", expiration,
-                        "%%date%%", punishment.getCreatedAt().toString()
+                        "%%date%%", PrettyTimeUtils.getHumanDate(punishment.getCreatedAt().toDate(), user.getLanguage())
                 )
         );
 

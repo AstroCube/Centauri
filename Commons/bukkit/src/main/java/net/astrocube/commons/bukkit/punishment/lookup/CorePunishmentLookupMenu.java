@@ -33,7 +33,7 @@ public class CorePunishmentLookupMenu implements PunishmentLookupMenu {
         GUIBuilder builder = GUIBuilder.builder(
                 messageHandler.replacing(
                         player, "punish-menu.lookup.menu",
-                        "%%player%%", target.getId()
+                        "%%player%%", target.getDisplay()
                 )
         );
 
