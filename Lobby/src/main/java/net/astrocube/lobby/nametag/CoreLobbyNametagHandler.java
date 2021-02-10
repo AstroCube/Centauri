@@ -41,39 +41,36 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
 
         player.setPlayerListName(displayMatcher.getDisplay(player, user).getColor() + user.getDisplay());
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+        Bukkit.getOnlinePlayers().forEach(online -> {
 
-            Bukkit.getOnlinePlayers().forEach(online -> {
+            if (!online.getDatabaseIdentifier().equals(player.getDatabaseIdentifier())) {
 
-                if (!online.getDatabaseIdentifier().equals(player.getDatabaseIdentifier())) {
+                findService.find(online.getDatabaseIdentifier()).callback(onlineCallback -> {
 
+                    onlineCallback.ifSuccessful(onlineUser -> {
 
-                    LobbyNametag ownerTag = LobbyNametag
-                            .builder(player)
-                            .prefix(getTranslatedTag(online, user))
-                            .build();
+                        LobbyNametag ownerTag = LobbyNametag
+                                .builder(player)
+                                .prefix(getTranslatedTag(online, user))
+                                .build();
 
-                    findService.find(online.getDatabaseIdentifier()).callback(onlineCallback -> {
+                        LobbyNametag onlineTag = LobbyNametag
+                                .builder(online)
+                                .prefix(getTranslatedTag(player, onlineUser))
+                                .build();
 
-                        onlineCallback.ifSuccessful(onlineUser -> {
-                            LobbyNametag onlineTag = LobbyNametag
-                                    .builder(online)
-                                    .prefix(getTranslatedTag(player, null))
-                                    .build();
-
-
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
                             nametagRegistry.submit(lobbyNametagRenderer.render(ownerTag, online));
                             nametagRegistry.submit(lobbyNametagRenderer.render(onlineTag, player));
-
-                        });
+                        }, 5L);
 
                     });
 
-                }
+                });
 
-            });
+            }
 
-        }, 5L);
+        });
 
     }
 
@@ -84,7 +81,7 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
 
     private String getTranslatedTag(Player viewer, User user) {
         TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(viewer, user);
-        return flairFormat.getPrefix().equalsIgnoreCase("") ?
+        return flairFormat.getPrefix().equalsIgnoreCase(flairFormat.getColor() + "") ?
                 flairFormat.getColor() + "" :
                 messageHandler.replacing(
                         viewer, "prefix",

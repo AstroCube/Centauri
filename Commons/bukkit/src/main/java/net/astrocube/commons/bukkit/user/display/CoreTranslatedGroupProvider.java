@@ -29,25 +29,29 @@ public class CoreTranslatedGroupProvider implements TranslatedGroupProvider {
             @Override
             public String getName() {
                 String name = messageHandler.get(player, "groups." + id + ".name");
-                return name == null ? messageHandler.get(player, "groups.default.name") : name;
+                return name.equalsIgnoreCase("groups." + id + ".name") ?
+                        messageHandler.get(player, "groups.default.name") : name;
             };
 
             @Override
             public String getPrefix() {
                 String prefix = messageHandler.get(player, "groups." + id + ".prefix");
-                return prefix == null ? messageHandler.get(player, "groups.default.prefix") : prefix;
+                return prefix.equalsIgnoreCase("groups." + id + ".prefix") ?
+                        messageHandler.get(player, "groups.default.prefix") : prefix;
             }
 
             @Override
             public String getJoinMessage() {
                 String joinMessage = messageHandler.get(player, "groups." + id + ".message.join");
-                return joinMessage == null ? messageHandler.get(player, "groups.default.message.join") : joinMessage;
+                return joinMessage.equalsIgnoreCase("groups." + id + ".message.join")
+                        ? messageHandler.get(player, "groups.default.message.join") : joinMessage;
             }
 
             @Override
             public String getLeaveMessage() {
                 String leaveMessage = messageHandler.get(player, "groups." + id + ".message.leave");
-                return leaveMessage == null ? messageHandler.get(player, "groups.default.message.leave") : leaveMessage;
+                return leaveMessage.equalsIgnoreCase("groups." + id + ".message.leave")
+                        ? messageHandler.get(player, "groups.default.message.leave") : leaveMessage;
             }
         };
     }
