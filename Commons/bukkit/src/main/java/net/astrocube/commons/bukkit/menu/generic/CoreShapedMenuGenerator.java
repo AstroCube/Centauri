@@ -32,7 +32,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
     public Inventory generate(Player player, String title, @Nullable Consumer<Player> backClick, Set<BaseClickable> items, int page) {
 
 
-        Pagination<BaseClickable> pagination = new SimplePagination<>(3, items);
+        Pagination<BaseClickable> pagination = new SimplePagination<>(28, items);
 
         GUIBuilder builder = GUIBuilder.builder(title);
 
