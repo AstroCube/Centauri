@@ -6,7 +6,7 @@ import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentExpirationChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentReasonChooserMenu;
 import net.astrocube.commons.bukkit.admin.selector.AdminGameModeSelectorMenu;
-import net.astrocube.commons.bukkit.admin.selector.AdminOnlineStaffMenu;
+import net.astrocube.commons.bukkit.admin.staff.AdminOnlineStaffMenu;
 import net.astrocube.commons.bukkit.admin.selector.AdminSubGameModeSelectorMenu;
 import net.astrocube.commons.bukkit.admin.selector.item.CoreGameModeItemExtractor;
 import net.astrocube.commons.bukkit.admin.selector.item.GameModeItemExtractor;
@@ -20,10 +20,10 @@ public class AdminMenuModule extends ProtectedModule {
         bind(PunishmentChooserMenu.class).in(Scopes.SINGLETON);
         bind(PunishmentReasonChooserMenu.class).in(Scopes.SINGLETON);
         bind(PunishmentExpirationChooserMenu.class).in(Scopes.SINGLETON);
-        bind(AdminMainPageMenu.class).in(Scopes.SINGLETON);
+        bind(AdminPanelMenu.class).in(Scopes.SINGLETON);
         bind(AdminOnlineStaffMenu.class).in(Scopes.SINGLETON);
 
-        bind(AdminMainPageMenu.class).in(Scopes.SINGLETON);
+        bind(AdminPanelMenu.class).in(Scopes.SINGLETON);
         bind(AdminGameModeSelectorMenu.class).in(Scopes.SINGLETON);
         bind(AdminSubGameModeSelectorMenu.class).in(Scopes.SINGLETON);
         bind(GameModeItemExtractor.class).to(CoreGameModeItemExtractor.class).in(Scopes.SINGLETON);

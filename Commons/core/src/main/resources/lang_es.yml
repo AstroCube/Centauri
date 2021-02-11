@@ -489,11 +489,16 @@ admin-panel:
             5e2dd7470fba1ccc89993a9e: "TEAMS Insane"
     online-staff:
         title: "Staff Conectado"
+        category:
+            - ""
+            - "%%blue%%¡Click izquierdo para ver"
+            - "%%blue%%la lista!"
         item-layout:
             lore:
                 - "%%gray%%Actualmente en: %connected%"
         next-name: "%%green%%Next page"
         previous-name: "%%red%%Previous page"
+        error: "%%red%%Ha ocurrido un error al abrir el menú de staff"
 groups:
     default:
         name: "%%gray%%Usuario"

@@ -2,7 +2,7 @@ package net.astrocube.commons.bukkit.admin;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.commons.bukkit.admin.selector.AdminGameModeSelectorMenu;
-import net.astrocube.commons.bukkit.admin.selector.AdminOnlineStaffMenu;
+import net.astrocube.commons.bukkit.admin.staff.AdminOnlineStaffMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,14 +12,11 @@ import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
 
-public class AdminMainPageMenu {
+public class AdminPanelMenu {
 
-    @Inject
-    private AdminGameModeSelectorMenu adminGameModeSelectorMenu;
-    @Inject
-    private AdminOnlineStaffMenu adminOnlineStaffMenu;
-    @Inject
-    private MessageHandler playerMessageHandler;
+    private @Inject AdminGameModeSelectorMenu adminGameModeSelectorMenu;
+    private @Inject AdminOnlineStaffMenu adminOnlineStaffMenu;
+    private @Inject MessageHandler playerMessageHandler;
 
     public Inventory createAdminPanel(Player player) {
 
@@ -54,7 +51,11 @@ public class AdminMainPageMenu {
                                 .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.online-staff.lore"))
                                 .build())
                         .setAction(event -> {
-                            adminOnlineStaffMenu.createOnlineStaffMenu(player, 1);
+                            try {
+                                player.openInventory(adminOnlineStaffMenu.createOnlineStaffMenu(player));
+                            } catch (Exception e) {
+                                playerMessageHandler.send(player, "admin-panel.online-staff.error");
+                            }
                             return true;
                         })
                         .build())
