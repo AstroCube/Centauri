@@ -1,11 +1,11 @@
-package net.astrocube.commons.bukkit.menu.punishment.helper;
+package net.astrocube.commons.bukkit.admin.punishment.helper;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.punishment.PresetPunishment;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.punishment.PunishmentHandler;
-import net.astrocube.commons.bukkit.menu.punishment.PunishmentExpirationChooserMenu;
+import net.astrocube.commons.bukkit.admin.punishment.PunishmentExpirationChooserMenu;
 import net.astrocube.commons.core.utils.PrettyTimeUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

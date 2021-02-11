@@ -1,8 +1,8 @@
-package net.astrocube.commons.bukkit.menu.admin.selector.item.action;
+package net.astrocube.commons.bukkit.admin.selector.item.action;
 
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
-import net.astrocube.commons.bukkit.menu.admin.selector.AdminSubGameModeSelectorMenu;
+import net.astrocube.commons.bukkit.admin.selector.AdminSubGameModeSelectorMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 

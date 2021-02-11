@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import net.astrocube.commons.bukkit.menu.admin.AdminMainPageMenu;
+import net.astrocube.commons.bukkit.admin.AdminMainPageMenu;
 import org.bukkit.entity.Player;
 
 public class AdminCommand implements CommandClass {

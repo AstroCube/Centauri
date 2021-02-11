@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.menu.admin.selector.item;
+package net.astrocube.commons.bukkit.admin.selector.item;
 
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.entity.Player;

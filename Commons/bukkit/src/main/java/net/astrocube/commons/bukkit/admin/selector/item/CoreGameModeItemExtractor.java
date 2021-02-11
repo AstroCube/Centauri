@@ -1,8 +1,8 @@
-package net.astrocube.commons.bukkit.menu.admin.selector.item;
+package net.astrocube.commons.bukkit.admin.selector.item;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.commons.bukkit.menu.admin.selector.item.action.DependentAction;
+import net.astrocube.commons.bukkit.admin.selector.item.action.DependentAction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;

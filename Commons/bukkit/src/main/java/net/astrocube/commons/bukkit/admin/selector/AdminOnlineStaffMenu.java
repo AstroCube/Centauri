@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.menu.admin.selector;
+package net.astrocube.commons.bukkit.admin.selector;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;

@@ -1,9 +1,9 @@
-package net.astrocube.commons.bukkit.menu.admin.selector;
+package net.astrocube.commons.bukkit.admin.selector;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.commons.bukkit.menu.admin.selector.item.GameModeItemExtractor;
+import net.astrocube.commons.bukkit.admin.selector.item.GameModeItemExtractor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

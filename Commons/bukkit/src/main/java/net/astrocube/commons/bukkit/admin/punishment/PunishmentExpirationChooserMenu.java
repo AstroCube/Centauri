@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.menu.punishment;
+package net.astrocube.commons.bukkit.admin.punishment;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;

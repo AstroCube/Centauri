@@ -1,8 +1,8 @@
-package net.astrocube.commons.bukkit.menu.admin;
+package net.astrocube.commons.bukkit.admin;
 
 import me.yushust.message.MessageHandler;
-import net.astrocube.commons.bukkit.menu.admin.selector.AdminGameModeSelectorMenu;
-import net.astrocube.commons.bukkit.menu.admin.selector.AdminOnlineStaffMenu;
+import net.astrocube.commons.bukkit.admin.selector.AdminGameModeSelectorMenu;
+import net.astrocube.commons.bukkit.admin.selector.AdminOnlineStaffMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

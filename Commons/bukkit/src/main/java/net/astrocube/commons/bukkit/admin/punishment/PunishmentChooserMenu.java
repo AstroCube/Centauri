@@ -1,10 +1,9 @@
-package net.astrocube.commons.bukkit.menu.punishment;
+package net.astrocube.commons.bukkit.admin.punishment;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
-import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.menu.GenericHeadHelper;
@@ -13,7 +12,6 @@ import net.astrocube.commons.bukkit.menu.MenuUtils;
 import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -26,7 +24,6 @@ import team.unnamed.gui.core.gui.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
-import java.util.Locale;
 
 public class PunishmentChooserMenu {
 

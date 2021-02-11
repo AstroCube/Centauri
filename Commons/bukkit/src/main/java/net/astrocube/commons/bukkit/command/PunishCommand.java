@@ -12,7 +12,7 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.commons.bukkit.menu.punishment.PunishmentChooserMenu;
+import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;

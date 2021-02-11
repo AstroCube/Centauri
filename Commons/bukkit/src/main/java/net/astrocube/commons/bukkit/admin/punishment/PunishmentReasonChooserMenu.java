@@ -1,11 +1,11 @@
-package net.astrocube.commons.bukkit.menu.punishment;
+package net.astrocube.commons.bukkit.admin.punishment;
 
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.punishment.PresetPunishment;
 import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
-import net.astrocube.commons.bukkit.menu.punishment.helper.PunishClickableGenerator;
+import net.astrocube.commons.bukkit.admin.punishment.helper.PunishClickableGenerator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
