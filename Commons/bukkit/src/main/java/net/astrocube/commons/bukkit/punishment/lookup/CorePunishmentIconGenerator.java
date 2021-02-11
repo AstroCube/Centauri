@@ -51,7 +51,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
         String issuer = "Error";
         try {
             User issuerRecord = findService.findSync(punishment.getIssuer());
-            issuer = displayMatcher.getDisplay(player, user).getColor() + user.getDisplay();
+            issuer = displayMatcher.getDisplay(player, issuerRecord).getColor() + user.getDisplay();
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Could not retrieve user data", e);
         }
