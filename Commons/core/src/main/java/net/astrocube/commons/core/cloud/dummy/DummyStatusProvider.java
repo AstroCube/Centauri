@@ -24,4 +24,10 @@ public class DummyStatusProvider implements CloudStatusProvider {
     public String getPlayerServer(String player) {
         return "";
     }
+
+    @Override
+    public void updateGameStatus(State state) {
+
+    }
+
 }

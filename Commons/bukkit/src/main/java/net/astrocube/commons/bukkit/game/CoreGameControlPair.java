@@ -22,16 +22,16 @@ import java.util.logging.Level;
 public class CoreGameControlPair implements GameControlPair {
 
     private final Plugin plugin;
-    private final FindService<GameMode> findService;
+    private final GameControlHelper gameControlHelper;
     private ServerDoc.Type type;
     private int stopSchedule;
     private int repeatingSchedule;
     private @Getter boolean paired;
 
     @Inject
-    CoreGameControlPair(Plugin plugin, FindService<GameMode> findService) {
+    CoreGameControlPair(Plugin plugin, GameControlHelper gameControlHelper) {
         this.plugin = plugin;
-        this.findService = findService;
+        this.gameControlHelper = gameControlHelper;
         this.type = ServerDoc.Type.SPECIAL;
         this.stopSchedule = -1;
         this.repeatingSchedule = -1;
@@ -52,26 +52,16 @@ public class CoreGameControlPair implements GameControlPair {
         FileConfiguration config = plugin.getConfig();
         plugin.getLogger().log(Level.INFO, "Attempting to pair provided GameMode");
 
-        GameMode mode = findService.findSync(gameMode);
+        Optional<GameControlHelper.ModeCompound> modeCompound = gameControlHelper.getService(gameMode, subGameMode);
 
-        if (mode.getSubTypes() == null) {
+        if (!modeCompound.isPresent()) {
             plugin.getLogger().log(Level.SEVERE, "The requested GameMode does not have any SubMode");
             return;
         }
 
-        Optional<SubGameMode> subMode = mode.getSubTypes().stream()
-                .filter(g -> g.getId().equalsIgnoreCase(subGameMode))
-                .findFirst();
-
-        if (!subMode.isPresent()) {
-            plugin.getLogger().log(Level.SEVERE, "The requested GameMode was not found");
-            return;
-        }
-
-
         if (
-                !mode.getId().equalsIgnoreCase(config.getString("game.mode")) ||
-                !subMode.get().getId().equalsIgnoreCase(config.getString("game.subMode"))
+                !modeCompound.get().getGameMode().getId().equalsIgnoreCase(config.getString("game.mode")) ||
+                !modeCompound.get().getSubGameMode().getId().equalsIgnoreCase(config.getString("game.subMode"))
         ) {
             throw new GameControlException("Provided mode does not correspond with configuration");
         }
@@ -85,12 +75,22 @@ public class CoreGameControlPair implements GameControlPair {
 
         plugin.getLogger().log(Level.INFO,
                 "Successfully paired GameMode {0} (ID: {1}) and SubGameMode {2} (ID: {3})",
-                new String[]{mode.getName(), mode.getId(), subMode.get().getName(), subMode.get().getId()}
+                new String[]{
+                        modeCompound.get().getGameMode().getName(),
+                        modeCompound.get().getGameMode().getId(),
+                        modeCompound.get().getSubGameMode().getName(),
+                        modeCompound.get().getGameMode().getId()
+                }
         );
 
         this.paired = true;
 
-        Bukkit.getPluginManager().callEvent(new MatchControlSanitizeEvent(mode, subMode.get()));
+        Bukkit.getPluginManager().callEvent(
+                new MatchControlSanitizeEvent(
+                        modeCompound.get().getGameMode(),
+                        modeCompound.get().getSubGameMode()
+                )
+        );
 
     }
 

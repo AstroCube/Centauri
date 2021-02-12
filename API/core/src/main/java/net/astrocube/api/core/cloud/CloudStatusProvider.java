@@ -23,4 +23,10 @@ public interface CloudStatusProvider {
      */
     String getPlayerServer(String player);
 
+    void updateGameStatus(State state);
+
+    enum State {
+        STARTING, ONLINE, OFFLINE, WAITING, RESTART, INGAME
+    }
+
 }

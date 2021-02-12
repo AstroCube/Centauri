@@ -36,4 +36,9 @@ public class CoreCloudStatusProvider implements CloudStatusProvider {
         return playerObject.getServer().getName();
     }
 
+    @Override
+    public void updateGameStatus(State state) {
+        TimoCloudAPI.getBukkitAPI().getThisServer().setState(state.toString());
+    }
+
 }
