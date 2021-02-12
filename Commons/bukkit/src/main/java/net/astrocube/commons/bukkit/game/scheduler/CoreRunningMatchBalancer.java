@@ -22,7 +22,7 @@ public class CoreRunningMatchBalancer implements RunningMatchBalancer {
         matches.add(id);
         played++;
 
-        if (!hasCapacity() || isNeedingRestart()) {
+        if (hasCapacity() || isNeedingRestart()) {
             cloudStatusProvider.updateGameStatus(CloudStatusProvider.State.INGAME);
         }
 
