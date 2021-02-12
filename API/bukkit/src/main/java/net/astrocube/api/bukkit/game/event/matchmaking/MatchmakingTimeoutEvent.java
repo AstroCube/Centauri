@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 
 @Getter
 @AllArgsConstructor
-public class MatchmakingRequestEvent extends Event {
+public class MatchmakingTimeoutEvent extends Event {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
     private final MatchmakingRequest matchmakingRequest;

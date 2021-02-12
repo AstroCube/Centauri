@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.game.GameControlHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,27 +17,12 @@ import java.util.logging.Level;
 
 public class MatchmakingErrorListener implements Listener {
 
-    private @Inject FindService<User> findService;
     private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
 
     @EventHandler
     public void onMatchmakingError(MatchmakingErrorEvent event) {
-        findService.find(
-                event.getMatchmakingError().getRequest().getRequesters().getResponsible()
-        ).callback(response -> {
-
-            if (response.isSuccessful() && response.getResponse().isPresent()) {
-
-                Player player = Bukkit.getPlayer(response.getResponse().get().getUsername());
-
-                messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.error");
-
-            } else {
-                plugin.getLogger().log(Level.SEVERE, "Could not find user for error alerting");
-            }
-
-        });
+        GameControlHelper.getPlayersFromRequest(event.getMatchmakingError().getRequest()).forEach(player ->
+                messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.error"));
     }
 
 }
