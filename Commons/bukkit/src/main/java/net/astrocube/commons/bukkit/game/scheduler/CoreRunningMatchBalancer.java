@@ -40,7 +40,7 @@ public class CoreRunningMatchBalancer implements RunningMatchBalancer {
 
     @Override
     public boolean isNeedingRestart() {
-        return getMaxCapacity() >= played;
+        return getMaxCapacity() <= played;
     }
 
     @Override
