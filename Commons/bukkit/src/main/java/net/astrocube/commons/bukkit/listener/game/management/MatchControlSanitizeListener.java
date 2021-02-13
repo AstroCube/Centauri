@@ -92,6 +92,11 @@ public class MatchControlSanitizeListener implements Listener {
 
             });
 
+            System.out.println("Max capacity: " + runningMatchBalancer.getMaxCapacity());
+            System.out.println("Max simultaneous: " + runningMatchBalancer.getSimultaneousCapacity());
+            System.out.println("Needing restart: " + runningMatchBalancer.isNeedingRestart());
+            System.out.println("Has capacity: " + runningMatchBalancer.hasCapacity());
+
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);
