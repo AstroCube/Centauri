@@ -162,7 +162,7 @@ staff:
         reminder-click: "klik"
 
 commands:
-    unknown-player: "%%red%%No se encuentra el usuario solicitado"
+    unknown-player: "%%red%%No se encuentra el usuario solicitado o está desconectado."
     translation:
         argument:
             no-more: "asdsd"
@@ -204,6 +204,11 @@ punish:
             - "%%center%%%%yellow%%%%reason%%"
             - " "
             - "%%red%%-----------------------------------------------------"
+    freeze:
+        alert:
+            title: "%%aqua%%\u2744 %%red%%¡Congelado! %%aqua%%\u2744"
+            sub: "%%yellow%%No te desconectes hasta que termine la revisión."
+            text: "%%red%%%%bold%%ALERTA: %%red%%Un moderador te está realizando una revisión. Sigue atentamente sus instrucciones y evita desconectarte, de lo contrario el sistema te baneará automáticamente."
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."
