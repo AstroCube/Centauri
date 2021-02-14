@@ -15,6 +15,7 @@ import me.fixeddev.commandflow.translator.DefaultTranslator;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.*;
 import net.astrocube.commons.bukkit.command.flow.CoreCommandLanguageProvider;
+import net.astrocube.commons.bukkit.command.punishment.PunishmentCommand;
 import org.bukkit.plugin.Plugin;
 
 public class CommandLoader implements Loader {
@@ -33,6 +34,7 @@ public class CommandLoader implements Loader {
     private @Inject AdminCommand adminCommand;
     private @Inject FreezeCommand freezeCommand;
     private @Inject PartyCommand partyCommand;
+    private @Inject PunishmentCommand punishmentCommand;
 
     private @Inject TestCommand testCommand;
 
@@ -60,6 +62,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
         commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
         commandManager.registerCommands(treeBuilder.fromClass(partyCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(punishmentCommand));
 
         commandManager.registerCommands(treeBuilder.fromClass(testCommand));
 

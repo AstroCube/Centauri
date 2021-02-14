@@ -1,5 +1,7 @@
 package net.astrocube.api.core.punishment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
@@ -46,6 +48,12 @@ public interface PunishmentHandler {
         );
 
         return new DateTime(timeout);
+    }
+
+    static ObjectNode findByName(ObjectMapper mapper, String name) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("username", name);
+        return node;
     }
 
 }

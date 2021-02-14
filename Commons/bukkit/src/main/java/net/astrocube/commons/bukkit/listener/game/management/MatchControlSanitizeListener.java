@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.listener.game.management;
 
-import cloud.timo.TimoCloud.api.TimoCloudAPI;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -91,11 +90,6 @@ public class MatchControlSanitizeListener implements Listener {
                 }
 
             });
-
-            System.out.println("Max capacity: " + runningMatchBalancer.getMaxCapacity());
-            System.out.println("Max simultaneous: " + runningMatchBalancer.getSimultaneousCapacity());
-            System.out.println("Needing restart: " + runningMatchBalancer.isNeedingRestart());
-            System.out.println("Has capacity: " + runningMatchBalancer.hasCapacity());
 
 
         } catch (Exception e) {
