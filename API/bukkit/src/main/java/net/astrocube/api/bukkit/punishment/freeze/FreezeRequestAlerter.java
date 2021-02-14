@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 public interface FreezeRequestAlerter {
 
     /**
-     *
-     * @param player
+     * Alert player of freezing
+     * @param player to be alerted
      */
     void alert(Player player);
 
