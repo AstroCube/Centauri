@@ -205,6 +205,7 @@ punish:
             - " "
             - "%%red%%-----------------------------------------------------"
     freeze:
+        disconnect: "Desconectado durante revisión"
         alert:
             title: "%%aqua%%\u2744 %%red%%¡Congelado! %%aqua%%\u2744"
             sub: "%%yellow%%No te desconectes hasta que termine la revisión."

@@ -1,6 +1,10 @@
 package net.astrocube.commons.bukkit.listener.freeze;
 
+import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.core.punishment.PunishmentHandler;
+import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
+import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,26 +14,27 @@ import javax.inject.Inject;
 
 public class PlayerQuitListener implements Listener {
 
-    @Inject
-    private PunishmentHandler punishmentHandler;
+    private @Inject FrozenUserProvider frozenUserProvider;
+    private @Inject MessageHandler messageHandler;
+    private @Inject PunishmentHandler punishmentHandler;
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
 
-        Player player = event.getPlayer();
+        if (frozenUserProvider.isFrozen(event.getPlayer())) {
 
-        if (!player.hasMetadata("freeze")) {
-            return;
+            punishmentHandler.createPunishment(
+                    "",
+                    event.getPlayer().getDatabaseIdentifier(),
+                    messageHandler.get(event.getPlayer(), "punish.freeze.disconnect"),
+                    PunishmentDoc.Identity.Type.BAN,
+                    -1,
+                    true,
+                    false,
+                    (punishment, e) -> {}
+            );
+
         }
 
-        /*
-        CorePunishmentBuilder.newBuilder(
-                "server",
-                player,
-                PunishmentDoc.Identity.Type.BAN)
-                .setDuration(Long.MAX_VALUE)
-                .setReason("Disconnection while was freezed.")
-                .build(punishmentHandler, (punishmentIgnored) -> {});
-         */
     }
 }

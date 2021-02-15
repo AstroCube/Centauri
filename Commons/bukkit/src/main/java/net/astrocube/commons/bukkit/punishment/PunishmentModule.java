@@ -9,6 +9,7 @@ import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.player.ProxyKickRequest;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.virtual.punishment.Punishment;
+import net.astrocube.commons.bukkit.punishment.freeze.FreezeModule;
 import net.astrocube.commons.bukkit.punishment.lookup.CorePunishmentIconGenerator;
 import net.astrocube.commons.bukkit.punishment.lookup.CorePunishmentLookupMenu;
 
@@ -16,6 +17,8 @@ public class PunishmentModule extends ProtectedModule implements ChannelBinder {
 
     @Override
     public void configure() {
+
+        install(new FreezeModule());
 
         bind(PunishmentLookupMenu.class).to(CorePunishmentLookupMenu.class);
         bind(PunishmentIconGenerator.class).to(CorePunishmentIconGenerator.class);
