@@ -25,7 +25,7 @@ public class FreezeCommand implements CommandClass {
         }
 
         if (frozenUserProvider.isFrozen(target.getPlayer())) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "freeze.already-frozen");
+            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.already-frozen");
             return true;
         }
 
@@ -43,7 +43,7 @@ public class FreezeCommand implements CommandClass {
         }
 
         if (!frozenUserProvider.isFrozen(target.getPlayer())) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "freeze.not-frozen");
+            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.not-frozen");
             return true;
         }
 
