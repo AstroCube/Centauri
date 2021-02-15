@@ -10,4 +10,10 @@ public interface FreezeRequestAlerter {
      */
     void alert(Player player);
 
+    /**
+     * Alert player of unfreezing
+     * @param player to be alerted
+     */
+    void alertUnfreeze(Player player);
+
 }
