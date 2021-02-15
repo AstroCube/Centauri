@@ -30,8 +30,8 @@ public class FreezeCommand implements CommandClass {
             return true;
         }
 
-        frozenUserProvider.freeze(player);
-        freezeRequestAlerter.alert(player);
+        frozenUserProvider.freeze(target.getPlayer());
+        freezeRequestAlerter.alert(target.getPlayer());
 
         return true;
     }
@@ -44,8 +44,12 @@ public class FreezeCommand implements CommandClass {
             return true;
         }
 
-        frozenUserProvider.unFreeze(player);
-        freezeRequestAlerter.alertUnfreeze(player);
+        if (!frozenUserProvider.isFrozen(target.getPlayer())) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "freeze.not-frozen");
+        }
+
+        frozenUserProvider.unFreeze(target.getPlayer());
+        freezeRequestAlerter.alertUnfreeze(target.getPlayer());
 
         return true;
     }
