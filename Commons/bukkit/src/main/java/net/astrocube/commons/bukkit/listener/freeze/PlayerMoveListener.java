@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.listener.freeze;
 
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,17 @@ public class PlayerMoveListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
 
         if (frozenUserProvider.isFrozen(event.getPlayer())) {
-            event.setCancelled(true);
+
+            Location from = event.getFrom();
+            Location to = event.getTo();
+
+            if(from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ()){
+                to.setX(from.getBlockX() + .5);
+                to.setZ(from.getBlockZ() + .5);
+
+                event.setTo(to);
+            }
+
         }
 
     }
