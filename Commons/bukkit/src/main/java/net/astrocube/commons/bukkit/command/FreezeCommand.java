@@ -24,6 +24,11 @@ public class FreezeCommand implements CommandClass {
             return true;
         }
 
+        if (frozenUserProvider.isFrozen(target.getPlayer())) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "freeze.already-frozen");
+            return true;
+        }
+
         frozenUserProvider.freeze(target.getPlayer());
         freezeRequestAlerter.alert(target.getPlayer());
 
