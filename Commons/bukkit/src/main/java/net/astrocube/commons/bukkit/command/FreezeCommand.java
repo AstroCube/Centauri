@@ -8,13 +8,8 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
-import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.service.query.QueryService;
-import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class FreezeCommand implements CommandClass {
 
@@ -25,8 +20,7 @@ public class FreezeCommand implements CommandClass {
     @Command(names = "freeze", permission = "commons.staff.freeze")
     public boolean freezeCommand(@Sender Player player, OfflinePlayer target) {
 
-        if (target == null || !target.isOnline()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+        if (checkFreezingAvailability(player, target)) {
             return true;
         }
 
@@ -39,19 +33,34 @@ public class FreezeCommand implements CommandClass {
     @Command(names = "unfreeze", permission = "commons.staff.freeze")
     public boolean unFreezeCommand(@Sender Player player, OfflinePlayer target) {
 
-        if (target == null || !target.isOnline()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+        if (checkFreezingAvailability(player, target)) {
             return true;
         }
 
         if (!frozenUserProvider.isFrozen(target.getPlayer())) {
             messageHandler.sendIn(player, AlertModes.ERROR, "freeze.not-frozen");
+            return true;
         }
 
         frozenUserProvider.unFreeze(target.getPlayer());
         freezeRequestAlerter.alertUnfreeze(target.getPlayer());
 
         return true;
+    }
+
+    private boolean checkFreezingAvailability(@Sender Player player, OfflinePlayer target) {
+
+        if (target == null || !target.isOnline()) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+            return true;
+        }
+
+        if (player.getName().equalsIgnoreCase(target.getName())) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.same");
+            return true;
+        }
+
+        return false;
     }
 
 }
