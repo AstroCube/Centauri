@@ -207,6 +207,7 @@ punish:
     freeze:
         disconnect: "Desconectado durante revisión"
         already-frozen: "%%red%%El jugador ya se encuentra congelado."
+        exempt: "%%red%%No puedes congelar a este jugador."
         not-frozen: "%%red%%El jugador no se encuentra congelado."
         same: "%%red%%No te puedes congelar a ti mismo."
         unfreeze: "%%yellow%%Se te ha descongelado. Ahora puedes moverte con tranquilidad y desconectarte sin sufrir penalizaciones."

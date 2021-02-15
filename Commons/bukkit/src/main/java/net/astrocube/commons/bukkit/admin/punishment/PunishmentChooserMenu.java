@@ -104,7 +104,8 @@ public class PunishmentChooserMenu {
                                 .setLore(messageHandler.replacingMany(player, "punish-menu.items.freeze.lore", "%punished_name%", resumedName))
                                 .build())
                         .setAction(inventoryClickEvent -> {
-                            Bukkit.dispatchCommand(player, "freeze " + target.getUsername());
+                            player.performCommand("freeze " + target.getUsername());
+                            player.closeInventory();
                             return true;
                         })
                         .build()

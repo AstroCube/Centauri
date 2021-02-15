@@ -60,6 +60,11 @@ public class FreezeCommand implements CommandClass {
             return true;
         }
 
+        if (target.getPlayer().hasPermission("commons.staff.freeze.exempt")) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.exempt");
+            return true;
+        }
+
         if (player.getName().equalsIgnoreCase(target.getName())) {
             messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.same");
             return true;
