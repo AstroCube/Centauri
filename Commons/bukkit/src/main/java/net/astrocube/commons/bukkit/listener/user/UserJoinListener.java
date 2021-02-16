@@ -143,7 +143,7 @@ public class UserJoinListener implements Listener {
                 TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
 
                 player.setDisplayName(
-                        flairFormat.getColor() + flairFormat.getPrefix() +
+                        flairFormat.getPrefix() +
                                 " " + ChatColor.WHITE + flairFormat.getName());
 
             } catch (Exception exception) {
