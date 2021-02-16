@@ -40,7 +40,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
 
                                     player.sendMessage(
-                                            messageHandler.get(player, "channel.admin.prefix") +
+                                            messageHandler.get(player, "channel.admin.prefix") + " " +
                                                     prefix + ChatColor.WHITE + ": " +
                                                     this.formatMessage(message.getMessage(), mentions)
                                     );
@@ -53,7 +53,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
                                 } else if (important) {
                                     player.sendMessage(
-                                            messageHandler.get(player, "channel.admin.important") +
+                                            messageHandler.get(player, "channel.admin.important")  + " " +
                                                     prefix + ChatColor.WHITE + ": " +
                                                     this.formatMessage(message.getMessage(), mentions)
                                     );
@@ -67,8 +67,13 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
     }
 
     private String formatMessage(String message, List<String> mentions) {
-        for (String user: mentions)
-            message = message.replace("@" + user, ChatColor.YELLOW + "@" + user + ChatColor.WHITE);
+
+        String formatted = message;
+
+        for (String user: mentions) {
+            formatted = formatted.replace("@" + user, ChatColor.YELLOW + "@" + user + ChatColor.WHITE);
+        }
+
         return message;
     }
 }
