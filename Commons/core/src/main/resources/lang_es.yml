@@ -448,6 +448,12 @@ menus:
         actual: "%%blue%%Página actual (%%white%%%%page%%%%blue%%)"
         next: "%%blue%%Página siguiente (%%white%%%%page%%%%blue%%) %%gold%%\u00BB"
     back: "%%red%%\u00AB Volver"
+
+channel:
+    admin:
+        error: "%%red%%Ha ocurrido un error al enviar un mensaje al canal de staff."
+        prefix: "%%aqua%%[STAFF]"
+        important: "%%red%%[IMPORTANT]"
 admin-panel:
     main:
         title: "AstroCube Admin Panel"

@@ -35,38 +35,45 @@ public class AdminChatCommand implements CommandClass {
             return true;
         }
 
-        this.findService.find(player.getDatabaseIdentifier())
-                .callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
-                        user -> {
-                            if (important && !player.hasPermission("commons.staff.chat.important")) {
-                                this.messageHandler.sendIn(player, AlertModes.ERROR, "staff.chat.permission");
-                                return;
-                            }
+        this.findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
 
-                            if (!user.getSettings().getAdminChatSettings().isActive()) {
-                                TextComponent disabledComponent = TextComponent.builder()
-                                        .content(this.messageHandler.get(player, "staff.chat.disabled" + ". "))
-                                        .color(TextColor.RED)
-                                        .build();
+            if (!userResponse.isSuccessful()) {
+                messageHandler.sendIn(player, AlertModes.ERROR, "channel.admin.error");
+            }
 
-                                TextComponent hoverComponent = TextComponent.builder()
-                                        .content(this.messageHandler.get(player, "staff.chat.reminder-click"))
-                                        .color(TextColor.YELLOW)
-                                        .clickEvent(ClickEvent.runCommand("/acs"))
-                                        .hoverEvent(
-                                                HoverEvent.showText(TextComponent.of(this.messageHandler.get(player, "staff.chat.reminder-click"))
-                                                        .color(TextColor.YELLOW)
-                                                )
-                                        )
-                                        .build();
+            userResponse.ifSuccessful(user -> {
 
-                                player.sendMessage(MessageUtils.kyoriToBungee(disabledComponent.append(hoverComponent)));
-                                return;
-                            }
+                if (important && !player.hasPermission("commons.staff.chat.important")) {
+                    this.messageHandler.sendIn(player, AlertModes.ERROR, "staff.chat.permission");
+                    return;
+                }
 
-                            this.messageManager.sendMessage(message, user, important);
-                        }
-                ));
+                if (!user.getSettings().getAdminChatSettings().isActive()) {
+                    TextComponent disabledComponent = TextComponent.builder()
+                            .content(this.messageHandler.get(player, "staff.chat.disabled" + ". "))
+                            .color(TextColor.RED)
+                            .build();
+
+                    TextComponent hoverComponent = TextComponent.builder()
+                            .content(this.messageHandler.get(player, "staff.chat.reminder-click"))
+                            .color(TextColor.YELLOW)
+                            .clickEvent(ClickEvent.runCommand("/acs"))
+                            .hoverEvent(
+                                    HoverEvent.showText(TextComponent.of(this.messageHandler.get(player, "staff.chat.reminder-click"))
+                                            .color(TextColor.YELLOW)
+                                    )
+                            )
+                            .build();
+
+                    player.sendMessage(MessageUtils.kyoriToBungee(disabledComponent.append(hoverComponent)));
+                    return;
+                }
+
+                this.messageManager.sendMessage(message, user, important);
+
+            });
+
+        });
 
         return true;
     }

@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.channel.admin;
 
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.channel.admin.StaffMessageDelivery;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
@@ -18,6 +19,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
     private @Inject FindService<User> findService;
     private @Inject DisplayMatcher displayMatcher;
+    private @Inject MessageHandler messageHandler;
 
     @Override
     public void deliver(ChatChannelMessage message) {
@@ -32,13 +34,13 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
                         if (player.hasPermission("commons.staff.chat")) {
                             this.findService.find(player.getDatabaseIdentifier()).callback(response -> response.ifSuccessful(onlineUser -> {
 
-                                String prefix = displayMatcher.getDisplay(player, sender).getPrefix();
+                                String prefix = displayMatcher.getDisplay(player, sender).getPrefix() + ChatColor.RESET + " " + onlineUser.getDisplay();
 
                                 if (onlineUser.getSettings().getAdminChatSettings().isActive() && !important) {
 
 
                                     player.sendMessage(
-                                            ChatColor.AQUA + "[STAFF] " +
+                                            messageHandler.get(player, "channel.admin.prefix") +
                                                     prefix + ChatColor.WHITE + ": " +
                                                     this.formatMessage(message.getMessage(), mentions)
                                     );
@@ -48,9 +50,10 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
                                             player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
                                         }
                                     });
+
                                 } else if (important) {
                                     player.sendMessage(
-                                            ChatColor.RED + "[STAFF] " +
+                                            messageHandler.get(player, "channel.admin.important") +
                                                     prefix + ChatColor.WHITE + ": " +
                                                     this.formatMessage(message.getMessage(), mentions)
                                     );
