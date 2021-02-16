@@ -8,6 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -18,7 +19,14 @@ public class FreezeCommand implements CommandClass {
     private @Inject FreezeRequestAlerter freezeRequestAlerter;
 
     @Command(names = "freeze", permission = "commons.staff.freeze")
-    public boolean freezeCommand(@Sender Player player, OfflinePlayer target) {
+    public boolean freezeCommand(@Sender Player player, String targetName) {
+
+        Player target = Bukkit.getPlayer(targetName);
+
+        if (target == null) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+            return true;
+        }
 
         if (checkFreezingAvailability(player, target)) {
             return true;
@@ -36,7 +44,14 @@ public class FreezeCommand implements CommandClass {
     }
 
     @Command(names = "unfreeze", permission = "commons.staff.freeze")
-    public boolean unFreezeCommand(@Sender Player player, OfflinePlayer target) {
+    public boolean unFreezeCommand(@Sender Player player, String targetName) {
+
+        Player target = Bukkit.getPlayer(targetName);
+
+        if (target == null) {
+            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+            return true;
+        }
 
         if (checkFreezingAvailability(player, target)) {
             return true;
@@ -53,12 +68,7 @@ public class FreezeCommand implements CommandClass {
         return true;
     }
 
-    private boolean checkFreezingAvailability(@Sender Player player, OfflinePlayer target) {
-
-        if (target == null || !target.isOnline()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
-            return true;
-        }
+    private boolean checkFreezingAvailability(@Sender Player player, Player target) {
 
         if (target.getPlayer().hasPermission("commons.staff.freeze.exempt")) {
             messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.exempt");

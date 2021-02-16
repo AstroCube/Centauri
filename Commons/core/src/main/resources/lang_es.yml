@@ -454,6 +454,8 @@ channel:
         error: "%%red%%Ha ocurrido un error al enviar un mensaje al canal de staff."
         prefix: "%%aqua%%[STAFF]"
         important: "%%red%%[IMPORTANT]"
+        settings:
+            title: "Opciones del chat staff"
 admin-panel:
     main:
         title: "AstroCube Admin Panel"
