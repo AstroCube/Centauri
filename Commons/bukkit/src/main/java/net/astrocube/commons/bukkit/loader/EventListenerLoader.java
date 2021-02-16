@@ -101,6 +101,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(matchStartListener);
         registerEvent(matchFinishListener);
         registerEvent(matchmakingErrorListener);
+        registerEvent(userChatListener);
 
         registerEvent(spectatorAssignListener);
         registerEvent(playerDamageListener);
