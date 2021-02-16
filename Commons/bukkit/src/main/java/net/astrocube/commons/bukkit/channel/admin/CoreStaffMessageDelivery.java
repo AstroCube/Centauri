@@ -34,7 +34,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
                         if (player.hasPermission("commons.staff.chat")) {
                             this.findService.find(player.getDatabaseIdentifier()).callback(response -> response.ifSuccessful(onlineUser -> {
 
-                                String prefix = displayMatcher.getDisplay(player, sender).getPrefix() + ChatColor.RESET + " " + onlineUser.getDisplay();
+                                String prefix = displayMatcher.getDisplay(player, sender).getPrefix() + ChatColor.RESET + " " + sender.getDisplay();
 
                                 if (onlineUser.getSettings().getAdminChatSettings().isActive() && !important) {
 
