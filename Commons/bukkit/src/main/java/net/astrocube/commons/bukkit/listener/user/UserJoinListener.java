@@ -5,6 +5,8 @@ import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
+import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.permission.PermissionBalancer;
@@ -36,6 +38,7 @@ public class UserJoinListener implements Listener {
 
     private @Inject UserMatchJoiner userMatchJoiner;
     private @Inject FindService<User> userFindService;
+    private @Inject DisplayMatcher displayMatcher;
 
     private @Inject InstanceNameProvider instanceNameProvider;
     private @Inject CrossTeleportExchanger crossTeleportExchanger;
@@ -136,6 +139,12 @@ public class UserJoinListener implements Listener {
                 }
 
                 tablistCompoundApplier.apply(player);
+
+                TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
+
+                player.setDisplayName(
+                        flairFormat.getColor() + flairFormat.getPrefix() +
+                                " " + ChatColor.WHITE + flairFormat.getName());
 
             } catch (Exception exception) {
 

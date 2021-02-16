@@ -36,8 +36,8 @@ public class UserChatListener implements Listener {
                 TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
 
                 player.sendMessage(
-                        format.getPrefix() + " " +
-                           user.getDisplay() + ChatColor.RESET + ": " +
+                        format.getColor() + format.getPrefix() + " " +
+                           ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
                            event.getMessage()
                 );
 
