@@ -20,10 +20,7 @@ import net.astrocube.commons.bukkit.listener.game.spectator.PlayerDamageListener
 import net.astrocube.commons.bukkit.listener.game.spectator.SpectatorAssignListener;
 import net.astrocube.commons.bukkit.listener.inventory.PlayerHotbarClickListener;
 import net.astrocube.commons.bukkit.listener.punishment.PunishmentIssueActionsListener;
-import net.astrocube.commons.bukkit.listener.user.UserDisconnectListener;
-import net.astrocube.commons.bukkit.listener.user.UserJoinListener;
-import net.astrocube.commons.bukkit.listener.user.UserLoginListener;
-import net.astrocube.commons.bukkit.listener.user.UserPreLoginListener;
+import net.astrocube.commons.bukkit.listener.user.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.core.GUIListeners;
@@ -43,6 +40,7 @@ public class EventListenerLoader implements Loader {
     private @Inject UserLoginListener userLoginListener;
     private @Inject UserJoinListener userJoinListener;
     private @Inject UserDisconnectListener userDisconnectListener;
+    private @Inject UserChatListener userChatListener;
 
     private @Inject GameModePairListener gameModePairListener;
     private @Inject GameTimerOutListener gameTimerOutListener;
