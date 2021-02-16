@@ -21,6 +21,8 @@ public class UserChatListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
 
+        event.setCancelled(true);
+
         findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
 
             if (!userCallback.isSuccessful()) {
@@ -45,7 +47,6 @@ public class UserChatListener implements Listener {
 
         });
 
-        event.setCancelled(true);
     }
 
 }
