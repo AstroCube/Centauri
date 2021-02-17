@@ -54,7 +54,7 @@ public class StaffSessionCompound implements StaffOptionCompound {
     public AsyncResponse<User> updateOption(User user) {
 
         user.getSettings().getAdminChatSettings().setReadingLogs(
-                !user.getSettings().getAdminChatSettings().isReadingPunishments()
+                !user.getSettings().getAdminChatSettings().isReadingLogs()
         );
 
         return updateService.update(user);

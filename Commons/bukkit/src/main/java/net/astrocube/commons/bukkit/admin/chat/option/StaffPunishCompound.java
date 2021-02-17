@@ -53,7 +53,7 @@ public class StaffPunishCompound implements StaffOptionCompound {
     @Override
     public AsyncResponse<User> updateOption(User user) {
 
-        user.getSettings().getAdminChatSettings().setReadingLogs(
+        user.getSettings().getAdminChatSettings().setReadingPunishments(
                 !user.getSettings().getAdminChatSettings().isReadingPunishments()
         );
 

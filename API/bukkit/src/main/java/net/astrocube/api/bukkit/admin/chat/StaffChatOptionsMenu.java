@@ -10,6 +10,6 @@ public interface StaffChatOptionsMenu {
      * @param player where information will be taken
      * @return inventory loading the menu
      */
-    Inventory generateMenu(Player player);
+    void generateMenu(Player player);
 
 }

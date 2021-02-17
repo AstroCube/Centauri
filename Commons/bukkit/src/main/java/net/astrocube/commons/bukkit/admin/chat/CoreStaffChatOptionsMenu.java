@@ -14,6 +14,7 @@ import net.astrocube.commons.bukkit.admin.chat.option.StaffSessionCompound;
 import net.astrocube.commons.bukkit.menu.GenericHeadHelper;
 import net.astrocube.commons.bukkit.menu.MenuUtils;
 import org.bukkit.Sound;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
@@ -34,11 +35,7 @@ public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
 
 
     @Override
-    public Inventory generateMenu(Player player) {
-
-        GUIBuilder builder = GUIBuilder.builder(
-            messageHandler.get(player, "channel.admin.settings.title")
-        );
+    public void generateMenu(Player player) {
 
         findService.find(player.getDatabaseIdentifier()).callback(userCallback -> {
 
@@ -47,16 +44,24 @@ public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
             }
 
             userCallback.ifSuccessful(user -> {
+
+                GUIBuilder builder = GUIBuilder.builder(
+                        messageHandler.get(player, "channel.admin.settings.title")
+                );
+
                 builder.addItem(generateClickable(staffChatCompound, player, user, 21, user.getSettings().getAdminChatSettings().isActive()));
                 builder.addItem(generateClickable(staffPunishCompound, player, user, 22, user.getSettings().getAdminChatSettings().isReadingPunishments()));
                 builder.addItem(generateClickable(staffSessionCompound, player, user, 23, user.getSettings().getAdminChatSettings().isReadingLogs()));
+                builder.addItem(
+                        headHelper.generateDefaultClickable(headHelper.backButton(player), 31, ClickType.LEFT, HumanEntity::closeInventory)
+                );
+
+                MenuUtils.generateFrame(builder);
+                player.openInventory(builder.build());
             });
 
         });
 
-        MenuUtils.generateFrame(builder);
-
-        return builder.build();
     }
 
     private ItemClickable generateClickable(StaffOptionCompound compound, Player player, User user, int slot, boolean active) {
@@ -76,7 +81,8 @@ public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
 
                     updatedUserCallback.ifSuccessful(updatedUser -> {
                         p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
-                        p.openInventory(generateMenu(p));
+                        player.closeInventory();
+                        generateMenu(p);
                     });
 
                 })
