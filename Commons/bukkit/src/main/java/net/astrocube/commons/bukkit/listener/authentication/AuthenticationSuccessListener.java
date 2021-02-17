@@ -4,10 +4,14 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
+import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
+import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.session.SessionSwitchWrapper;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.event.EventHandler;
@@ -15,6 +19,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
 import java.util.logging.Level;
 
 public class AuthenticationSuccessListener implements Listener {
@@ -26,6 +31,12 @@ public class AuthenticationSuccessListener implements Listener {
     private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject AuthenticationRadio authenticationRadio;
     private @Inject Plugin plugin;
+    private final Channel<SessionSwitchWrapper> channel;
+
+    @Inject
+    public AuthenticationSuccessListener(Messenger messenger) {
+        channel = messenger.getChannel(SessionSwitchWrapper.class);
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
@@ -49,6 +60,18 @@ public class AuthenticationSuccessListener implements Listener {
             } else {
                 throw new AuthorizeException("Unable to get available register server.");
             }
+
+            channel.sendMessage(new SessionSwitchWrapper() {
+                @Override
+                public User getUser() {
+                    return user;
+                }
+
+                @Override
+                public boolean isConnecting() {
+                    return true;
+                }
+            }, new HashMap<>());
 
         } catch (Exception exception) {
             plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
