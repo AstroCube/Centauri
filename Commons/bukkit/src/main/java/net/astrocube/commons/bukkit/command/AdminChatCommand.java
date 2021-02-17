@@ -28,7 +28,7 @@ public class AdminChatCommand implements CommandClass {
 
     @Command(names = {"acs"}, permission = "commons.staff.chat")
     public boolean onSettingsCommand(@Sender Player player) {
-        staffChatOptionsMenu.generateMenu(player);
+        player.openInventory(staffChatOptionsMenu.generateMenu(player));
         return true;
     }
 
