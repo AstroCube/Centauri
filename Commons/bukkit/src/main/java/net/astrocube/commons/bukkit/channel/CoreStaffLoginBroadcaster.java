@@ -26,7 +26,7 @@ public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
                         userCallback.ifSuccessful(user -> {
 
                             String prefix = displayMatcher.getDisplay(player, session).getPrefix()
-                                    + ChatColor.WHITE + " " + user.getDisplay();
+                                    + ChatColor.WHITE + " " + session.getDisplay();
 
                             if (user.getSettings().getAdminChatSettings().isReadingLogs()) {
 
