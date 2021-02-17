@@ -4,6 +4,7 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.*;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.admin.chat.StaffChatOptionsMenu;
 import net.astrocube.api.bukkit.channel.admin.StaffMessageManager;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
@@ -23,6 +24,13 @@ public class AdminChatCommand implements CommandClass {
     private @Inject FindService<User> findService;
     private @Inject MessageHandler messageHandler;
     private @Inject StaffMessageManager messageManager;
+    private @Inject StaffChatOptionsMenu staffChatOptionsMenu;
+
+    @Command(names = {"acs"}, permission = "commons.staff.chat")
+    public boolean onSettingsCommand(@Sender Player player) {
+        staffChatOptionsMenu.generateMenu(player);
+        return true;
+    }
 
     @Command(names = {"adminchat", "ac", "staffchat", "sc"}, permission = "commons.staff.chat")
     public boolean onCommand(

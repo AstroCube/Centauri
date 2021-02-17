@@ -456,6 +456,59 @@ channel:
         important: "%%red%%[IMPORTANT]"
         settings:
             title: "Opciones del chat staff"
+            error: "%%red%%Ha ocurrido un error al abrir las opciones del chat."
+            error-update: "%%red%%Ha ocurrido un error al actualizar las opciones del chat."
+            chat:
+                enabled:
+                    title: "%%blue%%Estado del chat: %%green%%ACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Recibe todos los mensajes del chat del"
+                        - "%%gray%%equipo incluyendo los importantes."
+                        - " "
+                        - "%%aqua%%¡Click para desactivar!"
+                disabled:
+                    title: "%%blue%%Estado del chat: %%red%%DESACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Inactivos todos los mensajes del chat del"
+                        - "%%gray%%equipo menos los importantes."
+                        - " "
+                        - "%%aqua%%¡Click para activar!"
+            punish:
+                enabled:
+                    title: "%%blue%%Alertas de sanción: %%green%%ACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Recibe todas las alertas de sanciones"
+                        - "%%gray%%hechas en el servidor."
+                        - " "
+                        - "%%aqua%%¡Click para desactivar!"
+                disabled:
+                    title: "%%blue%%Alertas de sanción: %%red%%DESACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Bloquea todas las alertas de sanciones"
+                        - "%%gray%%hechas en el servidor."
+                        - " "
+                        - "%%aqua%%¡Click para activar!"
+            logs:
+                enabled:
+                    title: "%%blue%%Alertas de sesión: %%green%%ACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Recibe todas las alertas de quién"
+                        - "%%gray%%entra y sale del servidor."
+                        - " "
+                        - "%%aqua%%¡Click para desactivar!"
+                disabled:
+                    title: "%%blue%%Alertas de sesión: %%red%%DESACTIVADO"
+                    lore:
+                        - " "
+                        - "%%gray%%Bloquea todas las alertas de quién"
+                        - "%%gray%%entra y sale del servidor."
+                        - " "
+                        - "%%aqua%%¡Click para activar!"
 admin-panel:
     main:
         title: "AstroCube Admin Panel"

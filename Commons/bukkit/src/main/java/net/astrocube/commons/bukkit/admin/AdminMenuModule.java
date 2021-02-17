@@ -2,6 +2,8 @@ package net.astrocube.commons.bukkit.admin;
 
 import com.google.inject.Scopes;
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.api.bukkit.admin.chat.StaffChatOptionsMenu;
+import net.astrocube.commons.bukkit.admin.chat.CoreStaffChatOptionsMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentExpirationChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentReasonChooserMenu;
@@ -28,6 +30,7 @@ public class AdminMenuModule extends ProtectedModule {
         bind(AdminSubGameModeSelectorMenu.class).in(Scopes.SINGLETON);
         bind(GameModeItemExtractor.class).to(CoreGameModeItemExtractor.class).in(Scopes.SINGLETON);
         bind(DependentAction.class).to(SimpleDependentAction.class).in(Scopes.SINGLETON);
+        bind(StaffChatOptionsMenu.class).to(CoreStaffChatOptionsMenu.class);
     }
     
 }

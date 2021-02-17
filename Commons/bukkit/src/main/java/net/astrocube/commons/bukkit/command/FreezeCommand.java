@@ -52,6 +52,7 @@ public class FreezeCommand implements CommandClass {
             messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
             return true;
         }
+        
 
         if (checkFreezingAvailability(player, target)) {
             return true;
