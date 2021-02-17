@@ -40,14 +40,14 @@ public class PunishmentStaffChatListener implements Listener {
                 punishedResponse.ifSuccessful(punished ->
                         Bukkit.getOnlinePlayers().forEach(player -> {
 
-                            if (player.hasPermission("commons.staff.chat")) {
+                            if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
 
                                 findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
 
                                     String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
                                             + issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 
-                                    String punishedPrefix = matcher.getDisplay(player, punished).getColor() + " " +
+                                    String punishedPrefix = matcher.getDisplay(player, punished).getColor() +
                                             punished.getDisplay();
 
                                     playerResponse.ifSuccessful(user -> {

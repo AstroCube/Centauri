@@ -501,7 +501,7 @@ channel:
                     title: "%%blue%%Alertas de sesión: %%green%%ACTIVADO"
                     lore:
                         - " "
-                        - "%%gray%%Recibe todas las alertas de quién"
+                        - "%%gray%%Recibe todas las alertas de que staff"
                         - "%%gray%%entra y sale del servidor."
                         - " "
                         - "%%aqua%%¡Click para desactivar!"
@@ -509,7 +509,7 @@ channel:
                     title: "%%blue%%Alertas de sesión: %%red%%DESACTIVADO"
                     lore:
                         - " "
-                        - "%%gray%%Bloquea todas las alertas de quién"
+                        - "%%gray%%Bloquea todas las alertas de que staff"
                         - "%%gray%%entra y sale del servidor."
                         - " "
                         - "%%aqua%%¡Click para activar!"
