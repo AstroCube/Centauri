@@ -32,7 +32,7 @@ public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
 
                                 messageHandler.sendReplacing(
                                         player, connecting ? "channel.admin.login" : "channel.admin.logout",
-                                        "%%prefix%%", messageHandler.get(player, important ? "channel.admin.importante" : "channel.admin.prefix"),
+                                        "%%prefix%%", messageHandler.get(player, important ? "channel.admin.important" : "channel.admin.prefix"),
                                         "%%player%%", prefix
                                 );
 
