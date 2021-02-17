@@ -44,10 +44,11 @@ public class PunishmentStaffChatListener implements Listener {
 
                                 findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
 
-                                    String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getPrefix()
-                                            + ChatColor.WHITE + " " + issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
+                                    String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
+                                            + issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 
-                                    String punishedPrefix = matcher.getDisplay(player, punished).getPrefix() + ChatColor.WHITE + " " + punished.getDisplay();
+                                    String punishedPrefix = matcher.getDisplay(player, punished).getColor() + " " +
+                                            punished.getDisplay();
 
                                     playerResponse.ifSuccessful(user -> {
 
@@ -56,6 +57,7 @@ public class PunishmentStaffChatListener implements Listener {
                                             messageHandler.sendReplacing(
                                                     player, "channel.admin.punish",
                                                     "%%prefix%%", messageHandler.get(player, "channel.admin.prefix"),
+                                                    "%%type%%", messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()),
                                                     "%%issuer%%", issuerPrefix,
                                                     "%%punished%%", punishedPrefix
                                             );
