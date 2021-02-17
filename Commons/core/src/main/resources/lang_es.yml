@@ -456,6 +456,8 @@ channel:
         important: "%%red%%[STAFF]"
         login: "%%prefix%% %%player%% %%yellow%%ha ingresado al servidor."
         logout: "%%prefix%% %%player%% %%yellow%%ha salido del servidor."
+        punish: "%%prefix%% %%issuer%% %%gray%%\u00BB %%type%% %%gray%%\u00BB %%punished%%"
+        auto: "%%yellow%%Auto"
         settings:
             title: "Opciones del chat staff"
             error: "%%red%%Ha ocurrido un error al abrir las opciones del chat."
