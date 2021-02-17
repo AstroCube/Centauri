@@ -8,6 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -33,13 +34,19 @@ public class FreezeCommand implements CommandClass {
         }
 
         if (frozenUserProvider.isFrozen(target.getPlayer())) {
-            frozenUserProvider.freeze(target.getPlayer());
-            freezeRequestAlerter.alert(target.getPlayer());
-            messageHandler.sendIn(player, AlertModes.MUTED, "punish.freeze.feedback.freeze");
-        } else {
             frozenUserProvider.unFreeze(target.getPlayer());
             freezeRequestAlerter.alertUnfreeze(target.getPlayer());
-            messageHandler.sendIn(player, AlertModes.MUTED, "punish.freeze.feedback.unfreeze");
+            messageHandler.sendReplacingIn(
+                    player, AlertModes.MUTED, "punish.freeze.feedback.unfreeze",
+                    "%%target%%", target.getName()
+            );
+        } else {
+            frozenUserProvider.freeze(target.getPlayer());
+            freezeRequestAlerter.alert(target.getPlayer());
+            messageHandler.sendReplacingIn(
+                    player, AlertModes.MUTED, "punish.freeze.feedback.freeze",
+                    "%%target%%", target.getName()
+            );
         }
 
         return true;
