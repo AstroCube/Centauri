@@ -47,7 +47,7 @@ public class GenericHeadHelper {
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta.setOwner(user.getUsername());
         meta.setLore(lore);
-        meta.setDisplayName(displayMatcher.getDisplay(player, user) + user.getDisplay());
+        meta.setDisplayName(displayMatcher.getDisplay(player, user).getPrefix() + ChatColor.WHITE + " " + user.getDisplay());
         skull.setItemMeta(meta);
         return skull;
     }
