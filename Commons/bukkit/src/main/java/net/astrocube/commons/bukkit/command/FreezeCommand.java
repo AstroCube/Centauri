@@ -33,38 +33,14 @@ public class FreezeCommand implements CommandClass {
         }
 
         if (frozenUserProvider.isFrozen(target.getPlayer())) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.already-frozen");
-            return true;
+            frozenUserProvider.freeze(target.getPlayer());
+            freezeRequestAlerter.alert(target.getPlayer());
+            messageHandler.sendIn(player, AlertModes.MUTED, "punish.freeze.feedback.freeze");
+        } else {
+            frozenUserProvider.unFreeze(target.getPlayer());
+            freezeRequestAlerter.alertUnfreeze(target.getPlayer());
+            messageHandler.sendIn(player, AlertModes.MUTED, "punish.freeze.feedback.unfreeze");
         }
-
-        frozenUserProvider.freeze(target.getPlayer());
-        freezeRequestAlerter.alert(target.getPlayer());
-
-        return true;
-    }
-
-    @Command(names = "unfreeze", permission = "commons.staff.freeze")
-    public boolean unFreezeCommand(@Sender Player player, String targetName) {
-
-        Player target = Bukkit.getPlayer(targetName);
-
-        if (target == null) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
-            return true;
-        }
-        
-
-        if (checkFreezingAvailability(player, target)) {
-            return true;
-        }
-
-        if (!frozenUserProvider.isFrozen(target.getPlayer())) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "punish.freeze.not-frozen");
-            return true;
-        }
-
-        frozenUserProvider.unFreeze(target.getPlayer());
-        freezeRequestAlerter.alertUnfreeze(target.getPlayer());
 
         return true;
     }

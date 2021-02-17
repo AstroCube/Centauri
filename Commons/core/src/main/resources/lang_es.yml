@@ -210,6 +210,9 @@ punish:
         exempt: "%%red%%No puedes congelar a este jugador."
         not-frozen: "%%red%%El jugador no se encuentra congelado."
         same: "%%red%%No te puedes congelar a ti mismo."
+        feedback:
+            freeze: "%%gray%%Congelaste a %%target%%, si se desconecta durante la revisión recibirá una suspensión permanente."
+            unfreeze: "%%gray%%Descongelaste a %%target%%. Ahora podrá moverse normalmente en el mundo."
         unfreeze: "%%yellow%%Se te ha descongelado. Ahora puedes moverte con tranquilidad y desconectarte sin sufrir penalizaciones."
         alert:
             title: "%%aqua%%\u2744 %%red%%¡Congelado! %%aqua%%\u2744"

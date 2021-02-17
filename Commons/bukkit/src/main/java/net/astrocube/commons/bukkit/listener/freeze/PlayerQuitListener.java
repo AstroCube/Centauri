@@ -23,6 +23,8 @@ public class PlayerQuitListener implements Listener {
 
         if (frozenUserProvider.isFrozen(event.getPlayer())) {
 
+            frozenUserProvider.unFreeze(event.getPlayer());
+
             punishmentHandler.createPunishment(
                     "",
                     event.getPlayer().getDatabaseIdentifier(),
