@@ -5,6 +5,7 @@ import net.astrocube.commons.bungee.cloud.CloudModule;
 import net.astrocube.commons.bungee.configuration.ConfigurationModule;
 import net.astrocube.commons.bungee.player.PlayerModule;
 import net.astrocube.commons.bungee.server.ServerModule;
+import net.astrocube.commons.bungee.user.UserModule;
 import net.astrocube.commons.core.CommonsModule;
 import net.astrocube.commons.core.virtual.VirtualModule;
 
@@ -19,6 +20,7 @@ public class InjectionModule extends ProtectedModule {
         install(new VirtualModule());
         install(new LoaderModule());
         install(new ServerModule());
+        install(new UserModule());
     }
 
 }
