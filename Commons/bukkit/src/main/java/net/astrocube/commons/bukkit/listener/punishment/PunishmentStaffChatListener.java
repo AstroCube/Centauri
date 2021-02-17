@@ -36,7 +36,7 @@ public class PunishmentStaffChatListener implements Listener {
     }
 
     private void executeFixedPunishment(Punishment punishment, User issuer) {
-        findService.find(punishment.getReason()).callback(punishedResponse ->
+        findService.find(punishment.getPunished()).callback(punishedResponse ->
                 punishedResponse.ifSuccessful(punished ->
                         Bukkit.getOnlinePlayers().forEach(player -> {
 
