@@ -112,7 +112,8 @@ public class CoreMatchAssigner implements MatchAssigner {
 
     }
 
-    private void setRecord(String id, String matchId, String server) throws Exception {
+    @Override
+    public void setRecord(String id, String matchId, String server) throws Exception {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.set("matchAssign:" + id, matchId);
             jedis.expire("matchAssign:" + id, 30);

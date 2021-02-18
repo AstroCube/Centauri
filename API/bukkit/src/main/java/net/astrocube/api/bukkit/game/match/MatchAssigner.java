@@ -20,4 +20,6 @@ public interface MatchAssigner {
 
     void unAssign(Player player) throws Exception;
 
+    void setRecord(String id, String matchId, String server) throws Exception;
+
 }

@@ -122,6 +122,10 @@ game:
         error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
         already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
     spectator:
+        request:
+            voided: "%%red%%No se ha encontrado una partida con los criterios solicitados."
+            success: "%%gray%%Te estamos redireccionando como espectador a la partida, espera un momento..."
+            error: "%%red%%Ha ocurrido un error al asignarte como espectador a una partida."
         return:
             title: "%%blue%%%%bold%%Volver a la central%%gray%% (Click derecho)"
             lore:
