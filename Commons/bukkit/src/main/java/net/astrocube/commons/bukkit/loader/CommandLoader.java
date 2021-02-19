@@ -31,6 +31,7 @@ public class CommandLoader implements Loader {
     private @Inject PlayCommand playCommand;
     private @Inject PunishCommand punishCommand;
     private @Inject PlayerLookCommand playerLookCommand;
+    private @Inject GoToCommand goToCommand;
     private @Inject AdminCommand adminCommand;
     private @Inject FreezeCommand freezeCommand;
     private @Inject PartyCommand partyCommand;
@@ -61,6 +62,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
         commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
         commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(goToCommand));
         commandManager.registerCommands(treeBuilder.fromClass(partyCommand));
         commandManager.registerCommands(treeBuilder.fromClass(punishmentCommand));
 

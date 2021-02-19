@@ -41,6 +41,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 
                 if (!matchResponse.isSuccessful()) {
                     Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
+                    return;
                 }
 
                 matchResponse.ifSuccessful(response -> {

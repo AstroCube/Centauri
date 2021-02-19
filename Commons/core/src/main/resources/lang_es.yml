@@ -148,7 +148,8 @@ game:
         invalidate: "%%red%%La partida se ha invalidado automáticamante debido a un error del sistema."
         invalidate-forced: "%%aqua%%La partida ha sido invalidada por un administrador. Se te ha forzado el modo espectador, tienes 2 minutos para salir de la partida, de lo contrario se te expulsará del serivdor automáticamente."
         invalidate-not-stared: "%%red%%Debes esperar a que la partida inicie para poder invalidarla."
-
+goto:
+    error: "%%red%%Ha ocurrido un error al teletransportarse hacia el usuario."
 interaction:
     actionable-error: "%%red%%Ha ocurrido un error al ejecutar esta acción."
 tablist:
