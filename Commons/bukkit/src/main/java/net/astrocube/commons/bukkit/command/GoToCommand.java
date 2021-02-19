@@ -63,7 +63,8 @@ public class GoToCommand implements CommandClass {
                         if (matchOptional.isPresent()) {
                             spectateRequestAssigner.assignRequest(
                                     matchOptional.get().getId(),
-                                    player.getDatabaseIdentifier()
+                                    player.getDatabaseIdentifier(),
+                                    user.getId()
                             );
                             return;
                         }

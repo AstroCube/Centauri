@@ -16,7 +16,8 @@ public interface SpectateRequestAssigner {
      *Generates a request assignation for an specific match
      * @param match to spectate
      * @param requester of spectate
+     * @param target of spectate
      */
-    void assignRequest(String match, String requester);
+    void assignRequestToPlayer(String match, String requester, String target);
 
 }

@@ -63,14 +63,14 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
     }
 
     @Override
-    public void assignRequest(String match, String requester) {
+    public void assignRequestToPlayer(String match, String requester, String target) {
 
         Player player = Bukkit.getPlayerByIdentifier(requester);
 
         if (player != null) {
             try {
 
-                Optional<Match> optionalMatch = actualMatchCache.get(requester);
+                Optional<Match> optionalMatch = actualMatchCache.get(target);
 
                 if (!optionalMatch.isPresent()) {
                     Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.VOIDED));
