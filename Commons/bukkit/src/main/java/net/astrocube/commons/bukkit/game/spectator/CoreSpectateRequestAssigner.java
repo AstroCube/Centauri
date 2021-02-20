@@ -77,7 +77,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
                     return;
                 }
 
-                optionalMatch.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getId()));
+                optionalMatch.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getServer()));
 
             } catch (Exception e) {
                 Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
