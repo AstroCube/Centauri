@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.game.match.control;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.game.channel.MatchChannelProvider;
 import net.astrocube.api.bukkit.game.event.match.MatchScheduleEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
@@ -23,6 +24,7 @@ public class CoreMatchScheduler implements MatchScheduler {
     private @Inject ServerService serverService;
     private @Inject Plugin plugin;
     private @Inject MatchAssigner matchAssigner;
+    private @Inject MatchChannelProvider matchChannelProvider;
     private @Inject CreateService<Match, MatchDoc.Partial> createService;
 
     @Override
@@ -66,6 +68,7 @@ public class CoreMatchScheduler implements MatchScheduler {
         };
 
         Match created = createService.createSync(match);
+        matchChannelProvider.createChannel(created.getId());
 
         plugin.getLogger().info("Scheduled new match with ID " + created.getId());
 

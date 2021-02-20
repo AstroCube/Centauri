@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.game.match.control.PendingMatchFinder;
 import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.bukkit.game.scheduler.RunningMatchBalancer;
 import net.astrocube.api.core.message.ChannelBinder;
+import net.astrocube.commons.bukkit.game.channel.GameChannelModule;
 import net.astrocube.commons.bukkit.game.match.MatchModule;
 import net.astrocube.commons.bukkit.game.match.control.CorePendingMatchFinder;
 import net.astrocube.commons.bukkit.game.matchmaking.MatchmakingModule;
@@ -20,6 +21,7 @@ public class GameModule extends ProtectedModule implements ChannelBinder {
         install(new MatchmakingModule());
         install(new SpectatorModule());
         install(new MatchModule());
+        install(new GameChannelModule());
         bindChannel(MatchmakingError.class).registerHandler(new MatchmakingErrorHandler());
         bind(GameControlPair.class).to(CoreGameControlPair.class);
         bind(PendingMatchFinder.class).to(CorePendingMatchFinder.class);

@@ -52,6 +52,7 @@ public class MatchControlSanitizeListener implements Listener {
                         if (runningMatchBalancer.hasCapacity()) {
                             try {
                                 matchmakingScheduler.schedule(pending);
+                                // TODO: Invalidate if created
                             } catch (Exception e) {
                                 plugin.getLogger().log(Level.WARNING, "Can not assign a match", e);
                                 try {
