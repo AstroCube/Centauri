@@ -9,6 +9,7 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.commons.bukkit.channel.admin.StaffChatMessageInterceptor;
+import net.astrocube.commons.bukkit.game.channel.MatchChannelInterceptor;
 
 import javax.inject.Inject;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ public class ChannelLoader implements Loader {
 
     private @Inject InterceptorRegistry interceptorRegistry;
     private @Inject StaffChatMessageInterceptor staffMessageInterceptor;
+    private @Inject MatchChannelInterceptor matchChannelInterceptor;
 
     private @Inject ObjectMapper mapper;
     private @Inject QueryService<ChatChannel> channelQueryService;
@@ -67,5 +69,6 @@ public class ChannelLoader implements Loader {
         }
 
         this.interceptorRegistry.register(this.staffMessageInterceptor);
+        this.interceptorRegistry.register(this.matchChannelInterceptor);
     }
 }
