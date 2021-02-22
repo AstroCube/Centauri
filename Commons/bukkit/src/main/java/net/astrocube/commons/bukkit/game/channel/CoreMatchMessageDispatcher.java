@@ -31,7 +31,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
                     String origin = (String) channelMessage.getMeta().get("origin");
 
-                    if (origin.equalsIgnoreCase("spectator")) {
+                    if (origin.equalsIgnoreCase("spectating")) {
                         dispatchSpectator(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage());
                     }
 
