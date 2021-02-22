@@ -57,7 +57,7 @@ public class CoreMatchChannelProvider implements MatchChannelProvider {
             @Nullable
             @Override
             public String getPermission() {
-                return null;
+                return "";
             }
         });
 
