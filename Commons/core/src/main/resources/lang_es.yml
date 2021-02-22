@@ -123,6 +123,7 @@ game:
         already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
     spectator:
         chat: "%%gray%%[ESPECTADOR] %%player%%%%gray%%: %%message%%"
+        error: "%%red%%No se ha podido enviar el mensaje. Inténtalo de nuevo."
         request:
             voided: "%%red%%No se ha encontrado una partida con los criterios solicitados."
             success: "%%gray%%Te estamos redireccionando como espectador a la partida, espera un momento..."
