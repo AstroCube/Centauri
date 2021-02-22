@@ -35,6 +35,7 @@ public class UserChatListener implements Listener {
         try {
             if (serverService.getActual().getServerType().equals(ServerDoc.Type.GAME)) {
                 matchMessageBroadcaster.sendMessage(event.getMessage(), event.getPlayer());
+                return;
             }
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual server mode. Cancelling chat.", e);

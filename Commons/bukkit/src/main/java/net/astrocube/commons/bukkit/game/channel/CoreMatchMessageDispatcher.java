@@ -32,7 +32,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                     String origin = (String) channelMessage.getMeta().get("origin");
 
                     if (origin.equalsIgnoreCase("spectator")) {
-                        dispatchSpectator(matchRecord.getSpectators(), channelMessage.getMessage());
+                        dispatchSpectator(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage());
                     }
 
                 })
@@ -40,19 +40,19 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
     }
 
-    private void dispatchSpectator(Set<String> spectators, String message) {
+    private void dispatchSpectator(Set<String> spectators, String senderId, String message) {
 
-        spectators.forEach(spectator -> {
+        userFindService.find(senderId).callback(userResponse -> {
 
-            Player player = Bukkit.getPlayerByIdentifier(spectator);
+            Player sender = Bukkit.getPlayerByIdentifier(senderId);
 
-            if (player != null) {
+            if (sender != null) {
 
-                userFindService.find(spectator).callback(userResponse -> {
+                spectators.forEach(spectator -> {
 
-                    Player sender = Bukkit.getPlayerByIdentifier(spectator);
+                    Player player = Bukkit.getPlayerByIdentifier(spectator);
 
-                    if (sender != null) {
+                    if (player != null) {
 
                         String prefix = sender.getDisguisedName();
 
