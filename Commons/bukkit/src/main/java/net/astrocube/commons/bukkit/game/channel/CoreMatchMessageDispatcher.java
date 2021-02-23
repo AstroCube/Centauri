@@ -11,6 +11,7 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -58,7 +59,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
                         if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
                             TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, userResponse.getResponse().get());
-                            prefix = flairFormat.getColor() + flairFormat.getPrefix() + " " + userResponse.getResponse().get().getDisplay();
+                            prefix = flairFormat.getColor() + flairFormat.getPrefix() + " " + ChatColor.WHITE + userResponse.getResponse().get().getDisplay();
                         }
 
                         messageHandler.sendReplacing(
