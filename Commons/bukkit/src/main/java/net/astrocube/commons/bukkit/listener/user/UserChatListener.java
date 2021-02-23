@@ -22,49 +22,42 @@ import java.util.logging.Level;
 public class UserChatListener implements Listener {
 
     private @Inject DisplayMatcher displayMatcher;
-    private @Inject ServerService serverService;
     private @Inject FindService<User> findService;
-    private @Inject MatchMessageBroadcaster matchMessageBroadcaster;
-    private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
 
-        event.setCancelled(true);
+        if (!event.isCancelled()) {
+            findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
 
-        try {
-            if (serverService.getActual().getServerType().equals(ServerDoc.Type.GAME)) {
-                matchMessageBroadcaster.sendMessage(event.getMessage(), event.getPlayer());
-                return;
-            }
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual server mode. Cancelling chat.", e);
-            return;
-        }
+                if (!userCallback.isSuccessful()) {
+                    Bukkit.getOnlinePlayers().forEach(player ->
+                            player.sendMessage(
+                                    event.getPlayer().getDisplayName() + ChatColor.RESET +
+                                            ": " + event.getMessage())
+                    );
+                }
 
-        findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
+                userCallback.ifSuccessful(user -> {
 
-            if (!userCallback.isSuccessful()) {
-                Bukkit.getOnlinePlayers().forEach(player ->
+                    Bukkit.getOnlinePlayers().forEach(player ->  {
+
+                        TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
+
                         player.sendMessage(
-                                event.getPlayer().getDisplayName() + ChatColor.RESET +
-                                        ": " + event.getMessage())
-                );
-            }
+                                format.getPrefix() + " " +
+                                        ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
+                                        event.getMessage()
+                        );
 
-            userCallback.ifSuccessful(user -> Bukkit.getOnlinePlayers().forEach(player ->  {
+                    });
 
-                TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
+                    event.setCancelled(true);
 
-                player.sendMessage(
-                        format.getPrefix() + " " +
-                           ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
-                           event.getMessage()
-                );
+                });
 
-            }));
-
-        });
+            });
+        }
 
     }
 
