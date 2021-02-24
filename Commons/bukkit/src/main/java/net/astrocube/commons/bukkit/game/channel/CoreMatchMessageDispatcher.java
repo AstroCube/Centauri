@@ -8,13 +8,17 @@ import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Singleton
 public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
@@ -33,7 +37,35 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                     String origin = (String) channelMessage.getMeta().get("origin");
 
                     if (origin.equalsIgnoreCase("spectating")) {
-                        dispatchSpectator(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage());
+                        dispatch(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage(), "game.spectator.chat");
+                    }
+
+                    if (origin.equalsIgnoreCase("playing")) {
+
+                        Set<String> users = new HashSet<>();
+
+                        if (matchRecord.getTeams().stream().anyMatch(t -> t.getMembers().size() != 1)) {
+
+                            matchRecord.getTeams().stream()
+                                    .filter(t -> t.getMembers().stream().anyMatch(
+                                            m -> m.getUser().equalsIgnoreCase(channelMessage.getSender()))
+                                    )
+                                    .findAny()
+                                    .ifPresent(t -> t.getMembers().forEach(m -> users.add(m.getUser())));
+
+                        } else {
+                            matchRecord.getTeams().stream().flatMap(
+                                    team -> team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+                            ).forEach(users::add);
+                        }
+
+                        dispatch(
+                                users,
+                                channelMessage.getSender(),
+                                channelMessage.getMessage(),
+                                "game.chat"
+                        );
+
                     }
 
                 })
@@ -41,7 +73,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
     }
 
-    private void dispatchSpectator(Set<String> spectators, String senderId, String message) {
+    private void dispatch(Set<String> listeners, String senderId, String message, String translation) {
 
         userFindService.find(senderId).callback(userResponse -> {
 
@@ -49,7 +81,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
             if (sender != null) {
 
-                spectators.forEach(spectator -> {
+                listeners.forEach(spectator -> {
 
                     Player player = Bukkit.getPlayerByIdentifier(spectator);
 
@@ -64,7 +96,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
                         messageHandler.sendReplacing(
                                 player,
-                                "game.spectator.chat",
+                                translation,
                                 "%%player%%", prefix,
                                 "%%message%%", message
                         );
@@ -78,5 +110,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
         });
 
     }
+
+
 
 }
