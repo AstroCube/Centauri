@@ -15,10 +15,12 @@ import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -28,6 +30,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
     private @Inject FindService<User> userFindService;
     private @Inject DisplayMatcher displayMatcher;
     private @Inject MessageHandler messageHandler;
+    private @Inject Plugin plugin;
 
     @Override
     public void dispatch(ChatChannelMessage channelMessage, String match) {
@@ -39,9 +42,6 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
                     if (origin.equalsIgnoreCase("spectating")) {
 
-                        Set<String> users = new HashSet<>();
-                        matchRecord.getSpectators();
-
                         if (channelMessage.getMeta().containsKey("shout") && channelMessage.getMeta().containsKey("all")) {
                             dispatch(
                                     MatchParticipantsProvider.getInvolvedIds(matchRecord),
@@ -52,7 +52,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                             return;
                         }
 
-                        dispatch(users, channelMessage.getSender(), channelMessage.getMessage(), "game.spectator.chat");
+                        dispatch(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage(), "game.spectator.chat");
 
                     }
 
@@ -127,6 +127,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                             prefix = flairFormat.getColor() + flairFormat.getPrefix() + " " + ChatColor.WHITE + userResponse.getResponse().get().getDisplay();
                         }
 
+                        plugin.getLogger().log(Level.INFO, "{1}: {2}", new String[]{player.getName(), message});
                         messageHandler.sendReplacing(
                                 player,
                                 translation,

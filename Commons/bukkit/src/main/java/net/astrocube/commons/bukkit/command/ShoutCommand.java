@@ -10,6 +10,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.channel.MatchMessageBroadcaster;
 import net.astrocube.api.bukkit.game.channel.MatchShoutoutCooldown;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import org.bukkit.entity.Player;
@@ -37,7 +38,9 @@ public class ShoutCommand implements CommandClass {
                 return true;
             }
 
-            if (global && !player.hasPermission("commands.staff.shout")) {
+            boolean spectating = UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), matchOptional.get()) == UserMatchJoiner.Origin.SPECTATING;
+
+            if ((global || spectating) && !player.hasPermission("commands.staff.shout")) {
                 messageHandler.sendIn(player, AlertModes.ERROR, "commands.command.no-permission");
                 return true;
             }
@@ -48,7 +51,7 @@ public class ShoutCommand implements CommandClass {
                 return true;
             }
 
-            if (matchOptional.get().getTeams().stream().anyMatch(t -> t.getMembers().size() > 1)) {
+            if (matchOptional.get().getTeams().stream().noneMatch(t -> t.getMembers().size() > 1)) {
                 messageHandler.sendIn(player, AlertModes.ERROR, "game.shout-solo");
                 return true;
             }
