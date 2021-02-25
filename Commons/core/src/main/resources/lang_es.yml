@@ -117,6 +117,7 @@ game:
     countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
     chat: "%%player%%%%white%%: %%message%%"
     shout: "%%gold%%[G] %%player%%%%white%%: %%message%%"
+    shout-cooldown: "Debes esperar un minuto desde tu último mensaje para usar el comando."
     rejoin:
         not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
     matchmaking:
@@ -174,15 +175,15 @@ commands:
     unknown-player: "%%red%%No se encuentra el usuario solicitado o está desconectado."
     translation:
         argument:
-            no-more: "asdsd"
+            no-more: "%%red%%Uso correcto:"
         command:
-            subcommand-invalid: "asd"
-            no-permission: "asdasd"
+            subcommand-invalid: "%%red%%Ejecutaste inválidamente este comando."
+            no-permission: "%%red%%No tienes permisos para realizar esta acción"
         sender:
-            unknown: "asdasd"
-            only-player: "asd"
+            unknown: "Unknown sender"
+            only-player: "Solo puede realizar esto un jugador"
         player:
-            offline: "asd"
+            offline: "%%red%%El jugador que solicitaste se encuentra desconectado."
 punish:
     error: "%%red%%Ha ocurrido un error al crear la sanción, inténtalo de nuevo o contacta con un administrador."
     lower: "%%red%%No peudes sancionar a alguien con permisos mayores a ti."
