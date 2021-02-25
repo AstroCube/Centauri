@@ -126,7 +126,7 @@ game:
         error: "%%red%%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
         already: "%%red%%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
     spectator:
-        chat: "%%prefix%% %%gray%%[ESPECTADOR] %%player%%%%gray%%: %%message%%"
+        chat: "%%gray%%[ESPECTADOR] %%player%%%%gray%%: %%message%%"
         error: "%%red%%No se ha podido enviar el mensaje. Inténtalo de nuevo."
         request:
             voided: "%%red%%No se ha encontrado una partida con los criterios solicitados."

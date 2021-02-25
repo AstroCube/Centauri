@@ -51,7 +51,7 @@ public class ShoutCommand implements CommandClass {
                 return true;
             }
 
-            if (matchOptional.get().getTeams().stream().noneMatch(t -> t.getMembers().size() > 1)) {
+            if ((!spectating && !global) && matchOptional.get().getTeams().stream().noneMatch(t -> t.getMembers().size() > 1)) {
                 messageHandler.sendIn(player, AlertModes.ERROR, "game.shout-solo");
                 return true;
             }
