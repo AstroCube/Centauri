@@ -31,6 +31,11 @@ public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
 
     @Override
     public void sendMessage(String message, Player player) throws Exception {
+        sendMessage(message, player, false, false);
+    }
+
+    @Override
+    public void sendMessage(String message, Player player, boolean shout, boolean all) throws Exception {
 
         Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
@@ -78,6 +83,16 @@ public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
                 Map<String, Object> meta = new HashMap<>();
 
                 meta.put("origin", origin);
+
+                if (shout) {
+
+                    meta.put("shout", true);
+
+                    if (all) {
+                        meta.put("all", true);
+                    }
+
+                }
 
                 return meta;
             }

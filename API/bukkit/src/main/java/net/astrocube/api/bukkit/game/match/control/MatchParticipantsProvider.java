@@ -40,6 +40,12 @@ public interface MatchParticipantsProvider {
         return players;
     }
 
+    static Set<String> getInvolvedIds(Match match) {
+        Set<String> players = getOnlineIds(match);
+        players.addAll(match.getSpectators());
+        return players;
+    }
+
     static Set<Player> getSpectatingPlayers(Match match) {
         return getPlayers(match.getSpectators().stream());
     }
@@ -52,6 +58,16 @@ public interface MatchParticipantsProvider {
                                 .map(MatchDoc.TeamMember::getUser)
                 )
         );
+    }
+
+    static Set<String> getOnlineIds(Match match) {
+        return match
+                .getTeams()
+                .stream()
+                .flatMap(teams ->
+                        teams.getMembers().stream()
+                                .map(MatchDoc.TeamMember::getUser))
+                .collect(Collectors.toSet());
     }
 
     static Set<Player> getPlayers(Stream<String> ids) {

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.channel.MatchMessageDispatcher;
+import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
@@ -37,14 +38,48 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                     String origin = (String) channelMessage.getMeta().get("origin");
 
                     if (origin.equalsIgnoreCase("spectating")) {
-                        dispatch(matchRecord.getSpectators(), channelMessage.getSender(), channelMessage.getMessage(), "game.spectator.chat");
+
+                        Set<String> users = new HashSet<>();
+                        matchRecord.getSpectators();
+
+                        if (channelMessage.getMeta().containsKey("shout") && channelMessage.getMeta().containsKey("all")) {
+                            dispatch(
+                                    MatchParticipantsProvider.getInvolvedIds(matchRecord),
+                                    channelMessage.getSender(),
+                                    channelMessage.getMessage(),
+                                    "game.shout"
+                            );
+                            return;
+                        }
+
+                        dispatch(users, channelMessage.getSender(), channelMessage.getMessage(), "game.spectator.chat");
+
                     }
 
                     if (origin.equalsIgnoreCase("playing")) {
 
                         Set<String> users = new HashSet<>();
 
-                        if (matchRecord.getTeams().stream().anyMatch(t -> t.getMembers().size() != 1)) {
+                        if (channelMessage.getMeta().containsKey("shout")) {
+
+                            users.addAll(MatchParticipantsProvider.getOnlineIds(matchRecord));
+
+                            if (channelMessage.getMeta().containsKey("all")) {
+                                users.addAll(MatchParticipantsProvider.getInvolvedIds(matchRecord));
+                            }
+
+                            dispatch(
+                                    users,
+                                    channelMessage.getSender(),
+                                    channelMessage.getMessage(),
+                                    "game.shout"
+                            );
+
+                            return;
+
+                        }
+
+                        if (matchRecord.getTeams().stream().anyMatch(t -> t.getMembers().size() > 1)) {
 
                             matchRecord.getTeams().stream()
                                     .filter(t -> t.getMembers().stream().anyMatch(
@@ -54,9 +89,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                                     .ifPresent(t -> t.getMembers().forEach(m -> users.add(m.getUser())));
 
                         } else {
-                            matchRecord.getTeams().stream().flatMap(
-                                    team -> team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                            ).forEach(users::add);
+                            users.addAll(MatchParticipantsProvider.getOnlineIds(matchRecord));
                         }
 
                         dispatch(
