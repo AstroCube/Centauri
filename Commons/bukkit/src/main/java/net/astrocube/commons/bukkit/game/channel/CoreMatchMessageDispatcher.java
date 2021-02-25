@@ -127,7 +127,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                             prefix = flairFormat.getColor() + flairFormat.getPrefix() + " " + ChatColor.WHITE + userResponse.getResponse().get().getDisplay();
                         }
 
-                        plugin.getLogger().log(Level.INFO, "{1}: {2}", new String[]{player.getName(), message});
+                        plugin.getLogger().log(Level.INFO, "{0}: {1}", new String[]{player.getName(), message});
                         messageHandler.sendReplacing(
                                 player,
                                 translation,
