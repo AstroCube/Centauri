@@ -117,7 +117,8 @@ game:
     countdown: "%%yellow%%¡La partida empezará en %%color%%%%seconds%% %%yellow%%segundo(s)!"
     chat: "%%player%%%%white%%: %%message%%"
     shout: "%%gold%%[G] %%player%%%%white%%: %%message%%"
-    shout-cooldown: "Debes esperar un minuto desde tu último mensaje para usar el comando."
+    shout-cooldown: "%%red%%Debes esperar un minuto desde tu último mensaje para usar el comando."
+    shout-solo: "%%red%%No puedes utilizar este comando en una partida en solitario."
     rejoin:
         not-active: "%%red%%Tu partida no ha empezado para poder re-ingresar."
     matchmaking:

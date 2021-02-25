@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.Flag;
+import me.fixeddev.commandflow.annotated.annotation.Switch;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.channel.MatchMessageBroadcaster;
@@ -26,7 +27,7 @@ public class ShoutCommand implements CommandClass {
     private @Inject Plugin plugin;
 
     @Command(names = {"shout"})
-    public boolean onShoutCommand(@Sender Player player, String message, @Flag(value = "g") boolean global) {
+    public boolean onShoutCommand(@Sender Player player, String message, @Switch("g") boolean global) {
 
         try {
             Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
@@ -44,6 +45,11 @@ public class ShoutCommand implements CommandClass {
             if (!global && !player.hasPermission("commands.staff.shout") &&
                     matchShoutoutCooldown.hasCooldown(player.getDatabaseIdentifier())) {
                 messageHandler.sendIn(player, AlertModes.ERROR, "game.shout-cooldown");
+                return true;
+            }
+
+            if (matchOptional.get().getTeams().stream().anyMatch(t -> t.getMembers().size() > 1)) {
+                messageHandler.sendIn(player, AlertModes.ERROR, "game.shout-solo");
                 return true;
             }
 
