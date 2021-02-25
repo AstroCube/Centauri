@@ -29,7 +29,7 @@ public class ShoutCommand implements CommandClass {
     private @Inject Plugin plugin;
 
     @Command(names = {"shout"})
-    public boolean onShoutCommand(@Sender Player player, @Flag("g") boolean global, @Text String message) {
+    public boolean onShoutCommand(@Sender Player player, @Switch("g") boolean global, @Text String message) {
 
         try {
             Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
