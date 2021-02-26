@@ -22,8 +22,7 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
     public void clearLegitMatches(String id) throws Exception {
 
         actualMatchProvider.getRegisteredMatches(id)
-                .stream()
-                .filter(match -> {
+                .forEach(match -> {
                     try {
 
                         Server server = findService.findSync(match.getServer());
@@ -33,13 +32,8 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
                             matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
                         }
 
-                        return available;
-
-                    } catch (Exception e) {
-                        return true;
-                    }
-                })
-                .findAny();
+                    } catch (Exception ignore) {}
+                });
     }
 
 }
