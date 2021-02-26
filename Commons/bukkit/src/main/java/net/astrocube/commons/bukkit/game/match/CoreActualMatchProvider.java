@@ -11,6 +11,7 @@ import net.astrocube.api.core.service.query.QueryService;
 
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.Set;
 
 @Singleton
 public class CoreActualMatchProvider implements ActualMatchProvider {
@@ -20,8 +21,12 @@ public class CoreActualMatchProvider implements ActualMatchProvider {
 
     @Override
     public Optional<Match> provide(String id) throws Exception {
+        return getRegisteredMatches(id).stream().max(Comparator.comparing(Model.Stamped::getCreatedAt));
+    }
 
-        //TODO: Do this in a better way may maybe
+    @Override
+    public Set<Match> getRegisteredMatches(String id) throws Exception {
+
         ObjectNode query = (ObjectNode) objectMapper.readTree("{\n" +
                 "\"$or\": [" +
                 "{\"spectators\": \"" + id + "\"}," +
@@ -35,8 +40,7 @@ public class CoreActualMatchProvider implements ActualMatchProvider {
                 "}");
 
         return findService.querySync(query)
-                .getFoundModels()
-                .stream().max(Comparator.comparing(Model.Stamped::getCreatedAt));
+                .getFoundModels();
     }
 
 }

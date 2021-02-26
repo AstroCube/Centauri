@@ -7,6 +7,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -25,6 +26,7 @@ public class PlayCommand implements CommandClass {
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject MessageHandler messageHandler;
     private @Inject @Named("core") MatchmakingGenerator matchmakingGenerator;
+    private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
     private @Inject Plugin plugin;
 
     @Command(names = {"play"})
@@ -58,7 +60,10 @@ public class PlayCommand implements CommandClass {
                 return;
             }
 
+
             try {
+
+                matchAvailabilityChecker.clearLegitMatches(player.getDatabaseIdentifier());
 
                 Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 

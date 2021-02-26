@@ -21,6 +21,11 @@ public class DummyCloudInstanceProvider implements CloudInstanceProvider {
         return instances;
     }
 
+    @Override
+    public boolean isAvailable(String slug) {
+        return false;
+    }
+
     private Instance generateTestLobbies(int connected, int max, int pos, boolean same) {
         return new Instance() {
             @Override

@@ -6,6 +6,8 @@ public interface CloudInstanceProvider {
 
     Set<CloudInstanceProvider.Instance> getGroupInstances(String name);
 
+    boolean isAvailable(String slug);
+
     interface Instance {
 
         /**

@@ -30,6 +30,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
         bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
         bind(LobbySessionModifier.class).to(CoreLobbySessionModifier.class);
         bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
+        bind(MatchAvailabilityChecker.class).to(CoreMatchAvailabilityChecker.class);
         bind(MatchService.class).to(CoreMatchService.class);
         bind(TeamBalancer.class).to(CoreTeamBalancer.class);
 
