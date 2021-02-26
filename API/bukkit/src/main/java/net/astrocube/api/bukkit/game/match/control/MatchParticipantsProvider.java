@@ -70,6 +70,17 @@ public interface MatchParticipantsProvider {
                 .collect(Collectors.toSet());
     }
 
+    static Set<String> getWaitingIds(Match match) {
+        return match
+                .getPending()
+                .stream()
+                .flatMap(pending -> {
+                    Set<String> delay = pending.getInvolved();
+                    delay.add(pending.getResponsible());
+                    return delay.stream();
+                }).collect(Collectors.toSet());
+    }
+
     static Set<Player> getPlayers(Stream<String> ids) {
         return ids.map(Bukkit::getPlayerByIdentifier)
                 .filter(Objects::nonNull)

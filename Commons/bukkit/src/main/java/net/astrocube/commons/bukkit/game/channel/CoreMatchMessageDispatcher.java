@@ -9,7 +9,6 @@ import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -18,10 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 @Singleton
 public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
@@ -39,6 +36,15 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                 matchRequest.ifSuccessful(matchRecord -> {
 
                     String origin = (String) channelMessage.getMeta().get("origin");
+
+                    if (origin.equalsIgnoreCase("waiting")) {
+                        dispatch(
+                                MatchParticipantsProvider.getWaitingIds(matchRecord),
+                                channelMessage.getSender(),
+                                channelMessage.getMessage(),
+                                "game.chat"
+                        );
+                    }
 
                     if (origin.equalsIgnoreCase("spectating")) {
 
