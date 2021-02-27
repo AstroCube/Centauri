@@ -38,7 +38,7 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
 
                         System.out.println(exception.getClass());
 
-                        if (exception instanceof HttpResponseException) {
+                        if (exception.getClass() == HttpResponseException.class) {
 
                             HttpResponseException responseException = (HttpResponseException) exception;
 
