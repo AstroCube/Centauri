@@ -36,9 +36,13 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
 
                     } catch (Exception exception) {
 
+                        System.out.println(exception instanceof HttpResponseException);
+
                         if (exception instanceof HttpResponseException) {
 
                             HttpResponseException responseException = (HttpResponseException) exception;
+
+                            System.out.println(responseException.getStatusCode());
 
                             if (responseException.getStatusCode() == 404) {
                                 try {
