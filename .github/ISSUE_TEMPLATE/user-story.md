@@ -2,7 +2,7 @@
 name: User Story
 about: Describe some user feature as the final user can see it.
 title: As a <user type>, I want <a goal> so that <benefit>
-labels: User Story
+labels: ''
 assignees: ''
 
 ---
@@ -14,6 +14,3 @@ assignees: ''
 
 
 ** Definition of done **
-
-
-** Business Value**
