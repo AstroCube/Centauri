@@ -29,13 +29,12 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
                         Server server = findService.findSync(match.getServer());
                         boolean available = cloudInstanceProvider.isAvailable(server.getSlug());
 
-                        System.out.println(server.getSlug() + ": " + cloudInstanceProvider.isAvailable(server.getSlug()));
-
                         if (!available) {
                             matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
                         }
 
                     } catch (NotFound notFound) {
+                        System.out.println(notFound.getClass().getName());
                         try {
                             matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
                         } catch (Exception ignore) {}
