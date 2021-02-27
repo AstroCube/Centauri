@@ -6,6 +6,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
+import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -28,6 +29,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
     private @Inject FindService<User> userFindService;
     private @Inject CountdownScheduler countdownScheduler;
     private @Inject LobbySessionModifier lobbySessionModifier;
+    private @Inject LobbyItemProvider lobbyItemProvider;
     private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
@@ -57,6 +59,8 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                 if (waitingIds.size() >= subMode.get().getMinPlayers()) {
                     countdownScheduler.scheduleMatchCountdown(match);
                 }
+
+                lobbyItemProvider.provide(player, 8);
 
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
