@@ -69,6 +69,7 @@ public class PlayCommand implements CommandClass {
 
                 if (match.isPresent()) {
                     messageHandler.sendIn(player, AlertModes.ERROR,"game.matchmaking.already");
+                    return;
                 }
 
                 matchmakingGenerator.pairMatch(player, foundMode.get(), foundSubMode.get());
