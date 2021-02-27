@@ -7,10 +7,12 @@ assignees: ''
 
 ---
 
-** User Story **
+**User Story**
 
 
-** Acceptance Criteria **
+**Acceptance Criteria**
 
 
-** Definition of done **
+**Definition of done**
+
+**Business value**

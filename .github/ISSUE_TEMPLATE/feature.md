@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-** Describe the feature as same as described at epic **
+**Describe the feature as same as described at epic**
 
 
-** List tasks **
+** ist tasks**
 
 - Task #1
 - Task #2
