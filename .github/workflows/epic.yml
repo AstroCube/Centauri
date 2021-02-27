@@ -11,5 +11,5 @@ jobs:
         uses: cloudaper/epics-action@v1
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
-          epic-label-name: epic
+          epic-label-name: User Story
           auto-close-epic: true
