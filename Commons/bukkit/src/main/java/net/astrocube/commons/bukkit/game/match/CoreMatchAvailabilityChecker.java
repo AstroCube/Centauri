@@ -10,6 +10,7 @@ import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import net.astrocube.api.core.http.exception.NotFound;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.server.Server;
+import org.apache.http.client.HttpResponseException;
 
 @Singleton
 public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
@@ -33,13 +34,20 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
                             matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
                         }
 
-                    } catch (NotFound notFound) {
-                        System.out.println(notFound.getClass().getName());
-                        try {
-                            matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
-                        } catch (Exception ignore) {}
-                    } catch (Exception ignore) {
-                        return;
+                    } catch (Exception exception) {
+
+                        if (exception instanceof HttpResponseException) {
+
+                            HttpResponseException responseException = (HttpResponseException) exception;
+
+                            if (responseException.getStatusCode() == 404) {
+                                try {
+                                    matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
+                                } catch (Exception ignore) {}
+                            }
+
+                        }
+
                     }
 
 
