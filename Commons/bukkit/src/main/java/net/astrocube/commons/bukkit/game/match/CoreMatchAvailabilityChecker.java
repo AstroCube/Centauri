@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.match.MatchStateUpdater;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
+import net.astrocube.api.core.http.exception.NotFound;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.server.Server;
 
@@ -34,7 +35,15 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
                             matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
                         }
 
-                    } catch (Exception ignore) {}
+                    } catch (NotFound notFound) {
+                        try {
+                            matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
+                        } catch (Exception ignore) {}
+                    } catch (Exception ignore) {
+                        return;
+                    }
+
+
                 });
     }
 
