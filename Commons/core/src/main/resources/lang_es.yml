@@ -111,6 +111,9 @@ game:
     play:
         error: "%%red%%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
         unknown: "%%green%%Para jugar, ingresa a una partida desde el %%aqua%%Selector de Juegos%%green%%."
+    return:
+        schedule: "%%aqua%%%%bold%%Serás redireccionado al lobby en 5 segundos... Presiona de nuevo para cancelar."
+        cancel: "%%red%%%%bold%%Petición de redireccionamiento cancelada."
     lobby-join: "%%yellow%%¡%%player%% %%yellow%%ha ingresado a la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     lobby-leave: "%%yellow%%¡%%player%% %%yellow%%ha salido de la partida (%%aqua%%%%actual%%%%yellow%%/%%aqua%%%%max%%%%yellow%%)!"
     lobby-error: "%%red%%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
