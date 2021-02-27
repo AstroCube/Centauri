@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.game.match;
 
+import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.match.ActualMatchProvider;
@@ -10,7 +11,6 @@ import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import net.astrocube.api.core.http.exception.NotFound;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.server.Server;
-import org.apache.http.client.HttpResponseException;
 
 @Singleton
 public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
@@ -36,9 +36,9 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
 
                     } catch (Exception exception) {
 
-                        System.out.println(exception.getClass() == HttpResponseException.class);
+                        System.out.println(exception instanceof HttpResponseException);
 
-                        if (exception.getClass() == HttpResponseException.class) {
+                        if (exception instanceof HttpResponseException) {
 
                             HttpResponseException responseException = (HttpResponseException) exception;
 
