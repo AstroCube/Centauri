@@ -35,8 +35,8 @@ public class CoreLobbyItemProvider implements LobbyItemProvider {
         ItemStack stack = NBTUtils.addString(new ItemStack(Material.MAGMA_CREAM, 1), "actionable", "gc_admin_lobby");
         ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "game.admin.item.title"));
-        meta.setLore(messageHandler.getMany(player, "game.admin.item.lore"));
+        meta.setDisplayName(messageHandler.get(player, "game.admin.lobby.item.title"));
+        meta.setLore(messageHandler.getMany(player, "game.admin.lobby.item.lore"));
 
         stack.setItemMeta(meta);
 
