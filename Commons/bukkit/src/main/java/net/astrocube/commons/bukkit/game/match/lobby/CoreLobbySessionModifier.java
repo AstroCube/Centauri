@@ -18,7 +18,6 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
     private @Inject MessageHandler messageHandler;
-    private @Inject LobbyItemProvider lobbyItemProvider;
 
     @Override
     public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
@@ -47,8 +46,6 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
                 player.hidePlayer(online);
             }
         });
-
-        lobbyItemProvider.provideBackButton(player, 8);
 
     }
 

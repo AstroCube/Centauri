@@ -63,7 +63,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                 lobbyItemProvider.provideBackButton(player, 8);
 
                 if (player.hasPermission("commons.game.admin")) {
-                    lobbyItemProvider.provideBackButton(player, 8);
+                    lobbyItemProvider.provideAdminButton(player, 7);
                 }
 
 
