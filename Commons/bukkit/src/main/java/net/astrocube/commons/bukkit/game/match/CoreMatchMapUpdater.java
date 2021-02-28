@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 public class CoreMatchMapUpdater implements MatchMapUpdater {
 
     private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<Match, MatchDoc.Complete> updateService;
+    private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
     private @Inject FindService<Match> findService;
     private @Inject Plugin plugin;
 
