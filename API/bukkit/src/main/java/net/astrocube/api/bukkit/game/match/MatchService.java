@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 
@@ -61,5 +62,7 @@ public interface MatchService {
      * @param user to be disauqlified
      */
     void disqualify(String match, String user) throws Exception;
+
+    void privatizeMatch(String requester, String match) throws Exception;
 
 }

@@ -140,6 +140,60 @@ game:
             lore:
                 - "%%gray%%Vuelve a la central espacial."
     admin:
+        lobby:
+            title: "Administración de partida"
+            error: "%%red%%Ha ocurrido un error al crear el menú de la partida."
+            privatizing:
+                enabled: "%%aqua%%%%player%% %%blue%%ha privatizado la partida."
+                disabled: "%%aqua%%%%player%% %%blue%%ha abierto la partida al público."
+                error: "%%red%%Ha ocurrido un error al actualizar la privatización de la partida."
+            map:
+                title: "Cambiar mapa de partida"
+                error: "%%red%%Ha ocurrido un error al actualizar el mapa de la partida."
+                select:
+                    title: "%%blue%%%%map%%"
+                    lore:
+                        - ""
+                        - "%%aqua%%¡Click para seleccionar"
+            icons:
+                map:
+                    title: "%%blue%%Seleccionar mapa"
+                    lore:
+                        - "%%gray%%Selecciona el mapa que se"
+                        - "%%gray%%jugará en la partida."
+                        - ""
+                        - "%%aqua%%Actual: %%gray%%%%status%%"
+                        - ""
+                        - "%%aqua%%¡Clíck izquierdo para cambiar!"
+                summon:
+                    title: "%%blue%%Teletransportar jugador"
+                    lore:
+                        - "%%gray%%Teletransporta un jugador a"
+                        - "%%gray%%la partida."
+                        - ""
+                        - "%%red%%Nota: %%gray%%El jugador no debe estar"
+                        - "en una partida actual."
+                        - ""
+                        - "%%aqua%%¡Clíck izquierdo para buscar el usuario!"
+                private:
+                    enable:
+                        title: "%%blue%%Privacidad de la partida"
+                        lore:
+                            - "%%gray%%Los jugadores podrán ingresar"
+                            - "%%gray%%a la partida desde los menús."
+                            - ""
+                            - "%%aqua%%Estado: %%red%%Desactivado"
+                            - ""
+                            - "%%aqua%%¡Clíck para activar!"
+                    disable:
+                        title: "%%blue%%Privacidad de la partida"
+                        lore:
+                            - "%%gray%%Los jugadores podrán ingresar"
+                                - "%%gray%%a la partida desde los menús."
+                                - ""
+                                - "%%aqua%%Estado: %%green%%Activado"
+                                - ""
+                                - "%%aqua%%¡Clíck para desactivar!"
         match-help:
             - "%%yellow%%============================"
             - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"

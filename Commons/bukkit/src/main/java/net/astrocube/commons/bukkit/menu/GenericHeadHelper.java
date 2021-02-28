@@ -84,6 +84,14 @@ public class GenericHeadHelper {
         return generateMetaAndPlace(library, title, null);
     }
 
+    public ItemStack generateMetaAndPlace(ItemStack stack, String title, List<String> lore) {
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(title);
+        if (lore != null) { meta.setLore(lore); }
+        stack.setItemMeta(meta);
+        return stack;
+    }
+
     private ItemStack generateMetaAndPlace(HeadLibrary library, String title, List<String> lore) {
         ItemStack stack = MenuUtils.generateHead(library);
         ItemMeta meta = stack.getItemMeta();

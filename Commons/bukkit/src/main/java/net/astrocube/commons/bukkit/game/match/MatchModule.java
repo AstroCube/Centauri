@@ -15,6 +15,7 @@ import net.astrocube.commons.bukkit.game.map.GameMapModule;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchScheduler;
 import net.astrocube.commons.bukkit.game.match.control.CoreTeamBalancer;
+import net.astrocube.commons.bukkit.game.match.control.menu.ControlLobbyModule;
 import net.astrocube.commons.bukkit.game.match.countdown.CoreCountdownAlerter;
 import net.astrocube.commons.bukkit.game.match.countdown.CoreCountdownScheduler;
 import net.astrocube.commons.bukkit.game.match.lobby.CoreLobbySessionManager;
@@ -25,6 +26,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
     @Override
     public void configure() {
         install(new GameMapModule());
+        install(new ControlLobbyModule());
 
         bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
         bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
@@ -33,6 +35,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
         bind(MatchAvailabilityChecker.class).to(CoreMatchAvailabilityChecker.class);
         bind(MatchService.class).to(CoreMatchService.class);
         bind(TeamBalancer.class).to(CoreTeamBalancer.class);
+        bind(MatchMapUpdater.class).to(CoreMatchMapUpdater.class);
 
         bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
 

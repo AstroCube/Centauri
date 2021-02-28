@@ -103,6 +103,20 @@ public interface MatchDoc {
          */
         Optional<String> getRequestedBy();
 
+        /**
+         * @return if match is private.
+         */
+        boolean isPrivate();
+
+        /**
+         * @param privatize if private or not
+         */
+        void setPrivate(boolean privatize);
+
+        /**
+         * @return user who privatized the match
+         */
+        String getPrivatizedBy();
 
         /**
          * @return certain {@link Status} of the match

@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.game.match;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
@@ -139,6 +140,25 @@ public class CoreMatchService implements MatchService {
 
         node.put("user", user);
         node.put("match",  match);
+
+        httpClient.executeRequestSync(
+                this.modelMeta.getRouteKey() + "/disqualify",
+                new RedisRequestCallable<>(objectMapper, redis, modelMeta),
+                new CoreRequestOptions(
+                        RequestOptions.Type.POST,
+                        new HashMap<>(),
+                        this.objectMapper.writeValueAsString(node),
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void privatizeMatch(String requester, String match) throws Exception {
+        ObjectNode node = objectMapper.createObjectNode();
+
+        node.put("requester", requester);
+        node.put("id",  match);
 
         httpClient.executeRequestSync(
                 this.modelMeta.getRouteKey() + "/disqualify",
