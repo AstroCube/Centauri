@@ -60,7 +60,12 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                     countdownScheduler.scheduleMatchCountdown(match);
                 }
 
-                lobbyItemProvider.provide(player, 8);
+                lobbyItemProvider.provideBackButton(player, 8);
+
+                if (player.hasPermission("commons.game.admin")) {
+                    lobbyItemProvider.provideBackButton(player, 8);
+                }
+
 
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);

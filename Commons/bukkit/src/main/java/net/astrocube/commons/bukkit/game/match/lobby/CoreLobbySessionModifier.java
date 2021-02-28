@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
+import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
     private @Inject MessageHandler messageHandler;
+    private @Inject LobbyItemProvider lobbyItemProvider;
 
     @Override
     public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
@@ -45,6 +47,9 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
                 player.hidePlayer(online);
             }
         });
+
+        lobbyItemProvider.provideBackButton(player, 8);
+
     }
 
     @Override

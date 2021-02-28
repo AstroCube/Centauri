@@ -9,6 +9,13 @@ public interface LobbyItemProvider {
      * @param player where item will be place
      * @param slot to be held
      */
-    void provide(Player player, int slot);
+    void provideBackButton(Player player, int slot);
+
+    /**
+     * Provide admin item for game control
+     * @param player where item will be placed
+     * @param slot to be held
+     */
+    void provideAdminButton(Player player, int slot);
 
 }

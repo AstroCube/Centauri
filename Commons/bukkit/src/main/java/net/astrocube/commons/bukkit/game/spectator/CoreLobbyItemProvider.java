@@ -16,7 +16,7 @@ public class CoreLobbyItemProvider implements LobbyItemProvider {
     private @Inject MessageHandler messageHandler;
 
     @Override
-    public void provide(Player player, int slot) {
+    public void provideBackButton(Player player, int slot) {
 
         ItemStack stack = NBTUtils.addString(new ItemStack(Material.IRON_DOOR, 1), "actionable", "gc_lobby");
         ItemMeta meta = stack.getItemMeta();
@@ -28,6 +28,19 @@ public class CoreLobbyItemProvider implements LobbyItemProvider {
 
         player.getInventory().setItem(slot, stack);
 
+    }
+
+    @Override
+    public void provideAdminButton(Player player, int slot) {
+        ItemStack stack = NBTUtils.addString(new ItemStack(Material.MAGMA_CREAM, 1), "actionable", "gc_admin_lobby");
+        ItemMeta meta = stack.getItemMeta();
+
+        meta.setDisplayName(messageHandler.get(player, "game.admin.item.title"));
+        meta.setLore(messageHandler.getMany(player, "game.admin.item.lore"));
+
+        stack.setItemMeta(meta);
+
+        player.getInventory().setItem(slot, stack);
     }
 
 }
