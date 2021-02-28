@@ -60,6 +60,8 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                     countdownScheduler.scheduleMatchCountdown(match);
                 }
 
+                player.getInventory().clear();
+
                 lobbyItemProvider.provideBackButton(player, 8);
 
                 if (player.hasPermission("commons.game.admin")) {
