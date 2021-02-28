@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.game.channel;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import net.astrocube.api.bukkit.channel.InterceptorRegistry;
 import net.astrocube.api.bukkit.game.channel.MatchChannelProvider;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannel;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelDoc;

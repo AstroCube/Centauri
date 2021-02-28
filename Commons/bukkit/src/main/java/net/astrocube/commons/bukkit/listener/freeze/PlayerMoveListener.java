@@ -2,7 +2,6 @@ package net.astrocube.commons.bukkit.listener.freeze;
 
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;

@@ -12,16 +12,12 @@ import net.astrocube.api.bukkit.packet.PacketHandler;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 @Singleton
 public class CoreLobbyNametagHandler implements LobbyNametagHandler {

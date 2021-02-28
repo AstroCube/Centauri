@@ -6,7 +6,6 @@ import net.astrocube.api.bukkit.session.SessionCacheInvalidator;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.session.SessionSwitchWrapper;
-import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.session.validation.CoreInvalidSessionMessageMatcher;
 import net.astrocube.commons.bukkit.session.validation.CoreSessionCacheInvalidator;
 import net.astrocube.commons.bukkit.session.validation.CoreSessionValidator;

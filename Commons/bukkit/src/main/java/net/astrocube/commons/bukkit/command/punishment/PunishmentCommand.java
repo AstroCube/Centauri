@@ -8,7 +8,6 @@ import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.annotated.annotation.Text;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
-
 import org.bukkit.entity.Player;
 
 public class PunishmentCommand implements CommandClass {

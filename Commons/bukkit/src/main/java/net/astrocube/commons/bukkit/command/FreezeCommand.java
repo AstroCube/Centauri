@@ -8,9 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
-import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class FreezeCommand implements CommandClass {

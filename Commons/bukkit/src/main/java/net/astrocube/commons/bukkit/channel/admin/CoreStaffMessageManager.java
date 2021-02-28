@@ -16,7 +16,6 @@ import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

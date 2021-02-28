@@ -8,12 +8,12 @@ import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentExpirationChooserMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentReasonChooserMenu;
 import net.astrocube.commons.bukkit.admin.selector.AdminGameModeSelectorMenu;
-import net.astrocube.commons.bukkit.admin.staff.AdminOnlineStaffMenu;
 import net.astrocube.commons.bukkit.admin.selector.AdminSubGameModeSelectorMenu;
 import net.astrocube.commons.bukkit.admin.selector.item.CoreGameModeItemExtractor;
 import net.astrocube.commons.bukkit.admin.selector.item.GameModeItemExtractor;
 import net.astrocube.commons.bukkit.admin.selector.item.action.DependentAction;
 import net.astrocube.commons.bukkit.admin.selector.item.action.SimpleDependentAction;
+import net.astrocube.commons.bukkit.admin.staff.AdminOnlineStaffMenu;
 
 public class AdminMenuModule extends ProtectedModule {
     

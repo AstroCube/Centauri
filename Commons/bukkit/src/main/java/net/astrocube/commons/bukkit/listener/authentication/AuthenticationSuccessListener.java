@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
-import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;

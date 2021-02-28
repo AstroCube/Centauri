@@ -1,7 +1,6 @@
 package net.astrocube.api.bukkit.admin.chat;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 public interface StaffChatOptionsMenu {
 

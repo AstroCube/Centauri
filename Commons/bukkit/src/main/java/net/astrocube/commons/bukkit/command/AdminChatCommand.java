@@ -10,7 +10,6 @@ import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.utils.MessageUtils;
-import net.astrocube.commons.core.utils.Callbacks;
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;

@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
-import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;

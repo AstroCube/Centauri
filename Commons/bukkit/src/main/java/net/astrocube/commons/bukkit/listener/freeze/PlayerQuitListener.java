@@ -4,8 +4,6 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 import net.astrocube.api.core.punishment.PunishmentHandler;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
-import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

@@ -2,9 +2,7 @@ package net.astrocube.commons.bukkit.user.staff;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import gnu.trove.impl.hash.THash;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
-import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;

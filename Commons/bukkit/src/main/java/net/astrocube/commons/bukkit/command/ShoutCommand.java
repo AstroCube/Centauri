@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.command;
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
-import me.fixeddev.commandflow.annotated.annotation.Flag;
 import me.fixeddev.commandflow.annotated.annotation.Switch;
 import me.fixeddev.commandflow.annotated.annotation.Text;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;

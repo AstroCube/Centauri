@@ -11,7 +11,6 @@ import net.astrocube.commons.bukkit.menu.HeadLibrary;
 import net.astrocube.commons.bukkit.menu.MenuUtils;
 import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
 import net.wesjd.anvilgui.AnvilGUI;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

@@ -2,7 +2,9 @@ package net.astrocube.commons.bukkit.nametag;
 
 import net.astrocube.api.bukkit.nametag.Nametag;
 import net.astrocube.api.bukkit.nametag.types.AbstractRenderedNametag;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.EntitySlime;
+import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 

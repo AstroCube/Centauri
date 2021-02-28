@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.listener.game.matchmaking;
 
 import com.google.inject.Inject;
-import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingErrorEvent;
 import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingRequestEvent;
 import net.astrocube.api.bukkit.game.event.matchmaking.MatchmakingTimeoutEvent;
@@ -11,8 +10,6 @@ import net.astrocube.api.bukkit.game.matchmaking.IdealMatchSelector;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

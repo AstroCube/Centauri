@@ -3,7 +3,6 @@ package net.astrocube.commons.bukkit.listener.game.management;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchLobbyMenuProvider;
-import net.astrocube.api.bukkit.game.spectator.SpectatorLobbyTeleporter;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.user.inventory.event.ActionableItemEvent;
 import org.bukkit.event.EventHandler;

@@ -1,6 +1,5 @@
 package net.astrocube.api.bukkit.game.match;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 
