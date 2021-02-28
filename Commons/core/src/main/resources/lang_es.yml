@@ -180,7 +180,7 @@ game:
                         - "%%gray%%la partida."
                         - ""
                         - "%%red%%Nota: %%gray%%El jugador no debe estar"
-                        - "en una partida actual."
+                        - "%%gray%%en una partida actual."
                         - ""
                         - "%%aqua%%¡Clíck izquierdo para buscar el usuario!"
                 private:

@@ -161,7 +161,7 @@ public class CoreMatchService implements MatchService {
         node.put("id",  match);
 
         httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey() + "/disqualify",
+                this.modelMeta.getRouteKey() + "/privatize",
                 new RedisRequestCallable<>(objectMapper, redis, modelMeta),
                 new CoreRequestOptions(
                         RequestOptions.Type.POST,
