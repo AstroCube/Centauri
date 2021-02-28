@@ -198,7 +198,7 @@ game:
                         lore:
                             - "%%gray%%Los jugadores podrán ingresar"
                             - "%%gray%%a la partida desde los menús."
-                             - ""
+                            - ""
                             - "%%aqua%%Estado: %%green%%Activado"
                             - ""
                             - "%%aqua%%¡Clíck para desactivar!"
