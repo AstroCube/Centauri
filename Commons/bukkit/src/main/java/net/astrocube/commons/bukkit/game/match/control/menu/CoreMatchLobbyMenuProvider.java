@@ -70,7 +70,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                         messageHandler.get(player, "game.admin.lobby.icons.private.enable.title"),
                         messageHandler.getMany(player, "game.admin.lobby.icons.private.enable.lore")
                 ),
-                12,
+                13,
                 ClickType.LEFT,
                 (p) -> {
                     try {
@@ -90,7 +90,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                         messageHandler.get(player, "game.admin.lobby.icons.private.disable.title"),
                         messageHandler.getMany(player, "game.admin.lobby.icons.private.disable.lore")
                 ),
-                12,
+                13,
                 ClickType.LEFT,
                 (p) -> {
                     try {
@@ -110,7 +110,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                         messageHandler.get(player, "game.admin.lobby.icons.map.title"),
                         messageHandler.getMany(player, "game.admin.lobby.icons.map.lore")
                 ),
-                10,
+                11,
                 ClickType.LEFT,
                 (p) -> {
                     try {
@@ -127,10 +127,10 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
         return genericHeadHelper.generateDefaultClickable(
                 genericHeadHelper.generateMetaAndPlace(
                         new ItemStack(Material.EYE_OF_ENDER),
-                        messageHandler.get(player, "game.admin.lobby.icons.map.title"),
-                        messageHandler.getMany(player, "game.admin.lobby.icons.map.lore")
+                        messageHandler.get(player, "game.admin.lobby.icons.summon.title"),
+                        messageHandler.getMany(player, "game.admin.lobby.icons.summon.lore")
                 ),
-                14,
+                15,
                 ClickType.LEFT,
                 (p) -> {
 
