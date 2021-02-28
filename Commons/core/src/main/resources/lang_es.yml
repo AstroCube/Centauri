@@ -154,7 +154,10 @@ game:
                     title: "%%blue%%%%map%%"
                     lore:
                         - ""
-                        - "%%aqua%%¡Click para seleccionar"
+                        - "%%aqua%%¡Click para seleccionar!"
+                    lore-selected:
+                        - ""
+                        - "%%red%%¡Ya está seleccionado!"
             icons:
                 map:
                     title: "%%blue%%Seleccionar mapa"

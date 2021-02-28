@@ -53,16 +53,17 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                                 plugin.getLogger().log(Level.SEVERE, "Error while generating player menu", e);
                             }
                         },
-                        generateMaps(player, match.getGameMode(), match.getSubMode(), match.getId())
+                        generateMaps(player, match)
                 )
         );
 
     }
 
-    private Set<ShapedMenuGenerator.BaseClickable> generateMaps(Player player, String mode, String subMode, String match) throws Exception {
+    private Set<ShapedMenuGenerator.BaseClickable> generateMaps(Player player, Match match) throws Exception {
 
         ObjectNode nodes = mapper.createObjectNode();
-        nodes.put(mode, subMode);
+        nodes.put("gameMode", match.getGameMode());
+        nodes.put("subGamemode", match.getSubMode());
 
         return queryService.querySync(nodes).getFoundModels()
                 .stream()
@@ -70,8 +71,13 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                     @Override
                     public Consumer<Player> getClick() {
                         return (p) -> {
-                            matchMapUpdater.updateMatch(match, map.getId(), player.getDatabaseIdentifier());
-                            Bukkit.getScheduler().runTask(plugin, p::closeInventory);
+                            if (match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) {
+                                matchMapUpdater.updateMatch(match.getId(), map.getId(), player.getDatabaseIdentifier());
+                                Bukkit.getScheduler().runTask(plugin, p::closeInventory);
+                            } else {
+                                messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
+                                player.closeInventory();
+                            }
                         };
                     }
 
@@ -80,7 +86,11 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                         return genericHeadHelper.generateMetaAndPlace(
                                 new ItemStack(Material.PAPER),
                                 messageHandler.get(player, "game.admin.lobby.map.select.title"),
-                                messageHandler.getMany(player, "game.admin.lobby.map.select.lore")
+                                messageHandler.getMany(
+                                        player,
+                                        (match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) ?
+                                        "game.admin.lobby.map.select.lore" : "game.admin.lobby.map.select.lore-selected"
+                                )
                         );
                     }
                 })
