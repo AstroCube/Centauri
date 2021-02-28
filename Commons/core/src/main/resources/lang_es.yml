@@ -197,11 +197,11 @@ game:
                         title: "%%blue%%Privacidad de la partida"
                         lore:
                             - "%%gray%%Los jugadores podrán ingresar"
-                                - "%%gray%%a la partida desde los menús."
-                                - ""
-                                - "%%aqua%%Estado: %%green%%Activado"
-                                - ""
-                                - "%%aqua%%¡Clíck para desactivar!"
+                            - "%%gray%%a la partida desde los menús."
+                             - ""
+                            - "%%aqua%%Estado: %%green%%Activado"
+                            - ""
+                            - "%%aqua%%¡Clíck para desactivar!"
         match-help:
             - "%%yellow%%============================"
             - "%%aqua%%/match start <%%yellow%%segundos%%aqua%%> %%gold%%- %%yellow%%Inicia la partida en la que te encuentras en cierta cantidad de segundos"
