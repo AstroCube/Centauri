@@ -49,6 +49,7 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
         }
 
         criteria.put("server", serverArray);
+        criteria.put("private", false);
         criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
         return matchQueryService.querySync(criteria).getFoundModels()
