@@ -39,8 +39,6 @@ public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
 
                             HttpResponseException responseException = (HttpResponseException) exception;
 
-                            System.out.println(responseException.getStatusCode());
-
                             if (responseException.getStatusCode() == 404) {
                                 try {
                                     matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);

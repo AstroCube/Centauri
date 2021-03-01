@@ -17,7 +17,6 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
         Set<Instance> instances = new HashSet<>();
 
-
         ServerGroupObject groupObject = TimoCloudAPI.getUniversalAPI().getServerGroup(name);
 
         if (groupObject == null) {
@@ -60,6 +59,8 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
     @Override
     public boolean isAvailable(String slug) {
+        System.out.println(slug);
+        System.out.println(TimoCloudAPI.getUniversalAPI().getServer(slug));
         return TimoCloudAPI.getUniversalAPI().getServer(slug) != null;
     }
 
