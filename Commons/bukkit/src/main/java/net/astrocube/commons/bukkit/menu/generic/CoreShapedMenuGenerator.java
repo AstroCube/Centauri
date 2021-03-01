@@ -63,7 +63,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
         if (items.isEmpty()) {
             builder.addItem(
                     genericHeadHelper.generateDecorator(
-                            genericHeadHelper.getEmptyHead(player, "punishment-expiration-menu.items.empty"),
+                            genericHeadHelper.getEmptyHead(player, "menus.empty"),
                             22
                     )
             );

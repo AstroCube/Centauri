@@ -527,6 +527,7 @@ menus:
         actual: "%%blue%%Página actual (%%white%%%%page%%%%blue%%)"
         next: "%%blue%%Página siguiente (%%white%%%%page%%%%blue%%) %%gold%%\u00BB"
     back: "%%red%%\u00AB Volver"
+    empty: "%%red%%No se encontraron registros :("
 
 channel:
     admin:
