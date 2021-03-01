@@ -62,7 +62,7 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
     private Set<ShapedMenuGenerator.BaseClickable> generateMaps(Player player, Match match) throws Exception {
 
         ObjectNode nodes = mapper.createObjectNode();
-        nodes.put("gameMode", match.getGameMode());
+        nodes.put("gamemode", match.getGameMode());
         nodes.put("subGamemode", match.getSubMode());
 
         return queryService.querySync(nodes).getFoundModels()
@@ -71,13 +71,12 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                     @Override
                     public Consumer<Player> getClick() {
                         return (p) -> {
-                            if (match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) {
+                            if (!(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId()))) {
                                 matchMapUpdater.updateMatch(match.getId(), map.getId(), player.getDatabaseIdentifier());
-                                Bukkit.getScheduler().runTask(plugin, p::closeInventory);
                             } else {
                                 messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
-                                player.closeInventory();
                             }
+                            Bukkit.getScheduler().runTask(plugin, p::closeInventory);
                         };
                     }
 
@@ -85,10 +84,13 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                     public ItemStack getStack() {
                         return genericHeadHelper.generateMetaAndPlace(
                                 new ItemStack(Material.PAPER),
-                                messageHandler.get(player, "game.admin.lobby.map.select.title"),
+                                messageHandler.replacing(
+                                        player, "game.admin.lobby.map.select.title",
+                                        "%%map%%", map.getName()
+                                ),
                                 messageHandler.getMany(
                                         player,
-                                        (match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) ?
+                                        !(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) ?
                                         "game.admin.lobby.map.select.lore" : "game.admin.lobby.map.select.lore-selected"
                                 )
                         );

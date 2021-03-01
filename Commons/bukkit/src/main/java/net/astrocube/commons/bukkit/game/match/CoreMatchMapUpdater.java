@@ -24,21 +24,26 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
     @Override
     public void updateMatch(String match, String map, String requester) {
         findService.find(match).callback(matchCallback -> {
+
             if (!matchCallback.isSuccessful()) {
-                alertError(requester);
+                alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
             }
+
             matchCallback.ifSuccessful(matchResponse -> {
                 matchResponse.setMap(map);
                 updateService.update(matchResponse).callback(updateCallback -> {
+
                     if (!updateCallback.isSuccessful()) {
-                        alertError(requester);
+                        alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
                     }
+
+                    alertMessage(requester, AlertModes.INFO, "game.admin.lobby.map.success");
                 });
             });
         });
     }
 
-    private void alertError(String id) {
+    private void alertMessage(String id, String mode, String translation) {
 
         Player player = Bukkit.getPlayerByIdentifier(id);
 
@@ -46,7 +51,7 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
             Bukkit.getScheduler().runTask(
                     plugin,
                     () -> {
-                        messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
+                        messageHandler.sendIn(player, mode, translation);
                         player.closeInventory();
                     });
         }

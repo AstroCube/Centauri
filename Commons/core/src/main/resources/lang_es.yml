@@ -155,6 +155,8 @@ game:
             map:
                 title: "Cambiar mapa de partida"
                 error: "%%red%%Ha ocurrido un error al actualizar el mapa de la partida."
+                success: "%%blue%%¡Actualizaste el mapa a jugar a %%aqua%%%%map%%%%blue%%!"
+                none: "%%red%%Ninguno"
                 select:
                     title: "%%blue%%%%map%%"
                     lore:
@@ -170,7 +172,7 @@ game:
                         - "%%gray%%Selecciona el mapa que se"
                         - "%%gray%%jugará en la partida."
                         - ""
-                        - "%%aqua%%Actual: %%gray%%%%status%%"
+                        - "%%aqua%%Actual: %%gray%%%%actual%%"
                         - ""
                         - "%%aqua%%¡Clíck izquierdo para cambiar!"
                 summon:

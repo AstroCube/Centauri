@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchPrivatizeSwitcher;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -38,7 +39,19 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
                 "game.admin.lobby.privatizing.enabled" : "game.admin.lobby.privatizing.disabled";
 
         MatchParticipantsProvider.getWaitingIds(match).forEach(
-                p -> messageHandler.sendIn(p, AlertModes.INFO, translation)
+                p -> {
+
+                    Player recordPlayer = Bukkit.getPlayerByIdentifier(p);
+
+                    if (recordPlayer != null) {
+                        messageHandler.sendReplacingIn(
+                                recordPlayer, AlertModes.INFO, translation,
+                                "%%player%%", player.getName()
+                        );
+                    }
+
+                    player.closeInventory();
+                }
         );
 
     }

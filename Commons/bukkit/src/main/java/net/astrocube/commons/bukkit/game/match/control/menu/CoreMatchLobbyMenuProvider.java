@@ -4,11 +4,15 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchLobbyMenuProvider;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchMapSwitcher;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchPrivatizeSwitcher;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.commons.bukkit.menu.GenericHeadHelper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,10 +34,17 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
     private @Inject Plugin plugin;
 
     private @Inject MatchPrivatizeSwitcher matchPrivatizeSwitcher;
+    private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
     private @Inject MatchMapSwitcher matchMapSwitcher;
+    private @Inject FindService<GameMap> findService;
 
     @Override
     public void create(Player player) throws Exception {
+
+
+        if (!plugin.getConfig().getBoolean("server.sandbox")) {
+            matchAvailabilityChecker.clearLegitMatches(player.getDatabaseIdentifier());
+        }
 
         Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
@@ -49,7 +60,14 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                 3
         );
 
-        builder.addItem(generateMapSelectorButton(player, match));
+        String actualMap = messageHandler.get(player, "game.admin.lobby.map.none");
+
+        if (match.getMap() != null) {
+            actualMap = findService.findSync(match.getMap()).getName();
+        }
+
+
+        builder.addItem(generateMapSelectorButton(player, match, actualMap));
 
         if (match.isPrivate()) {
             builder.addItem(generateDeactivateButton(player));
@@ -66,7 +84,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
     private ItemClickable generateActivateButton(Player player) {
         return genericHeadHelper.generateDefaultClickable(
                 genericHeadHelper.generateMetaAndPlace(
-                        new ItemStack(Material.EMERALD),
+                        new ItemStack(Material.REDSTONE_BLOCK),
                         messageHandler.get(player, "game.admin.lobby.icons.private.enable.title"),
                         messageHandler.getMany(player, "game.admin.lobby.icons.private.enable.lore")
                 ),
@@ -75,6 +93,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                 (p) -> {
                     try {
                         matchPrivatizeSwitcher.switchPrivatization(player);
+                        create(player);
                     } catch (Exception e) {
                         plugin.getLogger().log(Level.SEVERE, "Error while updating privatization", e);
                         messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.privatizing.error");
@@ -86,7 +105,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
     private ItemClickable generateDeactivateButton(Player player) {
         return genericHeadHelper.generateDefaultClickable(
                 genericHeadHelper.generateMetaAndPlace(
-                        new ItemStack(Material.REDSTONE_BLOCK),
+                        new ItemStack(Material.EMERALD_BLOCK),
                         messageHandler.get(player, "game.admin.lobby.icons.private.disable.title"),
                         messageHandler.getMany(player, "game.admin.lobby.icons.private.disable.lore")
                 ),
@@ -95,6 +114,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                 (p) -> {
                     try {
                         matchPrivatizeSwitcher.switchPrivatization(player);
+                        create(player);
                     } catch (Exception e) {
                         plugin.getLogger().log(Level.SEVERE, "Error while updating privatization", e);
                         messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.privatizing.error");
@@ -103,12 +123,15 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
         );
     }
 
-    private ItemClickable generateMapSelectorButton(Player player, Match match) {
+    private ItemClickable generateMapSelectorButton(Player player, Match match, String map) {
         return genericHeadHelper.generateDefaultClickable(
                 genericHeadHelper.generateMetaAndPlace(
                         new ItemStack(Material.MAP),
                         messageHandler.get(player, "game.admin.lobby.icons.map.title"),
-                        messageHandler.getMany(player, "game.admin.lobby.icons.map.lore")
+                        messageHandler.replacingMany(
+                                player, "game.admin.lobby.icons.map.lore",
+                                "%%actual%%", map
+                        )
                 ),
                 11,
                 ClickType.LEFT,
