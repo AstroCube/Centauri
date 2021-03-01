@@ -59,9 +59,7 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
     @Override
     public boolean isAvailable(String slug) {
-        System.out.println(slug);
-        System.out.println(TimoCloudAPI.getUniversalAPI().getServer(slug));
-        return TimoCloudAPI.getUniversalAPI().getServer(slug) != null;
+        return TimoCloudAPI.getUniversalAPI().getServers().stream().anyMatch(s -> s.getId().equalsIgnoreCase(slug));
     }
 
 
