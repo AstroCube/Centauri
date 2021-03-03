@@ -24,7 +24,7 @@ public class MatchDebugCommand implements CommandClass {
     private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
 
-    @Command(names = "sandbox", permission = "commons.match.sandbox")
+    @Command(names = "sandbox", permission = "")
     public boolean execute(@Sender Player player) {
 
         try {
