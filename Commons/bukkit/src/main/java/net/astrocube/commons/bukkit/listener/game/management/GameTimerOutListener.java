@@ -17,6 +17,7 @@ import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.update.UpdateService;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -71,6 +72,18 @@ public class    GameTimerOutListener implements Listener {
                 Set<MatchDoc.Team> balanced = teamBalancer.balanceTeams(match, match.getPending());
 
                 matchService.assignTeams(balanced, match.getId());
+
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    balanced.stream().flatMap(p -> p.getMembers().stream().map(MatchDoc.TeamMember::getUser)).forEach(player -> {
+
+                        Player online = Bukkit.getPlayerByIdentifier(player);
+
+                        if (online != null) {
+                            online.getInventory().clear();
+                        }
+
+                    });
+                });
 
                 Bukkit.getPluginManager().callEvent(new GameReadyEvent(event.getMatch(), configuration, balanced));
 
