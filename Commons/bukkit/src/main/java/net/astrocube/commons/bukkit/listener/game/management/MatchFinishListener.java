@@ -11,6 +11,7 @@ import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.scheduler.RunningMatchBalancer;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.commons.bukkit.game.GameControlHelper;
 import org.bukkit.Bukkit;
@@ -44,6 +45,11 @@ public class MatchFinishListener implements Listener {
                 }
 
                 Match match = matchCallback.getResponse().get();
+
+                if (match.getStatus() != MatchDoc.Status.RUNNING) {
+                    return;
+                }
+
                 matchService.assignVictory(event.getMatch(), event.getWinners());
                 Set<Player> players = MatchParticipantsProvider.getInvolved(match);
                 ghostEffectControl.clearMatch(match.getId());
