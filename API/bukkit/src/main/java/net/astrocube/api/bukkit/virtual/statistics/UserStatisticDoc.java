@@ -5,11 +5,7 @@ import net.astrocube.api.core.model.PartialModel;
 
 import javax.annotation.Nullable;
 
-/**
- * @param <T> Represents the type of statistics that the model handles, it can handle {"integers", "strings"} all types of objects
- */
-
-public interface UserStatisticDoc<T> {
+public interface UserStatisticDoc {
 
 
     /**
@@ -23,7 +19,7 @@ public interface UserStatisticDoc<T> {
      * Provides methods to handle statistics.
      */
 
-    interface Statistic<T> extends Partial {
+    interface Statistic extends Partial {
 
         /**
          * @return The type of statistics that is being handled by the model.
@@ -32,10 +28,10 @@ public interface UserStatisticDoc<T> {
         String getType();
 
         /**
-         * @return The object of the statistic that is being handled.
+         * @return An string representation of the statistic that is being handled.
          */
 
-        T getStatistic();
+        String getStatistic();
 
     }
 
@@ -60,6 +56,7 @@ public interface UserStatisticDoc<T> {
 
         /**
          * Provides the responsible id of this statistic.
+         *
          * @return The id of the responsible user.
          */
 
@@ -67,5 +64,5 @@ public interface UserStatisticDoc<T> {
 
     }
 
-    interface Complete<T> extends Model.Stamped, Identity, Statistic<T> {}
+    interface Complete extends Model.Stamped, Identity, Statistic {}
 }
