@@ -7,6 +7,7 @@ import net.astrocube.commons.bukkit.loader.listener.*;
 import net.astrocube.commons.bukkit.loader.listener.game.GameListenerLoader;
 import net.astrocube.commons.bukkit.loader.listener.game.MatchListenerLoader;
 import net.astrocube.commons.bukkit.loader.listener.game.MatchmakingListenerLoader;
+import net.astrocube.commons.bukkit.loader.listener.game.SpectatorListenerLoader;
 import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ public class EventListenerLoader implements Loader {
     private @Inject MatchmakingListenerLoader matchmakingListenerLoader;
     private @Inject MatchListenerLoader matchListenerLoader;
     private @Inject UserListenerLoader userListenerLoader;
+    private @Inject SpectatorListenerLoader spectatorListenerLoader;
     private @Inject LobbyListenerLoader lobbyListenerLoader;
     private @Inject InteractionListenerLoader interactionListenerLoader;
     private @Inject StaffListenerLoader staffListenerLoader;
@@ -39,6 +41,7 @@ public class EventListenerLoader implements Loader {
                 matchmakingListenerLoader,
                 userListenerLoader,
                 lobbyListenerLoader,
+                spectatorListenerLoader,
                 interactionListenerLoader,
                 staffListenerLoader
         );
