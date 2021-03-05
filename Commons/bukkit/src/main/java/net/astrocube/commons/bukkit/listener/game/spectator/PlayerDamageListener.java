@@ -1,9 +1,11 @@
 package net.astrocube.commons.bukkit.listener.game.spectator;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
+import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +20,7 @@ import java.util.logging.Level;
 public class PlayerDamageListener implements Listener {
 
     private @Inject ActualMatchCache actualMatchCache;
+    private @Inject SpectatorSessionManager spectatorSessionManager;
     private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -40,7 +43,11 @@ public class PlayerDamageListener implements Listener {
                         event.setCancelled(true);
                     }
 
-                } catch (GameControlException ignore) {}
+                    if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                        spectatorSessionManager.provideFunctions(player, match);
+                    }
+
+                } catch (GameControlException | JsonProcessingException ignore) {}
             });
 
         } catch (Exception e) {

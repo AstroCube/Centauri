@@ -54,10 +54,11 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
             }
         });
 
-        player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
 
         player.setHealth(20);
         player.setFoodLevel(20);
+
+        player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
         player.setAllowFlight(true);
         player.setFlying(true);
 
