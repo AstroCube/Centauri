@@ -104,7 +104,7 @@ public class CoreMatchAssigner implements MatchAssigner {
                             teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
                     )
             ) {
-                //TODO: Handle disconnection
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player));
             }
 
         }

@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -18,7 +19,7 @@ public class LobbyUserDisconnectListener implements Listener {
     private @Inject FindService<Match> findService;
     private @Inject Plugin plugin;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR )
     public void onGameUserJoin(GameUserDisconnectEvent event) {
         findService.find(event.getMatch()).callback(matchResponse -> {
 
