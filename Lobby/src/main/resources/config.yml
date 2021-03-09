@@ -5,6 +5,7 @@ spawn:
   yaw: 0
   pitch: 0
 gamemode: ""
+board: false
 ambiental:
   time: 1000
   effects:

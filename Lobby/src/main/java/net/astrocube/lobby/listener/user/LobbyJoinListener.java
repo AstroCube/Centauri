@@ -47,7 +47,9 @@ public class LobbyJoinListener implements Listener {
         Bukkit.getScheduler().runTask(plugin, () -> {
 
             try {
-                scoreboardProcessor.generateBoard(player);
+                if (plugin.getConfig().getBoolean("board")) {
+                    scoreboardProcessor.generateBoard(player);
+                }
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "Could not process user board", e);
             }

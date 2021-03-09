@@ -7,6 +7,8 @@ import net.astrocube.commons.bukkit.menu.GenericHeadHelper;
 import net.astrocube.commons.bukkit.menu.MenuUtils;
 import net.astrocube.commons.core.utils.Pagination;
 import net.astrocube.commons.core.utils.SimplePagination;
+import org.bukkit.craftbukkit.v1_8_R3.creator.hologram.CraftHologram;
+import org.bukkit.creator.hologram.Hologram;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
@@ -94,7 +96,6 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
                     )
             );
         }
-
 
         return builder.build();
 
