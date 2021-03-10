@@ -10,6 +10,7 @@ public class VirtualModule extends ProtectedModule {
         install(new GameModeModelModule());
         install(new ServerModelModule());
         install(new UserModelModule());
+        install(new PerkModule());
         install(new PunishmentsModelModule());
         install(new GroupModelModule());
     }
