@@ -56,7 +56,7 @@ public interface StorablePerkDoc {
         Object getStored();
 
         /**
-         * @param updatable to be replaced
+         * @param updatable to be replaced.
          */
         void setStored(Object updatable);
     }
