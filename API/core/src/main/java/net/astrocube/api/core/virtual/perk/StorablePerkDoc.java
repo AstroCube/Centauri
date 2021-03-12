@@ -54,6 +54,11 @@ public interface StorablePerkDoc {
          * @return The perk type contents in an object to generalize the usage
          */
         Object getStored();
+
+        /**
+         * @param updatable to be replaced
+         */
+        void setStored(Object updatable);
     }
 
     interface Creation extends Partial, StorableManifest, Identity {}
