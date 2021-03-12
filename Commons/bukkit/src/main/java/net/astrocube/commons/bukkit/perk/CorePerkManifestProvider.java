@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.bukkit.perk.AbstractPerk;
 import net.astrocube.api.bukkit.perk.PerkManifestProvider;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.query.QueryService;
@@ -24,7 +25,7 @@ public class CorePerkManifestProvider implements PerkManifestProvider {
     private @Inject ObjectMapper mapper;
 
     @Override
-    public <T extends PerkManifestProvider> void createRegistry(
+    public <T extends AbstractPerk> void createRegistry(
             String playerId, String gameMode, @Nullable String subMode,
             String type, T perk) throws Exception {
 
@@ -59,7 +60,7 @@ public class CorePerkManifestProvider implements PerkManifestProvider {
     }
 
     @Override
-    public <T extends PerkManifestProvider> Set<StorablePerk> query(ObjectNode query, Class<T> genericClass) throws Exception {
+    public <T extends AbstractPerk> Set<StorablePerk> query(ObjectNode query, Class<T> genericClass) throws Exception {
         return queryService.querySync(query).getFoundModels()
                 .stream()
                 .peek(perk -> perk.setStored(transformPerk(perk, genericClass)))
@@ -67,7 +68,7 @@ public class CorePerkManifestProvider implements PerkManifestProvider {
     }
 
     @Override
-    public <T extends PerkManifestProvider> T transformPerk(StorablePerk perk, Class<T> genericClass) {
+    public <T extends AbstractPerk> T transformPerk(StorablePerk perk, Class<T> genericClass) {
         return mapper.convertValue(perk.getStored(), genericClass);
     }
 
