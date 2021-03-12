@@ -56,5 +56,7 @@ public interface StorablePerkDoc {
         Object getStored();
     }
 
+    interface Creation extends Partial, StorableManifest, Identity {}
+
     interface Complete extends Model.Stamped, Identity, StorableManifest {}
 }
