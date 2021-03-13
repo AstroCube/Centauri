@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.menu;
+package net.astrocube.api.bukkit.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

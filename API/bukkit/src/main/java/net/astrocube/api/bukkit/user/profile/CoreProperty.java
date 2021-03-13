@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.user.profile;
+package net.astrocube.api.bukkit.user.profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

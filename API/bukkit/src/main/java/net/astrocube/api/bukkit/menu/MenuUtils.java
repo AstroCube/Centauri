@@ -1,9 +1,9 @@
-package net.astrocube.commons.bukkit.menu;
+package net.astrocube.api.bukkit.menu;
 
 import net.astrocube.api.bukkit.user.profile.AbstractGameProfile;
-import net.astrocube.commons.bukkit.user.profile.CoreGameProfile;
-import net.astrocube.commons.bukkit.user.profile.CoreProperty;
-import net.astrocube.commons.bukkit.user.profile.MojangProfileGeneratorUtil;
+import net.astrocube.api.bukkit.user.profile.CoreGameProfile;
+import net.astrocube.api.bukkit.user.profile.CoreProperty;
+import net.astrocube.api.bukkit.user.profile.MojangProfileGeneratorUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

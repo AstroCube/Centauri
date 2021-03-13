@@ -1,4 +1,4 @@
-package net.astrocube.commons.core.utils;
+package net.astrocube.api.core.utils;
 
 import java.util.List;
 

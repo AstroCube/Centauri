@@ -1,14 +1,12 @@
-package net.astrocube.commons.bukkit.menu.generic;
+package net.astrocube.api.bukkit.menu.generic;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
-import net.astrocube.commons.bukkit.menu.GenericHeadHelper;
-import net.astrocube.commons.bukkit.menu.MenuUtils;
-import net.astrocube.commons.core.utils.Pagination;
-import net.astrocube.commons.core.utils.SimplePagination;
-import org.bukkit.craftbukkit.v1_8_R3.creator.hologram.CraftHologram;
-import org.bukkit.creator.hologram.Hologram;
+import net.astrocube.api.bukkit.menu.GenericHeadHelper;
+import net.astrocube.api.bukkit.menu.MenuUtils;
+import net.astrocube.api.core.utils.Pagination;
+import net.astrocube.api.core.utils.SimplePagination;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
