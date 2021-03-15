@@ -41,6 +41,7 @@ public class CommonsModule extends ProtectedModule {
             mapper.registerModule(new MrBeanModule());
             return mapper;
         }).in(Scopes.SINGLETON);
+        expose(ObjectMapper.class);
 
     }
 
