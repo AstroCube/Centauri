@@ -16,8 +16,10 @@ public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 
         compound += getGroupOnline(gameMode.getLobby());
 
-        for (SubGameMode subGameMode: gameMode.getSubTypes()) {
-            compound += getGroupOnline(subGameMode.getGroup());
+        if (gameMode.getSubTypes() != null) {
+            for (SubGameMode subGameMode: gameMode.getSubTypes()) {
+                compound += getGroupOnline(subGameMode.getGroup());
+            }
         }
 
         return compound;
