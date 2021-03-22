@@ -17,11 +17,9 @@ public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
         try {
 
             compound += getGroupOnline(gameMode.getLobby());
-            System.out.println("Onlines in lobby..." + compound);
 
             if (gameMode.getSubTypes() != null) {
                 for (SubGameMode subGameMode: gameMode.getSubTypes()) {
-                    System.out.println("Obtaining " + subGameMode.getName());
                     compound += getGroupOnline(subGameMode.getGroup());
                 }
             }
@@ -39,10 +37,7 @@ public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 
         ServerGroupObject lobby = TimoCloudAPI.getUniversalAPI().getServerGroup(group);
 
-        System.out.println("Checking online group: " + lobby.getName() + compound);
-
         for (ServerObject server : lobby.getServers()) {
-            System.out.println("Server object: " + server.getName());
             compound += server.getOnlinePlayerCount();
         }
 

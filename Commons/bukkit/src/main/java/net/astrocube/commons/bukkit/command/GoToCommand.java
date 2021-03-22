@@ -75,7 +75,6 @@ public class GoToCommand implements CommandClass {
                         return;
                     }
 
-                    System.out.println("Hi");
                     //TODO: Teleport to server without Control integration
 
                 });
