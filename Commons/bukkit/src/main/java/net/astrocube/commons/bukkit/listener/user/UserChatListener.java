@@ -46,12 +46,13 @@ public class UserChatListener implements Listener {
 
                     });
 
-                    event.setCancelled(true);
-
                 });
+
 
             });
         }
+
+        event.setCancelled(true);
 
     }
 
