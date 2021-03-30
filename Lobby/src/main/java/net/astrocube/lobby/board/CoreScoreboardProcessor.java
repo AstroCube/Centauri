@@ -12,7 +12,10 @@ import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
+import team.unnamed.uboard.ScoreboardObjective;
 import team.unnamed.uboard.builder.ScoreboardBuilder;
+
+import java.util.Optional;
 
 @Singleton
 public class CoreScoreboardProcessor implements ScoreboardProcessor {
@@ -26,8 +29,8 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
     @Override
     public void generateBoard(Player player) throws Exception {
 
-        ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard(player.getDatabaseIdentifier());
-        builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
+        Optional<ScoreboardObjective> objectiveOptional =
+                scoreboardManagerProvider.getScoreboard().getScoreboard("lobby_" + player.getDatabaseIdentifier());
 
         User user = findService.findSync(player.getDatabaseIdentifier());
 
@@ -41,8 +44,15 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
                 "%%online%%", cloudStatusProvider.getOnline()
         );
 
-        scoreTranslation.forEach(builder::addLine);
-        scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
+        if (!objectiveOptional.isPresent()) {
+            ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard(player.getDatabaseIdentifier());
+            scoreTranslation.forEach(builder::addLine);builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
+            scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
+        } else {
+            objectiveOptional.get().setStringLines(scoreTranslation);
+            objectiveOptional.get().updateScoreboard();
+        }
+
 
     }
 
