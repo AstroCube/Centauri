@@ -57,18 +57,18 @@ public class CoreSelectorRegistry implements SelectorRegistry {
                 }
 
                 @Override
-                public float getX() {
-                    return (float) linkedKey.get("x");
+                public double getX() {
+                    return (double) linkedKey.get("x");
                 }
 
                 @Override
-                public float getY() {
-                    return (float) linkedKey.get("y");
+                public double getY() {
+                    return (double) linkedKey.get("y");
                 }
 
                 @Override
-                public float getZ() {
-                    return (float) linkedKey.get("z");
+                public double getZ() {
+                    return (double) linkedKey.get("z");
                 }
 
                 @Override
@@ -89,7 +89,7 @@ public class CoreSelectorRegistry implements SelectorRegistry {
                             selector.getX(),
                             selector.getY(),
                             selector.getZ(),
-                            selector.getY(),
+                            selector.getYaw(),
                             selector.getPitch()
                     )
             );

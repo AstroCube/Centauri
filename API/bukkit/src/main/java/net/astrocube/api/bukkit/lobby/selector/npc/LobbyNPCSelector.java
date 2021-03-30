@@ -28,17 +28,17 @@ public interface LobbyNPCSelector {
     /**
      * @return X coordinate to spawn
      */
-    float getX();
+    double getX();
 
     /**
      * @return Y coordinate to spawn
      */
-    float getY();
+    double getY();
 
     /**
      * @return Z coordinate to spawn
      */
-    float getZ();
+    double getZ();
 
     /**
      * @return Yaw coordinate to spawn

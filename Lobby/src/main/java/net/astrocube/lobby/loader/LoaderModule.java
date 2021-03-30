@@ -3,7 +3,6 @@ package net.astrocube.lobby.loader;
 import com.google.inject.name.Names;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.core.loader.Loader;
-import net.astrocube.lobby.inject.NPCLibProvider;
 
 public class LoaderModule extends ProtectedModule {
 

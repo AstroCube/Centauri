@@ -18,6 +18,7 @@ public class Lobby extends JavaPlugin {
 
     @Override
     public void configure(ProtectedBinder binder) {
+        binder.bind(Lobby.class).toInstance(this);
         binder.install(new InjectionLoaderModule());
     }
 
