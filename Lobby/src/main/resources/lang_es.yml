@@ -80,3 +80,11 @@ lobby:
                     - "%%gray%%compañeros y destruye las"
                     - "%%gray%%camas enemigas para ganar."
 prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%> %%reset%%"
+selectors:
+    title:
+        - "%%title%%"
+        - ""
+        - "%%blue%%%%bold%%¡Juega junto a %%white%%%%bold%%%%players%%%%blue%%%%bold%% más!"
+    5db64666df034f2e9a3b4800: "TNT Games"
+    5db645eea534664c62702cbe: "TNT Run"
+    5e7c266e2e25d63c747474e7: "Bow Spleef"

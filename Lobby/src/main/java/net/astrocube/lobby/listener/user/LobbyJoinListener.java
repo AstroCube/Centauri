@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.lobby.hide.HideJoinProcessor;
 import net.astrocube.api.bukkit.lobby.hotbar.LobbyHotbarProvider;
 import net.astrocube.api.bukkit.lobby.nametag.LobbyNametagHandler;
+import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class LobbyJoinListener implements Listener {
     private @Inject LobbyHotbarProvider lobbyHotbarProvider;
     private @Inject LobbyNametagHandler lobbyNametagHandler;
     private @Inject ScoreboardProcessor scoreboardProcessor;
+    private @Inject SelectorRegistry selectorRegistry;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -66,6 +68,8 @@ public class LobbyJoinListener implements Listener {
                 }
 
             });
+
+            selectorRegistry.spawnSelectors(player);
 
         });
 
