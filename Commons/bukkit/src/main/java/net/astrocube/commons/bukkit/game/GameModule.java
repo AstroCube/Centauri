@@ -27,7 +27,6 @@ public class GameModule extends ProtectedModule implements ChannelBinder {
         bind(GameControlPair.class).to(CoreGameControlPair.class);
         bind(PendingMatchFinder.class).to(CorePendingMatchFinder.class);
         bind(RunningMatchBalancer.class).to(CoreRunningMatchBalancer.class);
-        expose(MatchmakingGenerator.class);
     }
 
 }
