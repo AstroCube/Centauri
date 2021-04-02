@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyCloudWrapperGenerator;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorDisplay;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyServerRedirect;
+import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCActionHandler;
 import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
 import net.astrocube.lobby.selector.gamemode.CoreGameItemExtractor;
 import net.astrocube.lobby.selector.gamemode.CoreGameSelectorDisplay;
@@ -16,6 +17,7 @@ import net.astrocube.lobby.selector.lobby.CoreLobbyCloudWrapperGenerator;
 import net.astrocube.lobby.selector.lobby.CoreLobbyIconExtractor;
 import net.astrocube.lobby.selector.lobby.CoreLobbySelectorDisplay;
 import net.astrocube.lobby.selector.lobby.CoreLobbyServerRedirect;
+import net.astrocube.lobby.selector.npc.CoreLobbyNPCActionHandler;
 import net.astrocube.lobby.selector.npc.CoreSelectorRegistry;
 
 public class SelectorModule extends ProtectedModule {
@@ -30,5 +32,6 @@ public class SelectorModule extends ProtectedModule {
         bind(LobbyServerRedirect.class).to(CoreLobbyServerRedirect.class);
         bind(LobbyCloudWrapperGenerator.class).to(CoreLobbyCloudWrapperGenerator.class);
         bind(SelectorRegistry.class).to(CoreSelectorRegistry.class);
+        bind(LobbyNPCActionHandler.class).to(CoreLobbyNPCActionHandler.class);
     }
 }

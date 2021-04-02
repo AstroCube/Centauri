@@ -81,6 +81,7 @@ lobby:
                     - "%%gray%%camas enemigas para ganar."
 prefix: "%%color%%%%bold%%%%prefix%%%%reset%% %%dark_gray%%> %%reset%%"
 selectors:
+    error: "%%red%%Ha ocurrido un error al emparejarte con una partida."
     title:
         - "%%title%%"
         - ""

@@ -25,12 +25,6 @@
             <version>1.8-20201112.225727-1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.jitse</groupId>
-            <artifactId>npclib-api</artifactId>
-            <version>2.9-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
 </project>

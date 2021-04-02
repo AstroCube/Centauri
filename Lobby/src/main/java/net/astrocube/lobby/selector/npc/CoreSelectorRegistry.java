@@ -4,13 +4,20 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.util.StringList;
+import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCActionHandler;
 import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCSelector;
 import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
-import net.jitse.npclib.NPCLib;
-import net.jitse.npclib.api.NPC;
-import net.jitse.npclib.api.skin.Skin;
+import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
+import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.virtual.gamemode.GameMode;
+import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.puppets.entity.ClickAction;
+import net.astrocube.puppets.entity.PuppetRegistry;
+import net.astrocube.puppets.location.CoreLocation;
+import net.astrocube.puppets.player.PlayerPuppetEntity;
+import net.astrocube.puppets.player.PlayerPuppetEntityBuilder;
+import net.astrocube.puppets.player.skin.CorePuppetSkin;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -23,7 +30,10 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 
     private @Inject Plugin plugin;
     private @Inject MessageHandler messageHandler;
-    private @Inject NPCLib npcLib;
+    private @Inject PuppetRegistry puppetRegistry;
+    private @Inject CloudModeConnectedProvider cloudModeConnectedProvider;
+    private @Inject FindService<GameMode> findService;
+    private @Inject LobbyNPCActionHandler lobbyNPCActionHandler;
 
     private final Set<SelectorCompound> registries = new HashSet<>();
 
@@ -82,20 +92,24 @@ public class CoreSelectorRegistry implements SelectorRegistry {
                 }
             };
 
-            NPC npc = npcLib.createNPC();
-            npc.setLocation(
-                    new Location(
-                            Bukkit.getWorlds().get(0),
+            PlayerPuppetEntity playerPuppetEntity = PlayerPuppetEntityBuilder.create(
+                    new CoreLocation(
                             selector.getX(),
                             selector.getY(),
                             selector.getZ(),
                             selector.getYaw(),
-                            selector.getPitch()
-                    )
-            );
-            npc.setSkin(new Skin(selector.getValue(), selector.getSignature()));
+                            selector.getPitch(),
+                            Bukkit.getWorlds().get(0).getName()
+                    ),
+                    plugin,
+                    puppetRegistry
+            )
+                    .setClickType(ClickAction.Type.RIGHT)
+                    .setSkin(new CorePuppetSkin(selector.getValue(), selector.getSignature()))
+                    .setAction((p) -> lobbyNPCActionHandler.execute(p.getPlayer(), selector.getMode(), selector.getSubMode()))
+                    .build();
 
-            registries.add(new SelectorCompound(npc, selector));
+            registries.add(new SelectorCompound(playerPuppetEntity, selector));
 
         }
 
@@ -104,38 +118,73 @@ public class CoreSelectorRegistry implements SelectorRegistry {
     @Override
     public void spawnSelectors(Player player) {
 
-        registries.forEach(registry -> {
+        registries.forEach(registry ->
+                findService.find(registry.getLobbyNPCSelector().getMode()).callback(response -> {
 
-            StringList message = messageHandler.replacingMany(
-                    player, "selectors.replacing",
-                    "%%players%%", "0",
-                    "%%title%%", messageHandler.get(player, "selectors." + registry.getLobbyNPCSelector().getMode())
-            );
+                    response.ifSuccessful(gameMode -> {
 
+                        String title;
 
-            registry.getNPC().show(player);
-            registry.getNPC().setPlayerLines(message, player);
+                        String players = "0";
 
-        });
+                        if (registry.getLobbyNPCSelector().getSubMode().isEmpty()) {
+
+                            title = messageHandler.get(player, "selectors." +
+                                    registry.getLobbyNPCSelector().getMode());
+
+                            players = cloudModeConnectedProvider.getGlobalOnline(gameMode) + "";
+
+                        } else {
+
+                            title = messageHandler.get(player, "selectors." +
+                                    registry.getLobbyNPCSelector().getSubMode());
+
+                            if (gameMode.getSubTypes() != null) {
+
+                                for (SubGameMode subType : gameMode.getSubTypes()) {
+                                    if (subType.getId().equalsIgnoreCase(
+                                            registry.getLobbyNPCSelector().getSubMode())
+                                    ) {
+                                        players = cloudModeConnectedProvider.getGroupOnline(subType.getGroup()) + "";
+                                        break;
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                        StringList message = messageHandler.replacingMany(
+                                player, "selectors.title",
+                                "%%players%%", players,
+                                "%%title%%", title
+                        );
+
+                        registry.getNPC().register(player);
+                        registry.getNPC().show(player);
+                        registry.getNPC().setHolograms(player, message);
+
+                    });
+        }));
 
     }
 
     @Override
     public void despawnSelectors(Player player) {
-        registries.forEach(registry -> registry.getNPC().hide(player));
+        registries.forEach(registry -> registry.getNPC().unregister(player));
     }
 
     private static class SelectorCompound {
 
-        private final NPC NPC;
+        private final PlayerPuppetEntity NPC;
         private final LobbyNPCSelector lobbyNPCSelector;
 
-        public SelectorCompound(NPC NPC, LobbyNPCSelector lobbyNPCSelector) {
+        public SelectorCompound(PlayerPuppetEntity NPC, LobbyNPCSelector lobbyNPCSelector) {
             this.NPC = NPC;
             this.lobbyNPCSelector = lobbyNPCSelector;
         }
 
-        public NPC getNPC() {
+        public PlayerPuppetEntity getNPC() {
             return NPC;
         }
 

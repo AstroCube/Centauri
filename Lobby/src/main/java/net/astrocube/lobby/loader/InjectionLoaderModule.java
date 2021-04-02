@@ -1,16 +1,20 @@
 package net.astrocube.lobby.loader;
 
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.translation.TranslationModule;
-import net.astrocube.lobby.Lobby;
 import net.astrocube.lobby.board.ScoreboardModule;
 import net.astrocube.lobby.gamemode.GameModeModule;
 import net.astrocube.lobby.hide.HideModule;
 import net.astrocube.lobby.hotbar.HotbarModule;
 import net.astrocube.lobby.nametag.NametagModule;
 import net.astrocube.lobby.selector.SelectorModule;
-import net.jitse.npclib.NPCLib;
+import net.astrocube.puppets.entity.CorePuppetRegistry;
+import net.astrocube.puppets.entity.PuppetRegistry;
+import net.astrocube.puppets.listener.ChunkPuppetListener;
+import net.astrocube.puppets.listener.PlayerPuppetListener;
+import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
@@ -26,9 +30,19 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new HotbarModule());
     }
 
-    @Provides
-    public NPCLib provideNPC(Lobby lobby) {
-        return new NPCLib(lobby);
+    @Provides @Singleton
+    public PuppetRegistry getPuppetRegistry() {
+        return new CorePuppetRegistry();
+    }
+
+    @Provides @Singleton
+    public ChunkPuppetListener getPuppetChunkListener(PuppetRegistry puppetRegistry) {
+        return new ChunkPuppetListener(puppetRegistry);
+    }
+
+    @Provides @Singleton
+    public PlayerPuppetListener getPuppetPlayerListener(PuppetRegistry puppetRegistry, Plugin plugin) {
+        return new PlayerPuppetListener(puppetRegistry, plugin);
     }
 
 }
