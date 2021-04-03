@@ -39,12 +39,17 @@ public class CoreHttpClient implements HttpClient {
 
     @Override
     public <T> T executeRequestSync(String path, RequestCallable<T> returnType, RequestOptions options) throws Exception {
+        return executeHeadlessRequestSync(httpClientConfig.getBaseURL() + path, returnType, options);
+    }
+
+    @Override
+    public <T> T executeHeadlessRequestSync(String path, RequestCallable<T> returnType, RequestOptions options) throws Exception {
         try {
             HttpRequest request = RequestContentBuilderUtil.build(
                     requestFactory,
                     options,
-                    httpClientConfig.getBaseURL(),
-                    path
+                    path,
+                    ""
             );
 
             options.getHeaders().forEach((key, value) -> request.getHeaders().set(key, value));

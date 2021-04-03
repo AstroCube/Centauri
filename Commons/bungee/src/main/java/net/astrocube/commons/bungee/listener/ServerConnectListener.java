@@ -3,7 +3,10 @@ package net.astrocube.commons.bungee.listener;
 import com.google.inject.Inject;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
+import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.api.core.virtual.user.UserDoc;
 import net.astrocube.commons.bungee.configuration.PluginConfigurationHelper;
+import net.astrocube.commons.bungee.user.UserProvideHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,6 +25,7 @@ public class ServerConnectListener implements Listener {
     private @Inject CloudTeleport cloudTeleport;
     private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject PluginConfigurationHelper configurationHelper;
+    private @Inject UserProvideHelper userProvideHelper;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -30,26 +34,37 @@ public class ServerConnectListener implements Listener {
         if (event.getReason() == ServerConnectEvent.Reason.JOIN_PROXY) {
             try {
 
-                Optional<Configuration> configuration = Optional.ofNullable(configurationHelper.get());
+                Configuration configuration = Optional.ofNullable(configurationHelper.get())
+                        .orElseThrow(() -> new Exception("Unable to get optimal server group"));
 
-                if (configuration.isPresent()) {
+                if (cloudStatusProvider.hasCloudHooked()) {
 
-                    if (cloudStatusProvider.hasCloudHooked()) {
+                    User user = userProvideHelper.getUserByName(event.getPlayer().getName())
+                            .orElseThrow(() -> new Exception("Unable to retrieve user record"));
 
-                        Optional<ServerInfo> connectable =
+                    ServerInfo connectable;
+
+                    if (
+                            user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM
+                    ) {
+                        connectable =
                                 Optional.of(ProxyServer.getInstance().getServerInfo(
                                         cloudTeleport.getServerFromGroup(
-                                                configuration.get().getString("redirect.authentication")
+                                                user.getSession().getLastLobby()
                                         )
-                                ));
-
-                        connectable.ifPresent(event::setTarget);
-
+                                )).orElseThrow(() -> new Exception("Unable to connect"));
+                    } else {
+                        connectable =
+                                Optional.of(ProxyServer.getInstance().getServerInfo(
+                                        cloudTeleport.getServerFromGroup(
+                                                configuration.getString("redirect.authentication")
+                                        )
+                                )).orElseThrow(() -> new Exception("Unable to connect"));
                     }
 
-                }
+                    event.setTarget(connectable);
 
-                configuration.orElseThrow(() -> new Exception("Unable to get optimal server group"));
+                }
 
             } catch (Exception e) {
                 event.getPlayer().disconnect(new TextComponent(
