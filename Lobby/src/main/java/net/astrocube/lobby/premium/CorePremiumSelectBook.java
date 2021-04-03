@@ -22,7 +22,7 @@ public class CorePremiumSelectBook implements PremiumSelectBook {
                                 .add(messageHandler.get(player, "premium.enable.book"))
                                 .add(BookUtil.TextBuilder.of(messageHandler.get(player, "premium.enable.button"))
                                         .onHover(BookUtil.HoverAction.showText(messageHandler.get(player, "premium.enable.hover")))
-                                        .onClick(BookUtil.ClickAction.runCommand("/premium perform"))
+                                        .onClick(BookUtil.ClickAction.runCommand("/premium confirm"))
                                         .build())
                                 .build()
                         )

@@ -51,6 +51,8 @@ public class CorePremiumConfirmationMenu implements PremiumConfirmationMenu {
                         .build()
         );
 
+        player.openInventory(builder.build());
+
     }
 
 }
