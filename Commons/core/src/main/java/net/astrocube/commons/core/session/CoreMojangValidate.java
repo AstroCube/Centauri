@@ -10,10 +10,9 @@ import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.session.MojangValidate;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
+import net.astrocube.commons.core.http.RawRequestCallable;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 @Singleton
 public class CoreMojangValidate implements MojangValidate {
@@ -24,12 +23,16 @@ public class CoreMojangValidate implements MojangValidate {
     @Override
     public boolean validateUUID(String user, UUID uniqueId) throws Exception {
 
+        Map<String, String> headers = new HashMap<>();
+        String url = "https://api.minetools.eu/uuid/" + uniqueId.toString().toLowerCase(Locale.ROOT);
+        headers.put("Referer", url);
+
         String response = httpClient.executeRequestSync(
-                "https://api.minetools.eu/uuid/" + uniqueId.toString().toLowerCase(Locale.ROOT),
-                new CoreRequestCallable<>(TypeToken.of(String.class), mapper),
+                url,
+                new RawRequestCallable(),
                 new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        new HashMap<>(),
+                        RequestOptions.Type.GET,
+                        headers,
                         "",
                         null
                 )

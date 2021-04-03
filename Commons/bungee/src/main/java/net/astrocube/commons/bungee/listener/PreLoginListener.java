@@ -11,6 +11,7 @@ import net.astrocube.commons.bungee.user.UserProvideHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
+import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -30,7 +31,7 @@ public class PreLoginListener implements Listener {
     private @Inject Redis redis;
 
     @EventHandler
-    public void onPreLogin(PreLoginEvent event) {
+    public void onPreLogin(LoginEvent event) {
 
         PendingConnection connection = event.getConnection();
         event.registerIntent(plugin);
@@ -38,7 +39,7 @@ public class PreLoginListener implements Listener {
         try {
 
             User user = userProvideHelper.getUserByName(event.getConnection().getName())
-                    .orElseThrow(() -> new Exception("Error while"));
+                    .orElseThrow(() -> new Exception("Error while obtaining user"));
 
             if (
                     connection.getUniqueId() != null &&

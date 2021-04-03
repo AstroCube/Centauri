@@ -1,8 +1,12 @@
 package net.astrocube.commons.bukkit.authentication.gateway.premium;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
+import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
+import net.astrocube.api.core.player.ProxyKickRequest;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -10,9 +14,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
+import java.util.HashMap;
+
 public class PremiumGateway implements AuthenticationGateway {
 
     private @Inject Redis redis;
+    private final Channel<ProxyKickRequest> channel;
+
+    @Inject
+    public PremiumGateway(Messenger jedisMessenger) {
+        channel = jedisMessenger.getChannel(ProxyKickRequest.class);
+    }
 
     @Override
     public void startProcessing(User user) {
@@ -24,7 +36,19 @@ public class PremiumGateway implements AuthenticationGateway {
             try (Jedis jedis = redis.getRawConnection().getResource()) {
 
                 if (!jedis.exists("premium:" + user.getId())) {
-                    player.sendMessage(ChatColor.RED + "Unable to verify your premium session. If problem persists contact an administrator");
+                    try {
+                        channel.sendMessage(new ProxyKickRequest() {
+                            @Override
+                            public String getName() {
+                                return player.getName();
+                            }
+
+                            @Override
+                            public String getReason() {
+                                return ChatColor.RED + "Unable to verify premium stastus, if problem persists contact an administrator";
+                            }
+                        }, new HashMap<>());
+                    } catch (Exception ignore) {}
                     return;
                 }
 
