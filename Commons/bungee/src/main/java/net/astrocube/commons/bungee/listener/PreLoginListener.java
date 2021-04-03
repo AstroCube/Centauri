@@ -60,23 +60,10 @@ public class PreLoginListener implements Listener {
 
 
         } catch (Exception e) {
-
-            if (e instanceof HttpResponseException) {
-
-                HttpResponseException responseException = (HttpResponseException) e;
-
-                if (responseException.getStatusCode() == 404) {
-                    connection.setOnlineMode(false);
-                    return;
-                }
-
-            }
-
             plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
             connection.disconnect(
                     new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
             );
-
         }
 
         event.completeIntent(plugin);
