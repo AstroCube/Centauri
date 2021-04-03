@@ -19,7 +19,8 @@ public class CorePremiumConfirmationMenu implements PremiumConfirmationMenu {
     public void open(Player player) {
 
         GUIBuilder builder = GUIBuilder.builder(
-                messageHandler.get(player, "premium.confirmation.title")
+                messageHandler.get(player, "premium.confirmation.title"),
+                3
         );
 
         builder.addItem(
