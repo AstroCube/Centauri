@@ -10,6 +10,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.LoginEvent;
+import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
@@ -27,7 +28,37 @@ public class PreLoginListener implements Listener {
     private @Inject Redis redis;
 
     @EventHandler
-    public void onPreLogin(LoginEvent event) {
+    public void onPreLogin(PreLoginEvent event) {
+
+        PendingConnection connection = event.getConnection();
+        event.registerIntent(plugin);
+
+        try {
+
+            User user = userProvideHelper.getUserByName(event.getConnection().getName())
+                    .orElseThrow(() -> new Exception("Error while obtaining user"));
+
+            if (user.getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
+                connection.setOnlineMode(false);
+                connection
+                        .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
+                        .getBytes(Charsets.UTF_8)));
+            }
+
+
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
+            connection.disconnect(
+                    new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
+            );
+        }
+
+        event.completeIntent(plugin);
+
+    }
+
+    @EventHandler
+    public void onLogin(LoginEvent event) {
 
         PendingConnection connection = event.getConnection();
         event.registerIntent(plugin);
@@ -39,7 +70,7 @@ public class PreLoginListener implements Listener {
 
             if (
                     connection.getUniqueId() != null &&
-                    mojangValidate.validateUUID(connection.getName(), connection.getUniqueId())
+                            mojangValidate.validateUUID(connection.getName(), connection.getUniqueId())
             ) {
 
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
@@ -49,14 +80,6 @@ public class PreLoginListener implements Listener {
                 }
 
             }
-
-            if (user.getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
-                connection.setOnlineMode(false);
-                connection
-                        .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
-                        .getBytes(Charsets.UTF_8)));
-            }
-
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
