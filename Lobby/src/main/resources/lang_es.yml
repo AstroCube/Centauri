@@ -97,12 +97,12 @@ premium:
         accept: "%%green%%Si, deseo activar modo premium"
         decline: "%%red%%No, quiero seguir utilizando contraseña"
     enable:
-        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nSi tu cuenta de Minecraft es original, puedes saltarte el inicio de sesión activando esta función (No podrás volver a entrar con lanzadores piratas). \n\n"
+        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nSi tu cuenta de Minecraft es original, puedes saltarte el inicio de sesión activando esta función (No podrás volver a entrar con lanzadores piratas)."
         button: "%%dark_green%%%%bold%%Click para activar"
         hover: "%%green%%¡Activar modo premium!"
         alert: "%%green%%Se ha activado el modo %%yellow%%%%bold%%PREMIUM%%green%%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."
     disable:
-        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nDesactivarás el modo premium e iniciarás nuevamente con la contraseña que registraste. \n\n"
+        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nDesactivarás el modo premium e iniciarás nuevamente con la contraseña que registraste."
         button: "%%dark_red%%%%bold%%Click para desactivar"
         hover: "%%red%%¡Desactivar modo premium!"
         alert: "%%red%%Se ha desactivado el modo %%yellow%%%%bold%%PREMIUM%%red%%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."

@@ -42,9 +42,9 @@ public class CorePremiumStatusSwitcher implements PremiumStatusSwitcher {
                     updateResponse.ifSuccessful(update -> {
 
                         if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
-                            messageHandler.sendIn(player, AlertModes.MUTED, "premium.disable.alert");
-                        } else {
                             messageHandler.sendIn(player, AlertModes.MUTED, "premium.enable.alert");
+                        } else {
+                            messageHandler.sendIn(player, AlertModes.MUTED, "premium.disable.alert");
                         }
 
                     });
