@@ -39,7 +39,22 @@ public class CoreHttpClient implements HttpClient {
 
     @Override
     public <T> T executeRequestSync(String path, RequestCallable<T> returnType, RequestOptions options) throws Exception {
-        return executeHeadlessRequestSync(httpClientConfig.getBaseURL() + path, returnType, options);
+        try {
+            HttpRequest request = RequestContentBuilderUtil.build(
+                    requestFactory,
+                    options,
+                    httpClientConfig.getBaseURL(),
+                    path
+            );
+
+            options.getHeaders().forEach((key, value) -> request.getHeaders().set(key, value));
+            request.getHeaders().setAccept("application/json");
+            request.getHeaders().set("Authorization", "Bearer " + new String(authorizationProcessor.getAuthorizationToken()));
+            return returnType.call(request);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Failed to build request to " + path, e);
+            throw e;
+        }
     }
 
     @Override
