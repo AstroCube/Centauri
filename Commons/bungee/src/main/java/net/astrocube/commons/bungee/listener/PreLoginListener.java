@@ -1,8 +1,6 @@
 package net.astrocube.commons.bungee.listener;
 
 import com.google.inject.Inject;
-import net.astrocube.api.core.message.Channel;
-import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.MojangValidate;
 import net.astrocube.api.core.virtual.user.User;
@@ -12,7 +10,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.LoginEvent;
-import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
@@ -20,7 +17,6 @@ import org.apache.commons.codec.Charsets;
 import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class PreLoginListener implements Listener {
