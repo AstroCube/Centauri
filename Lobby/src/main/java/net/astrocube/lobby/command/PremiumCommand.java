@@ -13,6 +13,9 @@ import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.entity.Player;
 
+@Command(
+        names = "premium"
+)
 public class PremiumCommand implements CommandClass {
 
     private @Inject FindService<User> findService;
@@ -20,7 +23,7 @@ public class PremiumCommand implements CommandClass {
     private @Inject PremiumSelectBook premiumSelectBook;
     private @Inject PremiumConfirmationMenu premiumConfirmationMenu;
 
-    @Command(names = {"premium"})
+    @Command(names = {""})
     public boolean onPremiumCommand(@Sender Player player) {
 
         findService.find(player.getDatabaseIdentifier()).callback(response -> {
@@ -45,7 +48,7 @@ public class PremiumCommand implements CommandClass {
 
     }
 
-    @Command(names = {"premium confirm"})
+    @Command(names = {"confirm"})
     public boolean onPremiumConfirmCommand(@Sender Player player) {
         premiumConfirmationMenu.open(player);
         return true;
