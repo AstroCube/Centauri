@@ -10,6 +10,7 @@ public class LobbyLoader implements Loader {
 
     private @Inject @Named("events") Loader eventLoader;
     private @Inject @Named("world") Loader worldLoader;
+    private @Inject @Named("command") Loader commandLoader;
 
     private @Inject SelectorRegistry selectorRegistry;
 
@@ -17,6 +18,7 @@ public class LobbyLoader implements Loader {
     public void load() {
         eventLoader.load();
         worldLoader.load();
+        commandLoader.load();;
         selectorRegistry.generateRegistry();
     }
 

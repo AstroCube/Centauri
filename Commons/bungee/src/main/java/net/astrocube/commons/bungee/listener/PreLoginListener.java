@@ -1,11 +1,12 @@
 package net.astrocube.commons.bungee.listener;
 
-import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
+import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
+import net.astrocube.api.core.session.MojangValidate;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
-import net.astrocube.commons.bungee.user.MojangSessionHelper;
 import net.astrocube.commons.bungee.user.UserProvideHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,13 +19,14 @@ import org.apache.commons.codec.Charsets;
 import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class PreLoginListener implements Listener {
 
     private @Inject Plugin plugin;
     private @Inject UserProvideHelper userProvideHelper;
-    private @Inject MojangSessionHelper mojangSessionHelper;
+    private @Inject MojangValidate mojangValidate;
     private @Inject Redis redis;
 
     @EventHandler
@@ -40,7 +42,7 @@ public class PreLoginListener implements Listener {
 
             if (
                     connection.getUniqueId() != null &&
-                    mojangSessionHelper.hasValidUUID(connection.getName(), connection.getUniqueId().toString())
+                    mojangValidate.validateUUID(connection.getName(), connection.getUniqueId())
             ) {
 
                 try (Jedis jedis = redis.getRawConnection().getResource()) {

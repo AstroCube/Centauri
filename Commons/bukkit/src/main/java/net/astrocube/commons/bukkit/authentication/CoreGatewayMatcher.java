@@ -5,6 +5,7 @@ import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import net.astrocube.commons.bukkit.authentication.gateway.password.PasswordGateway;
+import net.astrocube.commons.bukkit.authentication.gateway.premium.PremiumGateway;
 import net.astrocube.commons.bukkit.authentication.gateway.register.RegisterGateway;
 
 import java.util.HashMap;
@@ -17,11 +18,13 @@ public class CoreGatewayMatcher implements GatewayMatcher {
 
     @Inject public CoreGatewayMatcher(
             PasswordGateway passwordGateway,
-            RegisterGateway registerGateway
+            RegisterGateway registerGateway,
+            PremiumGateway premiumGateway
     ) {
         this.registerGateway = registerGateway;
         this.types = new HashMap<>();
         types.put(UserDoc.Session.Authorization.PASSWORD, passwordGateway);
+        types.put(UserDoc.Session.Authorization.PREMIUM, premiumGateway);
     }
 
     @Override

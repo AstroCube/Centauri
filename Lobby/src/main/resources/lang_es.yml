@@ -89,3 +89,20 @@ selectors:
     5db64666df034f2e9a3b4800: "TNT Games"
     5db645eea534664c62702cbe: "TNT Run"
     5e7c266e2e25d63c747474e7: "Bow Spleef"
+premium:
+    error: "Ha ocurrido un error al actualizar el estado del modo premium."
+    reminder: "%%aqua%%Tip: %%gray%%Como eres un jugador premium, puedes saltarte el inicio de sesión utilizando el comando %%blue%%/premium%%gray%%."
+    confirmation:
+        title: "¿Estás seguro?"
+        accept: "%%green%%Si, deseo activar modo premium"
+        decline: "%%red%%No, quiero seguir utilizando contraseña"
+    enable:
+        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nSi tu cuenta de Minecraft es original, puedes saltarte el inicio de sesión activando esta función (No podrás volver a entrar con lanzadores piratas). \n\n"
+        button: "%%dark_green%%%%bold%%Click para activar"
+        hover: "%%green%%¡Activar modo premium!"
+        alert: "%%green%%Se ha activado el modo %%yellow%%%%bold%%PREMIUM%%green%%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."
+    disable:
+        book: "%%blue%%%%bold%%Activar %%gold%%%%bold%%PREMIUM\n\nDesactivarás el modo premium e iniciarás nuevamente con la contraseña que registraste. \n\n"
+        button: "%%dark_red%%%%bold%%Click para desactivar"
+        hover: "%%red%%¡Desactivar modo premium!"
+        alert: "%%red%%Se ha desactivado el modo %%yellow%%%%bold%%PREMIUM%%red%%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."

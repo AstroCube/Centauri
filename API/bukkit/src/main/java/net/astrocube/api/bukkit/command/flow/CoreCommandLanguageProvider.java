@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.command.flow;
+package net.astrocube.api.bukkit.command.flow;
 
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.Namespace;

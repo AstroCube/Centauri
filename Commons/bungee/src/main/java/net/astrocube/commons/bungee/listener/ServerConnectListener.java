@@ -25,7 +25,6 @@ public class ServerConnectListener implements Listener {
     private @Inject CloudTeleport cloudTeleport;
     private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject PluginConfigurationHelper configurationHelper;
-    private @Inject UserProvideHelper userProvideHelper;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -39,28 +38,12 @@ public class ServerConnectListener implements Listener {
 
                 if (cloudStatusProvider.hasCloudHooked()) {
 
-                    User user = userProvideHelper.getUserByName(event.getPlayer().getName())
-                            .orElseThrow(() -> new Exception("Unable to retrieve user record"));
-
-                    ServerInfo connectable;
-
-                    if (
-                            user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM
-                    ) {
-                        connectable =
-                                Optional.of(ProxyServer.getInstance().getServerInfo(
-                                        cloudTeleport.getServerFromGroup(
-                                                user.getSession().getLastLobby()
-                                        )
-                                )).orElseThrow(() -> new Exception("Unable to connect"));
-                    } else {
-                        connectable =
-                                Optional.of(ProxyServer.getInstance().getServerInfo(
-                                        cloudTeleport.getServerFromGroup(
-                                                configuration.getString("redirect.authentication")
-                                        )
-                                )).orElseThrow(() -> new Exception("Unable to connect"));
-                    }
+                    ServerInfo connectable =
+                            Optional.of(ProxyServer.getInstance().getServerInfo(
+                                    cloudTeleport.getServerFromGroup(
+                                            configuration.getString("redirect.authentication")
+                                    )
+                            )).orElseThrow(() -> new Exception("Unable to connect"));
 
                     event.setTarget(connectable);
 

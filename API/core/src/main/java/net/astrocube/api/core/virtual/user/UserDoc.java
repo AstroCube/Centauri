@@ -75,6 +75,9 @@ public interface UserDoc {
         @JsonProperty("authorize")
         Authorization getAuthorizeMethod();
 
+        @JsonProperty("authorize")
+        void setAuthorizeMethod(Authorization authorization);
+
         enum Authorization {
             @JsonProperty("Password")
             PASSWORD,

@@ -9,6 +9,7 @@ import net.astrocube.lobby.gamemode.GameModeModule;
 import net.astrocube.lobby.hide.HideModule;
 import net.astrocube.lobby.hotbar.HotbarModule;
 import net.astrocube.lobby.nametag.NametagModule;
+import net.astrocube.lobby.premium.PremiumModule;
 import net.astrocube.lobby.selector.SelectorModule;
 import net.astrocube.puppets.entity.CorePuppetRegistry;
 import net.astrocube.puppets.entity.PuppetRegistry;
@@ -26,6 +27,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new TranslationModule());
         install(new GameModeModule());
         install(new SelectorModule());
+        install(new PremiumModule());
         install(new HideModule());
         install(new HotbarModule());
     }

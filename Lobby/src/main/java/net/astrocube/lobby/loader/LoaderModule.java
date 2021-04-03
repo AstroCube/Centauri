@@ -9,6 +9,7 @@ public class LoaderModule extends ProtectedModule {
     @Override
     public void configure() {
         bind(Loader.class).to(LobbyLoader.class);
+        bind(Loader.class).annotatedWith(Names.named("command")).to(CommandLoader.class);
         bind(Loader.class).annotatedWith(Names.named("events")).to(EventListenerLoader.class);
         bind(Loader.class).annotatedWith(Names.named("world")).to(WorldLoader.class);
     }
