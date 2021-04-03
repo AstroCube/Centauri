@@ -39,8 +39,9 @@ public class CoreMojangValidate implements MojangValidate {
         );
 
         JsonNode node = this.mapper.readTree(response);
-        return node.get("name").toString().equalsIgnoreCase(user) &&
-                node.get("status").toString().equalsIgnoreCase("OK");
+
+        return node.get("name").toString().replace("\"", "").equalsIgnoreCase(user) &&
+                node.get("status").toString().replace("\"", "").equalsIgnoreCase("OK");
 
     }
 
