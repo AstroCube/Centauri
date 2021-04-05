@@ -11,8 +11,7 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class WorldLoader implements Loader {
 
-    private @Inject
-    Plugin plugin;
+    private @Inject Plugin plugin;
 
     @Override
     public void load() {
