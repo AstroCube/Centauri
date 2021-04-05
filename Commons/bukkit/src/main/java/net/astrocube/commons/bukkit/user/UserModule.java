@@ -8,12 +8,16 @@ import net.astrocube.api.bukkit.user.display.TranslatedGroupProvider;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
 import net.astrocube.commons.bukkit.user.display.CoreDisplayMatcher;
 import net.astrocube.commons.bukkit.user.display.CoreTranslatedGroupProvider;
+import net.astrocube.commons.bukkit.user.skin.SkinModule;
 import net.astrocube.commons.bukkit.user.staff.CoreOnlineStaffProvider;
 
 public class UserModule extends ProtectedModule {
 
     @Override
     protected void configure() {
+
+        install(new SkinModule());
+
         bind(TranslatedGroupProvider.class).to(CoreTranslatedGroupProvider.class);
         bind(DisplayMatcher.class).to(CoreDisplayMatcher.class).in(Scopes.SINGLETON);
         bind(UserMatcher.class).to(CoreUserMatcher.class).in(Scopes.SINGLETON);

@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
+import net.astrocube.api.bukkit.user.skin.CustomSkinRegistry;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.permission.PermissionBalancer;
@@ -49,6 +50,7 @@ public class UserJoinListener implements Listener {
 
     private @Inject PermissionBalancer permissionBalancer;
     private @Inject Plugin plugin;
+    private @Inject CustomSkinRegistry customSkinRegistry;
 
     private static Field playerField;
 
@@ -145,6 +147,8 @@ public class UserJoinListener implements Listener {
                 player.setDisplayName(
                         flairFormat.getPrefix() +
                                 " " + ChatColor.WHITE + user.getDisplay());
+
+                customSkinRegistry.add(player, user.getSkin());
 
             } catch (Exception exception) {
 

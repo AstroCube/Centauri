@@ -12,7 +12,7 @@ public class AdminCommand implements CommandClass {
     @Inject
     private AdminPanelMenu adminPanelMenu;
 
-    @Command(names = {"apv", "app", "admin"})
+    @Command(names = {"apv", "app", "admin"}, permission = "commons.staff.panel")
     public boolean adminCommand(@Sender Player player) {
 
         player.openInventory(adminPanelMenu.createAdminPanel(player));
