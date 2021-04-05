@@ -115,7 +115,7 @@ public class CountdownTimer implements Runnable {
     }
 
     public boolean isImportantSecond() {
-        return ((this.secondsLeft % 15) == 0) || (this.secondsLeft < 11 && this.secondsLeft >= 1);
+        return ((this.secondsLeft % 15) == 0) || (this.secondsLeft < 6 && this.secondsLeft >= 1);
     }
 
 }
