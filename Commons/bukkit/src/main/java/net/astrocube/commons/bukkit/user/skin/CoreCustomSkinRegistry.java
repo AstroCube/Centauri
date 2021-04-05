@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class CoreCustomSkinRegistry implements CustomSkinRegistry {
 
     private @Inject SignedSkinFetcher skinFetcher;
-    private @Inject Plugin plugin;
     private Location location = null;
 
     @Override
@@ -44,12 +43,10 @@ public class CoreCustomSkinRegistry implements CustomSkinRegistry {
                 new Property(property.getName(), property.getValue(), property.getSignature())
         );
 
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            for (Player online : Bukkit.getOnlinePlayers()) {
-                online.hidePlayer(player);
-                online.showPlayer(player);
-            }
-        });
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            online.hidePlayer(player);
+            online.showPlayer(player);
+        }
 
     }
 
