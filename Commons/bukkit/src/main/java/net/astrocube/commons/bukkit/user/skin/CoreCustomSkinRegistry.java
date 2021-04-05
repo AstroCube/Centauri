@@ -21,19 +21,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class CoreCustomSkinRegistry implements CustomSkinRegistry {
 
     private @Inject SignedSkinFetcher skinFetcher;
-    private Location location = null;
 
     @Override
     public void add(Player player, String skin) {
 
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-
-        if (location == null) {
-
-            World world = new WorldCreator("skinFetching").createWorld();
-            location = new Location(world, 0, 0, 0);
-
-        }
 
         GameProfile profile = entityPlayer.getProfile();
         AbstractProperty property = skinFetcher.fetch(skin);
