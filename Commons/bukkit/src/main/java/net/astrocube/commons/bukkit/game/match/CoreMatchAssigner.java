@@ -91,20 +91,21 @@ public class CoreMatchAssigner implements MatchAssigner {
 
             if (match.getSpectators().contains(player.getDatabaseIdentifier())) {
                 matchService.assignSpectator(player.getDatabaseIdentifier(), match.getId(), false);
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.SPECTATING));
             } else if (match.getPending().stream().anyMatch(pending ->
                     pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
                             pending.getInvolved().contains(player.getDatabaseIdentifier()))
             ) {
 
                 matchService.unAssignPending(player.getDatabaseIdentifier(), match.getId());
-                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player));
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.WAITING));
 
             } else if (match.getTeams().stream()
                     .anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
                             teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
                     )
             ) {
-                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player));
+                Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.PLAYING));
             }
 
         }
