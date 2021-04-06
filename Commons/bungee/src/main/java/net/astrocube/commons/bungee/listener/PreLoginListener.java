@@ -18,6 +18,7 @@ import net.md_5.bungee.event.EventHandler;
 import org.apache.commons.codec.Charsets;
 import redis.clients.jedis.Jedis;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -36,10 +37,9 @@ public class PreLoginListener implements Listener {
 
         try {
 
-            User user = userProvideHelper.getUserByName(event.getConnection().getName())
-                    .orElseThrow(() -> new Exception("Error while obtaining user"));
+            Optional<User> user = userProvideHelper.getUserByName(event.getConnection().getName());
 
-            if (user.getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
+            if (!user.isPresent() || user.get().getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
                 connection.setOnlineMode(false);
                 connection
                         .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
@@ -48,22 +48,6 @@ public class PreLoginListener implements Listener {
 
 
         } catch (Exception e) {
-
-            if (e instanceof HttpResponseException) {
-
-                HttpResponseException responseException = (HttpResponseException) e;
-
-                if (responseException.getStatusCode() == 404) {
-                    try {
-                        connection.setOnlineMode(false);
-                        connection
-                                .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
-                                        .getBytes(Charsets.UTF_8)));
-                        return;
-                    } catch (Exception ignore) {}
-                }
-
-            }
 
             plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
             connection.disconnect(
@@ -83,8 +67,9 @@ public class PreLoginListener implements Listener {
 
         try {
 
-            User user = userProvideHelper.getUserByName(event.getConnection().getName())
-                    .orElseThrow(() -> new Exception("Error while obtaining user"));
+            String user = userProvideHelper.getUserByName(event.getConnection().getName())
+                    .map(UserDoc.Login::getUsername)
+                    .orElse(event.getConnection().getName());
 
             if (
                     connection.getUniqueId() != null &&
@@ -92,7 +77,7 @@ public class PreLoginListener implements Listener {
             ) {
 
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    jedis.set("premium:" + user.getId(), "1");
+                    jedis.set("premium:" + user, "1");
                 } catch (Exception e) {
                     throw new Exception("Unable to store premium state");
                 }

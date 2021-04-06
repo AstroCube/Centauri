@@ -52,7 +52,7 @@ public class ServerDisconnectListener implements Listener {
                 }, new HashMap<>());
 
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    jedis.del("premium:" + user.get().getId());
+                    jedis.del("premium:" + user.get().getUsername());
                 } catch (Exception e) {
                     throw new Exception("Unable to store premium state");
                 }

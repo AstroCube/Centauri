@@ -35,7 +35,7 @@ public class PremiumGateway implements AuthenticationGateway {
 
             try (Jedis jedis = redis.getRawConnection().getResource()) {
 
-                if (!jedis.exists("premium:" + user.getId())) {
+                if (!jedis.exists("premium:" + user.getUsername())) {
                     try {
                         channel.sendMessage(new ProxyKickRequest() {
                             @Override

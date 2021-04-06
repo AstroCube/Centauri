@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import redis.clients.jedis.Jedis;
 
+import java.util.Locale;
 import java.util.logging.Level;
 
 public class LobbyJoinListener implements Listener {
@@ -84,7 +85,7 @@ public class LobbyJoinListener implements Listener {
 
         if (event.getUser().getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PASSWORD) {
             try (Jedis jedis = redis.getRawConnection().getResource()) {
-                if (jedis.exists("premium:" + player.getDatabaseIdentifier())) {
+                if (jedis.exists("premium:" + player.getName().toLowerCase(Locale.ROOT))) {
                     Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () ->
                             messageHandler.sendIn(player, AlertModes.MUTED, "premium.reminder"), 60 * 20L);
                 }
