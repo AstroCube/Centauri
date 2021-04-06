@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.admin.selector.item.action;
 
+import net.astrocube.api.bukkit.game.spectator.SpectateRequestAssigner;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.commons.bukkit.admin.selector.AdminSubGameModeSelectorMenu;
@@ -13,8 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimpleDependentAction implements DependentAction {
 
-    @Inject
-    private AdminSubGameModeSelectorMenu adminSubGameModeSelectorMenu;
+    @Inject private AdminSubGameModeSelectorMenu adminSubGameModeSelectorMenu;
+    private @Inject SpectateRequestAssigner spectateRequestAssigner;
 
     @Override
     public boolean constructClickActions(InventoryClickEvent inventoryClickEvent, GameMode gameMode) {
@@ -38,7 +39,10 @@ public class SimpleDependentAction implements DependentAction {
 
                 int i = ThreadLocalRandom.current().nextInt(gameModes.size());
 
-                SubGameMode subGameMode = gameModes.get(i); // TODO: 6/1/2021 Send to this sub-gamemode, but first I need the cloud
+                SubGameMode subGameMode = gameModes.get(i);
+
+                spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
+
                 return true;
 
             default:

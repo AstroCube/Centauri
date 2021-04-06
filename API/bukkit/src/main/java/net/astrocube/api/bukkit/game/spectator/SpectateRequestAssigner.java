@@ -13,7 +13,7 @@ public interface SpectateRequestAssigner {
     void assignRequest(String gameMode, @Nullable String subMode, String requester);
 
     /**
-     *Generates a request assignation for an specific match
+     * Generates a request assignation for an specific match
      * @param match to spectate
      * @param requester of spectate
      * @param target of spectate

@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.admin.selector;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.spectator.SpectateRequestAssigner;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import org.bukkit.ChatColor;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 public class AdminSubGameModeSelectorMenu {
 
     private @Inject MessageHandler playerMessageHandler;
+    private @Inject SpectateRequestAssigner spectateRequestAssigner;
 
     public Inventory createSubGameModeSelectorMenu(Player player, GameMode gameMode) {
 
@@ -26,7 +28,7 @@ public class AdminSubGameModeSelectorMenu {
                         "admin-panel.subGamemode.title"
                 ),
                 1
-        ); // TODO: 6/1/2021 Start and finish this gui
+        );
 
         int index = 0;
         for (SubGameMode subGameMode : gameMode.getSubTypes()) {
@@ -49,7 +51,7 @@ public class AdminSubGameModeSelectorMenu {
                                     .addFlag(ItemFlag.HIDE_ATTRIBUTES)
                                     .build())
                             .setAction(InventoryClickEvent -> {
-                                // TODO: 9/1/2021 Send to the requested sub-gamemode
+                                spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
                                 return true;
                             })
                             .build());

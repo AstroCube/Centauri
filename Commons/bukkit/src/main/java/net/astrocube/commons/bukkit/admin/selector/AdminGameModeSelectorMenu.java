@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.admin.selector;
 
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.spectator.SpectateRequestAssigner;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
@@ -41,7 +42,8 @@ public class AdminGameModeSelectorMenu {
                                         .setAction(action -> {
 
                                             if (action.getClick() == ClickType.LEFT) {
-                                                Bukkit.getScheduler().runTask(plugin, () -> adminPanelMenu.createAdminPanel(player));
+                                                Bukkit.getScheduler()
+                                                        .runTask(plugin, () -> adminPanelMenu.createAdminPanel(player));
                                             }
 
                                             return true;
