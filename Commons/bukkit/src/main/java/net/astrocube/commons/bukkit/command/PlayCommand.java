@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.command;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;

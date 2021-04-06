@@ -6,6 +6,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
+import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
@@ -31,6 +32,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
     private @Inject LobbySessionModifier lobbySessionModifier;
     private @Inject LobbyItemProvider lobbyItemProvider;
     private @Inject MessageHandler messageHandler;
+    private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
 
     @Override
@@ -103,6 +105,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
                     countdownScheduler.cancelMatchCountdown(match);
                 }
 
+                actualMatchCache.remove(player.getDatabaseIdentifier());
 
             } catch (Exception e) {
                 Bukkit.getLogger().warning("There was an error while updating the match assignation.");
