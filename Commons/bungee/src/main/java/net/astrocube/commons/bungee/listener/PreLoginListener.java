@@ -1,5 +1,6 @@
 package net.astrocube.commons.bungee.listener;
 
+import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.MojangValidate;
@@ -47,6 +48,23 @@ public class PreLoginListener implements Listener {
 
 
         } catch (Exception e) {
+
+            if (e instanceof HttpResponseException) {
+
+                HttpResponseException responseException = (HttpResponseException) e;
+
+                if (responseException.getStatusCode() == 404) {
+                    try {
+                        connection.setOnlineMode(false);
+                        connection
+                                .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
+                                        .getBytes(Charsets.UTF_8)));
+                        return;
+                    } catch (Exception ignore) {}
+                }
+
+            }
+
             plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
             connection.disconnect(
                     new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
