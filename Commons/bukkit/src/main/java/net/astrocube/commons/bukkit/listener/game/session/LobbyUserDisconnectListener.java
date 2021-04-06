@@ -29,6 +29,7 @@ public class LobbyUserDisconnectListener implements Listener {
                     throw new GameControlException("Unsuccessful query at error update");
                 }
 
+                // TODO: Check disconnection flow
                 lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
             } catch (Exception e) {
                 plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);

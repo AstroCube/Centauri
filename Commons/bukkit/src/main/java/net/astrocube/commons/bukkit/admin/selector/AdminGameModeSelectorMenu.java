@@ -44,7 +44,7 @@ public class AdminGameModeSelectorMenu {
 
                                             if (action.getClick() == ClickType.LEFT) {
                                                 Bukkit.getScheduler()
-                                                        .runTask(plugin, () -> adminPanelMenu.createAdminPanel(player));
+                                                        .runTask(plugin, () -> player.openInventory(adminPanelMenu.createAdminPanel(player)));
                                             }
 
                                             return true;
