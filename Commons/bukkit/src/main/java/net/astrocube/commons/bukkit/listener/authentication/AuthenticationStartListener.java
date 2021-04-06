@@ -93,7 +93,10 @@ public class AuthenticationStartListener implements Listener {
 
                 });
 
-                gateway.startProcessing(user);
+                if (event.isRegistered()) {
+                    gateway.startProcessing(user);
+                }
+
                 authenticationRadio.addPlayer(event.getPlayer());
 
                 Bukkit.getScheduler().runTaskLater(plugin, () ->
