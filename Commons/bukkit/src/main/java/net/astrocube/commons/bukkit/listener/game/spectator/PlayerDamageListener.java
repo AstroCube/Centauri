@@ -3,10 +3,17 @@ package net.astrocube.commons.bukkit.listener.game.spectator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
+import net.astrocube.api.bukkit.game.map.GameMapCache;
+import net.astrocube.api.bukkit.game.map.MapConfigurationProvider;
+import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
+import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,11 +47,12 @@ public class PlayerDamageListener implements Listener {
 
                     if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
                             UserMatchJoiner.Origin.SPECTATING) {
-                        event.setCancelled(true);
-                    }
 
-                    if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                        spectatorSessionManager.provideFunctions(player, match);
+                        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                            spectatorSessionManager.provideFunctions(player, match);
+                        }
+
+                        event.setCancelled(true);
                     }
 
                 } catch (GameControlException | JsonProcessingException ignore) {}
