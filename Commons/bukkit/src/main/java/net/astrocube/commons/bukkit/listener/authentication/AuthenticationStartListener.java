@@ -80,7 +80,6 @@ public class AuthenticationStartListener implements Listener {
 
                 if (!event.isRegistered()) {
                     gatewayMatcher.getRegisterGateway().startProcessing(user);
-                    return;
                 }
 
                 Bukkit.getScheduler().runTask(plugin, () -> {
