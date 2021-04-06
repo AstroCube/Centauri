@@ -7,6 +7,7 @@ import net.astrocube.commons.bukkit.listener.game.management.GameModePairListene
 import net.astrocube.commons.bukkit.listener.game.management.GameTimerOutListener;
 import net.astrocube.commons.bukkit.listener.game.management.LobbyAdminInteractListener;
 import net.astrocube.commons.bukkit.listener.game.session.GameServerJoinListener;
+import net.astrocube.commons.bukkit.listener.game.session.GameServerLeaveListener;
 import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
@@ -17,6 +18,7 @@ public class GameListenerLoader implements ListenerLoader {
     private @Inject GameTimerOutListener gameTimerOutListener;
     private @Inject GameServerJoinListener gameServerJoinListener;
     private @Inject GameChatListener gameChatListener;
+    private @Inject GameServerLeaveListener gameServerLeaveListener;
     private @Inject LobbyAdminInteractListener lobbyAdminInteractListener;
 
     @Override
@@ -27,6 +29,7 @@ public class GameListenerLoader implements ListenerLoader {
                 gameModePairListener,
                 gameTimerOutListener,
                 gameServerJoinListener,
+                gameServerLeaveListener,
                 gameChatListener
         );
     }

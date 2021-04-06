@@ -6,6 +6,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
@@ -31,6 +32,7 @@ public class PlayCommand implements CommandClass {
     private @Inject MatchmakingGenerator matchmakingGenerator;
     private @Inject CloudStatusProvider cloudStatusProvider;
     private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
+    private @Inject MatchAssigner matchAssigner;
     private @Inject Plugin plugin;
 
     @Command(names = {"play"})
@@ -86,9 +88,7 @@ public class PlayCommand implements CommandClass {
                         }
 
                         try {
-
-
-
+                            matchAssigner.unAssign(player);
                             matchmakingGenerator.pairMatch(player, foundMode.get(), foundSubMode.get());
                         } catch (Exception e) {
                             messageHandler.sendIn(player, AlertModes.MUTED, "game.play.error");
