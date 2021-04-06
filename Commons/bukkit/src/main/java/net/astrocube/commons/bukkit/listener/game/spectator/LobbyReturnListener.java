@@ -17,7 +17,7 @@ public class LobbyReturnListener implements Listener {
                 event.getAction().equalsIgnoreCase("gc_lobby") &&
                         (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
         ) {
-            if (!spectatorLobbyTeleporter.hasScheduledTeleport(event.getPlayer())) {
+            if (spectatorLobbyTeleporter.hasScheduledTeleport(event.getPlayer())) {
                 spectatorLobbyTeleporter.cancelTeleport(event.getPlayer());
             } else {
                 spectatorLobbyTeleporter.scheduleTeleport(event.getPlayer());
