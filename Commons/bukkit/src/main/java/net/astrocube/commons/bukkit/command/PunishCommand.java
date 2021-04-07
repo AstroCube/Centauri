@@ -14,6 +14,7 @@ import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.Optional;
 
@@ -64,10 +65,12 @@ public class PunishCommand implements CommandClass {
                     return;
                 }
 
-                player.openInventory(
-                        punishmentChooserMenu.createPunishmentChooserMenu(
-                                player, userResponse.getResponse().get(), online.get())
-                );
+                Inventory inventory = punishmentChooserMenu.createPunishmentChooserMenu(
+                        player, userResponse.getResponse().get(), online.get());
+
+                if (inventory != null) {
+                    player.openInventory(inventory);
+                }
 
             });
 
