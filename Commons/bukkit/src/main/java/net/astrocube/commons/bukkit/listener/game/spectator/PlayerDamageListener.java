@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -31,19 +32,26 @@ public class PlayerDamageListener implements Listener {
     private @Inject Plugin plugin;
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerDamage(EntityDamageEvent event) {
+    public void onPlayerDamage(EntityDamageByEntityEvent event) {
 
-        if (!(event.getEntity() instanceof Player)) {
+        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getEntity();
+        Player damager = (Player) event.getDamager();
 
         try {
             Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
             matchOptional.ifPresent(match -> {
                 try {
+
+                    if (UserMatchJoiner.checkOrigin(damager.getDatabaseIdentifier(), match)
+                            == UserMatchJoiner.Origin.SPECTATING) {
+                        event.setCancelled(true);
+                        return;
+                    }
 
                     if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
                             UserMatchJoiner.Origin.SPECTATING) {
