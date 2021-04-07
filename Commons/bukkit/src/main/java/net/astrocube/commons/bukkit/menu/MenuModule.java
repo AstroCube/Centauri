@@ -11,5 +11,6 @@ public class MenuModule extends ProtectedModule {
     public void configure() {
         install(new AdminMenuModule());
         bind(ShapedMenuGenerator.class).to(CoreShapedMenuGenerator.class);
+        expose(ShapedMenuGenerator.class);
     }
 }
