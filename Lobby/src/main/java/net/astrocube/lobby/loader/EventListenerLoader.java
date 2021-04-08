@@ -2,6 +2,7 @@ package net.astrocube.lobby.loader;
 
 import com.google.inject.Inject;
 import net.astrocube.api.core.loader.Loader;
+import net.astrocube.lobby.listener.environment.WeatherChangeListener;
 import net.astrocube.lobby.listener.gadget.GameGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.HideGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.LobbySelectorGadgetInteractListener;
@@ -25,6 +26,8 @@ public class EventListenerLoader implements Loader {
     private @Inject PlayerQuitListener playerQuitListener;
     private @Inject UserBasicActionsListener userBasicActionsListener;
 
+    private @Inject WeatherChangeListener weatherChangeListener;
+
     private @Inject Plugin plugin;
 
     @Override
@@ -39,6 +42,8 @@ public class EventListenerLoader implements Loader {
         registerEvent(lobbyJoinListener);
         registerEvent(playerQuitListener);
         registerEvent(userBasicActionsListener);
+
+        registerEvent(weatherChangeListener);
 
     }
 
