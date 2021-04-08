@@ -53,6 +53,27 @@ public class PlayerDamageListener implements Listener {
                         return;
                     }
 
+                } catch (GameControlException ignore) {}
+            });
+
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error while checking actual match.");
+        }
+
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onEntityDamage(EntityDamageEvent event) {
+
+
+        Player player = (Player) event.getEntity();
+
+        try {
+            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+
+            matchOptional.ifPresent(match -> {
+                try {
+
                     if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
                             UserMatchJoiner.Origin.SPECTATING) {
 
