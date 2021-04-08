@@ -24,15 +24,11 @@ public class CoreActualMatchCache implements ActualMatchCache {
 
     @Override
     public Optional<Match> get(String id) throws Exception {
-
         try (Jedis jedis = redis.getRawConnection().getResource()) {
+            String matchId = jedis.get("actualMatch:" + id);
 
-            if (jedis.exists("actualMatch:" + id)) {
-
-                String matchId = jedis.get("actualMatch:" + id);
-
+            if (matchId != null) {
                 return Optional.of(findService.findSync(matchId));
-
             } else {
                 return obtainFromProvider(id, jedis);
             }
