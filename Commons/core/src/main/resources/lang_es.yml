@@ -93,6 +93,11 @@ commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de par
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
 
+whipser:
+    error: "%%red%%Ha ocurrido un error al enviar un mensaje."
+    sender: "%%blue%%[%%sender%% %%gray%%-> %%target%%%%blue%%] %%message%%"
+    target: "%%blue%%[%%sender%% %%gray%%-> %%target%%%%blue%%] %%message%%"
+
 authentication:
     attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
     unauthorized: "%%red%%Tu sesión en AstroCube no se autorizó correctamente. %n%%n% (Response: %%error%%)"

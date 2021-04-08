@@ -26,7 +26,6 @@ public class CoreWhisperManager implements WhisperManager {
     @Inject
     private CoreWhisperManager(Messenger messenger,
                                ListeningExecutorService executorService,
-                               FindService<User> userFindService,
                                MessageHandler handler) {
         this.executorService = executorService;
         this.messageHandler = handler;
@@ -47,10 +46,10 @@ public class CoreWhisperManager implements WhisperManager {
         // is online on other server
         if (targetPlayer == null) {
             messageHandler
-                    .send(sender, "whisper.sender",
-                            senderUser.getDisplay(),
-                            target.getDisplay(),
-                            message);
+                    .sendReplacing(sender, "whisper.sender",
+                            "%%sender%%", senderUser.getDisplay(),
+                            "%%target%%", target.getDisplay(),
+                            "%%message%%", message);
 
             WhisperMessage whisperMessage = new CoreWhisperMessage(senderUser, target, message);
 
@@ -67,15 +66,15 @@ public class CoreWhisperManager implements WhisperManager {
 
         // online on the same server
         messageHandler
-                .send(targetPlayer, "whisper.target",
-                        senderUser.getDisplay(),
-                        target.getDisplay(),
-                        message);
+                .sendReplacing(targetPlayer, "whisper.target",
+                        "%%sender%%", senderUser.getDisplay(),
+                        "%%target%%", target.getDisplay(),
+                        "%%message%%", message);
         messageHandler
-                .send(sender, "whisper.sender",
-                        senderUser.getDisplay(),
-                        target.getDisplay(),
-                        message);
+                .sendReplacing(sender, "whisper.sender",
+                        "%%sender%%", senderUser.getDisplay(),
+                        "%%target%%", target.getDisplay(),
+                        "%%message%%", message);
 
 
         return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));
