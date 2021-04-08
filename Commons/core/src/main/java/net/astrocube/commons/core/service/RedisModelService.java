@@ -21,7 +21,7 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 
 @SuppressWarnings("All")
-public class FRedisModelService<Complete extends Model, Partial extends PartialModel>
+public class RedisModelService<Complete extends Model, Partial extends PartialModel>
         extends CoreModelService<Complete, Partial> {
 
     @Inject private Redis redis;
