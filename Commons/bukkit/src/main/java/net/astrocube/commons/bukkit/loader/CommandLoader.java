@@ -68,7 +68,7 @@ public class CommandLoader implements Loader {
                 punishCommand,
                 playerLookCommand,
                 shoutCommand,
-                adminChatCommand,
+                adminCommand,
                 freezeCommand,
                 goToCommand,
                 partyCommand,
@@ -79,8 +79,10 @@ public class CommandLoader implements Loader {
         );
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
-            commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
-            commandManager.registerCommands(treeBuilder.fromClass(this.registerCommand));
+            registerCommands(
+                    commandManager, treeBuilder,
+                    loginCommand, registerCommand
+            );
         }
     }
 
