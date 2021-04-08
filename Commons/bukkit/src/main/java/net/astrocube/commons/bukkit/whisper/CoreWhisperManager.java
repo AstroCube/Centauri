@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import me.fixeddev.minecraft.player.Player;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.service.find.FindService;
@@ -19,15 +20,15 @@ import java.util.concurrent.ExecutorService;
 public class CoreWhisperManager implements WhisperManager {
 
     private final Channel<WhisperMessage> whisperMessageChannel;
-    private final ExecutorService executorService;
+    private final ExecutorServiceProvider executorServiceProvider;
 
     private final MessageHandler messageHandler;
 
     @Inject
     private CoreWhisperManager(Messenger messenger,
-                               ListeningExecutorService executorService,
+                               ExecutorServiceProvider executorServiceProvider,
                                MessageHandler handler) {
-        this.executorService = executorService;
+        this.executorServiceProvider = executorServiceProvider;
         this.messageHandler = handler;
 
         whisperMessageChannel = messenger.getChannel(WhisperMessage.class)
@@ -62,7 +63,7 @@ public class CoreWhisperManager implements WhisperManager {
                 } catch (JsonProcessingException e) {
                     return new CoreWhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
                 }
-            }, executorService);
+            }, executorServiceProvider.getRegisteredService());
         }
 
         // online on the same server
