@@ -12,7 +12,6 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.whisper.WhisperManager;
 import net.astrocube.commons.bukkit.whisper.WhisperResponse;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
