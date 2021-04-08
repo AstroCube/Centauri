@@ -9,7 +9,6 @@ import me.yushust.message.bukkit.BukkitMessageAdapt;
 import me.yushust.message.source.MessageSource;
 import me.yushust.message.source.MessageSourceDecorator;
 import net.astrocube.api.bukkit.translation.interceptor.CenterMessageInterceptor;
-import net.astrocube.api.bukkit.translation.interceptor.ColorMessageInterceptor;
 import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -30,10 +29,12 @@ public class TranslationModule extends ProtectedModule {
                     config.specify(Player.class)
                             .setLinguist(languageProvider)
                             .setMessageSender(new CoreMessenger());
-                    config.intercept(new ColorMessageInterceptor());
-                    config.intercept(new CenterMessageInterceptor());
+                    config.addInterceptor(new CenterMessageInterceptor());
                 }
         );
+
+        messageProvider.getReplacer()
+                .setValueProvider(new ColorPlaceholderValueProvider(messageProvider.getConfig()));
 
         return MessageHandler.of(messageProvider);
     }
