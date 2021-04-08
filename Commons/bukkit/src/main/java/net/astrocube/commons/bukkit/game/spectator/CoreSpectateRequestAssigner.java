@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.event.spectator.SpectateRequestEvent;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.spectator.SpectateRequest;
 import net.astrocube.api.bukkit.game.spectator.SpectateRequestAssigner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -24,6 +25,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
     private @Inject QueryService<Match> queryService;
     private @Inject FindService<Server> findService;
     private @Inject ActualMatchCache actualMatchCache;
+    private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
     private @Inject ObjectMapper mapper;
 
     @Override

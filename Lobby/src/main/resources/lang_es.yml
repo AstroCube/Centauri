@@ -11,7 +11,7 @@ lobby:
             - "    %%dark_aqua%%Lobby%%dark_gray%%: %%white%%#%%lobby%%"
             - "    %%dark_aqua%%Conectados%%dark_gray%%: %%white%%%%online%%"
             - "%%gray%%"
-            - "%%gray%%astrocube.net"
+            - "%%aqua%%astrocube.net"
     hiding:
         active-gadget: "%%light_purple%%Mostrar jugadores %%gray%%(Click derecho)"
         disabled-gadget: "%%blue%%Ocultar jugadores %%gray%%(Click derecho)"
