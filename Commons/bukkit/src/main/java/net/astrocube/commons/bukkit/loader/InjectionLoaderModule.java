@@ -24,6 +24,7 @@ import net.astrocube.commons.bukkit.tablist.TablistModule;
 import net.astrocube.commons.bukkit.teleport.TeleportModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
+import net.astrocube.commons.bukkit.whisper.WhisperModule;
 import net.astrocube.commons.core.CommonsModule;
 import net.astrocube.puppets.entity.CorePuppetRegistry;
 import net.astrocube.puppets.entity.PuppetRegistry;
@@ -45,6 +46,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new ScoreboardModule());
         install(new LoaderModule());
         install(new ServerModule());
+        install(new WhisperModule());
         install(new BukkitSessionModule());
         install(new GameModule());
         install(new BukkitConfigurationModule());
