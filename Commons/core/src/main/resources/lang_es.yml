@@ -91,8 +91,8 @@ commons-friend-not-yourself: "No puedes hacer esto contigo mismo!"
 commons-friend-already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
 commons-friend-already-friends: "Ya eres amigo de esta persona"
 commons-friend-not-friends: "No eres amigo de esta persona"
-commons-friend-request-sent: "%%yellow%%Has enviado una solicitud de amistad a %%orange%%%%receiver%% %%yellow%%correctamente"
-commons-friend-forced: "%%yellow%%Has forzado la amistad entre tú y %%orange%%%%receiver%%"
+commons-friend-request-sent: "%%yellow%%Has enviado una solicitud de amistad a %%gold%%%%receiver%% %%yellow%%correctamente"
+commons-friend-forced: "%%yellow%%Has forzado la amistad entre tú y %%gold%%%%receiver%%"
 commons-friend-removed: "%%yellow%%Has removido a %%receiver%% de tu lista de amigos"
 commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de parte de este usuario"
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
@@ -115,7 +115,7 @@ authentication:
     success-message: "%%aqua%%Gracias por iniciar sesión %%yellow%%%%player%%%%aqua%%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%%red%%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%%n% Por favor inténtalo nuevamente en: %%time%%"
     chat: "%%red%%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
-    time-exceeded: "%%red%%Excedite el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
+    time-exceeded: "%%red%%Excediste el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
 
 game:
     play:
