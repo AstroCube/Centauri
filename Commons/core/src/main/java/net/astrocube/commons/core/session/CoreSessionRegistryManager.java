@@ -7,9 +7,9 @@ import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.registry.SessionRegistry;
 import net.astrocube.api.core.session.registry.SessionRegistryManager;
-import org.joda.time.DateTime;
 import redis.clients.jedis.Jedis;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Singleton
@@ -62,8 +62,8 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
                 }
 
                 @Override
-                public DateTime getAuthorizationDate() {
-                    return new DateTime();
+                public LocalDateTime getAuthorizationDate() {
+                    return LocalDateTime.now();
                 }
 
                 @Override

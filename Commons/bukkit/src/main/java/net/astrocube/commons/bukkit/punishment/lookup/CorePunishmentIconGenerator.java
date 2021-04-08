@@ -15,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.logging.Level;
 
 @Singleton
@@ -67,13 +69,15 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
                 )
         );
 
+        Date date = Date.from(punishment.getCreatedAt().atZone(ZoneOffset.systemDefault()).toInstant());
+
         meta.setLore(
                 messageHandler.replacingMany(
                         player, "punish-menu.lookup.lore",
                         "%%issuer%%", issuer,
                         "%%reason%%", punishment.getReason(),
                         "%%expires%%", expiration,
-                        "%%date%%", PrettyTimeUtils.getHumanDate(punishment.getCreatedAt().toDate(), user.getLanguage())
+                        "%%date%%", PrettyTimeUtils.getHumanDate(date, user.getLanguage())
                 )
         );
 

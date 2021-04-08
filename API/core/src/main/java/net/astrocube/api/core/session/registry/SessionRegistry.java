@@ -1,7 +1,8 @@
 package net.astrocube.api.core.session.registry;
 
 import net.astrocube.api.core.model.Document;
-import org.joda.time.DateTime;
+
+import java.time.LocalDateTime;
 
 public interface SessionRegistry extends Document {
 
@@ -21,7 +22,7 @@ public interface SessionRegistry extends Document {
      * Date of authorization
      * @return dateTime
      */
-    DateTime getAuthorizationDate();
+    LocalDateTime getAuthorizationDate();
 
     /**
      * Return identifier of authorization method used by the {@link net.astrocube.api.core.virtual.user.User}

@@ -10,10 +10,10 @@ import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.message.MessageHandler;
 import net.astrocube.api.core.message.Metadata;
-import org.joda.time.DateTime;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -56,8 +56,8 @@ public class JedisChannel<T extends Message> implements Channel<T> {
             }
 
             @Override
-            public DateTime getTimestamp() {
-                return DateTime.now();
+            public LocalDateTime getTimestamp() {
+                return LocalDateTime.now();
             }
         };
 

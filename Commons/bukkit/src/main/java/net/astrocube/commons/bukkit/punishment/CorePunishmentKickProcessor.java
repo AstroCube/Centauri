@@ -18,8 +18,8 @@ import net.astrocube.commons.core.utils.PrettyTimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.joda.time.DateTime;
 
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -52,11 +52,13 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
             translation = "punish.ban.message-temporal";
         }
 
+        Date date = Date.from(punishment.getExpiration().atZone(ZoneOffset.systemDefault()).toInstant());
+
         String finalMessage = messageHandler.replacing(
                 player, translation,
                 "%%reason%%", punishment.getReason(),
                 "%%expires%%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
-                        punishment.getExpiration().toDate(),
+                        date,
                         user.getLanguage()
                 )
         );

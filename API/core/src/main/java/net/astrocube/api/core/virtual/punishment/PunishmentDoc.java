@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
-import org.joda.time.DateTime;
 
 import javax.annotation.Nullable;
+import java.time.LocalDateTime;
 
 public interface PunishmentDoc extends Model {
 
@@ -91,7 +91,8 @@ public interface PunishmentDoc extends Model {
          * @return The data time that the punishment will expire.
          */
         @JsonProperty("expires")
-        @Nullable DateTime getExpiration();
+        @Nullable
+        LocalDateTime getExpiration();
 
     }
 

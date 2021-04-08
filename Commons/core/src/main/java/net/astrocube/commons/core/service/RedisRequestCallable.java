@@ -28,9 +28,12 @@ public class RedisRequestCallable<T extends Model> implements RequestCallable<T>
         if (statusCode < 400) {
             try (Jedis jedis = redis.getRawConnection().getResource()) {
                 T model = (T) mapper.readValue(json, mapper.constructType(modelMeta.getCompleteType()));
+
                 String key = modelMeta.getRouteKey() + ":" + model.getId();
+
                 jedis.set(key, json);
                 jedis.expire(key, modelMeta.getCache());
+
                 return model;
             } catch (Exception exception) {
                 exception.printStackTrace();

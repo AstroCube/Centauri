@@ -1,8 +1,8 @@
 package net.astrocube.api.core.message;
 
 import net.astrocube.api.core.model.Document;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public interface Metadata extends Document {
@@ -15,6 +15,6 @@ public interface Metadata extends Document {
 
     String getInstanceId();
 
-    DateTime getTimestamp();
+    LocalDateTime getTimestamp();
 
 }

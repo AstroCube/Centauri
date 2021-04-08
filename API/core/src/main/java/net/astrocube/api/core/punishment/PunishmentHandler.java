@@ -6,8 +6,9 @@ import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,11 +33,11 @@ public interface PunishmentHandler {
 
     AsyncResponse<List<Punishment>> getPunishments(PunishmentDoc.Identity.Type type, String playerId);
 
-    AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type  type, String playerId);
+    AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type type, String playerId);
 
     AsyncResponse<Void> updatePunishment(Punishment punishment);
 
-    static DateTime generateFromExpiration(long expiration) {
+    static LocalDateTime generateFromExpiration(long expiration) {
 
         if (expiration == -1) {
             return null;
@@ -47,7 +48,8 @@ public interface PunishmentHandler {
                 new Date().getTime() + expiration
         );
 
-        return new DateTime(timeout);
+        return LocalDateTime.now()
+                .plus(expiration, ChronoUnit.MILLIS);
     }
 
     static ObjectNode findByName(ObjectMapper mapper, String name) {

@@ -17,8 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 
 public class AuthenticationStartListener implements Listener {
@@ -58,8 +58,8 @@ public class AuthenticationStartListener implements Listener {
                     }
 
                     @Override
-                    public DateTime getAuthorizationDate() {
-                        return new DateTime();
+                    public LocalDateTime getAuthorizationDate() {
+                        return LocalDateTime.now();
                     }
 
                     @Override

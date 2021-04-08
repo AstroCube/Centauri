@@ -12,9 +12,9 @@ import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.virtual.punishment.Punishment;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import org.bukkit.Bukkit;
-import org.joda.time.DateTime;
 
 import javax.annotation.Nullable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -49,7 +49,8 @@ public class CorePunishmentHandler implements PunishmentHandler {
         PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
             @Override
-            public @Nullable DateTime getExpiration() {
+            public @Nullable
+            LocalDateTime getExpiration() {
                 return PunishmentHandler.generateFromExpiration(expiration);
             }
 
