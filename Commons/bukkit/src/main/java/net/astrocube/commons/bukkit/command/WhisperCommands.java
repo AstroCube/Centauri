@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.Text;
+import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
@@ -28,7 +29,7 @@ public class WhisperCommands implements CommandClass {
     private @Inject MessageHandler messageHandler;
 
     @Command(names = {"whisper", "msg", "m", "tell", "t", "w"})
-    public boolean whisper(Player sender, String target, @Text String message) {
+    public boolean whisper(@Sender Player sender, String target, @Text String message) {
 
         ObjectNode query = mapper.createObjectNode();
         query.put("username", target);
