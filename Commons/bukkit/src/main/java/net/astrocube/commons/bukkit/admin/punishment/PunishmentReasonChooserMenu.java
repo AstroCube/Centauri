@@ -5,6 +5,7 @@ import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.punishment.PresetPunishment;
 import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
 import net.astrocube.api.core.punishment.PunishmentBuilder;
+import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.commons.bukkit.admin.punishment.helper.PunishClickableGenerator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -43,6 +44,9 @@ public class PunishmentReasonChooserMenu {
                                         player,
                                         "punish-menu.reasons." + p.getId() + ".title"
                                 ).contains(search))
+                        .filter(p -> player.hasPermission("commons.staff.punish.ban") && p.getType() == PunishmentDoc.Identity.Type.BAN)
+                        .filter(p -> player.hasPermission("commons.staff.punish.kick") && p.getType() == PunishmentDoc.Identity.Type.KICK)
+                        .filter(p -> player.hasPermission("commons.staff.punish.warn") && p.getType() == PunishmentDoc.Identity.Type.WARN)
                         .collect(Collectors.toSet()),
                 search,
                 true,

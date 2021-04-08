@@ -299,6 +299,7 @@ punish:
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."
+    permission: "%%red%%No tienes permiso para aplicar sanciones."
     lookup:
         menu: "Sanciones de %%player%%"
         title: "%%type%%"

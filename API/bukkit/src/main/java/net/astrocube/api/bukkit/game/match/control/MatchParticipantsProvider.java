@@ -55,6 +55,7 @@ public interface MatchParticipantsProvider {
                 .stream()
                 .flatMap(teams ->
                         teams.getMembers().stream()
+                                .filter(MatchDoc.TeamMember::isActive)
                                 .map(MatchDoc.TeamMember::getUser)
                 )
         );
@@ -66,6 +67,7 @@ public interface MatchParticipantsProvider {
                 .stream()
                 .flatMap(teams ->
                         teams.getMembers().stream()
+                                .filter(MatchDoc.TeamMember::isActive)
                                 .map(MatchDoc.TeamMember::getUser))
                 .collect(Collectors.toSet());
     }
