@@ -1,5 +1,8 @@
 package net.astrocube.commons.bukkit.loader;
 
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
@@ -21,6 +24,10 @@ import net.astrocube.commons.bukkit.teleport.TeleportModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.core.CommonsModule;
+import net.astrocube.puppets.entity.PuppetRegistry;
+import net.astrocube.puppets.packet.PacketHandler;
+import net.astrocube.puppets.packet.PuppetClickPacket;
+import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
@@ -48,4 +55,10 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new PartyModule());
         install(new PunishmentModule());
     }
+
+    @Provides @Singleton @Named("puppet")
+    public PacketHandler providePuppetHandler(PuppetRegistry registry, Plugin plugin) {
+        return new PuppetClickPacket(registry, plugin);
+    }
+
 }

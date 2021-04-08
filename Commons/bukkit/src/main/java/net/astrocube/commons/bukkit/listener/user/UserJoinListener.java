@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.listener.user;
-
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
@@ -20,6 +20,7 @@ import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.game.match.lobby.LobbyLocationParser;
 import net.astrocube.commons.bukkit.permission.CorePermissible;
+import net.astrocube.puppets.packet.PacketHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
@@ -50,6 +51,7 @@ public class UserJoinListener implements Listener {
 
     private @Inject PermissionBalancer permissionBalancer;
     private @Inject Plugin plugin;
+    private @Inject @Named("puppet") PacketHandler packetHandler;
     private @Inject CustomSkinRegistry customSkinRegistry;
 
     private static Field playerField;
@@ -147,6 +149,8 @@ public class UserJoinListener implements Listener {
                 player.setDisplayName(
                         flairFormat.getPrefix() +
                                 " " + ChatColor.WHITE + user.getDisplay());
+
+                packetHandler.handle(player);
 
                 //Bukkit.getScheduler().runTask(plugin, () ->
                 //                        customSkinRegistry.add(player, user.getSkin()));

@@ -18,7 +18,7 @@ public class LobbyLoader implements Loader {
     public void load() {
         eventLoader.load();
         worldLoader.load();
-        commandLoader.load();;
+        commandLoader.load();
         selectorRegistry.generateRegistry();
     }
 
