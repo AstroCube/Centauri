@@ -33,11 +33,6 @@ public class InjectionLoaderModule extends ProtectedModule {
     }
 
     @Provides @Singleton
-    public PuppetRegistry getPuppetRegistry() {
-        return new CorePuppetRegistry();
-    }
-
-    @Provides @Singleton
     public ChunkPuppetListener getPuppetChunkListener(PuppetRegistry puppetRegistry) {
         return new ChunkPuppetListener(puppetRegistry);
     }

@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.loader;
 
+import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -62,7 +63,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         return new PuppetClickPacket(registry, plugin);
     }
 
-    @Provides @Singleton
+    @Provides @Singleton @Exposed
     public PuppetRegistry providePuppetRegistry() {
         return new CorePuppetRegistry();
     }
