@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import me.fixeddev.commandflow.CommandManager;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilder;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilderImpl;
+import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.builder.AnnotatedCommandBuilderImpl;
 import me.fixeddev.commandflow.annotated.part.PartInjector;
 import me.fixeddev.commandflow.annotated.part.SimplePartInjector;
@@ -57,26 +58,40 @@ public class CommandLoader implements Loader {
                 (clazz, parent) -> this.injector.getInstance(clazz)
         );
 
-        commandManager.registerCommands(treeBuilder.fromClass(adminChatCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(playCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(friendsCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(matchCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(whisperCommands));
-        commandManager.registerCommands(treeBuilder.fromClass(punishCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(playerLookCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(shoutCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(adminCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(freezeCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(goToCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(partyCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(punishmentCommand));
-        commandManager.registerCommands(treeBuilder.fromClass(flyCommand));
+        registerCommands(
+                commandManager, treeBuilder,
+                adminChatCommand,
+                playCommand,
+                friendsCommand,
+                matchCommand,
+                whisperCommands,
+                punishCommand,
+                playerLookCommand,
+                shoutCommand,
+                adminChatCommand,
+                freezeCommand,
+                goToCommand,
+                partyCommand,
+                punishmentCommand,
+                flyCommand,
 
-        commandManager.registerCommands(treeBuilder.fromClass(testCommand));
+                testCommand
+        );
 
         if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
             commandManager.registerCommands(treeBuilder.fromClass(this.loginCommand));
             commandManager.registerCommands(treeBuilder.fromClass(this.registerCommand));
         }
     }
+
+    private void registerCommands(
+            CommandManager commandManager,
+            AnnotatedCommandTreeBuilder treeBuilder,
+            CommandClass... commandClasses
+    ) {
+        for (CommandClass commandClass : commandClasses) {
+            commandManager.registerCommands(treeBuilder.fromClass(commandClass));
+        }
+    }
+
 }
