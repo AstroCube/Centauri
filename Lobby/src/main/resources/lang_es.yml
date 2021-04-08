@@ -89,6 +89,11 @@ selectors:
     5db64666df034f2e9a3b4800: "TNT Games"
     5db645eea534664c62702cbe: "TNT Run"
     5e7c266e2e25d63c747474e7: "Bow Spleef"
+    5e14f4e5ff6607e52a32ed48: "Bed Wars"
+    603b0d83969dda3de98f260e: "1 vs 1"
+    606e7dab1fb922deba381e66: "2 vs 2"
+    606e7e15dbd01cb0b1480531: "3 vs 3"
+    606e7e32493c5090ec68f568: "4 vs 4"
 premium:
     error: "Ha ocurrido un error al actualizar el estado del modo premium."
     reminder: "%%aqua%%Tip: %%gray%%Como eres un jugador premium, puedes saltarte el inicio de sesión utilizando el comando %%blue%%/premium%%gray%%."
