@@ -93,7 +93,7 @@ commons-friend-no-friend-request: "%%red%%No hay una petición de amistad de par
 commons-friend-request-denied: "%%yellow%%Has denegado la solicitud de amistad de este jugador."
 commons-friend-request-accepted: "%%yellow%%Has aceptado esta solicitud de amistad"
 
-whipser:
+whisper:
     error: "%%red%%Ha ocurrido un error al enviar un mensaje."
     sender: "%%blue%%[%%sender%% %%gray%%-> %%target%%%%blue%%] %%message%%"
     target: "%%blue%%[%%sender%% %%gray%%-> %%target%%%%blue%%] %%message%%"

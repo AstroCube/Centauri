@@ -10,6 +10,7 @@ import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
+import org.bukkit.Bukkit;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -83,6 +84,6 @@ public class CoreWhisperManager implements WhisperManager {
     }
 
     private Player getPlayerById(String id) {
-        return null;
+        return Bukkit.getPlayerByIdentifier(id);
     }
 }
