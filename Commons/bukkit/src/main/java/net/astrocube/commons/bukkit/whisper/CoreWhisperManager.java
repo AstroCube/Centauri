@@ -30,7 +30,8 @@ public class CoreWhisperManager implements WhisperManager {
         this.executorService = executorService;
         this.messageHandler = handler;
 
-        whisperMessageChannel = messenger.getChannel(WhisperMessage.class);
+        whisperMessageChannel = messenger.getChannel(WhisperMessage.class)
+                .addHandler(new WhisperListener(messageHandler));
     }
 
     @Override
