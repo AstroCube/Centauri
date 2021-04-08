@@ -38,6 +38,7 @@ public class CommandLoader implements Loader {
     private @Inject PartyCommand partyCommand;
     private @Inject WhisperCommands whisperCommands;
     private @Inject PunishmentCommand punishmentCommand;
+    private @Inject FlyCommand flyCommand;
 
     private @Inject TestCommand testCommand;
 
@@ -69,6 +70,7 @@ public class CommandLoader implements Loader {
         commandManager.registerCommands(treeBuilder.fromClass(goToCommand));
         commandManager.registerCommands(treeBuilder.fromClass(partyCommand));
         commandManager.registerCommands(treeBuilder.fromClass(punishmentCommand));
+        commandManager.registerCommands(treeBuilder.fromClass(flyCommand));
 
         commandManager.registerCommands(treeBuilder.fromClass(testCommand));
 

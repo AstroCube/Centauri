@@ -34,6 +34,11 @@ rejected-invitation: "%%yellow%%Has rechazado una invitación a grupo correctame
 kicked-offline: "%%yellow%%Has removido a los miembros desconectados."
 other-kicked-offline: "%%yellow%%El líder %%gold%%%%player%%%% %%yellow%%ha removido a los miembros desconectados"
 
+fly-true: "%%yellow%%Tu vuelo ha sido %%green%%activado"
+fly-false: "%%yellow%%Tu vuelo ha sido %%red%%desactivado"
+fly-true-other: "%%yellow%%Has %%green%%activado %%yellow%%el vuelo de %%gold%%%%target%%"
+fly-false-other: "%%yellow%%Has %%red%%desactivado %%yellow%%el vuelo de %%gold%%%%target%%"
+
 invoker-kicked: "%%yellow%%Has removido al miembro %%gold%%%%player%%"
 kicked: "%%yellow%%Has sido eliminado de tu grupo."
 other-kicked: "%%gold%%%%player%% %%yellow%%ha promovido a %%gold%%%%target%% %%yellow%%a líder de grupo."
