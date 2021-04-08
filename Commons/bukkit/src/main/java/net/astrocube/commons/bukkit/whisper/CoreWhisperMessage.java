@@ -1,28 +1,46 @@
 package net.astrocube.commons.bukkit.whisper;
 
+import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 
-public class CoreWhisperMessage implements WhisperMessage{
+public class CoreWhisperMessage implements WhisperMessage {
 
-    private final UserDoc.Identity sender;
-    private final UserDoc.Identity target;
+    private final String senderId;
+    private final String senderDisplay;
+
+    private final String targetId;
+    private final String targetDisplay;
 
     private final String message;
 
-    public CoreWhisperMessage(UserDoc.Identity sender, UserDoc.Identity target, String message) {
-        this.sender = sender;
-        this.target = target;
+    public CoreWhisperMessage(User sender, User target, String message) {
+        senderId = sender.getId();
+        senderDisplay = sender.getDisplay();
+
+        targetId = target.getId();
+        targetDisplay = target.getDisplay();
+
         this.message = message;
     }
 
     @Override
-    public UserDoc.Identity sender() {
-        return sender;
+    public String senderId() {
+        return senderId;
     }
 
     @Override
-    public UserDoc.Identity target() {
-        return target;
+    public String senderDisplay() {
+        return senderDisplay;
+    }
+
+    @Override
+    public String targetId() {
+        return targetId;
+    }
+
+    @Override
+    public String targetDisplay() {
+        return targetDisplay;
     }
 
     @Override

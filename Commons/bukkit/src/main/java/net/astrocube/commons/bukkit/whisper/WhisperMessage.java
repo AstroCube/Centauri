@@ -4,9 +4,13 @@ import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.virtual.user.UserDoc;
 
 public interface WhisperMessage extends Message {
-    UserDoc.Identity sender();
+    String senderId();
 
-    UserDoc.Identity target();
+    String senderDisplay();
+
+    String targetId();
+
+    String targetDisplay();
 
     String message();
 }
