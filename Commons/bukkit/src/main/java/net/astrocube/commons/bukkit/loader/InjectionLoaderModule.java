@@ -24,6 +24,7 @@ import net.astrocube.commons.bukkit.teleport.TeleportModule;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.core.CommonsModule;
+import net.astrocube.puppets.entity.CorePuppetRegistry;
 import net.astrocube.puppets.entity.PuppetRegistry;
 import net.astrocube.puppets.packet.PacketHandler;
 import net.astrocube.puppets.packet.PuppetClickPacket;
@@ -59,6 +60,11 @@ public class InjectionLoaderModule extends ProtectedModule {
     @Provides @Singleton @Named("puppet")
     public PacketHandler providePuppetHandler(PuppetRegistry registry, Plugin plugin) {
         return new PuppetClickPacket(registry, plugin);
+    }
+
+    @Provides @Singleton
+    public PuppetRegistry providePuppetRegistry() {
+        return new CorePuppetRegistry();
     }
 
 }
