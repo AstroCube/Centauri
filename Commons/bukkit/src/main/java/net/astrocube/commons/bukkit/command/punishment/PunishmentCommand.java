@@ -2,10 +2,7 @@ package net.astrocube.commons.bukkit.command.punishment;
 
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
-import me.fixeddev.commandflow.annotated.annotation.Command;
-import me.fixeddev.commandflow.annotated.annotation.Flag;
-import me.fixeddev.commandflow.annotated.annotation.OptArg;
-import me.fixeddev.commandflow.annotated.annotation.Text;
+import me.fixeddev.commandflow.annotated.annotation.*;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import org.bukkit.entity.Player;
@@ -20,7 +17,7 @@ public class PunishmentCommand implements CommandClass {
             @Sender Player sender,
             String punished,
             @Text @OptArg("") String compound,
-            @Flag("s") boolean silent
+            @Switch("s") Boolean silent
     ) {
         punishmentCommandHelper.processPunishment(
                 sender,
@@ -37,7 +34,7 @@ public class PunishmentCommand implements CommandClass {
             @Sender Player sender,
             String punished,
             @Text @OptArg("") String compound,
-            @Flag("s") boolean silent
+            @Switch("s") Boolean silent
     ) {
         punishmentCommandHelper.processPunishment(
                 sender,
@@ -54,7 +51,7 @@ public class PunishmentCommand implements CommandClass {
             @Sender Player sender,
             String punished,
             @Text @OptArg("") String compound,
-            @Flag("s") boolean silent
+            @Switch("s") Boolean silent
     ) {
         punishmentCommandHelper.processPunishment(
                 sender,
