@@ -28,20 +28,15 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
     @Override
     public void execute(Player player, String mode, String subMode) {
 
-        System.out.println("Executed");
-
         findService.find(mode).callback(response -> {
 
             response.ifSuccessful(gameMode -> {
-
-                System.out.println("Oraguey");
 
                 if (subMode.isEmpty()) {
                     cloudTeleport.teleportToGroup(gameMode.getLobby(), player.getName());
                     return;
                 }
 
-                System.out.println("Not null");
 
                 if (gameMode.getSubTypes() != null) {
 
@@ -50,12 +45,9 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
                             .filter(g -> g.getId().equalsIgnoreCase(subMode))
                             .findAny();
 
-                    System.out.println("Asshole");
-
                     subGameMode.ifPresent(subModeRecord -> {
 
                         try {
-                            System.out.println("Gone here");
                             matchmakingGenerator.pairMatch(player, gameMode, subModeRecord);
                         } catch (Exception e) {
                             messageHandler.sendIn(player, AlertModes.ERROR, "selectors.error");
