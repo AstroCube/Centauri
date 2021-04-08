@@ -23,6 +23,9 @@ public class TranslationModule extends ProtectedModule {
                 .addFallbackLanguage("es")
                 .get();
 
+        // pre-load the spanish language
+        source.load("es");
+
         MessageProvider messageProvider = MessageProvider.create(
                 source,
                 config -> {

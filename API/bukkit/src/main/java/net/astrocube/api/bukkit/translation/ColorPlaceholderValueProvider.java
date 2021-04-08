@@ -1,6 +1,6 @@
 package net.astrocube.api.bukkit.translation;
 
-import me.yushust.message.config.ConfigurationContainer;
+import me.yushust.message.config.ConfigurationHandle;
 import me.yushust.message.format.PlaceholderValueProviderImpl;
 import me.yushust.message.track.TrackingContext;
 import org.bukkit.ChatColor;
@@ -13,7 +13,7 @@ public class ColorPlaceholderValueProvider extends PlaceholderValueProviderImpl 
 
     private final Map<String, String> colors = new HashMap<>();
 
-    public ColorPlaceholderValueProvider(ConfigurationContainer config) {
+    public ColorPlaceholderValueProvider(ConfigurationHandle config) {
         super(config);
         colors.put("n", "\n");
         for (ChatColor color : ChatColor.values()) {
