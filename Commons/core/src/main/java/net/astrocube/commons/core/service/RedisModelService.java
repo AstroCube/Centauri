@@ -21,7 +21,7 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 
 @SuppressWarnings("All")
-public class RedisModelService<Complete extends Model, Partial extends PartialModel>
+public class FRedisModelService<Complete extends Model, Partial extends PartialModel>
         extends CoreModelService<Complete, Partial> {
 
     @Inject private Redis redis;
@@ -62,10 +62,11 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
         String key = modelMeta.getRouteKey() + ":" + findModelRequest.getId();
 
         try (Jedis jedis = redis.getRawConnection().getResource()) {
+            String jsonValue = jedis.get(key);
 
             if (jedis.exists(key)) {
                 return (Complete) objectMapper.readValue(
-                        jedis.get(key),
+                        jsonValue,
                         mapper.constructType(getCompleteType())
                 );
             }
@@ -113,9 +114,12 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
             if (statusCode < 400) {
                 try (Jedis jedis = redis.getRawConnection().getResource()) {
                     T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
+
                     String key = modelMeta.getRouteKey() + ":" + model.getId();
+
                     jedis.set(key, json);
                     jedis.expire(key, modelMeta.getCache());
+
                     return model;
                 } catch (Exception exception) {
                     exception.printStackTrace();
