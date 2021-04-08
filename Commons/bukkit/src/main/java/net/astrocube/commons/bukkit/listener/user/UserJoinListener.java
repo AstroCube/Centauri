@@ -148,8 +148,8 @@ public class UserJoinListener implements Listener {
                         flairFormat.getPrefix() +
                                 " " + ChatColor.WHITE + user.getDisplay());
 
-                Bukkit.getScheduler().runTask(plugin, () ->
-                        customSkinRegistry.add(player, user.getSkin()));
+                //Bukkit.getScheduler().runTask(plugin, () ->
+                //                        customSkinRegistry.add(player, user.getSkin()));
 
             } catch (Exception exception) {
 
