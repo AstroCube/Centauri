@@ -68,7 +68,7 @@ public class PunishmentCommandHelper {
                             sender.getDatabaseIdentifier(),
                             target.getId(),
                             reason,
-                            PunishmentDoc.Identity.Type.BAN,
+                            type,
                             expiration,
                             false,
                             silent,
