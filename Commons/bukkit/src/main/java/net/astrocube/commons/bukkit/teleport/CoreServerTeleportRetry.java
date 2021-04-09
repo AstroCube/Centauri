@@ -63,11 +63,13 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
         cloudTeleport.teleportToServer(server, player);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(
-                plugin,
-                () -> attemptTeleport(player, server, attempt + 1, maxAttempt),
-                5 * 20L
-        );
+        if (!online.isOnline()) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(
+                    plugin,
+                    () -> attemptTeleport(player, server, attempt + 1, maxAttempt),
+                    2 * 20L
+            );
+        }
 
     }
 
