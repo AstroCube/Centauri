@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 
+import java.io.IOException;
+
 public interface MapConfigurationProvider {
 
     /**
@@ -13,6 +15,6 @@ public interface MapConfigurationProvider {
      * @return parsed configuration
      * @throws JsonProcessingException
      */
-    <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws JsonProcessingException;
+    <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws IOException;
 
 }

@@ -15,6 +15,7 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class CoreTeamBalancer implements TeamBalancer {
     private @Inject FindService<GameMode> findService;
 
     @Override
-    public Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, JsonProcessingException {
+    public Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, IOException {
 
         Optional<Integer> maxPerTeam = getMaxMembers(match);
 

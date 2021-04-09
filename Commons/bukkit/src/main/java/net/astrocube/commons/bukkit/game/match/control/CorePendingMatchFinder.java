@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
@@ -41,7 +42,7 @@ public class CorePendingMatchFinder implements PendingMatchFinder {
                     .map(key -> {
                         try {
                             return mapper.readValue(key, MatchmakingRequest.class);
-                        } catch (JsonProcessingException e) {
+                        } catch (IOException e) {
                             plugin.getLogger().log(Level.SEVERE, "Error deserializing matchmaking", e);
                             return null;
                         }

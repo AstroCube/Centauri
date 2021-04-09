@@ -9,6 +9,7 @@ import net.astrocube.api.core.message.MessageHandler;
 import net.astrocube.api.core.message.Metadata;
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 public class ChatChannelMessageHandler implements MessageHandler<ChatChannelMessage> {
 
@@ -25,7 +26,7 @@ public class ChatChannelMessageHandler implements MessageHandler<ChatChannelMess
         try {
             ChatChannel channel = this.mapper.readValue((String) properties.getHeaders().get("channel"), ChatChannel.class);
             this.interceptorRegistry.getInterceptors().forEach(interceptor -> interceptor.intercept(channel, message));
-        } catch (JsonProcessingException exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
     }

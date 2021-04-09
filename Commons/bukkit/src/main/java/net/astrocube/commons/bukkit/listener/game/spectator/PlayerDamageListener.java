@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -84,7 +85,7 @@ public class PlayerDamageListener implements Listener {
                         event.setCancelled(true);
                     }
 
-                } catch (GameControlException | JsonProcessingException ignore) {}
+                } catch (GameControlException | IOException ignore) {}
             });
 
         } catch (Exception e) {
