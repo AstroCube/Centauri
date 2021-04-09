@@ -32,7 +32,7 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
         Player online = Bukkit.getPlayer(player);
 
-        if (online == null) {
+        if (online == null || !online.isOnline()) {
             return;
         }
 
