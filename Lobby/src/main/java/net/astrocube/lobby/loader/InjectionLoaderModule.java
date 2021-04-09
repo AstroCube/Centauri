@@ -11,7 +11,6 @@ import net.astrocube.lobby.hotbar.HotbarModule;
 import net.astrocube.lobby.nametag.NametagModule;
 import net.astrocube.lobby.premium.PremiumModule;
 import net.astrocube.lobby.selector.SelectorModule;
-import net.astrocube.puppets.entity.CorePuppetRegistry;
 import net.astrocube.puppets.entity.PuppetRegistry;
 import net.astrocube.puppets.listener.ChunkPuppetListener;
 import net.astrocube.puppets.listener.PlayerPuppetListener;
