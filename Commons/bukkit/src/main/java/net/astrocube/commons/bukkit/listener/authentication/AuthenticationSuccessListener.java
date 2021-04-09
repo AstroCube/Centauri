@@ -55,6 +55,8 @@ public class AuthenticationSuccessListener implements Listener {
             );
 
             if (cloudStatusProvider.hasCloudHooked()) {
+                System.out.println(user.getUsername());
+                System.out.println(user.getSession().getLastLobby());
                 serverTeleportRetry.attemptGroupTeleport(
                         user.getUsername(),
                         user.getSession().getLastLobby(),
