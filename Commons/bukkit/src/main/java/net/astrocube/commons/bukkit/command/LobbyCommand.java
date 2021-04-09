@@ -11,7 +11,6 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 
-@Command(names = "hub")
 public class LobbyCommand implements CommandClass {
 
     private @Inject Plugin plugin;
