@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.mrbean.MrBeanModule;
 import com.google.inject.Scopes;
 import me.fixeddev.inject.ProtectedModule;
@@ -28,7 +29,7 @@ public class CommonsModule extends ProtectedModule {
 
         bind(ObjectMapper.class).toProvider(() -> {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JodaModule());
+            mapper.registerModule(new JavaTimeModule());
             mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
             mapper.setVisibility(mapper.getSerializationConfig()
                     .getDefaultVisibilityChecker()
