@@ -18,6 +18,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
 @Singleton
 public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 
@@ -27,7 +29,7 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
     private @Inject GhostEffectControl ghostEffectControl;
 
     @Override
-    public void provideFunctions(Player player, Match match) throws GameControlException, JsonProcessingException {
+    public void provideFunctions(Player player, Match match) throws GameControlException, IOException {
 
 
         CoordinatePoint configuration = mapConfigurationProvider.parseConfiguration(
