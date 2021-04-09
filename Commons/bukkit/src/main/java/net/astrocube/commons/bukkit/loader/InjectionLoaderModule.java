@@ -60,6 +60,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new PunishmentModule());
 
         bind(ServerTeleportRetry.class).to(CoreServerTeleportRetry.class);
+        expose(ServerTeleportRetry.class);
     }
 
     @Provides @Singleton @Named("puppet")
