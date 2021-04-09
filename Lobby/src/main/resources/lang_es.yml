@@ -113,3 +113,16 @@ premium:
         button: "%%dark_red%%%%bold%%Click para desactivar"
         hover: "¡Desactivar modo premium!"
         alert: "%%red%%Se ha desactivado el modo %%yellow%%%%bold%%PREMIUM%%red%%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."
+commands:
+    unknown-player: "%%red%%No se encuentra el usuario solicitado o está desconectado."
+    translation:
+        argument:
+            no-more: "%%red%%Uso correcto:"
+        command:
+            subcommand-invalid: "%%red%%Ejecutaste inválidamente este comando."
+            no-permission: "%%red%%No tienes permisos para realizar esta acción"
+        sender:
+            unknown: "Unknown sender"
+            only-player: "Solo puede realizar esto un jugador"
+        player:
+            offline: "%%red%%El jugador que solicitaste se encuentra desconectado."
