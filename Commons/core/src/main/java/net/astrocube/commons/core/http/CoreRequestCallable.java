@@ -27,6 +27,10 @@ public class CoreRequestCallable<T> implements RequestCallable<T> {
         final String json = response.parseAsString();
         int statusCode = response.getStatusCode();
 
+        if (returnType.getRawClass() == Void.class) {
+            return null;
+        }
+
         if (statusCode == 200) {
             T returnable = this.mapper.readValue(json, returnType);
             return returnable;

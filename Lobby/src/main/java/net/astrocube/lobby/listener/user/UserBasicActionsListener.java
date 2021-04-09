@@ -61,15 +61,17 @@ public class UserBasicActionsListener implements Listener {
             }
         }
 
+        Material material = event.getClickedBlock().getType();
+
         if (
-                (event.getMaterial() == Material.WORKBENCH) ||
-                (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("door")) ||
-                (event.getMaterial() == Material.ANVIL) ||
-                (event.getMaterial() == Material.FURNACE || event.getMaterial() == Material.BURNING_FURNACE) ||
-                (event.getMaterial() == Material.CHEST) ||
-                (event.getMaterial() == Material.STONE_BUTTON || event.getMaterial() == Material.WOOD_BUTTON) ||
-                (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("trap")) ||
-                (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("minecarf"))
+                (material == Material.WORKBENCH) ||
+                (material.toString().toLowerCase(Locale.ROOT).contains("door")) ||
+                (material == Material.ANVIL) ||
+                (material == Material.FURNACE || material == Material.BURNING_FURNACE) ||
+                (material == Material.CHEST) ||
+                (material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON) ||
+                (material.toString().toLowerCase(Locale.ROOT).contains("trap")) ||
+                (material.toString().toLowerCase(Locale.ROOT).contains("minecart"))
         ) {
             event.setCancelled(true);
         }
