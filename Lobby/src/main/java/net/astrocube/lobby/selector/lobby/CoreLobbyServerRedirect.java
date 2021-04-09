@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySwitchStatus;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 public class CoreLobbyServerRedirect implements LobbyServerRedirect {
 
     private @Inject MessageHandler messageHandler;
-    private @Inject CloudTeleport cloudTeleport;
+    private @Inject ServerTeleportRetry serverTeleportRetry;
 
     @Override
     public void redirectPlayer(Player player, CloudInstanceProvider.Instance wrapper, LobbySwitchStatus status) {
@@ -29,7 +30,7 @@ public class CoreLobbyServerRedirect implements LobbyServerRedirect {
                 break;
             }
             default: {
-                cloudTeleport.teleportToServer(wrapper.getName(), player.getName());
+                serverTeleportRetry.attemptGroupTeleport(player.getName(), wrapper.getName(), 1,3);
                 break;
             }
         }

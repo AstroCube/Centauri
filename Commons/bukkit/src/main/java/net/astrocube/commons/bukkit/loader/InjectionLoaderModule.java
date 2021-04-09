@@ -5,6 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.TranslationModule;
 import net.astrocube.commons.bukkit.authentication.AuthenticationModule;
 import net.astrocube.commons.bukkit.board.ScoreboardModule;
@@ -21,7 +22,7 @@ import net.astrocube.commons.bukkit.punishment.PunishmentModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.tablist.TablistModule;
-import net.astrocube.commons.bukkit.teleport.TeleportModule;
+import net.astrocube.commons.bukkit.teleport.CoreServerTeleportRetry;
 import net.astrocube.commons.bukkit.user.UserModule;
 import net.astrocube.commons.bukkit.virtual.BukkitVirtualModule;
 import net.astrocube.commons.bukkit.whisper.WhisperModule;
@@ -40,7 +41,6 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new FriendsModule());
         install(new CloudModule());
         install(new PerkModule());
-        install(new TeleportModule());
         install(new CommonsModule());
         install(new AuthenticationModule());
         install(new ScoreboardModule());
@@ -58,6 +58,8 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new MenuModule());
         install(new PartyModule());
         install(new PunishmentModule());
+
+        bind(ServerTeleportRetry.class).to(CoreServerTeleportRetry.class);
     }
 
     @Provides @Singleton @Named("puppet")

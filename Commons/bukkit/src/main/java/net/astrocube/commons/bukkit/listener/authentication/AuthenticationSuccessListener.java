@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
@@ -24,7 +25,7 @@ import java.util.logging.Level;
 public class AuthenticationSuccessListener implements Listener {
 
     private @Inject SessionRegistryManager sessionRegistryManager;
-    private @Inject CloudTeleport cloudTeleport;
+    private @Inject ServerTeleportRetry serverTeleportRetry;
     private @Inject FindService<User> findService;
     private @Inject MessageHandler messageHandler;
     private @Inject CloudStatusProvider cloudStatusProvider;
@@ -54,7 +55,12 @@ public class AuthenticationSuccessListener implements Listener {
             );
 
             if (cloudStatusProvider.hasCloudHooked()) {
-                cloudTeleport.teleportToGroup(user.getSession().getLastLobby(), user.getUsername());
+                serverTeleportRetry.attemptGroupTeleport(
+                        user.getUsername(),
+                        user.getSession().getLastLobby(),
+                        1,
+                        3
+                );
                 authenticationRadio.removePlayer(event.getPlayer());
             } else {
                 throw new AuthorizeException("Unable to get available register server.");

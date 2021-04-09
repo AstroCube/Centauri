@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
 import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCActionHandler;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.service.find.FindService;
@@ -23,7 +24,7 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
     private @Inject Plugin plugin;
     private @Inject FindService<GameMode> findService;
     private @Inject MessageHandler messageHandler;
-    private @Inject CloudTeleport cloudTeleport;
+    private @Inject ServerTeleportRetry serverTeleportRetry;
 
     @Override
     public void execute(Player player, String mode, String subMode) {
@@ -33,7 +34,12 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
             response.ifSuccessful(gameMode -> {
 
                 if (subMode.isEmpty()) {
-                    cloudTeleport.teleportToGroup(gameMode.getLobby(), player.getName());
+                    serverTeleportRetry.attemptGroupTeleport(
+                            player.getName(),
+                            gameMode.getLobby(),
+                            1,
+                            3
+                    );
                     return;
                 }
 

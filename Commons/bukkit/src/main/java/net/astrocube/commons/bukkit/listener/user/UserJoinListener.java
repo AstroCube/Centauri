@@ -4,7 +4,6 @@ import com.google.inject.name.Named;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
-import net.astrocube.api.bukkit.teleport.CrossTeleportExchanger;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.bukkit.user.skin.CustomSkinRegistry;
@@ -43,7 +42,6 @@ public class UserJoinListener implements Listener {
     private @Inject DisplayMatcher displayMatcher;
 
     private @Inject InstanceNameProvider instanceNameProvider;
-    private @Inject CrossTeleportExchanger crossTeleportExchanger;
     private @Inject TablistCompoundApplier tablistCompoundApplier;
 
     private @Inject SessionAliveInterceptor sessionAliveInterceptor;
@@ -121,8 +119,6 @@ public class UserJoinListener implements Listener {
                     if (!registry.getAddress().equalsIgnoreCase(address)) {
                         throw new AuthorizeException("Matching address not correspond to authorization");
                     }
-
-                    crossTeleportExchanger.exchange(user);
 
                 }
 

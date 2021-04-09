@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.spectator.SpectatorLobbyTeleporter;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import org.bukkit.Bukkit;
@@ -18,8 +19,8 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 
     private @Inject MessageHandler messageHandler;
     private @Inject Plugin plugin;
-    private @Inject CloudTeleport cloudTeleport;
-    private Map<String, Integer> scheduledTeleports = new HashMap<>();
+    private @Inject ServerTeleportRetry serverTeleportRetry;
+    private final Map<String, Integer> scheduledTeleports = new HashMap<>();
 
     @Override
     public void scheduleTeleport(Player player) {
@@ -28,8 +29,11 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 
         scheduledTeleports.put(player.getDatabaseIdentifier(),
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    cloudTeleport.teleportToGroup(
-                            plugin.getConfig().getString("server.fallback", "main-lobby"), player.getName()
+                    serverTeleportRetry.attemptGroupTeleport(
+                            player.getName(),
+                            plugin.getConfig().getString("server.fallback", "main-lobby"),
+                            1,
+                            3
                     );
                     scheduledTeleports.remove(player.getDatabaseIdentifier());
                 }, 20*5L).getTaskId()
