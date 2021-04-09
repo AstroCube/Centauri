@@ -1,5 +1,7 @@
 package net.astrocube.lobby.selector.npc;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
@@ -36,6 +38,7 @@ public class CoreSelectorRegistry implements SelectorRegistry {
     private @Inject LobbyNPCActionHandler lobbyNPCActionHandler;
 
     private final Set<SelectorCompound> registries = new HashSet<>();
+    private final Multimap<String, Integer> assignedTasks = MultimapBuilder.hashKeys().hashSetValues().build();
 
     @Override
     public void generateRegistry() {
@@ -119,59 +122,72 @@ public class CoreSelectorRegistry implements SelectorRegistry {
     public void spawnSelectors(Player player) {
 
         registries.forEach(registry ->
-                findService.find(registry.getLobbyNPCSelector().getMode()).callback(response -> {
+                findService.find(registry.getLobbyNPCSelector().getMode()).callback(response ->
+                        response.ifSuccessful(gameMode -> {
+                            registry.getNPC().register(player);
+                            registry.getNPC().show(player);
+                        })
+                )
+        );
 
-                    response.ifSuccessful(gameMode -> {
 
-                        String title;
+        int task = Bukkit.getScheduler().runTaskTimerAsynchronously(
+                plugin,
+                () -> updateHolograms(player),
+                0,
+                20 * 30L
+        ).getTaskId();
 
-                        String players = "0";
+        assignedTasks.put(player.getDatabaseIdentifier(), task);
+    }
 
-                        if (registry.getLobbyNPCSelector().getSubMode().isEmpty()) {
-
-                            title = messageHandler.get(player, "selectors." +
-                                    registry.getLobbyNPCSelector().getMode());
-
-                            players = cloudModeConnectedProvider.getGlobalOnline(gameMode) + "";
-
-                        } else {
-
-                            title = messageHandler.get(player, "selectors." +
-                                    registry.getLobbyNPCSelector().getSubMode());
-
-                            if (gameMode.getSubTypes() != null) {
-
-                                for (SubGameMode subType : gameMode.getSubTypes()) {
-                                    if (subType.getId().equalsIgnoreCase(
-                                            registry.getLobbyNPCSelector().getSubMode())
-                                    ) {
-                                        players = cloudModeConnectedProvider.getGroupOnline(subType.getGroup()) + "";
-                                        break;
-                                    }
-                                }
-
-                            }
-
-                        }
-
-                        StringList message = messageHandler.replacingMany(
-                                player, "selectors.title",
-                                "%players%", players,
-                                "%title%", title
-                        );
-
-                        registry.getNPC().register(player);
-                        registry.getNPC().show(player);
-                        registry.getNPC().setHolograms(player, message);
-
-                    });
-        }));
-
+    private void updateHolograms(Player player) {
+        registries.forEach(registry ->
+                findService.find(registry.getLobbyNPCSelector().getMode()).callback(response ->
+                        response.ifSuccessful(gameMode -> {
+                            boolean subMode = registry.getLobbyNPCSelector().getSubMode().isEmpty();
+                            final String title = subMode ?
+                                    messageHandler.get(player, "selectors." +
+                                            registry.getLobbyNPCSelector().getMode()) :
+                                    messageHandler.get(player, "selectors." +
+                                            registry.getLobbyNPCSelector().getSubMode());
+                            StringList message = messageHandler.replacingMany(
+                                    player, "selectors.title",
+                                    "%players%", subMode ?
+                                            getOnlineFromGlobal(gameMode) :
+                                            getOnlineFromSub(
+                                                    gameMode,
+                                                    registry.getLobbyNPCSelector().getSubMode()
+                                            ),
+                                    "%title%", title
+                            );
+                            registry.getNPC().setHolograms(player, message);
+                        })
+                )
+        );
     }
 
     @Override
     public void despawnSelectors(Player player) {
         registries.forEach(registry -> registry.getNPC().unregister(player));
+    }
+
+    private String getOnlineFromSub(GameMode gameMode, String subMode)  {
+        if (gameMode.getSubTypes() != null) {
+
+            for (SubGameMode subType : gameMode.getSubTypes()) {
+                if (subType.getId().equalsIgnoreCase(subMode)) {
+                    return cloudModeConnectedProvider.getGroupOnline(subType.getGroup()) + "";
+                }
+            }
+
+        }
+
+        return "0";
+    }
+
+    private String getOnlineFromGlobal(GameMode mode) {
+        return cloudModeConnectedProvider.getGlobalOnline(mode) + "";
     }
 
     private static class SelectorCompound {

@@ -9,8 +9,7 @@ import net.astrocube.api.core.virtual.server.ServerDoc;
 
 public class CentauriGameStartManager implements GameServerStartManager {
 
-    private @Inject
-    ServerService serverService;
+    private @Inject ServerService serverService;
 
     @Override
     public String createGameServer(String slug, ServerDoc.Type type, String cluster, int maxRunning, int maxTotal, GameMode gamemode, SubGameMode subGamemode) throws Exception {

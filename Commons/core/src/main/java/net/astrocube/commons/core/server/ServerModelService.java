@@ -86,8 +86,8 @@ public class ServerModelService implements ServerService {
         );
 
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.set("server:" + actual, objectMapper.writeValueAsString(actual));
-            jedis.expire("server:" + actual, 600);
+            jedis.set("server:" + actual.getId(), objectMapper.writeValueAsString(actual));
+            jedis.expire("server:" + actual.getId(), 600);
             return actual;
         }
 
