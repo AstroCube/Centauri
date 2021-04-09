@@ -6,6 +6,9 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
+import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
+import net.astrocube.api.bukkit.user.display.TranslatedGroupProvider;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
@@ -15,10 +18,10 @@ import org.bukkit.entity.Player;
 public class AddSubCommand implements CommandClass {
 
     private @Inject MessageHandler messageHandler;
-    private @Inject
-    FriendHelper friendHelper;
+    private @Inject FriendHelper friendHelper;
     private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;
+    private @Inject FriendCallbackHelper friendCallbackHelper;}
+    private @Inject DisplayMatcher displayMatcher;
 
     @Command(names = "")
     public boolean execute(@Sender Player player, OfflinePlayer target) {
@@ -38,9 +41,12 @@ public class AddSubCommand implements CommandClass {
             }
 
             friendshipHandler.createFriendRequest(user.getId(), targetUser.getId());
-            player.sendMessage(
-                    messageHandler.get(player, "commons-friend-request-sent")
-                            .replace("%receiver%", target.getName())
+
+            TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, targetUser);
+
+            messageHandler.sendReplacing(
+                    player, "friend.request-sent",
+                    "%receiver%", flairFormat.getColor() + targetUser.getDisplay()
             );
 
         });

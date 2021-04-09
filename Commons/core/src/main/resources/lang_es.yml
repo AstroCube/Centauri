@@ -70,33 +70,39 @@ cannot-invite:
 ####################
 # Friends messages #
 ####################
-friend-help:
-    - "%gold%============================"
-    - "%gold%/friend accept <player> %dark_gray%- %yellow%Acepta una petición de amistad"
-    - "%gold%/friend add <player> %dark_gray%- %yellow%Invita a alguien a ser tu amigo"
-    - "%gold%/friend deny <player> %dark_gray%- %yellow%Rechaza una petición de amistad"
-    - "%gold%/friend help %dark_gray%- %yellow%Muestra ayuda sobre estos comandos"
-    - "%gold%/friend list [page] %dark_gray%- %yellow%Muestra a todos tus amigos"
-    - "%gold%/friend remove <player> %dark_gray%- %yellow%Elimina a alguien de tu lista de amigos"
-    - "%gold%============================"
-no-friends: "&cAl parecer no tienes amigos :("
-friends-next-page: "%yellow%%bold%Página siguiente"
-friends-previous-page: "%yellow%%bold%Página anterior"
-friend-list:
-    header: "%gold%============ %yellow%Lista de Amigos %gold%============"
-    element: "%gold%%friend_name% %dark_gray%- %status%"
-online: "%yellow%Conectado"
-offline: "%red%Desconectado"
-commons-friend-not-yourself: "No puedes hacer esto contigo mismo!"
-commons-friend-already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
-commons-friend-already-friends: "Ya eres amigo de esta persona"
-commons-friend-not-friends: "No eres amigo de esta persona"
-commons-friend-request-sent: "%yellow%Has enviado una solicitud de amistad a %gold%%receiver% %yellow%correctamente"
-commons-friend-forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
-commons-friend-removed: "%yellow%Has removido a %receiver% de tu lista de amigos"
-commons-friend-no-friend-request: "%red%No hay una petición de amistad de parte de este usuario"
-commons-friend-request-denied: "%yellow%Has denegado la solicitud de amistad de este jugador."
-commons-friend-request-accepted: "%yellow%Has aceptado esta solicitud de amistad"
+friend:
+    help:
+        - "%blue%====================================================="
+        - "%white%/friend accept <player> %dark_gray%- %aqua%Acepta una petición de amistad"
+        - "%white%/friend add <player> %dark_gray%- %aqua%Invita a alguien a ser tu amigo"
+        - "%white%/friend deny <player> %dark_gray%- %aqua%Rechaza una petición de amistad"
+        - "%white%/friend help %dark_gray%- %aqua%Muestra ayuda sobre estos comandos"
+        - "%white%/friend list [page] %dark_gray%- %aqua%Muestra a todos tus amigos"
+        - "%white%/friend remove <player> %dark_gray%- %aqua%Elimina a alguien de tu lista de amigos"
+        - "%blue%====================================================="
+    online: "%yellow%Conectado"
+    offline: "%red%Desconectado"
+    request-sent:
+        - "%blue%====================================================="
+        - "%white%Has enviado una solicitud de amistad a %receiver% %white%correctamente"
+        - "%blue%====================================================="
+    forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
+    request-accepted: "%yellow%Has aceptado esta solicitud de amistad"
+    error:
+        empty: "%%red%%Al parecer no tienes amigos :("
+        not-yourself: "No puedes hacer esto contigo mismo!"
+        already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
+        already-friends: "Ya eres amigo de esta persona"
+        not-friends: "No eres amigo de esta persona"
+        request-sent: "%yellow%Has enviado una solicitud de amistad a %gold%%receiver% %yellow%correctamente"
+        no-friend-request: "%red%No hay una petición de amistad de parte de este usuario"
+        removed: "%yellow%Has removido a %receiver% de tu lista de amigos"
+        request-denied: "%yellow%Has denegado la solicitud de amistad de este jugador."
+    list:
+        next: "%yellow%%bold%Página siguiente"
+        previous: "%yellow%%bold%Página anterior"
+        header: "%gold%============ %yellow%Lista de Amigos %gold%============"
+        element: "%gold%%friend_name% %dark_gray%- %status%"
 
 whisper:
     error: "%red%Ha ocurrido un error al enviar un mensaje."

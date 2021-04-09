@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.mojang.authlib.properties.PropertyMap;
 import net.astrocube.api.bukkit.user.profile.AbstractProperty;
 import net.astrocube.api.bukkit.user.skin.CustomSkinRegistry;
 import net.astrocube.api.bukkit.user.skin.SignedSkinFetcher;
@@ -29,11 +30,14 @@ public class CoreCustomSkinRegistry implements CustomSkinRegistry {
 
         GameProfile profile = entityPlayer.getProfile();
         AbstractProperty property = skinFetcher.fetch(skin);
+        PropertyMap properties = profile.getProperties();
 
-        profile.getProperties().put(
-                "texture",
-                new Property(property.getName(), property.getValue(), property.getSignature())
-        );
+        properties.removeAll("textures");
+        properties.put("textures", new Property(
+                property.getName(),
+                property.getValue(),
+                property.getSignature()
+        ));
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             online.hidePlayer(player);

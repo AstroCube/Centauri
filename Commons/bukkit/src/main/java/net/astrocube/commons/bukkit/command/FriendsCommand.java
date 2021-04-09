@@ -24,9 +24,7 @@ public class FriendsCommand implements CommandClass {
 
     @Command(names = {""})
     public boolean onCommand(@Sender Player player) {
-        for (String message : messageHandler.getMany(player, "friend-help").getContents()) {
-            player.sendMessage(message);
-        }
+        messageHandler.send(player, "friend.help");
         return true;
     }
 

@@ -53,13 +53,17 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
     @Override
     public void createFriendRequest(String from, String to) {
+
         if (existsFriendRequest(from, to)) {
             return;
         }
+
         try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.set("friendship:" + from + ":" + to, ""); // dummy values
             jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY);
         }
+
+
     }
 
     @Override

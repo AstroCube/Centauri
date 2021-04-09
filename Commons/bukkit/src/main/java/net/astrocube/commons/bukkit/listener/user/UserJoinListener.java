@@ -148,8 +148,8 @@ public class UserJoinListener implements Listener {
 
                 packetHandler.handle(player);
 
-                //Bukkit.getScheduler().runTask(plugin, () ->
-                //                        customSkinRegistry.add(player, user.getSkin()));
+                Bukkit.getScheduler().runTask(plugin, () ->
+                                       customSkinRegistry.add(player, user.getSkin()));
 
             } catch (Exception exception) {
 
