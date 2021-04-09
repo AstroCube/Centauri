@@ -20,7 +20,7 @@ public class AddSubCommand implements CommandClass {
     private @Inject MessageHandler messageHandler;
     private @Inject FriendHelper friendHelper;
     private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;}
+    private @Inject FriendCallbackHelper friendCallbackHelper;
     private @Inject DisplayMatcher displayMatcher;
 
     @Command(names = "")
