@@ -60,7 +60,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
 
         String expiration = punishment.getExpiration() == null ?
                 messageHandler.get(player, "punishment-expiration.never") :
-                PrettyTimeUtils.getHumanDate(punishment.getExpiration().toDate(), user.getLanguage());
+                PrettyTimeUtils.getHumanDate(punishment.getExpiration(), user.getLanguage());
 
         meta.setDisplayName(
                 messageHandler.replacing(

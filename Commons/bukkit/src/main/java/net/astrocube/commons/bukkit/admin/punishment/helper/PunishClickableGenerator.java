@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.inject.Inject;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -44,9 +45,9 @@ public class PunishClickableGenerator {
                                     "%%reason%%", translated,
                                     "%%expire%%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
                                             PrettyTimeUtils.getHumanDate(
-                                                    PunishmentHandler.generateFromExpiration(
+                                                    Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
                                                             punishment.getExpiration()
-                                                    ).toDate(),
+                                                    )),
                                                     punishmentBuilder.getIssuer().getLanguage()
                                             )
                             )

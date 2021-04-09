@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
@@ -89,7 +90,9 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
         node.put("active", true);
 
         Optional<Punishment> activePunishment = queryService.querySync(node).getFoundModels().stream().filter(
-                punishment -> punishment.getExpiration() == null || punishment.getExpiration().isAfter(new DateTime(new Date()))
+                punishment -> punishment.getExpiration() == null ||
+                        punishment.getExpiration().isAfter(LocalDateTime.now())
+
         ).collect(Collectors.toSet()).stream().findFirst();
 
         if (activePunishment.isPresent()) {

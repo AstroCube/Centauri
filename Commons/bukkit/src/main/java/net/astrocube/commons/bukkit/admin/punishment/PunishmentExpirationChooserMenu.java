@@ -20,6 +20,7 @@ import team.unnamed.gui.core.gui.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
+import java.util.Objects;
 
 public class PunishmentExpirationChooserMenu {
 
@@ -43,9 +44,9 @@ public class PunishmentExpirationChooserMenu {
                                                 "%%type%%", messageHandler.get(player, "punish-menu.type." + punishmentBuilder.getType().toString().toLowerCase()),
                                                 "%%expires%%", punishmentBuilder.getDuration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
                                                         PrettyTimeUtils.getHumanDate(
-                                                                PunishmentHandler.generateFromExpiration(
+                                                                Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
                                                                         punishmentBuilder.getDuration()
-                                                                ).toDate(),
+                                                                )),
                                                                 punishmentBuilder.getIssuer().getLanguage())
                                         )
                                 ),
@@ -84,9 +85,9 @@ public class PunishmentExpirationChooserMenu {
                                             punishmentBuilder.getDuration() == -1 ?
                                                     messageHandler.get(player, "punishment-expiration.never") :
                                                     PrettyTimeUtils.getHumanDate(
-                                                            PunishmentHandler.generateFromExpiration(
+                                                            Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
                                                                     punishmentBuilder.getDuration()
-                                                            ).toDate(),
+                                                            )),
                                                             punishmentBuilder.getIssuer().getLanguage()
                                                     )
                                     )
