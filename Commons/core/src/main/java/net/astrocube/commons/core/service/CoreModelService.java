@@ -23,7 +23,6 @@ import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
@@ -74,7 +73,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
                         queryResult.getFoundModels().toString(),
                         mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
                 );
-            } catch (IOException e) {
+            } catch (JsonProcessingException e) {
                 return new HashSet<>();
             }
         };
@@ -132,7 +131,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
                             paginateResult.getData().toString(),
                             mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
                     );
-                } catch (IOException  e) {
+                } catch (JsonProcessingException e) {
                     return new HashSet<>();
                 }
             }

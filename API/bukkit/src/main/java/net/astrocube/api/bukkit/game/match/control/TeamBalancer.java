@@ -6,7 +6,6 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 
-import java.io.IOException;
 import java.util.Set;
 
 public interface TeamBalancer {
@@ -20,6 +19,6 @@ public interface TeamBalancer {
      * @throws GameControlException when the maximum players nor the map configuration can't be retrieved.
      * @throws JsonProcessingException when the map configuration can't be parsed.
      */
-    Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, IOException;
+    Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, JsonProcessingException;
 
 }
