@@ -1,15 +1,15 @@
 lobby:
     scoreboard:
-        title: "%blue%bold%AstroCube"
+        title: "%blue%%bold%AstroCube"
         lore:
             - "%green%"
-            - "  %aqua%bold%Tu perfil"
-            - "    %dark_aqua%Nombre%dark_gray%: %white%player%"
-            - "    %dark_aqua%Rango%dark_gray%: %white%rank%"
+            - "  %aqua%%bold%Tu perfil"
+            - "    %dark_aqua%Nombre%dark_gray%: %white%%player%"
+            - "    %dark_aqua%Rango%dark_gray%: %white%%rank%"
             - "%aqua%"
-            - "  %aqua%bold%Información"
+            - "  %aqua%%bold%Información"
             - "    %dark_aqua%Lobby%dark_gray%: %white%#%lobby%"
-            - "    %dark_aqua%Conectados%dark_gray%: %white%online%"
+            - "    %dark_aqua%Conectados%dark_gray%: %white%%online%"
             - "%gray%"
             - "%gray%astrocube.net"
     hiding:
@@ -79,4 +79,4 @@ lobby:
                     - "%gray%Protege la cama junto a tus"
                     - "%gray%compañeros y destruye las"
                     - "%gray%camas enemigas para ganar."
-prefix: "%color%bold%prefix%reset% %dark_gray%> %reset%"
+prefix: "%color%%bold%%prefix%%reset% %dark_gray%> %reset%"

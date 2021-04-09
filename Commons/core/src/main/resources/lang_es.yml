@@ -18,7 +18,7 @@ already-in-party: "%red%Ya estás en un grupo."
 no-party-invitation: "%red%No tienes invitaciones a grupos pendientes."
 no-party-now: "%red%El jugador ya no tiene un grupo."
 joined-party: "%yellow%Te has unido a un grupo"
-other-joined-party: "%gold%player%yellow% se ha unido a tu grupo"
+other-joined-party: "%gold%%player%%yellow% se ha unido a tu grupo"
 party-invited:
     - "%gold%============================"
     - "%yellow%Has sido invitado al grupo de %inviter%"
@@ -27,29 +27,29 @@ party-invited:
     - "%gold%/p reject %yellow% para rechazar"
     - "%gold%============================"
 left-party: "%yellow%Has abandonado tu grupo"
-other-left-party: "%gold%player%yellow% ha abandonado el grupo."
-party-disbanded: "%gold%player%yellow% ha deshecho el grupo"
-rejected-party-invitation: "%gold%player%yellow% ha rechazado tu invitación a tu grupo."
+other-left-party: "%gold%%player%%yellow% ha abandonado el grupo."
+party-disbanded: "%gold%%player%%yellow% ha deshecho el grupo"
+rejected-party-invitation: "%gold%%player%%yellow% ha rechazado tu invitación a tu grupo."
 rejected-invitation: "%yellow%Has rechazado una invitación a grupo correctamente"
 kicked-offline: "%yellow%Has removido a los miembros desconectados."
-other-kicked-offline: "%yellow%El líder %gold%player% %yellow%ha removido a los miembros desconectados"
+other-kicked-offline: "%yellow%El líder %gold%%player%% %yellow%ha removido a los miembros desconectados"
 
 fly-true: "%yellow%Tu vuelo ha sido %green%activado"
 fly-false: "%yellow%Tu vuelo ha sido %red%desactivado"
-fly-true-other: "%yellow%Has %green%activado %yellow%el vuelo de %gold%target%"
-fly-false-other: "%yellow%Has %red%desactivado %yellow%el vuelo de %gold%target%"
+fly-true-other: "%yellow%Has %green%activado %yellow%el vuelo de %gold%%target%"
+fly-false-other: "%yellow%Has %red%desactivado %yellow%el vuelo de %gold%%target%"
 
-invoker-kicked: "%yellow%Has removido al miembro %gold%player%"
+invoker-kicked: "%yellow%Has removido al miembro %gold%%player%"
 kicked: "%yellow%Has sido eliminado de tu grupo."
-other-kicked: "%gold%player% %yellow%ha promovido a %gold%target% %yellow%a líder de grupo."
+other-kicked: "%gold%%player% %yellow%ha promovido a %gold%%target% %yellow%a líder de grupo."
 cannot-kick:
     not-leader: "%red%No eres el líder de tu grupo. No puedes remover a otro miembro."
     not-in-party: "%red%No tienes un grupo. No puedes remover a otro miembro."
     not-same-party: "%red%El jugador al que intentas remover no está en tu grupo."
 
-invoker-promoted: "%yellow%Has promovido al miembro %gold%player%"
+invoker-promoted: "%yellow%Has promovido al miembro %gold%%player%"
 promoted: "%yellow%Has sido promovido a líder de tu grupo."
-other-promoted: "%gold%player% %yellow%ha promovido a %gold%target% %yellow%a líder de grupo."
+other-promoted: "%gold%%player% %yellow%ha promovido a %gold%%target% %yellow%a líder de grupo."
 cannot-promote:
     not-leader: "%red%No eres el líder de tu grupo. No puedes promover a otro miembro."
     not-in-party: "%red%No tienes un grupo. No puedes promover a otro miembro."
@@ -80,19 +80,19 @@ friend-help:
     - "%gold%/friend remove <player> %dark_gray%- %yellow%Elimina a alguien de tu lista de amigos"
     - "%gold%============================"
 no-friends: "&cAl parecer no tienes amigos :("
-friends-next-page: "%yellow%bold%Página siguiente"
-friends-previous-page: "%yellow%bold%Página anterior"
+friends-next-page: "%yellow%%bold%Página siguiente"
+friends-previous-page: "%yellow%%bold%Página anterior"
 friend-list:
     header: "%gold%============ %yellow%Lista de Amigos %gold%============"
-    element: "%gold%friend_name% %dark_gray%- %status%"
+    element: "%gold%%friend_name% %dark_gray%- %status%"
 online: "%yellow%Conectado"
 offline: "%red%Desconectado"
 commons-friend-not-yourself: "No puedes hacer esto contigo mismo!"
 commons-friend-already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
 commons-friend-already-friends: "Ya eres amigo de esta persona"
 commons-friend-not-friends: "No eres amigo de esta persona"
-commons-friend-request-sent: "%yellow%Has enviado una solicitud de amistad a %gold%receiver% %yellow%correctamente"
-commons-friend-forced: "%yellow%Has forzado la amistad entre tú y %gold%receiver%"
+commons-friend-request-sent: "%yellow%Has enviado una solicitud de amistad a %gold%%receiver% %yellow%correctamente"
+commons-friend-forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
 commons-friend-removed: "%yellow%Has removido a %receiver% de tu lista de amigos"
 commons-friend-no-friend-request: "%red%No hay una petición de amistad de parte de este usuario"
 commons-friend-request-denied: "%yellow%Has denegado la solicitud de amistad de este jugador."
@@ -100,19 +100,19 @@ commons-friend-request-accepted: "%yellow%Has aceptado esta solicitud de amistad
 
 whisper:
     error: "%red%Ha ocurrido un error al enviar un mensaje."
-    sender: "%blue%[%sender% %gray%-> %target%blue%] %message%"
-    target: "%blue%[%sender% %gray%-> %target%blue%] %message%"
+    sender: "%blue%[%sender% %gray%-> %target%%blue%] %message%"
+    target: "%blue%[%sender% %gray%-> %target%%blue%] %message%"
 
 authentication:
     attempts: "Intentaste autenticarte muchas veces sin exito, por favor intenta de nuevo más tarde."
     unauthorized: "%red%Tu sesión en AstroCube no se autorizó correctamente. %n%n% (Response: %error%)"
     register-title: "%aqua%¡Bienvenido a %blue%Astro%white%Cube%aqua%!"
     register-sub: "%aqua%Registrate con el comando %blue%/register <contraseña>"
-    password-title: "%aqua%¡Hola, %player%aqua%!"
+    password-title: "%aqua%¡Hola, %player%%aqua%!"
     password-sub: "%aqua%Inicia sesión con %blue%/login <contraseña>"
     password-invalid: "%red%¡Ups! Esa no es tu contraseña, tranqui, aún te quedan más intentos."
     password-error: "%red%Ha ocurrido un error al procesar tu contraseña, inténtalo nuevamente."
-    success-message: "%aqua%Gracias por iniciar sesión %yellow%player%aqua%. ¡Bienvenido de vuelta a AstroCube!"
+    success-message: "%aqua%Gracias por iniciar sesión %yellow%%player%%aqua%. ¡Bienvenido de vuelta a AstroCube!"
     cooldown-await: "%red%Ingresaste demasiadas veces tu contraseña de manera incorrecta. %n%n% Por favor inténtalo nuevamente en: %time%"
     chat: "%red%No puedes hablar mientras te encuentras iniciando sesión. Por favor inicia sesión para se teletransportado."
     time-exceeded: "%red%Excediste el máximo de tiempo que puedes estar conectado. Por favor conectate nuevamente."
@@ -122,14 +122,14 @@ game:
         error: "%red%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
         unknown: "%green%Para jugar, ingresa a una partida desde el %aqua%Selector de Juegos%green%."
     return:
-        schedule: "%aqua%bold%Serás redireccionado al lobby en 5 segundos... Presiona de nuevo para cancelar."
-        cancel: "%red%bold%Petición de redireccionamiento cancelada."
-    lobby-join: "%yellow%¡%player% %yellow%ha ingresado a la partida (%aqua%actual%yellow%/%aqua%max%yellow%)!"
-    lobby-leave: "%yellow%¡%player% %yellow%ha salido de la partida (%aqua%actual%yellow%/%aqua%max%yellow%)!"
+        schedule: "%aqua%%bold%Serás redireccionado al lobby en 5 segundos... Presiona de nuevo para cancelar."
+        cancel: "%red%%bold%Petición de redireccionamiento cancelada."
+    lobby-join: "%yellow%¡%player% %yellow%ha ingresado a la partida (%aqua%%actual%%yellow%/%aqua%%max%%yellow%)!"
+    lobby-leave: "%yellow%¡%player% %yellow%ha salido de la partida (%aqua%%actual%%yellow%/%aqua%%max%%yellow%)!"
     lobby-error: "%red%Ha ocurrido un error al emparejarte con la partida, por favor intenta ingresar a otra. Si te encontrabas en un grupo pide al anfitrión que te una antes de que inicie la partida."
-    countdown: "%yellow%¡La partida empezará en %color%seconds% %yellow%segundo(s)!"
-    chat: "%player%white%: %message%"
-    shout: "%gold%[G] %player%white%: %message%"
+    countdown: "%yellow%¡La partida empezará en %color%%seconds% %yellow%segundo(s)!"
+    chat: "%player%%white%: %message%"
+    shout: "%gold%[G] %player%%white%: %message%"
     shout-cooldown: "%red%Debes esperar un minuto desde tu último mensaje para usar el comando."
     shout-solo: "%red%No puedes utilizar este comando en una partida en solitario."
     rejoin:
@@ -139,14 +139,14 @@ game:
         error: "%red%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."
         already: "%red%Ya te encuentras adentro de una partida, sal de esta antes de ingresar a otra."
     spectator:
-        chat: "%gray%[ESPECTADOR] %player%gray%: %message%"
+        chat: "%gray%[ESPECTADOR] %player%%gray%: %message%"
         error: "%red%No se ha podido enviar el mensaje. Inténtalo de nuevo."
         request:
             voided: "%red%No se ha encontrado una partida con los criterios solicitados."
             success: "%gray%Te estamos redireccionando como espectador a la partida, espera un momento..."
             error: "%red%Ha ocurrido un error al asignarte como espectador a una partida."
         return:
-            title: "%blue%bold%Volver a la central%gray% (Click derecho)"
+            title: "%blue%%bold%Volver a la central%gray% (Click derecho)"
             lore:
                 - "%gray%Vuelve a la central espacial."
     admin:
@@ -159,16 +159,16 @@ game:
                     - "%gray%Modifica aspectos esenciales"
                     - "%gray%de la partida que vas a jugar."
             privatizing:
-                enabled: "%aqua%player% %blue%ha privatizado la partida."
-                disabled: "%aqua%player% %blue%ha abierto la partida al público."
+                enabled: "%aqua%%player% %blue%ha privatizado la partida."
+                disabled: "%aqua%%player% %blue%ha abierto la partida al público."
                 error: "%red%Ha ocurrido un error al actualizar la privatización de la partida."
             map:
                 title: "Cambiar mapa de partida"
                 error: "%red%Ha ocurrido un error al actualizar el mapa de la partida."
-                success: "%blue%¡Actualizaste el mapa a jugar a %aqua%map%blue%!"
+                success: "%blue%¡Actualizaste el mapa a jugar a %aqua%%map%%blue%!"
                 none: "%red%Ninguno"
                 select:
-                    title: "%blue%map%"
+                    title: "%blue%%map%"
                     lore:
                         - ""
                         - "%aqua%¡Click para seleccionar!"
@@ -182,7 +182,7 @@ game:
                         - "%gray%Selecciona el mapa que se"
                         - "%gray%jugará en la partida."
                         - ""
-                        - "%aqua%Actual: %gray%actual%"
+                        - "%aqua%Actual: %gray%%actual%"
                         - ""
                         - "%aqua%¡Clíck izquierdo para cambiar!"
                 summon:
@@ -237,12 +237,12 @@ interaction:
     actionable-error: "%red%Ha ocurrido un error al ejecutar esta acción."
 tablist:
     header:
-        - "%white%bold%Estás jugando en %blue%bold%ASTRO%aqua%bold%CUBE%reset% %white%bold%NETWORK"
+        - "%white%%bold%Estás jugando en %blue%%bold%ASTRO%aqua%%bold%CUBE%reset% %white%%bold%NETWORK"
         - " "
     footer:
         - " "
-        - "%white%Página web: %aqua%bold%astrocube.net"
-        - "%white%Tienda: %aqua%bold%store.astrocube.net"
+        - "%white%Página web: %aqua%%bold%astrocube.net"
+        - "%white%Tienda: %aqua%%bold%store.astrocube.net"
 staff:
     chat:
         permission: ":monda: no tenes permisos"
@@ -267,29 +267,29 @@ punish:
     lower: "%red%No peudes sancionar a alguien con permisos mayores a ti."
     kick:
         message:
-            - "%red%Expulsión %gold%\u00BB %aqua%reason%"
+            - "%red%Expulsión %gold%\u00BB %aqua%%reason%"
             - " "
             - "%yellow%Visita %gold%astrocube.net/apelar %yellow%para apelar"
     ban:
         message-permanent:
-            - "%red%Suspensión Permanente %gold%\u00BB %aqua%reason%"
+            - "%red%Suspensión Permanente %gold%\u00BB %aqua%%reason%"
             - " "
             - "%yellow%Visita %gold%astrocube.net/apelar %yellow%para apelar"
         message-temporal:
-            - "%red%Suspensión Temporal %gold%\u00BB %aqua%reason%"
+            - "%red%Suspensión Temporal %gold%\u00BB %aqua%%reason%"
             - " "
             - "%gray%Expira %expires%"
             - " "
             - "%yellow%Visita %gold%astrocube.net/apelar %yellow%para apelar"
     warn:
         title: "%yellow%\u26A0 %red%ADVERTENCIA %yellow%\u26A0"
-        sub: "%aqua%reason%"
+        sub: "%aqua%%reason%"
         chat:
             - "%red%-----------------------------------------------------"
             - " "
-            - "%center%red%bold%¡ADVERTENCIA!"
+            - "%center%%red%%bold%¡ADVERTENCIA!"
             - " "
-            - "%center%yellow%reason%"
+            - "%center%%yellow%%reason%"
             - " "
             - "%red%-----------------------------------------------------"
     freeze:
@@ -299,13 +299,13 @@ punish:
         not-frozen: "%red%El jugador no se encuentra congelado."
         same: "%red%No te puedes congelar a ti mismo."
         feedback:
-            freeze: "%gray%Congelaste a %yellow%target%gray%, si se desconecta durante la revisión recibirá una suspensión permanente."
-            unfreeze: "%gray%Descongelaste a %yellow%target%gray%. Ahora podrá moverse normalmente en el mundo."
+            freeze: "%gray%Congelaste a %yellow%%target%%gray%, si se desconecta durante la revisión recibirá una suspensión permanente."
+            unfreeze: "%gray%Descongelaste a %yellow%%target%%gray%. Ahora podrá moverse normalmente en el mundo."
         unfreeze: "%yellow%Se te ha descongelado. Ahora puedes moverte con tranquilidad y desconectarte sin sufrir penalizaciones."
         alert:
             title: "%aqua%\u2744 %red%¡Congelado! %aqua%\u2744"
             sub: "%yellow%No te desconectes hasta que termine la revisión."
-            text: "%red%bold%ALERTA: %red%Un moderador te está realizando una revisión. Sigue atentamente sus instrucciones y evita desconectarte, de lo contrario el sistema te baneará automáticamente."
+            text: "%red%%bold%ALERTA: %red%Un moderador te está realizando una revisión. Sigue atentamente sus instrucciones y evita desconectarte, de lo contrario el sistema te baneará automáticamente."
 punish-menu:
     title: "Menú de sanciones"
     error: "Ha ocurrido un error al abrir el menú de sanciones."
@@ -315,9 +315,9 @@ punish-menu:
         title: "%type%"
         lore:
             - "%aqua%Emisor: %issuer%"
-            - "%aqua%Razón: %white%reason%"
-            - "%aqua%Expira: %white%expires%"
-            - "%aqua%Emitido: %white%date%"
+            - "%aqua%Razón: %white%%reason%"
+            - "%aqua%Expira: %white%%expires%"
+            - "%aqua%Emitido: %white%%date%"
     search:
         item:
             title: "%aqua%Buscar por nombre"
@@ -332,8 +332,8 @@ punish-menu:
         kick: "%yellow%Expulsión"
     lore:
         - " "
-        - "%aqua%Razón: %white%reason%"
-        - "%aqua%Expira: %white%expire%"
+        - "%aqua%Razón: %white%%reason%"
+        - "%aqua%Expira: %white%%expire%"
         - " "
         - "%yellow%¡Click izquierdo para aplicar!"
     reasons:
@@ -511,9 +511,9 @@ punishment-expiration-menu:
         actual:
             lore:
                 - " "
-                - "%blue%Sanción: %white%reason%"
+                - "%blue%Sanción: %white%%reason%"
                 - "%blue%Tipo: %type%"
-                - "%blue%Expira: %white%expires%"
+                - "%blue%Expira: %white%%expires%"
         confirm:
             name: "%green%Confirmar sanción"
             lore:
@@ -528,7 +528,7 @@ punishment-expiration-menu:
                 - "%white%Edita la duración de la sanción aplicada."
                 - " "
                 - "%white%Duración actual:"
-                - "%blue%duration%"
+                - "%blue%%duration%"
         decrease:
             name: "%red%Decrease the time in minutes"
             lore:
@@ -536,9 +536,9 @@ punishment-expiration-menu:
                 - "%white%NOTE: If the value was set in -1 the punishment will be permanently"
 menus:
     pagination:
-        previous: "%gold%\u00AB %blue%Página anterior (%white%page%blue%)"
-        actual: "%blue%Página actual (%white%page%blue%)"
-        next: "%blue%Página siguiente (%white%page%blue%) %gold%\u00BB"
+        previous: "%gold%\u00AB %blue%Página anterior (%white%%page%%blue%)"
+        actual: "%blue%Página actual (%white%%page%%blue%)"
+        next: "%blue%Página siguiente (%white%%page%%blue%) %gold%\u00BB"
     back: "%red%\u00AB Volver"
     empty: "%red%No se encontraron registros :("
 
@@ -679,79 +679,79 @@ groups:
             leave: ""
     5deaca21e2b2efe25f5281e1:
         name: "%gold%Chief"
-        prefix: "%gold%bold%CHIEF"
+        prefix: "%gold%%bold%CHIEF"
         message:
             join: ""
             leave: ""
     5e73e2826c0fc523c054a5cf:
         name: "%blue%Constructor Trial"
-        prefix: "%blue%bold%T. BUILD"
+        prefix: "%blue%%bold%T. BUILD"
         message:
             join: ""
             leave: ""
     5e73e2916c0fc523c054a5d0:
         name: "%dark_red%Mod Senior"
-        prefix: "%dark_red%bold%S. MOD"
+        prefix: "%dark_red%%bold%S. MOD"
         message:
             join: ""
             leave: ""
     5b52b2048284865491b1f56a:
         name: "%green%Beta Tester"
-        prefix: "%green%bold%BETA"
+        prefix: "%green%%bold%BETA"
         message:
             join: ""
             leave: ""
     5e73e2a26c0fc523c054a5d2:
         name: "%blue%Constructor Senior"
-        prefix: "%blue%bold%S. BUILD"
+        prefix: "%blue%%bold%S. BUILD"
         message:
             join: ""
             leave: ""
     5e73e2ae6c0fc523c054a5d3:
         name: "%dark_green%Moderador"
-        prefix: "%dark_green%bold%MOD"
+        prefix: "%dark_green%%bold%MOD"
         message:
             join: ""
             leave: ""
     5e73e2b76c0fc523c054a5d4:
         name: "%green%Mercadeo"
-        prefix: "%green%bold%MARKETING"
+        prefix: "%green%%bold%MARKETING"
         message:
             join: ""
             leave: ""
     5e73e2c06c0fc523c054a5d5:
         name: "%green%Junior Dev"
-        prefix: "%dark_purple%bold%JR. DEV"
+        prefix: "%dark_purple%%bold%JR. DEV"
         message:
             join: ""
             leave: ""
     5e73e2d16c0fc523c054a5d6:
         name: "%blue%Jefe Constructor"
-        prefix: "%blue%bold%J. BUILD"
+        prefix: "%blue%%bold%J. BUILD"
         message:
             join: ""
             leave: ""
     5e73e2d96c0fc523c054a5d7:
         name: "%light_purple%Ayudante"
-        prefix: "%light_purple%bold%AYUDANTE"
+        prefix: "%light_purple%%bold%AYUDANTE"
         message:
             join: ""
             leave: ""
     5e73e2e16c0fc523c054a5d8:
         name: "%dark_purple%Developer"
-        prefix: "%dark_purple%bold%DEV"
+        prefix: "%dark_purple%%bold%DEV"
         message:
             join: ""
             leave: ""
     5e73e2e76c0fc523c054a5d9:
         name: "%blue%Constructor"
-        prefix: "%blue%bold%BUILD"
+        prefix: "%blue%%bold%BUILD"
         message:
             join: ""
             leave: ""
     5e73e2996c0fc523c054a5d1:
         name: "%dark_purple%Senior Dev"
-        prefix: "%dark_purple%bold%SR. DEV"
+        prefix: "%dark_purple%%bold%SR. DEV"
         message:
             join: ""
             leave: ""

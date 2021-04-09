@@ -69,7 +69,7 @@ public class UserBasicActionsListener implements Listener {
                 (event.getMaterial() == Material.CHEST) ||
                 (event.getMaterial() == Material.STONE_BUTTON || event.getMaterial() == Material.WOOD_BUTTON) ||
                 (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("trap")) ||
-                (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("minecart"))
+                (event.getMaterial().toString().toLowerCase(Locale.ROOT).contains("minecarf"))
         ) {
             event.setCancelled(true);
         }
