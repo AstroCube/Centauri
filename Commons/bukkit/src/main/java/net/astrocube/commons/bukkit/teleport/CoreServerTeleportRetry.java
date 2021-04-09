@@ -38,6 +38,7 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
         if (server == null) {
             online.sendMessage(ChatColor.RED + "Unable to find empty server");
+            return;
         }
 
         if (attempt > maxAttempt) {
@@ -74,6 +75,8 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
     public void attemptGroupTeleport(String player, String group, int attempt, int maxAttempt) {
 
         String server = cloudTeleport.getServerFromGroup(group);
+
+        System.out.println(server);
 
         attemptTeleport(
                 player,
