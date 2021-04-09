@@ -61,7 +61,7 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
             return;
         }
 
-        cloudTeleport.teleportToServer(player, server);
+        cloudTeleport.teleportToServer(server, player);
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(
                 plugin,
@@ -75,8 +75,6 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
     public void attemptGroupTeleport(String player, String group, int attempt, int maxAttempt) {
 
         String server = cloudTeleport.getServerFromGroup(group);
-
-        System.out.println(server);
 
         attemptTeleport(
                 player,
