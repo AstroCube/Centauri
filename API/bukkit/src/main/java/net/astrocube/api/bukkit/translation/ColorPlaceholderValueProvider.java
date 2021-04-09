@@ -17,7 +17,7 @@ public class ColorPlaceholderValueProvider extends PlaceholderValueProviderImpl 
         super(config);
         colors.put("n", "\n");
         for (ChatColor color : ChatColor.values()) {
-            colors.put("%" + color.name().toLowerCase() + "%", color.toString());
+            colors.put(color.name().toLowerCase(), color.toString());
         }
     }
 
