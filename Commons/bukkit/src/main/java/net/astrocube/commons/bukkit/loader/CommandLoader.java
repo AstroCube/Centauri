@@ -28,6 +28,7 @@ public class CommandLoader implements Loader {
     private @Inject RegisterCommand registerCommand;
     private @Inject FriendsCommand friendsCommand;
     private @Inject MatchCommand matchCommand;
+    private @Inject LobbyCommand lobbyCommand;
     private @Inject AdminChatCommand adminChatCommand;
     private @Inject PlayCommand playCommand;
     private @Inject PunishCommand punishCommand;
@@ -70,11 +71,11 @@ public class CommandLoader implements Loader {
                 shoutCommand,
                 adminCommand,
                 freezeCommand,
+                lobbyCommand,
                 goToCommand,
                 partyCommand,
                 punishmentCommand,
                 flyCommand,
-
                 testCommand
         );
 

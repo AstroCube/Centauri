@@ -10,6 +10,7 @@ import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.scheduler.RunningMatchBalancer;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
+import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
@@ -32,6 +33,7 @@ public class MatchFinishListener implements Listener {
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject RunningMatchBalancer runningMatchBalancer;
     private @Inject GameControlHelper gameControlHelper;
+    private @Inject ServerTeleportRetry serverTeleportRetry;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -54,7 +56,17 @@ public class MatchFinishListener implements Listener {
                 Set<Player> players = MatchParticipantsProvider.getInvolved(match);
                 ghostEffectControl.clearMatch(match.getId());
                 MatchParticipantsProvider.getInvolved(match).forEach(p -> actualMatchCache.remove(p.getDatabaseIdentifier()));
-                Bukkit.getScheduler().runTaskLater(plugin, () -> players.forEach(player -> player.kickPlayer("")), 200L);
+                Bukkit.getScheduler().runTaskLater(
+                        plugin, () -> players.forEach(
+                                player -> serverTeleportRetry.attemptTeleport(
+                                        player.getName(),
+                                        plugin.getConfig().getString("server.fallback"),
+                                        1,
+                                        3
+                                )
+                        ),
+                        200L
+                );
                 runningMatchBalancer.releaseMatch(event.getMatch());
 
                 Optional<GameControlHelper.ModeCompound> compound =
