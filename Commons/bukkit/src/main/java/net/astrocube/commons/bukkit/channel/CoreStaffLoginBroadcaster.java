@@ -32,16 +32,16 @@ public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
 
                                 messageHandler.sendReplacing(
                                         player, connecting ? "channel.admin.login" : "channel.admin.logout",
-                                        "%%prefix%%", messageHandler.get(player, important ? "channel.admin.important" : "channel.admin.prefix"),
-                                        "%%player%%", prefix
+                                        "%prefix%", messageHandler.get(player, important ? "channel.admin.important" : "channel.admin.prefix"),
+                                        "%player%", prefix
                                 );
 
                             } else if (important) {
 
                                 messageHandler.sendReplacing(
                                         player, connecting ? "channel.admin.login" : "channel.admin.logout",
-                                        "%%prefix%%", messageHandler.get(player, "channel.admin.important"),
-                                        "%%player%%", prefix
+                                        "%prefix%", messageHandler.get(player, "channel.admin.important"),
+                                        "%player%", prefix
                                 );
 
                                 player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 2f);

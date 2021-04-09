@@ -40,9 +40,9 @@ public class PunishmentExpirationChooserMenu {
                                         punishmentBuilder.getTarget(),
                                         messageHandler.replacingMany(
                                                 player, "punishment-expiration-menu.items.actual.lore",
-                                                "%%reason%%", punishmentBuilder.getReason(),
-                                                "%%type%%", messageHandler.get(player, "punish-menu.type." + punishmentBuilder.getType().toString().toLowerCase()),
-                                                "%%expires%%", punishmentBuilder.getDuration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
+                                                "%reason%", punishmentBuilder.getReason(),
+                                                "%type%", messageHandler.get(player, "punish-menu.type." + punishmentBuilder.getType().toString().toLowerCase()),
+                                                "%expires%", punishmentBuilder.getDuration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
                                                         PrettyTimeUtils.getHumanDate(
                                                                 Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
                                                                         punishmentBuilder.getDuration()
@@ -81,7 +81,7 @@ public class PunishmentExpirationChooserMenu {
                             .setLore(
                                     messageHandler.replacingMany(
                                             player, "punishment-expiration-menu.items.edit.lore",
-                                            "%%duration%%",
+                                            "%duration%",
                                             punishmentBuilder.getDuration() == -1 ?
                                                     messageHandler.get(player, "punishment-expiration.never") :
                                                     PrettyTimeUtils.getHumanDate(

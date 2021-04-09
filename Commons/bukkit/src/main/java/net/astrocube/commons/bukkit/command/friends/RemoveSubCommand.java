@@ -63,7 +63,7 @@ public class RemoveSubCommand implements CommandClass {
 
             player.sendMessage(
                     messageHandler.get(player, "commons-friend-removed")
-                        .replace("%%receiver%%", targetUser.getId())
+                        .replace("%receiver%", targetUser.getId())
             );
 
         });

@@ -31,7 +31,7 @@ public class PartyRejectCommand implements CommandClass {
         if (inviter != null) {
             messageHandler.sendReplacing(
                     inviter, "rejected-party-invitation",
-                    "%%player%%", player.getName()
+                    "%player%", player.getName()
             );
         }
 

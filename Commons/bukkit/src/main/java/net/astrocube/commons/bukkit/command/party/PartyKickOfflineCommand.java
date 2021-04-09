@@ -48,7 +48,7 @@ public class PartyKickOfflineCommand
                 String path = (memberId.equals(playerId) ? "" : "other-") + "kicked-offline";
                 messageHandler.sendReplacing(
                         member, path,
-                        "%%player%%", player.getName()
+                        "%player%", player.getName()
                 );
             }
         }

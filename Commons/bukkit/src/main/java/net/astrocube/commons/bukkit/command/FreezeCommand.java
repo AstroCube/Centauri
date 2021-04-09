@@ -36,14 +36,14 @@ public class FreezeCommand implements CommandClass {
             freezeRequestAlerter.alertUnfreeze(target.getPlayer());
             messageHandler.sendReplacingIn(
                     player, AlertModes.MUTED, "punish.freeze.feedback.unfreeze",
-                    "%%target%%", target.getName()
+                    "%target%", target.getName()
             );
         } else {
             frozenUserProvider.freeze(target.getPlayer());
             freezeRequestAlerter.alert(target.getPlayer());
             messageHandler.sendReplacingIn(
                     player, AlertModes.MUTED, "punish.freeze.feedback.freeze",
-                    "%%target%%", target.getName()
+                    "%target%", target.getName()
             );
         }
 

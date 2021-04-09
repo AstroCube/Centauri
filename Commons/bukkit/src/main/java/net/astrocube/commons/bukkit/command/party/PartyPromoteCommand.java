@@ -61,8 +61,8 @@ public class PartyPromoteCommand
 
             messageHandler.sendReplacing(
                     member, path,
-                    "%%player%%", player.getName(),
-                    "%%target%%", target.getName()
+                    "%player%", player.getName(),
+                    "%target%", target.getName()
             );
         }
     }

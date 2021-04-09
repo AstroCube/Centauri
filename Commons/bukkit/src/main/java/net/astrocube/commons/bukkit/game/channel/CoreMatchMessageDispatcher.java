@@ -137,8 +137,8 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
                         messageHandler.sendReplacing(
                                 player,
                                 translation,
-                                "%%player%%", prefix,
-                                "%%message%%", message
+                                "%player%", prefix,
+                                "%message%", message
                         );
 
                     }

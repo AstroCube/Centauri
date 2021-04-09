@@ -39,8 +39,8 @@ public class CoreCountdownAlerter implements CountdownAlerter {
 
     private String generateAlertMessage(Player player, int second, ChatColor color) {
         return messageHandler.get(player, "game.countdown")
-                .replace("%%color%%", color + "")
-                .replace("%%seconds%%", second + "");
+                .replace("%color%", color + "")
+                .replace("%seconds%", second + "");
     }
 
 

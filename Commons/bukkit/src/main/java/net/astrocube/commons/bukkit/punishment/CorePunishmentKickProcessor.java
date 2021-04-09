@@ -57,8 +57,8 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
 
         String finalMessage = messageHandler.replacing(
                 player, translation,
-                "%%reason%%", punishment.getReason(),
-                "%%expires%%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
+                "%reason%", punishment.getReason(),
+                "%expires%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
                         date,
                         user.getLanguage()
                 )

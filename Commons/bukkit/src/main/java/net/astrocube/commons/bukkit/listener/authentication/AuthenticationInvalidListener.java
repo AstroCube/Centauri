@@ -46,7 +46,7 @@ public class AuthenticationInvalidListener implements Listener {
                 plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
                 event.getPlayer().kickPlayer(
                         messageHandler.get(event.getPlayer(), "authentication.unauthorized")
-                                .replace("%%error%%", exception.getMessage())
+                                .replace("%error%", exception.getMessage())
                 );
             }
 

@@ -28,7 +28,7 @@ public class CorePunishmentLookupMenu implements PunishmentLookupMenu {
                 player,
                 messageHandler.replacing(
                         player, "punish-menu.lookup.menu",
-                        "%%player%%", target.getDisplay()
+                        "%player%", target.getDisplay()
                 ),
                 null,
                 punishments.stream()

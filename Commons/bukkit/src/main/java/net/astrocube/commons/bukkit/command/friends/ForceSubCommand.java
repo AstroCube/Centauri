@@ -62,7 +62,7 @@ public class ForceSubCommand implements CommandClass {
             }).callback(Callbacks.applyCommonErrorHandler(friendship ->
                     player.sendMessage(
                             messageHandler.get(player, "commons-friend-forced")
-                                    .replace("%%receiver%%", target.getName())
+                                    .replace("%receiver%", target.getName())
                     )
             ));
 

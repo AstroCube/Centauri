@@ -60,14 +60,14 @@ public class CorePartyService implements PartyService {
         ) {
             messageHandler.sendReplacing(
                     inviter, "cannot-invite.already-invited",
-                    "%%target%%", invited.getName()
+                    "%target%", invited.getName()
             );
             return;
         }
 
         messageHandler.sendReplacing(
                 invited, "party-invited",
-                "%%inviter%%", inviter.getName()
+                "%inviter%", inviter.getName()
         );
 
         try (Jedis client = redis.getRawConnection().getResource()) {

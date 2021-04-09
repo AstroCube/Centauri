@@ -50,7 +50,7 @@ public class AuthenticationSuccessListener implements Listener {
 
             event.getPlayer().sendMessage(
                     messageHandler.get(event.getPlayer(), "authentication.success-message")
-                    .replace("%%player%%", event.getPlayer().getName())
+                    .replace("%player%", event.getPlayer().getName())
             );
 
             if (cloudStatusProvider.hasCloudHooked()) {
@@ -76,7 +76,7 @@ public class AuthenticationSuccessListener implements Listener {
             plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
             event.getPlayer().kickPlayer(
                     messageHandler.get(event.getPlayer(), "authentication.unauthorized")
-                            .replace("%%error%%", exception.getMessage())
+                            .replace("%error%", exception.getMessage())
             );
         }
     }

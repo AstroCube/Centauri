@@ -50,9 +50,9 @@ public class CoreWhisperManager implements WhisperManager {
         if (targetPlayer == null) {
             messageHandler
                     .sendReplacing(sender, "whisper.sender",
-                            "%%sender%%", senderUser.getDisplay(),
-                            "%%target%%", target.getDisplay(),
-                            "%%message%%", message);
+                            "%sender%", senderUser.getDisplay(),
+                            "%target%", target.getDisplay(),
+                            "%message%", message);
 
             WhisperMessage whisperMessage = new CoreWhisperMessage(senderUser, target, message);
 
@@ -70,14 +70,14 @@ public class CoreWhisperManager implements WhisperManager {
         // online on the same server
         messageHandler
                 .sendReplacing(targetPlayer, "whisper.target",
-                        "%%sender%%", senderUser.getDisplay(),
-                        "%%target%%", target.getDisplay(),
-                        "%%message%%", message);
+                        "%sender%", senderUser.getDisplay(),
+                        "%target%", target.getDisplay(),
+                        "%message%", message);
         messageHandler
                 .sendReplacing(sender, "whisper.sender",
-                        "%%sender%%", senderUser.getDisplay(),
-                        "%%target%%", target.getDisplay(),
-                        "%%message%%", message);
+                        "%sender%", senderUser.getDisplay(),
+                        "%target%", target.getDisplay(),
+                        "%message%", message);
 
 
         return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));

@@ -57,7 +57,7 @@ public class GenericHeadHelper {
                 head,
                 messageHandler.replacing(
                         player, translation,
-                        "%%page%%", page
+                        "%page%", page
                 )
         );
     }

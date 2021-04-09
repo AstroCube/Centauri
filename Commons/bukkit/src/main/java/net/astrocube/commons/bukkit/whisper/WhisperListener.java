@@ -27,9 +27,9 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
         messageHandler
                 .sendReplacing(target, "whisper.target",
-                        "%%sender%%", message.senderDisplay(),
-                        "%%target%%", message.targetDisplay(),
-                        "%%message%%", message);
+                        "%sender%", message.senderDisplay(),
+                        "%target%", message.targetDisplay(),
+                        "%message%", message);
     }
 
     private Player getPlayerById(String id) {

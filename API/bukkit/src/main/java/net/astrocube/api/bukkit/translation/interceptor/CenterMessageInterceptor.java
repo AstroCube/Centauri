@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CenterMessageInterceptor implements MessageInterceptor {
 
-    private static final String CENTER_KEYWORD = "%%center%%";
+    private static final String CENTER_KEYWORD = "%center%";
 
     private String interceptOneLine(String text) {
         if (!text.startsWith(CENTER_KEYWORD)) {

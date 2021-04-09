@@ -86,7 +86,7 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
                                 new ItemStack(Material.PAPER),
                                 messageHandler.replacing(
                                         player, "game.admin.lobby.map.select.title",
-                                        "%%map%%", map.getName()
+                                        "%map%", map.getName()
                                 ),
                                 messageHandler.getMany(
                                         player,

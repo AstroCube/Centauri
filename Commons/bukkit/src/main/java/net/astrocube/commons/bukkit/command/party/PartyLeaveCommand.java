@@ -42,7 +42,7 @@ public class PartyLeaveCommand implements CommandClass {
                 if (member != null) {
                     messageHandler.sendReplacing(
                             member, "other-left-party",
-                            "%%player%%", player.getName()
+                            "%player%", player.getName()
                     );
                 }
             }

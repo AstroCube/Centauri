@@ -44,7 +44,7 @@ public class PartyAcceptCommand implements CommandClass {
             if (!optParty.isPresent()) {
                 messageHandler.sendReplacing(
                         player, "no-party-now",
-                        "%%inviter%%", inviter.getName()
+                        "%inviter%", inviter.getName()
                 );
             } else {
                 Party party = optParty.get();
@@ -53,14 +53,14 @@ public class PartyAcceptCommand implements CommandClass {
                     if (member != null) {
                         messageHandler.send(
                                 member, "other-joined-party",
-                                "%%player%%", player.getName()
+                                "%player%", player.getName()
                         );
                     }
                 }
                 party.getMembers().add(player.getDatabaseIdentifier());
                 messageHandler.send(
                         player, "joined-party",
-                        "%%inviter%%", inviter.getName()
+                        "%inviter%", inviter.getName()
                 );
                 updateService.update(party);
             }

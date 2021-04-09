@@ -35,7 +35,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
         baseLore.add(
                 messageHandler.replacing(
                         player, "lobby.gameSelector.gadget-playing",
-                        "%%players%%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
+                        "%players%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
                 )
         );
 

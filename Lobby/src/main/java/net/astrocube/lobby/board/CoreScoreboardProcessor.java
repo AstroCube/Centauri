@@ -38,10 +38,10 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
 
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "lobby.scoreboard.lore",
-                "%%player%%", user.getDisplay(),
-                "%%rank%%", flairFormat.getColor() + flairFormat.getName(),
-                "%%lobby%%", 1,
-                "%%online%%", cloudStatusProvider.getOnline()
+                "%player%", user.getDisplay(),
+                "%rank%", flairFormat.getColor() + flairFormat.getName(),
+                "%lobby%", 1,
+                "%online%", cloudStatusProvider.getOnline()
         );
 
         if (!objectiveOptional.isPresent()) {

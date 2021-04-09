@@ -70,7 +70,7 @@ public class MatchMessageHelper {
 
                 involvedPlayer.sendMessage(
                         messageHandler.get(involvedPlayer, message)
-                                .replace("%%player%%", rawName)
+                                .replace("%player%", rawName)
                 );
             });
         });

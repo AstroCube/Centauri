@@ -55,7 +55,7 @@ public class UserLoginListener implements Listener {
                                 event.getPlayer(),
                                 "cooldown-await"
                         ).replace(
-                                "%%time%%",
+                                "%time%",
                                 PrettyTimeUtils.getHumanDate(
                                         authenticationCooldown.getRemainingTime(
                                                 event.getPlayer().getDatabaseIdentifier()),

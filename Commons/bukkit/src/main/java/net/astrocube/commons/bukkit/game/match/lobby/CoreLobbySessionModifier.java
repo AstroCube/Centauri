@@ -32,9 +32,9 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 
                 online.sendMessage(
                         messageHandler.getMessage("game.lobby-join")
-                                .replace("%%player%%", player.getDisplayName())
-                                .replace("%%actual%%", waitingIds.size() + "")
-                                .replace("%%max%%", subGameMode.getMaxPlayers() + "")
+                                .replace("%player%", player.getDisplayName())
+                                .replace("%actual%", waitingIds.size() + "")
+                                .replace("%max%", subGameMode.getMaxPlayers() + "")
                 );
 
                 online.showPlayer(player);
@@ -55,9 +55,9 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
             if (waitingIds.contains(online.getDatabaseIdentifier())) {
                 online.sendMessage(
                         messageHandler.getMessage("game.lobby-leave")
-                                .replace("%%player%%", online.getDisplayName())
-                                .replace("%%actual%%", waitingIds.size() + "")
-                                .replace("%%max%%", subGameMode.getMaxPlayers() + "")
+                                .replace("%player%", online.getDisplayName())
+                                .replace("%actual%", waitingIds.size() + "")
+                                .replace("%max%", subGameMode.getMaxPlayers() + "")
                 );
             }
         });

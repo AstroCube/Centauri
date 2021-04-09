@@ -53,8 +53,8 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
         loreArray.add(
                 messageHandler.get(player, "lobby.lobby-selector.indicators.connected")
-                        .replace("%%users%%", wrapper.getConnected() + "")
-                        .replace("%%total%%", wrapper.getMax() + "")
+                        .replace("%users%", wrapper.getConnected() + "")
+                        .replace("%total%", wrapper.getMax() + "")
         );
         loreArray.add(" ");
         loreArray.add(

@@ -55,10 +55,10 @@ public class PunishmentStaffChatListener implements Listener {
 
                                             messageHandler.sendReplacing(
                                                     player, "channel.admin.punish",
-                                                    "%%prefix%%", messageHandler.get(player, "channel.admin.prefix"),
-                                                    "%%type%%", messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()),
-                                                    "%%issuer%%", issuerPrefix,
-                                                    "%%punished%%", punishedPrefix
+                                                    "%prefix%", messageHandler.get(player, "channel.admin.prefix"),
+                                                    "%type%", messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()),
+                                                    "%issuer%", issuerPrefix,
+                                                    "%punished%", punishedPrefix
                                             );
 
                                         }

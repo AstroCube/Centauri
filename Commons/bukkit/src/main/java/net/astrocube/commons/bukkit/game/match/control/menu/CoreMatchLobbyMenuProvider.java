@@ -129,7 +129,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
                         messageHandler.get(player, "game.admin.lobby.icons.map.title"),
                         messageHandler.replacingMany(
                                 player, "game.admin.lobby.icons.map.lore",
-                                "%%actual%%", map
+                                "%actual%", map
                         )
                 ),
                 11,

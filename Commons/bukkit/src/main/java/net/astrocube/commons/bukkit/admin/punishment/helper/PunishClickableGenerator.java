@@ -42,8 +42,8 @@ public class PunishClickableGenerator {
                     meta.setLore(
                             messageHandler.replacingMany(
                                     player, "punish-menu.lore",
-                                    "%%reason%%", translated,
-                                    "%%expire%%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
+                                    "%reason%", translated,
+                                    "%expire%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
                                             PrettyTimeUtils.getHumanDate(
                                                     Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
                                                             punishment.getExpiration()

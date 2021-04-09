@@ -30,7 +30,7 @@ public class FlyCommand implements CommandClass {
         if (player != target) {
             messageHandler.sendReplacing(
                     player, messagePath + "-other",
-                    "%%target%%", target.getName()
+                    "%target%", target.getName()
             );
         }
     }

@@ -35,7 +35,7 @@ public class AuthorizationUtils {
         if (exception instanceof AuthorizeException) {
             Bukkit.getScheduler().runTask(plugin, ()-> player.kickPlayer(
                     messageHandler.get(player, "authentication.unauthorized")
-                            .replace("%%error%%", exception.getMessage())
+                            .replace("%error%", exception.getMessage())
             ));
             return;
         }

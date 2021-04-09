@@ -41,7 +41,7 @@ public class PartyDisbandCommand implements CommandClass {
             if (member != null) {
                 messageHandler.sendReplacing(
                         member, "party-disbanded",
-                        "%%player%%", player.getName()
+                        "%player%", player.getName()
                 );
             }
         }

@@ -46,7 +46,7 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
                     if (recordPlayer != null) {
                         messageHandler.sendReplacingIn(
                                 recordPlayer, AlertModes.INFO, translation,
-                                "%%player%%", player.getName()
+                                "%player%", player.getName()
                         );
                     }
 

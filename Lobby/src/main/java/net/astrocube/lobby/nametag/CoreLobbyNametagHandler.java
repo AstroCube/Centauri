@@ -81,8 +81,8 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
                 flairFormat.getColor() + "" :
                 messageHandler.replacing(
                         viewer, "prefix",
-                        "%%color%%", (flairFormat.getColor() + ""),
-                        "%%prefix%%", flairFormat.getPrefix().toUpperCase(Locale.ROOT)
+                        "%color%", (flairFormat.getColor() + ""),
+                        "%prefix%", flairFormat.getPrefix().toUpperCase(Locale.ROOT)
                 );
     }
 

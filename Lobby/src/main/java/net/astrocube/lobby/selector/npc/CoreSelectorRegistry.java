@@ -156,8 +156,8 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 
                         StringList message = messageHandler.replacingMany(
                                 player, "selectors.title",
-                                "%%players%%", players,
-                                "%%title%%", title
+                                "%players%", players,
+                                "%title%", title
                         );
 
                         registry.getNPC().register(player);

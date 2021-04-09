@@ -57,8 +57,8 @@ public class PartyKickCommand implements CommandClass {
 
             messageHandler.sendReplacing(
                     member, path,
-                    "%%player%%", player.getName(),
-                    "%%target%%", target.getName()
+                    "%player%", player.getName(),
+                    "%target%", target.getName()
             );
         }
 

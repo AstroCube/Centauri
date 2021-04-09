@@ -42,14 +42,14 @@ public class PunishmentIssueActionsListener implements Listener {
                             messageHandler.get(player, "punish.warn.title"),
                             messageHandler.replacing(
                                     player, "punish.warn.sub",
-                                    "%%reason%%", event.getPunishment().getReason()
+                                    "%reason%", event.getPunishment().getReason()
                             )
                     );
 
                     player.sendTitle(title);
                     messageHandler.sendReplacing(
                             player, "punish.warn.chat",
-                            "%%reason%%", event.getPunishment().getReason()
+                            "%reason%", event.getPunishment().getReason()
                     );
                     player.playSound(player.getLocation(), Sound.WITHER_DEATH, 1f, 1f);
 

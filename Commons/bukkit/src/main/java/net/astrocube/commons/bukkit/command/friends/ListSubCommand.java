@@ -70,8 +70,8 @@ public class ListSubCommand implements CommandClass {
 
                         player.sendMessage(
                                 messageHandler.get(player, "friend-list.element")
-                                        .replace("%%friend_name%%", user.getUsername())
-                                        .replace("%%status%%", messageHandler.get(player,
+                                        .replace("%friend_name%", user.getUsername())
+                                        .replace("%status%", messageHandler.get(player,
                                                 user.getSession().isOnline() ? "online" : "offline"
                                         ))
                         );

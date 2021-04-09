@@ -65,7 +65,7 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
         meta.setDisplayName(
                 messageHandler.replacing(
                         player, "punish-menu.lookup.title",
-                        "%%type%%", title
+                        "%type%", title
                 )
         );
 
@@ -74,10 +74,10 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
         meta.setLore(
                 messageHandler.replacingMany(
                         player, "punish-menu.lookup.lore",
-                        "%%issuer%%", issuer,
-                        "%%reason%%", punishment.getReason(),
-                        "%%expires%%", expiration,
-                        "%%date%%", PrettyTimeUtils.getHumanDate(date, user.getLanguage())
+                        "%issuer%", issuer,
+                        "%reason%", punishment.getReason(),
+                        "%expires%", expiration,
+                        "%date%", PrettyTimeUtils.getHumanDate(date, user.getLanguage())
                 )
         );
 
