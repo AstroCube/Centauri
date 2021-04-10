@@ -90,7 +90,7 @@ friend:
         received:
             - "%blue%====================================================="
             - "%white%Recibiste una solicitúd de amistad de %sender%"
-            - "%%holder%%"
+            - "%holder%"
             - "%blue%====================================================="
         holder: "%%red%%%%bold%%¡Click para ver más!"
     forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"

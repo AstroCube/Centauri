@@ -2,6 +2,7 @@ package net.astrocube.commons.bukkit.listener.friend;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.friend.FriendshipAction;
 import net.astrocube.api.bukkit.friend.FriendshipActionEvent;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
@@ -15,6 +16,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,11 +63,21 @@ public class FriendAddListener implements Listener {
                             .create();
 
 
-                    messageHandler.sendReplacingIn(
+                    StringList list = messageHandler.replacingMany(
                             receiver, AlertModes.INFO, "friend.request.received",
-                            "%sender%", flairFormat.getColor() + sender.getDisplay(),
-                            "%holder%", builder
+                            "%sender%", flairFormat.getColor() + sender.getDisplay()
                     );
+
+                    receiver.playSound(receiver.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+                    list.forEach(component -> {
+
+                        if (component.equalsIgnoreCase("%holder%")) {
+                            receiver.spigot().sendMessage(builder);
+                        } else {
+                            receiver.sendMessage(component);
+                        }
+
+                    });
 
                 })
         );
