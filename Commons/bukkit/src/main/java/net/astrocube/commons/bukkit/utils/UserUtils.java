@@ -16,6 +16,7 @@ public class UserUtils {
                 player,
                 messageHandler.get(player, "commons-friend-not-yourself")
         );
+
         return true;
     }
 

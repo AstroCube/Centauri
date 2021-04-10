@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.friend.Friendship;
@@ -32,10 +33,7 @@ public class CoreFriendHelper implements FriendHelper {
             return false;
         }
 
-        ChatAlertLibrary.alertChatError(
-                player,
-                messageHandler.get(player, "commons-friend-already-sent")
-        );
+        messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-sent");
         return true;
     }
 
@@ -53,10 +51,7 @@ public class CoreFriendHelper implements FriendHelper {
         }
 
         if (friendships.isEmpty()) {
-            ChatAlertLibrary.alertChatError(
-                    player,
-                    messageHandler.get(player, "commons-friend-not-friends")
-            );
+            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.not-friends");
         }
 
         return friendships.isEmpty();
@@ -77,10 +72,7 @@ public class CoreFriendHelper implements FriendHelper {
         }
 
         if (!friendships.isEmpty()) {
-            ChatAlertLibrary.alertChatError(
-                    player,
-                    messageHandler.get(player, "commons-friend-already-friends")
-            );
+            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-friends");
         }
 
         return !friendships.isEmpty();
@@ -107,7 +99,7 @@ public class CoreFriendHelper implements FriendHelper {
         try {
             friendships = friendshipQueryService.querySync(filter).getFoundModels();
         } catch (Exception exception) {
-            ChatAlertLibrary.alertChatError(player, exception.getMessage());
+            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
             Bukkit.getLogger().log(Level.SEVERE, "An error has appeared while querying friendships", exception);
             return null;
         }

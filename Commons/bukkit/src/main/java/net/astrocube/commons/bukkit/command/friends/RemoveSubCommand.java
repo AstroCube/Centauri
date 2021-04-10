@@ -8,6 +8,9 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.service.delete.DeleteService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.friend.Friendship;
@@ -22,6 +25,7 @@ public class RemoveSubCommand implements CommandClass {
     private @Inject FriendCallbackHelper friendCallbackHelper;
     private @Inject FriendHelper friendHelper;
     private @Inject DeleteService<Friendship> deleteService;
+    private @Inject DisplayMatcher displayMatcher;
     private @Inject QueryService<Friendship> queryService;
     private @Inject ObjectMapper objectMapper;
     private @Inject MessageHandler messageHandler;
@@ -61,9 +65,14 @@ public class RemoveSubCommand implements CommandClass {
                 )
             ));
 
-            player.sendMessage(
-                    messageHandler.get(player, "commons-friend-removed")
-                        .replace("%receiver%", targetUser.getId())
+            TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
+                    player,
+                    targetUser
+            );
+
+            messageHandler.sendReplacingIn(
+                    player, AlertModes.MUTED, "friend.request.removed",
+                    "%player%", flairFormat.getColor() + targetUser.getDisplay()
             );
 
         });

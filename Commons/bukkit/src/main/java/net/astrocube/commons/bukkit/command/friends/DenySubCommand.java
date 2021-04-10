@@ -7,6 +7,8 @@ import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.api.bukkit.user.display.DisplayMatcher;
+import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import net.astrocube.commons.bukkit.utils.UserUtils;
@@ -18,6 +20,7 @@ public class DenySubCommand implements CommandClass {
 
     private @Inject MessageHandler messageHandler;
     private @Inject FriendHelper friendCommandValidator;
+    private @Inject DisplayMatcher displayMatcher;
     private @Inject FriendshipHandler friendshipHandler;
     private @Inject FriendCallbackHelper friendCallbackHelper;
 
@@ -35,15 +38,18 @@ public class DenySubCommand implements CommandClass {
             }
 
             if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-                ChatAlertLibrary.alertChatError(
-                        player,
-                        messageHandler.get(player, "commons-friend-no-friend-request")
-                );
+                messageHandler.get(player, "friend.error.already-friends");
                 return;
             }
 
             friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
-            messageHandler.sendIn(player, AlertModes.ERROR, "commons-friend-request-denied");
+
+            TranslatedFlairFormat matcher = displayMatcher.getDisplay(player, targetUser);
+
+            messageHandler.sendReplacingIn(
+                    player, AlertModes.ERROR, "friend.request.denied",
+                    "%sender%", matcher.getColor() + targetUser.getDisplay()
+            );
 
         });
 
