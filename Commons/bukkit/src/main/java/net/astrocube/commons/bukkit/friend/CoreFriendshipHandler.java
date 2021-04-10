@@ -81,7 +81,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
 
             jedis.set("friendship:" + from + ":" + to, ""); // dummy values
-            jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY);
+            jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY + 2);
 
             FriendshipAction createAction = createAction(from, to, FriendshipAction.Action.ADD);
 
@@ -95,7 +95,10 @@ public class CoreFriendshipHandler implements FriendshipHandler {
                     () -> {
 
                         try (Jedis jedisInside = redis.getRawConnection().getResource()) {
-                            if (jedisInside.exists("friendship:" + from + ":" + to)) {
+                            if (
+                                    jedisInside.exists("friendship:" + from + ":" + to) ||
+                                    jedisInside.exists("friendship:" + to + ":" + from)
+                            ) {
 
                                 FriendshipAction action = createAction(from, to, FriendshipAction.Action.EXPIRE);
 
