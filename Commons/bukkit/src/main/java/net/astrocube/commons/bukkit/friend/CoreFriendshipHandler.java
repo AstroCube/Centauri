@@ -192,6 +192,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
                             action,
                             new HashMap<>()
                     );
+                    removeFriendRequest(sender, receiver);
                     Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(action));
                 } catch (JsonProcessingException e) {
                     plugin.getLogger().log(Level.SEVERE, "There was an error alerting friend accept", e);
