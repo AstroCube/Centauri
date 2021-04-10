@@ -32,11 +32,7 @@ public class FriendAddListener implements Listener {
             return;
         }
 
-        if (!(event.getAction().getFriendship() instanceof FriendshipDoc.Creation)) {
-            return;
-        }
-
-        FriendshipDoc.Creation friendship = (FriendshipDoc.Creation) event.getAction().getFriendship();
+        FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
         Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
 

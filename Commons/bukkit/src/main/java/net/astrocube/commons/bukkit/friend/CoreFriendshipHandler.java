@@ -78,7 +78,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
             FriendshipAction action = new FriendshipAction() {
                 @Override
-                public FriendshipDoc.Partial getFriendship() {
+                public FriendshipDoc.Relation getFriendship() {
                     return new FriendshipDoc.Relation() {
                         @Override
                         public String getSender() {

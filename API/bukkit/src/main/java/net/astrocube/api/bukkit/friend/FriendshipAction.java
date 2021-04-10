@@ -8,7 +8,7 @@ public interface FriendshipAction extends Message {
     /**
      * @return friendship.
      */
-    FriendshipDoc.Partial getFriendship();
+    FriendshipDoc.Relation getFriendship();
 
     /**
      * @return action type related to the friendship.
