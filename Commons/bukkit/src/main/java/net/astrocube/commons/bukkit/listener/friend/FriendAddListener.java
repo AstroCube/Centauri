@@ -32,7 +32,7 @@ public class FriendAddListener implements Listener {
             return;
         }
 
-        if (!(event.getAction().getFriendship() instanceof FriendshipDoc.Complete)) {
+        if (!(event.getAction().getFriendship() instanceof FriendshipDoc.Creation)) {
             return;
         }
 
