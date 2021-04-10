@@ -29,7 +29,7 @@ public class CoreLobbyServerRedirect implements LobbyServerRedirect {
                 break;
             }
             default: {
-                serverTeleportRetry.attemptGroupTeleport(player.getName(), wrapper.getName(), 1,3);
+                serverTeleportRetry.attemptTeleport(player.getName(), wrapper.getName(), 1,3);
                 break;
             }
         }
