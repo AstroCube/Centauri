@@ -78,30 +78,10 @@ public class CoreFriendshipHandler implements FriendshipHandler {
             jedis.set("friendship:" + from + ":" + to, ""); // dummy values
             jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY);
 
-            FriendshipAction action = new FriendshipAction() {
-                @Override
-                public FriendshipDoc.Relation getFriendship() {
-                    return new FriendshipDoc.Relation() {
-                        @Override
-                        public String getSender() {
-                            return from;
-                        }
-
-                        @Override
-                        public String getReceiver() {
-                            return to;
-                        }
-                    };
-                }
-
-                @Override
-                public Action getActionType() {
-                    return Action.ADD;
-                }
-            };
+            FriendshipAction createAction = createAction(from, to, FriendshipAction.Action.ADD);
 
             channel.sendMessage(
-                    action,
+                    createAction,
                     new HashMap<>()
             );
 
@@ -111,35 +91,18 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
                         try (Jedis jedisInside = redis.getRawConnection().getResource()) {
                             if (jedisInside.exists("friendship:" + from + ":" + to)) {
-                                FriendshipAction rejectAction = new FriendshipAction() {
-                                    @Override
-                                    public FriendshipDoc.Relation getFriendship() {
-                                        return new FriendshipDoc.Relation() {
-                                            @Override
-                                            public String getSender() {
-                                                return from;
-                                            }
 
-                                            @Override
-                                            public String getReceiver() {
-                                                return to;
-                                            }
-                                        };
-                                    }
-
-                                    @Override
-                                    public Action getActionType() {
-                                        return Action.EXPIRE;
-                                    }
-                                };
+                                FriendshipAction action = createAction(from, to, FriendshipAction.Action.EXPIRE);
 
                                 channel.sendMessage(
-                                        rejectAction,
+                                        action,
                                         new HashMap<>()
                                 );
 
                                 Bukkit.getPluginManager().callEvent(
-                                        new FriendshipActionEvent(rejectAction)
+                                        new FriendshipActionEvent(
+                                                action
+                                        )
                                 );
 
                             }
@@ -154,7 +117,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
                     FRIEND_REQUEST_EXPIRY * 20L
             );
 
-            Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(action));
+            Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(createAction));
 
         }
 
@@ -205,6 +168,30 @@ public class CoreFriendshipHandler implements FriendshipHandler {
                 Callbacks.applyCommonErrorHandler("Friendship creation", callback)
         );
 
+    }
+
+    private FriendshipAction createAction(String sender, String receiver, FriendshipAction.Action action) {
+        return new FriendshipAction() {
+            @Override
+            public FriendshipDoc.Relation getFriendship() {
+                return new FriendshipDoc.Relation() {
+                    @Override
+                    public String getSender() {
+                        return sender;
+                    }
+
+                    @Override
+                    public String getReceiver() {
+                        return receiver;
+                    }
+                };
+            }
+
+            @Override
+            public Action getActionType() {
+                return action;
+            }
+        };
     }
 
 }
