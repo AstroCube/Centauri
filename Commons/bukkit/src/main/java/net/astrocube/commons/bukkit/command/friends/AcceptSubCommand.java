@@ -6,6 +6,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import net.astrocube.commons.bukkit.utils.UserUtils;
@@ -30,22 +31,16 @@ public class AcceptSubCommand implements CommandClass {
         friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
             if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
+                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-friends");
                 return;
             }
 
             if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-                ChatAlertLibrary.alertChatError(
-                        player,
-                        messageHandler.get(player, "commons-friend-no-friend-request")
-                );
+                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-sent");
                 return;
             }
 
-            friendshipHandler.createFriendship(user.getId(), targetUser.getId(), friendship ->
-                messageHandler.send(player, "commons-friend-request-accepted")
-            );
-
-            friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
+            friendshipHandler.createFriendship(user.getId(), targetUser.getId());
 
         });
 
