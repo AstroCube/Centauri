@@ -19,19 +19,21 @@ import net.astrocube.api.core.virtual.friend.Friendship;
 import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class CoreFriendshipHandler implements FriendshipHandler {
 
-    // expiry in seconds
-    private static final int FRIEND_REQUEST_EXPIRY = 60; // 60 seconds = 1 minute
+    private static final int FRIEND_REQUEST_EXPIRY = 600; // 10 mintues
 
     private @Inject CreateService<Friendship, FriendshipDoc.Partial> createService;
     private @Inject PaginateService<Friendship> paginateService;
     private @Inject ObjectMapper objectMapper;
+    private @Inject Plugin plugin;
     private @Inject Redis redis;
     private final Channel<FriendshipAction> channel;
 
@@ -101,6 +103,55 @@ public class CoreFriendshipHandler implements FriendshipHandler {
             channel.sendMessage(
                     action,
                     new HashMap<>()
+            );
+
+            Bukkit.getScheduler().runTaskLaterAsynchronously(
+                    plugin,
+                    () -> {
+
+                        try (Jedis jedisInside = redis.getRawConnection().getResource()) {
+                            if (jedisInside.exists("friendship:" + from + ":" + to)) {
+                                FriendshipAction rejectAction = new FriendshipAction() {
+                                    @Override
+                                    public FriendshipDoc.Relation getFriendship() {
+                                        return new FriendshipDoc.Relation() {
+                                            @Override
+                                            public String getSender() {
+                                                return from;
+                                            }
+
+                                            @Override
+                                            public String getReceiver() {
+                                                return to;
+                                            }
+                                        };
+                                    }
+
+                                    @Override
+                                    public Action getActionType() {
+                                        return Action.EXPIRE;
+                                    }
+                                };
+
+                                channel.sendMessage(
+                                        rejectAction,
+                                        new HashMap<>()
+                                );
+
+                                Bukkit.getPluginManager().callEvent(
+                                        new FriendshipActionEvent(rejectAction)
+                                );
+
+                            }
+
+                        } catch (JsonProcessingException e) {
+                            plugin.getLogger().log(
+                                    Level.SEVERE,
+                                    "There was error announcing expiring friend request", e);
+                        }
+
+                    },
+                    FRIEND_REQUEST_EXPIRY * 20L
             );
 
             Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(action));

@@ -16,7 +16,7 @@ public interface FriendshipAction extends Message {
     Action getActionType();
 
     enum Action {
-        ADD, ACCEPT, FORCE
+        ADD, ACCEPT, FORCE, EXPIRE
     }
 
 }

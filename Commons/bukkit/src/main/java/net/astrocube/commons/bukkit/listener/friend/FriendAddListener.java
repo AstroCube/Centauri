@@ -11,6 +11,7 @@ import net.astrocube.api.bukkit.user.display.TranslatedFlairFormat;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 import net.astrocube.api.core.virtual.user.User;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -58,9 +59,14 @@ public class FriendAddListener implements Listener {
                                             HoverEvent.Action.SHOW_TEXT,
                                             new ComponentBuilder(
                                                     messageHandler.get(receiver, "friend.request.holder")
-                                            ).create()
+                                            )
+                                                    .color(ChatColor.RED)
+                                                    .bold(true)
+                                                     .create()
                                     )
                             )
+                            .color(ChatColor.RED)
+                            .bold(true)
                             .create();
 
 

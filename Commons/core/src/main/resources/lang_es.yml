@@ -85,14 +85,18 @@ friend:
     request:
         sent:
             - "%blue%====================================================="
-            - "%green%Añadiste a %receiver%%green%. ¡Espera que responda!"
+            - "%green%Añadiste a %receiver%%green%, tiene 10 minutos para responder."
             - "%blue%====================================================="
         received:
             - "%blue%====================================================="
             - "%white%Recibiste una solicitúd de amistad de %sender%"
             - "%holder%"
             - "%blue%====================================================="
-        holder: "%%red%%%%bold%%¡Click para ver más!"
+        expired:
+            - "%blue%====================================================="
+            - "%red%Tu solicitúd de amistad a %receiver%%red% expiró."
+            - "%blue%====================================================="
+        holder: "¡Click para ver más!"
     forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
     request-accepted: "%yellow%Has aceptado esta solicitud de amistad"
     error:

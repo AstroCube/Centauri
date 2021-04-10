@@ -7,18 +7,21 @@ import net.astrocube.commons.bukkit.listener.authentication.AuthenticationRestri
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationStartListener;
 import net.astrocube.commons.bukkit.listener.authentication.AuthenticationSuccessListener;
 import net.astrocube.commons.bukkit.listener.friend.FriendAddListener;
+import net.astrocube.commons.bukkit.listener.friend.FriendExpireListener;
 import org.bukkit.plugin.Plugin;
 
 public class FriendListenerLoader implements ListenerLoader {
 
     private @Inject Plugin plugin;
     private @Inject FriendAddListener friendAddListener;
+    private @Inject FriendExpireListener friendExpireListener;
 
     @Override
     public void registerEvents() {
         registerEvent(
                 plugin,
-                friendAddListener
+                friendAddListener,
+                friendExpireListener
         );
     }
 
