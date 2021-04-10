@@ -1,14 +1,14 @@
 package net.astrocube.api.bukkit.friend;
 
 import net.astrocube.api.core.message.Message;
-import net.astrocube.api.core.virtual.friend.Friendship;
+import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 
 public interface FriendshipAction extends Message {
 
     /**
      * @return friendship.
      */
-    Friendship getFriendship();
+    FriendshipDoc.Partial getFriendship();
 
     /**
      * @return action type related to the friendship.

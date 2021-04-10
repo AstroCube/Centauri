@@ -2,9 +2,9 @@ package net.astrocube.api.bukkit.menu.generic;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.MenuUtils;
+import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.core.utils.Pagination;
 import net.astrocube.api.core.utils.SimplePagination;
 import org.bukkit.entity.Player;

@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorRedirect;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
-import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import org.bukkit.entity.Player;
 

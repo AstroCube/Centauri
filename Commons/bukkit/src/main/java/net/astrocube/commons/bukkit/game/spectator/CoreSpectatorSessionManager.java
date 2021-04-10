@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.game.spectator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.exception.GameControlException;

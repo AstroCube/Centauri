@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.whisper;
 
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.api.core.virtual.user.UserDoc;
 
 public class CoreWhisperMessage implements WhisperMessage {
 

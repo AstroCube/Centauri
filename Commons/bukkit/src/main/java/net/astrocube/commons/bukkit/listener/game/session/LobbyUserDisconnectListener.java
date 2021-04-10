@@ -5,7 +5,6 @@ import net.astrocube.api.bukkit.game.event.game.GameUserDisconnectEvent;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
-import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
 import org.bukkit.event.EventHandler;

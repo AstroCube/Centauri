@@ -2,10 +2,10 @@ package net.astrocube.commons.bukkit.admin.staff;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
 import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -1,6 +1,5 @@
 package net.astrocube.commons.bungee.listener;
 
-import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.MojangValidate;

@@ -1,13 +1,11 @@
 package net.astrocube.commons.bukkit.whisper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.util.concurrent.ListeningExecutorService;
 import me.fixeddev.minecraft.player.Player;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
-import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.Bukkit;
@@ -16,7 +14,6 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 
 public class CoreWhisperManager implements WhisperManager {
 

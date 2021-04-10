@@ -6,7 +6,6 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.spectator.SpectatorLobbyTeleporter;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
-import net.astrocube.api.core.cloud.CloudTeleport;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

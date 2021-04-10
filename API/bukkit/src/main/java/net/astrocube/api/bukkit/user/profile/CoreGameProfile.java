@@ -1,8 +1,6 @@
 package net.astrocube.api.bukkit.user.profile;
 
 import lombok.Getter;
-import net.astrocube.api.bukkit.user.profile.AbstractGameProfile;
-import net.astrocube.api.bukkit.user.profile.AbstractProperty;
 
 import java.util.HashSet;
 import java.util.Set;

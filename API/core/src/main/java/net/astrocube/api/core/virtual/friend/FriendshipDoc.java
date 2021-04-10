@@ -57,15 +57,5 @@ public interface FriendshipDoc extends Model {
      */
     interface Complete extends Model.Stamped, Creation {}
 
-    /**
-     * Type of friendship
-     */
-    enum FriendshipAction {
-        CREATE,
-        ACCEPT,
-        FORCE
-    }
-
-
 
 }

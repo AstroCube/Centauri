@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.astrocube.api.core.virtual.perk.StorablePerk;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.Set;
 
 public interface PerkManifestProvider {

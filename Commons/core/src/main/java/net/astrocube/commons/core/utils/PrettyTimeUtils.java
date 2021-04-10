@@ -2,7 +2,6 @@ package net.astrocube.commons.core.utils;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;

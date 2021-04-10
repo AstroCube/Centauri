@@ -8,7 +8,6 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySwitchStatus;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
-import net.astrocube.api.core.cloud.CloudTeleport;
 import org.bukkit.entity.Player;
 
 @Singleton

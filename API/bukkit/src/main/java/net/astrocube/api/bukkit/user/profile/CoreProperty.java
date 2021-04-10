@@ -2,7 +2,6 @@ package net.astrocube.api.bukkit.user.profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.astrocube.api.bukkit.user.profile.AbstractProperty;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.annotation.Nullable;

@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
-import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.service.find.FindService;

@@ -1,9 +1,7 @@
 package net.astrocube.commons.bukkit.admin.selector;
 
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.spectator.SpectateRequestAssigner;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
-import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.commons.bukkit.admin.AdminPanelMenu;
@@ -13,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.abstraction.item.ItemClickableBuilder;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
 import javax.inject.Inject;

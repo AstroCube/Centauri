@@ -1,11 +1,15 @@
 package net.astrocube.commons.bukkit.friend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.friend.FriendshipAction;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.friend.FriendshipHandler;
+import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.paginate.PaginateResult;
@@ -16,6 +20,7 @@ import net.astrocube.commons.core.utils.Callbacks;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 
 public class CoreFriendshipHandler implements FriendshipHandler {
 
@@ -26,6 +31,12 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     private @Inject PaginateService<Friendship> paginateService;
     private @Inject ObjectMapper objectMapper;
     private @Inject Redis redis;
+    private final Channel<FriendshipAction> channel;
+
+    @Inject
+    public CoreFriendshipHandler(Messenger messenger) {
+        this.channel = messenger.getChannel(FriendshipAction.class);
+    }
 
     @Override
     public AsyncResponse<PaginateResult<Friendship>> paginate(String userId, int page, int perPage) {
@@ -52,17 +63,43 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     }
 
     @Override
-    public void createFriendRequest(String from, String to) {
+    public void createFriendRequest(String from, String to) throws JsonProcessingException {
 
         if (existsFriendRequest(from, to)) {
             return;
         }
 
         try (Jedis jedis = redis.getRawConnection().getResource()) {
+
             jedis.set("friendship:" + from + ":" + to, ""); // dummy values
             jedis.expire("friendship:" + from + ":" + to, FRIEND_REQUEST_EXPIRY);
-        }
 
+            channel.sendMessage(
+                    new FriendshipAction() {
+                        @Override
+                        public FriendshipDoc.Partial getFriendship() {
+                            return new FriendshipDoc.Relation() {
+                                @Override
+                                public String getSender() {
+                                    return from;
+                                }
+
+                                @Override
+                                public String getReceiver() {
+                                    return to;
+                                }
+                            };
+                        }
+
+                        @Override
+                        public Action getActionType() {
+                            return Action.ADD;
+                        }
+                    },
+                    new HashMap<>()
+            );
+
+        }
 
     }
 

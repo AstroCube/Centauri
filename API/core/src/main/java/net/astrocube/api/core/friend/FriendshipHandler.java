@@ -1,5 +1,6 @@
 package net.astrocube.api.core.friend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.concurrent.Callback;
 import net.astrocube.api.core.service.paginate.PaginateResult;
@@ -11,7 +12,7 @@ public interface FriendshipHandler {
 
     boolean existsFriendRequest(String issuer, String receiver);
 
-    void createFriendRequest(String issuer, String receiver);
+    void createFriendRequest(String issuer, String receiver) throws JsonProcessingException;
 
     void removeFriendRequest(String issuer, String receiver);
 

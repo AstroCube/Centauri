@@ -13,9 +13,9 @@ import me.fixeddev.commandflow.annotated.part.defaults.DefaultsModule;
 import me.fixeddev.commandflow.bukkit.BukkitCommandManager;
 import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
 import me.fixeddev.commandflow.translator.DefaultTranslator;
+import net.astrocube.api.bukkit.command.flow.CoreCommandLanguageProvider;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.*;
-import net.astrocube.api.bukkit.command.flow.CoreCommandLanguageProvider;
 import net.astrocube.commons.bukkit.command.punishment.PunishmentCommand;
 import org.bukkit.plugin.Plugin;
 

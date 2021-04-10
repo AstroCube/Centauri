@@ -2,7 +2,6 @@ package net.astrocube.api.bukkit.user.profile;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import net.astrocube.api.bukkit.user.profile.AbstractGameProfile;
 
 public class MojangProfileGeneratorUtil {
 

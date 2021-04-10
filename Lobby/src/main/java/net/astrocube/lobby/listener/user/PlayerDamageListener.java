@@ -1,8 +1,6 @@
 package net.astrocube.lobby.listener.user;
 
 import com.google.inject.Inject;
-import net.astrocube.api.bukkit.lobby.nametag.LobbyNametagHandler;
-import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.user.skin;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
@@ -13,7 +12,6 @@ import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.session.MojangManifest;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.http.RawRequestCallable;
 import org.bukkit.plugin.Plugin;
 
 import java.security.PublicKey;

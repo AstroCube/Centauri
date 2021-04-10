@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.channel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.astrocube.api.bukkit.channel.InterceptorRegistry;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannel;

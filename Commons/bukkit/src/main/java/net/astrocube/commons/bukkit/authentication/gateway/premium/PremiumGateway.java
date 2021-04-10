@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.authentication.gateway.premium;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;

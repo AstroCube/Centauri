@@ -82,13 +82,21 @@ friend:
         - "%blue%====================================================="
     online: "%yellow%Conectado"
     offline: "%red%Desconectado"
-    request-sent:
-        - "%blue%====================================================="
-        - "%white%Has enviado una solicitud de amistad a %receiver% %white%correctamente"
-        - "%blue%====================================================="
+    request:
+        sent:
+            - "%blue%====================================================="
+            - "%white%Has enviado una solicitud de amistad a %receiver% %white%correctamente"
+            - "%blue%====================================================="
+        received:
+            - "%blue%====================================================="
+            - "%white%Recibiste una solicitúd de amistad de %sender%"
+            - "%%holder%%"
+            - "%blue%====================================================="
+        holder: "%%red%%%%bold%%¡Click para ver más!"
     forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
     request-accepted: "%yellow%Has aceptado esta solicitud de amistad"
     error:
+        internal: "%%red%%Ha ocurrido un error interno al crear la solicitúd."
         empty: "%%red%%Al parecer no tienes amigos :("
         not-yourself: "No puedes hacer esto contigo mismo!"
         already-sent: "Ya le has mandado una solicitud de amistad a este jugador"

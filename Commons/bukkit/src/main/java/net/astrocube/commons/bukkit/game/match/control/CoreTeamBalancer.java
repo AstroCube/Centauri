@@ -1,6 +1,5 @@
 package net.astrocube.commons.bukkit.game.match.control;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.map.GameMapCache;

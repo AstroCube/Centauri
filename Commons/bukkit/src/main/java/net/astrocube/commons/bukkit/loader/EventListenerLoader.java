@@ -17,6 +17,7 @@ public class EventListenerLoader implements Loader {
     private @Inject AuthenticationListenerLoader authenticationListenerLoader;
     private @Inject GameListenerLoader gameListenerLoader;
     private @Inject MatchmakingListenerLoader matchmakingListenerLoader;
+    private @Inject FriendListenerLoader friendListenerLoader;
     private @Inject MatchListenerLoader matchListenerLoader;
     private @Inject UserListenerLoader userListenerLoader;
     private @Inject SpectatorListenerLoader spectatorListenerLoader;
@@ -39,6 +40,7 @@ public class EventListenerLoader implements Loader {
                 gameListenerLoader,
                 matchListenerLoader,
                 matchmakingListenerLoader,
+                friendListenerLoader,
                 userListenerLoader,
                 lobbyListenerLoader,
                 spectatorListenerLoader,
