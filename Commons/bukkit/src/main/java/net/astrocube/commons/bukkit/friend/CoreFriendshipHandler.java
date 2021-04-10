@@ -67,7 +67,8 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     @Override
     public boolean existsFriendRequest(String from, String to) {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            return jedis.exists("friendship:" + from + ":" + to);
+            return jedis.exists("friendship:" + from + ":" + to) ||
+                    jedis.exists("friendship:" + to + ":" + from);
         }
     }
 
@@ -94,10 +95,9 @@ public class CoreFriendshipHandler implements FriendshipHandler {
                     plugin,
                     () -> {
 
-                        try (Jedis jedisInside = redis.getRawConnection().getResource()) {
+                        try {
                             if (
-                                    jedisInside.exists("friendship:" + from + ":" + to) ||
-                                    jedisInside.exists("friendship:" + to + ":" + from)
+                                    existsFriendRequest(from, to)
                             ) {
 
                                 FriendshipAction action = createAction(from, to, FriendshipAction.Action.EXPIRE);
@@ -133,9 +133,11 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
     @Override
     public void removeFriendRequest(String from, String to) {
+
         if (!existsFriendRequest(from, to)) {
             return;
         }
+
         try (Jedis jedis = redis.getRawConnection().getResource()) {
             jedis.del("friendship:" + from + ":" + to);
             jedis.del("friendship:" + to + ":" + from);
