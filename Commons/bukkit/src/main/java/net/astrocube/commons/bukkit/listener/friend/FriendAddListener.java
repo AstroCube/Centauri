@@ -44,6 +44,7 @@ public class FriendAddListener implements Listener {
 
         findService.find(friendship.getSender()).callback(senderResponse ->
                 senderResponse.ifSuccessful(sender -> {
+
                     TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(receiver, sender);
 
                     BaseComponent[] builder = new ComponentBuilder(
@@ -64,7 +65,7 @@ public class FriendAddListener implements Listener {
 
 
                     StringList list = messageHandler.replacingMany(
-                            receiver, AlertModes.INFO, "friend.request.received",
+                            receiver, "friend.request.received",
                             "%sender%", flairFormat.getColor() + sender.getDisplay()
                     );
 
