@@ -134,10 +134,8 @@ public class CoreFriendshipHandler implements FriendshipHandler {
             return;
         }
         try (Jedis jedis = redis.getRawConnection().getResource()) {
-            String key = "friendship:" + from + ":" + to;
-            if (jedis.exists(key)) {
-                jedis.del(key);
-            }
+            jedis.del("friendship:" + from + ":" + to);
+            jedis.del("friendship:" + to + ":" + from);
         }
     }
 
@@ -197,8 +195,6 @@ public class CoreFriendshipHandler implements FriendshipHandler {
             });
 
         });
-
-
 
     }
 

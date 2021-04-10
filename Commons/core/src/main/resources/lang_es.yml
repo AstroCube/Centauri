@@ -85,7 +85,7 @@ friend:
     request:
         accept:
             - "%blue%====================================================="
-            - "%aqua%Ahora eres amigo con %receiver%%green%."
+            - "%aqua%Ahora eres amigo con %receiver%%aqua%."
             - "%blue%====================================================="
         sent:
             - "%blue%====================================================="
@@ -103,7 +103,7 @@ friend:
         holder: "¡Click para ver más!"
     forced: "%yellow%Has forzado la amistad entre tú y %gold%%receiver%"
     error:
-        internal: "%%red%%Ha ocurrido un error interno al procesar la solicitúd de amistad."
+        internal: "%red%Ha ocurrido un error interno al procesar la solicitúd de amistad."
         empty: "%%red%%Al parecer no tienes amigos :("
         not-yourself: "No puedes hacer esto contigo mismo!"
         already-sent: "Ya le has mandado una solicitud de amistad a este jugador"
