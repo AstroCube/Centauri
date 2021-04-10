@@ -57,15 +57,19 @@ public class FriendAcceptListener implements Listener {
                 ? relation.getReceiver() : relation.getReceiver();
 
         findService.find(related).callback(userResponse ->
-                userResponse.ifSuccessful(user ->
-                        messageHandler.sendReplacingIn(
-                                player, AlertModes.MUTED, "friend.request.accept",
-                                "%receiver%", displayMatcher.getDisplay(
-                                        player,
-                                        user
-                                )
-                        )
-                )
+                userResponse.ifSuccessful(user -> {
+
+                    TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
+                            player,
+                            user
+                    );
+
+                    messageHandler.sendReplacingIn(
+                            player, AlertModes.MUTED, "friend.request.accept",
+                            "%receiver%", flairFormat.getColor() + user.getDisplay()
+                    );
+
+                })
         );
 
     }
