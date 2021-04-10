@@ -54,7 +54,7 @@ public class FriendAcceptListener implements Listener {
     private void alertFriendship(Player player, FriendshipDoc.Relation relation) {
 
         String related = player.getDatabaseIdentifier().equalsIgnoreCase(relation.getSender())
-                ? relation.getReceiver() : relation.getReceiver();
+                ? relation.getReceiver() : relation.getSender();
 
         findService.find(related).callback(userResponse ->
                 userResponse.ifSuccessful(user -> {
