@@ -28,7 +28,7 @@ import java.util.logging.Level;
 
 public class CoreFriendshipHandler implements FriendshipHandler {
 
-    private static final int FRIEND_REQUEST_EXPIRY = 600; // 10 mintues
+    private static final int FRIEND_REQUEST_EXPIRY = 60; // 10 mintues
 
     private @Inject CreateService<Friendship, FriendshipDoc.Partial> createService;
     private @Inject PaginateService<Friendship> paginateService;
