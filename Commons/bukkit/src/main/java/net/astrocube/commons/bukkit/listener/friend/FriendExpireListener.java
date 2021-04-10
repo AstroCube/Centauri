@@ -31,7 +31,7 @@ public class FriendExpireListener implements Listener {
     @EventHandler
     public void onFriendshipAction(FriendshipActionEvent event) {
 
-        if (event.getAction().getActionType() != FriendshipAction.Action.ADD) {
+        if (event.getAction().getActionType() != FriendshipAction.Action.EXPIRE) {
             return;
         }
 
