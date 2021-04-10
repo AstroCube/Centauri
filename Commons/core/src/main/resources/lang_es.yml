@@ -85,7 +85,7 @@ friend:
     request:
         sent:
             - "%blue%====================================================="
-            - "%white%Has enviado una solicitud de amistad a %receiver% %white%correctamente"
+            - "%green%Añadiste a %receiver% %green%. ¡Espera que responda!"
             - "%blue%====================================================="
         received:
             - "%blue%====================================================="
