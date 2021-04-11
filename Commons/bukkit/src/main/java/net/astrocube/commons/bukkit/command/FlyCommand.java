@@ -5,6 +5,7 @@ import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.OptArg;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.core.virtual.server.ServerDoc;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,7 +26,9 @@ public class FlyCommand implements CommandClass {
             return;
         }
 
-        if (!plugin.getConfig().getString("server.type").equalsIgnoreCase("LOBBY")) {
+        ServerDoc.Type serverType = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+
+        if (serverType != ServerDoc.Type.LOBBY) {
             messageHandler.send(player, "fly.no-in-lobby");
             return;
         }
