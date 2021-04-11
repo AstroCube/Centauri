@@ -53,7 +53,7 @@ public class RemoveSubCommand implements CommandClass {
                     .add(
                             objectMapper.createObjectNode()
                                 .put("issuer", targetUser.getId())
-                                .put("issuer", user.getId())
+                                .put("receiver", user.getId())
                     );
 
             queryService.query(node).callback(queryResponse -> {
