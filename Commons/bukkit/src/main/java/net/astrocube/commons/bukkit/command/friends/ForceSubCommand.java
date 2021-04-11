@@ -53,7 +53,7 @@ public class ForceSubCommand implements CommandClass {
             }
 
             issuerResponse.ifSuccessful(issuerRecord ->
-                    friendCallbackHelper.findUserByName(issuer, (exception, user) -> {
+                    friendCallbackHelper.findUserByName(target.getName(), (exception, user) -> {
 
                         if (!user.isPresent()) {
                             messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown");
