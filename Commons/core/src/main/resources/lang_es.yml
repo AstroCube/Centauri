@@ -297,6 +297,9 @@ staff:
         disabled: ":monda: lo tenes desactivado"
         reminder-click: "klik"
 
+fly:
+    no-in-lobby: "no estas en un servidor de lobby"
+
 commands:
     unknown: "%red%El jugador que buscas no existe."
     unknown-player: "%red%No se encuentra el usuario solicitado o está desconectado."

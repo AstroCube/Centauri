@@ -32,21 +32,17 @@ public class UserChatListener implements Listener {
                     );
                 }
 
-                userCallback.ifSuccessful(user -> {
+                userCallback.ifSuccessful(user -> Bukkit.getOnlinePlayers().forEach(player ->  {
 
-                    Bukkit.getOnlinePlayers().forEach(player ->  {
+                    TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
 
-                        TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
+                    player.sendMessage(
+                            format.getPrefix() + " " +
+                                    ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
+                                    event.getMessage()
+                    );
 
-                        player.sendMessage(
-                                format.getPrefix() + " " +
-                                        ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
-                                        event.getMessage()
-                        );
-
-                    });
-
-                });
+                }));
 
 
             });
