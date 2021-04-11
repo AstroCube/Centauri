@@ -15,6 +15,8 @@ public interface FriendshipHandler {
 
     void createFriendRequest(String issuer, String receiver) throws JsonProcessingException;
 
+    void forceFriendship(String issuer, String first, String second, boolean alerted);
+
     void removeFriendRequest(String issuer, String receiver);
 
     void createFriendship(String issuer, String receiver);

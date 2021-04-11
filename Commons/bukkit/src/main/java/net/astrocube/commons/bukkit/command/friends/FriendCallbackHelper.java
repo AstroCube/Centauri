@@ -4,13 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.astrocube.api.core.concurrent.Callback;
+import net.astrocube.api.core.concurrent.Response;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 @Singleton
@@ -38,6 +42,31 @@ public class FriendCallbackHelper {
 
                         }
                 ));
+
+    }
+
+
+    public void findUserByName(String player, BiConsumer<Exception, Optional<User>> callback) {
+
+        ObjectNode filter = objectMapper.createObjectNode()
+                .put("username", player);
+
+        userQueryService.query(filter).callback(response -> {
+
+            if (!response.isSuccessful()) {
+                callback.accept(response.getThrownException().get(), null);
+            }
+
+            response.ifSuccessful(user ->
+                    callback.accept(
+                            null,
+                            user.getFoundModels().stream()
+                                    .filter(p -> p.getUsername().equalsIgnoreCase(player))
+                                    .findAny()
+                    )
+            );
+
+        });
 
     }
 

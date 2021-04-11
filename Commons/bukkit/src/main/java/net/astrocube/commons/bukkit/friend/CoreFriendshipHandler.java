@@ -132,6 +132,71 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     }
 
     @Override
+    public void forceFriendship(String issuer, String first, String second, boolean alerted) {
+
+        FriendshipDoc.Creation creation = new FriendshipDoc.Creation() {
+            @Nullable
+            @Override
+            public String getIssuer() {
+                return issuer;
+            }
+            @Override
+            public boolean isAlerted() {
+                return alerted;
+            }
+            @Override
+            public String getSender() {
+                return first;
+            }
+            @Override
+            public String getReceiver() {
+                return second;
+            }
+        };
+
+        FriendshipAction action = new FriendshipAction() {
+            @Override
+            public FriendshipDoc.Creation getFriendship() {
+                return creation;
+            }
+
+            @Override
+            public Action getActionType() {
+                return Action.FORCE;
+            }
+        };
+
+        createService.create(creation).callback(response -> {
+
+            if (!response.isSuccessful()) {
+                Player player = Bukkit.getPlayerByIdentifier(issuer);
+                if (issuer != null) {
+                    messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+                }
+            }
+
+            response.ifSuccessful(friendship -> {
+
+                try {
+
+                    channel.sendMessage(
+                            action,
+                            new HashMap<>()
+                    );
+
+                    Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(action));
+
+                } catch (JsonProcessingException e) {
+                    plugin.getLogger().log(Level.SEVERE, "Error while processing force message", e);
+                }
+
+            });
+
+        });
+
+    }
+
+    @Override
     public void removeFriendRequest(String from, String to) {
 
         if (!existsFriendRequest(from, to)) {
@@ -188,12 +253,14 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
                 FriendshipAction action = createAction(sender, receiver, FriendshipAction.Action.ACCEPT);
                 try {
+
                     channel.sendMessage(
                             action,
                             new HashMap<>()
                     );
                     removeFriendRequest(sender, receiver);
                     Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(action));
+
                 } catch (JsonProcessingException e) {
                     plugin.getLogger().log(Level.SEVERE, "There was an error alerting friend accept", e);
                 }
@@ -207,8 +274,19 @@ public class CoreFriendshipHandler implements FriendshipHandler {
     private FriendshipAction createAction(String sender, String receiver, FriendshipAction.Action action) {
         return new FriendshipAction() {
             @Override
-            public FriendshipDoc.Relation getFriendship() {
-                return new FriendshipDoc.Relation() {
+            public FriendshipDoc.Creation getFriendship() {
+                return new FriendshipDoc.Creation() {
+                    @Nullable
+                    @Override
+                    public String getIssuer() {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isAlerted() {
+                        return false;
+                    }
+
                     @Override
                     public String getSender() {
                         return sender;
