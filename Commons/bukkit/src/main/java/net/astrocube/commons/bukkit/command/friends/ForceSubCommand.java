@@ -41,9 +41,11 @@ public class ForceSubCommand implements CommandClass {
         String issuer = player.getDatabaseIdentifier();
 
         if (second != null && second.getName().equalsIgnoreCase(player.getName())) {
-            target = null;
+            second = null;
         }
 
+        OfflinePlayer finalSecond = second;
+        OfflinePlayer finalSecond1 = second;
         findService.find(issuer).callback(issuerResponse -> {
 
             if (!issuerResponse.isSuccessful()) {
@@ -58,7 +60,7 @@ public class ForceSubCommand implements CommandClass {
                             return;
                         }
 
-                        if (second == null) {
+                        if (finalSecond == null) {
 
                             if (friendHelper.checkAlreadySent(player, issuerRecord, user.get())) {
                                 return;
@@ -71,7 +73,7 @@ public class ForceSubCommand implements CommandClass {
                             friendshipHandler.forceFriendship(issuer, issuer, user.get().getId(), false);
                         }
 
-                        friendCallbackHelper.findUserByName("", (secondException, secondUser) -> {
+                        friendCallbackHelper.findUserByName(finalSecond1.getName(), (secondException, secondUser) -> {
 
                             if (!secondUser.isPresent()) {
                                 messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown");
