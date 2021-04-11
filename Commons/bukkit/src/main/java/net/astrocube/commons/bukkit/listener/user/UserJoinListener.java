@@ -151,9 +151,11 @@ public class UserJoinListener implements Listener {
                 Bukkit.getScheduler().runTask(plugin, () ->
                                        customSkinRegistry.add(player, user.getSkin()));
 
-                if (player.hasPermission("commons.fly")) {
-                    player.setAllowFlight(true);
-                }
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    if (player.hasPermission("commons.fly")) {
+                        player.setAllowFlight(true);
+                    }
+                });
 
 
             } catch (Exception exception) {
