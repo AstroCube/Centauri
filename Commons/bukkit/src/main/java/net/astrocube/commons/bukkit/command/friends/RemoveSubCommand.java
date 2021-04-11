@@ -56,24 +56,42 @@ public class RemoveSubCommand implements CommandClass {
                                 .put("issuer", user.getId())
                     );
 
-            queryService.query(node).callback(Callbacks.applyCommonErrorHandler(result ->
-                deleteService.delete(
-                        result.getFoundModels()
-                            .iterator()
-                            .next()
-                            .getId()
-                )
-            ));
+            queryService.query(node).callback(queryResponse -> {
 
-            TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
-                    player,
-                    targetUser
-            );
+                if (!queryResponse.isSuccessful()) {
+                    messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+                }
 
-            messageHandler.sendReplacingIn(
-                    player, AlertModes.MUTED, "friend.request.removed",
-                    "%player%", flairFormat.getColor() + targetUser.getDisplay()
-            );
+                queryResponse.ifSuccessful(friendships ->
+                        deleteService.delete(
+                                friendships.getFoundModels()
+                                        .iterator()
+                                        .next()
+                                        .getId()
+                        ).callback(deleted -> {
+
+                            if (!deleted.isSuccessful()) {
+                                messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+                            }
+
+                            deleted.ifSuccessful(response -> {
+
+                                TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
+                                        player,
+                                        targetUser
+                                );
+
+                                messageHandler.sendReplacingIn(
+                                        player, AlertModes.MUTED, "friend.request.removed",
+                                        "%player%", flairFormat.getColor() + targetUser.getDisplay()
+                                );
+
+                            });
+
+                        })
+                );
+
+            });
 
         });
 
