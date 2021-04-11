@@ -57,7 +57,7 @@ public class RemoveSubCommand implements CommandClass {
                     );
 
             queryService.query(node).callback(Callbacks.applyCommonErrorHandler(result ->
-                deleteService.delete(
+                deleteService.declete(
                         result.getFoundModels()
                             .iterator()
                             .next()

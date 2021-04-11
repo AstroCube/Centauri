@@ -200,7 +200,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
                 new CoreRequestOptions(
                         RequestOptions.Type.DELETE,
                         new HashMap<>(),
-                        null,
+                        "",
                         null
                 )
         );
