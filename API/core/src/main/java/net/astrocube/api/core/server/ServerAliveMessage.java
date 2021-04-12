@@ -1,5 +1,6 @@
 package net.astrocube.api.core.server;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.message.Message;
 
 public interface ServerAliveMessage extends Message {
@@ -15,7 +16,10 @@ public interface ServerAliveMessage extends Message {
     Action getAction();
 
     enum Action {
-        REQUEST, CONFIRM
+        @JsonProperty("Request")
+        REQUEST,
+        @JsonProperty("Confirm")
+        CONFIRM
     }
 
 }
