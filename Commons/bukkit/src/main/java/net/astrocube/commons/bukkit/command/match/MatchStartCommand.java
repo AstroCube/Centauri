@@ -24,7 +24,7 @@ public class MatchStartCommand implements CommandClass {
     private @Inject MatchMessageHelper matchMessageHelper;
 
 
-    @Command(names = {"start"}, permission = "")
+    @Command(names = {"start"}, permission = "commons.match.admin")
     public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
 
         Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
