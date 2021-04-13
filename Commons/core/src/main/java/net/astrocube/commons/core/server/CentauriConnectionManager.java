@@ -15,11 +15,16 @@ public class CentauriConnectionManager implements ServerConnectionManager {
     }
 
     @Override
-    public String startConnection(String slug, ServerDoc.Type type, String cluster) throws Exception {
+    public String startConnection(String slug, ServerDoc.Type type, String cluster, boolean sandbox) throws Exception {
         ServerDoc.Identity identity = new ServerDoc.Identity() {
             @Override
             public String getSlug() {
                 return slug;
+            }
+
+            @Override
+            public boolean isSandbox() {
+                return sandbox;
             }
 
             @Override

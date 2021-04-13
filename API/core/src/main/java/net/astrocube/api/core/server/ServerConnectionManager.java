@@ -7,7 +7,8 @@ public interface ServerConnectionManager {
     String startConnection(
             String slug,
             ServerDoc.Type type,
-            String cluster
+            String cluster,
+            boolean sandbox
     ) throws Exception;
 
     void endConnection() throws Exception;

@@ -12,7 +12,7 @@ public class CentauriGameStartManager implements GameServerStartManager {
     private @Inject ServerService serverService;
 
     @Override
-    public String createGameServer(String slug, ServerDoc.Type type, String cluster, int maxRunning, int maxTotal, GameMode gamemode, SubGameMode subGamemode) throws Exception {
+    public String createGameServer(String slug, ServerDoc.Type type, String cluster, int maxRunning, int maxTotal, GameMode gamemode, SubGameMode subGamemode, boolean sandbox) throws Exception {
 
         ServerDoc.Creation gameCreation = new ServerDoc.Creation() {
             @Override
@@ -38,6 +38,11 @@ public class CentauriGameStartManager implements GameServerStartManager {
             @Override
             public String getSlug() {
                 return slug;
+            }
+
+            @Override
+            public boolean isSandbox() {
+                return sandbox;
             }
 
             @Override

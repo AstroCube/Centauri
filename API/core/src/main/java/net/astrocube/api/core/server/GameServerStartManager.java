@@ -13,7 +13,8 @@ public interface GameServerStartManager {
             int maxRunning,
             int maxTotal,
             GameMode gamemode,
-            SubGameMode subGamemode
+            SubGameMode subGamemode,
+            boolean sandbox
     ) throws Exception;
 
 }

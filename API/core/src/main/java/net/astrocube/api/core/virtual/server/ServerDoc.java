@@ -25,6 +25,11 @@ public interface ServerDoc {
         String getSlug();
 
         /**
+         * @return if the server is in sandbox mode
+         */
+        boolean isSandbox();
+
+        /**
          * Type of the server that should be resolved
          * @return server type
          */

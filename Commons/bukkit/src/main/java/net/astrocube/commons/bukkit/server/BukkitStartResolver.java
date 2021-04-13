@@ -38,7 +38,8 @@ public class BukkitStartResolver implements ServerStartResolver {
                 String token = serverConnectionManager.startConnection(
                         instanceNameProvider.getName(),
                         type,
-                        plugin.getConfig().getString("server.cluster")
+                        plugin.getConfig().getString("server.cluster"),
+                        plugin.getConfig().getBoolean("server.sandbox")
                 );
                 this.authorizationProcessor.authorizeBackend(token.toCharArray());
                 return;
@@ -66,7 +67,8 @@ public class BukkitStartResolver implements ServerStartResolver {
                     plugin.getConfig().getInt("game.running"),
                     plugin.getConfig().getInt("game.total"),
                     gameModeDoc,
-                    subGameMode.get()
+                    subGameMode.get(),
+                    plugin.getConfig().getBoolean("server.sandbox")
             );
             this.authorizationProcessor.authorizeBackend(token.toCharArray());
 

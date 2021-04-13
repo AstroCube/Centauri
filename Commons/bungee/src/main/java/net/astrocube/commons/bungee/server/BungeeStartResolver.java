@@ -24,7 +24,8 @@ public class BungeeStartResolver implements ServerStartResolver {
             String token = serverConnectionManager.startConnection(
                     plugin.getProxy().getName(),
                     ServerDoc.Type.BUNGEE,
-                    configurationHelper.get().getString("api.cluster")
+                    configurationHelper.get().getString("api.cluster"),
+                    configurationHelper.get().getBoolean("server.sandbox")
             );
             authorizationProcessor.authorizeBackend(token.toCharArray());
         } catch (Exception e) {
