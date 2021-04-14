@@ -1,6 +1,7 @@
 package net.astrocube.commons.core.server;
 
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.api.bukkit.game.match.request.*;
 import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.server.GameServerStartManager;
 import net.astrocube.api.core.server.ServerAliveMessage;
@@ -17,6 +18,13 @@ public class CoreServerModule extends ProtectedModule implements ChannelBinder {
         expose(ServerConnectionManager.class);
 
         bindChannel(ServerAliveMessage.class);
+        bindChannel(MatchCleanupMessage.class);
+        bindChannel(MatchDisqualifyMessage.class);
+        bindChannel(MatchmakingAssignMessage.class);
+        bindChannel(PendingAssignMessage.class);
+        bindChannel(SpectatorAssignMessage.class);
+        bindChannel(TeamAssignMessage.class);
+        bindChannel(VictoryAssignMessage.class);
     }
 
 
