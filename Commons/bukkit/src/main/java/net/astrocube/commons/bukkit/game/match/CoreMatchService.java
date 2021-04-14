@@ -20,9 +20,6 @@ import java.util.Set;
 public class CoreMatchService implements MatchService {
 
     private @Inject ObjectMapper objectMapper;
-    private @Inject HttpClient httpClient;
-    private @Inject ModelMeta<Match, MatchDoc.Partial> modelMeta;
-    private @Inject Redis redis;
     private final Messenger messenger;
 
     @Inject
@@ -32,26 +29,29 @@ public class CoreMatchService implements MatchService {
 
     @Override
     public void assignSpectator(String user, String match, boolean join) throws Exception {
-
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.put("user", user);
-        node.put("match", match);
-        node.put("join", join);
-
         Channel<SpectatorAssignMessage> spectatorAssignMessageChannel = messenger.getChannel(SpectatorAssignMessage.class);
-        spectatorAssignMessageChannel.sendMessage(objectMapper.readValue(node.toString(), SpectatorAssignMessage.class), new HashMap<>());
+        spectatorAssignMessageChannel.sendMessage(new SpectatorAssignMessage() {
+            @Override
+            public String getUser() {
+                return user;
+            }
+
+            @Override
+            public boolean isJoin() {
+                return join;
+            }
+
+            @Override
+            public String getMatch() {
+                return match;
+            }
+        }, new HashMap<>());
     }
 
     @Override
     public void assignTeams(Set<MatchDoc.Team> teams, String match) throws Exception {
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.putPOJO("teams", teams);
-        node.put("match", match);
-
         Channel<TeamAssignMessage> teamAssignMessageChannel = messenger.getChannel(TeamAssignMessage.class);
-        teamAssignMessageChannel.sendMessage(objectMapper.readValue(node.toString(), TeamAssignMessage.class), new HashMap<>());
+        teamAssignMessageChannel.sendMessage(() -> teams, new HashMap<>());
     }
 
     @Override
@@ -67,58 +67,72 @@ public class CoreMatchService implements MatchService {
 
     @Override
     public void assignPending(MatchAssignable pendingRequest, String match) throws Exception {
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.putPOJO("pending", pendingRequest);
-        node.put("match", match);
-
         Channel<MatchmakingAssignMessage> matchmakingAssignMessageChannel = messenger.getChannel(MatchmakingAssignMessage.class);
-        matchmakingAssignMessageChannel.sendMessage(objectMapper.readValue(node.toString(), MatchmakingAssignMessage.class), new HashMap<>());
-    }
+        matchmakingAssignMessageChannel.sendMessage(new MatchmakingAssignMessage() {
+            @Override
+            public MatchAssignable getAssignable() {
+                return pendingRequest;
+            }
 
-    @Override
-    public void matchCleanup() throws Exception {
-        Channel<MatchCleanupMessage> matchCleanupMessageChannel = messenger.getChannel(MatchCleanupMessage.class);
-        matchCleanupMessageChannel.sendMessage(new MatchCleanupMessage() {
             @Override
             public String getMatch() {
-                return "";
+                return match;
             }
         }, new HashMap<>());
     }
 
     @Override
+    public void matchCleanup() throws Exception {
+        Channel<MatchCleanupMessage> matchCleanupMessageChannel = messenger.getChannel(MatchCleanupMessage.class);
+        matchCleanupMessageChannel.sendMessage(() -> "", new HashMap<>());
+    }
+
+    @Override
     public void assignVictory(String match, Set<String> winners) throws Exception {
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.put("match", match);
-        node.putPOJO("winners", winners);
-
         Channel<VictoryAssignMessage> victoryAssignMessageChannel = messenger.getChannel(VictoryAssignMessage.class);
-        victoryAssignMessageChannel.sendMessage(objectMapper.readValue(node.toString(), VictoryAssignMessage.class), new HashMap<>());
+        victoryAssignMessageChannel.sendMessage(new VictoryAssignMessage() {
+            @Override
+            public Set<String> getWinners() {
+                return winners;
+            }
+
+            @Override
+            public String getMatch() {
+                return match;
+            }
+        }, new HashMap<>());
     }
 
     @Override
     public void disqualify(String match, String user) throws Exception {
-
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.put("user", user);
-        node.put("match", match);
-
         Channel<MatchDisqualifyMessage> matchDisqualifyMessageChannel = messenger.getChannel(MatchDisqualifyMessage.class);
-        matchDisqualifyMessageChannel.sendMessage(objectMapper.readValue(node.toString(), MatchDisqualifyMessage.class), new HashMap<>());
+        matchDisqualifyMessageChannel.sendMessage(new MatchDisqualifyMessage() {
+            @Override
+            public String getUser() {
+                return user;
+            }
+
+            @Override
+            public String getMatch() {
+                return match;
+            }
+        }, new HashMap<>());
     }
 
     @Override
     public void privatizeMatch(String requester, String match) throws Exception {
-        ObjectNode node = objectMapper.createObjectNode();
-
-        node.put("requester", requester);
-        node.put("match", match);
-
         Channel<MatchPrivatizeMessage> matchPrivatizeMessageChannel = messenger.getChannel(MatchPrivatizeMessage.class);
-        matchPrivatizeMessageChannel.sendMessage(objectMapper.readValue(node.toString(), MatchPrivatizeMessage.class), new HashMap<>());
+        matchPrivatizeMessageChannel.sendMessage(new MatchPrivatizeMessage() {
+            @Override
+            public String getRequester() {
+                return requester;
+            }
+
+            @Override
+            public String getMatch() {
+                return match;
+            }
+        }, new HashMap<>());
     }
 
 }
