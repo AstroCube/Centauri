@@ -21,7 +21,7 @@ public class CoreServerModule extends ProtectedModule implements ChannelBinder {
         bindChannel(MatchCleanupMessage.class);
         bindChannel(MatchDisqualifyMessage.class);
         bindChannel(MatchmakingAssignMessage.class);
-        bindChannel(PendingAssignMessage.class);
+        bindChannel(PendingUnAssignMessage.class);
         bindChannel(SpectatorAssignMessage.class);
         bindChannel(TeamAssignMessage.class);
         bindChannel(VictoryAssignMessage.class);
