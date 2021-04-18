@@ -6,6 +6,7 @@ import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.session.SessionService;
 import net.astrocube.api.core.session.SessionSwitchWrapper;
+import net.astrocube.api.core.session.registry.SessionRegistryManager;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bungee.user.UserProvideHelper;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -22,6 +23,7 @@ public class ServerDisconnectListener implements Listener {
 
     private @Inject UserProvideHelper userProvideHelper;
     private @Inject SessionService sessionService;
+    private @Inject SessionRegistryManager sessionRegistryManager;
     private @Inject Plugin plugin;
     private @Inject Redis redis;
     private final Channel<SessionSwitchWrapper> channel;
@@ -39,6 +41,7 @@ public class ServerDisconnectListener implements Listener {
 
             if (user.isPresent()) {
                 sessionService.serverDisconnect(user.get().getId());
+                sessionRegistryManager.unregister(user.get().getId());
                 channel.sendMessage(new SessionSwitchWrapper() {
                     @Override
                     public User getUser() {
