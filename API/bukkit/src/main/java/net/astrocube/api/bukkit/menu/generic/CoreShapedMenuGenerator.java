@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import javax.annotation.Nullable;
 import java.util.Set;

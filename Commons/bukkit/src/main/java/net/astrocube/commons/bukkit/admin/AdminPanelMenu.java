@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import team.unnamed.gui.core.gui.type.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;

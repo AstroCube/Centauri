@@ -10,7 +10,7 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 @Singleton
 public class CoreGameSelectorDisplay implements GameSelectorDisplay {

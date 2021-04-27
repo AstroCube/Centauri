@@ -19,7 +19,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import java.util.Optional;
 import java.util.logging.Level;

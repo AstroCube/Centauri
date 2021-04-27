@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import team.unnamed.gui.abstraction.item.ItemClickable;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
