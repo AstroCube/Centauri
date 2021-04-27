@@ -14,37 +14,10 @@
     <packaging>pom</packaging>
 
     <repositories>
-
-        <!-- Public AstroCube repositories -->
         <repository>
-            <id>astro-releases</id>
-            <url>https://repo.astrocube.net/repository/astro-releases</url>
+            <id>core-public</id>
+            <url>https://repo.astrocube.net/repository/core-public</url>
         </repository>
-        <repository>
-            <id>astro-snapshots</id>
-            <url>https://repo.astrocube.net/repository/astro-snapshots</url>
-        </repository>
-
-        <!-- Public AstroCube repositories -->
-        <repository>
-            <id>core-releases</id>
-            <url>https://repo.astrocube.net/repository/core-releases</url>
-        </repository>
-        <repository>
-            <id>core-snapshots</id>
-            <url>https://repo.astrocube.net/repository/core-releases</url>
-        </repository>
-
-        <!-- Public Unnamed repositories -->
-        <repository>
-            <id>unnamed-releases</id>
-            <url>https://repo.unnamed.team/repository/unnamed-releases</url>
-        </repository>
-        <repository>
-            <id>unnamed-snapshots</id>
-            <url>https://repo.unnamed.team/repository/unnamed-snapshots</url>
-        </repository>
-
         <repository>
             <id>TimoCloud-API</id>
             <url>https://maven.timo.cloud/repository/TimoCloud-API/</url>
@@ -53,7 +26,6 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-
     </repositories>
 
     <modules>

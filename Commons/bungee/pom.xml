@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.seocraft</groupId>
+            <groupId>io.github.waterfallmc</groupId>
             <artifactId>waterfall-api</artifactId>
-            <version>1.8</version>
+            <version>1.16-R0.5-20210427.004902-4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
