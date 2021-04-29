@@ -16,8 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
-import java.util.UUID;
-
 @Singleton
 public class CoreHideItemActionable implements HideItemActionable {
 
