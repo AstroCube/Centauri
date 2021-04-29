@@ -17,6 +17,7 @@ lobby:
         disabled-gadget: "%blue%Ocultar jugadores %gray%(Click derecho)"
         enabled: "%aqua%Ahora todos los jugadores están %red%ocultos%aqua%."
         disabled: "%aqua%Ahora todos los jugadores están %green%visibles%aqua%."
+        no-finished-cool-down: "%red%Debes esperar para realizar esto"
         gadget-lore:
             - "%gray%Al darle clic derecho cambiarás el estado"
             - "%gray%de visibilidad de tus jugadores."
