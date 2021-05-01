@@ -1,5 +1,21 @@
 lobby:
     profile:
+        title: "%gray%Tu Perfil"
+        head: "%aqua%Perfil de %blue%%player_name%"
+        head-lore:
+            - "%gray%Aquí puedes cambiar múltiples"
+            - "%gray%opciones pasa personalizar tu"
+            - "%gray%estadía en el servidor."
+        stats: "%aqua%Estadísticas"
+        stats-lore:
+            - "%gray%Al darle clic podrás ver"
+            - "%gray%un menú con todas tus estadísticas"
+            - "%gray%dentro del servidor"
+        options: "%aqua%Opciones"
+        options-lore:
+            - "%gray%Al darle clic podrás ver"
+            - "%gray%un menú con todas las opciones"
+            - "%gray%disponibles"
         gadget: "%blue%Perfil %gray%(Click derecho)"
         gadget-lore:
             - "%gray%Al darle clic derecho podrás ver"

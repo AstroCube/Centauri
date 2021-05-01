@@ -17,7 +17,7 @@ public class ProfileGadgetStack {
                         .setLore(provider.getMany(player, "lobby.profile.gadget-lore"))
                         .build(),
                 "actionable",
-                "game_menu"
+                "profile_menu"
         );
     }
 

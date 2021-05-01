@@ -6,6 +6,7 @@ import net.astrocube.lobby.listener.environment.WeatherChangeListener;
 import net.astrocube.lobby.listener.gadget.GameGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.HideGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.LobbySelectorGadgetInteractListener;
+import net.astrocube.lobby.listener.gadget.ProfileGadgetInteractListener;
 import net.astrocube.lobby.listener.user.LobbyJoinListener;
 import net.astrocube.lobby.listener.user.PlayerDamageListener;
 import net.astrocube.lobby.listener.user.PlayerQuitListener;
@@ -20,6 +21,7 @@ public class EventListenerLoader implements Loader {
     private @Inject HideGadgetInteractListener hideGadgetInteractListener;
     private @Inject GameGadgetInteractListener gameGadgetInteractListener;
     private @Inject LobbySelectorGadgetInteractListener lobbySelectorGadgetInteractListener;
+    private @Inject ProfileGadgetInteractListener profileGadgetInteractListener;
     private @Inject PlayerDamageListener playerDamageListener;
 
     private @Inject LobbyJoinListener lobbyJoinListener;
@@ -37,6 +39,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(hideGadgetInteractListener);
         registerEvent(gameGadgetInteractListener);
         registerEvent(lobbySelectorGadgetInteractListener);
+        registerEvent(profileGadgetInteractListener);
         registerEvent(playerDamageListener);
 
         registerEvent(lobbyJoinListener);
