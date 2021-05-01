@@ -18,6 +18,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
     public static final String TEXTURES_URL = "https://textures.minecraft.net/texture/";
 
     private @Inject MessageHandler messageHandler;
+    private @Inject CoreLanguageSelectorDisplay languageSelectorDisplay;
 
     @Override
     public void openDisplay(User user, Player player) {
@@ -61,7 +62,11 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
                 .setName(messageHandler.get(player, "lobby.profile.language"))
                 .setLore(messageHandler.getMany(player, "lobby.profile.language-lore"))
                 .build()
-        ).build());
+        ).setAction(event -> {
+            event.getWhoClicked().closeInventory();
+            languageSelectorDisplay.openDisplay(user, player);
+            return true;
+        }).build());
         //#endregion
 
         //#region Social Item
