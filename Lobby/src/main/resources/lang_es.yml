@@ -1,4 +1,10 @@
 lobby:
+    profile:
+        gadget: "%blue%Perfil %gray%(Click derecho)"
+        gadget-lore:
+            - "%gray%Al darle clic derecho podrás ver"
+            - "%gray%un todas las opciones disponibles"
+            - "%gray%de tu perfil de juego."
     scoreboard:
         title: "%blue%%bold%AstroCube"
         lore:
