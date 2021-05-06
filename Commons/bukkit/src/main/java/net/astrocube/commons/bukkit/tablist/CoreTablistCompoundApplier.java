@@ -30,11 +30,10 @@ public class CoreTablistCompoundApplier implements TablistCompoundApplier {
         ComponentBuilder componentBuilder = new ComponentBuilder("");
 
         for (int i = 0; compound.size() > i; i++) {
-
-            componentBuilder.appendLegacy(compound.get(i));
-            if (i != (compound.size() - 1)) {
+            if (i != 0) {
                 componentBuilder.append("\n");
             }
+            componentBuilder.appendLegacy(compound.get(i));
         }
         return componentBuilder.create();
     }
