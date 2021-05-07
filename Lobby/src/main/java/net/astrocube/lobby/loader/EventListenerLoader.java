@@ -2,6 +2,7 @@ package net.astrocube.lobby.loader;
 
 import com.google.inject.Inject;
 import net.astrocube.api.core.loader.Loader;
+import net.astrocube.lobby.listener.environment.CropBreakingListener;
 import net.astrocube.lobby.listener.environment.WeatherChangeListener;
 import net.astrocube.lobby.listener.gadget.GameGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.HideGadgetInteractListener;
@@ -29,6 +30,7 @@ public class EventListenerLoader implements Loader {
     private @Inject UserBasicActionsListener userBasicActionsListener;
 
     private @Inject WeatherChangeListener weatherChangeListener;
+    private @Inject CropBreakingListener cropBreakingListener;
 
     private @Inject Plugin plugin;
 
@@ -47,6 +49,7 @@ public class EventListenerLoader implements Loader {
         registerEvent(userBasicActionsListener);
 
         registerEvent(weatherChangeListener);
+        registerEvent(cropBreakingListener);
 
     }
 
