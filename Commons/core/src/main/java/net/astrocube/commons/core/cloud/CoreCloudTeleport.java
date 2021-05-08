@@ -11,7 +11,6 @@ public class CoreCloudTeleport implements CloudTeleport {
 
     @Override
     public void teleportToServer(String server, String player) {
-        System.out.println("server is " + server);
         Optional.ofNullable(TimoCloudAPI.getUniversalAPI().getServer(server))
                 .ifPresent(serverObject -> TimoCloudAPI.getUniversalAPI().getPlayer(player).sendToServer(serverObject));
     }
