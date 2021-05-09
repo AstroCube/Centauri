@@ -34,6 +34,7 @@ public class CoreHideItemActionable implements HideItemActionable {
         try (Jedis jedis = redis.getRawConnection().getResource()) {
 
             if(jedis.exists("COOL-DOWN:HIDE" + id)) {
+                plugin.getLogger().info("Exists in cool down");
                 messageHandler.send(player, "no-finished-cool-down");
                 return;
             }
@@ -53,6 +54,8 @@ public class CoreHideItemActionable implements HideItemActionable {
 
                     player.getInventory().setItem(7, HideGadgetStack.get(messageHandler, player, !hide));
                     messageHandler.send(player, translateAlert);
+
+                    plugin.getLogger().info(" The player has change hide ");
 
                     jedis.expire("COOL-DOWN:HIDE" + id, 3);
                 } else {
