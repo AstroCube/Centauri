@@ -30,7 +30,7 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 			Bukkit.getScheduler().runTaskLater(plugin, () -> {
 				serverTeleportRetry.attemptGroupTeleport(
 					player.getName(),
-					plugin.getConfig().getString("server.fallback", "main-lobby"),
+					plugin.getConfig().getString("server.fallback", "main_lobby"),
 					1,
 					3
 				);

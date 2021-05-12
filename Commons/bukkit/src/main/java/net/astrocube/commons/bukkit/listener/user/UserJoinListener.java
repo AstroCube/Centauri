@@ -96,7 +96,7 @@ public class UserJoinListener implements Listener {
 					@Nullable
 					@Override
 					public String getLobby() {
-						return plugin.getConfig().getString("server.fallback", "main-lobby");
+						return plugin.getConfig().getString("server.fallback", "main_lobby");
 					}
 				});
 
