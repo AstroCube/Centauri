@@ -5,12 +5,12 @@ package net.astrocube.api.core.http.exception;
  */
 public class Unauthorized extends BackendException {
 
-    public Unauthorized(String message) {
-        super(message);
-    }
+	public Unauthorized(String message) {
+		super(message);
+	}
 
-    @Override
-    public int statusCode() {
-        return 403;
-    }
+	@Override
+	public int statusCode() {
+		return 403;
+	}
 }

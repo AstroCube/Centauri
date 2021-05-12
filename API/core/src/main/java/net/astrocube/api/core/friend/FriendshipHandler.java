@@ -9,16 +9,16 @@ import net.astrocube.api.core.virtual.friend.Friendship;
 
 public interface FriendshipHandler {
 
-    AsyncResponse<PaginateResult<Friendship>> paginate(String userId, int page, int perPage);
+	AsyncResponse<PaginateResult<Friendship>> paginate(String userId, int page, int perPage);
 
-    boolean existsFriendRequest(String issuer, String receiver);
+	boolean existsFriendRequest(String issuer, String receiver);
 
-    void createFriendRequest(String issuer, String receiver) throws JsonProcessingException;
+	void createFriendRequest(String issuer, String receiver) throws JsonProcessingException;
 
-    void forceFriendship(String issuer, String first, String second, boolean alerted);
+	void forceFriendship(String issuer, String first, String second, boolean alerted);
 
-    void removeFriendRequest(String issuer, String receiver);
+	void removeFriendRequest(String issuer, String receiver);
 
-    void createFriendship(String issuer, String receiver);
+	void createFriendship(String issuer, String receiver);
 
 }

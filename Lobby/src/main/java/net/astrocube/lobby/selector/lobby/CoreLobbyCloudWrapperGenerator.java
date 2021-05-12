@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Singleton
 public class CoreLobbyCloudWrapperGenerator implements LobbyCloudWrapperGenerator {
 
-    private @Inject CloudInstanceProvider cloudInstanceProvider;
+	private @Inject CloudInstanceProvider cloudInstanceProvider;
 
-    @Override
-    public List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode) {
+	@Override
+	public List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode) {
 
-        return cloudInstanceProvider.getGroupInstances(gameMode.getLobby()).stream()
-                .sorted(Comparator.comparingInt(CloudInstanceProvider.Instance::getNumber))
-                .collect(Collectors.toList());
-    }
+		return cloudInstanceProvider.getGroupInstances(gameMode.getLobby()).stream()
+			.sorted(Comparator.comparingInt(CloudInstanceProvider.Instance::getNumber))
+			.collect(Collectors.toList());
+	}
 
 }

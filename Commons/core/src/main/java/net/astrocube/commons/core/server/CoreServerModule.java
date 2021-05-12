@@ -10,21 +10,21 @@ import net.astrocube.api.core.server.ServerService;
 
 public class CoreServerModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    protected void configure() {
-        bind(ServerConnectionManager.class).to(CentauriConnectionManager.class);
-        bind(GameServerStartManager.class).to(CentauriGameStartManager.class);
-        bind(ServerService.class).to(ServerModelService.class);
-        expose(ServerConnectionManager.class);
+	@Override
+	protected void configure() {
+		bind(ServerConnectionManager.class).to(CentauriConnectionManager.class);
+		bind(GameServerStartManager.class).to(CentauriGameStartManager.class);
+		bind(ServerService.class).to(ServerModelService.class);
+		expose(ServerConnectionManager.class);
 
-        bindChannel(ServerAliveMessage.class);
-        bindChannel(MatchDisqualifyMessage.class);
-        bindChannel(MatchmakingAssignMessage.class);
-        bindChannel(PendingUnAssignMessage.class);
-        bindChannel(SpectatorAssignMessage.class);
-        bindChannel(TeamAssignMessage.class);
-        bindChannel(VictoryAssignMessage.class);
-    }
+		bindChannel(ServerAliveMessage.class);
+		bindChannel(MatchDisqualifyMessage.class);
+		bindChannel(MatchmakingAssignMessage.class);
+		bindChannel(PendingUnAssignMessage.class);
+		bindChannel(SpectatorAssignMessage.class);
+		bindChannel(TeamAssignMessage.class);
+		bindChannel(VictoryAssignMessage.class);
+	}
 
 
 }

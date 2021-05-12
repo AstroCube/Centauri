@@ -9,12 +9,12 @@ import org.bukkit.entity.Player;
 
 public class LoginCommand implements CommandClass {
 
-    private @Inject PasswordGatewayProcessor passwordGatewayProcessor;
+	private @Inject PasswordGatewayProcessor passwordGatewayProcessor;
 
-    @Command(names = {"login"})
-    public boolean onLogin(@Sender Player player, String password) {
-        passwordGatewayProcessor.validateLogin(player, password);
-        return true;
-    }
+	@Command(names = {"login"})
+	public boolean onLogin(@Sender Player player, String password) {
+		passwordGatewayProcessor.validateLogin(player, password);
+		return true;
+	}
 
 }

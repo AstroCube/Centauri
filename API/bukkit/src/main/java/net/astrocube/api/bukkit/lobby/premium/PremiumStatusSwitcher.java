@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface PremiumStatusSwitcher {
 
-    void switchStatus(Player player);
+	void switchStatus(Player player);
 
 }

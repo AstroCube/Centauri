@@ -22,52 +22,52 @@ import java.io.IOException;
 @Singleton
 public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 
-    private @Inject MapConfigurationProvider mapConfigurationProvider;
-    private @Inject GameMapCache gameMapCache;
-    private @Inject LobbyItemProvider lobbyItemProvider;
-    private @Inject GhostEffectControl ghostEffectControl;
+	private @Inject MapConfigurationProvider mapConfigurationProvider;
+	private @Inject GameMapCache gameMapCache;
+	private @Inject LobbyItemProvider lobbyItemProvider;
+	private @Inject GhostEffectControl ghostEffectControl;
 
-    @Override
-    public void provideFunctions(Player player, Match match) throws GameControlException, IOException {
-
-
-        CoordinatePoint configuration = mapConfigurationProvider.parseConfiguration(
-                new String(gameMapCache.getConfiguration(match.getMap())),
-                GameMapConfiguration.class
-        ).getSpectatorSpawn();
-
-        World world = Bukkit.getWorld("match_" + match.getId());
-
-        if  (world == null) {
-            throw new GameControlException("Match world could not be found");
-        }
-
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
-
-        lobbyItemProvider.provideBackButton(player, 8);
-        ghostEffectControl.addPlayer(match.getId(), player);
-
-        Bukkit.getOnlinePlayers().forEach(online -> {
-            if (!MatchParticipantsProvider.getSpectatingPlayers(match).contains(online)) {
-                online.hidePlayer(player);
-                if (!MatchParticipantsProvider.getOnlinePlayers(match).contains(online)) {
-                    player.hidePlayer(online);
-                }
-            }
-        });
+	@Override
+	public void provideFunctions(Player player, Match match) throws GameControlException, IOException {
 
 
-        player.setHealth(20);
-        player.setFoodLevel(20);
+		CoordinatePoint configuration = mapConfigurationProvider.parseConfiguration(
+			new String(gameMapCache.getConfiguration(match.getMap())),
+			GameMapConfiguration.class
+		).getSpectatorSpawn();
 
-        player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
-        player.setAllowFlight(true);
-        player.setFlying(true);
+		World world = Bukkit.getWorld("match_" + match.getId());
 
-    }
+		if (world == null) {
+			throw new GameControlException("Match world could not be found");
+		}
+
+		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
+
+		lobbyItemProvider.provideBackButton(player, 8);
+		ghostEffectControl.addPlayer(match.getId(), player);
+
+		Bukkit.getOnlinePlayers().forEach(online -> {
+			if (!MatchParticipantsProvider.getSpectatingPlayers(match).contains(online)) {
+				online.hidePlayer(player);
+				if (!MatchParticipantsProvider.getOnlinePlayers(match).contains(online)) {
+					player.hidePlayer(online);
+				}
+			}
+		});
+
+
+		player.setHealth(20);
+		player.setFoodLevel(20);
+
+		player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
+		player.setAllowFlight(true);
+		player.setFlying(true);
+
+	}
 
 }

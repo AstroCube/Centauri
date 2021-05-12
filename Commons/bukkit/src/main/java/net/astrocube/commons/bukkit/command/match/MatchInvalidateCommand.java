@@ -16,27 +16,27 @@ import java.util.Optional;
 
 public class MatchInvalidateCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject MatchMessageHelper matchMessageHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MatchMessageHelper matchMessageHelper;
 
-    @Command(names = {"invalidate"}, permission = "commons.match.invalidate")
-    public boolean onCommand(@Sender Player player) {
+	@Command(names = {"invalidate"}, permission = "commons.match.invalidate")
+	public boolean onCommand(@Sender Player player) {
 
-        Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
-        if (!matchOptional.isPresent()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
-            return true;
-        }
+		if (!matchOptional.isPresent()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
+			return true;
+		}
 
-        if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-not-stared");
-            return true;
-        }
+		if (matchOptional.get().getStatus() != MatchDoc.Status.RUNNING) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-not-stared");
+			return true;
+		}
 
-        Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(matchOptional.get().getId(),true));
+		Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(matchOptional.get().getId(), true));
 
-        return true;
-    }
+		return true;
+	}
 
 }

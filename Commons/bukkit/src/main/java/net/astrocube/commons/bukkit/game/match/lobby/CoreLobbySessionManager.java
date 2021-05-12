@@ -26,95 +26,94 @@ import java.util.logging.Level;
 @Singleton
 public class CoreLobbySessionManager implements LobbySessionManager {
 
-    private @Inject FindService<GameMode> findService;
-    private @Inject FindService<User> userFindService;
-    private @Inject CountdownScheduler countdownScheduler;
-    private @Inject LobbySessionModifier lobbySessionModifier;
-    private @Inject LobbyItemProvider lobbyItemProvider;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject Plugin plugin;
+	private @Inject FindService<GameMode> findService;
+	private @Inject FindService<User> userFindService;
+	private @Inject CountdownScheduler countdownScheduler;
+	private @Inject LobbySessionModifier lobbySessionModifier;
+	private @Inject LobbyItemProvider lobbyItemProvider;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void connectUser(Player player, Match match) {
+	@Override
+	public void connectUser(Player player, Match match) {
 
-        findService.find(match.getGameMode()).callback(gameModeResponse -> {
+		findService.find(match.getGameMode()).callback(gameModeResponse -> {
 
-            Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
+			Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
 
-            if (!subMode.isPresent()) {
-                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-                player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
-                return;
-            }
+			if (!subMode.isPresent()) {
+				Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+				player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
+				return;
+			}
 
-            User user;
-            try {
-                user = userFindService.findSync(player.getDatabaseIdentifier());
+			User user;
+			try {
+				user = userFindService.findSync(player.getDatabaseIdentifier());
 
-                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+				Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
-                Bukkit.getScheduler().runTask(plugin, () ->
-                        lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
-
-
-                if (waitingIds.size() >= subMode.get().getMinPlayers()) {
-                    countdownScheduler.scheduleMatchCountdown(match);
-                }
-
-                player.getInventory().clear();
-
-                lobbyItemProvider.provideBackButton(player, 8);
-
-                if (player.hasPermission("commons.game.admin")) {
-                    lobbyItemProvider.provideAdminButton(player, 7);
-                }
+				Bukkit.getScheduler().runTask(plugin, () ->
+					lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
 
 
-            } catch (Exception e) {
-                Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
-                player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
-            }
+				if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+					countdownScheduler.scheduleMatchCountdown(match);
+				}
 
-        });
+				player.getInventory().clear();
 
-    }
+				lobbyItemProvider.provideBackButton(player, 8);
 
-    @Override
-    public void disconnectUser(Player player, Match match) {
+				if (player.hasPermission("commons.game.admin")) {
+					lobbyItemProvider.provideAdminButton(player, 7);
+				}
 
-        findService.find(match.getGameMode()).callback(gameModeResponse -> {
 
-            Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
+			} catch (Exception e) {
+				Bukkit.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
+				player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
+			}
 
-            if (!subMode.isPresent()) {
-                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-                return;
-            }
+		});
 
-            User user;
-            try {
+	}
 
-                user = userFindService.findSync(player.getDatabaseIdentifier());
+	@Override
+	public void disconnectUser(Player player, Match match) {
 
-                Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
-                Bukkit.getScheduler().runTask(plugin, () ->
-                        lobbySessionModifier.ensureDisconnect(user, player, match, subMode.get()));
+		findService.find(match.getGameMode()).callback(gameModeResponse -> {
 
-                if (waitingIds.size() >= subMode.get().getMinPlayers()) {
-                    countdownScheduler.cancelMatchCountdown(match);
-                }
+			Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, match);
 
-                actualMatchCache.remove(player.getDatabaseIdentifier());
+			if (!subMode.isPresent()) {
+				Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+				return;
+			}
 
-            } catch (Exception e) {
-                Bukkit.getLogger().warning("There was an error while updating the match assignation.");
-            }
+			User user;
+			try {
 
-        });
+				user = userFindService.findSync(player.getDatabaseIdentifier());
 
-    }
+				Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+				Bukkit.getScheduler().runTask(plugin, () ->
+					lobbySessionModifier.ensureDisconnect(user, player, match, subMode.get()));
 
+				if (waitingIds.size() >= subMode.get().getMinPlayers()) {
+					countdownScheduler.cancelMatchCountdown(match);
+				}
+
+				actualMatchCache.remove(player.getDatabaseIdentifier());
+
+			} catch (Exception e) {
+				Bukkit.getLogger().warning("There was an error while updating the match assignation.");
+			}
+
+		});
+
+	}
 
 
 }

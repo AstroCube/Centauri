@@ -21,72 +21,72 @@ import java.util.logging.Level;
 
 public class LobbyActionListener implements Listener {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject Plugin plugin;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject Plugin plugin;
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (isCancellable((Player) event.getEntity())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onFoodLevelChange(FoodLevelChangeEvent event) {
+		if (isCancellable((Player) event.getEntity())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player && isCancellable((Player) event.getEntity())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onEntityDamage(EntityDamageEvent event) {
+		if (event.getEntity() instanceof Player && isCancellable((Player) event.getEntity())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (isCancellable(event.getPlayer())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onBlockBreak(BlockBreakEvent event) {
+		if (isCancellable(event.getPlayer())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(BlockPlaceEvent event) {
-        if (isCancellable(event.getPlayer())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onBlockPlace(BlockPlaceEvent event) {
+		if (isCancellable(event.getPlayer())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onItemDrop(PlayerDropItemEvent event) {
-        if (isCancellable(event.getPlayer())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onItemDrop(PlayerDropItemEvent event) {
+		if (isCancellable(event.getPlayer())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onInventoryInteract(InventoryClickEvent event) {
-        if (isCancellable((Player) event.getWhoClicked())) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onInventoryInteract(InventoryClickEvent event) {
+		if (isCancellable((Player) event.getWhoClicked())) {
+			event.setCancelled(true);
+		}
+	}
 
-    public boolean isCancellable(Player player) {
+	public boolean isCancellable(Player player) {
 
-        try {
+		try {
 
-            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-            if (matchOptional.isPresent()) {
+			if (matchOptional.isPresent()) {
 
-                UserMatchJoiner.Origin origin =
-                        UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), matchOptional.get());
+				UserMatchJoiner.Origin origin =
+					UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), matchOptional.get());
 
-                return origin == UserMatchJoiner.Origin.SPECTATING || origin == UserMatchJoiner.Origin.WAITING;
+				return origin == UserMatchJoiner.Origin.SPECTATING || origin == UserMatchJoiner.Origin.WAITING;
 
-            }
+			}
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error while checking match assignation", e);
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.WARNING, "Error while checking match assignation", e);
+		}
 
-        return false;
+		return false;
 
-    }
+	}
 
 }

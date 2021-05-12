@@ -22,112 +22,112 @@ import java.util.HashMap;
 
 @SuppressWarnings("All")
 public class RedisModelService<Complete extends Model, Partial extends PartialModel>
-        extends CoreModelService<Complete, Partial> {
+	extends CoreModelService<Complete, Partial> {
 
-    @Inject private Redis redis;
-    @Inject private HttpClient httpClient;
-    private RedisRequestCallable<Complete> redisRequestCallable;
-    @Inject private ObjectMapper objectMapper;
+	@Inject private Redis redis;
+	@Inject private HttpClient httpClient;
+	private RedisRequestCallable<Complete> redisRequestCallable;
+	@Inject private ObjectMapper objectMapper;
 
-    @Inject
-    RedisModelService(
-            ObjectMapper mapper,
-            ModelMeta<Complete, Partial> modelMeta
-    ) {
-        super(mapper, modelMeta);
-    }
+	@Inject
+	RedisModelService(
+		ObjectMapper mapper,
+		ModelMeta<Complete, Partial> modelMeta
+	) {
+		super(mapper, modelMeta);
+	}
 
-    @Inject
-    public void constructCallable() {
-        this.redisRequestCallable = new RedisRequestCallable<>();
-    }
+	@Inject
+	public void constructCallable() {
+		this.redisRequestCallable = new RedisRequestCallable<>();
+	}
 
-    @Override
-    public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
-        return httpClient.executeRequestSync(
-                modelMeta.getRouteKey(),
-                redisRequestCallable,
-                new CoreRequestOptions(
-                        RequestOptions.Type.PUT,
-                        new HashMap<>(),
-                        this.objectMapper.writeValueAsString(request.getModel()),
-                        null
-                )
-        );
-    }
+	@Override
+	public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
+		return httpClient.executeRequestSync(
+			modelMeta.getRouteKey(),
+			redisRequestCallable,
+			new CoreRequestOptions(
+				RequestOptions.Type.PUT,
+				new HashMap<>(),
+				this.objectMapper.writeValueAsString(request.getModel()),
+				null
+			)
+		);
+	}
 
-    @Override
-    public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
+	@Override
+	public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
 
-        String key = modelMeta.getRouteKey() + ":" + findModelRequest.getId();
+		String key = modelMeta.getRouteKey() + ":" + findModelRequest.getId();
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            String jsonValue = jedis.get(key);
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			String jsonValue = jedis.get(key);
 
-            if (jedis.exists(key)) {
-                return (Complete) objectMapper.readValue(
-                        jsonValue,
-                        mapper.constructType(getCompleteType())
-                );
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+			if (jedis.exists(key)) {
+				return (Complete) objectMapper.readValue(
+					jsonValue,
+					mapper.constructType(getCompleteType())
+				);
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
-        return httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
-                this.redisRequestCallable,
-                new CoreRequestOptions(
-                        RequestOptions.Type.GET,
-                        new HashMap<>(),
-                        "",
-                        null
-                )
-        );
-    }
+		return httpClient.executeRequestSync(
+			this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
+			this.redisRequestCallable,
+			new CoreRequestOptions(
+				RequestOptions.Type.GET,
+				new HashMap<>(),
+				"",
+				null
+			)
+		);
+	}
 
-    @Override
-    public Complete createSync(CreateRequest<Partial> request) throws Exception {
-        return httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey(),
-                this.redisRequestCallable,
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        new HashMap<>(),
-                        this.objectMapper.writeValueAsString(request.getModel()),
-                        null
-                )
-        );
-    }
+	@Override
+	public Complete createSync(CreateRequest<Partial> request) throws Exception {
+		return httpClient.executeRequestSync(
+			this.modelMeta.getRouteKey(),
+			this.redisRequestCallable,
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				new HashMap<>(),
+				this.objectMapper.writeValueAsString(request.getModel()),
+				null
+			)
+		);
+	}
 
-    private class RedisRequestCallable<T extends Model> implements RequestCallable<T> {
+	private class RedisRequestCallable<T extends Model> implements RequestCallable<T> {
 
-        @Override
-        public T call(HttpRequest request) throws Exception {
+		@Override
+		public T call(HttpRequest request) throws Exception {
 
 
-            final HttpResponse response = request.execute();
-            final String json = response.parseAsString();
+			final HttpResponse response = request.execute();
+			final String json = response.parseAsString();
 
-            int statusCode = response.getStatusCode();
+			int statusCode = response.getStatusCode();
 
-            if (statusCode < 400) {
-                try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
+			if (statusCode < 400) {
+				try (Jedis jedis = redis.getRawConnection().getResource()) {
+					T model = (T) objectMapper.readValue(json, mapper.constructType(getCompleteType()));
 
-                    String key = modelMeta.getRouteKey() + ":" + model.getId();
+					String key = modelMeta.getRouteKey() + ":" + model.getId();
 
-                    jedis.set(key, json);
-                    jedis.expire(key, modelMeta.getCache());
+					jedis.set(key, json);
+					jedis.expire(key, modelMeta.getCache());
 
-                    return model;
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    throw new Exception("Parsing of " + getCompleteType() + " failed");
-                }
-            } else {
-                throw RequestExceptionResolverUtil.generateException(json, statusCode);
-            }
-        }
-    }
+					return model;
+				} catch (Exception exception) {
+					exception.printStackTrace();
+					throw new Exception("Parsing of " + getCompleteType() + " failed");
+				}
+			} else {
+				throw RequestExceptionResolverUtil.generateException(json, statusCode);
+			}
+		}
+	}
 }

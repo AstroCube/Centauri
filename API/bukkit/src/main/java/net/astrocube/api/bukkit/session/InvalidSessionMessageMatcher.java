@@ -4,10 +4,8 @@ import net.astrocube.api.core.virtual.user.User;
 
 public interface InvalidSessionMessageMatcher {
 
-    /**
-     * Will generate message indicating multi-account when authentication not authorized by the backend
-     * @param user
-     * @return
-     */
-    String generateSessionMessage(User user);
+	/**
+	 * Will generate message indicating multi-account when authentication not authorized by the backend
+	 */
+	String generateSessionMessage(User user);
 }

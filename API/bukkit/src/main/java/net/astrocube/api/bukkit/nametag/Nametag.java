@@ -6,49 +6,49 @@ import java.util.Set;
 
 public interface Nametag {
 
-    Player getRecipient();
+	Player getRecipient();
 
-    String getTag();
+	String getTag();
 
-    String getTeamName();
+	String getTeamName();
 
-    interface Rendered extends Nametag {
+	interface Rendered extends Nametag {
 
-        Player getViewer();
+		Player getViewer();
 
-        Set<Entity> getSpawnedEntities();
+		Set<Entity> getSpawnedEntities();
 
-        void setTag(String tag);
+		void setTag(String tag);
 
-        void hide();
+		void hide();
 
-        void show();
+		void show();
 
-        interface Entity {
+		interface Entity {
 
-            /**
-             * Identifier of the entity
-             * Used to identify the rendered entity
-             * and interact with it
-             */
-            String getIdentifier();
+			/**
+			 * Identifier of the entity
+			 * Used to identify the rendered entity
+			 * and interact with it
+			 */
+			String getIdentifier();
 
-            /**
-             * Id of the entity
-             * Used to identify the rendered entity
-             * and interact with it
-             */
-            int getEntityId();
+			/**
+			 * Id of the entity
+			 * Used to identify the rendered entity
+			 * and interact with it
+			 */
+			int getEntityId();
 
-            /**
-             * Object representing the packet entity
-             * Used to identify the rendered entity
-             * and interact with it
-             */
-            Object getEntityObject();
+			/**
+			 * Object representing the packet entity
+			 * Used to identify the rendered entity
+			 * and interact with it
+			 */
+			Object getEntityObject();
 
-        }
+		}
 
-    }
+	}
 
 }

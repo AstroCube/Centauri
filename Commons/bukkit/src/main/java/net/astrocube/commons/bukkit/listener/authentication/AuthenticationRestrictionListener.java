@@ -17,61 +17,61 @@ import org.bukkit.plugin.Plugin;
 
 public class AuthenticationRestrictionListener implements Listener {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+		messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onFoodLevelChange(FoodLevelChangeEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
-        String command = event.getMessage().toLowerCase();
+	@EventHandler
+	public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
+		String command = event.getMessage().toLowerCase();
 
-        if (command.startsWith("/login") || command.startsWith("/register")) {
-            return;
-        }
+		if (command.startsWith("/login") || command.startsWith("/register")) {
+			return;
+		}
 
-        this.messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
-        event.setCancelled(true);
-    }
+		this.messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "authentication.chat");
+		event.setCancelled(true);
+	}
 
-    @EventHandler
-    public void authenticationMovementListener(PlayerMoveEvent event) {
-        if (plugin.getConfig().getBoolean("authentication.enabled")) {
-            Location from = event.getFrom();
-            Location to = event.getTo();
+	@EventHandler
+	public void authenticationMovementListener(PlayerMoveEvent event) {
+		if (plugin.getConfig().getBoolean("authentication.enabled")) {
+			Location from = event.getFrom();
+			Location to = event.getTo();
 
-            if(from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ()){
-                to.setX(from.getBlockX() + .5);
-                to.setZ(from.getBlockZ() + .5);
+			if (from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ()) {
+				to.setX(from.getBlockX() + .5);
+				to.setZ(from.getBlockZ() + .5);
 
-                event.setTo(to);
-            }
+				event.setTo(to);
+			}
 
-        }
-    }
+		}
+	}
 
 }

@@ -10,32 +10,32 @@ import org.bukkit.Bukkit;
 @Singleton
 public class CloudNameProvider implements InstanceNameProvider {
 
-    private final CloudStatusProvider cloudStatusProvider;
-    private boolean verified;
-    private String name;
+	private final CloudStatusProvider cloudStatusProvider;
+	private boolean verified;
+	private String name;
 
-    @Inject
-    public CloudNameProvider(CloudStatusProvider cloudStatusProvider) {
-        this.cloudStatusProvider = cloudStatusProvider;
-        this.verified = false;
-        this.name = "";
-    }
+	@Inject
+	public CloudNameProvider(CloudStatusProvider cloudStatusProvider) {
+		this.cloudStatusProvider = cloudStatusProvider;
+		this.verified = false;
+		this.name = "";
+	}
 
-    @Override
-    public String getName() {
+	@Override
+	public String getName() {
 
-        if (!verified) {
+		if (!verified) {
 
-            this.verified = true;
+			this.verified = true;
 
-            if (cloudStatusProvider.hasCloudHooked()) {
-                this.name = TimoCloudAPI.getBukkitAPI().getThisServer().getId();
-            } else {
-                this.name = Bukkit.getServerName();
-            }
+			if (cloudStatusProvider.hasCloudHooked()) {
+				this.name = TimoCloudAPI.getBukkitAPI().getThisServer().getId();
+			} else {
+				this.name = Bukkit.getServerName();
+			}
 
-        }
+		}
 
-        return name;
-    }
+		return name;
+	}
 }

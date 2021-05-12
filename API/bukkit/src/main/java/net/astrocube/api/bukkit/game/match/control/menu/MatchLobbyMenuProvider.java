@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface MatchLobbyMenuProvider {
 
-    void create(Player player) throws Exception;
+	void create(Player player) throws Exception;
 
 }

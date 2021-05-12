@@ -16,36 +16,36 @@ import java.util.Optional;
 @Command(names = "disband")
 public class PartyDisbandCommand implements CommandClass {
 
-    private @Inject PartyService partyService;
-    private @Inject DeleteService<Party> partyDeleteService;
-    private @Inject MessageHandler messageHandler;
+	private @Inject PartyService partyService;
+	private @Inject DeleteService<Party> partyDeleteService;
+	private @Inject MessageHandler messageHandler;
 
-    @Command(names = "")
-    public void disband(
-            @Sender Player player
-    ) {
-        Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
-        if (!optParty.isPresent()) {
-            messageHandler.send(player, "cannot-disband.not-in-party");
-            return;
-        }
+	@Command(names = "")
+	public void disband(
+		@Sender Player player
+	) {
+		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
+		if (!optParty.isPresent()) {
+			messageHandler.send(player, "cannot-disband.not-in-party");
+			return;
+		}
 
-        Party party = optParty.get();
-        if (!player.getDatabaseIdentifier().equals(party.getLeader())) {
-            messageHandler.send(player, "cannot-disband.not-leader");
-            return;
-        }
+		Party party = optParty.get();
+		if (!player.getDatabaseIdentifier().equals(party.getLeader())) {
+			messageHandler.send(player, "cannot-disband.not-leader");
+			return;
+		}
 
-        for (String memberId : party.getMembers()) {
-            Player member = Bukkit.getPlayerByIdentifier(memberId);
-            if (member != null) {
-                messageHandler.sendReplacing(
-                        member, "party-disbanded",
-                        "%player%", player.getName()
-                );
-            }
-        }
-        partyDeleteService.delete(party.getId());
-    }
+		for (String memberId : party.getMembers()) {
+			Player member = Bukkit.getPlayerByIdentifier(memberId);
+			if (member != null) {
+				messageHandler.sendReplacing(
+					member, "party-disbanded",
+					"%player%", player.getName()
+				);
+			}
+		}
+		partyDeleteService.delete(party.getId());
+	}
 
 }

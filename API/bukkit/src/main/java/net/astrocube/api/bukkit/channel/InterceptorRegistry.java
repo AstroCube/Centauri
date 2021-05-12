@@ -4,8 +4,8 @@ import java.util.Set;
 
 public interface InterceptorRegistry {
 
-    Set<ChatMessageInterceptor> getInterceptors();
+	Set<ChatMessageInterceptor> getInterceptors();
 
-    void register(ChatMessageInterceptor interceptor);
+	void register(ChatMessageInterceptor interceptor);
 
 }

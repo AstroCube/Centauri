@@ -18,70 +18,70 @@ import java.util.logging.Level;
 
 public class SessionPingHandler implements MessageHandler<SessionPingMessage> {
 
-    private @Inject Plugin plugin;
-    private final Channel<SessionPingMessage> pingMessageChannel;
-    private final Channel<ProxyKickRequest> proxyKickRequestChannel;
+	private @Inject Plugin plugin;
+	private final Channel<SessionPingMessage> pingMessageChannel;
+	private final Channel<ProxyKickRequest> proxyKickRequestChannel;
 
-    @Inject
-    SessionPingHandler(Messenger messenger) {
-        pingMessageChannel = messenger.getChannel(SessionPingMessage.class);
-        pingMessageChannel.addHandler(this);
-        proxyKickRequestChannel = messenger.getChannel(ProxyKickRequest.class);
-    }
+	@Inject
+	SessionPingHandler(Messenger messenger) {
+		pingMessageChannel = messenger.getChannel(SessionPingMessage.class);
+		pingMessageChannel.addHandler(this);
+		proxyKickRequestChannel = messenger.getChannel(ProxyKickRequest.class);
+	}
 
-    @Override
-    public Class<SessionPingMessage> type() {
-        return SessionPingMessage.class;
-    }
+	@Override
+	public Class<SessionPingMessage> type() {
+		return SessionPingMessage.class;
+	}
 
-    @Override
-    public void handleDelivery(SessionPingMessage message, Metadata properties) {
+	@Override
+	public void handleDelivery(SessionPingMessage message, Metadata properties) {
 
 
-        Player player = Bukkit.getPlayerByIdentifier(message.getUser());
+		Player player = Bukkit.getPlayerByIdentifier(message.getUser());
 
-        if (player != null) {
+		if (player != null) {
 
-            if (message.getAction() == SessionPingMessage.Action.REQUEST) {
+			if (message.getAction() == SessionPingMessage.Action.REQUEST) {
 
-                try {
-                    pingMessageChannel.sendMessage(new SessionPingMessage() {
-                        @Override
-                        public String getUser() {
-                            return player.getDatabaseIdentifier();
-                        }
+				try {
+					pingMessageChannel.sendMessage(new SessionPingMessage() {
+						@Override
+						public String getUser() {
+							return player.getDatabaseIdentifier();
+						}
 
-                        @Override
-                        public Action getAction() {
-                            return Action.RESPONSE;
-                        }
-                    }, new HashMap<>());
-                } catch (JsonProcessingException e) {
-                    plugin.getLogger().log(Level.SEVERE, "Error while sending session ping response", e);
-                }
+						@Override
+						public Action getAction() {
+							return Action.RESPONSE;
+						}
+					}, new HashMap<>());
+				} catch (JsonProcessingException e) {
+					plugin.getLogger().log(Level.SEVERE, "Error while sending session ping response", e);
+				}
 
-            }
+			}
 
-            if (message.getAction() == SessionPingMessage.Action.DISCONNECT) {
-                try {
-                    proxyKickRequestChannel.sendMessage(new ProxyKickRequest() {
-                        @Override
-                        public String getName() {
-                            return player.getName();
-                        }
+			if (message.getAction() == SessionPingMessage.Action.DISCONNECT) {
+				try {
+					proxyKickRequestChannel.sendMessage(new ProxyKickRequest() {
+						@Override
+						public String getName() {
+							return player.getName();
+						}
 
-                        @Override
-                        public String getReason() {
-                            return ChatColor.RED + "Session invalidated due to lack of pingback";
-                        }
-                    }, new HashMap<>());
-                } catch (JsonProcessingException e) {
-                    plugin.getLogger().log(Level.SEVERE, "Error while sending session ping kick request", e);
-                }
-            }
+						@Override
+						public String getReason() {
+							return ChatColor.RED + "Session invalidated due to lack of pingback";
+						}
+					}, new HashMap<>());
+				} catch (JsonProcessingException e) {
+					plugin.getLogger().log(Level.SEVERE, "Error while sending session ping kick request", e);
+				}
+			}
 
-        }
+		}
 
-    }
+	}
 
 }

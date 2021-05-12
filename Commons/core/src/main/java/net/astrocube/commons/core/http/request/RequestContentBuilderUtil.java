@@ -9,16 +9,16 @@ import java.io.IOException;
 
 public class RequestContentBuilderUtil {
 
-    public static HttpRequest build(HttpRequestFactory factory, RequestOptions options, String baseURL, String path) throws IOException {
-        return factory.buildRequest(
-                options.getType().name(),
-                UrlBuilderUtil.build(baseURL, path, options.getQuery()),
-                buildContent(options)
-        );
-    }
+	public static HttpRequest build(HttpRequestFactory factory, RequestOptions options, String baseURL, String path) throws IOException {
+		return factory.buildRequest(
+			options.getType().name(),
+			UrlBuilderUtil.build(baseURL, path, options.getQuery()),
+			buildContent(options)
+		);
+	}
 
-    private static HttpContent buildContent(RequestOptions options) {
-        return options.getBody() == null ? null : new RequestContent(options.getBody());
-    }
+	private static HttpContent buildContent(RequestOptions options) {
+		return options.getBody() == null ? null : new RequestContent(options.getBody());
+	}
 
 }

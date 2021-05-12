@@ -13,25 +13,25 @@ import java.util.Optional;
 @Singleton
 public class CoreAuthenticationValidator implements AuthenticationValidator {
 
-    private @Inject SessionRegistryManager sessionRegistryManager;
+	private @Inject SessionRegistryManager sessionRegistryManager;
 
-    @Override
-    public void validateAuthenticationAttempt(Player player) throws AuthorizeException {
+	@Override
+	public void validateAuthenticationAttempt(Player player) throws AuthorizeException {
 
-        Optional<SessionRegistry> registryOptional =
-                sessionRegistryManager.getRegistry(player.getDatabaseIdentifier());
+		Optional<SessionRegistry> registryOptional =
+			sessionRegistryManager.getRegistry(player.getDatabaseIdentifier());
 
-        if (!registryOptional.isPresent())
-            throw new AuthorizeException("Authorization pre-fetching never performed.");
+		if (!registryOptional.isPresent())
+			throw new AuthorizeException("Authorization pre-fetching never performed.");
 
-        SessionRegistry registry = registryOptional.get();
+		SessionRegistry registry = registryOptional.get();
 
-        if (!registry.isPending()) throw new AuthorizeException("Session already authorized");
-        if (
-                !player.getAddress().getAddress().toString()
-                        .replace("/", "").equalsIgnoreCase(registry.getAddress())
-        ) throw new AuthorizeException("IP does not match with pre-authorized");
+		if (!registry.isPending()) throw new AuthorizeException("Session already authorized");
+		if (
+			!player.getAddress().getAddress().toString()
+				.replace("/", "").equalsIgnoreCase(registry.getAddress())
+		) throw new AuthorizeException("IP does not match with pre-authorized");
 
-    }
+	}
 
 }

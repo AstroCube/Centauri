@@ -14,26 +14,26 @@ import java.util.HashMap;
 @Singleton
 public class CoreMatchmakingErrorBroadcaster implements MatchmakingErrorBroadcaster {
 
-    private final Channel<MatchmakingError> channel;
+	private final Channel<MatchmakingError> channel;
 
-    @Inject
-    public CoreMatchmakingErrorBroadcaster(Messenger messenger) {
-        this.channel = messenger.getChannel(MatchmakingError.class);
-    }
+	@Inject
+	public CoreMatchmakingErrorBroadcaster(Messenger messenger) {
+		this.channel = messenger.getChannel(MatchmakingError.class);
+	}
 
-    @Override
-    public void broadcastError(MatchmakingRequest request, String message) throws JsonProcessingException {
-        channel.sendMessage(new MatchmakingError() {
-            @Override
-            public MatchmakingRequest getRequest() {
-                return request;
-            }
+	@Override
+	public void broadcastError(MatchmakingRequest request, String message) throws JsonProcessingException {
+		channel.sendMessage(new MatchmakingError() {
+			@Override
+			public MatchmakingRequest getRequest() {
+				return request;
+			}
 
-            @Override
-            public String getReason() {
-                return message;
-            }
-        }, new HashMap<>());
-    }
+			@Override
+			public String getReason() {
+				return message;
+			}
+		}, new HashMap<>());
+	}
 
 }

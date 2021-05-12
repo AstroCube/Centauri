@@ -4,4 +4,5 @@ import net.astrocube.api.core.model.ModelProperties;
 
 @ModelProperties.RouteKey("friend")
 @ModelProperties.Cache
-public interface Friendship extends FriendshipDoc.Complete {}
+public interface Friendship extends FriendshipDoc.Complete {
+}

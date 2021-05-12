@@ -18,22 +18,22 @@ import java.util.logging.Level;
 @Singleton
 public class UserPreLoginListener implements Listener {
 
-    private @Inject SessionService sessionService;
-    private @Inject SessionValidatorHandler sessionValidatorHandler;
-    private @Inject Plugin plugin;
+	private @Inject SessionService sessionService;
+	private @Inject SessionValidatorHandler sessionValidatorHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onUserPreLogin(AsyncPlayerPreLoginEvent event) {
-        try {
-            SessionValidateDoc.Complete authorization = sessionService.authenticationCheckSync(
-                    () -> LoginEventSessionUtil.retrieveRequestFromEvent(event)
-            );
-            sessionValidatorHandler.validateSession(event, authorization);
-        } catch (Exception exception) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error while authenticating a user", exception);
-            event.setKickMessage(ChatColor.RED + "AstroCube authentication servers are down, please try again later.");
-            event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-        }
-    }
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onUserPreLogin(AsyncPlayerPreLoginEvent event) {
+		try {
+			SessionValidateDoc.Complete authorization = sessionService.authenticationCheckSync(
+				() -> LoginEventSessionUtil.retrieveRequestFromEvent(event)
+			);
+			sessionValidatorHandler.validateSession(event, authorization);
+		} catch (Exception exception) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error while authenticating a user", exception);
+			event.setKickMessage(ChatColor.RED + "AstroCube authentication servers are down, please try again later.");
+			event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+		}
+	}
 
 }

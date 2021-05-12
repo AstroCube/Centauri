@@ -17,70 +17,70 @@ import java.util.concurrent.CompletableFuture;
 
 public class CoreWhisperManager implements WhisperManager {
 
-    private final Channel<WhisperMessage> whisperMessageChannel;
-    private final ExecutorServiceProvider executorServiceProvider;
+	private final Channel<WhisperMessage> whisperMessageChannel;
+	private final ExecutorServiceProvider executorServiceProvider;
 
-    private final MessageHandler messageHandler;
+	private final MessageHandler messageHandler;
 
-    @Inject
-    private CoreWhisperManager(Messenger messenger,
-                               ExecutorServiceProvider executorServiceProvider,
-                               MessageHandler handler) {
-        this.executorServiceProvider = executorServiceProvider;
-        this.messageHandler = handler;
+	@Inject
+	private CoreWhisperManager(Messenger messenger,
+														 ExecutorServiceProvider executorServiceProvider,
+														 MessageHandler handler) {
+		this.executorServiceProvider = executorServiceProvider;
+		this.messageHandler = handler;
 
-        whisperMessageChannel = messenger.getChannel(WhisperMessage.class)
-                .addHandler(new WhisperListener(messageHandler));
-    }
+		whisperMessageChannel = messenger.getChannel(WhisperMessage.class)
+			.addHandler(new WhisperListener(messageHandler));
+	}
 
-    @Override
-    public CompletableFuture<WhisperResponse> sendWhisper(Player sender, User target, User senderUser, String message) {
-        UserDoc.Session session = target.getSession();
+	@Override
+	public CompletableFuture<WhisperResponse> sendWhisper(Player sender, User target, User senderUser, String message) {
+		UserDoc.Session session = target.getSession();
 
-        if (!session.isOnline()) {
-            return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
-        }
+		if (!session.isOnline()) {
+			return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
+		}
 
-        Player targetPlayer = getPlayerById(target.getId());
+		Player targetPlayer = getPlayerById(target.getId());
 
-        // is online on other server
-        if (targetPlayer == null) {
-            messageHandler
-                    .sendReplacing(sender, "whisper.sender",
-                            "%sender%", senderUser.getDisplay(),
-                            "%target%", target.getDisplay(),
-                            "%message%", message);
+		// is online on other server
+		if (targetPlayer == null) {
+			messageHandler
+				.sendReplacing(sender, "whisper.sender",
+					"%sender%", senderUser.getDisplay(),
+					"%target%", target.getDisplay(),
+					"%message%", message);
 
-            WhisperMessage whisperMessage = new CoreWhisperMessage(senderUser, target, message);
+			WhisperMessage whisperMessage = new CoreWhisperMessage(senderUser, target, message);
 
-            return CompletableFuture.supplyAsync(() -> {
-                try {
-                    whisperMessageChannel.sendMessage(whisperMessage, new HashMap<>());
+			return CompletableFuture.supplyAsync(() -> {
+				try {
+					whisperMessageChannel.sendMessage(whisperMessage, new HashMap<>());
 
-                    return new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage);
-                } catch (JsonProcessingException e) {
-                    return new CoreWhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
-                }
-            }, executorServiceProvider.getRegisteredService());
-        }
+					return new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage);
+				} catch (JsonProcessingException e) {
+					return new CoreWhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
+				}
+			}, executorServiceProvider.getRegisteredService());
+		}
 
-        // online on the same server
-        messageHandler
-                .sendReplacing(targetPlayer, "whisper.target",
-                        "%sender%", senderUser.getDisplay(),
-                        "%target%", target.getDisplay(),
-                        "%message%", message);
-        messageHandler
-                .sendReplacing(sender, "whisper.sender",
-                        "%sender%", senderUser.getDisplay(),
-                        "%target%", target.getDisplay(),
-                        "%message%", message);
+		// online on the same server
+		messageHandler
+			.sendReplacing(targetPlayer, "whisper.target",
+				"%sender%", senderUser.getDisplay(),
+				"%target%", target.getDisplay(),
+				"%message%", message);
+		messageHandler
+			.sendReplacing(sender, "whisper.sender",
+				"%sender%", senderUser.getDisplay(),
+				"%target%", target.getDisplay(),
+				"%message%", message);
 
 
-        return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));
-    }
+		return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));
+	}
 
-    private Player getPlayerById(String id) {
-        return Bukkit.getPlayerByIdentifier(id);
-    }
+	private Player getPlayerById(String id) {
+		return Bukkit.getPlayerByIdentifier(id);
+	}
 }

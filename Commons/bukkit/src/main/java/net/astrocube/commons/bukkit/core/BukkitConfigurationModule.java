@@ -11,11 +11,11 @@ import net.astrocube.commons.bukkit.core.config.BukkitFactoryConfig;
 
 public class BukkitConfigurationModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(HttpFactoryConfig.class).to(BukkitFactoryConfig.class);
-        bind(HttpClientConfig.class).to(BukkitClientConfig.class);
-        bind(ExecutorServiceProvider.class).to(BukkitConcurrentProvider.class).in(Scopes.SINGLETON);
-    }
+	@Override
+	public void configure() {
+		bind(HttpFactoryConfig.class).to(BukkitFactoryConfig.class);
+		bind(HttpClientConfig.class).to(BukkitClientConfig.class);
+		bind(ExecutorServiceProvider.class).to(BukkitConcurrentProvider.class).in(Scopes.SINGLETON);
+	}
 
 }

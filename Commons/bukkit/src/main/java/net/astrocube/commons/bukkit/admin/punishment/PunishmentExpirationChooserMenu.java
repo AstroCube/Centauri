@@ -24,109 +24,109 @@ import java.util.Objects;
 
 public class PunishmentExpirationChooserMenu {
 
-    private @Inject PunishmentHandler punishmentHandler;
-    private @Inject GenericHeadHelper genericHeadHelper;
-    private @Inject MessageHandler messageHandler;
-    private @Inject PunishmentReasonChooserMenu punishmentReasonChooserMenu;
-    private @Inject Plugin plugin;
+	private @Inject PunishmentHandler punishmentHandler;
+	private @Inject GenericHeadHelper genericHeadHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject PunishmentReasonChooserMenu punishmentReasonChooserMenu;
+	private @Inject Plugin plugin;
 
-    public Inventory createPunishmentExpirationChooserMenu(Player player, PunishmentBuilder punishmentBuilder, String criteria, boolean search) {
+	public Inventory createPunishmentExpirationChooserMenu(Player player, PunishmentBuilder punishmentBuilder, String criteria, boolean search) {
 
-        GUIBuilder guiBuilder = GUIBuilder.builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6)
-                .addItem(
-                        genericHeadHelper.generateDecorator(
-                                genericHeadHelper.generateSkull(
-                                        player,
-                                        punishmentBuilder.getTarget(),
-                                        messageHandler.replacingMany(
-                                                player, "punishment-expiration-menu.items.actual.lore",
-                                                "%reason%", punishmentBuilder.getReason(),
-                                                "%type%", messageHandler.get(player, "punish-menu.type." + punishmentBuilder.getType().toString().toLowerCase()),
-                                                "%expires%", punishmentBuilder.getDuration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
-                                                        PrettyTimeUtils.getHumanDate(
-                                                                Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
-                                                                        punishmentBuilder.getDuration()
-                                                                )),
-                                                                punishmentBuilder.getIssuer().getLanguage())
-                                        )
-                                ),
-                                22
-                        )
-                )
-                .addItem(ItemClickable.builder(24)
-                        .setItemStack(ItemBuilder.newBuilder(Material.EMERALD_BLOCK)
-                                .setName(messageHandler.get(player, "punishment-expiration-menu.items.confirm.name"))
-                                .setLore(messageHandler.getMany(player, "punishment-expiration-menu.items.confirm.lore"))
-                                .build())
-                        .setAction(inventoryClickEvent -> {
-                            punishmentBuilder.build(
-                                    punishmentHandler,
-                                    (punishment, error) -> {
-                                        if (error != null) {
-                                            messageHandler.sendIn(player, AlertModes.ERROR, "punish.error");
-                                        }
-                                        player.closeInventory();
-                                    });
-                            return true;
-                        })
-                        .build()
-                );
+		GUIBuilder guiBuilder = GUIBuilder.builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6)
+			.addItem(
+				genericHeadHelper.generateDecorator(
+					genericHeadHelper.generateSkull(
+						player,
+						punishmentBuilder.getTarget(),
+						messageHandler.replacingMany(
+							player, "punishment-expiration-menu.items.actual.lore",
+							"%reason%", punishmentBuilder.getReason(),
+							"%type%", messageHandler.get(player, "punish-menu.type." + punishmentBuilder.getType().toString().toLowerCase()),
+							"%expires%", punishmentBuilder.getDuration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
+								PrettyTimeUtils.getHumanDate(
+									Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
+										punishmentBuilder.getDuration()
+									)),
+									punishmentBuilder.getIssuer().getLanguage())
+						)
+					),
+					22
+				)
+			)
+			.addItem(ItemClickable.builder(24)
+				.setItemStack(ItemBuilder.newBuilder(Material.EMERALD_BLOCK)
+					.setName(messageHandler.get(player, "punishment-expiration-menu.items.confirm.name"))
+					.setLore(messageHandler.getMany(player, "punishment-expiration-menu.items.confirm.lore"))
+					.build())
+				.setAction(inventoryClickEvent -> {
+					punishmentBuilder.build(
+						punishmentHandler,
+						(punishment, error) -> {
+							if (error != null) {
+								messageHandler.sendIn(player, AlertModes.ERROR, "punish.error");
+							}
+							player.closeInventory();
+						});
+					return true;
+				})
+				.build()
+			);
 
-        MenuUtils.generateFrame(guiBuilder);
+		MenuUtils.generateFrame(guiBuilder);
 
-        if (punishmentBuilder.getType() == PunishmentDoc.Identity.Type.BAN) {
-            guiBuilder.addItem(ItemClickable.builder(20)
-                    .setItemStack(ItemBuilder.newBuilder(Material.WORKBENCH)
-                            .setName(messageHandler.get(player, "punishment-expiration-menu.items.edit.name"))
-                            .setLore(
-                                    messageHandler.replacingMany(
-                                            player, "punishment-expiration-menu.items.edit.lore",
-                                            "%duration%",
-                                            punishmentBuilder.getDuration() == -1 ?
-                                                    messageHandler.get(player, "punishment-expiration.never") :
-                                                    PrettyTimeUtils.getHumanDate(
-                                                            Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
-                                                                    punishmentBuilder.getDuration()
-                                                            )),
-                                                            punishmentBuilder.getIssuer().getLanguage()
-                                                    )
-                                    )
-                            )
-                            .build())
-                    .setAction(inventoryClickEvent -> {
-                        player.closeInventory();
-                        new AnvilGUI.Builder()
-                                .title(messageHandler.get(player, "punishment-expiration.title"))
-                                .onClose(p -> player.openInventory(createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search)))
-                                .text(messageHandler.get(player, "punishment-expiration.holder"))
-                                .onComplete((playerIgnored, text) -> {
-                                    long punishmentExpiration = TimeParser.parseStringDuration(text);
+		if (punishmentBuilder.getType() == PunishmentDoc.Identity.Type.BAN) {
+			guiBuilder.addItem(ItemClickable.builder(20)
+				.setItemStack(ItemBuilder.newBuilder(Material.WORKBENCH)
+					.setName(messageHandler.get(player, "punishment-expiration-menu.items.edit.name"))
+					.setLore(
+						messageHandler.replacingMany(
+							player, "punishment-expiration-menu.items.edit.lore",
+							"%duration%",
+							punishmentBuilder.getDuration() == -1 ?
+								messageHandler.get(player, "punishment-expiration.never") :
+								PrettyTimeUtils.getHumanDate(
+									Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
+										punishmentBuilder.getDuration()
+									)),
+									punishmentBuilder.getIssuer().getLanguage()
+								)
+						)
+					)
+					.build())
+				.setAction(inventoryClickEvent -> {
+					player.closeInventory();
+					new AnvilGUI.Builder()
+						.title(messageHandler.get(player, "punishment-expiration.title"))
+						.onClose(p -> player.openInventory(createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search)))
+						.text(messageHandler.get(player, "punishment-expiration.holder"))
+						.onComplete((playerIgnored, text) -> {
+							long punishmentExpiration = TimeParser.parseStringDuration(text);
 
-                                    if (punishmentExpiration == -1) {
-                                        return AnvilGUI.Response.text(messageHandler.get(player, "punishment-expiration.invalid-number"));
-                                    }
+							if (punishmentExpiration == -1) {
+								return AnvilGUI.Response.text(messageHandler.get(player, "punishment-expiration.invalid-number"));
+							}
 
-                                    punishmentBuilder.setDuration(punishmentExpiration);
-                                    createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search);
-                                    return AnvilGUI.Response.close();
-                                })
-                                .plugin(plugin)
-                                .open(player);
-                        return true;
-                    }).build()
-            );
-        }
+							punishmentBuilder.setDuration(punishmentExpiration);
+							createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search);
+							return AnvilGUI.Response.close();
+						})
+						.plugin(plugin)
+						.open(player);
+					return true;
+				}).build()
+			);
+		}
 
-        guiBuilder.addItem(genericHeadHelper.generateDefaultClickable(
-                genericHeadHelper.backButton(player),
-                45,
-                ClickType.LEFT,
-                p -> p.openInventory(search ?
-                        punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, criteria, 1) :
-                        punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1))
-        ));
+		guiBuilder.addItem(genericHeadHelper.generateDefaultClickable(
+			genericHeadHelper.backButton(player),
+			45,
+			ClickType.LEFT,
+			p -> p.openInventory(search ?
+				punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, criteria, 1) :
+				punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1))
+		));
 
-        return guiBuilder.build();
-    }
+		return guiBuilder.build();
+	}
 
 }

@@ -14,42 +14,43 @@ import net.astrocube.api.core.virtual.server.Server;
 @Singleton
 public class CoreMatchAvailabilityChecker implements MatchAvailabilityChecker {
 
-    private @Inject ActualMatchProvider actualMatchProvider;
-    private @Inject FindService<Server> findService;
-    private @Inject MatchStateUpdater matchStateUpdater;
-    private @Inject CloudInstanceProvider cloudInstanceProvider;
+	private @Inject ActualMatchProvider actualMatchProvider;
+	private @Inject FindService<Server> findService;
+	private @Inject MatchStateUpdater matchStateUpdater;
+	private @Inject CloudInstanceProvider cloudInstanceProvider;
 
-    @Override
-    public void clearLegitMatches(String id) throws Exception {
+	@Override
+	public void clearLegitMatches(String id) throws Exception {
 
-        actualMatchProvider.getRegisteredMatches(id)
-                .forEach(match -> {
-                    try {
+		actualMatchProvider.getRegisteredMatches(id)
+			.forEach(match -> {
+				try {
 
-                        Server server = findService.findSync(match.getServer());
-                        boolean available = cloudInstanceProvider.isAvailable(server.getSlug());
+					Server server = findService.findSync(match.getServer());
+					boolean available = cloudInstanceProvider.isAvailable(server.getSlug());
 
-                        if (!available) {
-                            matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
-                        }
+					if (!available) {
+						matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
+					}
 
-                    } catch (Exception exception) {
+				} catch (Exception exception) {
 
-                        if (exception instanceof HttpResponseException) {
+					if (exception instanceof HttpResponseException) {
 
-                            HttpResponseException responseException = (HttpResponseException) exception;
+						HttpResponseException responseException = (HttpResponseException) exception;
 
-                            if (responseException.getStatusCode() == 404) {
-                                try {
-                                    matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
-                                } catch (Exception ignore) {}
-                            }
+						if (responseException.getStatusCode() == 404) {
+							try {
+								matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
+							} catch (Exception ignore) {
+							}
+						}
 
-                        }
+					}
 
-                    }
+				}
 
-                });
-    }
+			});
+	}
 
 }

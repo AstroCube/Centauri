@@ -24,68 +24,68 @@ import team.unnamed.gui.core.gui.type.GUIBuilder;
 @Singleton
 public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject GenericHeadHelper headHelper;
-    private @Inject FindService<User> findService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject GenericHeadHelper headHelper;
+	private @Inject FindService<User> findService;
 
-    private @Inject StaffChatCompound staffChatCompound;
-    private @Inject StaffPunishCompound staffPunishCompound;
-    private @Inject StaffSessionCompound staffSessionCompound;
+	private @Inject StaffChatCompound staffChatCompound;
+	private @Inject StaffPunishCompound staffPunishCompound;
+	private @Inject StaffSessionCompound staffSessionCompound;
 
 
-    @Override
-    public void generateMenu(Player player) {
+	@Override
+	public void generateMenu(Player player) {
 
-        findService.find(player.getDatabaseIdentifier()).callback(userCallback -> {
+		findService.find(player.getDatabaseIdentifier()).callback(userCallback -> {
 
-            if (!userCallback.isSuccessful()) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "channel.admin.settings.error");
-            }
+			if (!userCallback.isSuccessful()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "channel.admin.settings.error");
+			}
 
-            userCallback.ifSuccessful(user -> {
+			userCallback.ifSuccessful(user -> {
 
-                GUIBuilder builder = GUIBuilder.builder(
-                        messageHandler.get(player, "channel.admin.settings.title")
-                );
+				GUIBuilder builder = GUIBuilder.builder(
+					messageHandler.get(player, "channel.admin.settings.title")
+				);
 
-                builder.addItem(generateClickable(staffChatCompound, player, user, 21, user.getSettings().getAdminChatSettings().isActive()));
-                builder.addItem(generateClickable(staffPunishCompound, player, user, 22, user.getSettings().getAdminChatSettings().isReadingPunishments()));
-                builder.addItem(generateClickable(staffSessionCompound, player, user, 23, user.getSettings().getAdminChatSettings().isReadingLogs()));
-                builder.addItem(
-                        headHelper.generateDefaultClickable(headHelper.backButton(player), 31, ClickType.LEFT, HumanEntity::closeInventory)
-                );
+				builder.addItem(generateClickable(staffChatCompound, player, user, 21, user.getSettings().getAdminChatSettings().isActive()));
+				builder.addItem(generateClickable(staffPunishCompound, player, user, 22, user.getSettings().getAdminChatSettings().isReadingPunishments()));
+				builder.addItem(generateClickable(staffSessionCompound, player, user, 23, user.getSettings().getAdminChatSettings().isReadingLogs()));
+				builder.addItem(
+					headHelper.generateDefaultClickable(headHelper.backButton(player), 31, ClickType.LEFT, HumanEntity::closeInventory)
+				);
 
-                MenuUtils.generateFrame(builder);
-                player.openInventory(builder.build());
-            });
+				MenuUtils.generateFrame(builder);
+				player.openInventory(builder.build());
+			});
 
-        });
+		});
 
-    }
+	}
 
-    private ItemClickable generateClickable(StaffOptionCompound compound, Player player, User user, int slot, boolean active) {
+	private ItemClickable generateClickable(StaffOptionCompound compound, Player player, User user, int slot, boolean active) {
 
-        ItemStack stack = compound.getEnableItem(player);
+		ItemStack stack = compound.getEnableItem(player);
 
-        if (!active) {
-            stack = compound.getDisableItem(player);
-        }
+		if (!active) {
+			stack = compound.getDisableItem(player);
+		}
 
-        return headHelper.generateDefaultClickable(stack, slot, ClickType.LEFT, (p) ->
-                compound.updateOption(user).callback(updatedUserCallback -> {
+		return headHelper.generateDefaultClickable(stack, slot, ClickType.LEFT, (p) ->
+			compound.updateOption(user).callback(updatedUserCallback -> {
 
-                    if (!updatedUserCallback.isSuccessful()) {
-                        messageHandler.get(player, "channel.admin.settings.error-update");
-                    }
+				if (!updatedUserCallback.isSuccessful()) {
+					messageHandler.get(player, "channel.admin.settings.error-update");
+				}
 
-                    updatedUserCallback.ifSuccessful(updatedUser -> {
-                        p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
-                        player.closeInventory();
-                        generateMenu(p);
-                    });
+				updatedUserCallback.ifSuccessful(updatedUser -> {
+					p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
+					player.closeInventory();
+					generateMenu(p);
+				});
 
-                })
-        );
-    }
+			})
+		);
+	}
 
 }

@@ -9,15 +9,15 @@ import java.util.regex.Pattern;
 
 public class CoreStaffMentionParser implements StaffMentionParser {
 
-    @Override
-    public Set<String> parseMentions(String rawMessage) {
-        Pattern mentionedPattern = Pattern.compile("@(\\S+)");
-        Matcher matchedMentions = mentionedPattern.matcher(rawMessage);
-        Set<String> mentions = new HashSet<>();
-        while (matchedMentions.find()) {
-            mentions.add(matchedMentions.group(1));
-        }
+	@Override
+	public Set<String> parseMentions(String rawMessage) {
+		Pattern mentionedPattern = Pattern.compile("@(\\S+)");
+		Matcher matchedMentions = mentionedPattern.matcher(rawMessage);
+		Set<String> mentions = new HashSet<>();
+		while (matchedMentions.find()) {
+			mentions.add(matchedMentions.group(1));
+		}
 
-        return mentions;
-    }
+		return mentions;
+	}
 }

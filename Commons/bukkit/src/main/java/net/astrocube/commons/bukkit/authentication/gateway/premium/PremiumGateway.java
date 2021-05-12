@@ -17,57 +17,58 @@ import java.util.HashMap;
 
 public class PremiumGateway implements AuthenticationGateway {
 
-    private @Inject Redis redis;
-    private final Channel<ProxyKickRequest> channel;
+	private @Inject Redis redis;
+	private final Channel<ProxyKickRequest> channel;
 
-    @Inject
-    public PremiumGateway(Messenger jedisMessenger) {
-        channel = jedisMessenger.getChannel(ProxyKickRequest.class);
-    }
+	@Inject
+	public PremiumGateway(Messenger jedisMessenger) {
+		channel = jedisMessenger.getChannel(ProxyKickRequest.class);
+	}
 
-    @Override
-    public void startProcessing(User user) {
+	@Override
+	public void startProcessing(User user) {
 
-        Player player = Bukkit.getPlayerByIdentifier(user.getId());
+		Player player = Bukkit.getPlayerByIdentifier(user.getId());
 
-        if (player != null) {
+		if (player != null) {
 
-            try (Jedis jedis = redis.getRawConnection().getResource()) {
+			try (Jedis jedis = redis.getRawConnection().getResource()) {
 
-                if (!jedis.exists("premium:" + user.getUsername())) {
-                    try {
-                        channel.sendMessage(new ProxyKickRequest() {
-                            @Override
-                            public String getName() {
-                                return player.getName();
-                            }
+				if (!jedis.exists("premium:" + user.getUsername())) {
+					try {
+						channel.sendMessage(new ProxyKickRequest() {
+							@Override
+							public String getName() {
+								return player.getName();
+							}
 
-                            @Override
-                            public String getReason() {
-                                return ChatColor.RED + "Unable to verify premium stastus, if problem persists contact an administrator";
-                            }
-                        }, new HashMap<>());
-                    } catch (Exception ignore) {}
-                    return;
-                }
+							@Override
+							public String getReason() {
+								return ChatColor.RED + "Unable to verify premium stastus, if problem persists contact an administrator";
+							}
+						}, new HashMap<>());
+					} catch (Exception ignore) {
+					}
+					return;
+				}
 
-                Bukkit.getPluginManager().callEvent(
-                        new AuthenticationSuccessEvent(
-                                this,
-                                Bukkit.getPlayerByIdentifier(user.getId())
-                        )
-                );
+				Bukkit.getPluginManager().callEvent(
+					new AuthenticationSuccessEvent(
+						this,
+						Bukkit.getPlayerByIdentifier(user.getId())
+					)
+				);
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    @Override
-    public String getName() {
-        return "Premium";
-    }
+	@Override
+	public String getName() {
+		return "Premium";
+	}
 
 
 }

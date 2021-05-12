@@ -5,12 +5,12 @@ package net.astrocube.api.core.http.exception;
  */
 public class InternalServerError extends BackendException {
 
-    public InternalServerError(String message) {
-        super(message);
-    }
+	public InternalServerError(String message) {
+		super(message);
+	}
 
-    @Override
-    public int statusCode() {
-        return 500;
-    }
+	@Override
+	public int statusCode() {
+		return 500;
+	}
 }

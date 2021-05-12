@@ -24,72 +24,72 @@ import java.util.UUID;
 @SuppressWarnings("UnstableApiUsage")
 public class JedisChannel<T extends Message> implements Channel<T> {
 
-    private final String name;
-    private final String id;
-    private final TypeToken<T> type;
-    private final JedisPool jedisPool;
-    private final Set<MessageHandler<T>> handlers = new HashSet<>();
-    private final ObjectMapper mapper;
+	private final String name;
+	private final String id;
+	private final TypeToken<T> type;
+	private final JedisPool jedisPool;
+	private final Set<MessageHandler<T>> handlers = new HashSet<>();
+	private final ObjectMapper mapper;
 
-    @Override
-    public Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException {
+	@Override
+	public Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException {
 
-        Metadata metadata = new Metadata() {
-            @Override
-            public Map<String, Object> getHeaders() {
-                return headers;
-            }
+		Metadata metadata = new Metadata() {
+			@Override
+			public Map<String, Object> getHeaders() {
+				return headers;
+			}
 
-            @Override
-            public String getMessageId() {
-                return UUID.randomUUID().toString();
-            }
+			@Override
+			public String getMessageId() {
+				return UUID.randomUUID().toString();
+			}
 
-            @Override
-            public String getAppId() {
-                return name;
-            }
+			@Override
+			public String getAppId() {
+				return name;
+			}
 
-            @Override
-            public String getInstanceId() {
-                return id;
-            }
+			@Override
+			public String getInstanceId() {
+				return id;
+			}
 
-            @Override
-            public LocalDateTime getTimestamp() {
-                return LocalDateTime.now();
-            }
-        };
+			@Override
+			public LocalDateTime getTimestamp() {
+				return LocalDateTime.now();
+			}
+		};
 
-        ObjectNode message = mapper.createObjectNode();
+		ObjectNode message = mapper.createObjectNode();
 
-        message.putPOJO("metadata", metadata);
-        message.putPOJO("message", object);
+		message.putPOJO("metadata", metadata);
+		message.putPOJO("message", object);
 
-        try (Jedis jedis = jedisPool.getResource()) {
-            jedis.publish("centauri_redis", mapper.writeValueAsString(message));
-        }
+		try (Jedis jedis = jedisPool.getResource()) {
+			jedis.publish("centauri_redis", mapper.writeValueAsString(message));
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    @Override
-    public Channel<T> addHandler(MessageHandler<T> handler) {
-        handlers.add(handler);
-        return this;
-    }
+	@Override
+	public Channel<T> addHandler(MessageHandler<T> handler) {
+		handlers.add(handler);
+		return this;
+	}
 
-    @Override
-    public Channel<T> removeHandler(MessageHandler<T> handler) {
-        while (handlers.contains(handler)) {
-            handlers.remove(handler);
-        }
-        return this;
-    }
+	@Override
+	public Channel<T> removeHandler(MessageHandler<T> handler) {
+		while (handlers.contains(handler)) {
+			handlers.remove(handler);
+		}
+		return this;
+	}
 
-    public void callListeners(T object, Metadata metadata) {
-        for (MessageHandler<T> listener : handlers) {
-            listener.handleDelivery(object, metadata);
-        }
-    }
+	public void callListeners(T object, Metadata metadata) {
+		for (MessageHandler<T> listener : handlers) {
+			listener.handleDelivery(object, metadata);
+		}
+	}
 }

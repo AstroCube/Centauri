@@ -6,11 +6,11 @@ import java.util.Map;
 
 public interface EffectivePermissionsExtractor {
 
-    /**
-     * Extract effective permissions map from group
-     * @param group to be extracted
-     * @return evaluable set
-     */
-    Map<String, Boolean> extractFromGroup(Group group);
+	/**
+	 * Extract effective permissions map from group
+	 * @param group to be extracted
+	 * @return evaluable set
+	 */
+	Map<String, Boolean> extractFromGroup(Group group);
 
 }

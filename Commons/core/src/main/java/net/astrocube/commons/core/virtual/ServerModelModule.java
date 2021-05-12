@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.CoreModelService;
 
 public class ServerModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(Server.class, ServerDoc.Partial.class, model -> {
-            TypeLiteral<CoreModelService<Server, ServerDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<Server, ServerDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(Server.class, ServerDoc.Partial.class, model -> {
+			TypeLiteral<CoreModelService<Server, ServerDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<Server, ServerDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

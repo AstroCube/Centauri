@@ -11,14 +11,14 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class StaffHideApplier implements HideApplier {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void apply(User user, Player player, User target, Player targetPlayer) {
-        if (target.getGroups().stream().anyMatch(g -> g.getGroup().isStaff())
-        ) {
+	@Override
+	public void apply(User user, Player player, User target, Player targetPlayer) {
+		if (target.getGroups().stream().anyMatch(g -> g.getGroup().isStaff())
+		) {
 
-            Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
-        }
-    }
+			Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
+		}
+	}
 }

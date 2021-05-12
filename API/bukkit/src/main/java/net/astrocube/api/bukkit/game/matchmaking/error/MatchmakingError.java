@@ -5,14 +5,14 @@ import net.astrocube.api.core.message.Message;
 
 public interface MatchmakingError extends Message {
 
-    /**
-     * @return {@link MatchmakingRequest} that caused an error
-     */
-    MatchmakingRequest getRequest();
+	/**
+	 * @return {@link MatchmakingRequest} that caused an error
+	 */
+	MatchmakingRequest getRequest();
 
-    /**
-     * @return reason of the error
-     */
-    String getReason();
+	/**
+	 * @return reason of the error
+	 */
+	String getReason();
 
 }

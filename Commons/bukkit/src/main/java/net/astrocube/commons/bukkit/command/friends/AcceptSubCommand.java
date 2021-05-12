@@ -16,36 +16,36 @@ import org.bukkit.entity.Player;
 
 public class AcceptSubCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FriendHelper friendCommandValidator;
-    private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FriendHelper friendCommandValidator;
+	private @Inject FriendshipHandler friendshipHandler;
+	private @Inject FriendCallbackHelper friendCallbackHelper;
 
-    @Command(names = "accept")
-    public boolean execute(@Sender Player player, OfflinePlayer target) {
+	@Command(names = "accept")
+	public boolean execute(@Sender Player player, OfflinePlayer target) {
 
-        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-            return true;
-        }
+		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
+			return true;
+		}
 
-        friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
+		friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-friends");
-                return;
-            }
+			if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-friends");
+				return;
+			}
 
-            if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-sent");
-                return;
-            }
+			if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-sent");
+				return;
+			}
 
-            friendshipHandler.createFriendship(user.getId(), targetUser.getId());
+			friendshipHandler.createFriendship(user.getId(), targetUser.getId());
 
-        });
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
 }

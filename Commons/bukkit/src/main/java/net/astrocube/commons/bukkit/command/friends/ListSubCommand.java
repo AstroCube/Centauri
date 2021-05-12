@@ -23,87 +23,87 @@ import java.util.logging.Level;
 @Command(names = "list")
 public class ListSubCommand implements CommandClass {
 
-    private static final int FRIENDS_PER_PAGE = 10;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FindService<User> userFindService;
+	private static final int FRIENDS_PER_PAGE = 10;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FriendshipHandler friendshipHandler;
+	private @Inject FindService<User> userFindService;
 
-    @Command(names = "")
-    public boolean execute(@Sender Player player, @OptArg Integer providedPage) {
-        int page = providedPage == null ? 0 : providedPage - 1;
-        friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
-                Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
+	@Command(names = "")
+	public boolean execute(@Sender Player player, @OptArg Integer providedPage) {
+		int page = providedPage == null ? 0 : providedPage - 1;
+		friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
+			Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
 
-                    Set<Friendship> friendships = paginateResult.getData();
-                    PaginateResult.Pagination pagination = paginateResult.getPagination();
+				Set<Friendship> friendships = paginateResult.getData();
+				PaginateResult.Pagination pagination = paginateResult.getPagination();
 
-                    int pageIndicator = pagination.page().orElse(-1);
+				int pageIndicator = pagination.page().orElse(-1);
 
-                    if (friendships.size() == 0 && pageIndicator == -1
-                            && !pagination.hasNextPage() && !pagination.hasPrevPage()) {
-                        messageHandler.send(player, "no-friends");
-                        return;
-                    }
+				if (friendships.size() == 0 && pageIndicator == -1
+					&& !pagination.hasNextPage() && !pagination.hasPrevPage()) {
+					messageHandler.send(player, "no-friends");
+					return;
+				}
 
 
-                    messageHandler.send(player, "friend-list.header");
-                    for (Friendship friendship : friendships) {
+				messageHandler.send(player, "friend-list.header");
+				for (Friendship friendship : friendships) {
 
-                        String id = friendship.getIssuer();
+					String id = friendship.getIssuer();
 
-                        if (player.getDatabaseIdentifier().equals(id)) {
-                            id = friendship.getReceiver();
-                        }
+					if (player.getDatabaseIdentifier().equals(id)) {
+						id = friendship.getReceiver();
+					}
 
-                        User user;
+					User user;
 
-                        try {
-                            user = userFindService.findSync(id);
-                        } catch (Exception e) {
-                            Bukkit.getLogger().log(Level.SEVERE, "[Centauri] Failed to get friends of " + player.getName(), e);
-                            continue;
-                        }
+					try {
+						user = userFindService.findSync(id);
+					} catch (Exception e) {
+						Bukkit.getLogger().log(Level.SEVERE, "[Centauri] Failed to get friends of " + player.getName(), e);
+						continue;
+					}
 
-                        if (user == null) {
-                            continue;
-                        }
+					if (user == null) {
+						continue;
+					}
 
-                        player.sendMessage(
-                                messageHandler.get(player, "friend-list.element")
-                                        .replace("%friend_name%", user.getUsername())
-                                        .replace("%status%", messageHandler.get(player,
-                                                user.getSession().isOnline() ? "online" : "offline"
-                                        ))
-                        );
-                    }
+					player.sendMessage(
+						messageHandler.get(player, "friend-list.element")
+							.replace("%friend_name%", user.getUsername())
+							.replace("%status%", messageHandler.get(player,
+								user.getSession().isOnline() ? "online" : "offline"
+							))
+					);
+				}
 
-                    TextComponent clickableComponents = new TextComponent();
+				TextComponent clickableComponents = new TextComponent();
 
-                    if (pagination.hasPrevPage()) {
-                        String message = messageHandler.get(player, "friends-previous-page");
-                        clickableComponents.setText(message);
-                        clickableComponents.setHoverEvent(new HoverEvent(
-                                HoverEvent.Action.SHOW_TEXT,
-                                TextComponent.fromLegacyText(message)
-                        ));
-                    }
+				if (pagination.hasPrevPage()) {
+					String message = messageHandler.get(player, "friends-previous-page");
+					clickableComponents.setText(message);
+					clickableComponents.setHoverEvent(new HoverEvent(
+						HoverEvent.Action.SHOW_TEXT,
+						TextComponent.fromLegacyText(message)
+					));
+				}
 
-                    if (pagination.hasNextPage()) {
-                        clickableComponents.addExtra("        "); // just add space to separate that shit
-                        String message = messageHandler.get(player, "friends-next-page");
-                        TextComponent component = new TextComponent(message);
-                        component.setHoverEvent(new HoverEvent(
-                                HoverEvent.Action.SHOW_TEXT,
-                                TextComponent.fromLegacyText(message)
-                        ));
-                        clickableComponents.addExtra(component);
-                    }
+				if (pagination.hasNextPage()) {
+					clickableComponents.addExtra("        "); // just add space to separate that shit
+					String message = messageHandler.get(player, "friends-next-page");
+					TextComponent component = new TextComponent(message);
+					component.setHoverEvent(new HoverEvent(
+						HoverEvent.Action.SHOW_TEXT,
+						TextComponent.fromLegacyText(message)
+					));
+					clickableComponents.addExtra(component);
+				}
 
-                    player.sendMessage(clickableComponents);
+				player.sendMessage(clickableComponents);
 
-                })
-        );
-        return true;
-    }
+			})
+		);
+		return true;
+	}
 
 }

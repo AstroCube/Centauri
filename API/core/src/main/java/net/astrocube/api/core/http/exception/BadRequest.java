@@ -5,12 +5,12 @@ package net.astrocube.api.core.http.exception;
  */
 public class BadRequest extends BackendException {
 
-    public BadRequest(String message) {
-        super(message);
-    }
+	public BadRequest(String message) {
+		super(message);
+	}
 
-    @Override
-    public int statusCode() {
-        return 400;
-    }
+	@Override
+	public int statusCode() {
+		return 400;
+	}
 }

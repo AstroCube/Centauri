@@ -10,22 +10,22 @@ import org.bukkit.plugin.Plugin;
 
 public class AuthenticationListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject AuthenticationStartListener authenticationStartListener;
-    private @Inject AuthenticationSuccessListener authenticationSuccessListener;
-    private @Inject AuthenticationInvalidListener authenticationInvalidListener;
-    private @Inject AuthenticationRestrictionListener authenticationRestrictionListener;
+	private @Inject AuthenticationStartListener authenticationStartListener;
+	private @Inject AuthenticationSuccessListener authenticationSuccessListener;
+	private @Inject AuthenticationInvalidListener authenticationInvalidListener;
+	private @Inject AuthenticationRestrictionListener authenticationRestrictionListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                authenticationStartListener,
-                authenticationSuccessListener,
-                authenticationInvalidListener,
-                authenticationRestrictionListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			authenticationStartListener,
+			authenticationSuccessListener,
+			authenticationInvalidListener,
+			authenticationRestrictionListener
+		);
+	}
 
 }

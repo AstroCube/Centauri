@@ -19,27 +19,27 @@ import org.bukkit.plugin.Plugin;
 
 public class CommandLoader implements Loader {
 
-    private @Inject Plugin plugin;
-    private @Inject CoreCommandLanguageProvider coreCommandLanguageProvider;
-    private @Inject Injector injector;
+	private @Inject Plugin plugin;
+	private @Inject CoreCommandLanguageProvider coreCommandLanguageProvider;
+	private @Inject Injector injector;
 
-    private @Inject PremiumCommand premiumCommand;
+	private @Inject PremiumCommand premiumCommand;
 
-    @Override
-    public void load() {
-        CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
-        commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
+	@Override
+	public void load() {
+		CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
+		commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
 
-        PartInjector partInjector = new SimplePartInjector();
+		PartInjector partInjector = new SimplePartInjector();
 
-        partInjector.install(new BukkitModule());
-        partInjector.install(new DefaultsModule());
+		partInjector.install(new BukkitModule());
+		partInjector.install(new DefaultsModule());
 
-        AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
-                new AnnotatedCommandBuilderImpl(partInjector),
-                (clazz, parent) -> this.injector.getInstance(clazz)
-        );
+		AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
+			new AnnotatedCommandBuilderImpl(partInjector),
+			(clazz, parent) -> this.injector.getInstance(clazz)
+		);
 
-        commandManager.registerCommands(treeBuilder.fromClass(premiumCommand));
-    }
+		commandManager.registerCommands(treeBuilder.fromClass(premiumCommand));
+	}
 }

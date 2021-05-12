@@ -24,48 +24,48 @@ import java.util.stream.Collectors;
 @Singleton
 public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 
-    private @Inject QueryService<Match> matchQueryService;
-    private @Inject FindService<GameMode> findService;
-    private @Inject AvailableMatchServerProvider availableMatchServerProvider;
-    private @Inject ObjectMapper mapper;
+	private @Inject QueryService<Match> matchQueryService;
+	private @Inject FindService<GameMode> findService;
+	private @Inject AvailableMatchServerProvider availableMatchServerProvider;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
+	@Override
+	public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
 
-        ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
-        ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
+		ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
+		ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
 
-        GameMode gameMode = findService.findSync(request.getGameMode());
+		GameMode gameMode = findService.findSync(request.getGameMode());
 
-        if (gameMode.getSubTypes() == null) {
-            throw new GameControlException("There are not available sub modes for this GameMode");
-        }
+		if (gameMode.getSubTypes() == null) {
+			throw new GameControlException("There are not available sub modes for this GameMode");
+		}
 
-        Optional<SubGameMode> subGameModeOptional = gameMode.getSubTypes().stream()
-                .filter(sub -> sub.getId().equalsIgnoreCase(request.getSubGameMode())).findFirst();
+		Optional<SubGameMode> subGameModeOptional = gameMode.getSubTypes().stream()
+			.filter(sub -> sub.getId().equalsIgnoreCase(request.getSubGameMode())).findFirst();
 
-        if (!subGameModeOptional.isPresent()) {
-            throw new GameControlException("There was no subMode matching this request at the database");
-        }
+		if (!subGameModeOptional.isPresent()) {
+			throw new GameControlException("There was no subMode matching this request at the database");
+		}
 
-        criteria.put("server", serverArray);
-        criteria.put("private", false);
-        criteria.putPOJO("status", MatchDoc.Status.LOBBY);
+		criteria.put("server", serverArray);
+		criteria.put("private", false);
+		criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
-        return matchQueryService.querySync(criteria).getFoundModels()
-                .stream()
-                .filter(match -> match.getStatus() == MatchDoc.Status.LOBBY &&
-                        (subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
-                                (request.getRequesters().getInvolved().size() + 1))
-                .collect(Collectors.toSet());
-    }
+		return matchQueryService.querySync(criteria).getFoundModels()
+			.stream()
+			.filter(match -> match.getStatus() == MatchDoc.Status.LOBBY &&
+				(subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
+					(request.getRequesters().getInvolved().size() + 1))
+			.collect(Collectors.toSet());
+	}
 
-    public static int getRemainingSpace(Match match) {
-        int total = 0;
-        for (MatchAssignable matchAssignable : match.getPending()) {
-            total += matchAssignable.getInvolved().size() + 1;
-        }
-        return total;
-    }
+	public static int getRemainingSpace(Match match) {
+		int total = 0;
+		for (MatchAssignable matchAssignable : match.getPending()) {
+			total += matchAssignable.getInvolved().size() + 1;
+		}
+		return total;
+	}
 
 }

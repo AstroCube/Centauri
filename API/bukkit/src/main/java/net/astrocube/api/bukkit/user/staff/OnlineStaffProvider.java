@@ -7,12 +7,12 @@ import java.util.Set;
 
 public interface OnlineStaffProvider {
 
-    Set<User> provide() throws Exception;
+	Set<User> provide() throws Exception;
 
-    Set<Group> getGroups() throws Exception;
+	Set<Group> getGroups() throws Exception;
 
-    Set<User> getFromGroup(Set<String> group) throws Exception;
+	Set<User> getFromGroup(Set<String> group) throws Exception;
 
-    Set<User> getFromGroup(String group) throws Exception;
+	Set<User> getFromGroup(String group) throws Exception;
 
 }

@@ -7,10 +7,10 @@ import net.astrocube.api.core.permission.PermissionEvaluator;
 
 public class CorePermissionsModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        bind(EffectivePermissionsExtractor.class).to(CoreEffectivePermissionsExtractor.class);
-        bind(PermissionBalancer.class).to(CorePermissionBalancer.class);
-        bind(PermissionEvaluator.class).to(CorePermissionEvaluator.class);
-    }
+	@Override
+	protected void configure() {
+		bind(EffectivePermissionsExtractor.class).to(CoreEffectivePermissionsExtractor.class);
+		bind(PermissionBalancer.class).to(CorePermissionBalancer.class);
+		bind(PermissionEvaluator.class).to(CorePermissionEvaluator.class);
+	}
 }

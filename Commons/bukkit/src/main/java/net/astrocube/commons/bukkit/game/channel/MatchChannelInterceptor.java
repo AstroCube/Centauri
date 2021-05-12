@@ -7,14 +7,13 @@ import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 
 @Singleton
 public class MatchChannelInterceptor implements ChatMessageInterceptor {
-    @Override
-    public void intercept(ChatChannel channel, ChatChannelMessage message) {
+	@Override
+	public void intercept(ChatChannel channel, ChatChannelMessage message) {
 
-        if (!channel.getName().contains("match_")) {
-            return;
-        }
+		if (!channel.getName().contains("match_")) {
+			return;
+		}
 
 
-
-    }
+	}
 }

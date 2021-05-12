@@ -12,21 +12,21 @@ import java.io.IOException;
 
 public class ChatChannelMessageHandler implements MessageHandler<ChatChannelMessage> {
 
-    private @Inject InterceptorRegistry interceptorRegistry;
-    private @Inject ObjectMapper mapper;
+	private @Inject InterceptorRegistry interceptorRegistry;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public Class<ChatChannelMessage> type() {
-        return ChatChannelMessage.class;
-    }
+	@Override
+	public Class<ChatChannelMessage> type() {
+		return ChatChannelMessage.class;
+	}
 
-    @Override
-    public void handleDelivery(ChatChannelMessage message, Metadata properties) {
-        try {
-            ChatChannel channel = this.mapper.readValue((String) properties.getHeaders().get("channel"), ChatChannel.class);
-            this.interceptorRegistry.getInterceptors().forEach(interceptor -> interceptor.intercept(channel, message));
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
+	@Override
+	public void handleDelivery(ChatChannelMessage message, Metadata properties) {
+		try {
+			ChatChannel channel = this.mapper.readValue((String) properties.getHeaders().get("channel"), ChatChannel.class);
+			this.interceptorRegistry.getInterceptors().forEach(interceptor -> interceptor.intercept(channel, message));
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+	}
 }

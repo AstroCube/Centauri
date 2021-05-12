@@ -12,49 +12,49 @@ import java.util.HashMap;
 
 public class AliveInterceptorHandler implements MessageHandler<ServerAliveMessage> {
 
-    private @Inject ServerService serverService;
-    private final Channel<ServerAliveMessage> channel;
+	private @Inject ServerService serverService;
+	private final Channel<ServerAliveMessage> channel;
 
-    @Inject
-    public AliveInterceptorHandler(Messenger messenger) {
-        channel = messenger.getChannel(ServerAliveMessage.class);
-    }
+	@Inject
+	public AliveInterceptorHandler(Messenger messenger) {
+		channel = messenger.getChannel(ServerAliveMessage.class);
+	}
 
-    @Override
-    public Class<ServerAliveMessage> type() {
-        return ServerAliveMessage.class;
-    }
+	@Override
+	public Class<ServerAliveMessage> type() {
+		return ServerAliveMessage.class;
+	}
 
-    @Override
-    public void handleDelivery(ServerAliveMessage message, Metadata properties) {
+	@Override
+	public void handleDelivery(ServerAliveMessage message, Metadata properties) {
 
-        try {
+		try {
 
-            String actual = serverService.getActual().getId();
+			String actual = serverService.getActual().getId();
 
-            if (message.getAction() == ServerAliveMessage.Action.REQUEST) {
+			if (message.getAction() == ServerAliveMessage.Action.REQUEST) {
 
-                channel.sendMessage(
-                        new ServerAliveMessage() {
-                            @Override
-                            public String getServer() {
-                                return actual;
-                            }
+				channel.sendMessage(
+					new ServerAliveMessage() {
+						@Override
+						public String getServer() {
+							return actual;
+						}
 
-                            @Override
-                            public Action getAction() {
-                                return Action.CONFIRM;
-                            }
-                        },
-                        new HashMap<>()
-                );
+						@Override
+						public Action getAction() {
+							return Action.CONFIRM;
+						}
+					},
+					new HashMap<>()
+				);
 
-            }
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
 }

@@ -11,17 +11,17 @@ import org.bukkit.event.HandlerList;
 @AllArgsConstructor
 public class MatchControlSanitizeEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final GameMode gameMode;
-    private final SubGameMode subGameMode;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final GameMode gameMode;
+	private final SubGameMode subGameMode;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

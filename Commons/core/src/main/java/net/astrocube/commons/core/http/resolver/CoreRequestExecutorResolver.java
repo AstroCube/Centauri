@@ -11,16 +11,16 @@ import java.util.concurrent.ThreadFactory;
 
 public class CoreRequestExecutorResolver implements RequestExecutorResolver {
 
-    private @Inject ExecutorServiceProvider executorServiceProvider;
+	private @Inject ExecutorServiceProvider executorServiceProvider;
 
-    @Override
-    public ExecutorService getExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("API HTTP Executor").build();
-        if (executorServiceProvider.getConfiguredThreads() > 0) {
-            return executorServiceProvider.getRegisteredService();
-        } else {
-            return Executors.newCachedThreadPool(threadFactory);
-        }
-    }
+	@Override
+	public ExecutorService getExecutor() {
+		ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("API HTTP Executor").build();
+		if (executorServiceProvider.getConfiguredThreads() > 0) {
+			return executorServiceProvider.getRegisteredService();
+		} else {
+			return Executors.newCachedThreadPool(threadFactory);
+		}
+	}
 
 }

@@ -12,29 +12,29 @@ import javax.inject.Inject;
 
 public class UserSkullGenerator {
 
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject MessageHandler messageHandler;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject MessageHandler messageHandler;
 
-    public ItemStack generateSkull(User user, Player player) {
+	public ItemStack generateSkull(User user, Player player) {
 
-        ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 
-        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+		SkullMeta meta = (SkullMeta) stack.getItemMeta();
 
-        meta.setOwner(user.getSkin());
+		meta.setOwner(user.getSkin());
 
-        meta.setDisplayName(displayMatcher.getDisplay(player, user).getColor() + user.getDisplay());
+		meta.setDisplayName(displayMatcher.getDisplay(player, user).getColor() + user.getDisplay());
 
-        meta.setLore(
-                messageHandler.replacingMany(
-                        player, "admin-panel.online-staff.item-layout.lore",
-                        "%connected%", user.getSession().getLastGame()
-                )
-        );
+		meta.setLore(
+			messageHandler.replacingMany(
+				player, "admin-panel.online-staff.item-layout.lore",
+				"%connected%", user.getSession().getLastGame()
+			)
+		);
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
-    }
+		return stack;
+	}
 
 }

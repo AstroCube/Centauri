@@ -20,70 +20,72 @@ import java.util.logging.Level;
 
 public class PlayerDamageListener implements Listener {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject SpectatorSessionManager spectatorSessionManager;
-    private @Inject Plugin plugin;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject SpectatorSessionManager spectatorSessionManager;
+	private @Inject Plugin plugin;
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerDamage(EntityDamageByEntityEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPlayerDamage(EntityDamageByEntityEvent event) {
 
-        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
-            return;
-        }
+		if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
+			return;
+		}
 
-        Player player = (Player) event.getEntity();
-        Player damager = (Player) event.getDamager();
+		Player player = (Player) event.getEntity();
+		Player damager = (Player) event.getDamager();
 
-        try {
-            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		try {
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-            matchOptional.ifPresent(match -> {
-                try {
+			matchOptional.ifPresent(match -> {
+				try {
 
-                    if (UserMatchJoiner.checkOrigin(damager.getDatabaseIdentifier(), match)
-                            == UserMatchJoiner.Origin.SPECTATING) {
-                        event.setCancelled(true);
-                        return;
-                    }
+					if (UserMatchJoiner.checkOrigin(damager.getDatabaseIdentifier(), match)
+						== UserMatchJoiner.Origin.SPECTATING) {
+						event.setCancelled(true);
+						return;
+					}
 
-                } catch (GameControlException ignore) {}
-            });
+				} catch (GameControlException ignore) {
+				}
+			});
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error while checking actual match.");
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.WARNING, "Error while checking actual match.");
+		}
 
-    }
+	}
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamage(EntityDamageEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onEntityDamage(EntityDamageEvent event) {
 
 
-        Player player = (Player) event.getEntity();
+		Player player = (Player) event.getEntity();
 
-        try {
-            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		try {
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-            matchOptional.ifPresent(match -> {
-                try {
+			matchOptional.ifPresent(match -> {
+				try {
 
-                    if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
-                            UserMatchJoiner.Origin.SPECTATING) {
+					if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
+						UserMatchJoiner.Origin.SPECTATING) {
 
-                        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                            spectatorSessionManager.provideFunctions(player, match);
-                        }
+						if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+							spectatorSessionManager.provideFunctions(player, match);
+						}
 
-                        event.setCancelled(true);
-                    }
+						event.setCancelled(true);
+					}
 
-                } catch (GameControlException | IOException  ignore) {}
-            });
+				} catch (GameControlException | IOException ignore) {
+				}
+			});
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error while checking actual match.");
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.WARNING, "Error while checking actual match.");
+		}
 
-    }
+	}
 
 }

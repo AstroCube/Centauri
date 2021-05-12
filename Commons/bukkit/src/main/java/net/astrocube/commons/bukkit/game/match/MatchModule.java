@@ -23,36 +23,36 @@ import net.astrocube.commons.bukkit.game.match.lobby.CoreLobbySessionModifier;
 
 public class MatchModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
-        install(new GameMapModule());
-        install(new ControlLobbyModule());
+	@Override
+	public void configure() {
+		install(new GameMapModule());
+		install(new ControlLobbyModule());
 
-        bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
-        bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
-        bind(LobbySessionModifier.class).to(CoreLobbySessionModifier.class);
-        bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
-        bind(MatchAvailabilityChecker.class).to(CoreMatchAvailabilityChecker.class);
-        bind(MatchService.class).to(CoreMatchService.class);
-        bind(TeamBalancer.class).to(CoreTeamBalancer.class);
-        bind(MatchMapUpdater.class).to(CoreMatchMapUpdater.class);
+		bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
+		bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
+		bind(LobbySessionModifier.class).to(CoreLobbySessionModifier.class);
+		bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
+		bind(MatchAvailabilityChecker.class).to(CoreMatchAvailabilityChecker.class);
+		bind(MatchService.class).to(CoreMatchService.class);
+		bind(TeamBalancer.class).to(CoreTeamBalancer.class);
+		bind(MatchMapUpdater.class).to(CoreMatchMapUpdater.class);
 
-        bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
+		bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
 
-        bind(CountdownAlerter.class).to(CoreCountdownAlerter.class);
-        bind(CountdownScheduler.class).to(CoreCountdownScheduler.class);
+		bind(CountdownAlerter.class).to(CoreCountdownAlerter.class);
+		bind(CountdownScheduler.class).to(CoreCountdownScheduler.class);
 
-        bind(MatchAssigner.class).to(CoreMatchAssigner.class);
-        bind(MatchParticipantsProvider.class).to(CoreMatchParticipantsProvider.class);
-        bind(MatchStateUpdater.class).to(CoreMatchStateUpdater.class);
-        bind(MatchScheduler.class).to(CoreMatchScheduler.class);
-        bind(ActualMatchCache.class).to(CoreActualMatchCache.class);
+		bind(MatchAssigner.class).to(CoreMatchAssigner.class);
+		bind(MatchParticipantsProvider.class).to(CoreMatchParticipantsProvider.class);
+		bind(MatchStateUpdater.class).to(CoreMatchStateUpdater.class);
+		bind(MatchScheduler.class).to(CoreMatchScheduler.class);
+		bind(ActualMatchCache.class).to(CoreActualMatchCache.class);
 
-        bind(UserMatchJoiner.class).to(CoreUserMatchJoiner.class);
+		bind(UserMatchJoiner.class).to(CoreUserMatchJoiner.class);
 
-        expose(ActualMatchCache.class);
-        expose(ActualMatchProvider.class);
+		expose(ActualMatchCache.class);
+		expose(ActualMatchProvider.class);
 
-    }
+	}
 
 }

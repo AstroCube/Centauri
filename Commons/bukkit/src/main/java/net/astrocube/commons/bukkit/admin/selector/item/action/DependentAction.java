@@ -5,5 +5,5 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public interface DependentAction {
 
-    boolean constructClickActions(InventoryClickEvent inventoryClickEvent, GameMode gameMode);
+	boolean constructClickActions(InventoryClickEvent inventoryClickEvent, GameMode gameMode);
 }

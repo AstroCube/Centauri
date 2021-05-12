@@ -6,9 +6,9 @@ import net.astrocube.api.core.player.ProxyKickRequest;
 
 public class PlayerModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
-        bindChannel(ProxyKickRequest.class).registerHandler(new PlayerKickRequestHandler());
-    }
+	@Override
+	public void configure() {
+		bindChannel(ProxyKickRequest.class).registerHandler(new PlayerKickRequestHandler());
+	}
 
 }

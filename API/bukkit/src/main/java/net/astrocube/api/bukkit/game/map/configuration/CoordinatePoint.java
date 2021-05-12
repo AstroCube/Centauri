@@ -8,14 +8,14 @@ import org.bukkit.World;
  */
 public interface CoordinatePoint {
 
-    float getX();
+	float getX();
 
-    float getY();
+	float getY();
 
-    float getZ();
+	float getZ();
 
-    static Location coordinatePointToLocation(World world, CoordinatePoint coordinatePoint) {
-        return new Location(world, coordinatePoint.getX(), coordinatePoint.getY(), coordinatePoint.getZ());
-    }
+	static Location coordinatePointToLocation(World world, CoordinatePoint coordinatePoint) {
+		return new Location(world, coordinatePoint.getX(), coordinatePoint.getY(), coordinatePoint.getZ());
+	}
 
 }

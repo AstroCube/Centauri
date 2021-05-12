@@ -24,36 +24,36 @@ import org.bukkit.event.Listener;
 
 public class FriendExpireListener implements Listener {
 
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
 
-    @EventHandler
-    public void onFriendshipAction(FriendshipActionEvent event) {
+	@EventHandler
+	public void onFriendshipAction(FriendshipActionEvent event) {
 
-        if (event.getAction().getActionType() != FriendshipAction.Action.EXPIRE) {
-            return;
-        }
+		if (event.getAction().getActionType() != FriendshipAction.Action.EXPIRE) {
+			return;
+		}
 
-        FriendshipDoc.Relation friendship = event.getAction().getFriendship();
+		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-        Player player = Bukkit.getPlayerByIdentifier(friendship.getSender());
+		Player player = Bukkit.getPlayerByIdentifier(friendship.getSender());
 
-        if (player == null) {
-            return;
-        }
+		if (player == null) {
+			return;
+		}
 
-        findService.find(event.getAction().getFriendship().getReceiver()).callback(receiverCallback ->
-                receiverCallback.ifSuccessful(receiver -> {
-                    TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, receiver);
-                    messageHandler.sendReplacingIn(
-                            player, AlertModes.MUTED, "friend.request.expired",
-                            "%receiver%", flairFormat.getColor() + receiver.getDisplay()
-                    );
-                })
-        );
+		findService.find(event.getAction().getFriendship().getReceiver()).callback(receiverCallback ->
+			receiverCallback.ifSuccessful(receiver -> {
+				TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, receiver);
+				messageHandler.sendReplacingIn(
+					player, AlertModes.MUTED, "friend.request.expired",
+					"%receiver%", flairFormat.getColor() + receiver.getDisplay()
+				);
+			})
+		);
 
 
-    }
+	}
 
 }

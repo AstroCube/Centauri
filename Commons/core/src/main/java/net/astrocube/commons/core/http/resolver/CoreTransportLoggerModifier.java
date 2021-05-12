@@ -9,18 +9,18 @@ import java.util.logging.Logger;
 
 public class CoreTransportLoggerModifier implements TransportLoggerModifier {
 
-    @Override
-    public void overrideDefaultLogger(final Logger logger) {
-        final Logger httpLogger = Logger.getLogger(HttpTransport.class.getName());
-        httpLogger.setUseParentHandlers(false);
-        httpLogger.addHandler(new ConsoleHandler() {
-            @Override
-            public void publish(LogRecord record) {
-                String message = record.getMessage();
-                if (record.getThrown() != null) message += ": " + record.getThrown().toString();
-                logger.log(record.getLevel(), message);
-            }
-        });
-    }
+	@Override
+	public void overrideDefaultLogger(final Logger logger) {
+		final Logger httpLogger = Logger.getLogger(HttpTransport.class.getName());
+		httpLogger.setUseParentHandlers(false);
+		httpLogger.addHandler(new ConsoleHandler() {
+			@Override
+			public void publish(LogRecord record) {
+				String message = record.getMessage();
+				if (record.getThrown() != null) message += ": " + record.getThrown().toString();
+				logger.log(record.getLevel(), message);
+			}
+		});
+	}
 
 }

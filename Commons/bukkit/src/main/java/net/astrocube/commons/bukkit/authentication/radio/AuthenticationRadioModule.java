@@ -6,10 +6,10 @@ import net.astrocube.api.bukkit.authentication.radio.AuthenticationSongLoader;
 
 public class AuthenticationRadioModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(AuthenticationSongLoader.class).to(CoreAuthenticationSongLoader.class);
-        bind(AuthenticationRadio.class).to(CoreAuthenticationRadio.class);
-    }
+	@Override
+	public void configure() {
+		bind(AuthenticationSongLoader.class).to(CoreAuthenticationSongLoader.class);
+		bind(AuthenticationRadio.class).to(CoreAuthenticationRadio.class);
+	}
 
 }

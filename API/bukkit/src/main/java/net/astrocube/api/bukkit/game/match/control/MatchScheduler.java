@@ -10,15 +10,15 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
  */
 public interface MatchScheduler {
 
-    /**
-     * Run the {@link Match} scheduler.
-     * @param request to generate matchmaking if needed.
-     */
-    void schedule(MatchmakingRequest request) throws Exception;
+	/**
+	 * Run the {@link Match} scheduler.
+	 * @param request to generate matchmaking if needed.
+	 */
+	void schedule(MatchmakingRequest request) throws Exception;
 
-    /**
-     * Run the {@link Match} scheduler.
-     */
-    void schedule() throws Exception;
+	/**
+	 * Run the {@link Match} scheduler.
+	 */
+	void schedule() throws Exception;
 
 }

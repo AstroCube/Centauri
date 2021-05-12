@@ -14,20 +14,22 @@ import net.astrocube.commons.core.service.CoreModelService;
 
 public class ChannelModelModule extends ProtectedModule implements ModelBinderModule, ChannelBinder {
 
-    @Override
-    protected void configure() {
-        bindModel(ChatChannel.class, ChatChannelDoc.Creation.class, model -> {
-            TypeLiteral<CoreModelService<ChatChannel, ChatChannelDoc.Creation>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<ChatChannel, ChatChannelDoc.Creation>>(){};
-            model.bind(serviceTypeLiteral);
-        });
+	@Override
+	protected void configure() {
+		bindModel(ChatChannel.class, ChatChannelDoc.Creation.class, model -> {
+			TypeLiteral<CoreModelService<ChatChannel, ChatChannelDoc.Creation>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<ChatChannel, ChatChannelDoc.Creation>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
 
-        bindModel(ChatChannelMessage.class, ChatChannelMessageDoc.Creation.class, model -> {
-            TypeLiteral<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>>(){};
-            model.bind(serviceTypeLiteral);
-        });
+		bindModel(ChatChannelMessage.class, ChatChannelMessageDoc.Creation.class, model -> {
+			TypeLiteral<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
 
-        bindChannel(ChatChannelMessage.class).registerHandler(new ChatChannelMessageHandler());
-    }
+		bindChannel(ChatChannelMessage.class).registerHandler(new ChatChannelMessageHandler());
+	}
 }

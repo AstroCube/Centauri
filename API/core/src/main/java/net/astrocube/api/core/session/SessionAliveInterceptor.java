@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface SessionAliveInterceptor {
 
-    /**
-     * Check if user session is alive from local cache and cloud.
-     * @param user to be intercepted
-     * @return boolean indicating session status
-     */
-    Optional<SessionRegistry> isAlive(User user);
+	/**
+	 * Check if user session is alive from local cache and cloud.
+	 * @param user to be intercepted
+	 * @return boolean indicating session status
+	 */
+	Optional<SessionRegistry> isAlive(User user);
 }

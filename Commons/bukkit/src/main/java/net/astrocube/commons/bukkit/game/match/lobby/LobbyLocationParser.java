@@ -6,16 +6,16 @@ import org.bukkit.plugin.Plugin;
 
 public class LobbyLocationParser {
 
-    public static Location getLobby() {
+	public static Location getLobby() {
 
-        Plugin plugin = Bukkit.getPluginManager().getPlugin("Commons");
+		Plugin plugin = Bukkit.getPluginManager().getPlugin("Commons");
 
-        return new Location(
-                Bukkit.getWorld("world"),
-                Double.parseDouble(plugin.getConfig().getString("game.lobby.x")),
-                Double.parseDouble(plugin.getConfig().getString("game.lobby.y")),
-                Double.parseDouble(plugin.getConfig().getString("game.lobby.z"))
-        );
-    }
+		return new Location(
+			Bukkit.getWorld("world"),
+			Double.parseDouble(plugin.getConfig().getString("game.lobby.x")),
+			Double.parseDouble(plugin.getConfig().getString("game.lobby.y")),
+			Double.parseDouble(plugin.getConfig().getString("game.lobby.z"))
+		);
+	}
 
 }

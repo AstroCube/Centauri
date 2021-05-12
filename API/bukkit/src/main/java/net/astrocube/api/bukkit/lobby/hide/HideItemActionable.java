@@ -5,11 +5,11 @@ import org.bukkit.entity.Player;
 
 public interface HideItemActionable {
 
-    /**
-     * Update in-game & database logic for switching status
-     * @param user to be updated
-     * @param player to be switched
-     */
-    void switchHideStatus(User user, Player player);
+	/**
+	 * Update in-game & database logic for switching status
+	 * @param user   to be updated
+	 * @param player to be switched
+	 */
+	void switchHideStatus(User user, Player player);
 
 }

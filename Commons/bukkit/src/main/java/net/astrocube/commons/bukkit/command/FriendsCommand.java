@@ -11,21 +11,21 @@ import org.bukkit.entity.Player;
 
 @Command(names = {"friends", "friend", "f"})
 @SubCommandClasses({
-        ListSubCommand.class,
-        AddSubCommand.class,
-        ForceSubCommand.class,
-        RemoveSubCommand.class,
-        DenySubCommand.class,
-        AcceptSubCommand.class
+	ListSubCommand.class,
+	AddSubCommand.class,
+	ForceSubCommand.class,
+	RemoveSubCommand.class,
+	DenySubCommand.class,
+	AcceptSubCommand.class
 })
 public class FriendsCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Command(names = {""})
-    public boolean onCommand(@Sender Player player) {
-        messageHandler.send(player, "friend.help");
-        return true;
-    }
+	@Command(names = {""})
+	public boolean onCommand(@Sender Player player) {
+		messageHandler.send(player, "friend.help");
+		return true;
+	}
 
 }

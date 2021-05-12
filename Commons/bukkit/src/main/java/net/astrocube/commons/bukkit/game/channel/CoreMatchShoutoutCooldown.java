@@ -12,25 +12,25 @@ import java.util.logging.Level;
 @Singleton
 public class CoreMatchShoutoutCooldown implements MatchShoutoutCooldown {
 
-    private @Inject Redis redis;
-    private @Inject Plugin plugin;
+	private @Inject Redis redis;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void registerCooldown(String id) {
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.set("shoutCool:" + id, "true");
-        }
-    }
+	@Override
+	public void registerCooldown(String id) {
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			jedis.set("shoutCool:" + id, "true");
+		}
+	}
 
-    @Override
-    public boolean hasCooldown(String id) {
+	@Override
+	public boolean hasCooldown(String id) {
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            return jedis.exists("shoutCool:" + id);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error obtaining cooldown status", e);
-            return true;
-        }
-    }
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			return jedis.exists("shoutCool:" + id);
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error obtaining cooldown status", e);
+			return true;
+		}
+	}
 
 }

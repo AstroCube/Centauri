@@ -19,28 +19,30 @@ import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new LoaderModule());
-        install(new ScoreboardModule());
-        install(new NametagModule());
-        install(new TranslationModule());
-        install(new GameModeModule());
-        install(new SelectorModule());
-        install(new PremiumModule());
-        install(new HideModule());
-        install(new HotbarModule());
-        install(new ProfileModule());
-    }
+	@Override
+	public void configure() {
+		install(new LoaderModule());
+		install(new ScoreboardModule());
+		install(new NametagModule());
+		install(new TranslationModule());
+		install(new GameModeModule());
+		install(new SelectorModule());
+		install(new PremiumModule());
+		install(new HideModule());
+		install(new HotbarModule());
+		install(new ProfileModule());
+	}
 
-    @Provides @Singleton
-    public ChunkPuppetListener getPuppetChunkListener(PuppetRegistry puppetRegistry) {
-        return new ChunkPuppetListener(puppetRegistry);
-    }
+	@Provides
+	@Singleton
+	public ChunkPuppetListener getPuppetChunkListener(PuppetRegistry puppetRegistry) {
+		return new ChunkPuppetListener(puppetRegistry);
+	}
 
-    @Provides @Singleton
-    public PlayerPuppetListener getPuppetPlayerListener(PuppetRegistry puppetRegistry, Plugin plugin) {
-        return new PlayerPuppetListener(puppetRegistry, plugin);
-    }
+	@Provides
+	@Singleton
+	public PlayerPuppetListener getPuppetPlayerListener(PuppetRegistry puppetRegistry, Plugin plugin) {
+		return new PlayerPuppetListener(puppetRegistry, plugin);
+	}
 
 }

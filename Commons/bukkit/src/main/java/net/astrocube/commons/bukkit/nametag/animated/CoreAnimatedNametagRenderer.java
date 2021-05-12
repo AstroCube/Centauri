@@ -11,12 +11,12 @@ import java.util.Set;
 
 public class CoreAnimatedNametagRenderer implements AnimatedNametagRenderer {
 
-    @Override
-    public RenderedAnimatedNametag render(AnimatedNametag nametag, Player player) {
-        Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag);
-        RenderedAnimatedNametag animatedNametag = new CoreRenderedAnimatedNametag(nametag, spawnedEntities, player);
-        animatedNametag.show();
+	@Override
+	public RenderedAnimatedNametag render(AnimatedNametag nametag, Player player) {
+		Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag);
+		RenderedAnimatedNametag animatedNametag = new CoreRenderedAnimatedNametag(nametag, spawnedEntities, player);
+		animatedNametag.show();
 
-        return animatedNametag;
-    }
+		return animatedNametag;
+	}
 }

@@ -24,81 +24,80 @@ import java.util.logging.Level;
 
 public class MatchControlSanitizeListener implements Listener {
 
-    private @Inject MatchScheduler matchmakingScheduler;
-    private @Inject PendingMatchFinder pendingMatchFinder;
-    private @Inject ServerService serverService;
-    private @Inject ObjectMapper mapper;
-    private @Inject QueryService<Match> queryService;
-    private @Inject MatchmakingErrorBroadcaster matchmakingErrorBroadcaster;
-    private @Inject RunningMatchBalancer runningMatchBalancer;
-    private @Inject Plugin plugin;
+	private @Inject MatchScheduler matchmakingScheduler;
+	private @Inject PendingMatchFinder pendingMatchFinder;
+	private @Inject ServerService serverService;
+	private @Inject ObjectMapper mapper;
+	private @Inject QueryService<Match> queryService;
+	private @Inject MatchmakingErrorBroadcaster matchmakingErrorBroadcaster;
+	private @Inject RunningMatchBalancer runningMatchBalancer;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onMatchControlSanitize(MatchControlSanitizeEvent event) {
+	@EventHandler
+	public void onMatchControlSanitize(MatchControlSanitizeEvent event) {
 
-        try {
+		try {
 
-            if (plugin.getConfig().getBoolean("server.sandbox")) {
-                plugin.getLogger().log(Level.INFO, "Skipping sanitization due to sandbox mode. Starting new temp match.");
-                matchmakingScheduler.schedule();
-                return;
-            }
+			if (plugin.getConfig().getBoolean("server.sandbox")) {
+				plugin.getLogger().log(Level.INFO, "Skipping sanitization due to sandbox mode. Starting new temp match.");
+				matchmakingScheduler.schedule();
+				return;
+			}
 
-            Server server = serverService.getActual();
+			Server server = serverService.getActual();
 
-            pendingMatchFinder.getPendingMatches(event.getGameMode(), event.getSubGameMode())
-                    .forEach(pending -> {
+			pendingMatchFinder.getPendingMatches(event.getGameMode(), event.getSubGameMode())
+				.forEach(pending -> {
 
-                        if (runningMatchBalancer.hasCapacity()) {
-                            try {
-                                matchmakingScheduler.schedule(pending);
-                                // TODO: Invalidate if created
-                            } catch (Exception e) {
-                                plugin.getLogger().log(Level.WARNING, "Can not assign a match", e);
-                                try {
-                                    matchmakingErrorBroadcaster.broadcastError(pending, e.getMessage());
-                                } catch (JsonProcessingException ex) {
-                                    plugin.getLogger().log(Level.SEVERE, "Error serializing error for broadcasting", e);
-                                }
-                            }
-                        }
+					if (runningMatchBalancer.hasCapacity()) {
+						try {
+							matchmakingScheduler.schedule(pending);
+							// TODO: Invalidate if created
+						} catch (Exception e) {
+							plugin.getLogger().log(Level.WARNING, "Can not assign a match", e);
+							try {
+								matchmakingErrorBroadcaster.broadcastError(pending, e.getMessage());
+							} catch (JsonProcessingException ex) {
+								plugin.getLogger().log(Level.SEVERE, "Error serializing error for broadcasting", e);
+							}
+						}
+					}
 
-                    });
+				});
 
-            ObjectNode node = mapper.createObjectNode();
-            node.put("server", server.getId());
-            node.put("gamemode", event.getGameMode().getId());
-            node.put("subGamemode", event.getSubGameMode().getId());
+			ObjectNode node = mapper.createObjectNode();
+			node.put("server", server.getId());
+			node.put("gamemode", event.getGameMode().getId());
+			node.put("subGamemode", event.getSubGameMode().getId());
 
-            queryService.query(node).callback(callbacks -> {
+			queryService.query(node).callback(callbacks -> {
 
-                if (!callbacks.isSuccessful() || !callbacks.getResponse().isPresent()) {
-                    plugin.getLogger().warning("Can not obtain sanitize matches.");
-                }
+				if (!callbacks.isSuccessful() || !callbacks.getResponse().isPresent()) {
+					plugin.getLogger().warning("Can not obtain sanitize matches.");
+				}
 
-                if (callbacks.getResponse()
-                        .get()
-                        .getFoundModels()
-                        .stream()
-                        .noneMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
-                    try {
-                        if (runningMatchBalancer.hasCapacity()) {
-                            matchmakingScheduler.schedule();
-                        }
-                    } catch (Exception e) {
-                        plugin.getLogger().log(Level.WARNING, "There was an error trying to create match at sanitizing.", e);
-                    }
-                }
+				if (callbacks.getResponse()
+					.get()
+					.getFoundModels()
+					.stream()
+					.noneMatch(match -> match.getStatus() == MatchDoc.Status.LOBBY && CoreAvailableMatchProvider.getRemainingSpace(match) > 0)) {
+					try {
+						if (runningMatchBalancer.hasCapacity()) {
+							matchmakingScheduler.schedule();
+						}
+					} catch (Exception e) {
+						plugin.getLogger().log(Level.WARNING, "There was an error trying to create match at sanitizing.", e);
+					}
+				}
 
-            });
+			});
 
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error trying to sanitize matches.", e);
+		}
 
-    }
-
+	}
 
 
 }

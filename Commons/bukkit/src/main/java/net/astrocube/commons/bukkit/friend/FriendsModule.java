@@ -8,13 +8,13 @@ import net.astrocube.api.core.message.ChannelBinder;
 
 public class FriendsModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
-        bind(FriendHelper.class).to(CoreFriendHelper.class);
-        bind(FriendshipHandler.class).to(CoreFriendshipHandler.class);
-        bindChannel(FriendshipAction.class)
-                .registerHandler(new FriendshipActionHandler());
-        expose(FriendshipHandler.class);
-        expose(FriendHelper.class);
-    }
+	@Override
+	public void configure() {
+		bind(FriendHelper.class).to(CoreFriendHelper.class);
+		bind(FriendshipHandler.class).to(CoreFriendshipHandler.class);
+		bindChannel(FriendshipAction.class)
+			.registerHandler(new FriendshipActionHandler());
+		expose(FriendshipHandler.class);
+		expose(FriendHelper.class);
+	}
 }

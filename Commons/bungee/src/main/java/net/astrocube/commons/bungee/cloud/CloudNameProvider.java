@@ -10,32 +10,32 @@ import net.md_5.bungee.api.ProxyServer;
 @Singleton
 public class CloudNameProvider implements InstanceNameProvider {
 
-    private final CloudStatusProvider cloudStatusProvider;
-    private boolean verified;
-    private String name;
+	private final CloudStatusProvider cloudStatusProvider;
+	private boolean verified;
+	private String name;
 
-    @Inject
-    public CloudNameProvider(CloudStatusProvider cloudStatusProvider) {
-        this.cloudStatusProvider = cloudStatusProvider;
-        this.verified = false;
-        this.name = "";
-    }
+	@Inject
+	public CloudNameProvider(CloudStatusProvider cloudStatusProvider) {
+		this.cloudStatusProvider = cloudStatusProvider;
+		this.verified = false;
+		this.name = "";
+	}
 
-    @Override
-    public String getName() {
+	@Override
+	public String getName() {
 
-        if (!verified) {
+		if (!verified) {
 
-            this.verified = true;
+			this.verified = true;
 
-            if (cloudStatusProvider.hasCloudHooked()) {
-                this.name = TimoCloudAPI.getBungeeAPI().getThisProxy().getId();
-            } else {
-                this.name = ProxyServer.getInstance().getName();
-            }
+			if (cloudStatusProvider.hasCloudHooked()) {
+				this.name = TimoCloudAPI.getBungeeAPI().getThisProxy().getId();
+			} else {
+				this.name = ProxyServer.getInstance().getName();
+			}
 
-        }
+		}
 
-        return name;
-    }
+		return name;
+	}
 }

@@ -7,12 +7,12 @@ import org.bukkit.inventory.ItemStack;
 
 public interface PunishmentIconGenerator {
 
-    /**
-     * @param punishment to generate
-     * @param player to translate
-     * @param user to translate
-     * @return clickable item
-     */
-    ItemStack generateFromPunishment(Punishment punishment, Player player, User user);
+	/**
+	 * @param punishment to generate
+	 * @param player     to translate
+	 * @param user       to translate
+	 * @return clickable item
+	 */
+	ItemStack generateFromPunishment(Punishment punishment, Player player, User user);
 
 }

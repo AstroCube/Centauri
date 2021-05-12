@@ -8,14 +8,14 @@ import org.bukkit.Bukkit;
 
 public class AuthenticationSuccessHandler implements MessageHandler<SessionSwitchWrapper> {
 
-    @Override
-    public Class<SessionSwitchWrapper> type() {
-        return SessionSwitchWrapper.class;
-    }
+	@Override
+	public Class<SessionSwitchWrapper> type() {
+		return SessionSwitchWrapper.class;
+	}
 
-    @Override
-    public void handleDelivery(SessionSwitchWrapper message, Metadata properties) {
-        Bukkit.getPluginManager().callEvent(new SessionSwitchBroadcast(message));
-    }
+	@Override
+	public void handleDelivery(SessionSwitchWrapper message, Metadata properties) {
+		Bukkit.getPluginManager().callEvent(new SessionSwitchBroadcast(message));
+	}
 
 }

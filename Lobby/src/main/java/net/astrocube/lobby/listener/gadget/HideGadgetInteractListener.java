@@ -9,15 +9,15 @@ import org.bukkit.event.block.Action;
 
 public class HideGadgetInteractListener implements Listener {
 
-    private @Inject HideItemActionable hideItemActionable;
+	private @Inject HideItemActionable hideItemActionable;
 
-    @EventHandler
-    public void onGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equalsIgnoreCase("hide_gadget") &&
-                (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            hideItemActionable.switchHideStatus(event.getUser(), event.getPlayer());
-        }
-    }
+	@EventHandler
+	public void onGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equalsIgnoreCase("hide_gadget") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			hideItemActionable.switchHideStatus(event.getUser(), event.getPlayer());
+		}
+	}
 }

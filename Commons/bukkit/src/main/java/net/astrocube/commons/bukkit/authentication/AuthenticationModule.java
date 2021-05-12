@@ -17,18 +17,18 @@ import net.astrocube.commons.bukkit.authentication.server.CoreCooldownKick;
 
 public class AuthenticationModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
+	@Override
+	public void configure() {
 
-        install(new AuthenticationRadioModule());
+		install(new AuthenticationRadioModule());
 
-        bind(AuthenticationCooldown.class).to(CoreAuthenticationCooldown.class);
-        bind(CooldownKick.class).to(CoreCooldownKick.class);
-        bind(GatewayMatcher.class).to(CoreGatewayMatcher.class);
-        bind(AuthenticationValidator.class).to(CoreAuthenticationValidator.class);
-        bind(RegisterGatewayProcessor.class).to(CoreRegisterGatewayProcessor.class);
-        bind(AuthenticationService.class).to(CoreAuthenticationService.class);
-        bind(PasswordGatewayProcessor.class).to(CorePasswordGatewayProcessor.class);
-    }
+		bind(AuthenticationCooldown.class).to(CoreAuthenticationCooldown.class);
+		bind(CooldownKick.class).to(CoreCooldownKick.class);
+		bind(GatewayMatcher.class).to(CoreGatewayMatcher.class);
+		bind(AuthenticationValidator.class).to(CoreAuthenticationValidator.class);
+		bind(RegisterGatewayProcessor.class).to(CoreRegisterGatewayProcessor.class);
+		bind(AuthenticationService.class).to(CoreAuthenticationService.class);
+		bind(PasswordGatewayProcessor.class).to(CorePasswordGatewayProcessor.class);
+	}
 
 }

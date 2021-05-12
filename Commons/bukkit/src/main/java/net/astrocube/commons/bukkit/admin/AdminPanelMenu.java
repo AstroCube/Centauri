@@ -14,51 +14,51 @@ import javax.inject.Inject;
 
 public class AdminPanelMenu {
 
-    private @Inject AdminGameModeSelectorMenu adminGameModeSelectorMenu;
-    private @Inject AdminOnlineStaffMenu adminOnlineStaffMenu;
-    private @Inject MessageHandler playerMessageHandler;
+	private @Inject AdminGameModeSelectorMenu adminGameModeSelectorMenu;
+	private @Inject AdminOnlineStaffMenu adminOnlineStaffMenu;
+	private @Inject MessageHandler playerMessageHandler;
 
-    public Inventory createAdminPanel(Player player) {
+	public Inventory createAdminPanel(Player player) {
 
-        return GUIBuilder
-                .builder(playerMessageHandler.get(player, "admin-panel.main.title"), 3)
-                .addItem(ItemClickable
-                        .builder(11)
-                        .setItemStack(ItemBuilder.newBuilder(Material.PAPER)
-                                .setName(playerMessageHandler.get(player, "admin-panel.main.items.match-teleport.name"))
-                                .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.match-teleport.lore"))
-                                .build())
-                        .setAction(event -> {
-                            adminGameModeSelectorMenu.createGameModeSelectorMenu(player);
-                            return true;
-                        })
-                        .build())
+		return GUIBuilder
+			.builder(playerMessageHandler.get(player, "admin-panel.main.title"), 3)
+			.addItem(ItemClickable
+				.builder(11)
+				.setItemStack(ItemBuilder.newBuilder(Material.PAPER)
+					.setName(playerMessageHandler.get(player, "admin-panel.main.items.match-teleport.name"))
+					.setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.match-teleport.lore"))
+					.build())
+				.setAction(event -> {
+					adminGameModeSelectorMenu.createGameModeSelectorMenu(player);
+					return true;
+				})
+				.build())
 
-                .addItem(ItemClickable.builder(13)
-                        .setItemStack(ItemBuilder.newBuilder(Material.COMPASS)
-                                .setName(playerMessageHandler.get(player, "admin-panel.main.items.lobby-teleport.name"))
-                                .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.lobby-teleport.lore"))
-                                .build())
-                        .setAction(event -> {
-                            player.sendMessage("Open the lobby TP panel");
-                            return true;
-                        })
-                        .build())
+			.addItem(ItemClickable.builder(13)
+				.setItemStack(ItemBuilder.newBuilder(Material.COMPASS)
+					.setName(playerMessageHandler.get(player, "admin-panel.main.items.lobby-teleport.name"))
+					.setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.lobby-teleport.lore"))
+					.build())
+				.setAction(event -> {
+					player.sendMessage("Open the lobby TP panel");
+					return true;
+				})
+				.build())
 
-                .addItem(ItemClickable.builder(15)
-                        .setItemStack(ItemBuilder.newBuilder(Material.ANVIL)
-                                .setName(playerMessageHandler.get(player, "admin-panel.main.items.online-staff.name"))
-                                .setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.online-staff.lore"))
-                                .build())
-                        .setAction(event -> {
-                            try {
-                                player.openInventory(adminOnlineStaffMenu.createOnlineStaffMenu(player));
-                            } catch (Exception e) {
-                                playerMessageHandler.send(player, "admin-panel.online-staff.error");
-                            }
-                            return true;
-                        })
-                        .build())
-                .build();
-    }
+			.addItem(ItemClickable.builder(15)
+				.setItemStack(ItemBuilder.newBuilder(Material.ANVIL)
+					.setName(playerMessageHandler.get(player, "admin-panel.main.items.online-staff.name"))
+					.setLore(playerMessageHandler.getMany(player, "admin-panel.main.items.online-staff.lore"))
+					.build())
+				.setAction(event -> {
+					try {
+						player.openInventory(adminOnlineStaffMenu.createOnlineStaffMenu(player));
+					} catch (Exception e) {
+						playerMessageHandler.send(player, "admin-panel.online-staff.error");
+					}
+					return true;
+				})
+				.build())
+			.build();
+	}
 }

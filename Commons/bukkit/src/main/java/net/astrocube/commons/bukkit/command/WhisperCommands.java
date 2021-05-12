@@ -20,67 +20,67 @@ import java.util.Optional;
 
 public class WhisperCommands implements CommandClass {
 
-    private @Inject QueryService<User> userQueryService;
-    private @Inject FindService<User> userFindService;
+	private @Inject QueryService<User> userQueryService;
+	private @Inject FindService<User> userFindService;
 
-    private @Inject WhisperManager whisperManager;
+	private @Inject WhisperManager whisperManager;
 
-    private @Inject ObjectMapper mapper;
-    private @Inject MessageHandler messageHandler;
+	private @Inject ObjectMapper mapper;
+	private @Inject MessageHandler messageHandler;
 
-    @Command(names = {"whisper", "msg", "m", "tell", "t", "w"})
-    public boolean whisper(@Sender Player sender, String target, @Text String message) {
+	@Command(names = {"whisper", "msg", "m", "tell", "t", "w"})
+	public boolean whisper(@Sender Player sender, String target, @Text String message) {
 
-        ObjectNode query = mapper.createObjectNode();
-        query.put("username", target);
+		ObjectNode query = mapper.createObjectNode();
+		query.put("username", target);
 
-        userFindService.find(sender.getDatabaseIdentifier())
-                .callback(userResponse -> {
-                    if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
-                        messageHandler.sendIn(sender, AlertModes.ERROR, "whisper.error");
-                        return;
-                    }
+		userFindService.find(sender.getDatabaseIdentifier())
+			.callback(userResponse -> {
+				if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
+					messageHandler.sendIn(sender, AlertModes.ERROR, "whisper.error");
+					return;
+				}
 
-                    User user = userResponse.getResponse().get();
+				User user = userResponse.getResponse().get();
 
-                    userQueryService.query(query)
-                            .callback(response -> {
-                                if (!response.isSuccessful() || !response.getResponse().isPresent()) {
-                                    messageHandler.sendIn(sender, AlertModes.ERROR, "whisper.error");
-                                    return;
-                                }
+				userQueryService.query(query)
+					.callback(response -> {
+						if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+							messageHandler.sendIn(sender, AlertModes.ERROR, "whisper.error");
+							return;
+						}
 
-                                Optional<User> targetOptional = response.getResponse().get().getFoundModels().stream().findFirst();
+						Optional<User> targetOptional = response.getResponse().get().getFoundModels().stream().findFirst();
 
-                                if (!targetOptional.isPresent()) {
-                                    messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-                                    return;
-                                }
+						if (!targetOptional.isPresent()) {
+							messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
+							return;
+						}
 
-                                User targetUser = targetOptional.get();
+						User targetUser = targetOptional.get();
 
-                                if (!targetUser.getSession().isOnline()) {
-                                    messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-                                    return;
-                                }
+						if (!targetUser.getSession().isOnline()) {
+							messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
+							return;
+						}
 
-                                whisperManager.sendWhisper(sender, targetUser, user, message)
-                                        .thenAccept(whisperResponse -> {
-                                            if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
-                                                messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
+						whisperManager.sendWhisper(sender, targetUser, user, message)
+							.thenAccept(whisperResponse -> {
+								if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
+									messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
 
-                                                return;
-                                            }
+									return;
+								}
 
-                                            // handle more errors!
-                                        });
+								// handle more errors!
+							});
 
-                            });
-                });
+					});
+			});
 
-        return true;
+		return true;
 
-    }
+	}
 
 
 }

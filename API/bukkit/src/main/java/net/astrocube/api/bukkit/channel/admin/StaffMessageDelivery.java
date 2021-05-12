@@ -4,6 +4,6 @@ import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 
 public interface StaffMessageDelivery {
 
-    void deliver(ChatChannelMessage message);
+	void deliver(ChatChannelMessage message);
 
 }

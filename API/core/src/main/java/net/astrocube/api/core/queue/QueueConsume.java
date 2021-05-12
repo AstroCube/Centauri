@@ -4,14 +4,14 @@ import java.util.Map;
 
 public interface QueueConsume {
 
-    String getName();
+	String getName();
 
-    boolean isDurable();
+	boolean isDurable();
 
-    boolean isExclusive();
+	boolean isExclusive();
 
-    boolean isAutoDelete();
+	boolean isAutoDelete();
 
-    Map<String, Object> getArguments();
+	Map<String, Object> getArguments();
 
 }

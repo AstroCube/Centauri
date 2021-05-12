@@ -12,19 +12,19 @@ import java.util.concurrent.Executors;
 @Singleton
 public class BungeeConcurrentProvider implements ExecutorServiceProvider {
 
-    private ExecutorService executorService;
-    private @Inject PluginConfigurationHelper configurationHelper;
+	private ExecutorService executorService;
+	private @Inject PluginConfigurationHelper configurationHelper;
 
-    @Override
-    public ExecutorService getRegisteredService() {
-        if (executorService == null) this.executorService = Executors.newFixedThreadPool(getConfiguredThreads());
-        return executorService;
-    }
+	@Override
+	public ExecutorService getRegisteredService() {
+		if (executorService == null) this.executorService = Executors.newFixedThreadPool(getConfiguredThreads());
+		return executorService;
+	}
 
-    @Override
-    public int getConfiguredThreads() {
-        Optional<Configuration> configuration = Optional.ofNullable(configurationHelper.get());
-        return configuration.map(value -> value.getInt("api.threads", 2)).orElse(2);
-    }
+	@Override
+	public int getConfiguredThreads() {
+		Optional<Configuration> configuration = Optional.ofNullable(configurationHelper.get());
+		return configuration.map(value -> value.getInt("api.threads", 2)).orElse(2);
+	}
 
 }

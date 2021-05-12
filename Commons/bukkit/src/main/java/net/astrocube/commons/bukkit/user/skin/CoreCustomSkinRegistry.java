@@ -16,29 +16,29 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreCustomSkinRegistry implements CustomSkinRegistry {
 
-    private @Inject SignedSkinFetcher skinFetcher;
+	private @Inject SignedSkinFetcher skinFetcher;
 
-    @Override
-    public void add(Player player, String skin) {
+	@Override
+	public void add(Player player, String skin) {
 
-        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+		EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
 
-        GameProfile profile = entityPlayer.getProfile();
-        AbstractProperty property = skinFetcher.fetch(skin);
-        PropertyMap properties = profile.getProperties();
+		GameProfile profile = entityPlayer.getProfile();
+		AbstractProperty property = skinFetcher.fetch(skin);
+		PropertyMap properties = profile.getProperties();
 
-        properties.removeAll("textures");
-        properties.put("textures", new Property(
-                property.getName(),
-                property.getValue(),
-                property.getSignature()
-        ));
+		properties.removeAll("textures");
+		properties.put("textures", new Property(
+			property.getName(),
+			property.getValue(),
+			property.getSignature()
+		));
 
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            online.hidePlayer(player);
-            online.showPlayer(player);
-        }
+		for (Player online : Bukkit.getOnlinePlayers()) {
+			online.hidePlayer(player);
+			online.showPlayer(player);
+		}
 
-    }
+	}
 
 }

@@ -5,6 +5,6 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 
 public interface MatchmakingErrorBroadcaster {
 
-    void broadcastError(MatchmakingRequest request, String message) throws JsonProcessingException;
+	void broadcastError(MatchmakingRequest request, String message) throws JsonProcessingException;
 
 }

@@ -12,13 +12,13 @@ import net.astrocube.commons.bukkit.session.validation.CoreSessionValidator;
 
 public class BukkitSessionModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
-        bind(SessionValidatorHandler.class).to(CoreSessionValidator.class);
-        bind(SessionCacheInvalidator.class).to(CoreSessionCacheInvalidator.class);
-        bind(InvalidSessionMessageMatcher.class).to(CoreInvalidSessionMessageMatcher.class);
+	@Override
+	public void configure() {
+		bind(SessionValidatorHandler.class).to(CoreSessionValidator.class);
+		bind(SessionCacheInvalidator.class).to(CoreSessionCacheInvalidator.class);
+		bind(InvalidSessionMessageMatcher.class).to(CoreInvalidSessionMessageMatcher.class);
 
-        bindChannel(SessionSwitchWrapper.class).registerHandler(new AuthenticationSuccessHandler());
-    }
+		bindChannel(SessionSwitchWrapper.class).registerHandler(new AuthenticationSuccessHandler());
+	}
 
 }

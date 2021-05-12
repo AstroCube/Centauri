@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface ScoreboardProcessor {
 
-    void generateBoard(Player player) throws Exception;
+	void generateBoard(Player player) throws Exception;
 
 }

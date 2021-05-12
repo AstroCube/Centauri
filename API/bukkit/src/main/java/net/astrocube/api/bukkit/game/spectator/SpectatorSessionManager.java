@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public interface SpectatorSessionManager {
 
-    void provideFunctions(Player player, Match match) throws GameControlException, IOException;
+	void provideFunctions(Player player, Match match) throws GameControlException, IOException;
 
 }

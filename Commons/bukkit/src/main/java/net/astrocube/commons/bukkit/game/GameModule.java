@@ -16,16 +16,16 @@ import net.astrocube.commons.bukkit.game.spectator.SpectatorModule;
 
 public class GameModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
-        install(new MatchmakingModule());
-        install(new SpectatorModule());
-        install(new MatchModule());
-        install(new GameChannelModule());
-        bindChannel(MatchmakingError.class).registerHandler(new MatchmakingErrorHandler());
-        bind(GameControlPair.class).to(CoreGameControlPair.class);
-        bind(PendingMatchFinder.class).to(CorePendingMatchFinder.class);
-        bind(RunningMatchBalancer.class).to(CoreRunningMatchBalancer.class);
-    }
+	@Override
+	public void configure() {
+		install(new MatchmakingModule());
+		install(new SpectatorModule());
+		install(new MatchModule());
+		install(new GameChannelModule());
+		bindChannel(MatchmakingError.class).registerHandler(new MatchmakingErrorHandler());
+		bind(GameControlPair.class).to(CoreGameControlPair.class);
+		bind(PendingMatchFinder.class).to(CorePendingMatchFinder.class);
+		bind(RunningMatchBalancer.class).to(CoreRunningMatchBalancer.class);
+	}
 
 }

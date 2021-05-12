@@ -9,40 +9,40 @@ import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
 public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 
-    @Override
-    public int getGlobalOnline(GameMode gameMode) {
+	@Override
+	public int getGlobalOnline(GameMode gameMode) {
 
-        int compound = 0;
+		int compound = 0;
 
-        try {
+		try {
 
-            compound += getGroupOnline(gameMode.getLobby());
+			compound += getGroupOnline(gameMode.getLobby());
 
-            if (gameMode.getSubTypes() != null) {
-                for (SubGameMode subGameMode: gameMode.getSubTypes()) {
-                    compound += getGroupOnline(subGameMode.getGroup());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			if (gameMode.getSubTypes() != null) {
+				for (SubGameMode subGameMode : gameMode.getSubTypes()) {
+					compound += getGroupOnline(subGameMode.getGroup());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return compound;
-    }
+		return compound;
+	}
 
-    @Override
-    public int getGroupOnline(String group) {
+	@Override
+	public int getGroupOnline(String group) {
 
-        int compound = 0;
+		int compound = 0;
 
-        ServerGroupObject lobby = TimoCloudAPI.getUniversalAPI().getServerGroup(group);
+		ServerGroupObject lobby = TimoCloudAPI.getUniversalAPI().getServerGroup(group);
 
-        for (ServerObject server : lobby.getServers()) {
-            compound += server.getOnlinePlayerCount();
-        }
+		for (ServerObject server : lobby.getServers()) {
+			compound += server.getOnlinePlayerCount();
+		}
 
-        return compound;
+		return compound;
 
-    }
+	}
 
 }

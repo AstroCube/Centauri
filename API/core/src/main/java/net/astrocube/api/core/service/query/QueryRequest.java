@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 
 public interface QueryRequest<Complete extends Model> extends ModelRequest<Complete> {
 
-    /**
-     * Query that will be used as body for the request
-     * @return ObjectNode to be serialized
-     */
-    @Nullable
-    ObjectNode getBsonQuery();
+	/**
+	 * Query that will be used as body for the request
+	 * @return ObjectNode to be serialized
+	 */
+	@Nullable
+	ObjectNode getBsonQuery();
 
 }

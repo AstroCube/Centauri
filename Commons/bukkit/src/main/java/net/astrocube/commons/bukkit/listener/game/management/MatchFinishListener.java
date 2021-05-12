@@ -27,68 +27,68 @@ import java.util.logging.Level;
 
 public class MatchFinishListener implements Listener {
 
-    private @Inject MatchService matchService;
-    private @Inject FindService<Match> findService;
-    private @Inject GhostEffectControl ghostEffectControl;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject RunningMatchBalancer runningMatchBalancer;
-    private @Inject GameControlHelper gameControlHelper;
-    private @Inject ServerTeleportRetry serverTeleportRetry;
-    private @Inject Plugin plugin;
+	private @Inject MatchService matchService;
+	private @Inject FindService<Match> findService;
+	private @Inject GhostEffectControl ghostEffectControl;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject RunningMatchBalancer runningMatchBalancer;
+	private @Inject GameControlHelper gameControlHelper;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onMatchFinish(MatchFinishEvent event) {
-        findService.find(event.getMatch()).callback(matchCallback -> {
+	@EventHandler
+	public void onMatchFinish(MatchFinishEvent event) {
+		findService.find(event.getMatch()).callback(matchCallback -> {
 
-            try {
+			try {
 
-                if (!matchCallback.isSuccessful() && !matchCallback.getResponse().isPresent()) {
-                    throw new GameControlException("Error while obtaining match");
-                }
+				if (!matchCallback.isSuccessful() && !matchCallback.getResponse().isPresent()) {
+					throw new GameControlException("Error while obtaining match");
+				}
 
-                Match match = matchCallback.getResponse().get();
+				Match match = matchCallback.getResponse().get();
 
-                if (match.getStatus() != MatchDoc.Status.RUNNING) {
-                    return;
-                }
+				if (match.getStatus() != MatchDoc.Status.RUNNING) {
+					return;
+				}
 
-                matchService.assignVictory(event.getMatch(), event.getWinners());
-                Set<Player> players = MatchParticipantsProvider.getInvolved(match);
-                ghostEffectControl.clearMatch(match.getId());
-                MatchParticipantsProvider.getInvolved(match).forEach(p -> actualMatchCache.remove(p.getDatabaseIdentifier()));
-                Bukkit.getScheduler().runTaskLater(
-                        plugin, () -> players.forEach(
-                                player -> serverTeleportRetry.attemptTeleport(
-                                        player.getName(),
-                                        plugin.getConfig().getString("server.fallback"),
-                                        1,
-                                        3
-                                )
-                        ),
-                        200L
-                );
-                runningMatchBalancer.releaseMatch(event.getMatch());
+				matchService.assignVictory(event.getMatch(), event.getWinners());
+				Set<Player> players = MatchParticipantsProvider.getInvolved(match);
+				ghostEffectControl.clearMatch(match.getId());
+				MatchParticipantsProvider.getInvolved(match).forEach(p -> actualMatchCache.remove(p.getDatabaseIdentifier()));
+				Bukkit.getScheduler().runTaskLater(
+					plugin, () -> players.forEach(
+						player -> serverTeleportRetry.attemptTeleport(
+							player.getName(),
+							plugin.getConfig().getString("server.fallback"),
+							1,
+							3
+						)
+					),
+					200L
+				);
+				runningMatchBalancer.releaseMatch(event.getMatch());
 
-                Optional<GameControlHelper.ModeCompound> compound =
-                        gameControlHelper.getService(match.getGameMode(), match.getSubMode());
+				Optional<GameControlHelper.ModeCompound> compound =
+					gameControlHelper.getService(match.getGameMode(), match.getSubMode());
 
-                compound.ifPresent(modeCompound -> Bukkit.getPluginManager().callEvent(
-                        new MatchControlSanitizeEvent(
-                                modeCompound.getGameMode(),
-                                modeCompound.getSubGameMode()
-                        )
-                ));
+				compound.ifPresent(modeCompound -> Bukkit.getPluginManager().callEvent(
+					new MatchControlSanitizeEvent(
+						modeCompound.getGameMode(),
+						modeCompound.getSubGameMode()
+					)
+				));
 
-                if (runningMatchBalancer.getTotalMatches() == 1 && runningMatchBalancer.isNeedingRestart()) {
-                    Bukkit.shutdown();
-                }
+				if (runningMatchBalancer.getTotalMatches() == 1 && runningMatchBalancer.isNeedingRestart()) {
+					Bukkit.shutdown();
+				}
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Error while adjudicating match victory", e);
-                Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
-            }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Error while adjudicating match victory", e);
+				Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+			}
 
-        });
-    }
+		});
+	}
 
 }

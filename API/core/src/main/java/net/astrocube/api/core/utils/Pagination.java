@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface Pagination<T> {
 
-    int getPageSize();
+	int getPageSize();
 
-    List<T> getObjects();
+	List<T> getObjects();
 
-    boolean pageExists(int page);
+	boolean pageExists(int page);
 
-    int totalPages();
+	int totalPages();
 
-    List<T> getPage(int page);
+	List<T> getPage(int page);
 }

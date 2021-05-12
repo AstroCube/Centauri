@@ -21,44 +21,44 @@ import java.util.logging.Level;
 
 public class MatchStartListener implements Listener {
 
-    private @Inject FindService<Match> findService;
-    private @Inject MatchStateUpdater matchStateUpdater;
-    private @Inject RunningMatchBalancer runningMatchBalancer;
-    private @Inject GameControlHelper gameControlHelper;
-    private @Inject Plugin plugin;
+	private @Inject FindService<Match> findService;
+	private @Inject MatchStateUpdater matchStateUpdater;
+	private @Inject RunningMatchBalancer runningMatchBalancer;
+	private @Inject GameControlHelper gameControlHelper;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onMatchStart(MatchStartEvent event) {
+	@EventHandler
+	public void onMatchStart(MatchStartEvent event) {
 
-         findService.find(event.getMatch()).callback(callback -> {
+		findService.find(event.getMatch()).callback(callback -> {
 
-             try {
+			try {
 
-                 if (!callback.isSuccessful() || !callback.getResponse().isPresent()) {
-                     throw new GameControlException("The requested start match was not found");
-                 }
+				if (!callback.isSuccessful() || !callback.getResponse().isPresent()) {
+					throw new GameControlException("The requested start match was not found");
+				}
 
-                 Match match = callback.getResponse().get();
-                 matchStateUpdater.updateMatch(match, MatchDoc.Status.RUNNING);
-                 runningMatchBalancer.registerMatch(event.getMatch());
+				Match match = callback.getResponse().get();
+				matchStateUpdater.updateMatch(match, MatchDoc.Status.RUNNING);
+				runningMatchBalancer.registerMatch(event.getMatch());
 
-                 Optional<GameControlHelper.ModeCompound> compound =
-                         gameControlHelper.getService(match.getGameMode(), match.getSubMode());
+				Optional<GameControlHelper.ModeCompound> compound =
+					gameControlHelper.getService(match.getGameMode(), match.getSubMode());
 
-                 compound.ifPresent(modeCompound -> Bukkit.getPluginManager().callEvent(
-                         new MatchControlSanitizeEvent(
-                                 modeCompound.getGameMode(),
-                                 modeCompound.getSubGameMode()
-                         )
-                 ));
+				compound.ifPresent(modeCompound -> Bukkit.getPluginManager().callEvent(
+					new MatchControlSanitizeEvent(
+						modeCompound.getGameMode(),
+						modeCompound.getSubGameMode()
+					)
+				));
 
-             } catch (Exception e) {
-                 plugin.getLogger().log(Level.SEVERE, "Error while starting a match.");
-                 Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
-             }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Error while starting a match.");
+				Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+			}
 
-         });
+		});
 
-    }
+	}
 
 }

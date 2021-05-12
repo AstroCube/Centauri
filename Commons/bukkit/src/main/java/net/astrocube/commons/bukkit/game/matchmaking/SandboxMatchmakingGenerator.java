@@ -22,47 +22,47 @@ import java.util.Set;
 @Singleton
 public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
-    private @Inject ObjectMapper mapper;
-    private @Inject ServerService serverService;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
+	private @Inject ObjectMapper mapper;
+	private @Inject ServerService serverService;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void pairMatch(Player player) throws Exception {
-        Server server = serverService.getActual();
+	@Override
+	public void pairMatch(Player player) throws Exception {
+		Server server = serverService.getActual();
 
-        if (!plugin.getConfig().getBoolean("server.sandbox")) {
-            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.no-sandbox");
-            return;
-        }
+		if (!plugin.getConfig().getBoolean("server.sandbox")) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.no-sandbox");
+			return;
+		}
 
-        MatchAssignable assignable = new MatchAssignable() {
-            @Override
-            public String getResponsible() {
-                return player.getDatabaseIdentifier();
-            }
+		MatchAssignable assignable = new MatchAssignable() {
+			@Override
+			public String getResponsible() {
+				return player.getDatabaseIdentifier();
+			}
 
-            @Override
-            public Set<String> getInvolved() {
-                return new HashSet<>();
-            }
-        };
+			@Override
+			public Set<String> getInvolved() {
+				return new HashSet<>();
+			}
+		};
 
-        ObjectNode node = mapper.createObjectNode();
-        node.put("server", server.getId());
+		ObjectNode node = mapper.createObjectNode();
+		node.put("server", server.getId());
 
-        matchmakingRegistryHandler.generateRequest(
-                assignable,
-                plugin.getConfig().getString("game.mode"),
-                plugin.getConfig().getString("game.subMode"),
-                "",
-                node
-        );
-    }
+		matchmakingRegistryHandler.generateRequest(
+			assignable,
+			plugin.getConfig().getString("game.mode"),
+			plugin.getConfig().getString("game.subMode"),
+			"",
+			node
+		);
+	}
 
-    @Override
-    public void pairMatch(Player player, GameMode gameMode, SubGameMode subMode) throws Exception {
-        pairMatch(player);
-    }
+	@Override
+	public void pairMatch(Player player, GameMode gameMode, SubGameMode subMode) throws Exception {
+		pairMatch(player);
+	}
 }

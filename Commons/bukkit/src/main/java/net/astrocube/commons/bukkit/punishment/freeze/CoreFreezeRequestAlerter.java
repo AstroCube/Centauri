@@ -12,25 +12,25 @@ import org.github.paperspigot.Title;
 @Singleton
 public class CoreFreezeRequestAlerter implements FreezeRequestAlerter {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void alert(Player player) {
+	@Override
+	public void alert(Player player) {
 
-        Title title = new Title(
-                messageHandler.get(player, "punish.freeze.alert.title"),
-                messageHandler.get(player, "punish.freeze.alert.sub")
-        );
+		Title title = new Title(
+			messageHandler.get(player, "punish.freeze.alert.title"),
+			messageHandler.get(player, "punish.freeze.alert.sub")
+		);
 
-        player.sendTitle(title);
-        player.playSound(player.getLocation(), Sound.WITHER_SPAWN, 1f, 1f);
-        messageHandler.send(player, "punish.freeze.alert.text");
+		player.sendTitle(title);
+		player.playSound(player.getLocation(), Sound.WITHER_SPAWN, 1f, 1f);
+		messageHandler.send(player, "punish.freeze.alert.text");
 
-    }
+	}
 
-    @Override
-    public void alertUnfreeze(Player player) {
-        messageHandler.sendIn(player, AlertModes.INFO, "punish.freeze.unfreeze");
-    }
+	@Override
+	public void alertUnfreeze(Player player) {
+		messageHandler.sendIn(player, AlertModes.INFO, "punish.freeze.unfreeze");
+	}
 
 }

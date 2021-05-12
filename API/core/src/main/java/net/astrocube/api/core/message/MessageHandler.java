@@ -2,8 +2,8 @@ package net.astrocube.api.core.message;
 
 public interface MessageHandler<T extends Message> {
 
-    Class<T> type();
+	Class<T> type();
 
-    void handleDelivery(T message, Metadata properties);
+	void handleDelivery(T message, Metadata properties);
 
 }

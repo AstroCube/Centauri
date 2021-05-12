@@ -22,16 +22,16 @@ import net.astrocube.lobby.selector.npc.CoreSelectorRegistry;
 
 public class SelectorModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(GameItemExtractor.class).to(CoreGameItemExtractor.class);
-        bind(GameSelectorDisplay.class).to(CoreGameSelectorDisplay.class);
-        bind(GameSelectorRedirect.class).to(CoreGameSelectorRedirect.class);
-        bind(LobbySelectorDisplay.class).to(CoreLobbySelectorDisplay.class);
-        bind(LobbyIconExtractor.class).to(CoreLobbyIconExtractor.class);
-        bind(LobbyServerRedirect.class).to(CoreLobbyServerRedirect.class);
-        bind(LobbyCloudWrapperGenerator.class).to(CoreLobbyCloudWrapperGenerator.class);
-        bind(SelectorRegistry.class).to(CoreSelectorRegistry.class);
-        bind(LobbyNPCActionHandler.class).to(CoreLobbyNPCActionHandler.class);
-    }
+	@Override
+	public void configure() {
+		bind(GameItemExtractor.class).to(CoreGameItemExtractor.class);
+		bind(GameSelectorDisplay.class).to(CoreGameSelectorDisplay.class);
+		bind(GameSelectorRedirect.class).to(CoreGameSelectorRedirect.class);
+		bind(LobbySelectorDisplay.class).to(CoreLobbySelectorDisplay.class);
+		bind(LobbyIconExtractor.class).to(CoreLobbyIconExtractor.class);
+		bind(LobbyServerRedirect.class).to(CoreLobbyServerRedirect.class);
+		bind(LobbyCloudWrapperGenerator.class).to(CoreLobbyCloudWrapperGenerator.class);
+		bind(SelectorRegistry.class).to(CoreSelectorRegistry.class);
+		bind(LobbyNPCActionHandler.class).to(CoreLobbyNPCActionHandler.class);
+	}
 }

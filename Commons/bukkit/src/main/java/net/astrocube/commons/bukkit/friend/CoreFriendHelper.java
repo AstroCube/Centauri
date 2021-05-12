@@ -21,91 +21,91 @@ import java.util.logging.Level;
 @Singleton
 public class CoreFriendHelper implements FriendHelper {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject QueryService<Friendship> friendshipQueryService;
-    private @Inject ObjectMapper objectMapper;
-    private @Inject FriendshipHandler friendshipHandler;
+	private @Inject MessageHandler messageHandler;
+	private @Inject QueryService<Friendship> friendshipQueryService;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject FriendshipHandler friendshipHandler;
 
-    @Override
-    public boolean checkAlreadySent(Player player, User issuer, User receiver) {
+	@Override
+	public boolean checkAlreadySent(Player player, User issuer, User receiver) {
 
-        if (!friendshipHandler.existsFriendRequest(issuer.getId(), receiver.getId())) {
-            return false;
-        }
+		if (!friendshipHandler.existsFriendRequest(issuer.getId(), receiver.getId())) {
+			return false;
+		}
 
-        messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-sent");
-        return true;
-    }
+		messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-sent");
+		return true;
+	}
 
-    @Override
-    public boolean checkNotFriends(Player player, User issuer, User receiver) {
+	@Override
+	public boolean checkNotFriends(Player player, User issuer, User receiver) {
 
-        Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
+		Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
 
-        // why a collection can be null?
-        // in this case, a empty collection
-        // indicates a good case, but,
-        // is possible a a bad case
-        if (friendships == null) {
-            return true;
-        }
+		// why a collection can be null?
+		// in this case, a empty collection
+		// indicates a good case, but,
+		// is possible a a bad case
+		if (friendships == null) {
+			return true;
+		}
 
-        if (friendships.isEmpty()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.not-friends");
-        }
+		if (friendships.isEmpty()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.not-friends");
+		}
 
-        return friendships.isEmpty();
+		return friendships.isEmpty();
 
-    }
+	}
 
-    @Override
-    public boolean checkAlreadyFriends(Player player, User issuer, User receiver) {
+	@Override
+	public boolean checkAlreadyFriends(Player player, User issuer, User receiver) {
 
-        Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
+		Collection<Friendship> friendships = getFriendships(player, issuer, receiver);
 
-        // why a collection can be null?
-        // in this case, a empty collection
-        // indicates a good case, but,
-        // is possible a a bad case
-        if (friendships == null) {
-            return true;
-        }
+		// why a collection can be null?
+		// in this case, a empty collection
+		// indicates a good case, but,
+		// is possible a a bad case
+		if (friendships == null) {
+			return true;
+		}
 
-        if (!friendships.isEmpty()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-friends");
-        }
+		if (!friendships.isEmpty()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.already-friends");
+		}
 
-        return !friendships.isEmpty();
+		return !friendships.isEmpty();
 
-    }
+	}
 
-    private Collection<Friendship> getFriendships(Player player, User issuer, User receiver) {
+	private Collection<Friendship> getFriendships(Player player, User issuer, User receiver) {
 
-        ObjectNode filter = objectMapper.createObjectNode();
-        filter.putArray("$or")
-                .add(
-                        objectMapper.createObjectNode()
-                                .put("issuer", issuer.getId())
-                                .put("receiver", receiver.getId())
-                )
-                .add(
-                        objectMapper.createObjectNode()
-                                .put("issuer", receiver.getId())
-                                .put("receiver", issuer.getId())
-                );
+		ObjectNode filter = objectMapper.createObjectNode();
+		filter.putArray("$or")
+			.add(
+				objectMapper.createObjectNode()
+					.put("issuer", issuer.getId())
+					.put("receiver", receiver.getId())
+			)
+			.add(
+				objectMapper.createObjectNode()
+					.put("issuer", receiver.getId())
+					.put("receiver", issuer.getId())
+			);
 
-        Collection<Friendship> friendships;
+		Collection<Friendship> friendships;
 
-        try {
-            friendships = friendshipQueryService.querySync(filter).getFoundModels();
-        } catch (Exception exception) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
-            Bukkit.getLogger().log(Level.SEVERE, "An error has appeared while querying friendships", exception);
-            return null;
-        }
+		try {
+			friendships = friendshipQueryService.querySync(filter).getFoundModels();
+		} catch (Exception exception) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+			Bukkit.getLogger().log(Level.SEVERE, "An error has appeared while querying friendships", exception);
+			return null;
+		}
 
-        return friendships;
+		return friendships;
 
-    }
+	}
 
 }

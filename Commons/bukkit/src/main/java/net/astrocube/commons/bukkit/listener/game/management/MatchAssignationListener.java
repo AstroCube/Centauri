@@ -11,22 +11,22 @@ import org.bukkit.event.Listener;
 
 public class MatchAssignationListener implements Listener {
 
-    private @Inject FindService<User> userFindService;
-    private @Inject InstanceNameProvider instanceNameProvider;
-    private @Inject CloudTeleport cloudTeleport;
+	private @Inject FindService<User> userFindService;
+	private @Inject InstanceNameProvider instanceNameProvider;
+	private @Inject CloudTeleport cloudTeleport;
 
-    @EventHandler
-    public void onMatchAssignation(MatchAssignationEvent event) {
+	@EventHandler
+	public void onMatchAssignation(MatchAssignationEvent event) {
 
-        if (instanceNameProvider.getName().equalsIgnoreCase(event.getAssignation().getServer())) {
-            userFindService.find(event.getAssignation().getUser()).callback(userResponse -> {
-                if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
-                    // TODO: Send message in order to fail pairing
-                }
-                cloudTeleport.teleportToActual(userResponse.getResponse().get().getUsername());
-            });
-        }
+		if (instanceNameProvider.getName().equalsIgnoreCase(event.getAssignation().getServer())) {
+			userFindService.find(event.getAssignation().getUser()).callback(userResponse -> {
+				if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
+					// TODO: Send message in order to fail pairing
+				}
+				cloudTeleport.teleportToActual(userResponse.getResponse().get().getUsername());
+			});
+		}
 
-    }
+	}
 
 }

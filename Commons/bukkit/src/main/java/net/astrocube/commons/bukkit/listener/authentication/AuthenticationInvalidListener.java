@@ -17,41 +17,41 @@ import java.util.logging.Level;
 
 public class AuthenticationInvalidListener implements Listener {
 
-    private @Inject CooldownKick cooldownKick;
-    private @Inject AuthenticationCooldown authenticationCooldown;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
-    private @Inject Plugin plugin;
+	private @Inject CooldownKick cooldownKick;
+	private @Inject AuthenticationCooldown authenticationCooldown;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject Plugin plugin;
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onInvalidAuthentication(AuthenticationInvalidEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onInvalidAuthentication(AuthenticationInvalidEvent event) {
 
-        findService.find(event.getPlayer().getDatabaseIdentifier()).callback(response -> {
-            try {
+		findService.find(event.getPlayer().getDatabaseIdentifier()).callback(response -> {
+			try {
 
-                if (!response.isSuccessful() || !response.getResponse().isPresent())
-                    throw new AuthorizeException("Could not find requested user");
+				if (!response.isSuccessful() || !response.getResponse().isPresent())
+					throw new AuthorizeException("Could not find requested user");
 
-                User user = response.getResponse().get();
+				User user = response.getResponse().get();
 
-                cooldownKick.addTry(user);
+				cooldownKick.addTry(user);
 
-                if (cooldownKick.getTries(user) > 2) {
-                    authenticationCooldown.setCooldownLock(user.getId());
-                    cooldownKick.checkAndKick(user, event.getPlayer());
-                    cooldownKick.clearTries(user);
-                }
+				if (cooldownKick.getTries(user) > 2) {
+					authenticationCooldown.setCooldownLock(user.getId());
+					cooldownKick.checkAndKick(user, event.getPlayer());
+					cooldownKick.clearTries(user);
+				}
 
-            } catch (AuthorizeException exception) {
-                plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
-                event.getPlayer().kickPlayer(
-                        messageHandler.get(event.getPlayer(), "authentication.unauthorized")
-                                .replace("%error%", exception.getMessage())
-                );
-            }
+			} catch (AuthorizeException exception) {
+				plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
+				event.getPlayer().kickPlayer(
+					messageHandler.get(event.getPlayer(), "authentication.unauthorized")
+						.replace("%error%", exception.getMessage())
+				);
+			}
 
-        });
+		});
 
 
-    }
+	}
 }

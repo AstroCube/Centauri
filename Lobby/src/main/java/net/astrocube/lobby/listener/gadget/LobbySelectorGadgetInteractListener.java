@@ -9,15 +9,15 @@ import org.bukkit.event.block.Action;
 
 public class LobbySelectorGadgetInteractListener implements Listener {
 
-    private @Inject LobbySelectorDisplay lobbySelectorDisplay;
+	private @Inject LobbySelectorDisplay lobbySelectorDisplay;
 
-    @EventHandler
-    public void onGameGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equalsIgnoreCase("lobby_selector") &&
-                        (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            lobbySelectorDisplay.openDisplay(event.getPlayer(), 1);
-        }
-    }
+	@EventHandler
+	public void onGameGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equalsIgnoreCase("lobby_selector") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			lobbySelectorDisplay.openDisplay(event.getPlayer(), 1);
+		}
+	}
 }

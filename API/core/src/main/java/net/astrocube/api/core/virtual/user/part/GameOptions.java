@@ -4,77 +4,77 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public interface GameOptions {
 
-    @JsonProperty("adminChat")
-    AdminChat getAdminChatSettings();
+	@JsonProperty("adminChat")
+	AdminChat getAdminChatSettings();
 
-    @JsonProperty("general")
-    General getGeneralSettings();
+	@JsonProperty("general")
+	General getGeneralSettings();
 
-    @JsonProperty("forum")
-    Forum getForumSettings();
+	@JsonProperty("forum")
+	Forum getForumSettings();
 
-    interface AdminChat {
+	interface AdminChat {
 
-        boolean isActive();
+		boolean isActive();
 
-        void setActive(boolean active);
+		void setActive(boolean active);
 
-        @JsonProperty("logs")
-        boolean isReadingLogs();
+		@JsonProperty("logs")
+		boolean isReadingLogs();
 
-        @JsonProperty("logs")
-        void setReadingLogs(boolean active);
+		@JsonProperty("logs")
+		void setReadingLogs(boolean active);
 
-        @JsonProperty("punishments")
-        boolean isReadingPunishments();
+		@JsonProperty("punishments")
+		boolean isReadingPunishments();
 
-        @JsonProperty("punishments")
-        void setReadingPunishments(boolean active);
+		@JsonProperty("punishments")
+		void setReadingPunishments(boolean active);
 
-    }
+	}
 
-    interface General {
+	interface General {
 
-        @JsonProperty("gifts")
-        boolean isReceivingGifts();
+		@JsonProperty("gifts")
+		boolean isReceivingGifts();
 
-        @JsonProperty("friends")
-        boolean isReceivingFriendRequests();
+		@JsonProperty("friends")
+		boolean isReceivingFriendRequests();
 
-        @JsonProperty("parties")
-        boolean isReceivingParties();
+		@JsonProperty("parties")
+		boolean isReceivingParties();
 
-        @JsonProperty("status")
-        boolean isHidingStatus();
+		@JsonProperty("status")
+		boolean isHidingStatus();
 
-        @JsonProperty("hiding")
-        boolean isHidingPlayers();
+		@JsonProperty("hiding")
+		boolean isHidingPlayers();
 
-        void setHidingPlayers(boolean hidingPlayers);
+		void setHidingPlayers(boolean hidingPlayers);
 
-        HideType getHideType();
+		HideType getHideType();
 
-        void setHideType(HideType hideType);
+		void setHideType(HideType hideType);
 
-        enum HideType {
-            @JsonProperty("Alone")
-            ALONE,
-            @JsonProperty("Friendless")
-            FRIENDLESS,
-            @JsonProperty("Default")
-            DEFAULT
-        }
+		enum HideType {
+			@JsonProperty("Alone")
+			ALONE,
+			@JsonProperty("Friendless")
+			FRIENDLESS,
+			@JsonProperty("Default")
+			DEFAULT
+		}
 
-    }
+	}
 
-    interface Forum {
+	interface Forum {
 
-        @JsonProperty("subscribe")
-        boolean isReceivingSubscriptionAlerts();
+		@JsonProperty("subscribe")
+		boolean isReceivingSubscriptionAlerts();
 
-        @JsonProperty("quoteAlert")
-        boolean isReceivingQuoteAlerts();
+		@JsonProperty("quoteAlert")
+		boolean isReceivingQuoteAlerts();
 
-    }
+	}
 
 }

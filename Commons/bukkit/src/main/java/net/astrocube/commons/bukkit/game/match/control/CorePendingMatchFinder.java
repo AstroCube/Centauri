@@ -21,37 +21,37 @@ import java.util.stream.Collectors;
 @Singleton
 public class CorePendingMatchFinder implements PendingMatchFinder {
 
-    private final JedisPool jedisPool;
-    private final ObjectMapper mapper;
-    private final Plugin plugin;
+	private final JedisPool jedisPool;
+	private final ObjectMapper mapper;
+	private final Plugin plugin;
 
-    @Inject
-    public CorePendingMatchFinder(Redis redis, ObjectMapper mapper, Plugin plugin) {
-        this.jedisPool = redis.getRawConnection();
-        this.mapper = mapper;
-        this.plugin = plugin;
-    }
+	@Inject
+	public CorePendingMatchFinder(Redis redis, ObjectMapper mapper, Plugin plugin) {
+		this.jedisPool = redis.getRawConnection();
+		this.mapper = mapper;
+		this.plugin = plugin;
+	}
 
-    @Override
-    public Set<MatchmakingRequest> getPendingMatches(GameMode gameMode, SubGameMode subGameMode) {
-        try (Jedis jedis = jedisPool.getResource()) {
-            return jedis.keys("matchmaking:*")
-                    .stream()
-                    .map(jedis::get)
-                    .map(key -> {
-                        try {
-                            return mapper.readValue(key, MatchmakingRequest.class);
-                        } catch (IOException e) {
-                            plugin.getLogger().log(Level.SEVERE, "Error deserializing matchmaking", e);
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
-                    .filter(request ->
-                            request.getGameMode().equalsIgnoreCase(gameMode.getId()) &&
-                                    request.getSubGameMode().equalsIgnoreCase(subGameMode.getId())
-                    ).collect(Collectors.toSet());
-        }
-    }
+	@Override
+	public Set<MatchmakingRequest> getPendingMatches(GameMode gameMode, SubGameMode subGameMode) {
+		try (Jedis jedis = jedisPool.getResource()) {
+			return jedis.keys("matchmaking:*")
+				.stream()
+				.map(jedis::get)
+				.map(key -> {
+					try {
+						return mapper.readValue(key, MatchmakingRequest.class);
+					} catch (IOException e) {
+						plugin.getLogger().log(Level.SEVERE, "Error deserializing matchmaking", e);
+						return null;
+					}
+				})
+				.filter(Objects::nonNull)
+				.filter(request ->
+					request.getGameMode().equalsIgnoreCase(gameMode.getId()) &&
+						request.getSubGameMode().equalsIgnoreCase(subGameMode.getId())
+				).collect(Collectors.toSet());
+		}
+	}
 
 }

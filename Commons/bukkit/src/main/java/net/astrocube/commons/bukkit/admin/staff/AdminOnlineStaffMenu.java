@@ -18,59 +18,59 @@ import java.util.function.Consumer;
 
 public class AdminOnlineStaffMenu {
 
-    private @Inject OnlineStaffProvider onlineStaffProvider;
-    private @Inject MessageHandler playerMessageHandler;
-    private @Inject ShapedMenuGenerator shapedMenuGenerator;
-    private @Inject AdminPanelMenu adminPanelMenu;
-    private @Inject AdminOnlineGroupMenu adminOnlineGroupMenu;
+	private @Inject OnlineStaffProvider onlineStaffProvider;
+	private @Inject MessageHandler playerMessageHandler;
+	private @Inject ShapedMenuGenerator shapedMenuGenerator;
+	private @Inject AdminPanelMenu adminPanelMenu;
+	private @Inject AdminOnlineGroupMenu adminOnlineGroupMenu;
 
-    public Inventory createOnlineStaffMenu(Player player) throws Exception {
+	public Inventory createOnlineStaffMenu(Player player) throws Exception {
 
-        return shapedMenuGenerator.generate(
-                player,
-                playerMessageHandler.get(player, "admin-panel.online-staff.title"),
-                (p) -> p.openInventory(adminPanelMenu.createAdminPanel(player)),
-                getCategories(player)
-        );
+		return shapedMenuGenerator.generate(
+			player,
+			playerMessageHandler.get(player, "admin-panel.online-staff.title"),
+			(p) -> p.openInventory(adminPanelMenu.createAdminPanel(player)),
+			getCategories(player)
+		);
 
-    }
+	}
 
-    private Set<ShapedMenuGenerator.BaseClickable> getCategories(Player player) throws Exception {
+	private Set<ShapedMenuGenerator.BaseClickable> getCategories(Player player) throws Exception {
 
-        Set<ShapedMenuGenerator.BaseClickable> clickables = new HashSet<>();
+		Set<ShapedMenuGenerator.BaseClickable> clickables = new HashSet<>();
 
-        for (Group group : onlineStaffProvider.getGroups()) {
+		for (Group group : onlineStaffProvider.getGroups()) {
 
-            ItemStack stack = new ItemStack(Material.PAPER);
-            ItemMeta meta = stack.getItemMeta();
+			ItemStack stack = new ItemStack(Material.PAPER);
+			ItemMeta meta = stack.getItemMeta();
 
-            meta.setDisplayName(playerMessageHandler.get(player, "groups." + group.getId() + ".name"));
-            meta.setLore(playerMessageHandler.getMany(player, "admin-panel.online-staff.category"));
+			meta.setDisplayName(playerMessageHandler.get(player, "groups." + group.getId() + ".name"));
+			meta.setLore(playerMessageHandler.getMany(player, "admin-panel.online-staff.category"));
 
-            stack.setItemMeta(meta);
+			stack.setItemMeta(meta);
 
-            clickables.add(new ShapedMenuGenerator.BaseClickable() {
-                @Override
-                public Consumer<Player> getClick() {
-                    return (p) -> {
-                        try {
-                            p.openInventory(adminOnlineGroupMenu.createOnlineStaffMenu(player, group.getId()));
-                        } catch (Exception e) {
-                            playerMessageHandler.send(player, "admin-panel.online-staff.error");
-                            p.closeInventory();
-                        }
-                    };
-                }
+			clickables.add(new ShapedMenuGenerator.BaseClickable() {
+				@Override
+				public Consumer<Player> getClick() {
+					return (p) -> {
+						try {
+							p.openInventory(adminOnlineGroupMenu.createOnlineStaffMenu(player, group.getId()));
+						} catch (Exception e) {
+							playerMessageHandler.send(player, "admin-panel.online-staff.error");
+							p.closeInventory();
+						}
+					};
+				}
 
-                    @Override
-                    public ItemStack getStack () {
-                        return stack;
-                    }
-            });
-        }
+				@Override
+				public ItemStack getStack() {
+					return stack;
+				}
+			});
+		}
 
-        return clickables;
+		return clickables;
 
-    }
+	}
 
 }

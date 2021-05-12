@@ -12,26 +12,26 @@ import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject GameModePairListener gameModePairListener;
-    private @Inject GameTimerOutListener gameTimerOutListener;
-    private @Inject GameServerJoinListener gameServerJoinListener;
-    private @Inject GameChatListener gameChatListener;
-    private @Inject GameServerLeaveListener gameServerLeaveListener;
-    private @Inject LobbyAdminInteractListener lobbyAdminInteractListener;
+	private @Inject GameModePairListener gameModePairListener;
+	private @Inject GameTimerOutListener gameTimerOutListener;
+	private @Inject GameServerJoinListener gameServerJoinListener;
+	private @Inject GameChatListener gameChatListener;
+	private @Inject GameServerLeaveListener gameServerLeaveListener;
+	private @Inject LobbyAdminInteractListener lobbyAdminInteractListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                lobbyAdminInteractListener,
-                gameModePairListener,
-                gameTimerOutListener,
-                gameServerJoinListener,
-                gameServerLeaveListener,
-                gameChatListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			lobbyAdminInteractListener,
+			gameModePairListener,
+			gameTimerOutListener,
+			gameServerJoinListener,
+			gameServerLeaveListener,
+			gameChatListener
+		);
+	}
 
 }

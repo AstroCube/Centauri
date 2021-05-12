@@ -9,36 +9,36 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class HideGadgetStack {
 
-    public static ItemStack get(MessageHandler provider, Player player, boolean active) {
+	public static ItemStack get(MessageHandler provider, Player player, boolean active) {
 
-        ItemStack hidingMenuBase;
-        if (active) {
-            hidingMenuBase = NBTUtils.addString(
-                    new ItemStack(Material.GLOWSTONE_DUST, 1),
-                    "actionable",
-                    "hide_gadget"
-            );
-        } else {
-            hidingMenuBase = NBTUtils.addString(
-                    new ItemStack(Material.REDSTONE, 1),
-                    "actionable",
-                    "hide_gadget"
-            );
-        }
+		ItemStack hidingMenuBase;
+		if (active) {
+			hidingMenuBase = NBTUtils.addString(
+				new ItemStack(Material.GLOWSTONE_DUST, 1),
+				"actionable",
+				"hide_gadget"
+			);
+		} else {
+			hidingMenuBase = NBTUtils.addString(
+				new ItemStack(Material.REDSTONE, 1),
+				"actionable",
+				"hide_gadget"
+			);
+		}
 
-        ItemMeta hidingMenuMeta = hidingMenuBase.getItemMeta();
-        if (active) {
-            hidingMenuMeta.setDisplayName(
-                    provider.get(player, "lobby.hiding.active-gadget")
-            );
-        } else {
-            hidingMenuMeta.setDisplayName(
-                    provider.get(player, "lobby.hiding.disabled-gadget")
-            );
-        }
+		ItemMeta hidingMenuMeta = hidingMenuBase.getItemMeta();
+		if (active) {
+			hidingMenuMeta.setDisplayName(
+				provider.get(player, "lobby.hiding.active-gadget")
+			);
+		} else {
+			hidingMenuMeta.setDisplayName(
+				provider.get(player, "lobby.hiding.disabled-gadget")
+			);
+		}
 
-        hidingMenuMeta.setLore(provider.getMany(player, "lobby.hiding.gadget-lore"));
-        hidingMenuBase.setItemMeta(hidingMenuMeta);
-        return hidingMenuBase;
-    }
+		hidingMenuMeta.setLore(provider.getMany(player, "lobby.hiding.gadget-lore"));
+		hidingMenuBase.setItemMeta(hidingMenuMeta);
+		return hidingMenuBase;
+	}
 }

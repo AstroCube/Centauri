@@ -9,26 +9,26 @@ import java.util.Set;
 
 public interface PaginateResult<Complete extends Model> extends Message {
 
-    Set<Complete> getData();
+	Set<Complete> getData();
 
-    Pagination getPagination();
+	Pagination getPagination();
 
-    interface Pagination extends Document {
+	interface Pagination extends Document {
 
-        int perPage();
+		int perPage();
 
-        boolean hasPrevPage();
+		boolean hasPrevPage();
 
-        boolean hasNextPage();
+		boolean hasNextPage();
 
-        Optional<Integer> prevPage();
+		Optional<Integer> prevPage();
 
-        Optional<Integer> nextPage();
+		Optional<Integer> nextPage();
 
-        Optional<Integer> page();
+		Optional<Integer> page();
 
-        Optional<Integer> totalPages();
+		Optional<Integer> totalPages();
 
-    }
+	}
 
 }

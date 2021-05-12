@@ -7,10 +7,10 @@ import org.bukkit.inventory.ItemStack;
 
 public interface StaffOptionCompound {
 
-    ItemStack getEnableItem(Player player);
+	ItemStack getEnableItem(Player player);
 
-    ItemStack getDisableItem(Player player);
+	ItemStack getDisableItem(Player player);
 
-    AsyncResponse<User> updateOption(User user);
+	AsyncResponse<User> updateOption(User user);
 
 }

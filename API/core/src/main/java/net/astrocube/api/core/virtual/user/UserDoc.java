@@ -12,92 +12,95 @@ import java.util.Set;
 
 public interface UserDoc {
 
-    interface Partial extends PartialModel {}
+	interface Partial extends PartialModel {
+	}
 
-    
-    interface Login extends Partial {
 
-        String getUsername();
+	interface Login extends Partial {
 
-        String getPassword();
+		String getUsername();
 
-    }
+		String getPassword();
 
-    
-    interface UserGroup {
+	}
 
-        Group getGroup();
 
-        String getJoinedAt();
+	interface UserGroup {
 
-        String getRoleComment();
+		Group getGroup();
 
-    }
+		String getJoinedAt();
 
-    
-    interface Identity {
+		String getRoleComment();
 
-        String getDisplay();
+	}
 
-        String getMail();
 
-        Set<UserGroup> getGroups();
+	interface Identity {
 
-        @Nullable String getSkin();
+		String getDisplay();
 
-        boolean isVerified();
+		String getMail();
 
-        Session getSession();
+		Set<UserGroup> getGroups();
 
-        int getExperience();
+		@Nullable
+		String getSkin();
 
-        Set<Address> getAddresses();
+		boolean isVerified();
 
-        String getLanguage();
+		Session getSession();
 
-        PublicInformation getPublicInfo();
+		int getExperience();
 
-        GameOptions getSettings();
+		Set<Address> getAddresses();
 
-    }
+		String getLanguage();
 
-    
-    interface Session {
+		PublicInformation getPublicInfo();
 
-        String getLastSeen();
+		GameOptions getSettings();
 
-        boolean isOnline();
+	}
 
-        String getLastGame();
 
-        String getLastLobby();
+	interface Session {
 
-        @JsonProperty("authorize")
-        Authorization getAuthorizeMethod();
+		String getLastSeen();
 
-        @JsonProperty("authorize")
-        void setAuthorizeMethod(Authorization authorization);
+		boolean isOnline();
 
-        enum Authorization {
-            @JsonProperty("Password")
-            PASSWORD,
-            @JsonProperty("Premium")
-            PREMIUM
-        }
+		String getLastGame();
 
-    }
+		String getLastLobby();
 
-    interface Address {
+		@JsonProperty("authorize")
+		Authorization getAuthorizeMethod();
 
-        String getCountry();
+		@JsonProperty("authorize")
+		void setAuthorizeMethod(Authorization authorization);
 
-        String getNumber();
+		enum Authorization {
+			@JsonProperty("Password")
+			PASSWORD,
+			@JsonProperty("Premium")
+			PREMIUM
+		}
 
-        boolean isPrimary();
+	}
 
-    }
+	interface Address {
 
-    
-    interface Complete extends Model.Stamped, Login, Identity {}
+		String getCountry();
+
+		String getNumber();
+
+		boolean isPrimary();
+
+	}
+
+
+	interface Complete extends Model.Stamped, Login, Identity {
+	}
 
 }

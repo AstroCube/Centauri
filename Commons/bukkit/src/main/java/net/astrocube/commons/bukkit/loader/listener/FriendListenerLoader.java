@@ -13,19 +13,19 @@ import org.bukkit.plugin.Plugin;
 
 public class FriendListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
-    private @Inject FriendAddListener friendAddListener;
-    private @Inject FriendExpireListener friendExpireListener;
-    private @Inject FriendAcceptListener friendAcceptListener;
+	private @Inject Plugin plugin;
+	private @Inject FriendAddListener friendAddListener;
+	private @Inject FriendExpireListener friendExpireListener;
+	private @Inject FriendAcceptListener friendAcceptListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                friendAddListener,
-                friendAcceptListener,
-                friendExpireListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			friendAddListener,
+			friendAcceptListener,
+			friendExpireListener
+		);
+	}
 
 }

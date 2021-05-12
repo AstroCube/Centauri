@@ -17,43 +17,43 @@ import java.util.Optional;
 @Singleton
 public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
 
-    private @Inject MatchService matchService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MatchService matchService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ActualMatchCache actualMatchCache;
 
-    @Override
-    public void switchPrivatization(Player player) throws Exception {
+	@Override
+	public void switchPrivatization(Player player) throws Exception {
 
-        Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-        if (!matchOptional.isPresent()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
-            return;
-        }
+		if (!matchOptional.isPresent()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
+			return;
+		}
 
-        Match match = matchOptional.get();
+		Match match = matchOptional.get();
 
-        matchService.privatizeMatch(player.getDatabaseIdentifier(), match.getId());
+		matchService.privatizeMatch(player.getDatabaseIdentifier(), match.getId());
 
-        String translation = !match.isPrivate() ?
-                "game.admin.lobby.privatizing.enabled" : "game.admin.lobby.privatizing.disabled";
+		String translation = !match.isPrivate() ?
+			"game.admin.lobby.privatizing.enabled" : "game.admin.lobby.privatizing.disabled";
 
-        MatchParticipantsProvider.getWaitingIds(match).forEach(
-                p -> {
+		MatchParticipantsProvider.getWaitingIds(match).forEach(
+			p -> {
 
-                    Player recordPlayer = Bukkit.getPlayerByIdentifier(p);
+				Player recordPlayer = Bukkit.getPlayerByIdentifier(p);
 
-                    if (recordPlayer != null) {
-                        messageHandler.sendReplacingIn(
-                                recordPlayer, AlertModes.INFO, translation,
-                                "%player%", player.getName()
-                        );
-                    }
+				if (recordPlayer != null) {
+					messageHandler.sendReplacingIn(
+						recordPlayer, AlertModes.INFO, translation,
+						"%player%", player.getName()
+					);
+				}
 
-                    player.closeInventory();
-                }
-        );
+				player.closeInventory();
+			}
+		);
 
-    }
+	}
 
 }

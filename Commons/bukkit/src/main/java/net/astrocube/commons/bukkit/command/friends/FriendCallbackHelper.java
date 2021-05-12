@@ -20,54 +20,54 @@ import java.util.function.BiConsumer;
 @Singleton
 public class FriendCallbackHelper {
 
-    private @Inject FindService<User> userFindService;
-    private @Inject QueryService<User> userQueryService;
-    private @Inject ObjectMapper objectMapper;
+	private @Inject FindService<User> userFindService;
+	private @Inject QueryService<User> userQueryService;
+	private @Inject ObjectMapper objectMapper;
 
-    public void findUsers(Player player, OfflinePlayer target, BiConsumer<User, User> callback) {
+	public void findUsers(Player player, OfflinePlayer target, BiConsumer<User, User> callback) {
 
-        userFindService.find(player.getDatabaseIdentifier())
-                .callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
-                        user -> {
+		userFindService.find(player.getDatabaseIdentifier())
+			.callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
+				user -> {
 
-                            ObjectNode filter = objectMapper.createObjectNode()
-                                    .put("username", target.getName());
+					ObjectNode filter = objectMapper.createObjectNode()
+						.put("username", target.getName());
 
-                            userQueryService.query(filter).callback(Callbacks.applyCommonErrorHandler("Find userdata of " + target.getName(), result -> {
+					userQueryService.query(filter).callback(Callbacks.applyCommonErrorHandler("Find userdata of " + target.getName(), result -> {
 
-                                User targetUser = result.getFoundModels().iterator().next();
-                                callback.accept(user, targetUser);
+						User targetUser = result.getFoundModels().iterator().next();
+						callback.accept(user, targetUser);
 
-                            }));
+					}));
 
-                        }
-                ));
+				}
+			));
 
-    }
+	}
 
 
-    public void findUserByName(String player, BiConsumer<Exception, Optional<User>> callback) {
+	public void findUserByName(String player, BiConsumer<Exception, Optional<User>> callback) {
 
-        ObjectNode filter = objectMapper.createObjectNode()
-                .put("username", player);
+		ObjectNode filter = objectMapper.createObjectNode()
+			.put("username", player);
 
-        userQueryService.query(filter).callback(response -> {
+		userQueryService.query(filter).callback(response -> {
 
-            if (!response.isSuccessful()) {
-                callback.accept(response.getThrownException().get(), null);
-            }
+			if (!response.isSuccessful()) {
+				callback.accept(response.getThrownException().get(), null);
+			}
 
-            response.ifSuccessful(user ->
-                    callback.accept(
-                            null,
-                            user.getFoundModels().stream()
-                                    .filter(p -> p.getUsername().equalsIgnoreCase(player))
-                                    .findAny()
-                    )
-            );
+			response.ifSuccessful(user ->
+				callback.accept(
+					null,
+					user.getFoundModels().stream()
+						.filter(p -> p.getUsername().equalsIgnoreCase(player))
+						.findAny()
+				)
+			);
 
-        });
+		});
 
-    }
+	}
 
 }

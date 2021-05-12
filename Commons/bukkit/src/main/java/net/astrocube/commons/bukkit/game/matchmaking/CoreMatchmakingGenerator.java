@@ -16,33 +16,33 @@ import java.util.Set;
 @Singleton
 public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
-    private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
+	private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
 
-    private @Inject ObjectMapper mapper;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public void pairMatch(Player player, GameMode mode, SubGameMode subMode) throws Exception {
+	@Override
+	public void pairMatch(Player player, GameMode mode, SubGameMode subMode) throws Exception {
 
-        MatchAssignable assignable = new MatchAssignable() {
-            @Override
-            public String getResponsible() {
-                return player.getDatabaseIdentifier();
-            }
+		MatchAssignable assignable = new MatchAssignable() {
+			@Override
+			public String getResponsible() {
+				return player.getDatabaseIdentifier();
+			}
 
-            @Override
-            public Set<String> getInvolved() {
-                return new HashSet<>();  // TODO: Get party
-            }
-        };
+			@Override
+			public Set<String> getInvolved() {
+				return new HashSet<>();  // TODO: Get party
+			}
+		};
 
-        matchmakingRegistryHandler.generateRequest(
-                assignable,
-                mode.getId(),
-                subMode.getId(),
-                "",
-                mapper.createObjectNode()
-        );
+		matchmakingRegistryHandler.generateRequest(
+			assignable,
+			mode.getId(),
+			subMode.getId(),
+			"",
+			mapper.createObjectNode()
+		);
 
-    }
+	}
 
 }

@@ -16,55 +16,55 @@ import java.util.stream.Collectors;
 
 public class PunishmentReasonChooserMenu {
 
-    private @Inject PunishClickableGenerator punishClickableGenerator;
-    private @Inject PresetPunishmentCache presetPunishmentCache;
-    private @Inject PunishmentChooserMenu punishmentChooserMenu;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ShapedMenuGenerator shapedMenuGenerator;
+	private @Inject PunishClickableGenerator punishClickableGenerator;
+	private @Inject PresetPunishmentCache presetPunishmentCache;
+	private @Inject PunishmentChooserMenu punishmentChooserMenu;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ShapedMenuGenerator shapedMenuGenerator;
 
-    public Inventory createFilter(Player player, PunishmentBuilder builder, int page) {
-        return createChooser(
-                player,
-                builder,
-                presetPunishmentCache.getPunishments(builder.getType()),
-                "",
-                false,
-                page
-        );
-    }
+	public Inventory createFilter(Player player, PunishmentBuilder builder, int page) {
+		return createChooser(
+			player,
+			builder,
+			presetPunishmentCache.getPunishments(builder.getType()),
+			"",
+			false,
+			page
+		);
+	}
 
-    public Inventory createSearch(Player player, PunishmentBuilder builder, String search, int page) {
-        return createChooser(
-                player,
-                builder,
-                presetPunishmentCache.getPunishments()
-                        .stream()
-                        .filter(p ->
-                                messageHandler.get(
-                                        player,
-                                        "punish-menu.reasons." + p.getId() + ".title"
-                                ).contains(search))
-                        .filter(p -> player.hasPermission("commons.staff.punish.ban") && p.getType() == PunishmentDoc.Identity.Type.BAN)
-                        .filter(p -> player.hasPermission("commons.staff.punish.kick") && p.getType() == PunishmentDoc.Identity.Type.KICK)
-                        .filter(p -> player.hasPermission("commons.staff.punish.warn") && p.getType() == PunishmentDoc.Identity.Type.WARN)
-                        .collect(Collectors.toSet()),
-                search,
-                true,
-                page
-        );
-    }
+	public Inventory createSearch(Player player, PunishmentBuilder builder, String search, int page) {
+		return createChooser(
+			player,
+			builder,
+			presetPunishmentCache.getPunishments()
+				.stream()
+				.filter(p ->
+					messageHandler.get(
+						player,
+						"punish-menu.reasons." + p.getId() + ".title"
+					).contains(search))
+				.filter(p -> player.hasPermission("commons.staff.punish.ban") && p.getType() == PunishmentDoc.Identity.Type.BAN)
+				.filter(p -> player.hasPermission("commons.staff.punish.kick") && p.getType() == PunishmentDoc.Identity.Type.KICK)
+				.filter(p -> player.hasPermission("commons.staff.punish.warn") && p.getType() == PunishmentDoc.Identity.Type.WARN)
+				.collect(Collectors.toSet()),
+			search,
+			true,
+			page
+		);
+	}
 
-    private Inventory createChooser(Player player, PunishmentBuilder builder, Set<PresetPunishment> preset, String criteria, boolean search, int page) {
-        return shapedMenuGenerator.generate(
-                player,
-                messageHandler.get(player, "punishment-expiration-menu.title"),
-                p -> p.openInventory(punishmentChooserMenu.createPunishmentChooserMenu(
-                        player,
-                        builder.getIssuer(),
-                        builder.getTarget()
-                )),
-                punishClickableGenerator.buildPunishReasons(player, builder, preset, criteria, search)
-        );
-    }
+	private Inventory createChooser(Player player, PunishmentBuilder builder, Set<PresetPunishment> preset, String criteria, boolean search, int page) {
+		return shapedMenuGenerator.generate(
+			player,
+			messageHandler.get(player, "punishment-expiration-menu.title"),
+			p -> p.openInventory(punishmentChooserMenu.createPunishmentChooserMenu(
+				player,
+				builder.getIssuer(),
+				builder.getTarget()
+			)),
+			punishClickableGenerator.buildPunishReasons(player, builder, preset, criteria, search)
+		);
+	}
 
 }

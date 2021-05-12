@@ -12,13 +12,14 @@ import java.io.IOException;
 
 public class PluginConfigurationHelper {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    public @Nullable Configuration get() {
-        try {
-            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(plugin.getDataFolder(), "config.yml"));
-        } catch (IOException e) {
-            return null;
-        }
-    }
+	public @Nullable
+	Configuration get() {
+		try {
+			return ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(plugin.getDataFolder(), "config.yml"));
+		} catch (IOException e) {
+			return null;
+		}
+	}
 }

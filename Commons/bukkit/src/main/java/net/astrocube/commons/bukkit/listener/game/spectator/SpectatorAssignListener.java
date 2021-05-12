@@ -21,46 +21,46 @@ import java.util.logging.Level;
 
 public class SpectatorAssignListener implements Listener {
 
-    private @Inject FindService<Match> findService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject MatchService matchService;
-    private @Inject Plugin plugin;
+	private @Inject FindService<Match> findService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MatchService matchService;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onSpectatorAssign(SpectatorAssignEvent event) {
-        findService.find(event.getMatch()).callback(response -> {
-            try {
+	@EventHandler
+	public void onSpectatorAssign(SpectatorAssignEvent event) {
+		findService.find(event.getMatch()).callback(response -> {
+			try {
 
-                if (!response.isSuccessful() || !response.getResponse().isPresent()) {
-                    throw new GameControlException("Can not retrieve from backend the match");
-                }
+				if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+					throw new GameControlException("Can not retrieve from backend the match");
+				}
 
-                Player player = event.getPlayer();
-                Match match = response.getResponse().get();
+				Player player = event.getPlayer();
+				Match match = response.getResponse().get();
 
-                matchService.assignSpectator(event.getPlayer().getDatabaseIdentifier(), event.getMatch(), true);
+				matchService.assignSpectator(event.getPlayer().getDatabaseIdentifier(), event.getMatch(), true);
 
-                if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
-                    matchService.disqualify(match.getId(), player.getDatabaseIdentifier());
-                }
+				if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+					matchService.disqualify(match.getId(), player.getDatabaseIdentifier());
+				}
 
-                Bukkit.getPluginManager().callEvent(
-                        new GameUserJoinEvent(
-                                event.getMatch(),
-                                player,
-                                UserMatchJoiner.Origin.SPECTATING
-                        )
-                );
+				Bukkit.getPluginManager().callEvent(
+					new GameUserJoinEvent(
+						event.getMatch(),
+						player,
+						UserMatchJoiner.Origin.SPECTATING
+					)
+				);
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Can not invalidate match.", e);
-                kickPlayer(event.getPlayer());
-            }
-        });
-    }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Can not invalidate match.", e);
+				kickPlayer(event.getPlayer());
+			}
+		});
+	}
 
-    private void kickPlayer(Player player) {
-        player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
-    }
+	private void kickPlayer(Player player) {
+		player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
+	}
 
 }

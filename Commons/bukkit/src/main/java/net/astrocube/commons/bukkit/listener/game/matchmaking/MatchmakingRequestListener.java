@@ -19,43 +19,43 @@ import java.util.Optional;
 
 public class MatchmakingRequestListener implements Listener {
 
-    private @Inject AvailableMatchProvider availableMatchProvider;
-    private @Inject MatchAssigner matchAssigner;
-    private @Inject IdealMatchSelector idealMatchSelector;
-    private @Inject Plugin plugin;
+	private @Inject AvailableMatchProvider availableMatchProvider;
+	private @Inject MatchAssigner matchAssigner;
+	private @Inject IdealMatchSelector idealMatchSelector;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onMatchmakingRequest(MatchmakingRequestEvent event) {
+	@EventHandler
+	public void onMatchmakingRequest(MatchmakingRequestEvent event) {
 
-        try {
+		try {
 
-            Optional<Match> match = idealMatchSelector.sortAvailableMatches(
-                    availableMatchProvider.getCriteriaAvailableMatches(event.getMatchmakingRequest())
-            );
+			Optional<Match> match = idealMatchSelector.sortAvailableMatches(
+				availableMatchProvider.getCriteriaAvailableMatches(event.getMatchmakingRequest())
+			);
 
-            if (match.isPresent()) {
-                matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
-            } else {
-                Bukkit.getScheduler().runTaskLater(plugin, () ->
-                        Bukkit.getPluginManager().callEvent(
-                                new MatchmakingTimeoutEvent(event.getMatchmakingRequest())), 20 * 30);
-            }
+			if (match.isPresent()) {
+				matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
+			} else {
+				Bukkit.getScheduler().runTaskLater(plugin, () ->
+					Bukkit.getPluginManager().callEvent(
+						new MatchmakingTimeoutEvent(event.getMatchmakingRequest())), 20 * 30);
+			}
 
-        } catch (Exception e) {
-            Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(
-                    new MatchmakingError() {
-                        @Override
-                        public MatchmakingRequest getRequest() {
-                            return event.getMatchmakingRequest();
-                        }
+		} catch (Exception e) {
+			Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(
+				new MatchmakingError() {
+					@Override
+					public MatchmakingRequest getRequest() {
+						return event.getMatchmakingRequest();
+					}
 
-                        @Override
-                        public String getReason() {
-                            return e.getMessage();
-                        }
-                    }
-            ));
-        }
-    }
+					@Override
+					public String getReason() {
+						return e.getMessage();
+					}
+				}
+			));
+		}
+	}
 
 }

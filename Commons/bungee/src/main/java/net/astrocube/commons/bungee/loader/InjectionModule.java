@@ -11,16 +11,16 @@ import net.astrocube.commons.core.virtual.VirtualModule;
 
 public class InjectionModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new ConfigurationModule());
-        install(new CommonsModule());
-        install(new CloudModule());
-        install(new PlayerModule());
-        install(new VirtualModule());
-        install(new LoaderModule());
-        install(new ServerModule());
-        install(new UserModule());
-    }
+	@Override
+	public void configure() {
+		install(new ConfigurationModule());
+		install(new CommonsModule());
+		install(new CloudModule());
+		install(new PlayerModule());
+		install(new VirtualModule());
+		install(new LoaderModule());
+		install(new ServerModule());
+		install(new UserModule());
+	}
 
 }

@@ -8,9 +8,9 @@ import java.util.UUID;
 @Singleton
 public class DummyNameProvider implements InstanceNameProvider {
 
-    @Override
-    public String getName() {
-        return UUID.randomUUID().toString();
-    }
+	@Override
+	public String getName() {
+		return UUID.randomUUID().toString();
+	}
 
 }

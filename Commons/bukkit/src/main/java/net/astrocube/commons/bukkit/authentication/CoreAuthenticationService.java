@@ -15,30 +15,30 @@ import net.astrocube.commons.core.http.CoreRequestOptions;
 @SuppressWarnings("UnstableApiUsage")
 public class CoreAuthenticationService implements AuthenticationService {
 
-    private @Inject HttpClient httpClient;
-    private @Inject ObjectMapper objectMapper;
+	private @Inject HttpClient httpClient;
+	private @Inject ObjectMapper objectMapper;
 
-    @Override
-    public void register(BasicAuthorization authorization) throws Exception {
-        httpClient.executeRequestSync(
-                "authentication/register-server",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        objectMapper.writeValueAsString(authorization)
-                )
-        );
-    }
+	@Override
+	public void register(BasicAuthorization authorization) throws Exception {
+		httpClient.executeRequestSync(
+			"authentication/register-server",
+			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				objectMapper.writeValueAsString(authorization)
+			)
+		);
+	}
 
-    @Override
-    public void login(BasicAuthorization authorization) throws Exception {
-        httpClient.executeRequestSync(
-                "authentication/login-server",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        objectMapper.writeValueAsString(authorization)
-                )
-        );
-    }
+	@Override
+	public void login(BasicAuthorization authorization) throws Exception {
+		httpClient.executeRequestSync(
+			"authentication/login-server",
+			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				objectMapper.writeValueAsString(authorization)
+			)
+		);
+	}
 }

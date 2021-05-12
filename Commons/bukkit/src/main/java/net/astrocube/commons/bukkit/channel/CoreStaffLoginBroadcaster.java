@@ -14,47 +14,47 @@ import org.bukkit.Sound;
 @Singleton
 public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
 
-    private @Inject FindService<User> findService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject DisplayMatcher displayMatcher;
+	private @Inject FindService<User> findService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject DisplayMatcher displayMatcher;
 
-    @Override
-    public void broadcastLogin(User session, boolean important, boolean connecting) {
+	@Override
+	public void broadcastLogin(User session, boolean important, boolean connecting) {
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            if (!player.hasPermission("commons.staff.chat")) {
-                return;
-            }
-            findService.find(player.getDatabaseIdentifier()).callback(userCallback ->
-                    userCallback.ifSuccessful(user -> {
+		Bukkit.getOnlinePlayers().forEach(player -> {
+			if (!player.hasPermission("commons.staff.chat")) {
+				return;
+			}
+			findService.find(player.getDatabaseIdentifier()).callback(userCallback ->
+				userCallback.ifSuccessful(user -> {
 
-                        String prefix = displayMatcher.getDisplay(player, session).getPrefix()
-                                + ChatColor.WHITE + " " + session.getDisplay();
+					String prefix = displayMatcher.getDisplay(player, session).getPrefix()
+						+ ChatColor.WHITE + " " + session.getDisplay();
 
-                        if (user.getSettings().getAdminChatSettings().isReadingLogs()) {
+					if (user.getSettings().getAdminChatSettings().isReadingLogs()) {
 
-                            messageHandler.sendReplacing(
-                                    player, connecting ? "channel.admin.login" : "channel.admin.logout",
-                                    "%prefix%", messageHandler.get(player, important ? "channel.admin.important" : "channel.admin.prefix"),
-                                    "%player%", prefix
-                            );
+						messageHandler.sendReplacing(
+							player, connecting ? "channel.admin.login" : "channel.admin.logout",
+							"%prefix%", messageHandler.get(player, important ? "channel.admin.important" : "channel.admin.prefix"),
+							"%player%", prefix
+						);
 
-                        } else if (important) {
+					} else if (important) {
 
-                            messageHandler.sendReplacing(
-                                    player, connecting ? "channel.admin.login" : "channel.admin.logout",
-                                    "%prefix%", messageHandler.get(player, "channel.admin.important"),
-                                    "%player%", prefix
-                            );
+						messageHandler.sendReplacing(
+							player, connecting ? "channel.admin.login" : "channel.admin.logout",
+							"%prefix%", messageHandler.get(player, "channel.admin.important"),
+							"%player%", prefix
+						);
 
-                            player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 2f);
+						player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 2f);
 
-                        }
+					}
 
-                    })
-            );
-        });
+				})
+			);
+		});
 
-    }
+	}
 
 }

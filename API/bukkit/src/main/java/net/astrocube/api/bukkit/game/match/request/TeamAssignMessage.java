@@ -10,9 +10,9 @@ import java.util.Set;
 @MessageDefaults.ChannelName("gc-assign-teams")
 public interface TeamAssignMessage extends MatchActionMessage {
 
-    /**
-     * @return {@link Match} teams to register at the match.
-     */
-    Set<MatchDoc.Team> getTeams();
+	/**
+	 * @return {@link Match} teams to register at the match.
+	 */
+	Set<MatchDoc.Team> getTeams();
 
 }

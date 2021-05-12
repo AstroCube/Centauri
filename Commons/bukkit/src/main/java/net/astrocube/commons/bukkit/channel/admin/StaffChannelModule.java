@@ -8,10 +8,10 @@ import net.astrocube.api.bukkit.channel.admin.StaffMessageManager;
 
 public class StaffChannelModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        this.bind(StaffMessageManager.class).to(CoreStaffMessageManager.class).in(Scopes.SINGLETON);
-        this.bind(StaffMessageDelivery.class).to(CoreStaffMessageDelivery.class).in(Scopes.SINGLETON);
-        this.bind(StaffMentionParser.class).to(CoreStaffMentionParser.class).in(Scopes.SINGLETON);
-    }
+	@Override
+	protected void configure() {
+		this.bind(StaffMessageManager.class).to(CoreStaffMessageManager.class).in(Scopes.SINGLETON);
+		this.bind(StaffMessageDelivery.class).to(CoreStaffMessageDelivery.class).in(Scopes.SINGLETON);
+		this.bind(StaffMentionParser.class).to(CoreStaffMentionParser.class).in(Scopes.SINGLETON);
+	}
 }

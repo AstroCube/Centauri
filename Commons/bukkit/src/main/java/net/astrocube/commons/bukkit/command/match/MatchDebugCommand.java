@@ -19,30 +19,32 @@ import java.util.logging.Level;
 
 public class MatchDebugCommand implements CommandClass {
 
-    private @Inject @Named("sandbox") MatchmakingGenerator matchmakingGenerator;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject
+	@Named("sandbox")
+	MatchmakingGenerator matchmakingGenerator;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Command(names = "sandbox", permission = "")
-    public boolean execute(@Sender Player player) {
+	@Command(names = "sandbox", permission = "")
+	public boolean execute(@Sender Player player) {
 
-        try {
+		try {
 
-            Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 
-            if (match.isPresent()) {
-                messageHandler.sendIn(player, AlertModes.ERROR,"game.matchmaking.already");
-            }
+			if (match.isPresent()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.already");
+			}
 
-            matchmakingGenerator.pairMatch(player);
+			matchmakingGenerator.pairMatch(player);
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error pairing user with a sandbox match.", e);
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.error");
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error pairing user with a sandbox match.", e);
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.error");
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 }

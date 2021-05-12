@@ -6,13 +6,13 @@ import net.astrocube.api.core.virtual.gamemode.GameMode;
 
 @Singleton
 public class DummyModeConnectedProvider implements CloudModeConnectedProvider {
-    @Override
-    public int getGlobalOnline(GameMode gameMode) {
-        return 0;
-    }
+	@Override
+	public int getGlobalOnline(GameMode gameMode) {
+		return 0;
+	}
 
-    @Override
-    public int getGroupOnline(String group) {
-        return 0;
-    }
+	@Override
+	public int getGroupOnline(String group) {
+		return 0;
+	}
 }

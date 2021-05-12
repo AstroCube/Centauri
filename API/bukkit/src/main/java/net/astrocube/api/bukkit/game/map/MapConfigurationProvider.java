@@ -8,13 +8,13 @@ import java.io.IOException;
 
 public interface MapConfigurationProvider {
 
-    /**
-     * Parse map configuration processed for a certain match.
-     * @param map to be processed
-     * @param type of the desired {@link GameMode} configuration which extends {@link GameMapConfiguration}.
-     * @return parsed configuration
-     * @throws JsonProcessingException
-     */
-    <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws IOException;
+	/**
+	 * Parse map configuration processed for a certain match.
+	 * @param map  to be processed
+	 * @param type of the desired {@link GameMode} configuration which extends {@link GameMapConfiguration}.
+	 * @return parsed configuration
+	 * @throws JsonProcessingException
+	 */
+	<T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws IOException;
 
 }

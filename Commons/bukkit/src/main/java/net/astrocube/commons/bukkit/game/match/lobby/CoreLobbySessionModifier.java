@@ -16,50 +16,50 @@ import java.util.Set;
 @Singleton
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
-        player.teleport(LobbyLocationParser.getLobby());
-        player.setGameMode(org.bukkit.GameMode.ADVENTURE);
-        player.setHealth(20);
-        player.setFoodLevel(20);
+	@Override
+	public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
+		player.teleport(LobbyLocationParser.getLobby());
+		player.setGameMode(org.bukkit.GameMode.ADVENTURE);
+		player.setHealth(20);
+		player.setFoodLevel(20);
 
-        Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
-        Bukkit.getOnlinePlayers().forEach(online -> {
-            if (waitingIds.contains(online.getDatabaseIdentifier())) {
+		Bukkit.getOnlinePlayers().forEach(online -> {
+			if (waitingIds.contains(online.getDatabaseIdentifier())) {
 
-                online.sendMessage(
-                        messageHandler.getMessage("game.lobby-join")
-                                .replace("%player%", player.getDisplayName())
-                                .replace("%actual%", waitingIds.size() + "")
-                                .replace("%max%", subGameMode.getMaxPlayers() + "")
-                );
+				online.sendMessage(
+					messageHandler.getMessage("game.lobby-join")
+						.replace("%player%", player.getDisplayName())
+						.replace("%actual%", waitingIds.size() + "")
+						.replace("%max%", subGameMode.getMaxPlayers() + "")
+				);
 
-                online.showPlayer(player);
-                player.showPlayer(online);
+				online.showPlayer(player);
+				player.showPlayer(online);
 
-            } else {
-                online.hidePlayer(player);
-                player.hidePlayer(online);
-            }
-        });
+			} else {
+				online.hidePlayer(player);
+				player.hidePlayer(online);
+			}
+		});
 
-    }
+	}
 
-    @Override
-    public void ensureDisconnect(User user, Player player, Match match, SubGameMode subGameMode) {
-        Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
-        Bukkit.getOnlinePlayers().forEach(online -> {
-            if (waitingIds.contains(online.getDatabaseIdentifier())) {
-                online.sendMessage(
-                        messageHandler.getMessage("game.lobby-leave")
-                                .replace("%player%", online.getDisplayName())
-                                .replace("%actual%", waitingIds.size() + "")
-                                .replace("%max%", subGameMode.getMaxPlayers() + "")
-                );
-            }
-        });
-    }
+	@Override
+	public void ensureDisconnect(User user, Player player, Match match, SubGameMode subGameMode) {
+		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
+		Bukkit.getOnlinePlayers().forEach(online -> {
+			if (waitingIds.contains(online.getDatabaseIdentifier())) {
+				online.sendMessage(
+					messageHandler.getMessage("game.lobby-leave")
+						.replace("%player%", online.getDisplayName())
+						.replace("%actual%", waitingIds.size() + "")
+						.replace("%max%", subGameMode.getMaxPlayers() + "")
+				);
+			}
+		});
+	}
 }

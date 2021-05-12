@@ -5,9 +5,9 @@ import net.astrocube.api.bukkit.lobby.board.ScoreboardProcessor;
 
 public class ScoreboardModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(ScoreboardProcessor.class).to(CoreScoreboardProcessor.class);
-    }
+	@Override
+	public void configure() {
+		bind(ScoreboardProcessor.class).to(CoreScoreboardProcessor.class);
+	}
 
 }

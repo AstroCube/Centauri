@@ -11,16 +11,16 @@ import java.util.Set;
 
 public class UserProvideHelper {
 
-    private @Inject QueryService<User> queryService;
-    private @Inject ObjectMapper mapper;
+	private @Inject QueryService<User> queryService;
+	private @Inject ObjectMapper mapper;
 
-    public Optional<User> getUserByName(String name) throws Exception {
-        ObjectNode query = this.mapper.createObjectNode();
-        query.put("username", name);
+	public Optional<User> getUserByName(String name) throws Exception {
+		ObjectNode query = this.mapper.createObjectNode();
+		query.put("username", name);
 
-        Set<User> q = queryService.querySync(query).getFoundModels();
+		Set<User> q = queryService.querySync(query).getFoundModels();
 
-        return q.stream().findFirst();
-    }
+		return q.stream().findFirst();
+	}
 
 }

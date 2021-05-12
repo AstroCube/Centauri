@@ -8,18 +8,24 @@ import javax.inject.Named;
 
 public class LobbyLoader implements Loader {
 
-    private @Inject @Named("events") Loader eventLoader;
-    private @Inject @Named("world") Loader worldLoader;
-    private @Inject @Named("command") Loader commandLoader;
+	private @Inject
+	@Named("events")
+	Loader eventLoader;
+	private @Inject
+	@Named("world")
+	Loader worldLoader;
+	private @Inject
+	@Named("command")
+	Loader commandLoader;
 
-    private @Inject SelectorRegistry selectorRegistry;
+	private @Inject SelectorRegistry selectorRegistry;
 
-    @Override
-    public void load() {
-        eventLoader.load();
-        worldLoader.load();
-        commandLoader.load();
-        selectorRegistry.generateRegistry();
-    }
+	@Override
+	public void load() {
+		eventLoader.load();
+		worldLoader.load();
+		commandLoader.load();
+		selectorRegistry.generateRegistry();
+	}
 
 }

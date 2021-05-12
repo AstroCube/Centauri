@@ -10,11 +10,11 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreGameSelectorRedirect implements GameSelectorRedirect {
 
-    private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
 
-    @Override
-    public void redirectPlayer(GameMode gameMode, Player player) {
-        serverTeleportRetry.attemptGroupTeleport(player.getName(), gameMode.getLobby(), 1, 3);
-    }
+	@Override
+	public void redirectPlayer(GameMode gameMode, Player player) {
+		serverTeleportRetry.attemptGroupTeleport(player.getName(), gameMode.getLobby(), 1, 3);
+	}
 
 }

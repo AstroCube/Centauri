@@ -20,51 +20,51 @@ import java.util.logging.Level;
 
 public class PunishmentIssueActionsListener implements Listener {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
-    private @Inject Plugin plugin;
-    private @Inject PunishmentKickProcessor punishmentKickProcessor;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject Plugin plugin;
+	private @Inject PunishmentKickProcessor punishmentKickProcessor;
 
-    @EventHandler
-    public void onPunishmentIssue(PunishmentIssueEvent event) {
+	@EventHandler
+	public void onPunishmentIssue(PunishmentIssueEvent event) {
 
-        Player player = Bukkit.getPlayerByIdentifier(event.getPunishment().getPunished());
+		Player player = Bukkit.getPlayerByIdentifier(event.getPunishment().getPunished());
 
-        if (player != null) {
+		if (player != null) {
 
-            try {
+			try {
 
-                User user = findService.findSync(player.getDatabaseIdentifier());
+				User user = findService.findSync(player.getDatabaseIdentifier());
 
-                if (event.getPunishment().getType() == PunishmentDoc.Identity.Type.WARN) {
+				if (event.getPunishment().getType() == PunishmentDoc.Identity.Type.WARN) {
 
-                    Title title = new Title(
-                            messageHandler.get(player, "punish.warn.title"),
-                            messageHandler.replacing(
-                                    player, "punish.warn.sub",
-                                    "%reason%", event.getPunishment().getReason()
-                            )
-                    );
+					Title title = new Title(
+						messageHandler.get(player, "punish.warn.title"),
+						messageHandler.replacing(
+							player, "punish.warn.sub",
+							"%reason%", event.getPunishment().getReason()
+						)
+					);
 
-                    player.sendTitle(title);
-                    messageHandler.sendReplacing(
-                            player, "punish.warn.chat",
-                            "%reason%", event.getPunishment().getReason()
-                    );
-                    player.playSound(player.getLocation(), Sound.WITHER_DEATH, 1f, 1f);
+					player.sendTitle(title);
+					messageHandler.sendReplacing(
+						player, "punish.warn.chat",
+						"%reason%", event.getPunishment().getReason()
+					);
+					player.playSound(player.getLocation(), Sound.WITHER_DEATH, 1f, 1f);
 
-                    return;
-                }
+					return;
+				}
 
-                punishmentKickProcessor.processKick(event.getPunishment(), player, user);
+				punishmentKickProcessor.processKick(event.getPunishment(), player, user);
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Error while aplying punishment to player", e);
-                player.kickPlayer(ChatColor.RED + "Kicked due to unability to apply punishment. Please re-login.");
-            }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Error while aplying punishment to player", e);
+				player.kickPlayer(ChatColor.RED + "Kicked due to unability to apply punishment. Please re-login.");
+			}
 
-        }
+		}
 
-    }
+	}
 
 }

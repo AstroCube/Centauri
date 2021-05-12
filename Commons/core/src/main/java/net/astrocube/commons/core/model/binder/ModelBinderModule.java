@@ -12,36 +12,36 @@ import java.util.function.Consumer;
  */
 public interface ModelBinderModule extends Binder {
 
-    default <M extends Model> ModelBind<M, M> bindModel(Class<M> M) {
-        return ModelBind.of(this, M);
-    }
+	default <M extends Model> ModelBind<M, M> bindModel(Class<M> M) {
+		return ModelBind.of(this, M);
+	}
 
-    default <M extends Model> ModelBind<M, M> ModelBind(TypeLiteral<M> M) {
-        return ModelBind.of(this, M);
-    }
+	default <M extends Model> ModelBind<M, M> ModelBind(TypeLiteral<M> M) {
+		return ModelBind.of(this, M);
+	}
 
-    default <M extends Model, P extends PartialModel> ModelBind<M, P> bindModel(Class<M> M, Class<P> P) {
-        return ModelBind.of(this, M, P);
-    }
+	default <M extends Model, P extends PartialModel> ModelBind<M, P> bindModel(Class<M> M, Class<P> P) {
+		return ModelBind.of(this, M, P);
+	}
 
-    default <M extends Model, P extends PartialModel> ModelBind<M, P> bindModel(TypeLiteral<M> M, TypeLiteral<P> P) {
-        return ModelBind.of(this, M, P);
-    }
+	default <M extends Model, P extends PartialModel> ModelBind<M, P> bindModel(TypeLiteral<M> M, TypeLiteral<P> P) {
+		return ModelBind.of(this, M, P);
+	}
 
-    default <M extends Model> void bindModel(Class<M> M, Consumer<ModelBind<M, M>> block) {
-        block.accept(ModelBind.of(this, M));
-    }
+	default <M extends Model> void bindModel(Class<M> M, Consumer<ModelBind<M, M>> block) {
+		block.accept(ModelBind.of(this, M));
+	}
 
-    default <M extends Model> void bindModel(TypeLiteral<M> M, Consumer<ModelBind<M, M>> block) {
-        block.accept(ModelBind.of(this, M));
-    }
+	default <M extends Model> void bindModel(TypeLiteral<M> M, Consumer<ModelBind<M, M>> block) {
+		block.accept(ModelBind.of(this, M));
+	}
 
-    default <M extends Model, P extends PartialModel> void bindModel(Class<M> M, Class<P> P, Consumer<ModelBind<M, P>> block) {
-        block.accept(ModelBind.of(this, M, P));
-    }
+	default <M extends Model, P extends PartialModel> void bindModel(Class<M> M, Class<P> P, Consumer<ModelBind<M, P>> block) {
+		block.accept(ModelBind.of(this, M, P));
+	}
 
-    default <M extends Model, P extends PartialModel> void bindModel(TypeLiteral<M> M, TypeLiteral<P> P, Consumer<ModelBind<M, P>> block) {
-        block.accept(ModelBind.of(this, M, P));
-    }
+	default <M extends Model, P extends PartialModel> void bindModel(TypeLiteral<M> M, TypeLiteral<P> P, Consumer<ModelBind<M, P>> block) {
+		block.accept(ModelBind.of(this, M, P));
+	}
 
 }

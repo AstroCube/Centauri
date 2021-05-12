@@ -12,14 +12,14 @@ import org.bukkit.plugin.Plugin;
 public class PermissionHideApplier implements HideApplier {
 
 
-    private @Inject
-    Plugin plugin;
+	private @Inject
+	Plugin plugin;
 
-    @Override
-    public void apply(User user, Player player, User target, Player targetPlayer) {
-        if (targetPlayer.hasPermission("lobby.hide.bypass")) {
-            Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
-        }
-    }
+	@Override
+	public void apply(User user, Player player, User target, Player targetPlayer) {
+		if (targetPlayer.hasPermission("lobby.hide.bypass")) {
+			Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
+		}
+	}
 
 }

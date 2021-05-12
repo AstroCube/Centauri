@@ -12,36 +12,36 @@ import java.util.logging.Level;
 
 public class AuthorizationUtils {
 
-    public static BasicAuthorization build(Player player, String password) {
-        return new BasicAuthorization() {
-            @Override
-            public String getId() {
-                return player.getDatabaseIdentifier();
-            }
+	public static BasicAuthorization build(Player player, String password) {
+		return new BasicAuthorization() {
+			@Override
+			public String getId() {
+				return player.getDatabaseIdentifier();
+			}
 
-            @Override
-            public String getPassword() {
-                return password;
-            }
+			@Override
+			public String getPassword() {
+				return password;
+			}
 
-            @Override
-            public String getAddress() {
-                return player.getAddress().getAddress().toString().replace("/", "");
-            }
-        };
-    }
+			@Override
+			public String getAddress() {
+				return player.getAddress().getAddress().toString().replace("/", "");
+			}
+		};
+	}
 
-    public static void checkError(Player player, Exception exception, Plugin plugin, MessageHandler messageHandler) {
-        if (exception instanceof AuthorizeException) {
-            Bukkit.getScheduler().runTask(plugin, ()-> player.kickPlayer(
-                    messageHandler.get(player, "authentication.unauthorized")
-                            .replace("%error%", exception.getMessage())
-            ));
-            return;
-        }
+	public static void checkError(Player player, Exception exception, Plugin plugin, MessageHandler messageHandler) {
+		if (exception instanceof AuthorizeException) {
+			Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(
+				messageHandler.get(player, "authentication.unauthorized")
+					.replace("%error%", exception.getMessage())
+			));
+			return;
+		}
 
-        messageHandler.sendIn(player, AlertModes.ERROR,"authentication.password-error");
-        plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
-    }
+		messageHandler.sendIn(player, AlertModes.ERROR, "authentication.password-error");
+		plugin.getLogger().log(Level.WARNING, "Could not perform user login", exception.getMessage());
+	}
 
 }

@@ -16,23 +16,23 @@ import java.util.logging.Logger;
 @Singleton
 public class CoreSessionAliveInterceptor implements SessionAliveInterceptor {
 
-    private @Inject SessionRegistryManager sessionRegistryManager;
-    private @Inject CloudStatusProvider cloudStatusProvider;
+	private @Inject SessionRegistryManager sessionRegistryManager;
+	private @Inject CloudStatusProvider cloudStatusProvider;
 
-    @Override
-    public Optional<SessionRegistry> isAlive(User user) {
-        try {
+	@Override
+	public Optional<SessionRegistry> isAlive(User user) {
+		try {
 
-            if (!cloudStatusProvider.hasAliveSession(user.getUsername())) {
-                return Optional.empty();
-            }
+			if (!cloudStatusProvider.hasAliveSession(user.getUsername())) {
+				return Optional.empty();
+			}
 
-            return sessionRegistryManager.getRegistry(user.getId());
-        } catch (AuthorizeException exception) {
-            Logger.getLogger("session").log(Level.WARNING, "Could not obtain session registry.");
-        }
+			return sessionRegistryManager.getRegistry(user.getId());
+		} catch (AuthorizeException exception) {
+			Logger.getLogger("session").log(Level.WARNING, "Could not obtain session registry.");
+		}
 
-        return Optional.empty();
-    }
+		return Optional.empty();
+	}
 
 }

@@ -21,67 +21,67 @@ import javax.annotation.Nullable;
 @Singleton
 public class CoreMatchScheduler implements MatchScheduler {
 
-    private @Inject ServerService serverService;
-    private @Inject Plugin plugin;
-    private @Inject MatchAssigner matchAssigner;
-    private @Inject MatchChannelProvider matchChannelProvider;
-    private @Inject CreateService<Match, MatchDoc.Partial> createService;
+	private @Inject ServerService serverService;
+	private @Inject Plugin plugin;
+	private @Inject MatchAssigner matchAssigner;
+	private @Inject MatchChannelProvider matchChannelProvider;
+	private @Inject CreateService<Match, MatchDoc.Partial> createService;
 
-    @Override
-    public void schedule(@Nullable MatchmakingRequest request) throws Exception {
+	@Override
+	public void schedule(@Nullable MatchmakingRequest request) throws Exception {
 
-        Server actual = serverService.getActual();
+		Server actual = serverService.getActual();
 
-        if (request != null) {
-            if (
-                    !request.getGameMode().equalsIgnoreCase(actual.getGameMode()) ||
-                    !request.getSubGameMode().equalsIgnoreCase(actual.getSubGameMode())
-            ) {
-                throw new GameControlException("Illegal matchmaking request scheduling");
-            }
-        }
+		if (request != null) {
+			if (
+				!request.getGameMode().equalsIgnoreCase(actual.getGameMode()) ||
+					!request.getSubGameMode().equalsIgnoreCase(actual.getSubGameMode())
+			) {
+				throw new GameControlException("Illegal matchmaking request scheduling");
+			}
+		}
 
 
-        MatchDoc.Partial match = new MatchDoc.Identity() {
+		MatchDoc.Partial match = new MatchDoc.Identity() {
 
-            @Override
-            public String getMap() {
-                return request == null ? "" :
-                        request.getMap().isPresent() ? request.getMap().get() : "";
-            }
+			@Override
+			public String getMap() {
+				return request == null ? "" :
+					request.getMap().isPresent() ? request.getMap().get() : "";
+			}
 
-            @Override
-            public void setMap(String map) {
-                
-            }
+			@Override
+			public void setMap(String map) {
 
-            @Override
-            public String getGameMode() {
-                return actual.getGameMode();
-            }
+			}
 
-            @Override
-            public String getSubMode() {
-                return actual.getSubGameMode();
-            }
+			@Override
+			public String getGameMode() {
+				return actual.getGameMode();
+			}
 
-        };
+			@Override
+			public String getSubMode() {
+				return actual.getSubGameMode();
+			}
 
-        Match created = createService.createSync(match);
-        matchChannelProvider.createChannel(created.getId());
+		};
 
-        plugin.getLogger().info("Scheduled new match with ID " + created.getId());
+		Match created = createService.createSync(match);
+		matchChannelProvider.createChannel(created.getId());
 
-        Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(created));
+		plugin.getLogger().info("Scheduled new match with ID " + created.getId());
 
-        if (request != null) {
-            matchAssigner.assign(request.getRequesters(), created);
-        }
+		Bukkit.getPluginManager().callEvent(new MatchScheduleEvent(created));
 
-    }
+		if (request != null) {
+			matchAssigner.assign(request.getRequesters(), created);
+		}
 
-    @Override
-    public void schedule() throws Exception {
-        this.schedule(null);
-    }
+	}
+
+	@Override
+	public void schedule() throws Exception {
+		this.schedule(null);
+	}
 }

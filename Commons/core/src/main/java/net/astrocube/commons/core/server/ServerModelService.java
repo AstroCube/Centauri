@@ -21,76 +21,76 @@ import java.util.HashMap;
 @SuppressWarnings("UnstableApiUsage")
 public class ServerModelService implements ServerService {
 
-    private @Inject ModelMeta<Server, ServerDoc.Partial> modelMeta;
-    private @Inject HttpClient httpClient;
-    private @Inject ObjectMapper objectMapper;
-    private @Inject Redis redis;
-    private String actual = "";
+	private @Inject ModelMeta<Server, ServerDoc.Partial> modelMeta;
+	private @Inject HttpClient httpClient;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject Redis redis;
+	private String actual = "";
 
-    public String connect(CreateRequest<Partial> request) throws Exception {
-        return httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey(),
-                new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        new HashMap<>(),
-                        this.objectMapper.writeValueAsString(request.getModel()),
-                        null
-                )
-        );
-    }
+	public String connect(CreateRequest<Partial> request) throws Exception {
+		return httpClient.executeRequestSync(
+			this.modelMeta.getRouteKey(),
+			new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				new HashMap<>(),
+				this.objectMapper.writeValueAsString(request.getModel()),
+				null
+			)
+		);
+	}
 
-    public void disconnect() throws Exception {
-        httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey(),
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.DELETE,
-                        ""
-                )
-        );
+	public void disconnect() throws Exception {
+		httpClient.executeRequestSync(
+			this.modelMeta.getRouteKey(),
+			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.DELETE,
+				""
+			)
+		);
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.del("server:" + actual);
-        }
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			jedis.del("server:" + actual);
+		}
 
-    }
+	}
 
-    @Override
-    public Server getActual() throws Exception {
+	@Override
+	public Server getActual() throws Exception {
 
-        if (actual.isEmpty()) {
-            Server actual = getFromBackend();
-            this.actual = actual.getId();
-            return actual;
-        }
+		if (actual.isEmpty()) {
+			Server actual = getFromBackend();
+			this.actual = actual.getId();
+			return actual;
+		}
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            if (jedis.exists("server:" + actual)) {
-                return objectMapper.readValue(jedis.get("server:" + actual), Server.class);
-            }
-            return getFromBackend();
-        }
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			if (jedis.exists("server:" + actual)) {
+				return objectMapper.readValue(jedis.get("server:" + actual), Server.class);
+			}
+			return getFromBackend();
+		}
 
-    }
+	}
 
-    private Server getFromBackend() throws Exception {
+	private Server getFromBackend() throws Exception {
 
-        Server actual = httpClient.executeRequestSync(
-                this.modelMeta.getRouteKey() + "/view/me",
-                new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.GET,
-                        ""
-                )
-        );
+		Server actual = httpClient.executeRequestSync(
+			this.modelMeta.getRouteKey() + "/view/me",
+			new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.GET,
+				""
+			)
+		);
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
-            jedis.set("server:" + actual.getId(), objectMapper.writeValueAsString(actual));
-            jedis.expire("server:" + actual.getId(), 600);
-            return actual;
-        }
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			jedis.set("server:" + actual.getId(), objectMapper.writeValueAsString(actual));
+			jedis.expire("server:" + actual.getId(), 600);
+			return actual;
+		}
 
-    }
+	}
 
 }

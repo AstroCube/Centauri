@@ -8,23 +8,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Lobby extends JavaPlugin {
 
-    private @Inject Loader loader;
+	private @Inject Loader loader;
 
-    @Override
-    public void onEnable() {
-        this.loader.load();
-        copyDefaults();
-    }
+	@Override
+	public void onEnable() {
+		this.loader.load();
+		copyDefaults();
+	}
 
-    @Override
-    public void configure(ProtectedBinder binder) {
-        binder.bind(Lobby.class).toInstance(this);
-        binder.install(new InjectionLoaderModule());
-    }
+	@Override
+	public void configure(ProtectedBinder binder) {
+		binder.bind(Lobby.class).toInstance(this);
+		binder.install(new InjectionLoaderModule());
+	}
 
-    public void copyDefaults() {
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
-    }
+	public void copyDefaults() {
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
+	}
 
 }

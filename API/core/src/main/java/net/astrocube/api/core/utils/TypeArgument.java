@@ -11,21 +11,21 @@ import com.google.inject.TypeLiteral;
 @SuppressWarnings("all")
 public abstract class TypeArgument<T> extends TypeParameter<T> {
 
-    private final TypeToken<? extends T> actual;
+	private final TypeToken<? extends T> actual;
 
-    public TypeArgument(TypeToken<? extends T> actual) {
-        this.actual = actual;
-    }
+	public TypeArgument(TypeToken<? extends T> actual) {
+		this.actual = actual;
+	}
 
-    public TypeArgument(TypeLiteral<? extends T> actual) {
-        this(Types.toToken(actual));
-    }
+	public TypeArgument(TypeLiteral<? extends T> actual) {
+		this(Types.toToken(actual));
+	}
 
-    public TypeArgument(Class<? extends T> actual) {
-        this(TypeToken.of(actual));
-    }
+	public TypeArgument(Class<? extends T> actual) {
+		this(TypeToken.of(actual));
+	}
 
-    public TypeToken<? extends T> actual() {
-        return actual;
-    }
+	public TypeToken<? extends T> actual() {
+		return actual;
+	}
 }

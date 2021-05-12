@@ -13,27 +13,27 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreLobbyServerRedirect implements LobbyServerRedirect {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
 
-    @Override
-    public void redirectPlayer(Player player, CloudInstanceProvider.Instance wrapper, LobbySwitchStatus status) {
+	@Override
+	public void redirectPlayer(Player player, CloudInstanceProvider.Instance wrapper, LobbySwitchStatus status) {
 
-        switch (status) {
-            case FULL: {
-                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.full");
-                break;
-            }
-            case CYCLIC: {
-                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.cyclic");
-                break;
-            }
-            default: {
-                serverTeleportRetry.attemptTeleport(player.getName(), wrapper.getName(), 1,3);
-                break;
-            }
-        }
+		switch (status) {
+			case FULL: {
+				messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.full");
+				break;
+			}
+			case CYCLIC: {
+				messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.cyclic");
+				break;
+			}
+			default: {
+				serverTeleportRetry.attemptTeleport(player.getName(), wrapper.getName(), 1, 3);
+				break;
+			}
+		}
 
-    }
+	}
 
 }

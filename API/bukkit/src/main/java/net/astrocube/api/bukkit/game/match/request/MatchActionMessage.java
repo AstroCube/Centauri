@@ -5,9 +5,9 @@ import net.astrocube.api.core.message.Message;
 
 public interface MatchActionMessage extends Message {
 
-    /**
-     * @return {@link Match} id to assign the user.
-     */
-    String getMatch();
+	/**
+	 * @return {@link Match} id to assign the user.
+	 */
+	String getMatch();
 
 }

@@ -13,27 +13,27 @@ import net.astrocube.api.core.virtual.server.Server;
 @Singleton
 public class CoreAvailableMatchServerProvider implements AvailableMatchServerProvider {
 
-    private @Inject QueryService<Server> serverQueryService;
-    private @Inject ObjectMapper mapper;
+	private @Inject QueryService<Server> serverQueryService;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public ArrayNode getPairableServers(MatchmakingRequest request) throws Exception {
+	@Override
+	public ArrayNode getPairableServers(MatchmakingRequest request) throws Exception {
 
-        ObjectNode node = mapper.createObjectNode();
-        node.put("gameMode", request.getGameMode());
-        node.put("subGameMode", request.getSubGameMode());
-        request.getMap().ifPresent(map -> {
-            if (!map.equalsIgnoreCase("")) {
-                node.put("map", map);
-            }
-        });
+		ObjectNode node = mapper.createObjectNode();
+		node.put("gameMode", request.getGameMode());
+		node.put("subGameMode", request.getSubGameMode());
+		request.getMap().ifPresent(map -> {
+			if (!map.equalsIgnoreCase("")) {
+				node.put("map", map);
+			}
+		});
 
-        ArrayNode serverArray = mapper.createArrayNode();
+		ArrayNode serverArray = mapper.createArrayNode();
 
-        for (Server server: serverQueryService.querySync(node).getFoundModels()) {
-            serverArray.add(server.getId());
-        }
+		for (Server server : serverQueryService.querySync(node).getFoundModels()) {
+			serverArray.add(server.getId());
+		}
 
-        return serverArray;
-    }
+		return serverArray;
+	}
 }

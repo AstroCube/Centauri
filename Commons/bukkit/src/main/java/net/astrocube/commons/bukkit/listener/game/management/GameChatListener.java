@@ -14,24 +14,24 @@ import java.util.logging.Level;
 
 public class GameChatListener implements Listener {
 
-    private @Inject MatchMessageBroadcaster matchMessageBroadcaster;
-    private @Inject Plugin plugin;
-    private @Inject ServerService serverService;
+	private @Inject MatchMessageBroadcaster matchMessageBroadcaster;
+	private @Inject Plugin plugin;
+	private @Inject ServerService serverService;
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
 
-        if (!event.isCancelled()) {
-            try {
-                if (serverService.getActual().getServerType().equals(ServerDoc.Type.GAME)) {
-                    matchMessageBroadcaster.sendMessage(event.getMessage(), event.getPlayer());
-                    event.setCancelled(true);
-                }
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual server mode. Cancelling chat.", e);
-            }
-        }
+		if (!event.isCancelled()) {
+			try {
+				if (serverService.getActual().getServerType().equals(ServerDoc.Type.GAME)) {
+					matchMessageBroadcaster.sendMessage(event.getMessage(), event.getPlayer());
+					event.setCancelled(true);
+				}
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual server mode. Cancelling chat.", e);
+			}
+		}
 
-    }
+	}
 
 }

@@ -8,16 +8,16 @@ import java.io.OutputStream;
 
 public class RequestContent extends AbstractHttpContent {
 
-    final String json;
+	final String json;
 
-    public RequestContent(String json) {
-        super("application/json");
-        this.json = json;
-    }
+	public RequestContent(String json) {
+		super("application/json");
+		this.json = json;
+	}
 
-    @Override
-    public void writeTo(OutputStream out) throws IOException {
-        out.write(json.getBytes(Charsets.UTF_8));
-    }
+	@Override
+	public void writeTo(OutputStream out) throws IOException {
+		out.write(json.getBytes(Charsets.UTF_8));
+	}
 
 }

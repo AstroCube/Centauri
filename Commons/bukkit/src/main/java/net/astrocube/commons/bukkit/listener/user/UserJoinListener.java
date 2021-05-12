@@ -1,4 +1,5 @@
 package net.astrocube.commons.bukkit.listener.user;
+
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
@@ -37,129 +38,131 @@ import java.util.logging.Level;
 
 public class UserJoinListener implements Listener {
 
-    private @Inject UserMatchJoiner userMatchJoiner;
-    private @Inject FindService<User> userFindService;
-    private @Inject DisplayMatcher displayMatcher;
+	private @Inject UserMatchJoiner userMatchJoiner;
+	private @Inject FindService<User> userFindService;
+	private @Inject DisplayMatcher displayMatcher;
 
-    private @Inject InstanceNameProvider instanceNameProvider;
-    private @Inject TablistCompoundApplier tablistCompoundApplier;
+	private @Inject InstanceNameProvider instanceNameProvider;
+	private @Inject TablistCompoundApplier tablistCompoundApplier;
 
-    private @Inject SessionAliveInterceptor sessionAliveInterceptor;
-    private @Inject SessionService sessionService;
+	private @Inject SessionAliveInterceptor sessionAliveInterceptor;
+	private @Inject SessionService sessionService;
 
-    private @Inject PermissionBalancer permissionBalancer;
-    private @Inject Plugin plugin;
-    private @Inject @Named("puppet") PacketHandler packetHandler;
-    private @Inject CustomSkinRegistry customSkinRegistry;
+	private @Inject PermissionBalancer permissionBalancer;
+	private @Inject Plugin plugin;
+	private @Inject
+	@Named("puppet")
+	PacketHandler packetHandler;
+	private @Inject CustomSkinRegistry customSkinRegistry;
 
-    private static Field playerField;
+	private static Field playerField;
 
-    static {
-        try {
-            playerField = CraftHumanEntity.class.getDeclaredField("perm");
-            playerField.setAccessible(true);
-        } catch (Exception ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Commons] Internal error where obtaining reflection field.");
-        }
-    }
+	static {
+		try {
+			playerField = CraftHumanEntity.class.getDeclaredField("perm");
+			playerField.setAccessible(true);
+		} catch (Exception ex) {
+			Bukkit.getLogger().log(Level.SEVERE, "[Commons] Internal error where obtaining reflection field.");
+		}
+	}
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onUserJoin(PlayerJoinEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onUserJoin(PlayerJoinEvent event) {
 
-        Player player = event.getPlayer();
-        ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
-        event.setJoinMessage("");
+		Player player = event.getPlayer();
+		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+		event.setJoinMessage("");
 
-        this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
-            try {
+		this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
+			try {
 
-                if (!response.isSuccessful() || !response.getResponse().isPresent())
-                    throw new Exception("User response was not present");
+				if (!response.isSuccessful() || !response.getResponse().isPresent())
+					throw new Exception("User response was not present");
 
-                User user = response.getResponse().get();
-                String address = event.getPlayer().getAddress().getAddress().getHostAddress();
+				User user = response.getResponse().get();
+				String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
-                sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
-                    @Override
-                    public String getUser() {
-                        return user.getId();
-                    }
+				sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
+					@Override
+					public String getUser() {
+						return user.getId();
+					}
 
-                    @Override
-                    public String getServer() {
-                        return instanceNameProvider.getName();
-                    }
+					@Override
+					public String getServer() {
+						return instanceNameProvider.getName();
+					}
 
-                    @Nullable
-                    @Override
-                    public String getLobby() {
-                        return plugin.getConfig().getString("server.fallback", "main-lobby");
-                    }
-                });
+					@Nullable
+					@Override
+					public String getLobby() {
+						return plugin.getConfig().getString("server.fallback", "main-lobby");
+					}
+				});
 
-                playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
+				playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
 
-                if (
-                        !plugin.getConfig().getBoolean("authentication.enabled") &&
-                                !plugin.getConfig().getBoolean("server.sandbox")
-                ) {
+				if (
+					!plugin.getConfig().getBoolean("authentication.enabled") &&
+						!plugin.getConfig().getBoolean("server.sandbox")
+				) {
 
-                    Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user);
+					Optional<SessionRegistry> registryOptional = sessionAliveInterceptor.isAlive(user);
 
-                    if (!registryOptional.isPresent()) {
-                        throw new AuthorizeException("Not authorized session");
-                    }
+					if (!registryOptional.isPresent()) {
+						throw new AuthorizeException("Not authorized session");
+					}
 
-                    SessionRegistry registry = registryOptional.get();
+					SessionRegistry registry = registryOptional.get();
 
-                    if (registry.isPending()) {
-                        throw new AuthorizeException("Session is pending of authorization");
-                    }
+					if (registry.isPending()) {
+						throw new AuthorizeException("Session is pending of authorization");
+					}
 
-                    if (!registry.getAddress().equalsIgnoreCase(address)) {
-                        throw new AuthorizeException("Matching address not correspond to authorization");
-                    }
+					if (!registry.getAddress().equalsIgnoreCase(address)) {
+						throw new AuthorizeException("Matching address not correspond to authorization");
+					}
 
-                }
+				}
 
-                if (type == ServerDoc.Type.LOBBY) {
-                    Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
-                } else if (type == ServerDoc.Type.GAME && !plugin.getConfig().getBoolean("server.sandbox")) {
-                    userMatchJoiner.processJoin(user, player);
-                }
+				if (type == ServerDoc.Type.LOBBY) {
+					Bukkit.getPluginManager().callEvent(new LobbyJoinEvent(player, user));
+				} else if (type == ServerDoc.Type.GAME && !plugin.getConfig().getBoolean("server.sandbox")) {
+					userMatchJoiner.processJoin(user, player);
+				}
 
-                if (type == ServerDoc.Type.GAME && plugin.getConfig().getBoolean("server.sandbox")) {
-                    Bukkit.getScheduler().runTask(plugin, () -> {
-                        player.teleport(LobbyLocationParser.getLobby());
-                        Bukkit.getOnlinePlayers().forEach(p -> {
-                            p.hidePlayer(player);
-                            player.hidePlayer(p);
-                        });
-                    });
-                }
+				if (type == ServerDoc.Type.GAME && plugin.getConfig().getBoolean("server.sandbox")) {
+					Bukkit.getScheduler().runTask(plugin, () -> {
+						player.teleport(LobbyLocationParser.getLobby());
+						Bukkit.getOnlinePlayers().forEach(p -> {
+							p.hidePlayer(player);
+							player.hidePlayer(p);
+						});
+					});
+				}
 
-                tablistCompoundApplier.apply(player);
+				tablistCompoundApplier.apply(player);
 
-                TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
+				TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
 
-                player.setDisplayName(
-                        flairFormat.getPrefix() +
-                                " " + ChatColor.WHITE + user.getDisplay());
+				player.setDisplayName(
+					flairFormat.getPrefix() +
+						" " + ChatColor.WHITE + user.getDisplay());
 
-                packetHandler.handle(player);
+				packetHandler.handle(player);
 
-                Bukkit.getScheduler().runTask(plugin, () ->
-                                       customSkinRegistry.add(player, user.getSkin()));
-                
-            } catch (Exception exception) {
+				Bukkit.getScheduler().runTask(plugin, () ->
+					customSkinRegistry.add(player, user.getSkin()));
 
-                String append = exception instanceof AuthorizeException ?
-                        "\n\n" + ChatColor.GRAY + "(Reason: " + exception.getMessage() + ")" : "";
+			} catch (Exception exception) {
 
-                Bukkit.getScheduler().runTask(plugin, () ->
-                        player.kickPlayer(ChatColor.RED + "There was an error processing your login. Please try again later." + append));
-                plugin.getLogger().log(Level.SEVERE, "Could not process player final join.", exception);
-            }
-        });
-    }
+				String append = exception instanceof AuthorizeException ?
+					"\n\n" + ChatColor.GRAY + "(Reason: " + exception.getMessage() + ")" : "";
+
+				Bukkit.getScheduler().runTask(plugin, () ->
+					player.kickPlayer(ChatColor.RED + "There was an error processing your login. Please try again later." + append));
+				plugin.getLogger().log(Level.SEVERE, "Could not process player final join.", exception);
+			}
+		});
+	}
 }

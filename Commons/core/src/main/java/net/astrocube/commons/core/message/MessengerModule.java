@@ -15,16 +15,16 @@ import java.util.Set;
 
 public class MessengerModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        Multibinder.newSetBinder(this, ChannelMeta.class);
-        Multibinder.newSetBinder(this, MessageHandler.class);
-    }
+	@Override
+	protected void configure() {
+		Multibinder.newSetBinder(this, ChannelMeta.class);
+		Multibinder.newSetBinder(this, MessageHandler.class);
+	}
 
-    @Provides
-    @Singleton
-    Messenger messenger(Redis redis, ObjectMapper mapper,
-                        ExecutorServiceProvider executorServiceProvider, Set<ChannelMeta> channelMetas, Set<MessageHandler> handlers) {
-        return new JedisMessenger(redis, mapper, executorServiceProvider.getRegisteredService(), channelMetas, handlers);
-    }
+	@Provides
+	@Singleton
+	Messenger messenger(Redis redis, ObjectMapper mapper,
+											ExecutorServiceProvider executorServiceProvider, Set<ChannelMeta> channelMetas, Set<MessageHandler> handlers) {
+		return new JedisMessenger(redis, mapper, executorServiceProvider.getRegisteredService(), channelMetas, handlers);
+	}
 }

@@ -2,9 +2,9 @@ root = true
 
 [*]
 charset = utf-8
-indent_style = space
+indent_style = tab
+
 indent_size = 4
 
 # Intellij
 ij_java_do_not_wrap_after_single_annotation = true
-ij_continuation_indent_size = 8

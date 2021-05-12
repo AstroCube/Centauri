@@ -18,55 +18,54 @@ import java.util.logging.Level;
 
 public class GameServerLeaveListener implements Listener {
 
-    private @Inject FindService<Match> findService;
-    private @Inject FindService<GameMode> gameModeFindService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject
-    MatchService matchService;
-    private @Inject Plugin plugin;
+	private @Inject FindService<Match> findService;
+	private @Inject FindService<GameMode> gameModeFindService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject
+	MatchService matchService;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onGameUserDisconnect(GameUserDisconnectEvent event) {
+	@EventHandler
+	public void onGameUserDisconnect(GameUserDisconnectEvent event) {
 
-        findService.find(event.getMatch()).callback(matchResponse -> {
+		findService.find(event.getMatch()).callback(matchResponse -> {
 
-            matchResponse.ifSuccessful(match -> {
+			matchResponse.ifSuccessful(match -> {
 
-                if (event.getOrigin() == UserMatchJoiner.Origin.PLAYING) {
+				if (event.getOrigin() == UserMatchJoiner.Origin.PLAYING) {
 
-                    gameModeFindService.find(match.getGameMode()).callback(gamemodeResponse -> {
+					gameModeFindService.find(match.getGameMode()).callback(gamemodeResponse -> {
 
-                        gamemodeResponse.ifSuccessful(mode -> {
+						gamemodeResponse.ifSuccessful(mode -> {
 
-                            if (mode.getSubTypes() != null) {
+							if (mode.getSubTypes() != null) {
 
-                                mode.getSubTypes().stream().filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()) && !sub.hasRejoin())
-                                        .findAny()
-                                        .ifPresent(sub -> {
-                                            try {
-                                                matchService.disqualify(match.getId(), event.getPlayer().getDatabaseIdentifier());
-                                            } catch (Exception exception) {
-                                                plugin.getLogger().log(Level.SEVERE, "Error while disqualifying player", exception);
-                                            }
-                                        });
-                            }
+								mode.getSubTypes().stream().filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()) && !sub.hasRejoin())
+									.findAny()
+									.ifPresent(sub -> {
+										try {
+											matchService.disqualify(match.getId(), event.getPlayer().getDatabaseIdentifier());
+										} catch (Exception exception) {
+											plugin.getLogger().log(Level.SEVERE, "Error while disqualifying player", exception);
+										}
+									});
+							}
 
-                        });
+						});
 
-                    });
+					});
 
-                }
+				}
 
-            });
+			});
 
-        });
+		});
 
 
+	}
 
-    }
-
-    private void kickPlayer(Player player) {
-        player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
-    }
+	private void kickPlayer(Player player) {
+		player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
+	}
 
 }

@@ -19,54 +19,54 @@ import java.util.logging.Level;
 @Singleton
 public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 
-    private @Inject MatchmakingGenerator matchmakingGenerator;
-    private @Inject Plugin plugin;
-    private @Inject FindService<GameMode> findService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject MatchmakingGenerator matchmakingGenerator;
+	private @Inject Plugin plugin;
+	private @Inject FindService<GameMode> findService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
 
-    @Override
-    public void execute(Player player, String mode, String subMode) {
+	@Override
+	public void execute(Player player, String mode, String subMode) {
 
-        findService.find(mode).callback(response -> {
+		findService.find(mode).callback(response -> {
 
-            response.ifSuccessful(gameMode -> {
+			response.ifSuccessful(gameMode -> {
 
-                if (subMode.isEmpty()) {
-                    serverTeleportRetry.attemptGroupTeleport(
-                            player.getName(),
-                            gameMode.getLobby(),
-                            1,
-                            3
-                    );
-                    return;
-                }
+				if (subMode.isEmpty()) {
+					serverTeleportRetry.attemptGroupTeleport(
+						player.getName(),
+						gameMode.getLobby(),
+						1,
+						3
+					);
+					return;
+				}
 
 
-                if (gameMode.getSubTypes() != null) {
+				if (gameMode.getSubTypes() != null) {
 
-                    Optional<SubGameMode> subGameMode = gameMode.getSubTypes()
-                            .stream()
-                            .filter(g -> g.getId().equalsIgnoreCase(subMode))
-                            .findAny();
+					Optional<SubGameMode> subGameMode = gameMode.getSubTypes()
+						.stream()
+						.filter(g -> g.getId().equalsIgnoreCase(subMode))
+						.findAny();
 
-                    subGameMode.ifPresent(subModeRecord -> {
+					subGameMode.ifPresent(subModeRecord -> {
 
-                        try {
-                            matchmakingGenerator.pairMatch(player, gameMode, subModeRecord);
-                        } catch (Exception e) {
-                            messageHandler.sendIn(player, AlertModes.ERROR, "selectors.error");
-                            plugin.getLogger().log(Level.SEVERE, "There was an error pairing to match", e);
-                        }
+						try {
+							matchmakingGenerator.pairMatch(player, gameMode, subModeRecord);
+						} catch (Exception e) {
+							messageHandler.sendIn(player, AlertModes.ERROR, "selectors.error");
+							plugin.getLogger().log(Level.SEVERE, "There was an error pairing to match", e);
+						}
 
-                    });
+					});
 
-                }
+				}
 
-            });
+			});
 
-        });
+		});
 
-    }
+	}
 
 }

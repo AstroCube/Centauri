@@ -16,27 +16,27 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class CoreRegisterGatewayProcessor implements RegisterGatewayProcessor {
 
-    private @Inject AuthenticationService authenticationService;
-    private @Inject AuthenticationValidator authenticationValidator;
-    private @Inject GatewayMatcher gatewayMatcher;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject AuthenticationService authenticationService;
+	private @Inject AuthenticationValidator authenticationValidator;
+	private @Inject GatewayMatcher gatewayMatcher;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void validateRegister(Player player, String password) {
+	@Override
+	public void validateRegister(Player player, String password) {
 
-        try {
-            authenticationValidator.validateAuthenticationAttempt(player);
-            authenticationService.register(AuthorizationUtils.build(player, password));
+		try {
+			authenticationValidator.validateAuthenticationAttempt(player);
+			authenticationService.register(AuthorizationUtils.build(player, password));
 
-            Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
-                    gatewayMatcher.getRegisterGateway(),
-                    player
-            ));
-        } catch (Exception exception) {
-            AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
-        }
+			Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
+				gatewayMatcher.getRegisterGateway(),
+				player
+			));
+		} catch (Exception exception) {
+			AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
+		}
 
-    }
+	}
 
 }

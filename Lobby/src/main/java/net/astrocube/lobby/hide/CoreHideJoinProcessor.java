@@ -14,41 +14,41 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class CoreHideJoinProcessor implements HideJoinProcessor {
 
-    private @Inject HideStatusModifier hideStatusModifier;
-    private @Inject HideCompoundMatcher hideCompoundMatcher;
-    private @Inject Plugin plugin;
-    private @Inject FindService<User> findService;
+	private @Inject HideStatusModifier hideStatusModifier;
+	private @Inject HideCompoundMatcher hideCompoundMatcher;
+	private @Inject Plugin plugin;
+	private @Inject FindService<User> findService;
 
-    @Override
-    public void process(User user) {
+	@Override
+	public void process(User user) {
 
-        if (user.getSettings().getGeneralSettings().isHidingPlayers()) {
-            hideStatusModifier.globalApply(user);
-        }
+		if (user.getSettings().getGeneralSettings().isHidingPlayers()) {
+			hideStatusModifier.globalApply(user);
+		}
 
-        Player userPlayer = Bukkit.getPlayer(user.getUsername());
+		Player userPlayer = Bukkit.getPlayer(user.getUsername());
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            if (!player.getDatabaseIdentifier().equalsIgnoreCase(user.getId())) {
-                findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+		Bukkit.getOnlinePlayers().forEach(player -> {
+			if (!player.getDatabaseIdentifier().equalsIgnoreCase(user.getId())) {
+				findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
 
-                    if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
-                        User target = userResponse.getResponse().get();
-                        if (target.getSettings().getGeneralSettings().isHidingPlayers()) {
-                            hideStatusModifier.individualApply(
-                                    userResponse.getResponse().get(),
-                                    user,
-                                    hideCompoundMatcher.getUserCompound(userResponse.getResponse().get())
-                            );
-                        }
-                    } else {
-                        Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(userPlayer));
-                    }
+					if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
+						User target = userResponse.getResponse().get();
+						if (target.getSettings().getGeneralSettings().isHidingPlayers()) {
+							hideStatusModifier.individualApply(
+								userResponse.getResponse().get(),
+								user,
+								hideCompoundMatcher.getUserCompound(userResponse.getResponse().get())
+							);
+						}
+					} else {
+						Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(userPlayer));
+					}
 
-                });
-            }
-        });
+				});
+			}
+		});
 
-    }
+	}
 
 }

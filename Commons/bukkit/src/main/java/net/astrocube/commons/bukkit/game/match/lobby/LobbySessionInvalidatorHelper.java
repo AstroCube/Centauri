@@ -9,16 +9,16 @@ import java.util.Optional;
 
 public class LobbySessionInvalidatorHelper {
 
-    public static Optional<SubGameMode> retrieveSubMode(Response<GameMode> gameMode, Match match) {
+	public static Optional<SubGameMode> retrieveSubMode(Response<GameMode> gameMode, Match match) {
 
-        if (!gameMode.isSuccessful() || !gameMode.getResponse().isPresent()) {
-            return Optional.empty();
-        }
+		if (!gameMode.isSuccessful() || !gameMode.getResponse().isPresent()) {
+			return Optional.empty();
+		}
 
-        return gameMode.getResponse().get()
-                .getSubTypes()
-                .stream()
-                .filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()))
-                .findFirst();
-    }
+		return gameMode.getResponse().get()
+			.getSubTypes()
+			.stream()
+			.filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()))
+			.findFirst();
+	}
 }

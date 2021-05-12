@@ -16,61 +16,62 @@ import java.util.stream.Collectors;
 @Singleton
 public class CorePresetPunishmentCache implements PresetPunishmentCache {
 
-    private @Inject Plugin plugin;
-    private final Set<PresetPunishment> punishments = new HashSet<>();
-    private boolean cached = false;
+	private @Inject Plugin plugin;
+	private final Set<PresetPunishment> punishments = new HashSet<>();
+	private boolean cached = false;
 
-    @Override
-    public Set<PresetPunishment> getPunishments() {
+	@Override
+	public Set<PresetPunishment> getPunishments() {
 
-        if (!cached) {
-            generateCache();
-        }
+		if (!cached) {
+			generateCache();
+		}
 
-        return punishments;
-    }
+		return punishments;
+	}
 
-    @Override
-    public Set<PresetPunishment> getPunishments(PunishmentDoc.Identity.Type type) {
-        return getPunishments().stream().filter(p -> p.getType() == type).collect(Collectors.toSet());
-    }
+	@Override
+	public Set<PresetPunishment> getPunishments(PunishmentDoc.Identity.Type type) {
+		return getPunishments().stream().filter(p -> p.getType() == type).collect(Collectors.toSet());
+	}
 
-    @Override
-    public void generateCache() {
+	@Override
+	public void generateCache() {
 
-        for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
+		for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
 
-            Map<String, Object> linkedKey = (Map<String, Object>) key;
+			Map<String, Object> linkedKey = (Map<String, Object>) key;
 
-            try {
+			try {
 
-                PunishmentDoc.Identity.Type type = PunishmentDoc.Identity.Type.valueOf((String) linkedKey.get("type"));
+				PunishmentDoc.Identity.Type type = PunishmentDoc.Identity.Type.valueOf((String) linkedKey.get("type"));
 
-                punishments.add(new PresetPunishment() {
-                    @Override
-                    public String getId() {
-                        return (String) linkedKey.get("name");
-                    }
+				punishments.add(new PresetPunishment() {
+					@Override
+					public String getId() {
+						return (String) linkedKey.get("name");
+					}
 
-                    @Override
-                    public PunishmentDoc.Identity.Type getType() {
-                        return type;
-                    }
+					@Override
+					public PunishmentDoc.Identity.Type getType() {
+						return type;
+					}
 
-                    @Override
-                    public long getExpiration() {
-                        return type == PunishmentDoc.Identity.Type.BAN &&
-                                !((String) linkedKey.get("expiration")).equalsIgnoreCase("-1") ?
-                            TimeParser.parseStringDuration((String) linkedKey.get("expiration")) : -1;
-                    }
-                });
+					@Override
+					public long getExpiration() {
+						return type == PunishmentDoc.Identity.Type.BAN &&
+							!((String) linkedKey.get("expiration")).equalsIgnoreCase("-1") ?
+							TimeParser.parseStringDuration((String) linkedKey.get("expiration")) : -1;
+					}
+				});
 
-            } catch (IllegalArgumentException ignore) {}
+			} catch (IllegalArgumentException ignore) {
+			}
 
-        }
+		}
 
 
-        cached = true;
-    }
+		cached = true;
+	}
 
 }

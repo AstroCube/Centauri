@@ -10,19 +10,19 @@ import org.bukkit.plugin.Plugin;
 
 public class LobbyJoinAssignFlyListener implements Listener {
 
-    @Inject
-    private Plugin plugin;
+	@Inject
+	private Plugin plugin;
 
-    @EventHandler
-    public void onLobbyJoin(LobbyJoinEvent event) {
+	@EventHandler
+	public void onLobbyJoin(LobbyJoinEvent event) {
 
-        Player player = event.getPlayer();
+		Player player = event.getPlayer();
 
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            if (player.hasPermission("commons.fly")) {
-                player.setAllowFlight(true);
-            }
-        });
-    }
+		Bukkit.getScheduler().runTask(plugin, () -> {
+			if (player.hasPermission("commons.fly")) {
+				player.setAllowFlight(true);
+			}
+		});
+	}
 
 }

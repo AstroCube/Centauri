@@ -9,22 +9,22 @@ import java.util.Set;
 
 @Singleton
 public class CoreFrozenUserProvider implements FrozenUserProvider {
-    
-    private final Set<String> registry = new HashSet<>();
 
-    @Override
-    public void freeze(Player player) {
-        registry.add(player.getDatabaseIdentifier());
-    }
+	private final Set<String> registry = new HashSet<>();
 
-    @Override
-    public void unFreeze(Player player) {
-        registry.remove(player.getDatabaseIdentifier());
-    }
+	@Override
+	public void freeze(Player player) {
+		registry.add(player.getDatabaseIdentifier());
+	}
 
-    @Override
-    public boolean isFrozen(Player player) {
-        return registry.contains(player.getDatabaseIdentifier());
-    }
+	@Override
+	public void unFreeze(Player player) {
+		registry.remove(player.getDatabaseIdentifier());
+	}
+
+	@Override
+	public boolean isFrozen(Player player) {
+		return registry.contains(player.getDatabaseIdentifier());
+	}
 
 }

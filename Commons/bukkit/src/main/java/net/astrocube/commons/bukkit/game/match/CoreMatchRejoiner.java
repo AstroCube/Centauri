@@ -18,27 +18,27 @@ import java.util.Optional;
 @Singleton
 public class CoreMatchRejoiner implements MatchRejoiner {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<GameMode> findService;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<GameMode> findService;
 
-    @Override
-    public void rejoinMatch(User user, Player player) throws Exception {
+	@Override
+	public void rejoinMatch(User user, Player player) throws Exception {
 
-        Optional<Match> match = actualMatchCache.get(user.getId());
+		Optional<Match> match = actualMatchCache.get(user.getId());
 
-        if (match.isPresent()) {
+		if (match.isPresent()) {
 
-            UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user.getId(), match.get());
+			UserMatchJoiner.Origin origin = UserMatchJoiner.checkOrigin(user.getId(), match.get());
 
-            if (origin != UserMatchJoiner.Origin.WAITING) {
-                messageHandler.sendIn(player, AlertModes.ERROR,"game.rejoin.not-active");
-                return;
-            }
+			if (origin != UserMatchJoiner.Origin.WAITING) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "game.rejoin.not-active");
+				return;
+			}
 
-        } else {
-            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.not-active");
-        }
-    }
+		} else {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
+		}
+	}
 
 }

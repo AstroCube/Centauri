@@ -12,21 +12,21 @@ import java.util.List;
 @Singleton
 public class CoreTablistGenerator implements TablistGenerator {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public TablistCompound generate(Player player) {
-        return new TablistCompound() {
-            @Override
-            public List<String> getHeader() {
-                return messageHandler.getMany(player, "tablist.header");
-            }
+	@Override
+	public TablistCompound generate(Player player) {
+		return new TablistCompound() {
+			@Override
+			public List<String> getHeader() {
+				return messageHandler.getMany(player, "tablist.header");
+			}
 
-            @Override
-            public List<String> getFooter() {
-                return messageHandler.getMany(player, "tablist.footer");
-            }
-        };
-    }
+			@Override
+			public List<String> getFooter() {
+				return messageHandler.getMany(player, "tablist.footer");
+			}
+		};
+	}
 
 }

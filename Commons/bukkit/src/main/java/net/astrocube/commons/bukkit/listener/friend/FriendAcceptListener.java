@@ -26,52 +26,53 @@ import org.bukkit.event.Listener;
 
 public class FriendAcceptListener implements Listener {
 
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
-    @EventHandler
-    public void onFriendshipAction(FriendshipActionEvent event) {
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
 
-        if (event.getAction().getActionType() != FriendshipAction.Action.ACCEPT) {
-            return;
-        }
+	@EventHandler
+	public void onFriendshipAction(FriendshipActionEvent event) {
 
-        FriendshipDoc.Relation friendship = event.getAction().getFriendship();
+		if (event.getAction().getActionType() != FriendshipAction.Action.ACCEPT) {
+			return;
+		}
 
-        Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
-        Player sender = Bukkit.getPlayerByIdentifier(friendship.getSender());
+		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-        if (receiver != null) {
-            alertFriendship(receiver, friendship);
-        }
+		Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
+		Player sender = Bukkit.getPlayerByIdentifier(friendship.getSender());
 
-        if (sender != null) {
-            alertFriendship(sender, friendship);
-        }
+		if (receiver != null) {
+			alertFriendship(receiver, friendship);
+		}
 
-    }
+		if (sender != null) {
+			alertFriendship(sender, friendship);
+		}
 
-    private void alertFriendship(Player player, FriendshipDoc.Relation relation) {
+	}
 
-        String related = player.getDatabaseIdentifier().equalsIgnoreCase(relation.getSender())
-                ? relation.getReceiver() : relation.getSender();
+	private void alertFriendship(Player player, FriendshipDoc.Relation relation) {
 
-        findService.find(related).callback(userResponse ->
-                userResponse.ifSuccessful(user -> {
+		String related = player.getDatabaseIdentifier().equalsIgnoreCase(relation.getSender())
+			? relation.getReceiver() : relation.getSender();
 
-                    TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
-                            player,
-                            user
-                    );
+		findService.find(related).callback(userResponse ->
+			userResponse.ifSuccessful(user -> {
 
-                    messageHandler.sendReplacingIn(
-                            player, AlertModes.MUTED, "friend.request.accept",
-                            "%receiver%", flairFormat.getColor() + user.getDisplay()
-                    );
+				TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
+					player,
+					user
+				);
 
-                })
-        );
+				messageHandler.sendReplacingIn(
+					player, AlertModes.MUTED, "friend.request.accept",
+					"%receiver%", flairFormat.getColor() + user.getDisplay()
+				);
 
-    }
+			})
+		);
+
+	}
 
 }

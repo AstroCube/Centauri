@@ -12,29 +12,30 @@ import javax.inject.Inject;
 
 public class PlayerQuitListener implements Listener {
 
-    private @Inject FrozenUserProvider frozenUserProvider;
-    private @Inject MessageHandler messageHandler;
-    private @Inject PunishmentHandler punishmentHandler;
+	private @Inject FrozenUserProvider frozenUserProvider;
+	private @Inject MessageHandler messageHandler;
+	private @Inject PunishmentHandler punishmentHandler;
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
 
-        if (frozenUserProvider.isFrozen(event.getPlayer())) {
+		if (frozenUserProvider.isFrozen(event.getPlayer())) {
 
-            frozenUserProvider.unFreeze(event.getPlayer());
+			frozenUserProvider.unFreeze(event.getPlayer());
 
-            punishmentHandler.createPunishment(
-                    "",
-                    event.getPlayer().getDatabaseIdentifier(),
-                    messageHandler.get(event.getPlayer(), "punish.freeze.disconnect"),
-                    PunishmentDoc.Identity.Type.BAN,
-                    -1,
-                    true,
-                    false,
-                    (punishment, e) -> {}
-            );
+			punishmentHandler.createPunishment(
+				"",
+				event.getPlayer().getDatabaseIdentifier(),
+				messageHandler.get(event.getPlayer(), "punish.freeze.disconnect"),
+				PunishmentDoc.Identity.Type.BAN,
+				-1,
+				true,
+				false,
+				(punishment, e) -> {
+				}
+			);
 
-        }
+		}
 
-    }
+	}
 }

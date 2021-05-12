@@ -5,9 +5,9 @@ import net.astrocube.api.core.redis.Redis;
 
 public class RedisModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        bind(Redis.class).to(CoreRedis.class);
-        expose(Redis.class);
-    }
+	@Override
+	protected void configure() {
+		bind(Redis.class).to(CoreRedis.class);
+		expose(Redis.class);
+	}
 }

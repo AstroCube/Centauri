@@ -4,4 +4,5 @@ import net.astrocube.api.core.model.ModelProperties;
 
 @ModelProperties.RouteKey("server")
 @ModelProperties.Cache
-public interface Server extends ServerDoc.Complete {}
+public interface Server extends ServerDoc.Complete {
+}

@@ -19,53 +19,52 @@ import java.util.logging.Level;
 
 public class GameServerJoinListener implements Listener {
 
-    private @Inject FindService<Match> findService;
-    private @Inject LobbySessionManager lobbySessionManager;
-    private @Inject SpectatorSessionManager spectatorSessionManager;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject FindService<Match> findService;
+	private @Inject LobbySessionManager lobbySessionManager;
+	private @Inject SpectatorSessionManager spectatorSessionManager;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onGameUserJoin(GameUserJoinEvent event) {
+	@EventHandler
+	public void onGameUserJoin(GameUserJoinEvent event) {
 
-        findService.find(event.getMatch()).callback(matchResponse -> {
+		findService.find(event.getMatch()).callback(matchResponse -> {
 
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                try {
+			Bukkit.getScheduler().runTask(plugin, () -> {
+				try {
 
-                    if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
-                        throw new GameControlException("Match not found");
-                    }
+					if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+						throw new GameControlException("Match not found");
+					}
 
-                    switch (event.getOrigin()) {
-                        case WAITING: {
-                            lobbySessionManager.connectUser(event.getPlayer(), matchResponse.getResponse().get());
-                            break;
-                        }
-                        case SPECTATING: {
-                            spectatorSessionManager.provideFunctions(event.getPlayer(), matchResponse.getResponse().get());
-                            break;
-                        }
-                        default: {
-                            kickPlayer(event.getPlayer());
-                            break;
-                        }
-                    }
+					switch (event.getOrigin()) {
+						case WAITING: {
+							lobbySessionManager.connectUser(event.getPlayer(), matchResponse.getResponse().get());
+							break;
+						}
+						case SPECTATING: {
+							spectatorSessionManager.provideFunctions(event.getPlayer(), matchResponse.getResponse().get());
+							break;
+						}
+						default: {
+							kickPlayer(event.getPlayer());
+							break;
+						}
+					}
 
-                } catch (Exception exception) {
-                    plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", exception);
-                    kickPlayer(event.getPlayer());
-                }
-            });
+				} catch (Exception exception) {
+					plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", exception);
+					kickPlayer(event.getPlayer());
+				}
+			});
 
-        });
+		});
 
 
+	}
 
-    }
-
-    private void kickPlayer(Player player) {
-        player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
-    }
+	private void kickPlayer(Player player) {
+		player.kickPlayer(ChatColor.RED + messageHandler.get(player, "game.lobby-error"));
+	}
 
 }

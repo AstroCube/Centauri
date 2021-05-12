@@ -23,87 +23,86 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
 public abstract class AsyncModelService<Complete extends Model, Partial extends PartialModel> implements
-        CreateService<Complete, Partial>,
-        DeleteService<Complete>,
-        FindService<Complete>,
-        PaginateService<Complete>,
-        QueryService<Complete>,
-        UpdateService<Complete, Partial>
-{
+	CreateService<Complete, Partial>,
+	DeleteService<Complete>,
+	FindService<Complete>,
+	PaginateService<Complete>,
+	QueryService<Complete>,
+	UpdateService<Complete, Partial> {
 
-    private @Inject ExecutorServiceProvider executorServiceProvider;
-    private ExecutorService executorService;
+	private @Inject ExecutorServiceProvider executorServiceProvider;
+	private ExecutorService executorService;
 
-    @Inject
-    public void computeExecutorService() {
-        this.executorService = executorServiceProvider.getRegisteredService();
-    }
+	@Inject
+	public void computeExecutorService() {
+		this.executorService = executorServiceProvider.getRegisteredService();
+	}
 
-    @Override
-    public AsyncResponse<Complete> create(CreateRequest<Partial> request) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS, createSync(request), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<Complete> create(CreateRequest<Partial> request) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, createSync(request), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
-    @Override
-    public AsyncResponse<Complete> update(UpdateRequest<Partial> request) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS, updateSync(request), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<Complete> update(UpdateRequest<Partial> request) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, updateSync(request), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
-    @Override
-    public AsyncResponse<QueryResult<Complete>> query(QueryRequest<Complete> queryRequest) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS, querySync(queryRequest), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<QueryResult<Complete>> query(QueryRequest<Complete> queryRequest) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, querySync(queryRequest), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
-    @Override
-    public AsyncResponse<PaginateResult<Complete>> paginate(PaginateRequest<Complete> paginateRequest) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS,paginateSync(paginateRequest), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<PaginateResult<Complete>> paginate(PaginateRequest<Complete> paginateRequest) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, paginateSync(paginateRequest), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
-    @Override
-    public AsyncResponse<Complete> find(FindRequest<Complete> findModelRequest) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS, findSync(findModelRequest), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<Complete> find(FindRequest<Complete> findModelRequest) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, findSync(findModelRequest), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
-    @Override
-    public AsyncResponse<Void> delete(DeleteRequest<Complete> deleteRequest) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                this.deleteSync(deleteRequest);
-                return new WrappedResponse<>(Response.Status.SUCCESS, null, null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
-    }
+	@Override
+	public AsyncResponse<Void> delete(DeleteRequest<Complete> deleteRequest) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				this.deleteSync(deleteRequest);
+				return new WrappedResponse<>(Response.Status.SUCCESS, null, null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
+	}
 
 }

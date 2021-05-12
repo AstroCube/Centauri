@@ -8,14 +8,14 @@ import org.bukkit.Bukkit;
 
 public class MatchmakingErrorHandler implements MessageHandler<MatchmakingError> {
 
-    @Override
-    public Class<MatchmakingError> type() {
-        return MatchmakingError.class;
-    }
+	@Override
+	public Class<MatchmakingError> type() {
+		return MatchmakingError.class;
+	}
 
-    @Override
-    public void handleDelivery(MatchmakingError message, Metadata properties) {
-        Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(message));
-    }
+	@Override
+	public void handleDelivery(MatchmakingError message, Metadata properties) {
+		Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(message));
+	}
 
 }

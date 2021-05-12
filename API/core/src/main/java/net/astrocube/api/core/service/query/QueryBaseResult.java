@@ -6,11 +6,11 @@ import net.astrocube.api.core.message.Message;
 
 public interface QueryBaseResult extends Message {
 
-    /**
-     * Complete collection of data that will return as part of pagination
-     * @return found models
-     */
-    @JsonProperty("data")
-    ArrayNode getFoundModels();
+	/**
+	 * Complete collection of data that will return as part of pagination
+	 * @return found models
+	 */
+	@JsonProperty("data")
+	ArrayNode getFoundModels();
 
 }

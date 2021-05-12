@@ -14,46 +14,46 @@ import java.util.logging.Level;
 
 public class EventListenerLoader implements Loader {
 
-    private @Inject AuthenticationListenerLoader authenticationListenerLoader;
-    private @Inject GameListenerLoader gameListenerLoader;
-    private @Inject MatchmakingListenerLoader matchmakingListenerLoader;
-    private @Inject FriendListenerLoader friendListenerLoader;
-    private @Inject MatchListenerLoader matchListenerLoader;
-    private @Inject UserListenerLoader userListenerLoader;
-    private @Inject SpectatorListenerLoader spectatorListenerLoader;
-    private @Inject LobbyListenerLoader lobbyListenerLoader;
-    private @Inject InteractionListenerLoader interactionListenerLoader;
-    private @Inject StaffListenerLoader staffListenerLoader;
+	private @Inject AuthenticationListenerLoader authenticationListenerLoader;
+	private @Inject GameListenerLoader gameListenerLoader;
+	private @Inject MatchmakingListenerLoader matchmakingListenerLoader;
+	private @Inject FriendListenerLoader friendListenerLoader;
+	private @Inject MatchListenerLoader matchListenerLoader;
+	private @Inject UserListenerLoader userListenerLoader;
+	private @Inject SpectatorListenerLoader spectatorListenerLoader;
+	private @Inject LobbyListenerLoader lobbyListenerLoader;
+	private @Inject InteractionListenerLoader interactionListenerLoader;
+	private @Inject StaffListenerLoader staffListenerLoader;
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void load() {
+	@Override
+	public void load() {
 
-        plugin.getLogger().log(Level.INFO, "Initializing event listeners");
+		plugin.getLogger().log(Level.INFO, "Initializing event listeners");
 
-        if (plugin.getConfig().getBoolean("authentication.enabled")) {
-            authenticationListenerLoader.registerEvents();
-        }
+		if (plugin.getConfig().getBoolean("authentication.enabled")) {
+			authenticationListenerLoader.registerEvents();
+		}
 
-        registerEvents(
-                gameListenerLoader,
-                matchListenerLoader,
-                matchmakingListenerLoader,
-                friendListenerLoader,
-                userListenerLoader,
-                lobbyListenerLoader,
-                spectatorListenerLoader,
-                interactionListenerLoader,
-                staffListenerLoader
-        );
+		registerEvents(
+			gameListenerLoader,
+			matchListenerLoader,
+			matchmakingListenerLoader,
+			friendListenerLoader,
+			userListenerLoader,
+			lobbyListenerLoader,
+			spectatorListenerLoader,
+			interactionListenerLoader,
+			staffListenerLoader
+		);
 
-    }
+	}
 
-    private void registerEvents(ListenerLoader... loaders) {
-        for (ListenerLoader loader : loaders) {
-            loader.registerEvents();
-        }
-    }
+	private void registerEvents(ListenerLoader... loaders) {
+		for (ListenerLoader loader : loaders) {
+			loader.registerEvents();
+		}
+	}
 
 }

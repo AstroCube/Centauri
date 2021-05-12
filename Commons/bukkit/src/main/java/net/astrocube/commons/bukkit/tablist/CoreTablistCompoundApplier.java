@@ -14,28 +14,28 @@ import java.util.List;
 @Singleton
 public class CoreTablistCompoundApplier implements TablistCompoundApplier {
 
-    private @Inject TablistGenerator tablistGenerator;
+	private @Inject TablistGenerator tablistGenerator;
 
-    @Override
-    public void apply(Player player) {
-        TablistCompound compound = tablistGenerator.generate(player);
-        player.setPlayerListHeaderFooter(
-                generateSpaces(compound.getHeader()),
-                generateSpaces(compound.getFooter())
-        );
-    }
+	@Override
+	public void apply(Player player) {
+		TablistCompound compound = tablistGenerator.generate(player);
+		player.setPlayerListHeaderFooter(
+			generateSpaces(compound.getHeader()),
+			generateSpaces(compound.getFooter())
+		);
+	}
 
-    private BaseComponent[] generateSpaces(List<String> compound) {
+	private BaseComponent[] generateSpaces(List<String> compound) {
 
-        ComponentBuilder componentBuilder = new ComponentBuilder("");
+		ComponentBuilder componentBuilder = new ComponentBuilder("");
 
-        for (int i = 0; compound.size() > i; i++) {
-            if (i != 0) {
-                componentBuilder.append("\n");
-            }
-            componentBuilder.appendLegacy(compound.get(i));
-        }
-        return componentBuilder.create();
-    }
+		for (int i = 0; compound.size() > i; i++) {
+			if (i != 0) {
+				componentBuilder.append("\n");
+			}
+			componentBuilder.appendLegacy(compound.get(i));
+		}
+		return componentBuilder.create();
+	}
 
 }

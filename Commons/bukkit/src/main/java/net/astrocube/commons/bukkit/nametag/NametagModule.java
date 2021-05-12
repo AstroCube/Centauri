@@ -8,11 +8,11 @@ import net.astrocube.commons.bukkit.nametag.lobby.CoreLobbyNametagRenderer;
 
 public class NametagModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        bind(NametagRegistry.class).to(DefaultNametagRegistry.class).in(Scopes.SINGLETON);
-        bind(LobbyNametagRenderer.class).to(CoreLobbyNametagRenderer.class).in(Scopes.SINGLETON);
-        expose(NametagRegistry.class);
-        expose(LobbyNametagRenderer.class);
-    }
+	@Override
+	protected void configure() {
+		bind(NametagRegistry.class).to(DefaultNametagRegistry.class).in(Scopes.SINGLETON);
+		bind(LobbyNametagRenderer.class).to(CoreLobbyNametagRenderer.class).in(Scopes.SINGLETON);
+		expose(NametagRegistry.class);
+		expose(LobbyNametagRenderer.class);
+	}
 }

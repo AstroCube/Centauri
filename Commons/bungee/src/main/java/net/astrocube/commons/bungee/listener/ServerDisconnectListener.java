@@ -21,51 +21,51 @@ import java.util.logging.Level;
 
 public class ServerDisconnectListener implements Listener {
 
-    private @Inject UserProvideHelper userProvideHelper;
-    private @Inject SessionService sessionService;
-    private @Inject SessionRegistryManager sessionRegistryManager;
-    private @Inject Plugin plugin;
-    private @Inject Redis redis;
-    private final Channel<SessionSwitchWrapper> channel;
+	private @Inject UserProvideHelper userProvideHelper;
+	private @Inject SessionService sessionService;
+	private @Inject SessionRegistryManager sessionRegistryManager;
+	private @Inject Plugin plugin;
+	private @Inject Redis redis;
+	private final Channel<SessionSwitchWrapper> channel;
 
-    @Inject
-    public ServerDisconnectListener(Messenger messenger) {
-        channel = messenger.getChannel(SessionSwitchWrapper.class);
-    }
+	@Inject
+	public ServerDisconnectListener(Messenger messenger) {
+		channel = messenger.getChannel(SessionSwitchWrapper.class);
+	}
 
-    @EventHandler
-    public void onServerDisconnect(PlayerDisconnectEvent event) {
+	@EventHandler
+	public void onServerDisconnect(PlayerDisconnectEvent event) {
 
-        try {
-            Optional<User> user = userProvideHelper.getUserByName(event.getPlayer().getName());
+		try {
+			Optional<User> user = userProvideHelper.getUserByName(event.getPlayer().getName());
 
-            if (user.isPresent()) {
-                sessionService.serverDisconnect(user.get().getId());
-                sessionRegistryManager.unregister(user.get().getId());
-                channel.sendMessage(new SessionSwitchWrapper() {
-                    @Override
-                    public User getUser() {
-                        return user.get();
-                    }
+			if (user.isPresent()) {
+				sessionService.serverDisconnect(user.get().getId());
+				sessionRegistryManager.unregister(user.get().getId());
+				channel.sendMessage(new SessionSwitchWrapper() {
+					@Override
+					public User getUser() {
+						return user.get();
+					}
 
-                    @Override
-                    public boolean isConnecting() {
-                        return false;
-                    }
-                }, new HashMap<>());
+					@Override
+					public boolean isConnecting() {
+						return false;
+					}
+				}, new HashMap<>());
 
-                try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    jedis.del("premium:" + user.get().getUsername());
-                } catch (Exception e) {
-                    throw new Exception("Unable to store premium state");
-                }
+				try (Jedis jedis = redis.getRawConnection().getResource()) {
+					jedis.del("premium:" + user.get().getUsername());
+				} catch (Exception e) {
+					throw new Exception("Unable to store premium state");
+				}
 
-            }
+			}
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error while obtaining user record", e);
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "Error while obtaining user record", e);
+		}
 
-    }
+	}
 
 }

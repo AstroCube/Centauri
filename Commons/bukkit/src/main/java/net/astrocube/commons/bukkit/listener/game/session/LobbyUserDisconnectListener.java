@@ -16,28 +16,28 @@ import java.util.logging.Level;
 
 public class LobbyUserDisconnectListener implements Listener {
 
-    private @Inject LobbySessionManager lobbySessionManager;
-    private @Inject FindService<Match> findService;
-    private @Inject Plugin plugin;
+	private @Inject LobbySessionManager lobbySessionManager;
+	private @Inject FindService<Match> findService;
+	private @Inject Plugin plugin;
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onGameUserJoin(GameUserDisconnectEvent event) {
-        findService.find(event.getMatch()).callback(matchResponse -> {
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onGameUserJoin(GameUserDisconnectEvent event) {
+		findService.find(event.getMatch()).callback(matchResponse -> {
 
-            try {
+			try {
 
-                if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
-                    throw new GameControlException("Unsuccessful query at error update");
-                }
+				if (!matchResponse.isSuccessful() || !matchResponse.getResponse().isPresent()) {
+					throw new GameControlException("Unsuccessful query at error update");
+				}
 
-                if (event.getOrigin() == UserMatchJoiner.Origin.WAITING) {
-                    lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
-                }
+				if (event.getOrigin() == UserMatchJoiner.Origin.WAITING) {
+					lobbySessionManager.disconnectUser(event.getPlayer(), matchResponse.getResponse().get());
+				}
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
-            }
-        });
-    }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.WARNING, "There was an error while updating the match assignation.", e);
+			}
+		});
+	}
 
 }

@@ -10,18 +10,18 @@ import java.util.Set;
  */
 public interface MatchAssignable {
 
-    /**
-     * @return {@link User} id of the assignable
-     * responsible. Can be just one in case of
-     * SOLO playing.
-     */
-    String getResponsible();
+	/**
+	 * @return {@link User} id of the assignable
+	 * responsible. Can be just one in case of
+	 * SOLO playing.
+	 */
+	String getResponsible();
 
-    /**
-     * @return involved {@link User}s id excluding
-     * the responsible. Generally used in non SOLO
-     * matchmaking.
-     */
-    Set<String> getInvolved();
+	/**
+	 * @return involved {@link User}s id excluding
+	 * the responsible. Generally used in non SOLO
+	 * matchmaking.
+	 */
+	Set<String> getInvolved();
 
 }

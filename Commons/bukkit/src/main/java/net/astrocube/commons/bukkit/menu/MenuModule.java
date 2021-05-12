@@ -7,10 +7,10 @@ import net.astrocube.commons.bukkit.admin.AdminMenuModule;
 
 public class MenuModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new AdminMenuModule());
-        bind(ShapedMenuGenerator.class).to(CoreShapedMenuGenerator.class);
-        expose(ShapedMenuGenerator.class);
-    }
+	@Override
+	public void configure() {
+		install(new AdminMenuModule());
+		bind(ShapedMenuGenerator.class).to(CoreShapedMenuGenerator.class);
+		expose(ShapedMenuGenerator.class);
+	}
 }

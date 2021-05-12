@@ -20,59 +20,59 @@ import java.util.function.Consumer;
 
 public class AdminSubGameModeSelectorMenu {
 
-    private @Inject MessageHandler playerMessageHandler;
-    private @Inject SpectateRequestAssigner spectateRequestAssigner;
-    private @Inject ShapedMenuGenerator shapedMenuGenerator;
-    private @Inject AdminGameModeSelectorMenu adminGameModeSelectorMenu;
+	private @Inject MessageHandler playerMessageHandler;
+	private @Inject SpectateRequestAssigner spectateRequestAssigner;
+	private @Inject ShapedMenuGenerator shapedMenuGenerator;
+	private @Inject AdminGameModeSelectorMenu adminGameModeSelectorMenu;
 
-    public Inventory createSubGameModeSelectorMenu(Player player, GameMode gameMode) {
+	public Inventory createSubGameModeSelectorMenu(Player player, GameMode gameMode) {
 
-        Set<ShapedMenuGenerator.BaseClickable> baseClickableList = new HashSet<>();
+		Set<ShapedMenuGenerator.BaseClickable> baseClickableList = new HashSet<>();
 
-        for (SubGameMode subGameMode : gameMode.getSubTypes()) {
+		for (SubGameMode subGameMode : gameMode.getSubTypes()) {
 
-            baseClickableList.add(
-                    new ShapedMenuGenerator.BaseClickable() {
-                        @Override
-                        public Consumer<Player> getClick() {
-                            return p ->
-                                    spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
-                        }
+			baseClickableList.add(
+				new ShapedMenuGenerator.BaseClickable() {
+					@Override
+					public Consumer<Player> getClick() {
+						return p ->
+							spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
+					}
 
-                        @Override
-                        public ItemStack getStack() {
-                            return ItemBuilder.newBuilder(Material.PAPER)
-                                    .setName(
-                                            ChatColor.BLUE +
-                                                    playerMessageHandler.get(
-                                                            player,
-                                                            "admin-panel.subGamemode.items." + subGameMode.getId()
-                                                    )
-                                    )
-                                    .setLore(
-                                            playerMessageHandler.getMany(
-                                                    player,
-                                                    "admin-panel.subGamemode.lore"
-                                            )
-                                    )
-                                    .addFlag(ItemFlag.HIDE_ATTRIBUTES)
-                                    .build();
-                        }
-                    }
-            );
+					@Override
+					public ItemStack getStack() {
+						return ItemBuilder.newBuilder(Material.PAPER)
+							.setName(
+								ChatColor.BLUE +
+									playerMessageHandler.get(
+										player,
+										"admin-panel.subGamemode.items." + subGameMode.getId()
+									)
+							)
+							.setLore(
+								playerMessageHandler.getMany(
+									player,
+									"admin-panel.subGamemode.lore"
+								)
+							)
+							.addFlag(ItemFlag.HIDE_ATTRIBUTES)
+							.build();
+					}
+				}
+			);
 
-        }
+		}
 
 
-        return shapedMenuGenerator.generate(
-                player,
-                playerMessageHandler.get(
-                        player,
-                        "admin-panel.subGamemode.title"
-                ),
-                (p) -> adminGameModeSelectorMenu.createGameModeSelectorMenu(player),
-                baseClickableList
-        );
-    }
+		return shapedMenuGenerator.generate(
+			player,
+			playerMessageHandler.get(
+				player,
+				"admin-panel.subGamemode.title"
+			),
+			(p) -> adminGameModeSelectorMenu.createGameModeSelectorMenu(player),
+			baseClickableList
+		);
+	}
 
 }

@@ -5,8 +5,8 @@ import net.astrocube.api.core.message.Message;
 
 public interface PaginateBaseResult extends Message {
 
-    ArrayNode getData();
+	ArrayNode getData();
 
-    PaginateResult.Pagination getPagination();
+	PaginateResult.Pagination getPagination();
 
 }

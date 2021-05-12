@@ -4,54 +4,54 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeParser {
 
-    public static long parseStringDuration(String input) {
-        if (input == null || input.isEmpty()) {
-            return -1L;
-        }
-        long result = 0L;
-        StringBuilder number = new StringBuilder();
+	public static long parseStringDuration(String input) {
+		if (input == null || input.isEmpty()) {
+			return -1L;
+		}
+		long result = 0L;
+		StringBuilder number = new StringBuilder();
 
-        for (int i = 0; i < input.length(); ++i) {
-            final char c = input.charAt(i);
+		for (int i = 0; i < input.length(); ++i) {
+			final char c = input.charAt(i);
 
-            if (Character.isDigit(c)) {
-                number.append(c);
-            } else {
-                final String str = number.toString();
+			if (Character.isDigit(c)) {
+				number.append(c);
+			} else {
+				final String str = number.toString();
 
-                if (Character.isLetter(c) && !str.isEmpty()) {
-                    result += convert(Integer.parseInt(str), c);
-                    number = new StringBuilder();
-                }
-            }
-        }
-        return result;
-    }
+				if (Character.isLetter(c) && !str.isEmpty()) {
+					result += convert(Integer.parseInt(str), c);
+					number = new StringBuilder();
+				}
+			}
+		}
+		return result;
+	}
 
-    private static long convert(final int value, final char unit) {
-        switch (unit) {
-            case 'y': {
-                return value * TimeUnit.DAYS.toMillis(365L);
-            }
-            case 'M': {
-                return value * TimeUnit.DAYS.toMillis(30L);
-            }
-            case 'd': {
-                return value * TimeUnit.DAYS.toMillis(1L);
-            }
-            case 'h': {
-                return value * TimeUnit.HOURS.toMillis(1L);
-            }
-            case 'm': {
-                return value * TimeUnit.MINUTES.toMillis(1L);
-            }
-            case 's': {
-                return value * TimeUnit.SECONDS.toMillis(1L);
-            }
-            default: {
-                return -1L;
-            }
-        }
-    }
+	private static long convert(final int value, final char unit) {
+		switch (unit) {
+			case 'y': {
+				return value * TimeUnit.DAYS.toMillis(365L);
+			}
+			case 'M': {
+				return value * TimeUnit.DAYS.toMillis(30L);
+			}
+			case 'd': {
+				return value * TimeUnit.DAYS.toMillis(1L);
+			}
+			case 'h': {
+				return value * TimeUnit.HOURS.toMillis(1L);
+			}
+			case 'm': {
+				return value * TimeUnit.MINUTES.toMillis(1L);
+			}
+			case 's': {
+				return value * TimeUnit.SECONDS.toMillis(1L);
+			}
+			default: {
+				return -1L;
+			}
+		}
+	}
 
 }

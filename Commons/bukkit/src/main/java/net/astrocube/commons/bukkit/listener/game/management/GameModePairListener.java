@@ -12,19 +12,19 @@ import java.util.logging.Level;
 
 public class GameModePairListener implements Listener {
 
-    private @Inject GameControlPair gameControlPair;
-    private @Inject Plugin plugin;
+	private @Inject GameControlPair gameControlPair;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onGameModePair(GameModePairEvent event) {
+	@EventHandler
+	public void onGameModePair(GameModePairEvent event) {
 
-        try {
-            gameControlPair.validatePair(event.getGameMode(), event.getSubGameMode());
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error while pairing GameMode", e);
-            Bukkit.shutdown();
-        }
+		try {
+			gameControlPair.validatePair(event.getGameMode(), event.getSubGameMode());
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "Error while pairing GameMode", e);
+			Bukkit.shutdown();
+		}
 
-    }
+	}
 
 }

@@ -4,10 +4,10 @@ import com.google.api.client.http.HttpRequestFactory;
 
 public interface RequestFactoryResolver {
 
-    /**
-     * Will resolve configuration binding to create request factory
-     * @return factory
-     */
-    HttpRequestFactory configureFactory();
+	/**
+	 * Will resolve configuration binding to create request factory
+	 * @return factory
+	 */
+	HttpRequestFactory configureFactory();
 
 }

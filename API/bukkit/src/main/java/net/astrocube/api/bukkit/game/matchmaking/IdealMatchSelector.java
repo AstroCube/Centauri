@@ -12,11 +12,11 @@ import java.util.Set;
  */
 public interface IdealMatchSelector {
 
-    /**
-     * Sort the ideal match to be paired at the matchmaking.
-     * @param matches to be sorted
-     * @return ideal match to be used
-     */
-    Optional<Match> sortAvailableMatches(Set<Match> matches);
+	/**
+	 * Sort the ideal match to be paired at the matchmaking.
+	 * @param matches to be sorted
+	 * @return ideal match to be used
+	 */
+	Optional<Match> sortAvailableMatches(Set<Match> matches);
 
 }

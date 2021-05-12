@@ -8,22 +8,22 @@ import java.util.function.BiConsumer;
 
 public interface PunishmentBuilder {
 
-    String getReason();
+	String getReason();
 
-    PunishmentBuilder setReason(String reason);
+	PunishmentBuilder setReason(String reason);
 
-    long getDuration();
+	long getDuration();
 
-    PunishmentBuilder setDuration(long duration);
+	PunishmentBuilder setDuration(long duration);
 
-    User getIssuer();
+	User getIssuer();
 
-    User getTarget();
+	User getTarget();
 
-    PunishmentDoc.Identity.Type getType();
+	PunishmentDoc.Identity.Type getType();
 
-    void setType(PunishmentDoc.Identity.Type type);
+	void setType(PunishmentDoc.Identity.Type type);
 
-    void build(PunishmentHandler punishmentHandler, BiConsumer<Punishment, Exception> punishmentCallback);
+	void build(PunishmentHandler punishmentHandler, BiConsumer<Punishment, Exception> punishmentCallback);
 
 }

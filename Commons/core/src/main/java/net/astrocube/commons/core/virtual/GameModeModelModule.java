@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.RedisModelService;
 
 public class GameModeModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(GameMode.class, GameModeDoc.Partial.class, model -> {
-            TypeLiteral<RedisModelService<GameMode, GameModeDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<RedisModelService<GameMode, GameModeDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(GameMode.class, GameModeDoc.Partial.class, model -> {
+			TypeLiteral<RedisModelService<GameMode, GameModeDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<RedisModelService<GameMode, GameModeDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

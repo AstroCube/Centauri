@@ -14,26 +14,26 @@ import javax.annotation.Nullable;
 @Singleton
 public class PasswordGateway implements AuthenticationGateway {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void startProcessing(User user) {
-        @Nullable Player player = Bukkit.getPlayer(user.getUsername());
+	@Override
+	public void startProcessing(User user) {
+		@Nullable Player player = Bukkit.getPlayer(user.getUsername());
 
-        if (player != null) {
-            player.sendTitle(
-                    new Title(
-                            messageHandler.get(player, "authentication.password-title").replace(
-                                    "%player%", user.getDisplay()),
-                            messageHandler.get(player, "authentication.password-sub")
-                    )
-            );
-        }
-    }
+		if (player != null) {
+			player.sendTitle(
+				new Title(
+					messageHandler.get(player, "authentication.password-title").replace(
+						"%player%", user.getDisplay()),
+					messageHandler.get(player, "authentication.password-sub")
+				)
+			);
+		}
+	}
 
-    @Override
-    public String getName() {
-        return "Password";
-    }
+	@Override
+	public String getName() {
+		return "Password";
+	}
 
 }

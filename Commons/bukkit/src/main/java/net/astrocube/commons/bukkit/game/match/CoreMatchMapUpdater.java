@@ -16,45 +16,45 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class CoreMatchMapUpdater implements MatchMapUpdater {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
-    private @Inject FindService<Match> findService;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
+	private @Inject FindService<Match> findService;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void updateMatch(String match, String map, String requester) {
-        findService.find(match).callback(matchCallback -> {
+	@Override
+	public void updateMatch(String match, String map, String requester) {
+		findService.find(match).callback(matchCallback -> {
 
-            if (!matchCallback.isSuccessful()) {
-                alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
-            }
+			if (!matchCallback.isSuccessful()) {
+				alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
+			}
 
-            matchCallback.ifSuccessful(matchResponse -> {
-                matchResponse.setMap(map);
-                updateService.update(matchResponse).callback(updateCallback -> {
+			matchCallback.ifSuccessful(matchResponse -> {
+				matchResponse.setMap(map);
+				updateService.update(matchResponse).callback(updateCallback -> {
 
-                    if (!updateCallback.isSuccessful()) {
-                        alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
-                    }
+					if (!updateCallback.isSuccessful()) {
+						alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
+					}
 
-                    alertMessage(requester, AlertModes.INFO, "game.admin.lobby.map.success");
-                });
-            });
-        });
-    }
+					alertMessage(requester, AlertModes.INFO, "game.admin.lobby.map.success");
+				});
+			});
+		});
+	}
 
-    private void alertMessage(String id, String mode, String translation) {
+	private void alertMessage(String id, String mode, String translation) {
 
-        Player player = Bukkit.getPlayerByIdentifier(id);
+		Player player = Bukkit.getPlayerByIdentifier(id);
 
-        if (player != null) {
-            Bukkit.getScheduler().runTask(
-                    plugin,
-                    () -> {
-                        messageHandler.sendIn(player, mode, translation);
-                        player.closeInventory();
-                    });
-        }
-    }
+		if (player != null) {
+			Bukkit.getScheduler().runTask(
+				plugin,
+				() -> {
+					messageHandler.sendIn(player, mode, translation);
+					player.closeInventory();
+				});
+		}
+	}
 
 }

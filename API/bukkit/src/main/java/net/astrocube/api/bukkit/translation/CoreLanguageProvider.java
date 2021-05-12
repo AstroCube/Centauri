@@ -12,24 +12,24 @@ import java.util.logging.Level;
 
 public class CoreLanguageProvider implements Linguist<Player> {
 
-    private @Inject FindService<User> userFindService;
+	private @Inject FindService<User> userFindService;
 
-    @Override
-    @Nullable
-    public String getLanguage(Player player) {
-        User user;
+	@Override
+	@Nullable
+	public String getLanguage(Player player) {
+		User user;
 
-        try {
-            user = this.userFindService.findSync(player.getDatabaseIdentifier());
-        } catch (Exception ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Error while finding user data for " + player.getName(), ex);
-            return null;
-        }
+		try {
+			user = this.userFindService.findSync(player.getDatabaseIdentifier());
+		} catch (Exception ex) {
+			Bukkit.getLogger().log(Level.SEVERE, "Error while finding user data for " + player.getName(), ex);
+			return null;
+		}
 
-        if (user == null) {
-            return null;
-        }
+		if (user == null) {
+			return null;
+		}
 
-        return user.getLanguage();
-    }
+		return user.getLanguage();
+	}
 }

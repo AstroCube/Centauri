@@ -13,21 +13,21 @@ import java.util.logging.Level;
 @Singleton
 public class CoreLobbyModeProvider implements LobbyModeProvider {
 
-    private @Inject FindService<GameMode> findService;
-    private @Inject Plugin plugin;
+	private @Inject FindService<GameMode> findService;
+	private @Inject Plugin plugin;
 
-    @Override
-    public Optional<GameMode> getRegisteredMode() {
+	@Override
+	public Optional<GameMode> getRegisteredMode() {
 
-        try {
-            return Optional.of(this.findService.findSync(plugin.getConfig().getString("gamemode")));
-        } catch (Exception ex) {
-            plugin.getLogger().log(Level.WARNING,
-                    "Could not provide correctly GameMode. This may cause some functionalities to fail.", ex
-            );
-        }
+		try {
+			return Optional.of(this.findService.findSync(plugin.getConfig().getString("gamemode")));
+		} catch (Exception ex) {
+			plugin.getLogger().log(Level.WARNING,
+				"Could not provide correctly GameMode. This may cause some functionalities to fail.", ex
+			);
+		}
 
-        return Optional.empty();
-    }
+		return Optional.empty();
+	}
 
 }

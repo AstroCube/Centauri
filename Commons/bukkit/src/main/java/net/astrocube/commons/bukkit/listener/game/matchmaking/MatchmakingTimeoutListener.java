@@ -10,12 +10,12 @@ import org.bukkit.event.Listener;
 
 public class MatchmakingTimeoutListener implements Listener {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @EventHandler
-    public void onMatchmakingError(MatchmakingErrorEvent event) {
-        GameControlHelper.getPlayersFromRequest(
-                event.getMatchmakingError().getRequest()).forEach(player -> messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.timeout"));
-    }
+	@EventHandler
+	public void onMatchmakingError(MatchmakingErrorEvent event) {
+		GameControlHelper.getPlayersFromRequest(
+			event.getMatchmakingError().getRequest()).forEach(player -> messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.timeout"));
+	}
 
 }

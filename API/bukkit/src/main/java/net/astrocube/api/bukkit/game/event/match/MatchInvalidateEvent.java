@@ -9,17 +9,17 @@ import org.bukkit.event.HandlerList;
 @AllArgsConstructor
 public class MatchInvalidateEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final String match;
-    private final boolean graceTime;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final String match;
+	private final boolean graceTime;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }
