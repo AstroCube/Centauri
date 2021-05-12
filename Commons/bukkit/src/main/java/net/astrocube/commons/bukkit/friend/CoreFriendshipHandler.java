@@ -67,8 +67,14 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 	@Override
 	public boolean existsFriendRequest(String from, String to) {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			return jedis.exists("friendship:" + from + ":" + to) ||
-				jedis.exists("friendship:" + to + ":" + from);
+			return jedis.exists("friendship:" + from + ":" + to);
+		}
+	}
+
+	@Override
+	public void deleteFriendRequest(String issuer, String receiver) {
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			jedis.del("friendship:" + issuer + ":" + receiver);
 		}
 	}
 

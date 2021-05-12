@@ -8,7 +8,6 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.friend.FriendshipHandler;
-import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -36,10 +35,11 @@ public class AcceptSubCommand implements CommandClass {
 			}
 
 			if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-sent");
+				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.no-friend-request");
 				return;
 			}
 
+			friendshipHandler.deleteFriendRequest(targetUser.getId(), user.getId());
 			friendshipHandler.createFriendship(user.getId(), targetUser.getId());
 
 		});

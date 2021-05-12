@@ -13,6 +13,8 @@ public interface FriendshipHandler {
 
 	boolean existsFriendRequest(String issuer, String receiver);
 
+	void deleteFriendRequest(String issuer, String receiver);
+
 	void createFriendRequest(String issuer, String receiver) throws JsonProcessingException;
 
 	void forceFriendship(String issuer, String first, String second, boolean alerted);

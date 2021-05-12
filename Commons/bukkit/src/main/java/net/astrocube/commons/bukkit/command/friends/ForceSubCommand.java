@@ -89,7 +89,14 @@ public class ForceSubCommand implements CommandClass {
 						}
 
 						friendshipHandler.forceFriendship(issuer, secondUser.get().getId(), user.get().getId(), !silent);
-
+						messageHandler.sendReplacingIn(
+							player, AlertModes.INFO, "friends.forced.simple.sender",
+							"%player%", target.getName()
+						);
+						messageHandler.send(
+							target, AlertModes.INFO, "friends.forced.simple.target",
+							"%player%", player.getName()
+						);
 					});
 
 
