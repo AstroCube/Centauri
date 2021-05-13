@@ -3,10 +3,11 @@ package net.astrocube.commons.bukkit.whisper;
 import me.fixeddev.minecraft.player.Player;
 import net.astrocube.api.core.message.MessageHandler;
 import net.astrocube.api.core.message.Metadata;
+import org.bukkit.Bukkit;
 
 public class WhisperListener implements MessageHandler<WhisperMessage> {
 
-	private me.yushust.message.MessageHandler messageHandler;
+	private final me.yushust.message.MessageHandler messageHandler;
 
 	WhisperListener(me.yushust.message.MessageHandler messageHandler) {
 		this.messageHandler = messageHandler;
@@ -19,7 +20,7 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
 	@Override
 	public void handleDelivery(WhisperMessage message, Metadata properties) {
-		Player target = getPlayerById(message.targetId());
+		Player target = Bukkit.getPlayerByIdentifier(message.targetId());
 
 		if (target == null) {
 			return; // The player is not online there.
@@ -30,10 +31,6 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 				"%sender%", message.senderDisplay(),
 				"%target%", message.targetDisplay(),
 				"%message%", message);
-	}
-
-	private Player getPlayerById(String id) {
-		return null;
 	}
 
 }

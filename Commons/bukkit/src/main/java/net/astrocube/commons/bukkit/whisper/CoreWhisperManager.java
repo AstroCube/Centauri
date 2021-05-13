@@ -56,7 +56,6 @@ public class CoreWhisperManager implements WhisperManager {
 			return CompletableFuture.supplyAsync(() -> {
 				try {
 					whisperMessageChannel.sendMessage(whisperMessage, new HashMap<>());
-
 					return new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage);
 				} catch (JsonProcessingException e) {
 					return new CoreWhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
