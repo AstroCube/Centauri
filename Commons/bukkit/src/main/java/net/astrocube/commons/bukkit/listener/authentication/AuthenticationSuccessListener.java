@@ -53,11 +53,8 @@ public class AuthenticationSuccessListener implements Listener {
                     .replace("%player%", event.getPlayer().getName())
             );
 
-            plugin.getLogger().info("User " + user.getUsername() + "Authentication Success");
 
             if (cloudStatusProvider.hasCloudHooked()) {
-
-                plugin.getLogger().info("User " + user.getUsername() + "Teleporting at... " + user.getSession().getLastLobby());
 
                 serverTeleportRetry.attemptGroupTeleport(
                         user.getUsername(),
