@@ -3,13 +3,13 @@ package net.astrocube.commons.bukkit.whisper;
 import net.astrocube.api.core.message.Message;
 
 public interface WhisperMessage extends Message {
-	String senderId();
+	String getSenderId();
 
-	String senderDisplay();
+	String getSenderDisplay();
 
-	String targetId();
+	String getTargetId();
 
-	String targetDisplay();
+	String getTargetDisplay();
 
-	String message();
+	String getMessage();
 }

@@ -23,27 +23,27 @@ public class CoreWhisperMessage implements WhisperMessage {
 	}
 
 	@Override
-	public String senderId() {
+	public String getSenderId() {
 		return senderId;
 	}
 
 	@Override
-	public String senderDisplay() {
+	public String getSenderDisplay() {
 		return senderDisplay;
 	}
 
 	@Override
-	public String targetId() {
+	public String getTargetId() {
 		return targetId;
 	}
 
 	@Override
-	public String targetDisplay() {
+	public String getTargetDisplay() {
 		return targetDisplay;
 	}
 
 	@Override
-	public String message() {
+	public String getMessage() {
 		return message;
 	}
 }

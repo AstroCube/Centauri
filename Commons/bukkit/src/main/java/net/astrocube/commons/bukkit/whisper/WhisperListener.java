@@ -20,10 +20,7 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
 	@Override
 	public void handleDelivery(WhisperMessage message, Metadata properties) {
-		System.out.println("sender" + message.senderId());
-		System.out.println("target: " + message.targetId());
-		System.out.println("message: " + message.message());
-		Player target = Bukkit.getPlayerByIdentifier(message.targetId());
+		Player target = Bukkit.getPlayerByIdentifier(message.getTargetId());
 
 		if (target == null) {
 			return; // The player is not online there.
@@ -31,8 +28,8 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
 		messageHandler
 			.sendReplacing(target, "whisper.target",
-				"%sender%", message.senderDisplay(),
-				"%target%", message.targetDisplay(),
+				"%sender%", message.getSenderDisplay(),
+				"%target%", message.getTargetDisplay(),
 				"%message%", message);
 	}
 
