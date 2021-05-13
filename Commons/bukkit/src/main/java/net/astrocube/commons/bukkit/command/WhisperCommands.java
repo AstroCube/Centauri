@@ -67,14 +67,19 @@ public class WhisperCommands implements CommandClass {
 						}
 
 						whisperManager.sendWhisper(sender, targetUser, user, message)
-							.thenAccept(whisperResponse -> {
-								if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
-									messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-								} else if (whisperResponse.result() == WhisperResponse.Result.FAILED_ERROR) {
-									whisperResponse.errors().forEach(e ->
-										Bukkit.getLogger().log(Level.WARNING, "Failed to send message", e));
+							.whenComplete((whisperResponse, error) -> {
+								try {
+									if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
+										messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
+									} else if (whisperResponse.result() == WhisperResponse.Result.FAILED_ERROR) {
+										whisperResponse.errors().forEach(e ->
+											Bukkit.getLogger().log(Level.WARNING, "Failed to send message", e));
+									}
+									// handle more errors!
+								} catch (Exception e) {
+									//TODO: remove this
+									e.printStackTrace();
 								}
-								// handle more errors!
 							});
 
 					});
