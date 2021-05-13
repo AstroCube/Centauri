@@ -53,13 +53,11 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
 			translation = "punish.ban.message-temporal";
 		}
 
-		Date date = Date.from(punishment.getExpiration().atZone(ZoneOffset.systemDefault()).toInstant());
-
 		String finalMessage = messageHandler.replacing(
 			player, translation,
 			"%reason%", punishment.getReason(),
 			"%expires%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
-				date,
+				Date.from(punishment.getExpiration().atZone(ZoneOffset.systemDefault()).toInstant()),
 				user.getLanguage()
 			)
 		);
