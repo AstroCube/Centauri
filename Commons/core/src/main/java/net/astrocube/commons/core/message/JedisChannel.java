@@ -67,7 +67,9 @@ public class JedisChannel<T extends Message> implements Channel<T> {
 		message.putPOJO("message", object);
 
 		try (Jedis jedis = jedisPool.getResource()) {
+			System.out.println("sending xd");
 			jedis.publish("centauri_redis", mapper.writeValueAsString(message));
+			System.out.println("sent!");
 		}
 
 		return this;
