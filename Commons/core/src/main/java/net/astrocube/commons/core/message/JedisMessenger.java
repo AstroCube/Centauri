@@ -37,6 +37,7 @@ public class JedisMessenger implements Messenger {
 		this.pubSub = new JedisPubSub() {
 			@Override
 			public void onMessage(String channel, String message) {
+				System.out.println("message received");
 				try {
 					JsonNode jsonMessage = (ObjectNode) mapper.readTree(message);
 
@@ -48,13 +49,17 @@ public class JedisMessenger implements Messenger {
 								.filter(meta -> metadata.getAppId().equals(meta.getName()))
 								.findFirst();
 
+						System.out.println("channel " + channelOptional.map(JedisChannel::getName).orElse("not found"));
+
 						if (!channelOptional.isPresent()) {
 							return;
 						}
 
 						JedisChannel channelObject = channelOptional.get();
 
+						// TODO: ??
 						if (metadata.getInstanceId().equals(channelObject.getId())) {
+							System.out.println("no");
 							return;
 						}
 
