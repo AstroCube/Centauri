@@ -13,10 +13,12 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.whisper.WhisperManager;
 import net.astrocube.commons.bukkit.whisper.WhisperResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class WhisperCommands implements CommandClass {
 
@@ -68,10 +70,10 @@ public class WhisperCommands implements CommandClass {
 							.thenAccept(whisperResponse -> {
 								if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
 									messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-
-									return;
+								} else if (whisperResponse.result() == WhisperResponse.Result.FAILED_ERROR) {
+									whisperResponse.errors().forEach(e ->
+										Bukkit.getLogger().log(Level.WARNING, "Failed to send message", e));
 								}
-
 								// handle more errors!
 							});
 

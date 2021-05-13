@@ -35,13 +35,14 @@ public class CoreWhisperManager implements WhisperManager {
 
 	@Override
 	public CompletableFuture<WhisperResponse> sendWhisper(Player sender, User target, User senderUser, String message) {
+
 		UserDoc.Session session = target.getSession();
 
 		if (!session.isOnline()) {
 			return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
 		}
 
-		Player targetPlayer = getPlayerById(target.getId());
+		Player targetPlayer = Bukkit.getPlayerByIdentifier(target.getId());
 
 		// is online on other server
 		if (targetPlayer == null) {
@@ -79,7 +80,4 @@ public class CoreWhisperManager implements WhisperManager {
 		return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));
 	}
 
-	private Player getPlayerById(String id) {
-		return Bukkit.getPlayerByIdentifier(id);
-	}
 }

@@ -20,6 +20,7 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
 	@Override
 	public void handleDelivery(WhisperMessage message, Metadata properties) {
+		System.out.println("whisper received");
 		Player target = Bukkit.getPlayerByIdentifier(message.getTargetId());
 
 		if (target == null) {
@@ -30,7 +31,7 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 			.sendReplacing(target, "whisper.target",
 				"%sender%", message.getSenderDisplay(),
 				"%target%", message.getTargetDisplay(),
-				"%message%", message);
+				"%message%", message.getMessage());
 	}
 
 }
