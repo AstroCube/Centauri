@@ -51,7 +51,6 @@ public class CorePunishmentHandler implements PunishmentHandler {
 		LocalDateTime localDateTime = PunishmentHandler.generateFromExpiration(expiration);
 
 
-
 		PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
 			@Override

@@ -67,7 +67,7 @@ public class PunishmentCommandHelper {
 					punishmentHandler.createPunishment(
 						sender.getDatabaseIdentifier(),
 						target.getId(),
-						reason,
+						expiration == 0 ? compound : reason,
 						type,
 						expiration,
 						false,
