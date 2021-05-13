@@ -53,7 +53,7 @@ public class PunishmentCommandHelper {
 								StringBuilder builder = new StringBuilder();
 
 								for (int i = 1; i < splitDuration.length; i++) {
-									builder.append(splitDuration[i]);
+									builder.append(splitDuration[i]).append(" ");
 								}
 
 								reason = builder.toString();

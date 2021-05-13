@@ -47,9 +47,7 @@ public class CorePunishmentHandler implements PunishmentHandler {
 		BiConsumer<Punishment, Exception> callback
 	) {
 
-		System.out.println("Expiration " + expiration);
 		LocalDateTime localDateTime = PunishmentHandler.generateFromExpiration(expiration);
-
 
 		PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
