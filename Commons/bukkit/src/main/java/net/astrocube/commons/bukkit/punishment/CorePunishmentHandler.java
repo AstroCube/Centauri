@@ -47,14 +47,12 @@ public class CorePunishmentHandler implements PunishmentHandler {
 		BiConsumer<Punishment, Exception> callback
 	) {
 
-		LocalDateTime localDateTime = PunishmentHandler.generateFromExpiration(expiration);
-
 		PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
 			@Override
 			public @Nullable
 			LocalDateTime getExpiration() {
-				return expiration == 0 ? null : localDateTime;
+				return expiration == 0 ? null : PunishmentHandler.generateFromExpiration(expiration);
 			}
 
 			@Override
@@ -95,6 +93,7 @@ public class CorePunishmentHandler implements PunishmentHandler {
 		};
 
 		try {
+
 			Punishment punishment = createService.createSync(partial);
 			punishmentChannel.sendMessage(punishment, new HashMap<>());
 			Bukkit.getPluginManager().callEvent(new PunishmentIssueEvent(punishment));
