@@ -113,7 +113,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 	public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
 		PaginateBaseResult paginateResult = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
-			new CoreRequestCallable<>(getCompleteType(), mapper),
+			new CoreRequestCallable<>(TypeToken.of(PaginateBaseResult.class), mapper),
 			new CoreRequestOptions(
 				RequestOptions.Type.POST,
 				new HashMap<>(),
