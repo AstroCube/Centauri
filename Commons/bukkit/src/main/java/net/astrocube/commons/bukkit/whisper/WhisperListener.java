@@ -20,6 +20,9 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 
 	@Override
 	public void handleDelivery(WhisperMessage message, Metadata properties) {
+		System.out.println("sender" + message.senderId());
+		System.out.println("target: " + message.targetId());
+		System.out.println("message: " + message.message());
 		Player target = Bukkit.getPlayerByIdentifier(message.targetId());
 
 		if (target == null) {
