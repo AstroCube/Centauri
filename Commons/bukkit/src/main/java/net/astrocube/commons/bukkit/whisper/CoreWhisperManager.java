@@ -65,6 +65,8 @@ public class CoreWhisperManager implements WhisperManager {
 			}, executorServiceProvider.getRegisteredService());
 		}
 
+		System.out.println("same server PTMM");
+
 		// online on the same server
 		messageHandler
 			.sendReplacing(targetPlayer, "whisper.target",
