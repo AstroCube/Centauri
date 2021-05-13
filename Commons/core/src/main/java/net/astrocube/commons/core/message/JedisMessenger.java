@@ -12,6 +12,8 @@ import redis.clients.jedis.JedisPubSub;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("All")
 public class JedisMessenger implements Messenger {
@@ -63,7 +65,12 @@ public class JedisMessenger implements Messenger {
 
 						channelObject.callListeners(messageObject, metadata);
 					}
-				} catch (Exception ignore) {
+				} catch (Exception e) {
+					Logger.getGlobal().log(
+						Level.WARNING,
+						"Error while reading redis message",
+						e
+					);
 				}
 			}
 		};
