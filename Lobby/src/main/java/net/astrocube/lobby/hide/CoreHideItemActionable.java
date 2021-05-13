@@ -31,8 +31,9 @@ public class CoreHideItemActionable implements HideItemActionable {
 		boolean hide = user.getSettings().getGeneralSettings().isHidingPlayers();
 		String id = player.getUniqueId().toString();
 
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
+        plugin.getLogger().info("switch hide status");
 
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
 			if (jedis.exists("COOL-DOWN:HIDE" + id)) {
 				messageHandler.send(player, "no-finished-cool-down");
 				return;
