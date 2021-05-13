@@ -27,7 +27,8 @@ public class CoreRedis implements Redis {
 			if (coreRedisConfig.getPassword() == null || coreRedisConfig.getPassword().isEmpty()) {
 				this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
 			} else {
-				this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
+				this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout(),
+					coreRedisConfig.getPassword());
 				listenerConnection.auth(coreRedisConfig.getPassword());
 			}
 		} catch (JedisConnectionException e) {
