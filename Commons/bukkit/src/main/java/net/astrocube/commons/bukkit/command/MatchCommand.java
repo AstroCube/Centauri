@@ -17,37 +17,37 @@ import java.util.List;
 
 @Command(names = {"match"})
 @SubCommandClasses({
-        MatchStartCommand.class,
-        MatchDebugCommand.class,
-        MatchInvalidateCommand.class,
-        MatchCancelCommand.class
+	MatchStartCommand.class,
+	MatchDebugCommand.class,
+	MatchInvalidateCommand.class,
+	MatchCancelCommand.class
 })
 public class MatchCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Command(names = {"", "help"})
-    public boolean onCommand(@Sender Player player) {
+	@Command(names = {"", "help"})
+	public boolean onCommand(@Sender Player player) {
 
-        List<String> content = messageHandler.getMany(player, "game.admin.match-help").getContents();
+		List<String> content = messageHandler.getMany(player, "game.admin.match-help").getContents();
 
-        for (int i = 0; i < content.size(); i++) {
+		for (int i = 0; i < content.size(); i++) {
 
-            /*
-             * Im not going to change this. Fuck that and update de list name,
-             * otherwise I will not be responsible for brain fucks while adding
-             * new commands.
-             *
-             * - Tomato
-             */
-            if (i != 4 || plugin.getConfig().getBoolean("server.sandbox")) {
-                player.sendMessage(content.get(i));
-            }
+			/*
+			 * Im not going to change this. Fuck that and update de list name,
+			 * otherwise I will not be responsible for brain fucks while adding
+			 * new commands.
+			 *
+			 * - Tomato
+			 */
+			if (i != 4 || plugin.getConfig().getBoolean("server.sandbox")) {
+				player.sendMessage(content.get(i));
+			}
 
-        }
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 }

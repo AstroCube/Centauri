@@ -14,25 +14,25 @@ import javax.annotation.Nullable;
 @Singleton
 public class RegisterGateway implements AuthenticationGateway {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void startProcessing(User user) {
+	@Override
+	public void startProcessing(User user) {
 
-        @Nullable Player player = Bukkit.getPlayer(user.getUsername());
+		@Nullable Player player = Bukkit.getPlayer(user.getUsername());
 
-        if (player != null) {
-            player.sendTitle(
-                    new Title(
-                            messageHandler.get(player, "authentication.register-title"),
-                            messageHandler.get(player, "authentication.register-sub")
-                    )
-            );
-        }
-    }
+		if (player != null) {
+			player.sendTitle(
+				new Title(
+					messageHandler.get(player, "authentication.register-title"),
+					messageHandler.get(player, "authentication.register-sub")
+				)
+			);
+		}
+	}
 
-    @Override
-    public String getName() {
-        return "Registration";
-    }
+	@Override
+	public String getName() {
+		return "Registration";
+	}
 }

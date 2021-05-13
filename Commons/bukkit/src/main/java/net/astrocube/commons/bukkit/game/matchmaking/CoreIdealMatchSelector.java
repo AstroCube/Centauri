@@ -11,9 +11,9 @@ import java.util.Set;
 @Singleton
 public class CoreIdealMatchSelector implements IdealMatchSelector {
 
-    @Override
-    public Optional<Match> sortAvailableMatches(Set<Match> matches) {
-        return matches.stream().max(Comparator.comparingInt(o -> o.getSpectators().size()));
-    }
+	@Override
+	public Optional<Match> sortAvailableMatches(Set<Match> matches) {
+		return matches.stream().max(Comparator.comparingInt(o -> o.getSpectators().size()));
+	}
 
 }

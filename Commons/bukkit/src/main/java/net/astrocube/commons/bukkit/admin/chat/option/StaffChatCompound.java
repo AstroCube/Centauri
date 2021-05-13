@@ -18,49 +18,49 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Singleton
 public class StaffChatCompound implements StaffOptionCompound {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<User, UserDoc.Partial> updateService;
-    private @Inject StaffChatOptionsMenu staffChatOptionsMenu;
+	private @Inject MessageHandler messageHandler;
+	private @Inject UpdateService<User, UserDoc.Partial> updateService;
+	private @Inject StaffChatOptionsMenu staffChatOptionsMenu;
 
-    @Override
-    public ItemStack getEnableItem(Player player) {
+	@Override
+	public ItemStack getEnableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.CHAT_ENABLED);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.CHAT_ENABLED);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.chat.enabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.chat.enabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.chat.enabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.chat.enabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public ItemStack getDisableItem(Player player) {
+	@Override
+	public ItemStack getDisableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.CHAT_DISABLED);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.CHAT_DISABLED);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.chat.disabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.chat.disabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.chat.disabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.chat.disabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public AsyncResponse<User> updateOption(User user) {
+	@Override
+	public AsyncResponse<User> updateOption(User user) {
 
-        user.getSettings().getAdminChatSettings().setActive(
-                !user.getSettings().getAdminChatSettings().isActive()
-        );
+		user.getSettings().getAdminChatSettings().setActive(
+			!user.getSettings().getAdminChatSettings().isActive()
+		);
 
-        return updateService.update(user);
+		return updateService.update(user);
 
-    }
+	}
 
 }

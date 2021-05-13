@@ -11,17 +11,17 @@ import org.bukkit.event.HandlerList;
 @AllArgsConstructor
 public class LobbyJoinEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final Player player;
-    private final User user;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final Player player;
+	private final User user;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

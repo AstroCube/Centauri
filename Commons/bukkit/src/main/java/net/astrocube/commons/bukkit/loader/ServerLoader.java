@@ -12,24 +12,24 @@ import java.util.logging.Level;
 
 public class ServerLoader implements Loader {
 
-    private @Inject ServerStartResolver serverStartResolver;
-    private @Inject Plugin plugin;
-    private @Inject AuthenticationSongLoader authenticationSongLoader;
-    private @Inject PresetPunishmentCache presetPunishmentCache;
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject ServerStartResolver serverStartResolver;
+	private @Inject Plugin plugin;
+	private @Inject AuthenticationSongLoader authenticationSongLoader;
+	private @Inject PresetPunishmentCache presetPunishmentCache;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
 
-    @Override
-    public void load() {
-        plugin.getLogger().log(Level.INFO, "Starting server authorization");
-        this.serverStartResolver.instantiateServer();
+	@Override
+	public void load() {
+		plugin.getLogger().log(Level.INFO, "Starting server authorization");
+		this.serverStartResolver.instantiateServer();
 
-        if (plugin.getConfig().getBoolean("authentication.enabled")) {
-            authenticationSongLoader.generateBroadcaster();
-        }
+		if (plugin.getConfig().getBoolean("authentication.enabled")) {
+			authenticationSongLoader.generateBroadcaster();
+		}
 
-        presetPunishmentCache.generateCache();
-        scoreboardManagerProvider.setupManager();
+		presetPunishmentCache.generateCache();
+		scoreboardManagerProvider.setupManager();
 
-    }
+	}
 
 }

@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.CoreModelService;
 
 public class GameMapModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(GameMap.class, GameMapDoc.Partial.class, model -> {
-            TypeLiteral<CoreModelService<GameMap, GameMapDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<GameMap, GameMapDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(GameMap.class, GameMapDoc.Partial.class, model -> {
+			TypeLiteral<CoreModelService<GameMap, GameMapDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<GameMap, GameMapDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

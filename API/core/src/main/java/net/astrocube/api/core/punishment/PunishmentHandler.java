@@ -16,46 +16,46 @@ import java.util.function.BiConsumer;
 
 public interface PunishmentHandler {
 
-    AsyncResponse<PaginateResult<Punishment>> paginate(String userId, int page, int perPage);
+	AsyncResponse<PaginateResult<Punishment>> paginate(String userId, int page, int perPage);
 
-    void createPunishment(
-            String issuer,
-            String punished,
-            String reason,
-            Punishment.Type type,
-            long expiration,
-            boolean automatic,
-            boolean silent,
-            BiConsumer<Punishment, Exception> callback
-    );
+	void createPunishment(
+		String issuer,
+		String punished,
+		String reason,
+		Punishment.Type type,
+		long expiration,
+		boolean automatic,
+		boolean silent,
+		BiConsumer<Punishment, Exception> callback
+	);
 
-    AsyncResponse<Punishment> getPunishmentById(String id);
+	AsyncResponse<Punishment> getPunishmentById(String id);
 
-    AsyncResponse<List<Punishment>> getPunishments(PunishmentDoc.Identity.Type type, String playerId);
+	AsyncResponse<List<Punishment>> getPunishments(PunishmentDoc.Identity.Type type, String playerId);
 
-    AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type type, String playerId);
+	AsyncResponse<Punishment> getLastPunishment(PunishmentDoc.Identity.Type type, String playerId);
 
-    AsyncResponse<Void> updatePunishment(Punishment punishment);
+	AsyncResponse<Void> updatePunishment(Punishment punishment);
 
-    static LocalDateTime generateFromExpiration(long expiration) {
+	static LocalDateTime generateFromExpiration(long expiration) {
 
-        if (expiration == -1) {
-            return null;
-        }
+		if (expiration == -1) {
+			return null;
+		}
 
-        Calendar timeout = Calendar.getInstance();
-        timeout.setTimeInMillis(
-                new Date().getTime() + expiration
-        );
+		Calendar timeout = Calendar.getInstance();
+		timeout.setTimeInMillis(
+			new Date().getTime() + expiration
+		);
 
-        return LocalDateTime.now()
-                .plus(expiration, ChronoUnit.MILLIS);
-    }
+		return LocalDateTime.now()
+			.plus(expiration, ChronoUnit.MILLIS);
+	}
 
-    static ObjectNode findByName(ObjectMapper mapper, String name) {
-        ObjectNode node = mapper.createObjectNode();
-        node.put("username", name);
-        return node;
-    }
+	static ObjectNode findByName(ObjectMapper mapper, String name) {
+		ObjectNode node = mapper.createObjectNode();
+		node.put("username", name);
+		return node;
+	}
 
 }

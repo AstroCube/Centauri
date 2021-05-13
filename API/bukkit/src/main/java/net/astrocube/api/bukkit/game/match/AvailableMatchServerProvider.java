@@ -6,11 +6,10 @@ import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequest;
 
 public interface AvailableMatchServerProvider {
 
-    /**
-     * @param request
-     * @return pai
-     * @throws Exception
-     */
-    ArrayNode getPairableServers(MatchmakingRequest request) throws Exception;
+	/**
+	 * @return pai
+	 * @throws Exception
+	 */
+	ArrayNode getPairableServers(MatchmakingRequest request) throws Exception;
 
 }

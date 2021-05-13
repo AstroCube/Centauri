@@ -5,10 +5,10 @@ import net.astrocube.api.core.service.ModelRequest;
 
 public interface CreateRequest<Partial extends PartialModel> extends ModelRequest<Partial> {
 
-    /**
-     * Model of the request to be serialized
-     * @return partial
-     */
-    Partial getModel();
+	/**
+	 * Model of the request to be serialized
+	 * @return partial
+	 */
+	Partial getModel();
 
 }

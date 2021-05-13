@@ -4,8 +4,8 @@ import net.astrocube.api.core.virtual.user.User;
 
 public interface AuthenticationGateway {
 
-    void startProcessing(User user);
+	void startProcessing(User user);
 
-    String getName();
+	String getName();
 
 }

@@ -35,42 +35,46 @@ import org.bukkit.plugin.Plugin;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new BukkitVirtualModule());
-        install(new FriendsModule());
-        install(new CloudModule());
-        install(new PerkModule());
-        install(new CommonsModule());
-        install(new AuthenticationModule());
-        install(new ScoreboardModule());
-        install(new LoaderModule());
-        install(new ServerModule());
-        install(new WhisperModule());
-        install(new BukkitSessionModule());
-        install(new GameModule());
-        install(new BukkitConfigurationModule());
-        install(new TranslationModule());
-        install(new UserModule());
-        install(new ChatChannelModule());
-        install(new NametagModule());
-        install(new TablistModule());
-        install(new MenuModule());
-        install(new PartyModule());
-        install(new PunishmentModule());
+	@Override
+	public void configure() {
+		install(new BukkitVirtualModule());
+		install(new FriendsModule());
+		install(new CloudModule());
+		install(new PerkModule());
+		install(new CommonsModule());
+		install(new AuthenticationModule());
+		install(new ScoreboardModule());
+		install(new LoaderModule());
+		install(new ServerModule());
+		install(new WhisperModule());
+		install(new BukkitSessionModule());
+		install(new GameModule());
+		install(new BukkitConfigurationModule());
+		install(new TranslationModule());
+		install(new UserModule());
+		install(new ChatChannelModule());
+		install(new NametagModule());
+		install(new TablistModule());
+		install(new MenuModule());
+		install(new PartyModule());
+		install(new PunishmentModule());
 
-        bind(ServerTeleportRetry.class).to(CoreServerTeleportRetry.class);
-        expose(ServerTeleportRetry.class);
-    }
+		bind(ServerTeleportRetry.class).to(CoreServerTeleportRetry.class);
+		expose(ServerTeleportRetry.class);
+	}
 
-    @Provides @Singleton @Named("puppet")
-    public PacketHandler providePuppetHandler(PuppetRegistry registry, Plugin plugin) {
-        return new PuppetClickPacket(registry, plugin);
-    }
+	@Provides
+	@Singleton
+	@Named("puppet")
+	public PacketHandler providePuppetHandler(PuppetRegistry registry, Plugin plugin) {
+		return new PuppetClickPacket(registry, plugin);
+	}
 
-    @Provides @Singleton @Exposed
-    public PuppetRegistry providePuppetRegistry() {
-        return new CorePuppetRegistry();
-    }
+	@Provides
+	@Singleton
+	@Exposed
+	public PuppetRegistry providePuppetRegistry() {
+		return new CorePuppetRegistry();
+	}
 
 }

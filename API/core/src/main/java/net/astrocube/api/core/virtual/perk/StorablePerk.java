@@ -4,4 +4,5 @@ import net.astrocube.api.core.model.ModelProperties;
 
 @ModelProperties.Cache(0)
 @ModelProperties.RouteKey("perk")
-public interface StorablePerk extends StorablePerkDoc.Complete {}
+public interface StorablePerk extends StorablePerkDoc.Complete {
+}

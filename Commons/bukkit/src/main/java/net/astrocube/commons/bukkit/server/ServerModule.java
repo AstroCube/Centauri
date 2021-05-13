@@ -6,10 +6,10 @@ import net.astrocube.api.core.server.ServerStartResolver;
 
 public class ServerModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(ServerStartResolver.class).to(BukkitStartResolver.class);
-        bind(ServerDisconnectHandler.class).to(CoreServerDisconnectHandler.class);
-    }
+	@Override
+	public void configure() {
+		bind(ServerStartResolver.class).to(BukkitStartResolver.class);
+		bind(ServerDisconnectHandler.class).to(CoreServerDisconnectHandler.class);
+	}
 
 }

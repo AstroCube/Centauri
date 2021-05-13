@@ -28,76 +28,76 @@ import java.util.stream.Collectors;
 @Singleton
 public class CoreMatchMapSwitcher implements MatchMapSwitcher {
 
-    private @Inject ShapedMenuGenerator shapedMenuGenerator;
-    private @Inject MessageHandler messageHandler;
-    private @Inject MatchLobbyMenuProvider matchLobbyMenuProvider;
-    private @Inject MatchMapUpdater matchMapUpdater;
-    private @Inject GenericHeadHelper genericHeadHelper;
-    private @Inject Plugin plugin;
+	private @Inject ShapedMenuGenerator shapedMenuGenerator;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MatchLobbyMenuProvider matchLobbyMenuProvider;
+	private @Inject MatchMapUpdater matchMapUpdater;
+	private @Inject GenericHeadHelper genericHeadHelper;
+	private @Inject Plugin plugin;
 
-    private @Inject QueryService<GameMap> queryService;
-    private @Inject ObjectMapper mapper;
+	private @Inject QueryService<GameMap> queryService;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public void openMapMenu(Player player, Match match) throws Exception {
+	@Override
+	public void openMapMenu(Player player, Match match) throws Exception {
 
-        player.openInventory(
-                shapedMenuGenerator.generate(
-                        player,
-                        messageHandler.get(player, "game.admin.lobby.map.title"),
-                        (p) -> {
-                            try {
-                                matchLobbyMenuProvider.create(p);
-                            } catch (Exception e) {
-                                messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.error");
-                                plugin.getLogger().log(Level.SEVERE, "Error while generating player menu", e);
-                            }
-                        },
-                        generateMaps(player, match)
-                )
-        );
+		player.openInventory(
+			shapedMenuGenerator.generate(
+				player,
+				messageHandler.get(player, "game.admin.lobby.map.title"),
+				(p) -> {
+					try {
+						matchLobbyMenuProvider.create(p);
+					} catch (Exception e) {
+						messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.error");
+						plugin.getLogger().log(Level.SEVERE, "Error while generating player menu", e);
+					}
+				},
+				generateMaps(player, match)
+			)
+		);
 
-    }
+	}
 
-    private Set<ShapedMenuGenerator.BaseClickable> generateMaps(Player player, Match match) throws Exception {
+	private Set<ShapedMenuGenerator.BaseClickable> generateMaps(Player player, Match match) throws Exception {
 
-        ObjectNode nodes = mapper.createObjectNode();
-        nodes.put("gamemode", match.getGameMode());
-        nodes.put("subGamemode", match.getSubMode());
+		ObjectNode nodes = mapper.createObjectNode();
+		nodes.put("gamemode", match.getGameMode());
+		nodes.put("subGamemode", match.getSubMode());
 
-        return queryService.querySync(nodes).getFoundModels()
-                .stream()
-                .map(map -> new ShapedMenuGenerator.BaseClickable() {
-                    @Override
-                    public Consumer<Player> getClick() {
-                        return (p) -> {
-                            if (!(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId()))) {
-                                matchMapUpdater.updateMatch(match.getId(), map.getId(), player.getDatabaseIdentifier());
-                            } else {
-                                messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
-                            }
-                            Bukkit.getScheduler().runTask(plugin, p::closeInventory);
-                        };
-                    }
+		return queryService.querySync(nodes).getFoundModels()
+			.stream()
+			.map(map -> new ShapedMenuGenerator.BaseClickable() {
+				@Override
+				public Consumer<Player> getClick() {
+					return (p) -> {
+						if (!(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId()))) {
+							matchMapUpdater.updateMatch(match.getId(), map.getId(), player.getDatabaseIdentifier());
+						} else {
+							messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
+						}
+						Bukkit.getScheduler().runTask(plugin, p::closeInventory);
+					};
+				}
 
-                    @Override
-                    public ItemStack getStack() {
-                        return genericHeadHelper.generateMetaAndPlace(
-                                new ItemStack(Material.PAPER),
-                                messageHandler.replacing(
-                                        player, "game.admin.lobby.map.select.title",
-                                        "%map%", map.getName()
-                                ),
-                                messageHandler.getMany(
-                                        player,
-                                        !(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) ?
-                                        "game.admin.lobby.map.select.lore" : "game.admin.lobby.map.select.lore-selected"
-                                )
-                        );
-                    }
-                })
-                .collect(Collectors.toSet());
+				@Override
+				public ItemStack getStack() {
+					return genericHeadHelper.generateMetaAndPlace(
+						new ItemStack(Material.PAPER),
+						messageHandler.replacing(
+							player, "game.admin.lobby.map.select.title",
+							"%map%", map.getName()
+						),
+						messageHandler.getMany(
+							player,
+							!(match.getMap() != null && match.getMap().equalsIgnoreCase(map.getId())) ?
+								"game.admin.lobby.map.select.lore" : "game.admin.lobby.map.select.lore-selected"
+						)
+					);
+				}
+			})
+			.collect(Collectors.toSet());
 
-    }
+	}
 
 }

@@ -6,10 +6,9 @@ import java.util.Optional;
 
 public interface LobbyModeProvider {
 
-    /**
-     * Obtain optional {@link GameMode}
-     * @return
-     */
-    Optional<GameMode> getRegisteredMode();
+	/**
+	 * Obtain optional {@link GameMode}
+	 */
+	Optional<GameMode> getRegisteredMode();
 
 }

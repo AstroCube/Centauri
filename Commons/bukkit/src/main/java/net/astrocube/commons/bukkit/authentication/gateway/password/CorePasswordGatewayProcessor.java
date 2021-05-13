@@ -20,38 +20,38 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
 
-    private @Inject AuthenticationService authenticationService;
-    private @Inject AuthenticationValidator authenticationValidator;
-    private @Inject GatewayMatcher gatewayMatcher;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject AuthenticationService authenticationService;
+	private @Inject AuthenticationValidator authenticationValidator;
+	private @Inject GatewayMatcher gatewayMatcher;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void validateLogin(Player player, String password) {
-        try {
+	@Override
+	public void validateLogin(Player player, String password) {
+		try {
 
-            authenticationValidator.validateAuthenticationAttempt(player);
-            authenticationService.login(AuthorizationUtils.build(player, password));
+			authenticationValidator.validateAuthenticationAttempt(player);
+			authenticationService.login(AuthorizationUtils.build(player, password));
 
-            Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
-                    gatewayMatcher.getUserAuthentication(UserDoc.Session.Authorization.PASSWORD),
-                    player
-            ));
+			Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
+				gatewayMatcher.getUserAuthentication(UserDoc.Session.Authorization.PASSWORD),
+				player
+			));
 
-        } catch (Exception exception) {
+		} catch (Exception exception) {
 
-            if (exception instanceof HttpResponseException) {
-                HttpResponseException httpResponseException = ((HttpResponseException) exception);
+			if (exception instanceof HttpResponseException) {
+				HttpResponseException httpResponseException = ((HttpResponseException) exception);
 
-                if (httpResponseException.getStatusCode() == 403) {
-                    messageHandler.sendIn(player, AlertModes.ERROR,"authentication.password-invalid");
-                    Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
-                    return;
-                }
-            }
+				if (httpResponseException.getStatusCode() == 403) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "authentication.password-invalid");
+					Bukkit.getPluginManager().callEvent(new AuthenticationInvalidEvent(player));
+					return;
+				}
+			}
 
-            AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
-        }
-    }
+			AuthorizationUtils.checkError(player, exception, plugin, messageHandler);
+		}
+	}
 
 }

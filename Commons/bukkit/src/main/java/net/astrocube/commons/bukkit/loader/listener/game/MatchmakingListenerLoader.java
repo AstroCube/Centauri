@@ -10,22 +10,22 @@ import org.bukkit.plugin.Plugin;
 
 public class MatchmakingListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject MatchmakingRequestListener matchmakingRequestListener;
-    private @Inject MatchmakingErrorListener matchmakingErrorListener;
-    private @Inject MatchmakingTimeoutListener matchmakingTimeoutListener;
-    private @Inject MatchAssignationListener matchAssignationListener;
+	private @Inject MatchmakingRequestListener matchmakingRequestListener;
+	private @Inject MatchmakingErrorListener matchmakingErrorListener;
+	private @Inject MatchmakingTimeoutListener matchmakingTimeoutListener;
+	private @Inject MatchAssignationListener matchAssignationListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                matchmakingRequestListener,
-                matchmakingErrorListener,
-                matchmakingTimeoutListener,
-                matchAssignationListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			matchmakingRequestListener,
+			matchmakingErrorListener,
+			matchmakingTimeoutListener,
+			matchAssignationListener
+		);
+	}
 
 }

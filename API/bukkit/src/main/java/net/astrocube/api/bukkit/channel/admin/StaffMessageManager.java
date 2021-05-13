@@ -4,6 +4,6 @@ import net.astrocube.api.core.virtual.user.User;
 
 public interface StaffMessageManager {
 
-    void sendMessage(String message, User sender, boolean important);
+	void sendMessage(String message, User sender, boolean important);
 
 }

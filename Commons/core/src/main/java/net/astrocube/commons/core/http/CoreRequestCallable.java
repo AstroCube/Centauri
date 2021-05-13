@@ -13,30 +13,30 @@ import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 @AllArgsConstructor
 public class CoreRequestCallable<T> implements RequestCallable<T> {
 
-    private final JavaType returnType;
-    private final ObjectMapper mapper;
+	private final JavaType returnType;
+	private final ObjectMapper mapper;
 
-    public CoreRequestCallable(TypeToken<T> type, ObjectMapper mapper) {
-        this.returnType = mapper.constructType(type.getType());
-        this.mapper = mapper;
-    }
+	public CoreRequestCallable(TypeToken<T> type, ObjectMapper mapper) {
+		this.returnType = mapper.constructType(type.getType());
+		this.mapper = mapper;
+	}
 
-    @Override
-    public T call(HttpRequest request) throws Exception {
-        final HttpResponse response = request.execute();
-        final String json = response.parseAsString();
-        int statusCode = response.getStatusCode();
+	@Override
+	public T call(HttpRequest request) throws Exception {
+		final HttpResponse response = request.execute();
+		final String json = response.parseAsString();
+		int statusCode = response.getStatusCode();
 
-        if (returnType.getRawClass() == Void.class) {
-            return null;
-        }
+		if (returnType.getRawClass() == Void.class) {
+			return null;
+		}
 
-        if (statusCode == 200) {
-            T returnable = this.mapper.readValue(json, returnType);
-            return returnable;
-        } else {
-            throw RequestExceptionResolverUtil.generateException(json, statusCode);
-        }
-    }
+		if (statusCode == 200) {
+			T returnable = this.mapper.readValue(json, returnType);
+			return returnable;
+		} else {
+			throw RequestExceptionResolverUtil.generateException(json, statusCode);
+		}
+	}
 
 }

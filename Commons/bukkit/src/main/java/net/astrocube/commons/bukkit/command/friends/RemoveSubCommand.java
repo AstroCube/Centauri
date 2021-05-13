@@ -22,80 +22,80 @@ import org.bukkit.entity.Player;
 @Command(names = {"remove", "rm", "delete", "del"})
 public class RemoveSubCommand implements CommandClass {
 
-    private @Inject FriendCallbackHelper friendCallbackHelper;
-    private @Inject FriendHelper friendHelper;
-    private @Inject DeleteService<Friendship> deleteService;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject QueryService<Friendship> queryService;
-    private @Inject ObjectMapper objectMapper;
-    private @Inject MessageHandler messageHandler;
+	private @Inject FriendCallbackHelper friendCallbackHelper;
+	private @Inject FriendHelper friendHelper;
+	private @Inject DeleteService<Friendship> deleteService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject QueryService<Friendship> queryService;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject MessageHandler messageHandler;
 
-    @Command(names = "")
-    public boolean execute(@Sender Player player, OfflinePlayer target) {
+	@Command(names = "")
+	public boolean execute(@Sender Player player, OfflinePlayer target) {
 
-        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-            return true;
-        }
+		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
+			return true;
+		}
 
-        friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
+		friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendHelper.checkNotFriends(player, user, targetUser)) {
-                return;
-            }
+			if (friendHelper.checkNotFriends(player, user, targetUser)) {
+				return;
+			}
 
-            ObjectNode node = objectMapper.createObjectNode();
-            node.putArray("$or")
-                    .add(
-                            objectMapper.createObjectNode()
-                                .put("issuer", user.getId())
-                                .put("receiver", targetUser.getId())
-                    )
-                    .add(
-                            objectMapper.createObjectNode()
-                                .put("issuer", targetUser.getId())
-                                .put("receiver", user.getId())
-                    );
+			ObjectNode node = objectMapper.createObjectNode();
+			node.putArray("$or")
+				.add(
+					objectMapper.createObjectNode()
+						.put("issuer", user.getId())
+						.put("receiver", targetUser.getId())
+				)
+				.add(
+					objectMapper.createObjectNode()
+						.put("issuer", targetUser.getId())
+						.put("receiver", user.getId())
+				);
 
-            queryService.query(node).callback(queryResponse -> {
+			queryService.query(node).callback(queryResponse -> {
 
-                if (!queryResponse.isSuccessful()) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
-                }
+				if (!queryResponse.isSuccessful()) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+				}
 
-                queryResponse.ifSuccessful(friendships ->
-                        deleteService.delete(
-                                friendships.getFoundModels()
-                                        .iterator()
-                                        .next()
-                                        .getId()
-                        ).callback(deleted -> {
+				queryResponse.ifSuccessful(friendships ->
+					deleteService.delete(
+						friendships.getFoundModels()
+							.iterator()
+							.next()
+							.getId()
+					).callback(deleted -> {
 
-                            if (!deleted.isSuccessful()) {
-                                messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
-                            }
+						if (!deleted.isSuccessful()) {
+							messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+						}
 
-                            deleted.ifSuccessful(response -> {
+						deleted.ifSuccessful(response -> {
 
-                                TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
-                                        player,
-                                        targetUser
-                                );
+							TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(
+								player,
+								targetUser
+							);
 
-                                messageHandler.sendReplacingIn(
-                                        player, AlertModes.MUTED, "friend.request.removed",
-                                        "%player%", flairFormat.getColor() + targetUser.getDisplay()
-                                );
+							messageHandler.sendReplacingIn(
+								player, AlertModes.MUTED, "friend.request.removed",
+								"%player%", flairFormat.getColor() + targetUser.getDisplay()
+							);
 
-                            });
+						});
 
-                        })
-                );
+					})
+				);
 
-            });
+			});
 
-        });
+		});
 
-        return true;
-    }
+		return true;
+	}
 
 }

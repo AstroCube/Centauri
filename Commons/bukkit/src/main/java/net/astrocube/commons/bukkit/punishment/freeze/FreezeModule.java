@@ -6,10 +6,10 @@ import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 
 public class FreezeModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(FreezeRequestAlerter.class).to(CoreFreezeRequestAlerter.class);
-        bind(FrozenUserProvider.class).to(CoreFrozenUserProvider.class);
-    }
+	@Override
+	public void configure() {
+		bind(FreezeRequestAlerter.class).to(CoreFreezeRequestAlerter.class);
+		bind(FrozenUserProvider.class).to(CoreFrozenUserProvider.class);
+	}
 
 }

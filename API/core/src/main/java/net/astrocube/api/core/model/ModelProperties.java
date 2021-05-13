@@ -12,23 +12,23 @@ import java.lang.annotation.Target;
  */
 public interface ModelProperties {
 
-    /**
-     * Defines the route associated with this model in the backend
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    @interface RouteKey {
-        String value();
-    }
+	/**
+	 * Defines the route associated with this model in the backend
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	@interface RouteKey {
+		String value();
+	}
 
-    /**
-     * Using this would allow the model to be cached, if 0
-     * model will not be cached
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    @interface Cache {
-        int value() default 120;
-    }
+	/**
+	 * Using this would allow the model to be cached, if 0
+	 * model will not be cached
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	@interface Cache {
+		int value() default 120;
+	}
 
 }

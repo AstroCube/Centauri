@@ -4,4 +4,5 @@ import net.astrocube.api.core.model.ModelProperties;
 
 @ModelProperties.Cache(600)
 @ModelProperties.RouteKey("channel")
-public interface ChatChannel extends ChatChannelDoc.Complete {}
+public interface ChatChannel extends ChatChannelDoc.Complete {
+}

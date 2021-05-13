@@ -13,65 +13,65 @@ import org.bukkit.event.Listener;
 
 public class PunishmentStaffChatListener implements Listener {
 
-    private @Inject FindService<User> findService;
-    private @Inject DisplayMatcher matcher;
-    private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject DisplayMatcher matcher;
+	private @Inject MessageHandler messageHandler;
 
-    @EventHandler
-    public void onPunishmentIssue(PunishmentIssueEvent event) {
+	@EventHandler
+	public void onPunishmentIssue(PunishmentIssueEvent event) {
 
-        if (!event.getPunishment().isSilent()) {
+		if (!event.getPunishment().isSilent()) {
 
-            if (event.getPunishment().isAutomatic()) {
-                executeFixedPunishment(event.getPunishment(), null);
-            }
+			if (event.getPunishment().isAutomatic()) {
+				executeFixedPunishment(event.getPunishment(), null);
+			}
 
-            findService.find(event.getPunishment().getIssuer()).callback(issuerResponse -> {
-                issuerResponse.ifSuccessful(issuer -> executeFixedPunishment(event.getPunishment(), issuer));
-            });
+			findService.find(event.getPunishment().getIssuer()).callback(issuerResponse -> {
+				issuerResponse.ifSuccessful(issuer -> executeFixedPunishment(event.getPunishment(), issuer));
+			});
 
-        }
+		}
 
-    }
+	}
 
-    private void executeFixedPunishment(Punishment punishment, User issuer) {
-        findService.find(punishment.getPunished()).callback(punishedResponse ->
-                punishedResponse.ifSuccessful(punished ->
-                        Bukkit.getOnlinePlayers().forEach(player -> {
+	private void executeFixedPunishment(Punishment punishment, User issuer) {
+		findService.find(punishment.getPunished()).callback(punishedResponse ->
+			punishedResponse.ifSuccessful(punished ->
+				Bukkit.getOnlinePlayers().forEach(player -> {
 
-                            if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
+					if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
 
-                                findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
+						findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
 
-                                    String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
-                                            + issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
+							String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
+								+ issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 
-                                    String punishedPrefix = matcher.getDisplay(player, punished).getColor() +
-                                            punished.getDisplay();
+							String punishedPrefix = matcher.getDisplay(player, punished).getColor() +
+								punished.getDisplay();
 
-                                    playerResponse.ifSuccessful(user -> {
+							playerResponse.ifSuccessful(user -> {
 
-                                        if (user.getSettings().getAdminChatSettings().isReadingPunishments()) {
+								if (user.getSettings().getAdminChatSettings().isReadingPunishments()) {
 
-                                            messageHandler.sendReplacing(
-                                                    player, "channel.admin.punish",
-                                                    "%prefix%", messageHandler.get(player, "channel.admin.prefix"),
-                                                    "%type%", messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()),
-                                                    "%issuer%", issuerPrefix,
-                                                    "%punished%", punishedPrefix
-                                            );
+									messageHandler.sendReplacing(
+										player, "channel.admin.punish",
+										"%prefix%", messageHandler.get(player, "channel.admin.prefix"),
+										"%type%", messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()),
+										"%issuer%", issuerPrefix,
+										"%punished%", punishedPrefix
+									);
 
-                                        }
+								}
 
-                                    });
+							});
 
-                                });
+						});
 
-                            }
+					}
 
-                        })
-                )
-        );
-    }
+				})
+			)
+		);
+	}
 
 }

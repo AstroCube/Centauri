@@ -5,9 +5,9 @@ import net.astrocube.api.bukkit.party.PartyService;
 
 public class PartyModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
-        bind(PartyService.class).to(CorePartyService.class);
-        expose(PartyService.class);
-    }
+	@Override
+	protected void configure() {
+		bind(PartyService.class).to(CorePartyService.class);
+		expose(PartyService.class);
+	}
 }

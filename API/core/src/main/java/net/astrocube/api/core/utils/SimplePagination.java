@@ -6,49 +6,49 @@ import java.util.Set;
 
 public class SimplePagination<T> implements Pagination<T> {
 
-    private final int pageSize;
-    private final List<T> objects;
+	private final int pageSize;
+	private final List<T> objects;
 
-    public SimplePagination(int pageSize, List<T> objects) {
-        this.pageSize = pageSize;
-        this.objects = objects;
-    }
+	public SimplePagination(int pageSize, List<T> objects) {
+		this.pageSize = pageSize;
+		this.objects = objects;
+	}
 
-    public SimplePagination(int pageSize, Set<T> objects) {
-        this.pageSize = pageSize;
-        this.objects = new ArrayList<>(objects);
-    }
+	public SimplePagination(int pageSize, Set<T> objects) {
+		this.pageSize = pageSize;
+		this.objects = new ArrayList<>(objects);
+	}
 
-    @Override
-    public int getPageSize() {
-        return this.pageSize;
-    }
+	@Override
+	public int getPageSize() {
+		return this.pageSize;
+	}
 
-    @Override
-    public List<T> getObjects() {
-        return this.objects;
-    }
+	@Override
+	public List<T> getObjects() {
+		return this.objects;
+	}
 
-    public boolean pageExists(int page) {
-        return !(page < 0) && page < totalPages();
-    }
+	public boolean pageExists(int page) {
+		return !(page < 0) && page < totalPages();
+	}
 
-    public int totalPages() {
-        return (int) Math.ceil((double) this.objects.size() / this.pageSize);
-    }
+	public int totalPages() {
+		return (int) Math.ceil((double) this.objects.size() / this.pageSize);
+	}
 
-    public List<T> getPage(int page) {
-        List<T> pageResult = new ArrayList<>();
+	public List<T> getPage(int page) {
+		List<T> pageResult = new ArrayList<>();
 
-        int min = (page * this.pageSize) - pageSize;
-        int max = page * this.pageSize - 1;
+		int min = (page * this.pageSize) - pageSize;
+		int max = page * this.pageSize - 1;
 
-        if (max > this.objects.size()) max = this.objects.size();
+		if (max > this.objects.size()) max = this.objects.size();
 
-        for (int i = min; max > i; i++) {
-            pageResult.add(this.objects.get(i));
-        }
+		for (int i = min; max > i; i++) {
+			pageResult.add(this.objects.get(i));
+		}
 
-        return pageResult;
-    }
+		return pageResult;
+	}
 }

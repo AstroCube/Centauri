@@ -12,28 +12,28 @@ import java.util.Set;
  */
 public interface GameMapConfiguration {
 
-    /**
-     * @return spectator point where users will be spawned.
-     */
-    CoordinatePoint getSpectatorSpawn();
+	/**
+	 * @return spectator point where users will be spawned.
+	 */
+	CoordinatePoint getSpectatorSpawn();
 
-    /**
-     * @return base teams to be used at {@link MatchDoc.Team} balancing.
-     */
-    Set<? extends MapTeam> getTeams();
+	/**
+	 * @return base teams to be used at {@link MatchDoc.Team} balancing.
+	 */
+	Set<? extends MapTeam> getTeams();
 
-    interface MapTeam {
+	interface MapTeam {
 
-        /**
-         * @return name of the team
-         */
-        String getName();
+		/**
+		 * @return name of the team
+		 */
+		String getName();
 
-        /**
-         * @return {@link Color} in string form.
-         */
-        String getColor();
+		/**
+		 * @return {@link Color} in string form.
+		 */
+		String getColor();
 
-    }
+	}
 
 }

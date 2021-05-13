@@ -21,56 +21,56 @@ import java.util.logging.Level;
 
 public class MatchInvalidationListener implements Listener {
 
-    private @Inject MatchStateUpdater matchStateUpdater;
-    private @Inject FindService<Match> matchFindService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject MatchStateUpdater matchStateUpdater;
+	private @Inject FindService<Match> matchFindService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onMatchInvalidation(MatchInvalidateEvent event) {
+	@EventHandler
+	public void onMatchInvalidation(MatchInvalidateEvent event) {
 
-        matchFindService.find(event.getMatch()).callback(response -> {
+		matchFindService.find(event.getMatch()).callback(response -> {
 
-            try {
+			try {
 
-                if (!response.isSuccessful() || !response.getResponse().isPresent()) {
-                    throw new GameControlException("Can not retrieve from backend the match");
-                }
+				if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+					throw new GameControlException("Can not retrieve from backend the match");
+				}
 
-                Match match = response.getResponse().get();
-                Set<String> involved = new HashSet<>();
+				Match match = response.getResponse().get();
+				Set<String> involved = new HashSet<>();
 
-                match.getPending().forEach(pending -> {
-                    involved.addAll(pending.getInvolved());
-                    involved.add(pending.getResponsible());
-                });
+				match.getPending().forEach(pending -> {
+					involved.addAll(pending.getInvolved());
+					involved.add(pending.getResponsible());
+				});
 
-                involved.addAll(match.getSpectators());
-                match.getTeams().forEach(team -> team.getMembers().forEach(teamMember -> {
-                    if (teamMember.isActive()) {
-                        involved.add(teamMember.getUser());
-                    }
-                }));
+				involved.addAll(match.getSpectators());
+				match.getTeams().forEach(team -> team.getMembers().forEach(teamMember -> {
+					if (teamMember.isActive()) {
+						involved.add(teamMember.getUser());
+					}
+				}));
 
-                matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
+				matchStateUpdater.updateMatch(match, MatchDoc.Status.INVALIDATED);
 
-                Bukkit.getOnlinePlayers().stream().filter
-                        (p -> involved.contains(p.getDatabaseIdentifier())).forEach(player -> {
-                    if (event.isGraceTime()) {
-                        messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-forced");
-                        Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(player, match.getId()));
-                    } else {
-                        Bukkit.getScheduler().runTask(plugin, () ->
-                                player.kickPlayer(messageHandler.get(player, "game.admin.invalidate")));
-                    }
-                });
+				Bukkit.getOnlinePlayers().stream().filter
+					(p -> involved.contains(p.getDatabaseIdentifier())).forEach(player -> {
+					if (event.isGraceTime()) {
+						messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.invalidate-forced");
+						Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(player, match.getId()));
+					} else {
+						Bukkit.getScheduler().runTask(plugin, () ->
+							player.kickPlayer(messageHandler.get(player, "game.admin.invalidate")));
+					}
+				});
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Can not invalidate match.", e);
-            }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "Can not invalidate match.", e);
+			}
 
-        });
+		});
 
-    }
+	}
 
 }

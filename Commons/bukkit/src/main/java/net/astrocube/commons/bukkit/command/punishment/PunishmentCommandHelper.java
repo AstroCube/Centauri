@@ -15,75 +15,75 @@ import java.util.Optional;
 
 public class PunishmentCommandHelper {
 
-    private @Inject PunishmentHandler punishmentHandler;
-    private @Inject MessageHandler messageHandler;
-    private @Inject QueryService<User> queryService;
-    private @Inject ObjectMapper mapper;
+	private @Inject PunishmentHandler punishmentHandler;
+	private @Inject MessageHandler messageHandler;
+	private @Inject QueryService<User> queryService;
+	private @Inject ObjectMapper mapper;
 
-    public void processPunishment(Player sender, PunishmentDoc.Identity.Type type, String punished, String compound, boolean silent) {
-        queryService.query(PunishmentHandler.findByName(mapper, punished)).callback(response -> {
+	public void processPunishment(Player sender, PunishmentDoc.Identity.Type type, String punished, String compound, boolean silent) {
+		queryService.query(PunishmentHandler.findByName(mapper, punished)).callback(response -> {
 
-            if (!response.isSuccessful()) {
-                messageHandler.sendIn(sender, AlertModes.ERROR, "punish.error");
-            }
+			if (!response.isSuccessful()) {
+				messageHandler.sendIn(sender, AlertModes.ERROR, "punish.error");
+			}
 
-            response.ifSuccessful(punish -> {
+			response.ifSuccessful(punish -> {
 
-                Optional<User> user = punish.getFoundModels().stream().findAny();
+				Optional<User> user = punish.getFoundModels().stream().findAny();
 
-                if (!user.isPresent()) {
-                    messageHandler.sendIn(sender, AlertModes.ERROR, "commands.unknown-player");
-                }
+				if (!user.isPresent()) {
+					messageHandler.sendIn(sender, AlertModes.ERROR, "commands.unknown-player");
+				}
 
-                user.ifPresent(target -> {
+				user.ifPresent(target -> {
 
-                    String reason = compound;
-                    long expiration = -1;
+					String reason = compound;
+					long expiration = -1;
 
-                    if (type == PunishmentDoc.Identity.Type.BAN) {
+					if (type == PunishmentDoc.Identity.Type.BAN) {
 
-                        String[] splitDuration = compound.split(" ");
+						String[] splitDuration = compound.split(" ");
 
-                        if (splitDuration.length != 0) {
+						if (splitDuration.length != 0) {
 
-                            expiration = TimeParser.parseStringDuration(splitDuration[0]);
+							expiration = TimeParser.parseStringDuration(splitDuration[0]);
 
-                            if (expiration != -1) {
+							if (expiration != -1) {
 
-                                StringBuilder builder = new StringBuilder();
+								StringBuilder builder = new StringBuilder();
 
-                                for (int i = 1; i < splitDuration.length; i++) {
-                                    builder.append(splitDuration[i]);
-                                }
+								for (int i = 1; i < splitDuration.length; i++) {
+									builder.append(splitDuration[i]);
+								}
 
-                                reason = builder.toString();
+								reason = builder.toString();
 
-                            }
+							}
 
-                        }
+						}
 
-                    }
+					}
 
-                    punishmentHandler.createPunishment(
-                            sender.getDatabaseIdentifier(),
-                            target.getId(),
-                            reason,
-                            type,
-                            expiration,
-                            false,
-                            silent,
-                            (punishment, exception) -> {
-                                if (exception != null) {
-                                    messageHandler.sendIn(sender, AlertModes.ERROR, "punish.error");
-                                }
-                            }
-                    );
+					punishmentHandler.createPunishment(
+						sender.getDatabaseIdentifier(),
+						target.getId(),
+						reason,
+						type,
+						expiration,
+						false,
+						silent,
+						(punishment, exception) -> {
+							if (exception != null) {
+								messageHandler.sendIn(sender, AlertModes.ERROR, "punish.error");
+							}
+						}
+					);
 
-                });
+				});
 
-            });
+			});
 
-        });
-    }
+		});
+	}
 
 }

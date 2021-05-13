@@ -22,124 +22,124 @@ import java.util.Optional;
 @Singleton
 public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 
-    private @Inject QueryService<Match> queryService;
-    private @Inject FindService<Server> findService;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
-    private @Inject ObjectMapper mapper;
+	private @Inject QueryService<Match> queryService;
+	private @Inject FindService<Server> findService;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public void assignRequest(String gameMode, @Nullable String subMode, String requester) {
+	@Override
+	public void assignRequest(String gameMode, @Nullable String subMode, String requester) {
 
-        Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByIdentifier(requester);
 
-        if (player != null) {
-            ObjectNode node = mapper.createObjectNode();
+		if (player != null) {
+			ObjectNode node = mapper.createObjectNode();
 
-            node.put("gamemode", gameMode);
-            node.put("subGamemode", subMode);
+			node.put("gamemode", gameMode);
+			node.put("subGamemode", subMode);
 
-            queryService.query(node).callback(matchResponse -> {
+			queryService.query(node).callback(matchResponse -> {
 
-                if (!matchResponse.isSuccessful()) {
-                    Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
-                    return;
-                }
+				if (!matchResponse.isSuccessful()) {
+					Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
+					return;
+				}
 
-                matchResponse.ifSuccessful(response -> {
+				matchResponse.ifSuccessful(response -> {
 
-                    Optional<Match> match = response.getFoundModels().stream().findAny();
+					Optional<Match> match = response.getFoundModels().stream().findAny();
 
-                    if (!match.isPresent()) {
-                        Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.VOIDED));
-                        return;
-                    }
+					if (!match.isPresent()) {
+						Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.VOIDED));
+						return;
+					}
 
-                    match.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getId()));
+					match.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getId()));
 
-                });
+				});
 
-            });
-        }
+			});
+		}
 
-    }
+	}
 
-    @Override
-    public void assignRequestToPlayer(String match, String requester, String target) {
+	@Override
+	public void assignRequestToPlayer(String match, String requester, String target) {
 
-        Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByIdentifier(requester);
 
-        if (player != null) {
-            try {
+		if (player != null) {
+			try {
 
-                Optional<Match> optionalMatch = actualMatchCache.get(target);
+				Optional<Match> optionalMatch = actualMatchCache.get(target);
 
-                if (!optionalMatch.isPresent()) {
-                    Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.VOIDED));
-                    return;
-                }
+				if (!optionalMatch.isPresent()) {
+					Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.VOIDED));
+					return;
+				}
 
-                optionalMatch.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getServer()));
+				optionalMatch.ifPresent(foundMatch -> successAssignSpectate(foundMatch, requester, foundMatch.getServer()));
 
-            } catch (Exception e) {
-                Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
-            }
-        }
+			} catch (Exception e) {
+				Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
+			}
+		}
 
-    }
+	}
 
-    private void successAssignSpectate(Match match, String requester, String serverId) {
+	private void successAssignSpectate(Match match, String requester, String serverId) {
 
-        Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByIdentifier(requester);
 
-        if (player != null) {
+		if (player != null) {
 
-            findService.find(serverId).callback(serverCallback -> {
+			findService.find(serverId).callback(serverCallback -> {
 
-                if (!serverCallback.isSuccessful()) {
-                    Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
-                    return;
-                }
+				if (!serverCallback.isSuccessful()) {
+					Bukkit.getPluginManager().callEvent(new SpectateRequestEvent(player, null, SpectateRequest.State.ERROR));
+					return;
+				}
 
-                serverCallback.ifSuccessful(server ->
-                        Bukkit.getPluginManager().callEvent(
-                                new SpectateRequestEvent(
-                                        player,
-                                        new SpectateRequest() {
-                                            @Override
-                                            public String getMode() {
-                                                return match.getGameMode();
-                                            }
+				serverCallback.ifSuccessful(server ->
+					Bukkit.getPluginManager().callEvent(
+						new SpectateRequestEvent(
+							player,
+							new SpectateRequest() {
+								@Override
+								public String getMode() {
+									return match.getGameMode();
+								}
 
-                                            @Override
-                                            public String getSubMode() {
-                                                return match.getSubMode();
-                                            }
+								@Override
+								public String getSubMode() {
+									return match.getSubMode();
+								}
 
-                                            @Override
-                                            public String getRequester() {
-                                                return requester;
-                                            }
+								@Override
+								public String getRequester() {
+									return requester;
+								}
 
-                                            @Override
-                                            public String getMatch() {
-                                                return match.getId();
-                                            }
+								@Override
+								public String getMatch() {
+									return match.getId();
+								}
 
-                                            @Override
-                                            public String getServer() {
-                                                return server.getSlug();
-                                            }
-                                        },
-                                        SpectateRequest.State.SUCCESS
-                                )
-                        )
-                );
+								@Override
+								public String getServer() {
+									return server.getSlug();
+								}
+							},
+							SpectateRequest.State.SUCCESS
+						)
+					)
+				);
 
-            });
+			});
 
-        }
+		}
 
-    }
+	}
 
 }

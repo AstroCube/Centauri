@@ -18,33 +18,33 @@ import javax.annotation.Nullable;
 
 public class PlayerHotbarClickListener implements Listener {
 
-    private @Inject FindService<User> findService;
-    private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject MessageHandler messageHandler;
 
-    @EventHandler
-    public void onHotbarClick(PlayerInteractEvent event) {
+	@EventHandler
+	public void onHotbarClick(PlayerInteractEvent event) {
 
-        @Nullable ItemStack stack = event.getItem();
+		@Nullable ItemStack stack = event.getItem();
 
-        if (
-                stack != null &&
-                stack.getData().getItemType() != Material.AIR &&
-                NBTUtils.hasString(stack, "actionable")
-        ) {
-            findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userResponse -> {
-                if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
-                    Bukkit.getPluginManager().callEvent(new ActionableItemEvent(
-                            event.getPlayer(),
-                            userResponse.getResponse().get(),
-                            NBTUtils.getString(stack, "actionable"),
-                            event.getAction()
-                    ));
-                    event.setCancelled(true);
-                } else {
-                    messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "interaction.actionable-error");
-                }
-            });
-        }
-    }
+		if (
+			stack != null &&
+				stack.getData().getItemType() != Material.AIR &&
+				NBTUtils.hasString(stack, "actionable")
+		) {
+			findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userResponse -> {
+				if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
+					Bukkit.getPluginManager().callEvent(new ActionableItemEvent(
+						event.getPlayer(),
+						userResponse.getResponse().get(),
+						NBTUtils.getString(stack, "actionable"),
+						event.getAction()
+					));
+					event.setCancelled(true);
+				} else {
+					messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "interaction.actionable-error");
+				}
+			});
+		}
+	}
 
 }

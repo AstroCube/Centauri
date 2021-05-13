@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.CoreModelService;
 
 public class FriendshipModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(Friendship.class, FriendshipDoc.Partial.class, model -> {
-            TypeLiteral<CoreModelService<Friendship, FriendshipDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<Friendship, FriendshipDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(Friendship.class, FriendshipDoc.Partial.class, model -> {
+			TypeLiteral<CoreModelService<Friendship, FriendshipDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<Friendship, FriendshipDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

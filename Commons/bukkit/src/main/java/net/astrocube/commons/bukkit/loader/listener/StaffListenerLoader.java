@@ -9,20 +9,20 @@ import org.bukkit.plugin.Plugin;
 
 public class StaffListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject StaffSessionLogListener staffSessionLogListener;
+	private @Inject StaffSessionLogListener staffSessionLogListener;
 
-    private @Inject PunishmentIssueActionsListener punishmentIssueActionsListener;
-    private @Inject PunishmentStaffChatListener punishmentStaffChatListener;
+	private @Inject PunishmentIssueActionsListener punishmentIssueActionsListener;
+	private @Inject PunishmentStaffChatListener punishmentStaffChatListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                staffSessionLogListener,
-                punishmentIssueActionsListener,
-                punishmentStaffChatListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			staffSessionLogListener,
+			punishmentIssueActionsListener,
+			punishmentStaffChatListener
+		);
+	}
 }

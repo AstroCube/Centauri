@@ -5,10 +5,10 @@ import net.astrocube.api.bukkit.perk.PerkManifestProvider;
 
 public class PerkModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(PerkManifestProvider.class).to(CorePerkManifestProvider.class);
-        expose(PerkManifestProvider.class);
-    }
+	@Override
+	public void configure() {
+		bind(PerkManifestProvider.class).to(CorePerkManifestProvider.class);
+		expose(PerkManifestProvider.class);
+	}
 
 }

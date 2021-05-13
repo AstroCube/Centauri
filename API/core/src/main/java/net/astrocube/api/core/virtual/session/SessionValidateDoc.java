@@ -9,51 +9,53 @@ import javax.annotation.Nullable;
 
 public interface SessionValidateDoc {
 
-    interface Partial extends PartialModel {}
+	interface Partial extends PartialModel {
+	}
 
-    interface Complete extends Model {
+	interface Complete extends Model {
 
-        /**
-         * @return user related to the session. Can be the authentic user or user that infringes policy.
-         */
-        @JsonProperty("user")
-        User getUser();
+		/**
+		 * @return user related to the session. Can be the authentic user or user that infringes policy.
+		 */
+		@JsonProperty("user")
+		User getUser();
 
-        /**
-         * @return if user is correctly registered or his account can be claimed.
-         */
-        @JsonProperty("registered")
-        boolean isRegistered();
+		/**
+		 * @return if user is correctly registered or his account can be claimed.
+		 */
+		@JsonProperty("registered")
+		boolean isRegistered();
 
-        /**
-         * @return multi account procedure.
-         */
-        @JsonProperty("multiAccount")
-        boolean isMultiAccount();
+		/**
+		 * @return multi account procedure.
+		 */
+		@JsonProperty("multiAccount")
+		boolean isMultiAccount();
 
-    }
+	}
 
-    interface Request extends Partial {
+	interface Request extends Partial {
 
-        @JsonProperty("username")
-        String getUser();
+		@JsonProperty("username")
+		String getUser();
 
-        @JsonProperty("address")
-        String getAddress();
+		@JsonProperty("address")
+		String getAddress();
 
-    }
+	}
 
-    interface ServerSwitch extends Partial {
+	interface ServerSwitch extends Partial {
 
-        @JsonProperty("user")
-        String getUser();
+		@JsonProperty("user")
+		String getUser();
 
-        @JsonProperty("server")
-        String getServer();
+		@JsonProperty("server")
+		String getServer();
 
-        @JsonProperty("lobby")
-        @Nullable String getLobby();
+		@JsonProperty("lobby")
+		@Nullable
+		String getLobby();
 
-    }
+	}
 
 }

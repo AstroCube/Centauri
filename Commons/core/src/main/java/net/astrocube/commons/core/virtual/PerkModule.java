@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.CoreModelService;
 
 public class PerkModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(StorablePerk.class, StorablePerkDoc.Partial.class, model -> {
-            TypeLiteral<CoreModelService<StorablePerk, StorablePerkDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<CoreModelService<StorablePerk, StorablePerkDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(StorablePerk.class, StorablePerkDoc.Partial.class, model -> {
+			TypeLiteral<CoreModelService<StorablePerk, StorablePerkDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<CoreModelService<StorablePerk, StorablePerkDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

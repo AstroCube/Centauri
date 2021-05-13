@@ -9,14 +9,14 @@ import java.util.Locale;
 
 public class PrettyTimeUtils {
 
-    public static String getHumanDate(Date date, String locale) {
-        PrettyTime p = new PrettyTime(new Locale(locale));
-        return p.format(date);
-    }
+	public static String getHumanDate(Date date, String locale) {
+		PrettyTime p = new PrettyTime(new Locale(locale));
+		return p.format(date);
+	}
 
-    public static String getHumanDate(LocalDateTime date, String locale) {
-        PrettyTime p = new PrettyTime(new Locale(locale));
-        return p.format(Date.from(date.toInstant(ZoneOffset.UTC)));
-    }
+	public static String getHumanDate(LocalDateTime date, String locale) {
+		PrettyTime p = new PrettyTime(new Locale(locale));
+		return p.format(Date.from(date.toInstant(ZoneOffset.UTC)));
+	}
 
 }

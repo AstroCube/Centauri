@@ -15,40 +15,40 @@ import java.util.logging.Logger;
 @Singleton
 public class CoreRedis implements Redis {
 
-    private JedisPool jedisPool;
-    private Jedis listenerConnection;
+	private JedisPool jedisPool;
+	private Jedis listenerConnection;
 
-    @Inject
-    CoreRedis(CoreRedisConfig coreRedisConfig) {
-        JedisPoolConfig config = new JedisPoolConfig();
-        try {
-            listenerConnection = new Jedis(coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
+	@Inject
+	CoreRedis(CoreRedisConfig coreRedisConfig) {
+		JedisPoolConfig config = new JedisPoolConfig();
+		try {
+			listenerConnection = new Jedis(coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
 
-            if (coreRedisConfig.getPassword() == null || coreRedisConfig.getPassword().isEmpty()) {
-                this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
-            } else {
-                this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
-                listenerConnection.auth(coreRedisConfig.getPassword());
-            }
-        } catch (JedisConnectionException e) {
-            e.printStackTrace();
-            Logger.getLogger("redis").log(Level.SEVERE, "An exception occurred while initializing the needed jedis instances", e);
-        }
-    }
+			if (coreRedisConfig.getPassword() == null || coreRedisConfig.getPassword().isEmpty()) {
+				this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
+			} else {
+				this.jedisPool = new JedisPool(config, coreRedisConfig.getAddress(), coreRedisConfig.getPort(), coreRedisConfig.getTimeout());
+				listenerConnection.auth(coreRedisConfig.getPassword());
+			}
+		} catch (JedisConnectionException e) {
+			e.printStackTrace();
+			Logger.getLogger("redis").log(Level.SEVERE, "An exception occurred while initializing the needed jedis instances", e);
+		}
+	}
 
-    @Override
-    public JedisPool getRawConnection() {
-        return this.jedisPool;
-    }
+	@Override
+	public JedisPool getRawConnection() {
+		return this.jedisPool;
+	}
 
-    @Override
-    public Jedis getListenerConnection() {
-        return this.listenerConnection;
-    }
+	@Override
+	public Jedis getListenerConnection() {
+		return this.listenerConnection;
+	}
 
-    @Override
-    public void close() throws IOException {
-        getRawConnection().close();
-        this.listenerConnection.close();
-    }
+	@Override
+	public void close() throws IOException {
+		getRawConnection().close();
+		this.listenerConnection.close();
+	}
 }

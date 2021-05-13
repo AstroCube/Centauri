@@ -9,12 +9,12 @@ import org.bukkit.entity.Player;
 
 public class RegisterCommand implements CommandClass {
 
-    private @Inject RegisterGatewayProcessor registerGatewayProcessor;
+	private @Inject RegisterGatewayProcessor registerGatewayProcessor;
 
-    @Command(names = {"register"})
-    public boolean onRegister(@Sender Player player, String password) {
-        registerGatewayProcessor.validateRegister(player, password);
-        return true;
-    }
+	@Command(names = {"register"})
+	public boolean onRegister(@Sender Player player, String password) {
+		registerGatewayProcessor.validateRegister(player, password);
+		return true;
+	}
 
 }

@@ -12,48 +12,48 @@ import org.bukkit.entity.Player;
 
 public class CorePremiumStatusSwitcher implements PremiumStatusSwitcher {
 
-    private @Inject FindService<User> findService;
-    private @Inject UpdateService<User, UserDoc.Partial> updateService;
-    private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject UpdateService<User, UserDoc.Partial> updateService;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void switchStatus(Player player) {
+	@Override
+	public void switchStatus(Player player) {
 
-        findService.find(player.getDatabaseIdentifier()).callback(response -> {
+		findService.find(player.getDatabaseIdentifier()).callback(response -> {
 
-            if (!response.isSuccessful()) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
-            }
+			if (!response.isSuccessful()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
+			}
 
-            response.ifSuccessful(user -> {
+			response.ifSuccessful(user -> {
 
-                if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
-                    user.getSession().setAuthorizeMethod(UserDoc.Session.Authorization.PASSWORD);
-                } else {
-                    user.getSession().setAuthorizeMethod(UserDoc.Session.Authorization.PREMIUM);
-                }
+				if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
+					user.getSession().setAuthorizeMethod(UserDoc.Session.Authorization.PASSWORD);
+				} else {
+					user.getSession().setAuthorizeMethod(UserDoc.Session.Authorization.PREMIUM);
+				}
 
-                updateService.update(user).callback(updateResponse -> {
+				updateService.update(user).callback(updateResponse -> {
 
-                    if (!response.isSuccessful()) {
-                        messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
-                    }
+					if (!response.isSuccessful()) {
+						messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
+					}
 
-                    updateResponse.ifSuccessful(update -> {
+					updateResponse.ifSuccessful(update -> {
 
-                        if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
-                            messageHandler.sendIn(player, AlertModes.MUTED, "premium.enable.alert");
-                        } else {
-                            messageHandler.sendIn(player, AlertModes.MUTED, "premium.disable.alert");
-                        }
+						if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
+							messageHandler.sendIn(player, AlertModes.MUTED, "premium.enable.alert");
+						} else {
+							messageHandler.sendIn(player, AlertModes.MUTED, "premium.disable.alert");
+						}
 
-                    });
+					});
 
-                });
-            });
+				});
+			});
 
-        });
+		});
 
-    }
+	}
 
 }

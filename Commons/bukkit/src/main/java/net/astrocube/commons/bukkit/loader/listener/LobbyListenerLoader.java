@@ -10,22 +10,22 @@ import org.bukkit.plugin.Plugin;
 
 public class LobbyListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
-    private @Inject LobbyReturnListener lobbyReturnListener;
-    private @Inject LobbyActionListener lobbyActionListener;
-    private @Inject LobbyJoinAssignFlyListener lobbyJoinAssignFlyListener;
+	private @Inject LobbyUserDisconnectListener lobbyUserDisconnectListener;
+	private @Inject LobbyReturnListener lobbyReturnListener;
+	private @Inject LobbyActionListener lobbyActionListener;
+	private @Inject LobbyJoinAssignFlyListener lobbyJoinAssignFlyListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-               lobbyUserDisconnectListener,
-                lobbyReturnListener,
-                lobbyActionListener,
-                lobbyJoinAssignFlyListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			lobbyUserDisconnectListener,
+			lobbyReturnListener,
+			lobbyActionListener,
+			lobbyJoinAssignFlyListener
+		);
+	}
 
 }

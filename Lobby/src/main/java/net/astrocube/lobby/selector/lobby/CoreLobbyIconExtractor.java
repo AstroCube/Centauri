@@ -21,56 +21,56 @@ import java.util.List;
 @Singleton
 public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject LobbyServerRedirect lobbyServerRedirect;
+	private @Inject MessageHandler messageHandler;
+	private @Inject LobbyServerRedirect lobbyServerRedirect;
 
-    @Override
-    public ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position) {
+	@Override
+	public ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position) {
 
-        ChatColor color = ChatColor.YELLOW;
-        LobbySwitchStatus status = LobbySwitchStatus.SUCCESS;
-        String translation = "connect";
-        ItemStack itemStack = new ItemStack(Material.QUARTZ_BLOCK, wrapper.getNumber());
+		ChatColor color = ChatColor.YELLOW;
+		LobbySwitchStatus status = LobbySwitchStatus.SUCCESS;
+		String translation = "connect";
+		ItemStack itemStack = new ItemStack(Material.QUARTZ_BLOCK, wrapper.getNumber());
 
-        if (wrapper.isFull()) {
-            color = ChatColor.RED;
-            translation = "full";
-            status = LobbySwitchStatus.FULL;
-            itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 14);
-        }
+		if (wrapper.isFull()) {
+			color = ChatColor.RED;
+			translation = "full";
+			status = LobbySwitchStatus.FULL;
+			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 14);
+		}
 
-        if (wrapper.getName().equalsIgnoreCase(Bukkit.getServerName())) {
-            color = ChatColor.GREEN;
-            translation = "already";
-            status = LobbySwitchStatus.CYCLIC;
-            itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 13);
-        }
+		if (wrapper.getName().equalsIgnoreCase(Bukkit.getServerName())) {
+			color = ChatColor.GREEN;
+			translation = "already";
+			status = LobbySwitchStatus.CYCLIC;
+			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 13);
+		}
 
-        ItemMeta meta = itemStack.getItemMeta();
-        List<String> loreArray = new ArrayList<>();
+		ItemMeta meta = itemStack.getItemMeta();
+		List<String> loreArray = new ArrayList<>();
 
-        meta.setDisplayName(color + wrapper.getName());
+		meta.setDisplayName(color + wrapper.getName());
 
-        loreArray.add(
-                messageHandler.get(player, "lobby.lobby-selector.indicators.connected")
-                        .replace("%users%", wrapper.getConnected() + "")
-                        .replace("%total%", wrapper.getMax() + "")
-        );
-        loreArray.add(" ");
-        loreArray.add(
-                color + messageHandler.get(player, "lobby.lobby-selector.indicators." + translation)
-        );
+		loreArray.add(
+			messageHandler.get(player, "lobby.lobby-selector.indicators.connected")
+				.replace("%users%", wrapper.getConnected() + "")
+				.replace("%total%", wrapper.getMax() + "")
+		);
+		loreArray.add(" ");
+		loreArray.add(
+			color + messageHandler.get(player, "lobby.lobby-selector.indicators." + translation)
+		);
 
-        meta.setLore(loreArray);
-        itemStack.setItemMeta(meta);
+		meta.setLore(loreArray);
+		itemStack.setItemMeta(meta);
 
-        LobbySwitchStatus finalStatus = status;
-        return ItemClickable.builder(position)
-                .setItemStack(itemStack)
-                .setAction((event) -> {
-                    event.getWhoClicked().closeInventory();
-                    lobbyServerRedirect.redirectPlayer(player, wrapper, finalStatus);
-                    return true;
-                }).build();
-    }
+		LobbySwitchStatus finalStatus = status;
+		return ItemClickable.builder(position)
+			.setItemStack(itemStack)
+			.setAction((event) -> {
+				event.getWhoClicked().closeInventory();
+				lobbyServerRedirect.redirectPlayer(player, wrapper, finalStatus);
+				return true;
+			}).build();
+	}
 }

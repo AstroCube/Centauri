@@ -9,28 +9,30 @@ import java.util.Set;
 
 public interface ChatChannelDoc {
 
-    interface Creation extends PartialModel {
+	interface Creation extends PartialModel {
 
-        String getName();
+		String getName();
 
-        int getLifecycle();
+		int getLifecycle();
 
-        boolean getConfirmation();
+		boolean getConfirmation();
 
-        Visibility getVisibility();
+		Visibility getVisibility();
 
-        Set<String> getParticipants();
+		Set<String> getParticipants();
 
-        @Nullable String getPermission();
+		@Nullable
+		String getPermission();
 
-        enum Visibility {
-            @JsonProperty("Public") PUBLIC,
-            @JsonProperty("Private") PRIVATE,
-            @JsonProperty("Permission") PERMISSION
-        }
+		enum Visibility {
+			@JsonProperty("Public") PUBLIC,
+			@JsonProperty("Private") PRIVATE,
+			@JsonProperty("Permission") PERMISSION
+		}
 
-    }
+	}
 
-    interface Complete extends Creation, Model.Stamped {}
+	interface Complete extends Creation, Model.Stamped {
+	}
 
 }

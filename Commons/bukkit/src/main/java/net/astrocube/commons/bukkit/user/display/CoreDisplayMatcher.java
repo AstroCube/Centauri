@@ -15,18 +15,18 @@ import java.util.Optional;
 
 public class CoreDisplayMatcher implements DisplayMatcher {
 
-    private @Inject TranslatedGroupProvider translatedFlairFormat;
+	private @Inject TranslatedGroupProvider translatedFlairFormat;
 
-    @Override
-    public TranslatedFlairFormat getDisplay(Player player, User user) {
-        Optional<Group> flairGroup = user.getGroups().stream()
-                .map(UserDoc.UserGroup::getGroup)
-                .min(Comparator.comparingInt(Group::getPriority));
-        return translatedFlairFormat.getGroupTranslations(
-                player,
-                flairGroup.isPresent() ? flairGroup.get().getId() : "default",
-                flairGroup.isPresent() ? DisplayMatcher.getColor(flairGroup.get()) : ChatColor.GRAY
-        );
-    }
+	@Override
+	public TranslatedFlairFormat getDisplay(Player player, User user) {
+		Optional<Group> flairGroup = user.getGroups().stream()
+			.map(UserDoc.UserGroup::getGroup)
+			.min(Comparator.comparingInt(Group::getPriority));
+		return translatedFlairFormat.getGroupTranslations(
+			player,
+			flairGroup.isPresent() ? flairGroup.get().getId() : "default",
+			flairGroup.isPresent() ? DisplayMatcher.getColor(flairGroup.get()) : ChatColor.GRAY
+		);
+	}
 
 }

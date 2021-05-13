@@ -18,42 +18,42 @@ import java.util.Set;
 
 public class MatchStartCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject CountdownScheduler countdownScheduler;
-    private @Inject MatchParticipantsProvider matchParticipantsProvider;
-    private @Inject MatchMessageHelper matchMessageHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject CountdownScheduler countdownScheduler;
+	private @Inject MatchParticipantsProvider matchParticipantsProvider;
+	private @Inject MatchMessageHelper matchMessageHelper;
 
 
-    @Command(names = {"start"}, permission = "commons.match.admin")
-    public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
+	@Command(names = {"start"}, permission = "commons.match.admin")
+	public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
 
-        Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
-        if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
-            return true;
-        }
+		if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
+			return true;
+		}
 
-        int secondsFixed;
-        try {
-            secondsFixed = Integer.parseInt(seconds);
-        } catch (Exception e) {
-            messageHandler.sendIn(player, AlertModes.ERROR,"game.admin.error");
-            return true;
-        }
+		int secondsFixed;
+		try {
+			secondsFixed = Integer.parseInt(seconds);
+		} catch (Exception e) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.error");
+			return true;
+		}
 
 
-        Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
+		Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
 
-        if (involved.size() < 2) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.insufficient");
-            return true;
-        }
+		if (involved.size() < 2) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.insufficient");
+			return true;
+		}
 
-        countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true);
-        involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
-        matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.force");
+		countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true);
+		involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
+		matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.force");
 
-        return true;
-    }
+		return true;
+	}
 
 }

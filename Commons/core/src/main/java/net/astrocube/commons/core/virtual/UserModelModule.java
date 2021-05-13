@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.RedisModelService;
 
 public class UserModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(User.class, UserDoc.Partial.class, model -> {
-            TypeLiteral<RedisModelService<User, UserDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<RedisModelService<User, UserDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(User.class, UserDoc.Partial.class, model -> {
+			TypeLiteral<RedisModelService<User, UserDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<RedisModelService<User, UserDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

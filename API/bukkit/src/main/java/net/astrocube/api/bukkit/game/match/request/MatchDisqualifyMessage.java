@@ -6,9 +6,9 @@ import net.astrocube.api.core.virtual.user.User;
 @MessageDefaults.ChannelName("gc-disqualify")
 public interface MatchDisqualifyMessage extends MatchActionMessage {
 
-    /**
-     * @return {@link User} id to assign as spectator.
-     */
-    String getUser();
+	/**
+	 * @return {@link User} id to assign as spectator.
+	 */
+	String getUser();
 
 }

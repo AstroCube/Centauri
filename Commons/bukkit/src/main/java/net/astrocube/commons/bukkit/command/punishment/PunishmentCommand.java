@@ -12,59 +12,59 @@ import org.bukkit.entity.Player;
 
 public class PunishmentCommand implements CommandClass {
 
-    private @Inject PunishmentCommandHelper punishmentCommandHelper;
+	private @Inject PunishmentCommandHelper punishmentCommandHelper;
 
 
-    @Command(names = {"ban", "tb", "tempban", "permaban", "pb"}, permission = "commons.staff.punish.ban")
-    public boolean onBanCommand(
-            @Sender Player sender,
-            String punished,
-            @Text @OptArg("") String compound,
-            @Switch("s") Boolean silent
-    ) {
-        punishmentCommandHelper.processPunishment(
-                sender,
-                PunishmentDoc.Identity.Type.BAN,
-                punished,
-                compound,
-                silent
-        );
-        return true;
-    }
+	@Command(names = {"ban", "tb", "tempban", "permaban", "pb"}, permission = "commons.staff.punish.ban")
+	public boolean onBanCommand(
+		@Sender Player sender,
+		String punished,
+		@Text @OptArg("") String compound,
+		@Switch("s") Boolean silent
+	) {
+		punishmentCommandHelper.processPunishment(
+			sender,
+			PunishmentDoc.Identity.Type.BAN,
+			punished,
+			compound,
+			silent
+		);
+		return true;
+	}
 
-    @Command(names = {"kick", "expulse", "k"}, permission = "commons.staff.punish.kick")
-    public boolean onKickCommand(
-            @Sender Player sender,
-            String punished,
-            @Text @OptArg("") String compound,
-            @Switch("s") Boolean silent
-    ) {
-        punishmentCommandHelper.processPunishment(
-                sender,
-                PunishmentDoc.Identity.Type.KICK,
-                punished,
-                compound,
-                silent
-        );
-        return true;
-    }
+	@Command(names = {"kick", "expulse", "k"}, permission = "commons.staff.punish.kick")
+	public boolean onKickCommand(
+		@Sender Player sender,
+		String punished,
+		@Text @OptArg("") String compound,
+		@Switch("s") Boolean silent
+	) {
+		punishmentCommandHelper.processPunishment(
+			sender,
+			PunishmentDoc.Identity.Type.KICK,
+			punished,
+			compound,
+			silent
+		);
+		return true;
+	}
 
-    @Command(names = {"warn", "warning"}, permission = "commons.staff.punish.warn")
-    public boolean onWarnCommand(
-            @Sender Player sender,
-            String punished,
-            @Text @OptArg("") String compound,
-            @Switch("s") Boolean silent
-    ) {
-        punishmentCommandHelper.processPunishment(
-                sender,
-                PunishmentDoc.Identity.Type.WARN,
-                punished,
-                compound,
-                silent
-        );
-        return true;
-    }
+	@Command(names = {"warn", "warning"}, permission = "commons.staff.punish.warn")
+	public boolean onWarnCommand(
+		@Sender Player sender,
+		String punished,
+		@Text @OptArg("") String compound,
+		@Switch("s") Boolean silent
+	) {
+		punishmentCommandHelper.processPunishment(
+			sender,
+			PunishmentDoc.Identity.Type.WARN,
+			punished,
+			compound,
+			silent
+		);
+		return true;
+	}
 
 
 }

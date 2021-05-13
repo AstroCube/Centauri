@@ -15,26 +15,26 @@ import java.util.logging.Level;
 @Singleton
 public class ListenerLoader implements Loader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject ServerConnectListener serverConnectListener;
-    private @Inject PreLoginListener preLoginListener;
-    private @Inject ServerDisconnectListener serverDisconnectListener;
+	private @Inject ServerConnectListener serverConnectListener;
+	private @Inject PreLoginListener preLoginListener;
+	private @Inject ServerDisconnectListener serverDisconnectListener;
 
-    @Override
-    public void load() {
+	@Override
+	public void load() {
 
-        plugin.getLogger().log(Level.INFO, "Initializing event listeners");
+		plugin.getLogger().log(Level.INFO, "Initializing event listeners");
 
-        registerEvent(serverConnectListener);
-        registerEvent(preLoginListener);
-        registerEvent(serverDisconnectListener);
+		registerEvent(serverConnectListener);
+		registerEvent(preLoginListener);
+		registerEvent(serverDisconnectListener);
 
-    }
+	}
 
-    private void registerEvent(Listener listener) {
-        plugin.getProxy().getPluginManager().registerListener(plugin, listener);
-    }
+	private void registerEvent(Listener listener) {
+		plugin.getProxy().getPluginManager().registerListener(plugin, listener);
+	}
 
 }
 

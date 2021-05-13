@@ -15,19 +15,19 @@ import net.astrocube.commons.bukkit.punishment.lookup.CorePunishmentLookupMenu;
 
 public class PunishmentModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    public void configure() {
+	@Override
+	public void configure() {
 
-        install(new FreezeModule());
+		install(new FreezeModule());
 
-        bind(PunishmentLookupMenu.class).to(CorePunishmentLookupMenu.class);
-        bind(PunishmentIconGenerator.class).to(CorePunishmentIconGenerator.class);
+		bind(PunishmentLookupMenu.class).to(CorePunishmentLookupMenu.class);
+		bind(PunishmentIconGenerator.class).to(CorePunishmentIconGenerator.class);
 
-        bind(PresetPunishmentCache.class).to(CorePresetPunishmentCache.class);
-        bind(PunishmentHandler.class).to(CorePunishmentHandler.class);
-        bind(PunishmentKickProcessor.class).to(CorePunishmentKickProcessor.class);
-        bindChannel(Punishment.class).registerHandler(new PunishmentBroadcastHandler());
-        bindChannel(ProxyKickRequest.class);
-    }
+		bind(PresetPunishmentCache.class).to(CorePresetPunishmentCache.class);
+		bind(PunishmentHandler.class).to(CorePunishmentHandler.class);
+		bind(PunishmentKickProcessor.class).to(CorePunishmentKickProcessor.class);
+		bindChannel(Punishment.class).registerHandler(new PunishmentBroadcastHandler());
+		bindChannel(ProxyKickRequest.class);
+	}
 
 }

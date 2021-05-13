@@ -20,66 +20,65 @@ import java.util.logging.Level;
 
 public class BukkitStartResolver implements ServerStartResolver {
 
-    private @Inject ServerConnectionManager serverConnectionManager;
-    private @Inject AuthorizationProcessor authorizationProcessor;
-    private @Inject GameServerStartManager gameServerStartManager;
-    private @Inject GameControlPair gameControlPair;
-    private @Inject FindService<GameMode> gameModeFindService;
-    private @Inject InstanceNameProvider instanceNameProvider;
-    private @Inject Plugin plugin;
+	private @Inject ServerConnectionManager serverConnectionManager;
+	private @Inject AuthorizationProcessor authorizationProcessor;
+	private @Inject GameServerStartManager gameServerStartManager;
+	private @Inject GameControlPair gameControlPair;
+	private @Inject FindService<GameMode> gameModeFindService;
+	private @Inject InstanceNameProvider instanceNameProvider;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void instantiateServer() {
-        try {
+	@Override
+	public void instantiateServer() {
+		try {
 
-            final ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+			final ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 
-            if (type != ServerDoc.Type.GAME) {
-                String token = serverConnectionManager.startConnection(
-                        instanceNameProvider.getName(),
-                        type,
-                        plugin.getConfig().getString("server.cluster"),
-                        plugin.getConfig().getBoolean("server.sandbox")
-                );
-                this.authorizationProcessor.authorizeBackend(token.toCharArray());
-                return;
-            }
+			if (type != ServerDoc.Type.GAME) {
+				String token = serverConnectionManager.startConnection(
+					instanceNameProvider.getName(),
+					type,
+					plugin.getConfig().getString("server.cluster"),
+					plugin.getConfig().getBoolean("server.sandbox")
+				);
+				this.authorizationProcessor.authorizeBackend(token.toCharArray());
+				return;
+			}
 
-            GameMode gameModeDoc = this.gameModeFindService.findSync(
-                    plugin.getConfig().getString("game.mode")
-            );
+			GameMode gameModeDoc = this.gameModeFindService.findSync(
+				plugin.getConfig().getString("game.mode")
+			);
 
-            if (gameModeDoc.getSubTypes() == null)
-                throw new Exception("Not subModes inside GameMode");
+			if (gameModeDoc.getSubTypes() == null)
+				throw new Exception("Not subModes inside GameMode");
 
-            Optional<SubGameMode> subGameMode =
-                    Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
-                            s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
-                    ).findAny();
+			Optional<SubGameMode> subGameMode =
+				Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
+					s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
+				).findAny();
 
-            if (!subGameMode.isPresent())
-                throw new Exception("Requested subGameMode not found");
+			if (!subGameMode.isPresent())
+				throw new Exception("Requested subGameMode not found");
 
-            String token = gameServerStartManager.createGameServer(
-                    instanceNameProvider.getName(),
-                    type,
-                    plugin.getConfig().getString("server.cluster"),
-                    plugin.getConfig().getInt("game.running"),
-                    plugin.getConfig().getInt("game.total"),
-                    gameModeDoc,
-                    subGameMode.get(),
-                    plugin.getConfig().getBoolean("server.sandbox")
-            );
-            this.authorizationProcessor.authorizeBackend(token.toCharArray());
+			String token = gameServerStartManager.createGameServer(
+				instanceNameProvider.getName(),
+				type,
+				plugin.getConfig().getString("server.cluster"),
+				plugin.getConfig().getInt("game.running"),
+				plugin.getConfig().getInt("game.total"),
+				gameModeDoc,
+				subGameMode.get(),
+				plugin.getConfig().getBoolean("server.sandbox")
+			);
+			this.authorizationProcessor.authorizeBackend(token.toCharArray());
 
-            gameControlPair.enablePairing();
+			gameControlPair.enablePairing();
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
-            Bukkit.shutdown();
-        }
-    }
-
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
+			Bukkit.shutdown();
+		}
+	}
 
 
 }

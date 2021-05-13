@@ -8,12 +8,12 @@ import net.astrocube.commons.bukkit.channel.admin.StaffChannelModule;
 
 public class ChatChannelModule extends ProtectedModule {
 
-    @Override
-    protected void configure() {
+	@Override
+	protected void configure() {
 
-        this.bind(StaffLoginBroadcaster.class).to(CoreStaffLoginBroadcaster.class);
-        this.bind(InterceptorRegistry.class).to(CoreInterceptorRegistry.class).in(Scopes.SINGLETON);
+		this.bind(StaffLoginBroadcaster.class).to(CoreStaffLoginBroadcaster.class);
+		this.bind(InterceptorRegistry.class).to(CoreInterceptorRegistry.class).in(Scopes.SINGLETON);
 
-        install(new StaffChannelModule());
-    }
+		install(new StaffChannelModule());
+	}
 }

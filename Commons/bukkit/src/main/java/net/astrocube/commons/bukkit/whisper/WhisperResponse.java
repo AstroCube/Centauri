@@ -5,13 +5,13 @@ import java.util.Optional;
 
 public interface WhisperResponse {
 
-    Result result();
+	Result result();
 
-    Collection<Exception> errors();
+	Collection<Exception> errors();
 
-    Optional<WhisperMessage> message();
+	Optional<WhisperMessage> message();
 
-    enum Result {
-        SUCCESS, FAILED_OFFLINE, FAILED_IGNORED, FAILED_NOT_RECEIVING, FAILED_ERROR;
-    }
+	enum Result {
+		SUCCESS, FAILED_OFFLINE, FAILED_IGNORED, FAILED_NOT_RECEIVING, FAILED_ERROR;
+	}
 }

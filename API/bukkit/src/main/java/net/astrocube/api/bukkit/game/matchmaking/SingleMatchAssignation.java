@@ -9,19 +9,19 @@ import net.astrocube.api.core.message.Message;
  */
 public interface SingleMatchAssignation extends Message {
 
-    /**
-     * @return user of the assignation.
-     */
-    String getUser();
+	/**
+	 * @return user of the assignation.
+	 */
+	String getUser();
 
-    /**
-     * @return match of the assignation.
-     */
-    String getMatch();
+	/**
+	 * @return match of the assignation.
+	 */
+	String getMatch();
 
-    /**
-     * @return server
-     */
-    String getServer();
+	/**
+	 * @return server
+	 */
+	String getServer();
 
 }

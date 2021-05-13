@@ -9,19 +9,19 @@ import org.bukkit.event.block.Action;
 
 public class LobbyReturnListener implements Listener {
 
-    private @Inject SpectatorLobbyTeleporter spectatorLobbyTeleporter;
+	private @Inject SpectatorLobbyTeleporter spectatorLobbyTeleporter;
 
-    @EventHandler
-    public void onGameGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equalsIgnoreCase("gc_lobby") &&
-                        (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            if (spectatorLobbyTeleporter.hasScheduledTeleport(event.getPlayer())) {
-                spectatorLobbyTeleporter.cancelTeleport(event.getPlayer());
-            } else {
-                spectatorLobbyTeleporter.scheduleTeleport(event.getPlayer());
-            }
-        }
-    }
+	@EventHandler
+	public void onGameGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equalsIgnoreCase("gc_lobby") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			if (spectatorLobbyTeleporter.hasScheduledTeleport(event.getPlayer())) {
+				spectatorLobbyTeleporter.cancelTeleport(event.getPlayer());
+			} else {
+				spectatorLobbyTeleporter.scheduleTeleport(event.getPlayer());
+			}
+		}
+	}
 }

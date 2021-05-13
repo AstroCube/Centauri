@@ -13,29 +13,30 @@ import java.util.Map;
 
 public class CoreGatewayMatcher implements GatewayMatcher {
 
-    private final Map<UserDoc.Session.Authorization, AuthenticationGateway> types;
-    private final AuthenticationGateway registerGateway;
+	private final Map<UserDoc.Session.Authorization, AuthenticationGateway> types;
+	private final AuthenticationGateway registerGateway;
 
-    @Inject public CoreGatewayMatcher(
-            PasswordGateway passwordGateway,
-            RegisterGateway registerGateway,
-            PremiumGateway premiumGateway
-    ) {
-        this.registerGateway = registerGateway;
-        this.types = new HashMap<>();
-        types.put(UserDoc.Session.Authorization.PASSWORD, passwordGateway);
-        types.put(UserDoc.Session.Authorization.PREMIUM, premiumGateway);
-    }
+	@Inject
+	public CoreGatewayMatcher(
+		PasswordGateway passwordGateway,
+		RegisterGateway registerGateway,
+		PremiumGateway premiumGateway
+	) {
+		this.registerGateway = registerGateway;
+		this.types = new HashMap<>();
+		types.put(UserDoc.Session.Authorization.PASSWORD, passwordGateway);
+		types.put(UserDoc.Session.Authorization.PREMIUM, premiumGateway);
+	}
 
-    @Override
-    public AuthenticationGateway getUserAuthentication(UserDoc.Session.Authorization authorizationType) {
-        return types.containsKey(authorizationType) ?
-                types.get(authorizationType) :
-                types.get(UserDoc.Session.Authorization.PASSWORD);
-    }
+	@Override
+	public AuthenticationGateway getUserAuthentication(UserDoc.Session.Authorization authorizationType) {
+		return types.containsKey(authorizationType) ?
+			types.get(authorizationType) :
+			types.get(UserDoc.Session.Authorization.PASSWORD);
+	}
 
-    @Override
-    public AuthenticationGateway getRegisterGateway() {
-        return registerGateway;
-    }
+	@Override
+	public AuthenticationGateway getRegisterGateway() {
+		return registerGateway;
+	}
 }

@@ -23,83 +23,83 @@ import java.util.Optional;
 @Singleton
 public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
 
-    private @Inject CreateService<ChatChannelMessage, ChatChannelMessageDoc.Creation> createService;
-    private @Inject MatchChannelProvider matchChannelProvider;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MatchMessageDispatcher matchMessageDispatcher;
-    private @Inject MessageHandler messageHandler;
+	private @Inject CreateService<ChatChannelMessage, ChatChannelMessageDoc.Creation> createService;
+	private @Inject MatchChannelProvider matchChannelProvider;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MatchMessageDispatcher matchMessageDispatcher;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void sendMessage(String message, Player player) throws Exception {
-        sendMessage(message, player, false, false);
-    }
+	@Override
+	public void sendMessage(String message, Player player) throws Exception {
+		sendMessage(message, player, false, false);
+	}
 
-    @Override
-    public void sendMessage(String message, Player player, boolean shout, boolean all) throws Exception {
+	@Override
+	public void sendMessage(String message, Player player, boolean shout, boolean all) throws Exception {
 
-        Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-        if (!matchOptional.isPresent()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.spectator.error");
-            return;
-        }
+		if (!matchOptional.isPresent()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.spectator.error");
+			return;
+		}
 
-        Match match = matchOptional.get();
+		Match match = matchOptional.get();
 
-        UserMatchJoiner.Origin origin =
-                UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match);
+		UserMatchJoiner.Origin origin =
+			UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match);
 
-        Optional<ChatChannel> channel = matchChannelProvider.retrieveChannel(match.getId());
+		Optional<ChatChannel> channel = matchChannelProvider.retrieveChannel(match.getId());
 
-        if (!channel.isPresent()) {
-            messageHandler.sendIn(player, AlertModes.ERROR, "game.spectator.error");
-            return;
-        }
+		if (!channel.isPresent()) {
+			messageHandler.sendIn(player, AlertModes.ERROR, "game.spectator.error");
+			return;
+		}
 
-        ChatChannelMessageDoc.Creation channelMessage = new ChatChannelMessageDoc.Creation() {
-            @Override
-            public String getSender() {
-                return player.getDatabaseIdentifier();
-            }
+		ChatChannelMessageDoc.Creation channelMessage = new ChatChannelMessageDoc.Creation() {
+			@Override
+			public String getSender() {
+				return player.getDatabaseIdentifier();
+			}
 
-            @Override
-            public String getMessage() {
-                return message;
-            }
+			@Override
+			public String getMessage() {
+				return message;
+			}
 
-            @Override
-            public String getChannel() {
-                return channel.get().getId();
-            }
+			@Override
+			public String getChannel() {
+				return channel.get().getId();
+			}
 
-            @Override
-            public Origin getOrigin() {
-                return Origin.INGAME;
-            }
+			@Override
+			public Origin getOrigin() {
+				return Origin.INGAME;
+			}
 
-            @Override
-            public Map<String, Object> getMeta() {
+			@Override
+			public Map<String, Object> getMeta() {
 
-                Map<String, Object> meta = new HashMap<>();
+				Map<String, Object> meta = new HashMap<>();
 
-                meta.put("origin", origin);
+				meta.put("origin", origin);
 
-                if (shout) {
+				if (shout) {
 
-                    meta.put("shout", true);
+					meta.put("shout", true);
 
-                    if (all) {
-                        meta.put("all", true);
-                    }
+					if (all) {
+						meta.put("all", true);
+					}
 
-                }
+				}
 
-                return meta;
-            }
-        };
+				return meta;
+			}
+		};
 
-        matchMessageDispatcher.dispatch(createService.createSync(channelMessage), match.getId());
+		matchMessageDispatcher.dispatch(createService.createSync(channelMessage), match.getId());
 
-    }
+	}
 
 }

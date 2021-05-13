@@ -5,6 +5,6 @@ import net.astrocube.api.bukkit.nametag.Nametag;
 
 public interface RenderedAnimatedNametag extends Nametag.Rendered {
 
-    void update();
+	void update();
 
 }

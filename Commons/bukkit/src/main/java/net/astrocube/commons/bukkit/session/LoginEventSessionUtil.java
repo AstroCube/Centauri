@@ -5,18 +5,18 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class LoginEventSessionUtil {
 
-    public static SessionValidateDoc.Request retrieveRequestFromEvent(AsyncPlayerPreLoginEvent event) {
-        return new SessionValidateDoc.Request() {
-            @Override
-            public String getUser() {
-                return event.getName();
-            }
+	public static SessionValidateDoc.Request retrieveRequestFromEvent(AsyncPlayerPreLoginEvent event) {
+		return new SessionValidateDoc.Request() {
+			@Override
+			public String getUser() {
+				return event.getName();
+			}
 
-            @Override
-            public String getAddress() {
-                return event.getAddress().getHostAddress();
-            }
-        };
-    }
+			@Override
+			public String getAddress() {
+				return event.getAddress().getHostAddress();
+			}
+		};
+	}
 
 }

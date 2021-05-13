@@ -8,14 +8,14 @@ import org.bukkit.Bukkit;
 
 public class PunishmentBroadcastHandler implements MessageHandler<Punishment> {
 
-    @Override
-    public Class<Punishment> type() {
-        return Punishment.class;
-    }
+	@Override
+	public Class<Punishment> type() {
+		return Punishment.class;
+	}
 
-    @Override
-    public void handleDelivery(Punishment message, Metadata properties) {
-        Bukkit.getPluginManager().callEvent(new PunishmentIssueEvent(message));
-    }
+	@Override
+	public void handleDelivery(Punishment message, Metadata properties) {
+		Bukkit.getPluginManager().callEvent(new PunishmentIssueEvent(message));
+	}
 
 }

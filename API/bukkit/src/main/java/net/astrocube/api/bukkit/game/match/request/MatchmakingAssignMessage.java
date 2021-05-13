@@ -7,9 +7,9 @@ import net.astrocube.api.core.virtual.user.User;
 @MessageDefaults.ChannelName("gc-pending-assign")
 public interface MatchmakingAssignMessage extends MatchActionMessage {
 
-    /**
-     * @return {@link User} id to assign as spectator.
-     */
-    MatchAssignable getAssignable();
+	/**
+	 * @return {@link User} id to assign as spectator.
+	 */
+	MatchAssignable getAssignable();
 
 }

@@ -7,13 +7,13 @@ import team.unnamed.gui.abstraction.item.ItemClickable;
 
 public interface LobbyIconExtractor {
 
-    /**
-     * Extract required info to generate a {@link ItemStack} with messages for a menu
-     * @param wrapper to be extracted
-     * @param player where language will be provided
-     * @param position to be placed
-     * @return configured icon
-     */
-    ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position);
+	/**
+	 * Extract required info to generate a {@link ItemStack} with messages for a menu
+	 * @param wrapper  to be extracted
+	 * @param player   where language will be provided
+	 * @param position to be placed
+	 * @return configured icon
+	 */
+	ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position);
 
 }

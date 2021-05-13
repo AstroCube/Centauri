@@ -18,66 +18,66 @@ import java.util.Locale;
 
 public class UserBasicActionsListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onFoodLevelChange(FoodLevelChangeEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onEntityDamage(EntityDamageEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onEntityDamage(EntityDamageEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockBreak(BlockBreakEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onBlockBreak(BlockBreakEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(BlockPlaceEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onBlockPlace(BlockPlaceEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onItemDrop(PlayerDropItemEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onItemDrop(PlayerDropItemEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onInventoryInteract(InventoryClickEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onInventoryInteract(InventoryClickEvent event) {
+		event.setCancelled(true);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onCraftTableInteract(PlayerInteractEvent event) {
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onCraftTableInteract(PlayerInteractEvent event) {
 
-        Block soilBlock = event.getPlayer().getLocation().getBlock();
-        if ((event.getAction() == Action.PHYSICAL)) {
-            if (soilBlock.getType() == Material.SOIL) {
-                event.setCancelled(true);
-                return;
-            }
-        }
+		Block soilBlock = event.getPlayer().getLocation().getBlock();
+		if ((event.getAction() == Action.PHYSICAL)) {
+			if (soilBlock.getType() == Material.SOIL) {
+				event.setCancelled(true);
+				return;
+			}
+		}
 
-        if (event.getClickedBlock() != null) {
-            Material material = event.getClickedBlock().getType();
-            if (
-                    (material == Material.WORKBENCH) ||
-                            (material.toString().toLowerCase(Locale.ROOT).contains("door")) ||
-                            (material == Material.ANVIL) ||
-                            (material == Material.FURNACE || material == Material.BURNING_FURNACE) ||
-                            (material == Material.CHEST) ||
-                            (material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON) ||
-                            (material.toString().toLowerCase(Locale.ROOT).contains("trap")) ||
-                            (material.toString().toLowerCase(Locale.ROOT).contains("minecart"))
-            ) {
-                event.setCancelled(true);
-            }
+		if (event.getClickedBlock() != null) {
+			Material material = event.getClickedBlock().getType();
+			if (
+				(material == Material.WORKBENCH) ||
+					(material.toString().toLowerCase(Locale.ROOT).contains("door")) ||
+					(material == Material.ANVIL) ||
+					(material == Material.FURNACE || material == Material.BURNING_FURNACE) ||
+					(material == Material.CHEST) ||
+					(material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON) ||
+					(material.toString().toLowerCase(Locale.ROOT).contains("trap")) ||
+					(material.toString().toLowerCase(Locale.ROOT).contains("minecart"))
+			) {
+				event.setCancelled(true);
+			}
 
-        }
+		}
 
 
-    }
+	}
 
 
 }

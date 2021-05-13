@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 
 public interface LobbyNametagHandler {
 
-    void render(Player player, User user);
+	void render(Player player, User user);
 
-    void remove(Player player);
+	void remove(Player player);
 
 }

@@ -21,48 +21,48 @@ import java.util.logging.Level;
 @Command(names = "add")
 public class AddSubCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FriendHelper friendHelper;
-    private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FriendHelper friendHelper;
+	private @Inject FriendshipHandler friendshipHandler;
+	private @Inject FriendCallbackHelper friendCallbackHelper;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject Plugin plugin;
 
-    @Command(names = "")
-    public boolean execute(@Sender Player player, OfflinePlayer target) {
+	@Command(names = "")
+	public boolean execute(@Sender Player player, OfflinePlayer target) {
 
-        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-            return true;
-        }
+		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
+			return true;
+		}
 
-        friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
+		friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendHelper.checkAlreadySent(player, user, targetUser)) {
-                return;
-            }
+			if (friendHelper.checkAlreadySent(player, user, targetUser)) {
+				return;
+			}
 
-            if (friendHelper.checkAlreadyFriends(player, user, targetUser)) {
-                return;
-            }
+			if (friendHelper.checkAlreadyFriends(player, user, targetUser)) {
+				return;
+			}
 
-            try {
-                friendshipHandler.createFriendRequest(user.getId(), targetUser.getId());
-            } catch (JsonProcessingException e) {
-                plugin.getLogger().log(Level.SEVERE, "Error while creating frienship request", e);
-                messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
-            }
+			try {
+				friendshipHandler.createFriendRequest(user.getId(), targetUser.getId());
+			} catch (JsonProcessingException e) {
+				plugin.getLogger().log(Level.SEVERE, "Error while creating frienship request", e);
+				messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
+			}
 
-            TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, targetUser);
+			TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, targetUser);
 
-            messageHandler.sendReplacing(
-                    player, "friend.request.sent",
-                    "%receiver%", flairFormat.getColor() + targetUser.getDisplay()
-            );
+			messageHandler.sendReplacing(
+				player, "friend.request.sent",
+				"%receiver%", flairFormat.getColor() + targetUser.getDisplay()
+			);
 
-        });
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
 }

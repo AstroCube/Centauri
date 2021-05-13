@@ -5,12 +5,12 @@ package net.astrocube.api.core.http.exception;
  */
 public class NotFound extends BackendException {
 
-    public NotFound(String message) {
-        super(message);
-    }
+	public NotFound(String message) {
+		super(message);
+	}
 
-    @Override
-    public int statusCode() {
-        return 404;
-    }
+	@Override
+	public int statusCode() {
+		return 404;
+	}
 }

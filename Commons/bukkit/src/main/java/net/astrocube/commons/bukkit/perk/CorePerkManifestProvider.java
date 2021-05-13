@@ -19,61 +19,64 @@ import java.util.stream.Collectors;
 @Singleton
 public class CorePerkManifestProvider implements PerkManifestProvider {
 
-    private @Inject CreateService<StorablePerk, StorablePerkDoc.Partial> createService;
-    private @Inject QueryService<StorablePerk> queryService;
-    private @Inject UpdateService<StorablePerk, StorablePerkDoc.Partial> updateService;
-    private @Inject ObjectMapper mapper;
+	private @Inject CreateService<StorablePerk, StorablePerkDoc.Partial> createService;
+	private @Inject QueryService<StorablePerk> queryService;
+	private @Inject UpdateService<StorablePerk, StorablePerkDoc.Partial> updateService;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public <T extends AbstractPerk> void createRegistry(
-            String playerId, String gameMode, @Nullable String subMode,
-            String type, T perk) throws Exception {
+	@Override
+	public <T extends AbstractPerk> void createRegistry(
+		String playerId, String gameMode, @Nullable String subMode,
+		String type, T perk) throws Exception {
 
-        createService.createSync(new StorablePerkDoc.Creation() {
-            @Override
-            public String getGameMode() {
-                return gameMode;
-            }
+		createService.createSync(new StorablePerkDoc.Creation() {
+			@Override
+			public String getGameMode() {
+				return gameMode;
+			}
 
-            @Nullable
-            @Override
-            public String getSubGameMode() { return subMode; }
+			@Nullable
+			@Override
+			public String getSubGameMode() {
+				return subMode;
+			}
 
-            @Override
-            public String getResponsible() {
-                return playerId;
-            }
+			@Override
+			public String getResponsible() {
+				return playerId;
+			}
 
-            @Override
-            public String getType() {
-                return type;
-            }
+			@Override
+			public String getType() {
+				return type;
+			}
 
-            @Override
-            public Object getStored() {
-                return perk;
-            }
+			@Override
+			public Object getStored() {
+				return perk;
+			}
 
-            @Override
-            public void setStored(Object updatable) {}
-        });
-    }
+			@Override
+			public void setStored(Object updatable) {
+			}
+		});
+	}
 
-    @Override
-    public <T extends AbstractPerk> Set<StorablePerk> query(ObjectNode query, Class<T> genericClass) throws Exception {
-        return queryService.querySync(query).getFoundModels()
-                .stream()
-                .peek(perk -> perk.setStored(transformPerk(perk, genericClass)))
-                .collect(Collectors.toSet());
-    }
+	@Override
+	public <T extends AbstractPerk> Set<StorablePerk> query(ObjectNode query, Class<T> genericClass) throws Exception {
+		return queryService.querySync(query).getFoundModels()
+			.stream()
+			.peek(perk -> perk.setStored(transformPerk(perk, genericClass)))
+			.collect(Collectors.toSet());
+	}
 
-    @Override
-    public <T extends AbstractPerk> T transformPerk(StorablePerk perk, Class<T> genericClass) {
-        return mapper.convertValue(perk.getStored(), genericClass);
-    }
+	@Override
+	public <T extends AbstractPerk> T transformPerk(StorablePerk perk, Class<T> genericClass) {
+		return mapper.convertValue(perk.getStored(), genericClass);
+	}
 
-    @Override
-    public void update(String playerId, StorablePerk manifest) throws Exception {
-        updateService.update(manifest);
-    }
+	@Override
+	public void update(String playerId, StorablePerk manifest) throws Exception {
+		updateService.update(manifest);
+	}
 }

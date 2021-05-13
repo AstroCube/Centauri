@@ -18,43 +18,43 @@ import org.bukkit.entity.Player;
 @Command(names = "deny")
 public class DenySubCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FriendHelper friendCommandValidator;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FriendHelper friendCommandValidator;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject FriendshipHandler friendshipHandler;
+	private @Inject FriendCallbackHelper friendCallbackHelper;
 
-    @Command(names = "")
-    public boolean execute(@Sender Player player, OfflinePlayer target) {
+	@Command(names = "")
+	public boolean execute(@Sender Player player, OfflinePlayer target) {
 
-        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-            return true;
-        }
+		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
+			return true;
+		}
 
-        friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
+		friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
-                return;
-            }
+			if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
+				return;
+			}
 
-            if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-                messageHandler.get(player, "friend.error.already-friends");
-                return;
-            }
+			if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
+				messageHandler.get(player, "friend.error.already-friends");
+				return;
+			}
 
-            friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
+			friendshipHandler.removeFriendRequest(targetUser.getId(), user.getId());
 
-            TranslatedFlairFormat matcher = displayMatcher.getDisplay(player, targetUser);
+			TranslatedFlairFormat matcher = displayMatcher.getDisplay(player, targetUser);
 
-            messageHandler.sendReplacingIn(
-                    player, AlertModes.ERROR, "friend.request.denied",
-                    "%sender%", matcher.getColor() + targetUser.getDisplay()
-            );
+			messageHandler.sendReplacingIn(
+				player, AlertModes.ERROR, "friend.request.denied",
+				"%sender%", matcher.getColor() + targetUser.getDisplay()
+			);
 
-        });
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
 }

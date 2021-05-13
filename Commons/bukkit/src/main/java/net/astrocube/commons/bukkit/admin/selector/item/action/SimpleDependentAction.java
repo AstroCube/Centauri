@@ -14,39 +14,39 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimpleDependentAction implements DependentAction {
 
-    @Inject private AdminSubGameModeSelectorMenu adminSubGameModeSelectorMenu;
-    private @Inject SpectateRequestAssigner spectateRequestAssigner;
+	@Inject private AdminSubGameModeSelectorMenu adminSubGameModeSelectorMenu;
+	private @Inject SpectateRequestAssigner spectateRequestAssigner;
 
-    @Override
-    public boolean constructClickActions(InventoryClickEvent inventoryClickEvent, GameMode gameMode) {
+	@Override
+	public boolean constructClickActions(InventoryClickEvent inventoryClickEvent, GameMode gameMode) {
 
-        Player player = (Player) inventoryClickEvent.getWhoClicked();
+		Player player = (Player) inventoryClickEvent.getWhoClicked();
 
-        switch (inventoryClickEvent.getClick()) {
+		switch (inventoryClickEvent.getClick()) {
 
-            case LEFT:
+			case LEFT:
 
-                player.openInventory(adminSubGameModeSelectorMenu.createSubGameModeSelectorMenu(player, gameMode));
-                return true;
+				player.openInventory(adminSubGameModeSelectorMenu.createSubGameModeSelectorMenu(player, gameMode));
+				return true;
 
-            case RIGHT:
+			case RIGHT:
 
-                List<SubGameMode> gameModes = new ArrayList<>(gameMode.getSubTypes());
+				List<SubGameMode> gameModes = new ArrayList<>(gameMode.getSubTypes());
 
-                if(gameModes.isEmpty()) {
-                    return false;
-                }
+				if (gameModes.isEmpty()) {
+					return false;
+				}
 
-                int i = ThreadLocalRandom.current().nextInt(gameModes.size());
+				int i = ThreadLocalRandom.current().nextInt(gameModes.size());
 
-                SubGameMode subGameMode = gameModes.get(i);
+				SubGameMode subGameMode = gameModes.get(i);
 
-                spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
+				spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
 
-                return true;
+				return true;
 
-            default:
-                return true;
-        }
-    }
+			default:
+				return true;
+		}
+	}
 }

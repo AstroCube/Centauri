@@ -15,41 +15,41 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class UserChatListener implements Listener {
 
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject FindService<User> findService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject FindService<User> findService;
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
 
-        if (!event.isCancelled()) {
-            findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
+		if (!event.isCancelled()) {
+			findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
 
-                if (!userCallback.isSuccessful()) {
-                    Bukkit.getOnlinePlayers().forEach(player ->
-                            player.sendMessage(
-                                    event.getPlayer().getDisplayName() + ChatColor.RESET +
-                                            ": " + event.getMessage())
-                    );
-                }
+				if (!userCallback.isSuccessful()) {
+					Bukkit.getOnlinePlayers().forEach(player ->
+						player.sendMessage(
+							event.getPlayer().getDisplayName() + ChatColor.RESET +
+								": " + event.getMessage())
+					);
+				}
 
-                userCallback.ifSuccessful(user -> Bukkit.getOnlinePlayers().forEach(player ->  {
+				userCallback.ifSuccessful(user -> Bukkit.getOnlinePlayers().forEach(player -> {
 
-                    TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
+					TranslatedFlairFormat format = displayMatcher.getDisplay(player, user);
 
-                    player.sendMessage(
-                            format.getPrefix() + " " +
-                                    ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
-                                    event.getMessage()
-                    );
+					player.sendMessage(
+						format.getPrefix() + " " +
+							ChatColor.WHITE + user.getDisplay() + ChatColor.RESET + ": " +
+							event.getMessage()
+					);
 
-                }));
+				}));
 
 
-            });
-        }
+			});
+		}
 
-        event.setCancelled(true);
+		event.setCancelled(true);
 
-    }
+	}
 
 }

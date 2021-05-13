@@ -12,13 +12,15 @@ import org.bukkit.plugin.Plugin;
 
 public class NametagModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(LobbyNametagHandler.class).to(CoreLobbyNametagHandler.class);
-    }
+	@Override
+	public void configure() {
+		bind(LobbyNametagHandler.class).to(CoreLobbyNametagHandler.class);
+	}
 
-    @Provides @Singleton @Named("nametag")
-    public PacketHandler provideNametagPacketHandler(NametagRegistry registry, Plugin plugin) {
-        return new CoreTagPacketHandler(registry, plugin);
-    }
+	@Provides
+	@Singleton
+	@Named("nametag")
+	public PacketHandler provideNametagPacketHandler(NametagRegistry registry, Plugin plugin) {
+		return new CoreTagPacketHandler(registry, plugin);
+	}
 }

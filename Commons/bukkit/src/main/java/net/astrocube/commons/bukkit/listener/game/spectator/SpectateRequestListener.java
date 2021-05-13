@@ -15,39 +15,40 @@ import java.util.logging.Level;
 
 public class SpectateRequestListener implements Listener {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject MatchService matchService;
-    private @Inject MatchAssigner matchAssigner;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MatchService matchService;
+	private @Inject MatchAssigner matchAssigner;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onSpectateRequest(SpectateRequestEvent event) {
+	@EventHandler
+	public void onSpectateRequest(SpectateRequestEvent event) {
 
-        if (event.getState() == SpectateRequest.State.VOIDED) {
-            messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.spectator.request.voided");
-            return;
-        }
+		if (event.getState() == SpectateRequest.State.VOIDED) {
+			messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.spectator.request.voided");
+			return;
+		}
 
-        if (event.getState() == SpectateRequest.State.ERROR) {
-            messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.spectator.request.error");
-            return;
-        }
+		if (event.getState() == SpectateRequest.State.ERROR) {
+			messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.spectator.request.error");
+			return;
+		}
 
-        if (event.getState() == SpectateRequest.State.SUCCESS && event.getSpectateRequest() != null) {
+		if (event.getState() == SpectateRequest.State.SUCCESS && event.getSpectateRequest() != null) {
 
-            SpectateRequest request = event.getSpectateRequest();;
+			SpectateRequest request = event.getSpectateRequest();
+			;
 
-            try {
-                matchService.assignSpectator(request.getRequester(), request.getMatch(), true);
-                matchAssigner.setRecord(request.getRequester(), request.getMatch(), request.getServer());
-                messageHandler.send(event.getPlayer(),"game.spectator.request.success");
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error assign spectators.", e);
-            }
+			try {
+				matchService.assignSpectator(request.getRequester(), request.getMatch(), true);
+				matchAssigner.setRecord(request.getRequester(), request.getMatch(), request.getServer());
+				messageHandler.send(event.getPlayer(), "game.spectator.request.success");
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "There was an error assign spectators.", e);
+			}
 
-        }
+		}
 
-    }
+	}
 
 
 }

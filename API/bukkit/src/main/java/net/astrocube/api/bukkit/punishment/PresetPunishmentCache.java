@@ -6,20 +6,20 @@ import java.util.Set;
 
 public interface PresetPunishmentCache {
 
-    /**
-     * @return set of {@link PresetPunishment}
-     */
-    Set<PresetPunishment> getPunishments();
+	/**
+	 * @return set of {@link PresetPunishment}
+	 */
+	Set<PresetPunishment> getPunishments();
 
-    /**
-     * @param type to be queried
-     * @return set of {@link PresetPunishment}
-     */
-    Set<PresetPunishment> getPunishments(PunishmentDoc.Identity.Type type);
+	/**
+	 * @param type to be queried
+	 * @return set of {@link PresetPunishment}
+	 */
+	Set<PresetPunishment> getPunishments(PunishmentDoc.Identity.Type type);
 
-    /**
-     * Load punishments to a local cache
-     */
-    void generateCache();
+	/**
+	 * Load punishments to a local cache
+	 */
+	void generateCache();
 
 }

@@ -11,17 +11,17 @@ import java.util.Set;
 @AllArgsConstructor
 public class MatchFinishEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final String match;
-    private final Set<String> winners;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final String match;
+	private final Set<String> winners;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

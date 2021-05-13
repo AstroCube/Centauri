@@ -11,15 +11,15 @@ import net.astrocube.commons.bukkit.game.matchmaking.error.CoreMatchmakingErrorB
 
 public class MatchmakingModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(MatchmakingGenerator.class).annotatedWith(Names.named("sandbox")).to(SandboxMatchmakingGenerator.class);
-        bind(MatchmakingGenerator.class).to(CoreMatchmakingGenerator.class);
-        bind(MatchmakingRegistryHandler.class).to(CoreMatchmakingRegistryHandler.class);
-        bind(IdealMatchSelector.class).to(CoreIdealMatchSelector.class);
-        bind(MatchmakingErrorBroadcaster.class).to(CoreMatchmakingErrorBroadcaster.class);
-        bind(AvailableMatchProvider.class).to(CoreAvailableMatchProvider.class);
-        expose(MatchmakingGenerator.class);
-    }
+	@Override
+	public void configure() {
+		bind(MatchmakingGenerator.class).annotatedWith(Names.named("sandbox")).to(SandboxMatchmakingGenerator.class);
+		bind(MatchmakingGenerator.class).to(CoreMatchmakingGenerator.class);
+		bind(MatchmakingRegistryHandler.class).to(CoreMatchmakingRegistryHandler.class);
+		bind(IdealMatchSelector.class).to(CoreIdealMatchSelector.class);
+		bind(MatchmakingErrorBroadcaster.class).to(CoreMatchmakingErrorBroadcaster.class);
+		bind(AvailableMatchProvider.class).to(CoreAvailableMatchProvider.class);
+		expose(MatchmakingGenerator.class);
+	}
 
 }

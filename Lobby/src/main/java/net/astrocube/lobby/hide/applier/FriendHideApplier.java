@@ -12,13 +12,13 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class FriendHideApplier implements HideApplier {
 
-    private @Inject FriendHelper friendHelper;
-    private @Inject Plugin plugin;
+	private @Inject FriendHelper friendHelper;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void apply(User user, Player player, User target, Player targetPlayer) {
-        if (friendHelper.checkAlreadyFriends(targetPlayer, target, user)) {
-            Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
-        }
-    }
+	@Override
+	public void apply(User user, Player player, User target, Player targetPlayer) {
+		if (friendHelper.checkAlreadyFriends(targetPlayer, target, user)) {
+			Bukkit.getScheduler().runTask(plugin, () -> player.showPlayer(targetPlayer));
+		}
+	}
 }

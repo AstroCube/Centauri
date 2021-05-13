@@ -9,15 +9,15 @@ import net.astrocube.lobby.hide.applier.StaffHideApplier;
 
 public class HideModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(HideApplier.class).annotatedWith(Names.named("friend")).to(FriendHideApplier.class);
-        bind(HideApplier.class).annotatedWith(Names.named("permission")).to(PermissionHideApplier.class);
-        bind(HideApplier.class).annotatedWith(Names.named("staff")).to(StaffHideApplier.class);
-        bind(HideJoinProcessor.class).to(CoreHideJoinProcessor.class);
-        bind(HideCompoundMatcher.class).to(CoreHideCompoundMatcher.class);
-        bind(HideItemActionable.class).to(CoreHideItemActionable.class);
-        bind(HideStatusModifier.class).to(CoreHideStatusModifier.class);
-    }
+	@Override
+	public void configure() {
+		bind(HideApplier.class).annotatedWith(Names.named("friend")).to(FriendHideApplier.class);
+		bind(HideApplier.class).annotatedWith(Names.named("permission")).to(PermissionHideApplier.class);
+		bind(HideApplier.class).annotatedWith(Names.named("staff")).to(StaffHideApplier.class);
+		bind(HideJoinProcessor.class).to(CoreHideJoinProcessor.class);
+		bind(HideCompoundMatcher.class).to(CoreHideCompoundMatcher.class);
+		bind(HideItemActionable.class).to(CoreHideItemActionable.class);
+		bind(HideStatusModifier.class).to(CoreHideStatusModifier.class);
+	}
 
 }

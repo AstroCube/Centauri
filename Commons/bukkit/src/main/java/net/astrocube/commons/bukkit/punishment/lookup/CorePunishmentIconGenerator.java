@@ -22,68 +22,68 @@ import java.util.logging.Level;
 @Singleton
 public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject FindService<User> findService;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject FindService<User> findService;
+	private @Inject Plugin plugin;
 
-    @Override
-    public ItemStack generateFromPunishment(Punishment punishment, Player player, User user) {
+	@Override
+	public ItemStack generateFromPunishment(Punishment punishment, Player player, User user) {
 
-        short id = 5;
+		short id = 5;
 
-        switch (punishment.getType()) {
-            case KICK: {
-                id = 4;
-                break;
-            }
-            case BAN: {
-                id = 14;
-                break;
-            }
-            default: {
-                break;
-            }
-        }
+		switch (punishment.getType()) {
+			case KICK: {
+				id = 4;
+				break;
+			}
+			case BAN: {
+				id = 14;
+				break;
+			}
+			default: {
+				break;
+			}
+		}
 
-        ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, id);
-        ItemMeta meta = stack.getItemMeta();
-        String title = messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase());
+		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, id);
+		ItemMeta meta = stack.getItemMeta();
+		String title = messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase());
 
-        String issuer = "Error";
-        try {
-            User issuerRecord = findService.findSync(punishment.getIssuer());
-            issuer = displayMatcher.getDisplay(player, issuerRecord).getColor() + user.getDisplay();
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Could not retrieve user data", e);
-        }
+		String issuer = "Error";
+		try {
+			User issuerRecord = findService.findSync(punishment.getIssuer());
+			issuer = displayMatcher.getDisplay(player, issuerRecord).getColor() + user.getDisplay();
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.WARNING, "Could not retrieve user data", e);
+		}
 
-        String expiration = punishment.getExpiration() == null ?
-                messageHandler.get(player, "punishment-expiration.never") :
-                PrettyTimeUtils.getHumanDate(punishment.getExpiration(), user.getLanguage());
+		String expiration = punishment.getExpiration() == null ?
+			messageHandler.get(player, "punishment-expiration.never") :
+			PrettyTimeUtils.getHumanDate(punishment.getExpiration(), user.getLanguage());
 
-        meta.setDisplayName(
-                messageHandler.replacing(
-                        player, "punish-menu.lookup.title",
-                        "%type%", title
-                )
-        );
+		meta.setDisplayName(
+			messageHandler.replacing(
+				player, "punish-menu.lookup.title",
+				"%type%", title
+			)
+		);
 
-        Date date = Date.from(punishment.getCreatedAt().atZone(ZoneOffset.systemDefault()).toInstant());
+		Date date = Date.from(punishment.getCreatedAt().atZone(ZoneOffset.systemDefault()).toInstant());
 
-        meta.setLore(
-                messageHandler.replacingMany(
-                        player, "punish-menu.lookup.lore",
-                        "%issuer%", issuer,
-                        "%reason%", punishment.getReason(),
-                        "%expires%", expiration,
-                        "%date%", PrettyTimeUtils.getHumanDate(date, user.getLanguage())
-                )
-        );
+		meta.setLore(
+			messageHandler.replacingMany(
+				player, "punish-menu.lookup.lore",
+				"%issuer%", issuer,
+				"%reason%", punishment.getReason(),
+				"%expires%", expiration,
+				"%date%", PrettyTimeUtils.getHumanDate(date, user.getLanguage())
+			)
+		);
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
-    }
+		return stack;
+	}
 
 }

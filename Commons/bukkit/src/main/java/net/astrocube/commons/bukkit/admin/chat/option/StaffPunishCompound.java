@@ -17,48 +17,48 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Singleton
 public class StaffPunishCompound implements StaffOptionCompound {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<User, UserDoc.Partial> updateService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject UpdateService<User, UserDoc.Partial> updateService;
 
-    @Override
-    public ItemStack getEnableItem(Player player) {
+	@Override
+	public ItemStack getEnableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.HAMMER_ENABLED);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.HAMMER_ENABLED);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.punish.enabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.punish.enabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.punish.enabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.punish.enabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public ItemStack getDisableItem(Player player) {
+	@Override
+	public ItemStack getDisableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.HAMMER_DISABLED);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.HAMMER_DISABLED);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.punish.disabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.punish.disabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.punish.disabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.punish.disabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public AsyncResponse<User> updateOption(User user) {
+	@Override
+	public AsyncResponse<User> updateOption(User user) {
 
-        user.getSettings().getAdminChatSettings().setReadingPunishments(
-                !user.getSettings().getAdminChatSettings().isReadingPunishments()
-        );
+		user.getSettings().getAdminChatSettings().setReadingPunishments(
+			!user.getSettings().getAdminChatSettings().isReadingPunishments()
+		);
 
-        return updateService.update(user);
+		return updateService.update(user);
 
-    }
+	}
 
 }

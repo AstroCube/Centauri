@@ -12,32 +12,32 @@ import java.util.Map;
 
 public class TestCommand implements CommandClass {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @Command(names = {"teststaff"})
-    public boolean onCommand() {
+	@Command(names = {"teststaff"})
+	public boolean onCommand() {
 
-        try {
-
-
-            @Getter
-            @AllArgsConstructor
-            class DemoRecord {
-                private final String name;
-                private final PunishmentDoc.Identity.Type type;
-            }
+		try {
 
 
-            for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
-                Map<String, Object> linkedKey = (Map<String, Object>) key;
-            }
+			@Getter
+			@AllArgsConstructor
+			class DemoRecord {
+				private final String name;
+				private final PunishmentDoc.Identity.Type type;
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+			for (Object key : plugin.getConfig().getList("admin.punishments.reasons")) {
+				Map<String, Object> linkedKey = (Map<String, Object>) key;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 
-        return true;
-    }
+		return true;
+	}
 
 }

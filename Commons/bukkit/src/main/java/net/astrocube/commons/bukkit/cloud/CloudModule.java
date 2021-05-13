@@ -11,38 +11,38 @@ import org.bukkit.plugin.Plugin;
 
 public class CloudModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
+	@Override
+	public void configure() {
 
-        if (hasCloudDeploy()) {
-            bind(InstanceNameProvider.class).to(CloudNameProvider.class);
-            bind(CloudStatusProvider.class).to(CoreCloudStatusProvider.class);
-            bind(CloudTeleport.class).to(CoreCloudTeleport.class);
-            bind(CloudInstanceProvider.class).to(CoreCloudInstanceProvider.class);
-            bind(CloudModeConnectedProvider.class).to(CoreModeConnectedProvider.class);
-        } else {
-            bind(InstanceNameProvider.class).to(DummyNameProvider.class);
-            bind(CloudStatusProvider.class).to(DummyStatusProvider.class);
-            bind(CloudTeleport.class).to(DummyCloudTeleport.class);
-            bind(CloudInstanceProvider.class).to(DummyCloudInstanceProvider.class);
-            bind(CloudModeConnectedProvider.class).to(DummyModeConnectedProvider.class);
-        }
+		if (hasCloudDeploy()) {
+			bind(InstanceNameProvider.class).to(CloudNameProvider.class);
+			bind(CloudStatusProvider.class).to(CoreCloudStatusProvider.class);
+			bind(CloudTeleport.class).to(CoreCloudTeleport.class);
+			bind(CloudInstanceProvider.class).to(CoreCloudInstanceProvider.class);
+			bind(CloudModeConnectedProvider.class).to(CoreModeConnectedProvider.class);
+		} else {
+			bind(InstanceNameProvider.class).to(DummyNameProvider.class);
+			bind(CloudStatusProvider.class).to(DummyStatusProvider.class);
+			bind(CloudTeleport.class).to(DummyCloudTeleport.class);
+			bind(CloudInstanceProvider.class).to(DummyCloudInstanceProvider.class);
+			bind(CloudModeConnectedProvider.class).to(DummyModeConnectedProvider.class);
+		}
 
-        expose(InstanceNameProvider.class);
-        expose(CloudStatusProvider.class);
-        expose(CloudTeleport.class);
-        expose(CloudModeConnectedProvider.class);
-        expose(CloudInstanceProvider.class);
+		expose(InstanceNameProvider.class);
+		expose(CloudStatusProvider.class);
+		expose(CloudTeleport.class);
+		expose(CloudModeConnectedProvider.class);
+		expose(CloudInstanceProvider.class);
 
-    }
+	}
 
-    public boolean hasCloudDeploy() {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (plugin.getName().equalsIgnoreCase("TimoCloud")) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public boolean hasCloudDeploy() {
+		for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+			if (plugin.getName().equalsIgnoreCase("TimoCloud")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

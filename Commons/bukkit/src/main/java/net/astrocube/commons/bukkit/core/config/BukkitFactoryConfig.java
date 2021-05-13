@@ -5,19 +5,19 @@ import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 
 public class BukkitFactoryConfig implements HttpFactoryConfig {
 
-    @Override
-    public int getConnectTimeout() {
-        return Configuration.getInteger("api.connect", 1200);
-    }
+	@Override
+	public int getConnectTimeout() {
+		return Configuration.getInteger("api.connect", 1200);
+	}
 
-    @Override
-    public int getReadTimeout() {
-        return Configuration.getInteger("api.read", 1200);
-    }
+	@Override
+	public int getReadTimeout() {
+		return Configuration.getInteger("api.read", 1200);
+	}
 
-    @Override
-    public int getRetryNumber() {
-        return Configuration.getInteger("api.retry", 3);
-    }
+	@Override
+	public int getRetryNumber() {
+		return Configuration.getInteger("api.retry", 3);
+	}
 
 }

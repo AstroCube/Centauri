@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface LobbyCloudWrapperGenerator {
 
-    /**
-     * Get set of {@link GameMode} lobbies from cloud integration
-     * @param gameMode to search
-     * @return collection containing lobbies
-     */
-    List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode);
+	/**
+	 * Get set of {@link GameMode} lobbies from cloud integration
+	 * @param gameMode to search
+	 * @return collection containing lobbies
+	 */
+	List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode);
 
 }

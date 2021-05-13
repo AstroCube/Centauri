@@ -10,23 +10,23 @@ import team.unnamed.gui.core.GUIListeners;
 
 public class InteractionListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject PlayerDamageListener playerDamageListener;
-    private @Inject PlayerMoveListener playerMoveListener;
-    private @Inject PlayerQuitListener playerQuitListener;
+	private @Inject PlayerDamageListener playerDamageListener;
+	private @Inject PlayerMoveListener playerMoveListener;
+	private @Inject PlayerQuitListener playerQuitListener;
 
-    private @Inject GUIListeners guiListeners;
+	private @Inject GUIListeners guiListeners;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                playerDamageListener,
-                playerMoveListener,
-                playerQuitListener,
-                guiListeners
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			playerDamageListener,
+			playerMoveListener,
+			playerQuitListener,
+			guiListeners
+		);
+	}
 
 }

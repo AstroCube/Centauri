@@ -16,38 +16,38 @@ import java.util.List;
 
 public class CoreGameModeItemExtractor implements GameModeItemExtractor {
 
-    @Inject
-    private MessageHandler messageHandler;
-    @Inject
-    private DependentAction dependentAction;
+	@Inject
+	private MessageHandler messageHandler;
+	@Inject
+	private DependentAction dependentAction;
 
-    @Override
-    public ItemClickable generateGameMode(GameMode gameMode, Player player) {
+	@Override
+	public ItemClickable generateGameMode(GameMode gameMode, Player player) {
 
-        ItemStack icon = new ItemStack(Material.DIRT);
+		ItemStack icon = new ItemStack(Material.DIRT);
 
-        Material exchangeableMaterial = Material.getMaterial(gameMode.getNavigator().toUpperCase());
-        if (exchangeableMaterial != null) {
-            icon = new ItemStack(exchangeableMaterial);
-        }
+		Material exchangeableMaterial = Material.getMaterial(gameMode.getNavigator().toUpperCase());
+		if (exchangeableMaterial != null) {
+			icon = new ItemStack(exchangeableMaterial);
+		}
 
-        ItemMeta iconMeta = icon.getItemMeta();
-        List<String> baseLore = new ArrayList<>(
-                gameMode.getSubTypes() != null && !gameMode.getSubTypes().isEmpty() ?
-                        messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents() :
-                        messageHandler.getMany(player, "admin-panel.gamemode.lore-solo").getContents()
-        );
+		ItemMeta iconMeta = icon.getItemMeta();
+		List<String> baseLore = new ArrayList<>(
+			gameMode.getSubTypes() != null && !gameMode.getSubTypes().isEmpty() ?
+				messageHandler.getMany(player, "admin-panel.gamemode.lore").getContents() :
+				messageHandler.getMany(player, "admin-panel.gamemode.lore-solo").getContents()
+		);
 
-        iconMeta.setDisplayName(messageHandler.get(player, "admin-panel.gamemode.items." + gameMode.getId()));
-        iconMeta.setLore(baseLore);
-        iconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		iconMeta.setDisplayName(messageHandler.get(player, "admin-panel.gamemode.items." + gameMode.getId()));
+		iconMeta.setLore(baseLore);
+		iconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
-        icon.setItemMeta(iconMeta);
+		icon.setItemMeta(iconMeta);
 
-        return ItemClickable
-                .builder(gameMode.getSlot())
-                .setItemStack(icon)
-                .setAction(inventoryClickEvent -> dependentAction.constructClickActions(inventoryClickEvent, gameMode))
-                .build();
-    }
+		return ItemClickable
+			.builder(gameMode.getSlot())
+			.setItemStack(icon)
+			.setAction(inventoryClickEvent -> dependentAction.constructClickActions(inventoryClickEvent, gameMode))
+			.build();
+	}
 }

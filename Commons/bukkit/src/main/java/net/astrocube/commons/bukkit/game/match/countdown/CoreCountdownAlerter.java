@@ -13,35 +13,35 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreCountdownAlerter implements CountdownAlerter {
 
-    private final MatchParticipantsProvider matchParticipantsProvider;
-    private final MessageHandler messageHandler;
+	private final MatchParticipantsProvider matchParticipantsProvider;
+	private final MessageHandler messageHandler;
 
-    @Inject
-    public CoreCountdownAlerter(
-            MatchParticipantsProvider matchParticipantsProvider,
-            MessageHandler messageHandler
-    ) {
-        this.matchParticipantsProvider = matchParticipantsProvider;
-        this.messageHandler = messageHandler;
-    }
+	@Inject
+	public CoreCountdownAlerter(
+		MatchParticipantsProvider matchParticipantsProvider,
+		MessageHandler messageHandler
+	) {
+		this.matchParticipantsProvider = matchParticipantsProvider;
+		this.messageHandler = messageHandler;
+	}
 
-    @Override
-    public void alertCountdownSecond(Match match, int second) {
-        this.matchParticipantsProvider.getMatchPending(match).forEach(user -> {
-            Player player = Bukkit.getPlayer(user.getUsername());
-            if (second > 5) {
-                player.sendMessage(generateAlertMessage(player, second, ChatColor.AQUA));
-            } else {
-                player.sendMessage(generateAlertMessage(player, second, ChatColor.RED));
-            }
-        });
-    }
+	@Override
+	public void alertCountdownSecond(Match match, int second) {
+		this.matchParticipantsProvider.getMatchPending(match).forEach(user -> {
+			Player player = Bukkit.getPlayer(user.getUsername());
+			if (second > 5) {
+				player.sendMessage(generateAlertMessage(player, second, ChatColor.AQUA));
+			} else {
+				player.sendMessage(generateAlertMessage(player, second, ChatColor.RED));
+			}
+		});
+	}
 
-    private String generateAlertMessage(Player player, int second, ChatColor color) {
-        return messageHandler.get(player, "game.countdown")
-                .replace("%color%", color + "")
-                .replace("%seconds%", second + "");
-    }
+	private String generateAlertMessage(Player player, int second, ChatColor color) {
+		return messageHandler.get(player, "game.countdown")
+			.replace("%color%", color + "")
+			.replace("%seconds%", second + "");
+	}
 
 
 }

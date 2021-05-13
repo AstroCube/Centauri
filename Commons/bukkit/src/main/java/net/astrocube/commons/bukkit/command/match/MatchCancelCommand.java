@@ -15,25 +15,25 @@ import java.util.Set;
 
 public class MatchCancelCommand implements CommandClass {
 
-    private @Inject CountdownScheduler countdownScheduler;
-    private @Inject MatchParticipantsProvider matchParticipantsProvider;
-    private @Inject MatchMessageHelper matchMessageHelper;
+	private @Inject CountdownScheduler countdownScheduler;
+	private @Inject MatchParticipantsProvider matchParticipantsProvider;
+	private @Inject MatchMessageHelper matchMessageHelper;
 
 
-    @Command(names = {"cancel"}, permission = "commons.match.cancel")
-    public boolean onCommand(@Sender Player player) {
+	@Command(names = {"cancel"}, permission = "commons.match.cancel")
+	public boolean onCommand(@Sender Player player) {
 
-        Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
 
-        if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
-            return true;
-        }
+		if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
+			return true;
+		}
 
-        Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
-        countdownScheduler.cancelMatchCountdown(matchOptional.get());
-        matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.stop");
+		Set<User> involved = matchParticipantsProvider.getMatchPending(matchOptional.get());
+		countdownScheduler.cancelMatchCountdown(matchOptional.get());
+		matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.stop");
 
-        return true;
-    }
+		return true;
+	}
 
 }

@@ -10,12 +10,12 @@ import java.util.Set;
  */
 public interface AvailableMatchProvider {
 
-    /**
-     * Obtain matches that meet the matchmaking request
-     * criteria.
-     * @param request where criteria will be extracted.
-     * @return set of available matches.
-     */
-    Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception;
+	/**
+	 * Obtain matches that meet the matchmaking request
+	 * criteria.
+	 * @param request where criteria will be extracted.
+	 * @return set of available matches.
+	 */
+	Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception;
 
 }

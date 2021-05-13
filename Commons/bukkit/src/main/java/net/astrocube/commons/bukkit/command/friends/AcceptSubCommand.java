@@ -8,7 +8,6 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.friend.FriendshipHandler;
-import net.astrocube.commons.bukkit.utils.ChatAlertLibrary;
 import net.astrocube.commons.bukkit.utils.UserUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,36 +15,37 @@ import org.bukkit.entity.Player;
 
 public class AcceptSubCommand implements CommandClass {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FriendHelper friendCommandValidator;
-    private @Inject FriendshipHandler friendshipHandler;
-    private @Inject FriendCallbackHelper friendCallbackHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FriendHelper friendCommandValidator;
+	private @Inject FriendshipHandler friendshipHandler;
+	private @Inject FriendCallbackHelper friendCallbackHelper;
 
-    @Command(names = "accept")
-    public boolean execute(@Sender Player player, OfflinePlayer target) {
+	@Command(names = "accept")
+	public boolean execute(@Sender Player player, OfflinePlayer target) {
 
-        if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-            return true;
-        }
+		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
+			return true;
+		}
 
-        friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
+		friendCallbackHelper.findUsers(player, target, (user, targetUser) -> {
 
-            if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-friends");
-                return;
-            }
+			if (friendCommandValidator.checkAlreadyFriends(player, user, targetUser)) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-friends");
+				return;
+			}
 
-            if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.already-sent");
-                return;
-            }
+			if (!friendshipHandler.existsFriendRequest(targetUser.getId(), user.getId())) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "friends.error.no-friend-request");
+				return;
+			}
 
-            friendshipHandler.createFriendship(user.getId(), targetUser.getId());
+			friendshipHandler.deleteFriendRequest(targetUser.getId(), user.getId());
+			friendshipHandler.createFriendship(user.getId(), targetUser.getId());
 
-        });
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
 }

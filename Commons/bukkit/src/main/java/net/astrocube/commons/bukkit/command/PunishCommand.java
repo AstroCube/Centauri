@@ -20,62 +20,62 @@ import java.util.Optional;
 
 public class PunishCommand implements CommandClass {
 
-    private @Inject PunishmentChooserMenu punishmentChooserMenu;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ObjectMapper objectMapper;
-    private @Inject QueryService<User> queryService;
-    private @Inject FindService<User> findService;
+	private @Inject PunishmentChooserMenu punishmentChooserMenu;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject QueryService<User> queryService;
+	private @Inject FindService<User> findService;
 
-    @Command(names = "punish", permission = "commons.staff.punish.menu")
-    public boolean punish(@Sender Player player, String punished) {
+	@Command(names = "punish", permission = "commons.staff.punish.menu")
+	public boolean punish(@Sender Player player, String punished) {
 
-        ObjectNode nodes = objectMapper.createObjectNode();
-        nodes.put("username", punished);
+		ObjectNode nodes = objectMapper.createObjectNode();
+		nodes.put("username", punished);
 
-        findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+		findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
 
-            if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
-                return;
-            }
+			if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
+				return;
+			}
 
-            queryService.query(nodes).callback(response -> {
+			queryService.query(nodes).callback(response -> {
 
-                if (!response.isSuccessful() || !response.getResponse().isPresent()) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
-                    return;
-                }
+				if (!response.isSuccessful() || !response.getResponse().isPresent()) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");
+					return;
+				}
 
-                Optional<User> online = response.getResponse().get().getFoundModels().stream().findFirst();
+				Optional<User> online = response.getResponse().get().getFoundModels().stream().findFirst();
 
-                if (!online.isPresent()) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
-                    return;
-                }
+				if (!online.isPresent()) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
+					return;
+				}
 
-                if (!online.get().getSession().isOnline()) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
-                    return;
-                }
+				if (!online.get().getSession().isOnline()) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "commands.player.offline");
+					return;
+				}
 
-                if (
-                        Group.getLowestPriority(online.get().getGroups()) <=
-                        Group.getLowestPriority(userResponse.getResponse().get().getGroups())) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "punish.lower");
-                    return;
-                }
+				if (
+					Group.getLowestPriority(online.get().getGroups()) <=
+						Group.getLowestPriority(userResponse.getResponse().get().getGroups())) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "punish.lower");
+					return;
+				}
 
-                Inventory inventory = punishmentChooserMenu.createPunishmentChooserMenu(
-                        player, userResponse.getResponse().get(), online.get());
+				Inventory inventory = punishmentChooserMenu.createPunishmentChooserMenu(
+					player, userResponse.getResponse().get(), online.get());
 
-                if (inventory != null) {
-                    player.openInventory(inventory);
-                }
+				if (inventory != null) {
+					player.openInventory(inventory);
+				}
 
-            });
+			});
 
-        });
+		});
 
-        return true;
-    }
+		return true;
+	}
 }

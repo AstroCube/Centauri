@@ -5,9 +5,9 @@ import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
 
 public class BukkitClientConfig implements HttpClientConfig {
 
-    @Override
-    public String getBaseURL() {
-        return Configuration.getString("api.route", "https://perseus.astrocube.net/api/");
-    }
+	@Override
+	public String getBaseURL() {
+		return Configuration.getString("api.route", "https://perseus.astrocube.net/api/");
+	}
 
 }

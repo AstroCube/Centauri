@@ -15,30 +15,30 @@ import team.unnamed.gui.core.gui.type.GUIBuilder;
 @Singleton
 public class CoreGameSelectorDisplay implements GameSelectorDisplay {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject QueryService<GameMode> queryService;
-    private @Inject GameItemExtractor gameItemExtractor;
+	private @Inject MessageHandler messageHandler;
+	private @Inject QueryService<GameMode> queryService;
+	private @Inject GameItemExtractor gameItemExtractor;
 
-    @Override
-    public void openDisplay(User user, Player player) {
+	@Override
+	public void openDisplay(User user, Player player) {
 
-        queryService.getAll().callback(modesResponse -> {
-            if (modesResponse.isSuccessful() && modesResponse.getResponse().isPresent()) {
+		queryService.getAll().callback(modesResponse -> {
+			if (modesResponse.isSuccessful() && modesResponse.getResponse().isPresent()) {
 
-                GUIBuilder menuBuilder = GUIBuilder.builder(
-                        messageHandler.get(player, "lobby.gameSelector.title"),
-                        1
-                );
+				GUIBuilder menuBuilder = GUIBuilder.builder(
+					messageHandler.get(player, "lobby.gameSelector.title"),
+					1
+				);
 
-                for (GameMode gameModeDoc : modesResponse.getResponse().get().getFoundModels()) {
-                    menuBuilder.addItem(gameItemExtractor.generate(gameModeDoc, player));
-                }
+				for (GameMode gameModeDoc : modesResponse.getResponse().get().getFoundModels()) {
+					menuBuilder.addItem(gameItemExtractor.generate(gameModeDoc, player));
+				}
 
-                player.openInventory(menuBuilder.build());
+				player.openInventory(menuBuilder.build());
 
-            } else {
-                messageHandler.sendIn(player, AlertModes.ERROR, "lobby.gameSelector.error");
-            }
-        });
-    }
+			} else {
+				messageHandler.sendIn(player, AlertModes.ERROR, "lobby.gameSelector.error");
+			}
+		});
+	}
 }

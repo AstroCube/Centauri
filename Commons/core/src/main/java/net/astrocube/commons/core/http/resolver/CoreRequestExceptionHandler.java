@@ -7,9 +7,9 @@ import net.astrocube.api.core.http.resolver.RequestExceptionHandler;
 
 public class CoreRequestExceptionHandler implements RequestExceptionHandler {
 
-    @Override
-    public HttpIOExceptionHandler getExceptionBackoff() {
-        return new HttpBackOffIOExceptionHandler(new ExponentialBackOff.Builder().build());
-    }
+	@Override
+	public HttpIOExceptionHandler getExceptionBackoff() {
+		return new HttpBackOffIOExceptionHandler(new ExponentialBackOff.Builder().build());
+	}
 
 }

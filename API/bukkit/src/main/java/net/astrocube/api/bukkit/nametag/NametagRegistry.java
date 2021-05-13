@@ -5,16 +5,16 @@ import org.bukkit.entity.Player;
 
 public interface NametagRegistry {
 
-    Multimap<String, Nametag.Rendered> getRenderedNametags();
+	Multimap<String, Nametag.Rendered> getRenderedNametags();
 
-    <T extends Nametag.Rendered> Multimap<String, T> getRenderedNametags(Class<T> type);
+	<T extends Nametag.Rendered> Multimap<String, T> getRenderedNametags(Class<T> type);
 
-    Multimap<String, Nametag.Rendered> getRenderedForPlayer(Player player);
+	Multimap<String, Nametag.Rendered> getRenderedForPlayer(Player player);
 
-    <T extends Nametag.Rendered> Multimap<String, T> getRenderedForPlayer(Player player, Class<T> type);
+	<T extends Nametag.Rendered> Multimap<String, T> getRenderedForPlayer(Player player, Class<T> type);
 
-    void submit(Nametag.Rendered rendered);
+	void submit(Nametag.Rendered rendered);
 
-    void delete(String recipient);
+	void delete(String recipient);
 
 }

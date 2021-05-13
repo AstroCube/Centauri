@@ -9,36 +9,36 @@ import org.bukkit.Bukkit;
 @Singleton
 public class CoreCloudStatusProvider implements CloudStatusProvider {
 
-    @Override
-    public boolean hasCloudHooked() {
-        return Bukkit.getServer().getPluginManager().getPlugin("TimoCloud") != null;
-    }
+	@Override
+	public boolean hasCloudHooked() {
+		return Bukkit.getServer().getPluginManager().getPlugin("TimoCloud") != null;
+	}
 
-    @Override
-    public int getOnline() {
-        return TimoCloudAPI.getUniversalAPI().getPlayers().size();
-    }
+	@Override
+	public int getOnline() {
+		return TimoCloudAPI.getUniversalAPI().getPlayers().size();
+	}
 
-    @Override
-    public boolean hasAliveSession(String player) {
-        return TimoCloudAPI.getUniversalAPI().getPlayer(player).isOnline();
-    }
+	@Override
+	public boolean hasAliveSession(String player) {
+		return TimoCloudAPI.getUniversalAPI().getPlayer(player).isOnline();
+	}
 
-    @Override
-    public String getPlayerServer(String player) {
+	@Override
+	public String getPlayerServer(String player) {
 
-        PlayerObject playerObject = TimoCloudAPI.getUniversalAPI().getPlayer(player);
+		PlayerObject playerObject = TimoCloudAPI.getUniversalAPI().getPlayer(player);
 
-        if (!playerObject.isOnline()) {
-            return "";
-        }
+		if (!playerObject.isOnline()) {
+			return "";
+		}
 
-        return playerObject.getServer().getName();
-    }
+		return playerObject.getServer().getName();
+	}
 
-    @Override
-    public void updateGameStatus(State state) {
-        TimoCloudAPI.getBukkitAPI().getThisServer().setState(state.toString());
-    }
+	@Override
+	public void updateGameStatus(State state) {
+		TimoCloudAPI.getBukkitAPI().getThisServer().setState(state.toString());
+	}
 
 }

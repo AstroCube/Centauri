@@ -12,19 +12,19 @@ import org.bukkit.event.block.Action;
 @AllArgsConstructor
 public class ActionableItemEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final Player player;
-    private final User user;
-    private final String action;
-    private final Action click;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final Player player;
+	private final User user;
+	private final String action;
+	private final Action click;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

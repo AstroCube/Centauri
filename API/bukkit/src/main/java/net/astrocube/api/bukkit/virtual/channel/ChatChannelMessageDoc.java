@@ -9,28 +9,28 @@ import java.util.Set;
 
 public interface ChatChannelMessageDoc {
 
-    interface Creation extends PartialModel {
+	interface Creation extends PartialModel {
 
-        String getSender();
+		String getSender();
 
-        String getMessage();
+		String getMessage();
 
-        String getChannel();
+		String getChannel();
 
-        Origin getOrigin();
+		Origin getOrigin();
 
-        Map<String, Object> getMeta();
+		Map<String, Object> getMeta();
 
-        enum Origin {
-            @JsonProperty("InGame") INGAME,
-            @JsonProperty("Website") WEBSITE
-        }
-    }
+		enum Origin {
+			@JsonProperty("InGame") INGAME,
+			@JsonProperty("Website") WEBSITE
+		}
+	}
 
-    interface Complete extends Creation, Model.Stamped {
+	interface Complete extends Creation, Model.Stamped {
 
-        Set<String> getViewed();
+		Set<String> getViewed();
 
-    }
+	}
 
 }

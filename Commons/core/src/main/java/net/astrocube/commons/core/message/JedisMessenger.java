@@ -12,85 +12,98 @@ import redis.clients.jedis.JedisPubSub;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("All")
 public class JedisMessenger implements Messenger {
 
-    private final ObjectMapper mapper;
-    private final JedisPool messengerPool;
-    private final Jedis listenerConnection;
-    private final JedisPubSub pubSub;
-    private final Map<Class<? extends Message>, JedisChannel<? extends Message>> channels;
+	private final ObjectMapper mapper;
+	private final JedisPool messengerPool;
+	private final Jedis listenerConnection;
+	private final JedisPubSub pubSub;
+	private final Map<Class<? extends Message>, JedisChannel<? extends Message>> channels;
 
-    public JedisMessenger(Redis redis,
-                          ObjectMapper mapper,
-                          ExecutorService executorService,
-                          Set<ChannelMeta> channelMetas,
-                          Set<MessageHandler> handlers
-    ) {
-        this.mapper = mapper;
-        this.listenerConnection = redis.getListenerConnection();
-        this.messengerPool = redis.getRawConnection();
-        this.channels = new HashMap<>();
-        this.pubSub = new JedisPubSub() {
-            @Override
-            public void onMessage(String channel, String message) {
-                try {
-                    JsonNode jsonMessage = (ObjectNode) mapper.readTree(message);
+	public JedisMessenger(Redis redis,
+												ObjectMapper mapper,
+												ExecutorService executorService,
+												Set<ChannelMeta> channelMetas,
+												Set<MessageHandler> handlers
+	) {
+		this.mapper = mapper;
+		this.listenerConnection = redis.getListenerConnection();
+		this.messengerPool = redis.getRawConnection();
+		this.channels = new HashMap<>();
+		this.pubSub = new JedisPubSub() {
+			@Override
+			public void onMessage(String channel, String message) {
+				System.out.println("message received");
+				try {
+					JsonNode jsonMessage = (ObjectNode) mapper.readTree(message);
 
-                    if (jsonMessage.get("metadata") != null) {
-                        Metadata metadata = mapper.readValue(jsonMessage.get("metadata").toString(), Metadata.class);
+					if (jsonMessage.get("metadata") != null) {
+						Metadata metadata = mapper.readValue(jsonMessage.get("metadata").toString(), Metadata.class);
 
-                        Optional<JedisChannel<? extends Message>> channelOptional =
-                                channels.values().stream()
-                                        .filter(meta -> metadata.getAppId().equals(meta.getName()))
-                                        .findFirst();
+						Optional<JedisChannel<? extends Message>> channelOptional =
+							channels.values().stream()
+								.filter(meta -> metadata.getAppId().equals(meta.getName()))
+								.findFirst();
 
-                        if (!channelOptional.isPresent()) {
-                            return;
-                        }
+						System.out.println("channel " + channelOptional.map(JedisChannel::getName).orElse("not found"));
 
-                        JedisChannel channelObject = channelOptional.get();
+						if (!channelOptional.isPresent()) {
+							return;
+						}
 
-                        if (metadata.getInstanceId().equals(channelObject.getId())) {
-                            return;
-                        }
+						JedisChannel channelObject = channelOptional.get();
 
-                        Message messageObject = (Message) mapper.readValue(
-                                mapper.writeValueAsString(jsonMessage.get("message")),
-                                channelObject.getType().getRawType()
-                        );
+						// TODO: ??
+						if (metadata.getInstanceId().equals(channelObject.getId())) {
+							System.out.println("no");
+							return;
+						}
 
-                        channelObject.callListeners(messageObject, metadata);
-                    }
-                } catch (Exception ignore) {}
-            }
-        };
+						Message messageObject = (Message) mapper.readValue(
+							mapper.writeValueAsString(jsonMessage.get("message")),
+							channelObject.getType().getRawType()
+						);
 
-        channelMetas.forEach(channelMeta -> {
-            JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), UUID.randomUUID().toString(), TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
+						channelObject.callListeners(messageObject, metadata);
+					}
+				} catch (Exception e) {
+					Logger.getGlobal().log(
+						Level.WARNING,
+						"Error while reading redis message",
+						e
+					);
+				}
+			}
+		};
 
-            this.channels.put(channelMeta.type(), channel);
-        });
+		channelMetas.forEach(channelMeta -> {
+			JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), UUID.randomUUID().toString(), TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
 
-        handlers.forEach(handler -> {
-            JedisChannel channel = this.channels.get(handler.type());
-            if (channel != null) {
-                channel.addHandler(handler);
-            }
-        });
+			this.channels.put(channelMeta.type(), channel);
+		});
 
-        executorService.submit(() -> listenerConnection.subscribe(pubSub, "centauri_redis"));
-    }
+		handlers.forEach(handler -> {
+			JedisChannel channel = this.channels.get(handler.type());
+			if (channel != null) {
+				channel.addHandler(handler);
+			}
+		});
 
-    @Override
-    public <T extends Message> Channel<T> getChannel(Class<T> type) {
-        JedisChannel<T> channel = (JedisChannel<T>) this.channels.get(type);
+		executorService.submit(() -> listenerConnection.subscribe(pubSub, "centauri_redis"));
+	}
 
-        if (channel == null) {
-            throw new IllegalArgumentException("The channel type " + type.getSimpleName() + " is not registered");
-        }
+	@Override
+	public <T extends Message> Channel<T> getChannel(Class<T> type) {
+		JedisChannel<T> channel = (JedisChannel<T>) this.channels.get(type);
 
-        return channel;
-    }
+		if (channel == null) {
+			throw new IllegalArgumentException("The channel type " + type.getSimpleName() + " is not registered");
+		}
+
+		return channel;
+	}
 }

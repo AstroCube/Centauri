@@ -14,22 +14,22 @@ import java.util.logging.Level;
 
 public class LobbyAdminInteractListener implements Listener {
 
-    private @Inject MatchLobbyMenuProvider matchLobbyMenuProvider;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject MatchLobbyMenuProvider matchLobbyMenuProvider;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onAdminGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equalsIgnoreCase("gc_admin_lobby") &&
-                        (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            try {
-                matchLobbyMenuProvider.create(event.getPlayer());
-            } catch (Exception e) {
-                messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.admin.lobby.error");
-                plugin.getLogger().log(Level.SEVERE, "Error while opening menu gadget event", e);
-            }
-        }
-    }
+	@EventHandler
+	public void onAdminGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equalsIgnoreCase("gc_admin_lobby") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			try {
+				matchLobbyMenuProvider.create(event.getPlayer());
+			} catch (Exception e) {
+				messageHandler.sendIn(event.getPlayer(), AlertModes.ERROR, "game.admin.lobby.error");
+				plugin.getLogger().log(Level.SEVERE, "Error while opening menu gadget event", e);
+			}
+		}
+	}
 }

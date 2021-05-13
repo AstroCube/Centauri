@@ -6,10 +6,10 @@ import net.astrocube.api.bukkit.user.skin.SignedSkinFetcher;
 
 public class SkinModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(CustomSkinRegistry.class).to(CoreCustomSkinRegistry.class);
-        bind(SignedSkinFetcher.class).to(CoreSignedSkinFetcher.class);
-    }
+	@Override
+	public void configure() {
+		bind(CustomSkinRegistry.class).to(CoreCustomSkinRegistry.class);
+		bind(SignedSkinFetcher.class).to(CoreSignedSkinFetcher.class);
+	}
 
 }

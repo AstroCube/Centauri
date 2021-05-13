@@ -20,140 +20,141 @@ import java.util.stream.Collectors;
 
 public class CoreTeamBalancer implements TeamBalancer {
 
-    private @Inject GameMapCache gameMapCache;
-    private @Inject MapConfigurationProvider mapConfigurationProvider;
-    private @Inject FindService<GameMode> findService;
+	private @Inject GameMapCache gameMapCache;
+	private @Inject MapConfigurationProvider mapConfigurationProvider;
+	private @Inject FindService<GameMode> findService;
 
-    @Override
-    public Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, IOException {
+	@Override
+	public Set<MatchDoc.Team> balanceTeams(Match match, Set<MatchAssignable> assignations) throws GameControlException, IOException {
 
-        Optional<Integer> maxPerTeam = getMaxMembers(match);
+		Optional<Integer> maxPerTeam = getMaxMembers(match);
 
-        if (!maxPerTeam.isPresent()) {
-            throw new GameControlException("Not maximum players can be parsed");
-        }
+		if (!maxPerTeam.isPresent()) {
+			throw new GameControlException("Not maximum players can be parsed");
+		}
 
-        List<SizedTeam> teams = mapConfigurationProvider.parseConfiguration(
-                new String(gameMapCache.getConfiguration(match.getMap())),
-                GameMapConfiguration.class
-        )
-                .getTeams()
-                .stream()
-                .map(mapTeam -> new SizedTeam(mapTeam.getName(), mapTeam.getColor(), maxPerTeam.get()))
-                .collect(Collectors.toList());
+		List<SizedTeam> teams = mapConfigurationProvider.parseConfiguration(
+			new String(gameMapCache.getConfiguration(match.getMap())),
+			GameMapConfiguration.class
+		)
+			.getTeams()
+			.stream()
+			.map(mapTeam -> new SizedTeam(mapTeam.getName(), mapTeam.getColor(), maxPerTeam.get()))
+			.collect(Collectors.toList());
 
-        return new HashSet<>(joinRemainingAssignations(assignations, teams, maxPerTeam.get()));
-    }
+		return new HashSet<>(joinRemainingAssignations(assignations, teams, maxPerTeam.get()));
+	}
 
-    /**
-     * Obtain every assignation pending and the match teams,
-     * ordering them in equitable teams depending the {@link Match}
-     * and {@link SubGameMode} capacity.
-     * @param assignations to be distributed between teams
-     * @param teams where assignations will be placed
-     * @param maxMembers allowed for every team.
-     */
-    private List<SizedTeam> joinRemainingAssignations(Set<MatchAssignable> assignations, List<SizedTeam> teams, int maxMembers) {
+	/**
+	 * Obtain every assignation pending and the match teams,
+	 * ordering them in equitable teams depending the {@link Match}
+	 * and {@link SubGameMode} capacity.
+	 * @param assignations to be distributed between teams
+	 * @param teams        where assignations will be placed
+	 * @param maxMembers   allowed for every team.
+	 */
+	private List<SizedTeam> joinRemainingAssignations(Set<MatchAssignable> assignations, List<SizedTeam> teams, int maxMembers) {
 
-        List<SizedTeam> sizedTeams = new ArrayList<>(teams);
+		List<SizedTeam> sizedTeams = new ArrayList<>(teams);
 
-        for (MatchAssignable assignable : assignations) {
+		for (MatchAssignable assignable : assignations) {
 
-            Set<MatchDoc.TeamMember> members = getProcessedMembers(assignable);
-            int remaining = members.size();
+			Set<MatchDoc.TeamMember> members = getProcessedMembers(assignable);
+			int remaining = members.size();
 
-            Comparator<SizedTeam> teamComparator = Comparator.comparingInt(value -> value.getMembers().size());
-            sizedTeams.sort(teamComparator);
+			Comparator<SizedTeam> teamComparator = Comparator.comparingInt(value -> value.getMembers().size());
+			sizedTeams.sort(teamComparator);
 
-            for (SizedTeam team : sizedTeams) {
+			for (SizedTeam team : sizedTeams) {
 
-                int playersThatCanJoin = maxMembers - team.getMembers().size();
+				int playersThatCanJoin = maxMembers - team.getMembers().size();
 
-                if (playersThatCanJoin >= remaining) {
-                    members.forEach(team::addMember);
-                    remaining = 0;
-                } else {
+				if (playersThatCanJoin >= remaining) {
+					members.forEach(team::addMember);
+					remaining = 0;
+				} else {
 
-                    remaining -= playersThatCanJoin;
+					remaining -= playersThatCanJoin;
 
-                    Iterator<MatchDoc.TeamMember> memberIterator = members.iterator();
+					Iterator<MatchDoc.TeamMember> memberIterator = members.iterator();
 
-                    int used = 0;
-                    while (memberIterator.hasNext() && used < playersThatCanJoin) {
-                        MatchDoc.TeamMember member = memberIterator.next();
+					int used = 0;
+					while (memberIterator.hasNext() && used < playersThatCanJoin) {
+						MatchDoc.TeamMember member = memberIterator.next();
 
-                        team.addMember(member);
-                        memberIterator.remove();
+						team.addMember(member);
+						memberIterator.remove();
 
-                        used++;
-                    }
-                }
+						used++;
+					}
+				}
 
-                if (remaining == 0) {
-                    break;
-                }
+				if (remaining == 0) {
+					break;
+				}
 
-            }
-        }
+			}
+		}
 
-        return sizedTeams;
-    }
+		return sizedTeams;
+	}
 
-    /**
-     * Get a {@link MatchAssignable} and group a set of
-     * them, stamping it with a creation date and mapping
-     * them to a {@link MatchDoc.TeamMember}
-     * @param assignable to be mapped
-     * @return set containing mapped assignation
-     */
-    private static Set<MatchDoc.TeamMember> getProcessedMembers(MatchAssignable assignable) {
+	/**
+	 * Get a {@link MatchAssignable} and group a set of
+	 * them, stamping it with a creation date and mapping
+	 * them to a {@link MatchDoc.TeamMember}
+	 * @param assignable to be mapped
+	 * @return set containing mapped assignation
+	 */
+	private static Set<MatchDoc.TeamMember> getProcessedMembers(MatchAssignable assignable) {
 
-        Set<String> generalAssignation = new HashSet<>(assignable.getInvolved());
-        generalAssignation.add(assignable.getResponsible());
+		Set<String> generalAssignation = new HashSet<>(assignable.getInvolved());
+		generalAssignation.add(assignable.getResponsible());
 
-        Date joinedAt = new Date();
-        return generalAssignation.stream().map(user -> new MatchDoc.TeamMember() {
-            @Override
-            public String getUser() {
-                return user;
-            }
+		Date joinedAt = new Date();
+		return generalAssignation.stream().map(user -> new MatchDoc.TeamMember() {
+			@Override
+			public String getUser() {
+				return user;
+			}
 
-            @Override
-            public boolean isActive() {
-                return true;
-            }
+			@Override
+			public boolean isActive() {
+				return true;
+			}
 
-            @Override
-            public Date getJoinedAt() {
-                return joinedAt;
-            }
-        }).collect(Collectors.toSet());
-    }
+			@Override
+			public Date getJoinedAt() {
+				return joinedAt;
+			}
+		}).collect(Collectors.toSet());
+	}
 
-    /**
-     * Find the actual match {@link GameMode}
-     * id and {@link SubGameMode} id in order to know which is
-     * the capacity of every team of the game.
-     * @param match to be queried
-     * @return optional indicating max capacity of each team.
-     */
-    private Optional<Integer> getMaxMembers(Match match) {
-        try {
-            GameMode mode = findService.findSync(match.getGameMode());
+	/**
+	 * Find the actual match {@link GameMode}
+	 * id and {@link SubGameMode} id in order to know which is
+	 * the capacity of every team of the game.
+	 * @param match to be queried
+	 * @return optional indicating max capacity of each team.
+	 */
+	private Optional<Integer> getMaxMembers(Match match) {
+		try {
+			GameMode mode = findService.findSync(match.getGameMode());
 
-            if (mode.getSubTypes() == null) {
-                throw new GameControlException("The requested mode does not have maximum members");
-            }
+			if (mode.getSubTypes() == null) {
+				throw new GameControlException("The requested mode does not have maximum members");
+			}
 
-            Optional<SubGameMode> subMode = mode
-                    .getSubTypes().stream()
-                    .filter(m -> m.getId().equalsIgnoreCase(match.getSubMode()))
-                    .findAny();
+			Optional<SubGameMode> subMode = mode
+				.getSubTypes().stream()
+				.filter(m -> m.getId().equalsIgnoreCase(match.getSubMode()))
+				.findAny();
 
-            return subMode.map(SubGameMode::getTeamSize);
+			return subMode.map(SubGameMode::getTeamSize);
 
-        } catch (Exception ignore) {}
-        return Optional.empty();
-    }
+		} catch (Exception ignore) {
+		}
+		return Optional.empty();
+	}
 
 }

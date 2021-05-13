@@ -6,6 +6,6 @@ api:
   read: 1200
   retry: 1
 server:
-    sandbox: false
+  sandbox: false
 redirect:
   authentication: "ac-auth"

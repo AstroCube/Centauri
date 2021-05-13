@@ -29,75 +29,75 @@ import java.util.stream.Collectors;
 @Singleton
 public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
 
-    private final Channel<ProxyKickRequest> channel;
-    private @Inject MessageHandler messageHandler;
-    private @Inject QueryService<Punishment> queryService;
-    private @Inject ObjectMapper mapper;
-    private @Inject Plugin plugin;
+	private final Channel<ProxyKickRequest> channel;
+	private @Inject MessageHandler messageHandler;
+	private @Inject QueryService<Punishment> queryService;
+	private @Inject ObjectMapper mapper;
+	private @Inject Plugin plugin;
 
-    @Inject
-    public CorePunishmentKickProcessor(Messenger jedisMessenger) {
-        channel = jedisMessenger.getChannel(ProxyKickRequest.class);
-    }
+	@Inject
+	public CorePunishmentKickProcessor(Messenger jedisMessenger) {
+		channel = jedisMessenger.getChannel(ProxyKickRequest.class);
+	}
 
-    @Override
-    public void processKick(Punishment punishment, Player player, User user) throws JsonProcessingException {
+	@Override
+	public void processKick(Punishment punishment, Player player, User user) throws JsonProcessingException {
 
-        String translation = "punish.kick.message";
+		String translation = "punish.kick.message";
 
-        if (punishment.getType() == PunishmentDoc.Identity.Type.BAN) {
-            translation = "punish.ban.message-permanent";
-        }
+		if (punishment.getType() == PunishmentDoc.Identity.Type.BAN) {
+			translation = "punish.ban.message-permanent";
+		}
 
-        if (punishment.getExpiration() != null) {
-            translation = "punish.ban.message-temporal";
-        }
+		if (punishment.getExpiration() != null) {
+			translation = "punish.ban.message-temporal";
+		}
 
-        Date date = Date.from(punishment.getExpiration().atZone(ZoneOffset.systemDefault()).toInstant());
+		Date date = Date.from(punishment.getExpiration().atZone(ZoneOffset.systemDefault()).toInstant());
 
-        String finalMessage = messageHandler.replacing(
-                player, translation,
-                "%reason%", punishment.getReason(),
-                "%expires%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
-                        date,
-                        user.getLanguage()
-                )
-        );
+		String finalMessage = messageHandler.replacing(
+			player, translation,
+			"%reason%", punishment.getReason(),
+			"%expires%", punishment.getExpiration() == null ? "" : PrettyTimeUtils.getHumanDate(
+				date,
+				user.getLanguage()
+			)
+		);
 
-        if (plugin.getConfig().getBoolean("server.sandbox")) {
-            Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(finalMessage));
-        } else {
-            channel.sendMessage(new ProxyKickRequest() {
-                @Override
-                public String getName() {
-                    return player.getName();
-                }
+		if (plugin.getConfig().getBoolean("server.sandbox")) {
+			Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(finalMessage));
+		} else {
+			channel.sendMessage(new ProxyKickRequest() {
+				@Override
+				public String getName() {
+					return player.getName();
+				}
 
-                @Override
-                public String getReason() {
-                    return finalMessage;
-                }
-            }, new HashMap<>());
-        }
+				@Override
+				public String getReason() {
+					return finalMessage;
+				}
+			}, new HashMap<>());
+		}
 
-    }
+	}
 
-    @Override
-    public void validateKick(Player player, User user) throws Exception {
-        ObjectNode node = mapper.createObjectNode();
-        node.put("type", "Ban");
-        node.put("punished", user.getId());
-        node.put("active", true);
+	@Override
+	public void validateKick(Player player, User user) throws Exception {
+		ObjectNode node = mapper.createObjectNode();
+		node.put("type", "Ban");
+		node.put("punished", user.getId());
+		node.put("active", true);
 
-        Optional<Punishment> activePunishment = queryService.querySync(node).getFoundModels().stream().filter(
-                punishment -> punishment.getExpiration() == null ||
-                        punishment.getExpiration().isAfter(LocalDateTime.now())
+		Optional<Punishment> activePunishment = queryService.querySync(node).getFoundModels().stream().filter(
+			punishment -> punishment.getExpiration() == null ||
+				punishment.getExpiration().isAfter(LocalDateTime.now())
 
-        ).collect(Collectors.toSet()).stream().findFirst();
+		).collect(Collectors.toSet()).stream().findFirst();
 
-        if (activePunishment.isPresent()) {
-            processKick(activePunishment.get(), player, user);
-        }
-    }
+		if (activePunishment.isPresent()) {
+			processKick(activePunishment.get(), player, user);
+		}
+	}
 
 }

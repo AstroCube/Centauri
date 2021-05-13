@@ -5,21 +5,21 @@ import net.astrocube.api.core.message.Message;
 
 public interface ServerAliveMessage extends Message {
 
-    /**
-     * @return server that will be requested / used.
-     */
-    String getServer();
+	/**
+	 * @return server that will be requested / used.
+	 */
+	String getServer();
 
-    /**
-     * @return action to be broadcasted / received.
-     */
-    Action getAction();
+	/**
+	 * @return action to be broadcasted / received.
+	 */
+	Action getAction();
 
-    enum Action {
-        @JsonProperty("Request")
-        REQUEST,
-        @JsonProperty("Confirm")
-        CONFIRM
-    }
+	enum Action {
+		@JsonProperty("Request")
+		REQUEST,
+		@JsonProperty("Confirm")
+		CONFIRM
+	}
 
 }

@@ -15,30 +15,31 @@ import org.bukkit.plugin.Plugin;
 
 public class TranslationModule extends ProtectedModule {
 
-    @Provides @Singleton
-    public MessageHandler provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
+	@Provides
+	@Singleton
+	public MessageHandler provideMessageProvider(Plugin plugin, CoreLanguageProvider languageProvider) {
 
-        MessageSource source = MessageSourceDecorator
-                .decorate(BukkitMessageAdapt.newYamlSource(plugin, "lang_%lang%.yml"))
-                .addFallbackLanguage("es")
-                .get();
+		MessageSource source = MessageSourceDecorator
+			.decorate(BukkitMessageAdapt.newYamlSource(plugin, "lang_%lang%.yml"))
+			.addFallbackLanguage("es")
+			.get();
 
-        // pre-load the spanish language
-        source.load("es");
+		// pre-load the spanish language
+		source.load("es");
 
-        MessageProvider messageProvider = MessageProvider.create(
-                source,
-                config -> {
-                    config.specify(Player.class)
-                            .setLinguist(languageProvider)
-                            .setMessageSender(new CoreMessenger());
-                    config.addInterceptor(new CenterMessageInterceptor());
-                }
-        );
+		MessageProvider messageProvider = MessageProvider.create(
+			source,
+			config -> {
+				config.specify(Player.class)
+					.setLinguist(languageProvider)
+					.setMessageSender(new CoreMessenger());
+				config.addInterceptor(new CenterMessageInterceptor());
+			}
+		);
 
-        messageProvider.getReplacer()
-                .setValueProvider(new ColorPlaceholderValueProvider(messageProvider.getConfig()));
+		messageProvider.getReplacer()
+			.setValueProvider(new ColorPlaceholderValueProvider(messageProvider.getConfig()));
 
-        return MessageHandler.of(messageProvider);
-    }
+		return MessageHandler.of(messageProvider);
+	}
 }

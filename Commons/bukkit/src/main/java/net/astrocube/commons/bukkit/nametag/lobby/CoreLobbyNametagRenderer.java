@@ -11,12 +11,12 @@ import java.util.Set;
 
 public class CoreLobbyNametagRenderer implements LobbyNametagRenderer {
 
-    @Override
-    public RenderedLobbyNametag render(LobbyNametag nametag, Player player) {
-        Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag);
-        RenderedLobbyNametag lobbyNametag = new CoreRenderedLobbyNametag(nametag, spawnedEntities, player);
-        lobbyNametag.show();
+	@Override
+	public RenderedLobbyNametag render(LobbyNametag nametag, Player player) {
+		Set<Nametag.Rendered.Entity> spawnedEntities = RenderUtil.getEntities(nametag);
+		RenderedLobbyNametag lobbyNametag = new CoreRenderedLobbyNametag(nametag, spawnedEntities, player);
+		lobbyNametag.show();
 
-        return lobbyNametag;
-    }
+		return lobbyNametag;
+	}
 }

@@ -18,33 +18,34 @@ import java.util.stream.Collectors;
 @Singleton
 public class CorePunishmentLookupMenu implements PunishmentLookupMenu {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject PunishmentIconGenerator punishmentIconGenerator;
-    private @Inject ShapedMenuGenerator shapedMenuGenerator;
+	private @Inject MessageHandler messageHandler;
+	private @Inject PunishmentIconGenerator punishmentIconGenerator;
+	private @Inject ShapedMenuGenerator shapedMenuGenerator;
 
-    @Override
-    public void generateMenu(Set<Punishment> punishments, User issuer, User target, Player player, int page) {
-        player.openInventory(shapedMenuGenerator.generate(
-                player,
-                messageHandler.replacing(
-                        player, "punish-menu.lookup.menu",
-                        "%player%", target.getDisplay()
-                ),
-                null,
-                punishments.stream()
-                        .map(p -> new ShapedMenuGenerator.BaseClickable() {
-                            @Override
-                            public Consumer<Player> getClick() {
-                                return (clicker) -> {};
-                            }
+	@Override
+	public void generateMenu(Set<Punishment> punishments, User issuer, User target, Player player, int page) {
+		player.openInventory(shapedMenuGenerator.generate(
+			player,
+			messageHandler.replacing(
+				player, "punish-menu.lookup.menu",
+				"%player%", target.getDisplay()
+			),
+			null,
+			punishments.stream()
+				.map(p -> new ShapedMenuGenerator.BaseClickable() {
+					@Override
+					public Consumer<Player> getClick() {
+						return (clicker) -> {
+						};
+					}
 
-                            @Override
-                            public ItemStack getStack() {
-                                return punishmentIconGenerator.generateFromPunishment(p, player, issuer);
-                            }
-                        })
-                        .collect(Collectors.toSet())
-        ));
-    }
+					@Override
+					public ItemStack getStack() {
+						return punishmentIconGenerator.generateFromPunishment(p, player, issuer);
+					}
+				})
+				.collect(Collectors.toSet())
+		));
+	}
 
 }

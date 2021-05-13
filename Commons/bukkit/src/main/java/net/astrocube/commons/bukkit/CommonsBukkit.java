@@ -9,28 +9,28 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommonsBukkit extends JavaPlugin {
 
-    private @Inject Loader loader;
-    private @Inject ServerDisconnectHandler serverDisconnectHandler;
+	private @Inject Loader loader;
+	private @Inject ServerDisconnectHandler serverDisconnectHandler;
 
-    @Override
-    public void onEnable() {
-        this.loader.load();
-        copyDefaults();
-    }
+	@Override
+	public void onEnable() {
+		this.loader.load();
+		copyDefaults();
+	}
 
-    @Override
-    public void onDisable() {
-        this.serverDisconnectHandler.execute();
-    }
+	@Override
+	public void onDisable() {
+		this.serverDisconnectHandler.execute();
+	}
 
-    @Override
-    public void configure(ProtectedBinder binder) {
-        binder.install(new InjectionLoaderModule());
-    }
+	@Override
+	public void configure(ProtectedBinder binder) {
+		binder.install(new InjectionLoaderModule());
+	}
 
-    public void copyDefaults() {
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
-    }
+	public void copyDefaults() {
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
+	}
 
 }

@@ -7,13 +7,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlayerPlaceholderReplacer implements PlaceholderProvider<Player> {
 
-    @Override
-    public @Nullable Object replace(ContextRepository ctx, Player player, String s) {
-        if ("player".equals(s)) {
-            return player.getName();
-        }
+	@Override
+	public @Nullable Object replace(ContextRepository ctx, Player player, String s) {
+		if ("player".equals(s)) {
+			return player.getName();
+		}
 
-        return "";
-    }
+		return "";
+	}
 
 }

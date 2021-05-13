@@ -5,6 +5,6 @@ import org.bukkit.entity.Player;
 
 public interface MatchRejoiner {
 
-    void rejoinMatch(User user, Player player) throws Exception;
+	void rejoinMatch(User user, Player player) throws Exception;
 
 }

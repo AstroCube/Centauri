@@ -17,47 +17,47 @@ import java.util.UUID;
 
 public class MenuUtils {
 
-    public static int[] slots = new int[]{9, 17, 18, 26, 27, 35, 36, 44};
+	public static int[] slots = new int[]{9, 17, 18, 26, 27, 35, 36, 44};
 
-    public static boolean isMarkedSlot(int slot) {
-        return (slot >= 0 && slot < 9) || (slot > 44 && slot < 54) || Arrays.stream(slots).anyMatch(s -> s == slot);
-    }
+	public static boolean isMarkedSlot(int slot) {
+		return (slot >= 0 && slot < 9) || (slot > 44 && slot < 54) || Arrays.stream(slots).anyMatch(s -> s == slot);
+	}
 
-    public static ItemStack generateStainedPane() {
-        ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
-        ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(" ");
-        stack.setItemMeta(meta);
-        return stack;
-    }
+	public static ItemStack generateStainedPane() {
+		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+		ItemMeta meta = stack.getItemMeta();
+		meta.setDisplayName(" ");
+		stack.setItemMeta(meta);
+		return stack;
+	}
 
-    public static void generateFrame(GUIBuilder builder) {
-        for (int i = 0; i < 54; i++) {
-            if (MenuUtils.isMarkedSlot(i)) {
-                builder.addItem(ItemClickable.builder(i).setItemStack(MenuUtils.generateStainedPane()).build());
-            }
-        }
-    }
+	public static void generateFrame(GUIBuilder builder) {
+		for (int i = 0; i < 54; i++) {
+			if (MenuUtils.isMarkedSlot(i)) {
+				builder.addItem(ItemClickable.builder(i).setItemStack(MenuUtils.generateStainedPane()).build());
+			}
+		}
+	}
 
-    public static ItemStack generateHead(HeadLibrary library) {
+	public static ItemStack generateHead(HeadLibrary library) {
 
-        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        Field profileField;
-        SkullMeta meta = (SkullMeta) head.getItemMeta();
+		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		Field profileField;
+		SkullMeta meta = (SkullMeta) head.getItemMeta();
 
-        AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "head");
-        profile.getProperties().add(new CoreProperty("textures", library.getBase64()));
+		AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "head");
+		profile.getProperties().add(new CoreProperty("textures", library.getBase64()));
 
-        try {
-            profileField = meta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(meta, MojangProfileGeneratorUtil.generateProfile(profile));
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }
+		try {
+			profileField = meta.getClass().getDeclaredField("profile");
+			profileField.setAccessible(true);
+			profileField.set(meta, MojangProfileGeneratorUtil.generateProfile(profile));
+		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
 
-        head.setItemMeta(meta);
-        return head;
-    }
+		head.setItemMeta(meta);
+		return head;
+	}
 
 }

@@ -6,5 +6,5 @@ import team.unnamed.gui.abstraction.item.ItemClickable;
 
 public interface GameModeItemExtractor {
 
-    ItemClickable generateGameMode(GameMode gameMode, Player player);
+	ItemClickable generateGameMode(GameMode gameMode, Player player);
 }

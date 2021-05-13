@@ -12,13 +12,13 @@ import org.bukkit.Bukkit;
 @Singleton
 public class CoreMatchStateUpdater implements MatchStateUpdater {
 
-    private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
+	private @Inject UpdateService<Match, MatchDoc.Partial> updateService;
 
-    @Override
-    public void updateMatch(Match match, MatchDoc.Status status) throws Exception {
-        match.setStatus(status);
-        updateService.updateSync(match);
-        Bukkit.getPluginManager().callEvent(new MatchStateUpdateEvent(match.getId(), status));
-    }
+	@Override
+	public void updateMatch(Match match, MatchDoc.Status status) throws Exception {
+		match.setStatus(status);
+		updateService.updateSync(match);
+		Bukkit.getPluginManager().callEvent(new MatchStateUpdateEvent(match.getId(), status));
+	}
 
 }

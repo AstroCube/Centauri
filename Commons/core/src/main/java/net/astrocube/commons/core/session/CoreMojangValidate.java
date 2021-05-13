@@ -18,32 +18,32 @@ import java.util.UUID;
 @Singleton
 public class CoreMojangValidate implements MojangValidate {
 
-    private @Inject HttpClient httpClient;
-    private @Inject ObjectMapper mapper;
+	private @Inject HttpClient httpClient;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public boolean validateUUID(String user, UUID uniqueId) throws Exception {
+	@Override
+	public boolean validateUUID(String user, UUID uniqueId) throws Exception {
 
-        Map<String, String> headers = new HashMap<>();
-        String url = "https://api.minetools.eu/uuid/" + uniqueId.toString().toLowerCase(Locale.ROOT);
-        headers.put("Referer", url);
+		Map<String, String> headers = new HashMap<>();
+		String url = "https://api.minetools.eu/uuid/" + uniqueId.toString().toLowerCase(Locale.ROOT);
+		headers.put("Referer", url);
 
-        String response = httpClient.executeRequestSync(
-                url,
-                new RawRequestCallable(),
-                new CoreRequestOptions(
-                        RequestOptions.Type.GET,
-                        headers,
-                        "",
-                        null
-                )
-        );
+		String response = httpClient.executeRequestSync(
+			url,
+			new RawRequestCallable(),
+			new CoreRequestOptions(
+				RequestOptions.Type.GET,
+				headers,
+				"",
+				null
+			)
+		);
 
-        JsonNode node = this.mapper.readTree(response);
+		JsonNode node = this.mapper.readTree(response);
 
-        return node.get("name").toString().replace("\"", "").equalsIgnoreCase(user) &&
-                node.get("status").toString().replace("\"", "").equalsIgnoreCase("OK");
+		return node.get("name").toString().replace("\"", "").equalsIgnoreCase(user) &&
+			node.get("status").toString().replace("\"", "").equalsIgnoreCase("OK");
 
-    }
+	}
 
 }

@@ -19,56 +19,50 @@ import redis.clients.jedis.Jedis;
 @Singleton
 public class CoreHideItemActionable implements HideItemActionable {
 
-    private @Inject UpdateService<User, UserDoc.Partial> updateService;
-    private @Inject HideStatusModifier hideStatusModifier;
-    private @Inject Redis redis;
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject UpdateService<User, UserDoc.Partial> updateService;
+	private @Inject HideStatusModifier hideStatusModifier;
+	private @Inject Redis redis;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void switchHideStatus(User user, Player player) {
+	@Override
+	public void switchHideStatus(User user, Player player) {
 
-        boolean hide = user.getSettings().getGeneralSettings().isHidingPlayers();
-        String id = player.getUniqueId().toString();
+		boolean hide = user.getSettings().getGeneralSettings().isHidingPlayers();
+		String id = player.getUniqueId().toString();
 
         plugin.getLogger().info("switch hide status");
 
-        try (Jedis jedis = redis.getRawConnection().getResource()) {
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			if (jedis.exists("COOL-DOWN:HIDE" + id)) {
+				messageHandler.send(player, "no-finished-cool-down");
+				return;
+			}
 
-            if(jedis.exists("COOL-DOWN:HIDE" + id)) {
-                plugin.getLogger().info("Exists in cool down");
-                messageHandler.send(player, "no-finished-cool-down");
-                return;
-            }
+			user.getSettings().getGeneralSettings().setHidingPlayers(!hide);
+			updateService.update(user).callback(userUpdate -> {
+				if (userUpdate.isSuccessful() && userUpdate.getResponse().isPresent()) {
 
-            user.getSettings().getGeneralSettings().setHidingPlayers(!hide);
-            updateService.update(user).callback(userUpdate -> {
-                if (userUpdate.isSuccessful() && userUpdate.getResponse().isPresent()) {
+					String translateAlert = "lobby.hiding.enabled";
 
-                    String translateAlert = "lobby.hiding.enabled";
+					if (!hide) {
+						hideStatusModifier.globalApply(user);
+					} else {
+						Bukkit.getScheduler().runTask(plugin, () -> hideStatusModifier.restore(user));
+						translateAlert = "lobby.hiding.disabled";
+					}
 
-                    if (!hide) {
-                        hideStatusModifier.globalApply(user);
-                    } else {
-                        Bukkit.getScheduler().runTask(plugin, () -> hideStatusModifier.restore(user));
-                        translateAlert = "lobby.hiding.disabled";
-                    }
-
-                    player.getInventory().setItem(7, HideGadgetStack.get(messageHandler, player, !hide));
-                    messageHandler.send(player, translateAlert);
-
-                    plugin.getLogger().info(" The player has change hide ");
-
-                    jedis.expire("COOL-DOWN:HIDE" + id, 3);
-                } else {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "lobby.hiding.error");
-                }
-            });
+					player.getInventory().setItem(7, HideGadgetStack.get(messageHandler, player, !hide));
+					messageHandler.send(player, translateAlert);
+					jedis.expire("COOL-DOWN:HIDE" + id, 3);
+				} else {
+					messageHandler.sendIn(player, AlertModes.ERROR, "lobby.hiding.error");
+				}
+			});
 
 
+		}
 
-        }
-
-    }
+	}
 
 }

@@ -7,14 +7,14 @@ import java.util.Map;
 
 public interface Metadata extends Document {
 
-    Map<String, Object> getHeaders();
+	Map<String, Object> getHeaders();
 
-    String getMessageId();
+	String getMessageId();
 
-    String getAppId();
+	String getAppId();
 
-    String getInstanceId();
+	String getInstanceId();
 
-    LocalDateTime getTimestamp();
+	LocalDateTime getTimestamp();
 
 }

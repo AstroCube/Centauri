@@ -15,20 +15,20 @@ import net.astrocube.commons.bukkit.user.staff.CoreOnlineStaffProvider;
 
 public class UserModule extends ProtectedModule implements ChannelBinder {
 
-    @Override
-    protected void configure() {
+	@Override
+	protected void configure() {
 
-        install(new SkinModule());
+		install(new SkinModule());
 
-        bind(TranslatedGroupProvider.class).to(CoreTranslatedGroupProvider.class);
-        bind(DisplayMatcher.class).to(CoreDisplayMatcher.class).in(Scopes.SINGLETON);
-        bind(UserMatcher.class).to(CoreUserMatcher.class).in(Scopes.SINGLETON);
-        bind(OnlineStaffProvider.class).to(CoreOnlineStaffProvider.class).in(Scopes.SINGLETON);
-        bindChannel(SessionPingMessage.class);
+		bind(TranslatedGroupProvider.class).to(CoreTranslatedGroupProvider.class);
+		bind(DisplayMatcher.class).to(CoreDisplayMatcher.class).in(Scopes.SINGLETON);
+		bind(UserMatcher.class).to(CoreUserMatcher.class).in(Scopes.SINGLETON);
+		bind(OnlineStaffProvider.class).to(CoreOnlineStaffProvider.class).in(Scopes.SINGLETON);
+		bindChannel(SessionPingMessage.class);
 
-        expose(TranslatedGroupProvider.class);
-        expose(DisplayMatcher.class);
-        expose(UserMatcher.class);
-        expose(OnlineStaffProvider.class);
-    }
+		expose(TranslatedGroupProvider.class);
+		expose(DisplayMatcher.class);
+		expose(UserMatcher.class);
+		expose(OnlineStaffProvider.class);
+	}
 }

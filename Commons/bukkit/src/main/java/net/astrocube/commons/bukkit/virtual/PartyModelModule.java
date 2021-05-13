@@ -10,13 +10,14 @@ import net.astrocube.commons.core.service.DirectRedisModelService;
 
 public class PartyModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(Party.class, PartyDoc.Partial.class, model -> {
-            TypeLiteral<DirectRedisModelService<Party, PartyDoc.Partial>> serviceTypeLiteral =
-                    new ResolvableType<DirectRedisModelService<Party, PartyDoc.Partial>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(Party.class, PartyDoc.Partial.class, model -> {
+			TypeLiteral<DirectRedisModelService<Party, PartyDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<DirectRedisModelService<Party, PartyDoc.Partial>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 
 }

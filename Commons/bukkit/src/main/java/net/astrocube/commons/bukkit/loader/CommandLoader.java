@@ -21,80 +21,80 @@ import org.bukkit.plugin.Plugin;
 
 public class CommandLoader implements Loader {
 
-    private @Inject Plugin plugin;
-    private @Inject CoreCommandLanguageProvider coreCommandLanguageProvider;
-    private @Inject Injector injector;
-    private @Inject LoginCommand loginCommand;
-    private @Inject RegisterCommand registerCommand;
-    private @Inject FriendsCommand friendsCommand;
-    private @Inject MatchCommand matchCommand;
-    private @Inject LobbyCommand lobbyCommand;
-    private @Inject AdminChatCommand adminChatCommand;
-    private @Inject PlayCommand playCommand;
-    private @Inject PunishCommand punishCommand;
-    private @Inject PlayerLookCommand playerLookCommand;
-    private @Inject GoToCommand goToCommand;
-    private @Inject ShoutCommand shoutCommand;
-    private @Inject AdminCommand adminCommand;
-    private @Inject FreezeCommand freezeCommand;
-    private @Inject PartyCommand partyCommand;
-    private @Inject WhisperCommands whisperCommands;
-    private @Inject PunishmentCommand punishmentCommand;
-    private @Inject FlyCommand flyCommand;
+	private @Inject Plugin plugin;
+	private @Inject CoreCommandLanguageProvider coreCommandLanguageProvider;
+	private @Inject Injector injector;
+	private @Inject LoginCommand loginCommand;
+	private @Inject RegisterCommand registerCommand;
+	private @Inject FriendsCommand friendsCommand;
+	private @Inject MatchCommand matchCommand;
+	private @Inject LobbyCommand lobbyCommand;
+	private @Inject AdminChatCommand adminChatCommand;
+	private @Inject PlayCommand playCommand;
+	private @Inject PunishCommand punishCommand;
+	private @Inject PlayerLookCommand playerLookCommand;
+	private @Inject GoToCommand goToCommand;
+	private @Inject ShoutCommand shoutCommand;
+	private @Inject AdminCommand adminCommand;
+	private @Inject FreezeCommand freezeCommand;
+	private @Inject PartyCommand partyCommand;
+	private @Inject WhisperCommands whisperCommands;
+	private @Inject PunishmentCommand punishmentCommand;
+	private @Inject FlyCommand flyCommand;
 
-    private @Inject TestCommand testCommand;
+	private @Inject TestCommand testCommand;
 
-    @Override
-    public void load() {
-        CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
-        commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
+	@Override
+	public void load() {
+		CommandManager commandManager = new BukkitCommandManager(this.plugin.getName());
+		commandManager.setTranslator(new DefaultTranslator(this.coreCommandLanguageProvider));
 
-        PartInjector partInjector = new SimplePartInjector();
+		PartInjector partInjector = new SimplePartInjector();
 
-        partInjector.install(new BukkitModule());
-        partInjector.install(new DefaultsModule());
+		partInjector.install(new BukkitModule());
+		partInjector.install(new DefaultsModule());
 
-        AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
-                new AnnotatedCommandBuilderImpl(partInjector),
-                (clazz, parent) -> this.injector.getInstance(clazz)
-        );
+		AnnotatedCommandTreeBuilder treeBuilder = new AnnotatedCommandTreeBuilderImpl(
+			new AnnotatedCommandBuilderImpl(partInjector),
+			(clazz, parent) -> this.injector.getInstance(clazz)
+		);
 
-        registerCommands(
-                commandManager, treeBuilder,
-                adminChatCommand,
-                playCommand,
-                friendsCommand,
-                matchCommand,
-                whisperCommands,
-                punishCommand,
-                playerLookCommand,
-                shoutCommand,
-                adminCommand,
-                freezeCommand,
-                lobbyCommand,
-                goToCommand,
-                partyCommand,
-                punishmentCommand,
-                flyCommand,
-                testCommand
-        );
+		registerCommands(
+			commandManager, treeBuilder,
+			adminChatCommand,
+			playCommand,
+			friendsCommand,
+			matchCommand,
+			whisperCommands,
+			punishCommand,
+			playerLookCommand,
+			shoutCommand,
+			adminCommand,
+			freezeCommand,
+			lobbyCommand,
+			goToCommand,
+			partyCommand,
+			punishmentCommand,
+			flyCommand,
+			testCommand
+		);
 
-        if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
-            registerCommands(
-                    commandManager, treeBuilder,
-                    loginCommand, registerCommand
-            );
-        }
-    }
+		if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
+			registerCommands(
+				commandManager, treeBuilder,
+				loginCommand, registerCommand
+			);
+		}
+	}
 
-    private void registerCommands(
-            CommandManager commandManager,
-            AnnotatedCommandTreeBuilder treeBuilder,
-            CommandClass... commandClasses
-    ) {
-        for (CommandClass commandClass : commandClasses) {
-            commandManager.registerCommands(treeBuilder.fromClass(commandClass));
-        }
-    }
+	private void registerCommands(
+		CommandManager commandManager,
+		AnnotatedCommandTreeBuilder treeBuilder,
+		CommandClass... commandClasses
+	) {
+		for (CommandClass commandClass : commandClasses) {
+			commandManager.registerCommands(treeBuilder.fromClass(commandClass));
+		}
+	}
 
 }

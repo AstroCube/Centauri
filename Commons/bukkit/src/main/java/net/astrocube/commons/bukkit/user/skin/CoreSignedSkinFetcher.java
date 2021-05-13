@@ -21,64 +21,64 @@ import java.util.logging.Level;
 @Singleton
 public class CoreSignedSkinFetcher implements SignedSkinFetcher {
 
-    private @Inject HttpClient httpClient;
-    private @Inject Plugin plugin;
-    private @Inject ObjectMapper mapper;
+	private @Inject HttpClient httpClient;
+	private @Inject Plugin plugin;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public AbstractProperty fetch(String skin) {
+	@Override
+	public AbstractProperty fetch(String skin) {
 
-        try {
+		try {
 
-            MojangManifest response = httpClient.executeRequestSync(
-                    "https://api.ashcon.app/mojang/v2/user/" + skin,
-                    new CoreRequestCallable<>(TypeToken.of(MojangManifest.class), mapper),
-                    new CoreRequestOptions(
-                            RequestOptions.Type.GET,
-                            new HashMap<>(),
-                            "",
-                            null
-                    )
-            );
-
-
-            return new CoreProperty(
-                    "textures",
-                    response.getTexture().getRaw().getValue(),
-                    response.getTexture().getRaw().getSignature()
-            );
-
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error parsing texture", e);
-        }
+			MojangManifest response = httpClient.executeRequestSync(
+				"https://api.ashcon.app/mojang/v2/user/" + skin,
+				new CoreRequestCallable<>(TypeToken.of(MojangManifest.class), mapper),
+				new CoreRequestOptions(
+					RequestOptions.Type.GET,
+					new HashMap<>(),
+					"",
+					null
+				)
+			);
 
 
-        return new AbstractProperty() {
-            @Override
-            public String getName() {
-                return "";
-            }
+			return new CoreProperty(
+				"textures",
+				response.getTexture().getRaw().getValue(),
+				response.getTexture().getRaw().getSignature()
+			);
 
-            @Override
-            public String getValue() {
-                return "";
-            }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "Error parsing texture", e);
+		}
 
-            @Override
-            public String getSignature() {
-                return "";
-            }
 
-            @Override
-            public boolean hasSignature() {
-                return false;
-            }
+		return new AbstractProperty() {
+			@Override
+			public String getName() {
+				return "";
+			}
 
-            @Override
-            public boolean isSignatureValid(PublicKey key) {
-                return false;
-            }
-        };
-    }
+			@Override
+			public String getValue() {
+				return "";
+			}
+
+			@Override
+			public String getSignature() {
+				return "";
+			}
+
+			@Override
+			public boolean hasSignature() {
+				return false;
+			}
+
+			@Override
+			public boolean isSignatureValid(PublicKey key) {
+				return false;
+			}
+		};
+	}
 
 }

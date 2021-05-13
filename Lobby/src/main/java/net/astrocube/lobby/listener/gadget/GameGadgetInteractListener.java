@@ -9,15 +9,15 @@ import org.bukkit.event.block.Action;
 
 public class GameGadgetInteractListener implements Listener {
 
-    private @Inject GameSelectorDisplay gameSelectorDisplay;
+	private @Inject GameSelectorDisplay gameSelectorDisplay;
 
-    @EventHandler
-    public void onGameGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equalsIgnoreCase("game_menu") &&
-                        (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            gameSelectorDisplay.openDisplay(event.getUser(), event.getPlayer());
-        }
-    }
+	@EventHandler
+	public void onGameGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equalsIgnoreCase("game_menu") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			gameSelectorDisplay.openDisplay(event.getUser(), event.getPlayer());
+		}
+	}
 }

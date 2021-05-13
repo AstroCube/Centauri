@@ -6,10 +6,10 @@ import net.astrocube.api.core.virtual.server.ServerDoc;
 
 public interface ServerService {
 
-    String connect(CreateRequest<ServerDoc.Partial> request) throws Exception;
+	String connect(CreateRequest<ServerDoc.Partial> request) throws Exception;
 
-    void disconnect() throws Exception;
+	void disconnect() throws Exception;
 
-    Server getActual() throws Exception;
+	Server getActual() throws Exception;
 
 }

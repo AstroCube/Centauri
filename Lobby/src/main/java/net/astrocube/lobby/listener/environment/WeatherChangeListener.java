@@ -7,9 +7,9 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class WeatherChangeListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onWeatherChange(WeatherChangeEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onWeatherChange(WeatherChangeEvent event) {
+		event.setCancelled(true);
+	}
 
 }

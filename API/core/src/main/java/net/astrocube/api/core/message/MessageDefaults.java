@@ -5,9 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 public interface MessageDefaults {
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface ChannelName {
-        String value();
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface ChannelName {
+		String value();
+	}
 
 }

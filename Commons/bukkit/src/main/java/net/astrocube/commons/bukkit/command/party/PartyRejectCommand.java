@@ -14,30 +14,30 @@ import java.util.Optional;
 @Command(names = "reject")
 public class PartyRejectCommand implements CommandClass {
 
-    private @Inject PartyService partyService;
-    private @Inject MessageHandler messageHandler;
+	private @Inject PartyService partyService;
+	private @Inject MessageHandler messageHandler;
 
-    @Command(names = "")
-    public void reject(
-            @Sender Player player
-    ) {
-        Optional<String> optInviter = partyService.getPartyInviter(player.getName());
-        if (!optInviter.isPresent()) {
-            messageHandler.send(player, "no-party-invitation");
-            return;
-        }
+	@Command(names = "")
+	public void reject(
+		@Sender Player player
+	) {
+		Optional<String> optInviter = partyService.getPartyInviter(player.getName());
+		if (!optInviter.isPresent()) {
+			messageHandler.send(player, "no-party-invitation");
+			return;
+		}
 
-        Player inviter = Bukkit.getPlayerByIdentifier(optInviter.get());
-        if (inviter != null) {
-            messageHandler.sendReplacing(
-                    inviter, "rejected-party-invitation",
-                    "%player%", player.getName()
-            );
-        }
+		Player inviter = Bukkit.getPlayerByIdentifier(optInviter.get());
+		if (inviter != null) {
+			messageHandler.sendReplacing(
+				inviter, "rejected-party-invitation",
+				"%player%", player.getName()
+			);
+		}
 
-        messageHandler.send(player, "rejected-invitation");
-        partyService.removeInvite(player.getName());
-    }
+		messageHandler.send(player, "rejected-invitation");
+		partyService.removeInvite(player.getName());
+	}
 
 }
 

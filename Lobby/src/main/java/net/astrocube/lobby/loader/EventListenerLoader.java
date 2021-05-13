@@ -19,42 +19,42 @@ import java.util.logging.Level;
 
 public class EventListenerLoader implements Loader {
 
-    private @Inject HideGadgetInteractListener hideGadgetInteractListener;
-    private @Inject GameGadgetInteractListener gameGadgetInteractListener;
-    private @Inject LobbySelectorGadgetInteractListener lobbySelectorGadgetInteractListener;
-    private @Inject ProfileGadgetInteractListener profileGadgetInteractListener;
-    private @Inject PlayerDamageListener playerDamageListener;
+	private @Inject HideGadgetInteractListener hideGadgetInteractListener;
+	private @Inject GameGadgetInteractListener gameGadgetInteractListener;
+	private @Inject LobbySelectorGadgetInteractListener lobbySelectorGadgetInteractListener;
+	private @Inject ProfileGadgetInteractListener profileGadgetInteractListener;
+	private @Inject PlayerDamageListener playerDamageListener;
 
-    private @Inject LobbyJoinListener lobbyJoinListener;
-    private @Inject PlayerQuitListener playerQuitListener;
-    private @Inject UserBasicActionsListener userBasicActionsListener;
+	private @Inject LobbyJoinListener lobbyJoinListener;
+	private @Inject PlayerQuitListener playerQuitListener;
+	private @Inject UserBasicActionsListener userBasicActionsListener;
 
-    private @Inject WeatherChangeListener weatherChangeListener;
-    private @Inject CropBreakingListener cropBreakingListener;
+	private @Inject WeatherChangeListener weatherChangeListener;
+	private @Inject CropBreakingListener cropBreakingListener;
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void load() {
-        plugin.getLogger().log(Level.INFO, "Initializing lobby event listeners");
+	@Override
+	public void load() {
+		plugin.getLogger().log(Level.INFO, "Initializing lobby event listeners");
 
-        registerEvent(hideGadgetInteractListener);
-        registerEvent(gameGadgetInteractListener);
-        registerEvent(lobbySelectorGadgetInteractListener);
-        registerEvent(profileGadgetInteractListener);
-        registerEvent(playerDamageListener);
+		registerEvent(hideGadgetInteractListener);
+		registerEvent(gameGadgetInteractListener);
+		registerEvent(lobbySelectorGadgetInteractListener);
+		registerEvent(profileGadgetInteractListener);
+		registerEvent(playerDamageListener);
 
-        registerEvent(lobbyJoinListener);
-        registerEvent(playerQuitListener);
-        registerEvent(userBasicActionsListener);
+		registerEvent(lobbyJoinListener);
+		registerEvent(playerQuitListener);
+		registerEvent(userBasicActionsListener);
 
-        registerEvent(weatherChangeListener);
-        registerEvent(cropBreakingListener);
+		registerEvent(weatherChangeListener);
+		registerEvent(cropBreakingListener);
 
-    }
+	}
 
-    private void registerEvent(Listener listener) {
-        plugin.getServer().getPluginManager().registerEvents(listener, plugin);
-    }
+	private void registerEvent(Listener listener) {
+		plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+	}
 
 }

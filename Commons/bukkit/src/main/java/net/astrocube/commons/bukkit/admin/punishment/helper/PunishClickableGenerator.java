@@ -21,61 +21,61 @@ import java.util.stream.Collectors;
 
 public class PunishClickableGenerator {
 
-    private @Inject PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
-    private @Inject MessageHandler messageHandler;
+	private @Inject PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
+	private @Inject MessageHandler messageHandler;
 
-    public Set<ShapedMenuGenerator.BaseClickable> buildPunishReasons
-            (Player player, PunishmentBuilder punishmentBuilder, Set<PresetPunishment> punishments, String criteria, boolean search) {
-        return punishments.stream()
-                .map(punishment -> {
+	public Set<ShapedMenuGenerator.BaseClickable> buildPunishReasons
+		(Player player, PunishmentBuilder punishmentBuilder, Set<PresetPunishment> punishments, String criteria, boolean search) {
+		return punishments.stream()
+			.map(punishment -> {
 
-                    String translated = messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".reason");
-                    ItemStack paper = new ItemStack(Material.PAPER);
-                    ItemMeta meta = paper.getItemMeta();
+				String translated = messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".reason");
+				ItemStack paper = new ItemStack(Material.PAPER);
+				ItemMeta meta = paper.getItemMeta();
 
-                    meta.setDisplayName(
-                            ChatColor.AQUA +
-                                    messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".title")  +
-                                    ChatColor.GRAY + (search ? " - " + messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()) : "")
-                    );
+				meta.setDisplayName(
+					ChatColor.AQUA +
+						messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".title") +
+						ChatColor.GRAY + (search ? " - " + messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()) : "")
+				);
 
-                    meta.setLore(
-                            messageHandler.replacingMany(
-                                    player, "punish-menu.lore",
-                                    "%reason%", translated,
-                                    "%expire%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
-                                            PrettyTimeUtils.getHumanDate(
-                                                    Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
-                                                            punishment.getExpiration()
-                                                    )),
-                                                    punishmentBuilder.getIssuer().getLanguage()
-                                            )
-                            )
-                    );
+				meta.setLore(
+					messageHandler.replacingMany(
+						player, "punish-menu.lore",
+						"%reason%", translated,
+						"%expire%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
+							PrettyTimeUtils.getHumanDate(
+								Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
+									punishment.getExpiration()
+								)),
+								punishmentBuilder.getIssuer().getLanguage()
+							)
+					)
+				);
 
-                    paper.setItemMeta(meta);
+				paper.setItemMeta(meta);
 
-                    return new ShapedMenuGenerator.BaseClickable() {
-                        @Override
-                        public Consumer<Player> getClick() {
-                            return (p) -> {
-                                if (search) {
-                                    punishmentBuilder.setType(punishment.getType());
-                                }
-                                punishmentBuilder.setReason(translated);
-                                punishmentBuilder.setDuration(punishment.getExpiration());
-                                player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search));
-                            };
-                        }
+				return new ShapedMenuGenerator.BaseClickable() {
+					@Override
+					public Consumer<Player> getClick() {
+						return (p) -> {
+							if (search) {
+								punishmentBuilder.setType(punishment.getType());
+							}
+							punishmentBuilder.setReason(translated);
+							punishmentBuilder.setDuration(punishment.getExpiration());
+							player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search));
+						};
+					}
 
-                        @Override
-                        public ItemStack getStack() {
-                            return paper;
-                        }
-                    };
+					@Override
+					public ItemStack getStack() {
+						return paper;
+					}
+				};
 
 
-                }).collect(Collectors.toSet());
-    }
+			}).collect(Collectors.toSet());
+	}
 
 }

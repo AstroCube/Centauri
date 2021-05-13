@@ -17,43 +17,43 @@ import java.util.Optional;
 
 @Command(names = "kickoffline")
 public class PartyKickOfflineCommand
-        implements CommandClass {
+	implements CommandClass {
 
-    @Inject private PartyService partyService;
-    @Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
-    @Inject private MessageHandler messageHandler;
+	@Inject private PartyService partyService;
+	@Inject private UpdateService<Party, PartyDoc.Partial> partyUpdateService;
+	@Inject private MessageHandler messageHandler;
 
-    @Command(names = "")
-    public void execute(
-            @Sender Player player
-    ) {
-        String playerId = player.getDatabaseIdentifier();
-        Optional<Party> optParty = partyService.getPartyOf(playerId);
-        Party party;
+	@Command(names = "")
+	public void execute(
+		@Sender Player player
+	) {
+		String playerId = player.getDatabaseIdentifier();
+		Optional<Party> optParty = partyService.getPartyOf(playerId);
+		Party party;
 
-        if (!optParty.isPresent()) {
-            messageHandler.send(player, "cannot-kickoffline.not-in-party");
-            return;
-        } else if (!(party = optParty.get()).getLeader().equals(playerId)) {
-            return;
-        }
+		if (!optParty.isPresent()) {
+			messageHandler.send(player, "cannot-kickoffline.not-in-party");
+			return;
+		} else if (!(party = optParty.get()).getLeader().equals(playerId)) {
+			return;
+		}
 
-        Iterator<String> memberIdsIterator = party.getMembers().iterator();
-        while (memberIdsIterator.hasNext()) {
-            String memberId = memberIdsIterator.next();
-            Player member = Bukkit.getPlayerByIdentifier(memberId);
-            if (member == null) {
-                memberIdsIterator.remove();
-            } else {
-                String path = (memberId.equals(playerId) ? "" : "other-") + "kicked-offline";
-                messageHandler.sendReplacing(
-                        member, path,
-                        "%player%", player.getName()
-                );
-            }
-        }
+		Iterator<String> memberIdsIterator = party.getMembers().iterator();
+		while (memberIdsIterator.hasNext()) {
+			String memberId = memberIdsIterator.next();
+			Player member = Bukkit.getPlayerByIdentifier(memberId);
+			if (member == null) {
+				memberIdsIterator.remove();
+			} else {
+				String path = (memberId.equals(playerId) ? "" : "other-") + "kicked-offline";
+				messageHandler.sendReplacing(
+					member, path,
+					"%player%", player.getName()
+				);
+			}
+		}
 
-        partyUpdateService.update(party);
-    }
+		partyUpdateService.update(party);
+	}
 
 }

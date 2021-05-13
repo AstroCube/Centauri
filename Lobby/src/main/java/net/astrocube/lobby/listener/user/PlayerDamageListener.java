@@ -11,31 +11,31 @@ import org.bukkit.plugin.Plugin;
 
 public class PlayerDamageListener implements Listener {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onPlayerQuit(EntityDamageEvent event) {
+	@EventHandler
+	public void onPlayerQuit(EntityDamageEvent event) {
 
-        Player player = (Player) event.getEntity();
+		Player player = (Player) event.getEntity();
 
-        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+		if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
 
-            player.teleport(
-                    new Location(
-                            Bukkit.getWorlds().get(0),
-                            plugin.getConfig().getInt("spawn.x", 0),
-                            plugin.getConfig().getInt("spawn.y", 0),
-                            plugin.getConfig().getInt("spawn.z", 0),
-                            plugin.getConfig().getInt("spawn.yaw", 0),
-                            plugin.getConfig().getInt("spawn.pitch", 0)
-                    )
-            );
+			player.teleport(
+				new Location(
+					Bukkit.getWorlds().get(0),
+					plugin.getConfig().getInt("spawn.x", 0),
+					plugin.getConfig().getInt("spawn.y", 0),
+					plugin.getConfig().getInt("spawn.z", 0),
+					plugin.getConfig().getInt("spawn.yaw", 0),
+					plugin.getConfig().getInt("spawn.pitch", 0)
+				)
+			);
 
-            event.setCancelled(true);
+			event.setCancelled(true);
 
-        }
+		}
 
 
-    }
+	}
 
 }

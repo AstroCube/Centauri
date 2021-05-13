@@ -8,9 +8,9 @@ import java.util.Set;
 @MessageDefaults.ChannelName("gc-privatization")
 public interface MatchPrivatizeMessage extends MatchActionMessage {
 
-    /**
-     * @return {@link User} to request privatizing.
-     */
-    String getRequester();
+	/**
+	 * @return {@link User} to request privatizing.
+	 */
+	String getRequester();
 
 }

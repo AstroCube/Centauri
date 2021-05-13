@@ -18,56 +18,56 @@ import java.util.logging.Level;
 
 public class GameControlHelper {
 
-    private @Inject FindService<GameMode> findService;
-    private @Inject Plugin plugin;
+	private @Inject FindService<GameMode> findService;
+	private @Inject Plugin plugin;
 
-    public Optional<ModeCompound> getService(String gameMode, String subGameMode) throws Exception {
+	public Optional<ModeCompound> getService(String gameMode, String subGameMode) throws Exception {
 
-        GameMode mode = findService.findSync(gameMode);
+		GameMode mode = findService.findSync(gameMode);
 
-        if (mode.getSubTypes() == null) {
-            plugin.getLogger().log(Level.SEVERE, "The requested GameMode does not have any SubMode");
-            return Optional.empty();
-        }
+		if (mode.getSubTypes() == null) {
+			plugin.getLogger().log(Level.SEVERE, "The requested GameMode does not have any SubMode");
+			return Optional.empty();
+		}
 
-        Optional<SubGameMode> subMode = mode.getSubTypes().stream()
-                .filter(g -> g.getId().equalsIgnoreCase(subGameMode))
-                .findFirst();
+		Optional<SubGameMode> subMode = mode.getSubTypes().stream()
+			.filter(g -> g.getId().equalsIgnoreCase(subGameMode))
+			.findFirst();
 
-        if (!subMode.isPresent()) {
-            plugin.getLogger().log(Level.SEVERE, "The requested GameMode was not found");
-            return Optional.empty();
-        }
+		if (!subMode.isPresent()) {
+			plugin.getLogger().log(Level.SEVERE, "The requested GameMode was not found");
+			return Optional.empty();
+		}
 
-        return Optional.of(new ModeCompound(mode, subMode.get()));
-    }
+		return Optional.of(new ModeCompound(mode, subMode.get()));
+	}
 
-    public static Set<Player> getPlayersFromRequest(MatchmakingRequest request) {
-        Set<Player> players = new HashSet<>();
+	public static Set<Player> getPlayersFromRequest(MatchmakingRequest request) {
+		Set<Player> players = new HashSet<>();
 
-        Player requester = Bukkit.getPlayerByIdentifier(request.getRequesters().getResponsible());
+		Player requester = Bukkit.getPlayerByIdentifier(request.getRequesters().getResponsible());
 
-        if (requester != null) {
-            players.add(requester);
-        }
+		if (requester != null) {
+			players.add(requester);
+		}
 
-        request.getRequesters().getInvolved().forEach(user -> {
-            Player involved = Bukkit.getPlayerByIdentifier(user);
+		request.getRequesters().getInvolved().forEach(user -> {
+			Player involved = Bukkit.getPlayerByIdentifier(user);
 
-            if (involved != null) {
-                players.add(involved);
-            }
+			if (involved != null) {
+				players.add(involved);
+			}
 
-        });
+		});
 
-        return players;
-    }
+		return players;
+	}
 
-    @Getter
-    @AllArgsConstructor
-    public static class ModeCompound {
-        private final GameMode gameMode;
-        private final SubGameMode subGameMode;
-    }
+	@Getter
+	@AllArgsConstructor
+	public static class ModeCompound {
+		private final GameMode gameMode;
+		private final SubGameMode subGameMode;
+	}
 
 }

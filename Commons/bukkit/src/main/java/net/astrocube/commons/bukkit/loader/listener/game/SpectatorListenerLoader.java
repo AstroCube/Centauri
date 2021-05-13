@@ -8,18 +8,18 @@ import org.bukkit.plugin.Plugin;
 
 public class SpectatorListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject SpectatorAssignListener spectatorAssignListener;
-    private @Inject SpectateRequestListener spectateRequestListener;
+	private @Inject SpectatorAssignListener spectatorAssignListener;
+	private @Inject SpectateRequestListener spectateRequestListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                spectatorAssignListener,
-                spectateRequestListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+			plugin,
+			spectatorAssignListener,
+			spectateRequestListener
+		);
+	}
 
 }

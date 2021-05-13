@@ -11,7 +11,8 @@ import java.lang.annotation.RetentionPolicy;
  */
 public interface MessageListener {
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface HandleMessage {}
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface HandleMessage {
+	}
 
 }

@@ -8,30 +8,30 @@ import java.io.IOException;
 
 public interface GameMapProvider {
 
-    /**
-     * Retrieve a map file pair from cache.
-     * @param gameMap to be retrieved.
-     * @return map pair of configuration/file.
-     * @throws IOException when map was not obtained correctly
-     * @throws GameControlException when map is attempted to be obtained
-     * wrongly without being cached before. This should never happen.
-     */
-    MapFiles loadGameMap(GameMap gameMap) throws IOException, GameControlException;
+	/**
+	 * Retrieve a map file pair from cache.
+	 * @param gameMap to be retrieved.
+	 * @return map pair of configuration/file.
+	 * @throws IOException          when map was not obtained correctly
+	 * @throws GameControlException when map is attempted to be obtained
+	 *                              wrongly without being cached before. This should never happen.
+	 */
+	MapFiles loadGameMap(GameMap gameMap) throws IOException, GameControlException;
 
-    interface MapFiles {
+	interface MapFiles {
 
-        byte[] getMapFile();
+		byte[] getMapFile();
 
-        byte[] getMapConfig();
+		byte[] getMapConfig();
 
-    }
+	}
 
-    interface EncodedFiles {
+	interface EncodedFiles {
 
-        SlimeWorld getWorld();
+		SlimeWorld getWorld();
 
-        String getConfiguration();
+		String getConfiguration();
 
-    }
+	}
 
 }

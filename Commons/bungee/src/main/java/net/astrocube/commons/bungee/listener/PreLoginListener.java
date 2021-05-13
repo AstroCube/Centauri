@@ -23,75 +23,75 @@ import java.util.logging.Level;
 
 public class PreLoginListener implements Listener {
 
-    private @Inject Plugin plugin;
-    private @Inject UserProvideHelper userProvideHelper;
-    private @Inject MojangValidate mojangValidate;
-    private @Inject Redis redis;
+	private @Inject Plugin plugin;
+	private @Inject UserProvideHelper userProvideHelper;
+	private @Inject MojangValidate mojangValidate;
+	private @Inject Redis redis;
 
-    @EventHandler
-    public void onPreLogin(PreLoginEvent event) {
+	@EventHandler
+	public void onPreLogin(PreLoginEvent event) {
 
-        PendingConnection connection = event.getConnection();
-        event.registerIntent(plugin);
+		PendingConnection connection = event.getConnection();
+		event.registerIntent(plugin);
 
-        try {
+		try {
 
-            Optional<User> user = userProvideHelper.getUserByName(event.getConnection().getName());
+			Optional<User> user = userProvideHelper.getUserByName(event.getConnection().getName());
 
-            if (!user.isPresent() || user.get().getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
-                connection.setOnlineMode(false);
-                connection
-                        .setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
-                        .getBytes(Charsets.UTF_8)));
-            }
+			if (!user.isPresent() || user.get().getSession().getAuthorizeMethod() != UserDoc.Session.Authorization.PREMIUM) {
+				connection.setOnlineMode(false);
+				connection
+					.setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
+						.getBytes(Charsets.UTF_8)));
+			}
 
 
-        } catch (Exception e) {
+		} catch (Exception e) {
 
-            plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
-            connection.disconnect(
-                    new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
-            );
-        }
+			plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
+			connection.disconnect(
+				new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
+			);
+		}
 
-        event.completeIntent(plugin);
+		event.completeIntent(plugin);
 
-    }
+	}
 
-    @EventHandler
-    public void onLogin(LoginEvent event) {
+	@EventHandler
+	public void onLogin(LoginEvent event) {
 
-        PendingConnection connection = event.getConnection();
-        event.registerIntent(plugin);
+		PendingConnection connection = event.getConnection();
+		event.registerIntent(plugin);
 
-        try {
+		try {
 
-            String user = userProvideHelper.getUserByName(event.getConnection().getName())
-                    .map(UserDoc.Login::getUsername)
-                    .orElse(event.getConnection().getName());
+			String user = userProvideHelper.getUserByName(event.getConnection().getName())
+				.map(UserDoc.Login::getUsername)
+				.orElse(event.getConnection().getName());
 
-            if (
-                    connection.getUniqueId() != null &&
-                            mojangValidate.validateUUID(connection.getName(), connection.getUniqueId())
-            ) {
+			if (
+				connection.getUniqueId() != null &&
+					mojangValidate.validateUUID(connection.getName(), connection.getUniqueId())
+			) {
 
-                try (Jedis jedis = redis.getRawConnection().getResource()) {
-                    jedis.set("premium:" + user, "1");
-                } catch (Exception e) {
-                    throw new Exception("Unable to store premium state");
-                }
+				try (Jedis jedis = redis.getRawConnection().getResource()) {
+					jedis.set("premium:" + user, "1");
+				} catch (Exception e) {
+					throw new Exception("Unable to store premium state");
+				}
 
-            }
+			}
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
-            connection.disconnect(
-                    new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
-            );
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.WARNING, "[Commons] There was an error logging a player.", e);
+			connection.disconnect(
+				new TextComponent(ChatColor.RED + "Error when logging in, please try again. \n\n" + ChatColor.GRAY + "Error Type: " + e.getClass().getSimpleName())
+			);
+		}
 
-        event.completeIntent(plugin);
+		event.completeIntent(plugin);
 
-    }
+	}
 
 }

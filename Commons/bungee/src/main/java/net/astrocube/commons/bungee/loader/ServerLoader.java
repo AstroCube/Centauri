@@ -9,12 +9,12 @@ import java.util.logging.Level;
 
 public class ServerLoader implements Loader {
 
-    private @Inject ServerStartResolver serverStartResolver;
-    private @Inject Plugin plugin;
+	private @Inject ServerStartResolver serverStartResolver;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void load() {
-        plugin.getLogger().log(Level.INFO, "Starting server authorization");
-        this.serverStartResolver.instantiateServer();
-    }
+	@Override
+	public void load() {
+		plugin.getLogger().log(Level.INFO, "Starting server authorization");
+		this.serverStartResolver.instantiateServer();
+	}
 }

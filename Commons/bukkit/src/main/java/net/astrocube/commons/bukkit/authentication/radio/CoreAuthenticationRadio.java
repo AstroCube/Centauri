@@ -9,22 +9,22 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreAuthenticationRadio implements AuthenticationRadio {
 
-    private @Inject AuthenticationSongLoader authenticationSongLoader;
+	private @Inject AuthenticationSongLoader authenticationSongLoader;
 
-    @Override
-    public void addPlayer(Player player) {
+	@Override
+	public void addPlayer(Player player) {
 
-        if (!authenticationSongLoader.getBroadcaster().isPlaying()) {
-            authenticationSongLoader.getBroadcaster().setPlaying(true);
-        }
+		if (!authenticationSongLoader.getBroadcaster().isPlaying()) {
+			authenticationSongLoader.getBroadcaster().setPlaying(true);
+		}
 
-        authenticationSongLoader.getBroadcaster().addAudienceMember(player);
+		authenticationSongLoader.getBroadcaster().addAudienceMember(player);
 
-    }
+	}
 
-    @Override
-    public void removePlayer(Player player) {
-        authenticationSongLoader.getBroadcaster().removeAudienceMember(player);
-    }
+	@Override
+	public void removePlayer(Player player) {
+		authenticationSongLoader.getBroadcaster().removeAudienceMember(player);
+	}
 
 }

@@ -12,18 +12,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class GameReadyEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final String match;
-    private final String configuration;
-    private final Set<MatchDoc.Team> teams;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final String match;
+	private final String configuration;
+	private final Set<MatchDoc.Team> teams;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

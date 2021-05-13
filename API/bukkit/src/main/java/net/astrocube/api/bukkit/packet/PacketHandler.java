@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface PacketHandler {
 
-    void handle(Player player);
+	void handle(Player player);
 
 }

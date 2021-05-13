@@ -13,11 +13,11 @@ import java.util.Set;
  */
 public interface PendingMatchFinder {
 
-    /**
-     * @param gameMode to search
-     * @param subGameMode to search
-     * @return set of matchmaking requests that can be provided for the paired mode/subMode.
-     */
-    Set<MatchmakingRequest> getPendingMatches(GameMode gameMode, SubGameMode subGameMode);
+	/**
+	 * @param gameMode    to search
+	 * @param subGameMode to search
+	 * @return set of matchmaking requests that can be provided for the paired mode/subMode.
+	 */
+	Set<MatchmakingRequest> getPendingMatches(GameMode gameMode, SubGameMode subGameMode);
 
 }

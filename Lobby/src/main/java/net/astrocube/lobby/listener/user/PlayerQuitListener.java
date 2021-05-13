@@ -9,13 +9,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
 
-    private @Inject LobbyNametagHandler lobbyNametagHandler;
-    private @Inject SelectorRegistry selectorRegistry;
+	private @Inject LobbyNametagHandler lobbyNametagHandler;
+	private @Inject SelectorRegistry selectorRegistry;
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        lobbyNametagHandler.remove(event.getPlayer());
-        selectorRegistry.despawnSelectors(event.getPlayer());
-    }
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		lobbyNametagHandler.remove(event.getPlayer());
+		selectorRegistry.despawnSelectors(event.getPlayer());
+	}
 
 }

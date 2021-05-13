@@ -15,31 +15,31 @@ import java.util.logging.Level;
 
 public class UserDisconnectListener implements Listener {
 
-    private @Inject Plugin plugin;
-    private @Inject MatchAssigner matchAssigner;
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject Plugin plugin;
+	private @Inject MatchAssigner matchAssigner;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onUserLeave(PlayerQuitEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onUserLeave(PlayerQuitEvent event) {
 
-            try {
+		try {
 
-                Player player = event.getPlayer();
-                ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
-                event.setQuitMessage("");
+			Player player = event.getPlayer();
+			ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+			event.setQuitMessage("");
 
-                if (type == ServerDoc.Type.GAME) {
-                    matchAssigner.unAssign(player);
-                }
+			if (type == ServerDoc.Type.GAME) {
+				matchAssigner.unAssign(player);
+			}
 
-               scoreboardManagerProvider.getScoreboard().getScoreboard(event.getPlayer().getDatabaseIdentifier()).ifPresent(board -> {
-                   scoreboardManagerProvider.getScoreboard().removeScoreboard(player);
-                   scoreboardManagerProvider.getScoreboard().removeScoreboard(board);
-                });
+			scoreboardManagerProvider.getScoreboard().getScoreboard(event.getPlayer().getDatabaseIdentifier()).ifPresent(board -> {
+				scoreboardManagerProvider.getScoreboard().removeScoreboard(player);
+				scoreboardManagerProvider.getScoreboard().removeScoreboard(board);
+			});
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting a player from game.", e);
-            }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error disconnecting a player from game.", e);
+		}
 
-    }
+	}
 }

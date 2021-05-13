@@ -11,19 +11,19 @@ import javax.inject.Inject;
 
 public class LobbyCommand implements CommandClass {
 
-    private @Inject Plugin plugin;
-    private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject Plugin plugin;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
 
-    @Command(names = {"hub", "lobby", "l"})
-    public void onCommandPerform(@Sender Player player) {
+	@Command(names = {"hub", "lobby", "l"})
+	public void onCommandPerform(@Sender Player player) {
 
-        serverTeleportRetry.attemptGroupTeleport(
-                player.getName(),
-                plugin.getConfig().getString("server.fallback"),
-                1,
-                3
-        );
+		serverTeleportRetry.attemptGroupTeleport(
+			player.getName(),
+			plugin.getConfig().getString("server.fallback"),
+			1,
+			3
+		);
 
-    }
+	}
 
 }

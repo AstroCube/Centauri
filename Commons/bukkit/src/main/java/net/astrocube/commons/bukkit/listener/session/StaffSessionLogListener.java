@@ -9,18 +9,18 @@ import org.bukkit.event.Listener;
 
 public class StaffSessionLogListener implements Listener {
 
-    private @Inject StaffLoginBroadcaster staffLoginBroadcaster;
-    private @Inject PermissionBalancer permissionBalancer;
+	private @Inject StaffLoginBroadcaster staffLoginBroadcaster;
+	private @Inject PermissionBalancer permissionBalancer;
 
-    @EventHandler
-    public void onAuthenticationBroadcast(SessionSwitchBroadcast event) {
-        if (
-                PermissionBalancer.hasUnlinkedPermission(event.getSession().getUser(), permissionBalancer, "commons.staff.chat")
-        ) {
-            boolean important = PermissionBalancer.hasUnlinkedPermission(
-                    event.getSession().getUser(), permissionBalancer, "commons.staff.chat.important");
-            staffLoginBroadcaster.broadcastLogin(event.getSession().getUser(), important, event.getSession().isConnecting());
-        }
-    }
+	@EventHandler
+	public void onAuthenticationBroadcast(SessionSwitchBroadcast event) {
+		if (
+			PermissionBalancer.hasUnlinkedPermission(event.getSession().getUser(), permissionBalancer, "commons.staff.chat")
+		) {
+			boolean important = PermissionBalancer.hasUnlinkedPermission(
+				event.getSession().getUser(), permissionBalancer, "commons.staff.chat.important");
+			staffLoginBroadcaster.broadcastLogin(event.getSession().getUser(), important, event.getSession().isConnecting());
+		}
+	}
 
 }

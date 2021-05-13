@@ -14,44 +14,44 @@ import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.entity.Player;
 
 @Command(
-        names = "premium"
+	names = "premium"
 )
 public class PremiumCommand implements CommandClass {
 
-    private @Inject FindService<User> findService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject PremiumSelectBook premiumSelectBook;
-    private @Inject PremiumConfirmationMenu premiumConfirmationMenu;
+	private @Inject FindService<User> findService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject PremiumSelectBook premiumSelectBook;
+	private @Inject PremiumConfirmationMenu premiumConfirmationMenu;
 
-    @Command(names = {""})
-    public boolean onPremiumCommand(@Sender Player player) {
+	@Command(names = {""})
+	public boolean onPremiumCommand(@Sender Player player) {
 
-        findService.find(player.getDatabaseIdentifier()).callback(response -> {
+		findService.find(player.getDatabaseIdentifier()).callback(response -> {
 
-            if (!response.isSuccessful()) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
-            }
+			if (!response.isSuccessful()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
+			}
 
-            response.ifSuccessful(user -> {
+			response.ifSuccessful(user -> {
 
-                if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
-                    premiumSelectBook.displayDisable(player);
-                } else {
-                    premiumSelectBook.displayEnable(player);
-                }
+				if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
+					premiumSelectBook.displayDisable(player);
+				} else {
+					premiumSelectBook.displayEnable(player);
+				}
 
-            });
+			});
 
-        });
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
-    @Command(names = {"confirm"})
-    public boolean onPremiumConfirmCommand(@Sender Player player) {
-        premiumConfirmationMenu.open(player);
-        return true;
-    }
+	@Command(names = {"confirm"})
+	public boolean onPremiumConfirmCommand(@Sender Player player) {
+		premiumConfirmationMenu.open(player);
+		return true;
+	}
 
 }

@@ -20,40 +20,41 @@ import java.util.Optional;
 @Singleton
 public class CoreScoreboardProcessor implements ScoreboardProcessor {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject CloudStatusProvider cloudStatusProvider;
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject CloudStatusProvider cloudStatusProvider;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
 
-    @Override
-    public void generateBoard(Player player) throws Exception {
+	@Override
+	public void generateBoard(Player player) throws Exception {
 
-        Optional<ScoreboardObjective> objectiveOptional =
-                scoreboardManagerProvider.getScoreboard().getScoreboard("lobby_" + player.getDatabaseIdentifier());
+		Optional<ScoreboardObjective> objectiveOptional =
+			scoreboardManagerProvider.getScoreboard().getScoreboard("lobby_" + player.getDatabaseIdentifier());
 
-        User user = findService.findSync(player.getDatabaseIdentifier());
+		User user = findService.findSync(player.getDatabaseIdentifier());
 
-        TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
+		TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
 
-        StringList scoreTranslation = messageHandler.replacingMany(
-                player, "lobby.scoreboard.lore",
-                "%player%", user.getDisplay(),
-                "%rank%", flairFormat.getColor() + flairFormat.getName(),
-                "%lobby%", 1,
-                "%online%", cloudStatusProvider.getOnline()
-        );
+		StringList scoreTranslation = messageHandler.replacingMany(
+			player, "lobby.scoreboard.lore",
+			"%player%", user.getDisplay(),
+			"%rank%", flairFormat.getColor() + flairFormat.getName(),
+			"%lobby%", 1,
+			"%online%", cloudStatusProvider.getOnline()
+		);
 
-        if (!objectiveOptional.isPresent()) {
-            ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard(player.getDatabaseIdentifier());
-            scoreTranslation.forEach(builder::addLine);builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
-            scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
-        } else {
-            objectiveOptional.get().setStringLines(scoreTranslation);
-            objectiveOptional.get().updateScoreboard();
-        }
+		if (!objectiveOptional.isPresent()) {
+			ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard(player.getDatabaseIdentifier());
+			scoreTranslation.forEach(builder::addLine);
+			builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
+			scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
+		} else {
+			objectiveOptional.get().setStringLines(scoreTranslation);
+			objectiveOptional.get().updateScoreboard();
+		}
 
 
-    }
+	}
 
 }

@@ -17,36 +17,36 @@ import java.util.Optional;
 @Command(names = "leave")
 public class PartyLeaveCommand implements CommandClass {
 
-    private @Inject PartyService partyService;
-    private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<Party, PartyDoc.Partial> partyUpdateService;
+	private @Inject PartyService partyService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject UpdateService<Party, PartyDoc.Partial> partyUpdateService;
 
-    @Command(names = "")
-    public void leave(
-            @Sender Player player
-    ) {
-        Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
-        if (!optParty.isPresent()) {
-            messageHandler.send(player, "cannot-leave.not-in-party");
-        } else {
-            Party party = optParty.get();
-            if (party.getLeader().equals(player.getDatabaseIdentifier())) {
-                messageHandler.send(player, "cannot-leave.leader");
-                return;
-            }
-            party.getMembers().remove(player.getDatabaseIdentifier());
-            partyUpdateService.update(party);
-            messageHandler.send(player, "left-party");
-            for (String memberId : party.getMembers()) {
-                Player member = Bukkit.getPlayerByIdentifier(memberId);
-                if (member != null) {
-                    messageHandler.sendReplacing(
-                            member, "other-left-party",
-                            "%player%", player.getName()
-                    );
-                }
-            }
-        }
-    }
+	@Command(names = "")
+	public void leave(
+		@Sender Player player
+	) {
+		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
+		if (!optParty.isPresent()) {
+			messageHandler.send(player, "cannot-leave.not-in-party");
+		} else {
+			Party party = optParty.get();
+			if (party.getLeader().equals(player.getDatabaseIdentifier())) {
+				messageHandler.send(player, "cannot-leave.leader");
+				return;
+			}
+			party.getMembers().remove(player.getDatabaseIdentifier());
+			partyUpdateService.update(party);
+			messageHandler.send(player, "left-party");
+			for (String memberId : party.getMembers()) {
+				Player member = Bukkit.getPlayerByIdentifier(memberId);
+				if (member != null) {
+					messageHandler.sendReplacing(
+						member, "other-left-party",
+						"%player%", player.getName()
+					);
+				}
+			}
+		}
+	}
 
 }

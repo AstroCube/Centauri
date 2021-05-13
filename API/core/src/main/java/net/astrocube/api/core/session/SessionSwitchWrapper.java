@@ -5,14 +5,14 @@ import net.astrocube.api.core.virtual.user.User;
 
 public interface SessionSwitchWrapper extends Message {
 
-    /**
-     * @return user who is switching status
-     */
-    User getUser();
+	/**
+	 * @return user who is switching status
+	 */
+	User getUser();
 
-    /**
-     * @return if is connecting or disconnecting
-     */
-    boolean isConnecting();
+	/**
+	 * @return if is connecting or disconnecting
+	 */
+	boolean isConnecting();
 
 }

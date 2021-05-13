@@ -9,22 +9,22 @@ import org.bukkit.event.player.PlayerEvent;
 @Getter
 public class GameUserJoinEvent extends PlayerEvent {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final UserMatchJoiner.Origin origin;
-    private final String match;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final UserMatchJoiner.Origin origin;
+	private final String match;
 
-    public GameUserJoinEvent(String match, Player player, UserMatchJoiner.Origin origin) {
-        super(player);
-        this.match = match;
-        this.origin = origin;
-    }
+	public GameUserJoinEvent(String match, Player player, UserMatchJoiner.Origin origin) {
+		super(player);
+		this.match = match;
+		this.origin = origin;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 }

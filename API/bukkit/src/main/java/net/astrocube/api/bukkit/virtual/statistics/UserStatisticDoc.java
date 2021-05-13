@@ -8,61 +8,62 @@ import javax.annotation.Nullable;
 public interface UserStatisticDoc {
 
 
-    /**
-     * Empty interface that acts as placeholder for
-     * Model Services.
-     */
+	/**
+	 * Empty interface that acts as placeholder for
+	 * Model Services.
+	 */
 
-    interface Partial extends PartialModel {}
+	interface Partial extends PartialModel {
+	}
 
-    /**
-     * Provides methods to handle statistics.
-     */
+	/**
+	 * Provides methods to handle statistics.
+	 */
 
-    interface Statistic extends Partial {
+	interface Statistic extends Partial {
 
-        /**
-         * @return The type of statistics that is being handled by the model.
-         */
+		/**
+		 * @return The type of statistics that is being handled by the model.
+		 */
 
-        String getType();
+		String getType();
 
-        /**
-         * @return An string representation of the statistic that is being handled.
-         */
+		/**
+		 * @return An string representation of the statistic that is being handled.
+		 */
 
-        String getStatistic();
+		String getStatistic();
 
-    }
+	}
 
-    /**
-     * Provides the methods on the identity of the statistic
-     */
+	/**
+	 * Provides the methods on the identity of the statistic
+	 */
 
-    interface Identity extends Partial {
+	interface Identity extends Partial {
 
-        /**
-         * @return The GameMode where the statistics are being handled.
-         */
+		/**
+		 * @return The GameMode where the statistics are being handled.
+		 */
 
-        String getGameMode();
+		String getGameMode();
 
-        /**
-         * @return The Sub-GameMode where the statistics are being handled.
-         */
+		/**
+		 * @return The Sub-GameMode where the statistics are being handled.
+		 */
 
-        @Nullable
-        String getSubGameMode();
+		@Nullable
+		String getSubGameMode();
 
-        /**
-         * Provides the responsible id of this statistic.
-         *
-         * @return The id of the responsible user.
-         */
+		/**
+		 * Provides the responsible id of this statistic.
+		 * @return The id of the responsible user.
+		 */
 
-        String getResponsible();
+		String getResponsible();
 
-    }
+	}
 
-    interface Complete extends Model.Stamped, Identity, Statistic {}
+	interface Complete extends Model.Stamped, Identity, Statistic {
+	}
 }

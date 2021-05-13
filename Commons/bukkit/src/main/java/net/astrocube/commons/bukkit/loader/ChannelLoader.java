@@ -17,58 +17,58 @@ import java.util.Set;
 
 public class ChannelLoader implements Loader {
 
-    private @Inject InterceptorRegistry interceptorRegistry;
-    private @Inject StaffChatMessageInterceptor staffMessageInterceptor;
-    private @Inject MatchChannelInterceptor matchChannelInterceptor;
+	private @Inject InterceptorRegistry interceptorRegistry;
+	private @Inject StaffChatMessageInterceptor staffMessageInterceptor;
+	private @Inject MatchChannelInterceptor matchChannelInterceptor;
 
-    private @Inject ObjectMapper mapper;
-    private @Inject QueryService<ChatChannel> channelQueryService;
-    private @Inject CreateService<ChatChannel, ChatChannelDoc.Creation> channelCreateService;
+	private @Inject ObjectMapper mapper;
+	private @Inject QueryService<ChatChannel> channelQueryService;
+	private @Inject CreateService<ChatChannel, ChatChannelDoc.Creation> channelCreateService;
 
-    @Override
-    public void load() {
-        ObjectNode staffChannelQuery = this.mapper.createObjectNode();
-        staffChannelQuery.put("name", "ac-staff");
+	@Override
+	public void load() {
+		ObjectNode staffChannelQuery = this.mapper.createObjectNode();
+		staffChannelQuery.put("name", "ac-staff");
 
-        try {
-            if (this.channelQueryService.querySync(staffChannelQuery).getFoundModels().isEmpty()) {
-                this.channelCreateService.createSync(new ChatChannelDoc.Creation() {
-                    @Override
-                    public String getName() {
-                        return "ac-staff";
-                    }
+		try {
+			if (this.channelQueryService.querySync(staffChannelQuery).getFoundModels().isEmpty()) {
+				this.channelCreateService.createSync(new ChatChannelDoc.Creation() {
+					@Override
+					public String getName() {
+						return "ac-staff";
+					}
 
-                    @Override
-                    public int getLifecycle() {
-                        return -1;
-                    }
+					@Override
+					public int getLifecycle() {
+						return -1;
+					}
 
-                    @Override
-                    public boolean getConfirmation() {
-                        return false;
-                    }
+					@Override
+					public boolean getConfirmation() {
+						return false;
+					}
 
-                    @Override
-                    public Visibility getVisibility() {
-                        return Visibility.PERMISSION;
-                    }
+					@Override
+					public Visibility getVisibility() {
+						return Visibility.PERMISSION;
+					}
 
-                    @Override
-                    public Set<String> getParticipants() {
-                        return new HashSet<>();
-                    }
+					@Override
+					public Set<String> getParticipants() {
+						return new HashSet<>();
+					}
 
-                    @Override
-                    public String getPermission() {
-                        return "commons.staff.chat";
-                    }
-                });
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+					@Override
+					public String getPermission() {
+						return "commons.staff.chat";
+					}
+				});
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
-        this.interceptorRegistry.register(this.staffMessageInterceptor);
-        this.interceptorRegistry.register(this.matchChannelInterceptor);
-    }
+		this.interceptorRegistry.register(this.staffMessageInterceptor);
+		this.interceptorRegistry.register(this.matchChannelInterceptor);
+	}
 }

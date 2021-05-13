@@ -18,66 +18,67 @@ import java.util.concurrent.ExecutorService;
 @SuppressWarnings("UnstableApiUsage")
 public class CoreSessionService implements SessionService {
 
-    private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
-    private final ExecutorService executorService;
+	private final HttpClient httpClient;
+	private final ObjectMapper objectMapper;
+	private final ExecutorService executorService;
 
-    @Inject CoreSessionService(
-            HttpClient httpClient,
-            ObjectMapper objectMapper,
-            ExecutorServiceProvider executorServiceProvider
-    ) {
-        this.httpClient = httpClient;
-        this.objectMapper = objectMapper;
-        this.executorService = executorServiceProvider.getRegisteredService();
-    }
+	@Inject
+	CoreSessionService(
+		HttpClient httpClient,
+		ObjectMapper objectMapper,
+		ExecutorServiceProvider executorServiceProvider
+	) {
+		this.httpClient = httpClient;
+		this.objectMapper = objectMapper;
+		this.executorService = executorServiceProvider.getRegisteredService();
+	}
 
-    @Override
-    public AsyncResponse<SessionValidateDoc.Complete> authenticationCheck(CreateRequest<SessionValidateDoc.Request> validate) {
-        return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
-            try {
-                return new WrappedResponse<>(Response.Status.SUCCESS, authenticationCheckSync(validate), null);
-            } catch (Exception exception) {
-                return new WrappedResponse<>(Response.Status.ERROR, null, exception);
-            }
-        }, executorService));
+	@Override
+	public AsyncResponse<SessionValidateDoc.Complete> authenticationCheck(CreateRequest<SessionValidateDoc.Request> validate) {
+		return new SimpleAsyncResponse<>(CompletableFuture.supplyAsync(() -> {
+			try {
+				return new WrappedResponse<>(Response.Status.SUCCESS, authenticationCheckSync(validate), null);
+			} catch (Exception exception) {
+				return new WrappedResponse<>(Response.Status.ERROR, null, exception);
+			}
+		}, executorService));
 
-    }
+	}
 
-    @Override
-    public SessionValidateDoc.Complete authenticationCheckSync(CreateRequest<SessionValidateDoc.Request> validate) throws Exception {
-        return httpClient.executeRequestSync(
-                "session/auth-session",
-                new CoreRequestCallable<>(TypeToken.of(SessionValidateDoc.Complete.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        this.objectMapper.writeValueAsString(validate.getModel())
-                )
-        );
-    }
+	@Override
+	public SessionValidateDoc.Complete authenticationCheckSync(CreateRequest<SessionValidateDoc.Request> validate) throws Exception {
+		return httpClient.executeRequestSync(
+			"session/auth-session",
+			new CoreRequestCallable<>(TypeToken.of(SessionValidateDoc.Complete.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				this.objectMapper.writeValueAsString(validate.getModel())
+			)
+		);
+	}
 
-    @Override
-    public void serverSwitch(CreateRequest<SessionValidateDoc.ServerSwitch> user) throws Exception {
-        httpClient.executeRequestSync(
-                "session/server-switch",
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.POST,
-                        this.objectMapper.writeValueAsString(user.getModel())
-                )
-        );
-    }
+	@Override
+	public void serverSwitch(CreateRequest<SessionValidateDoc.ServerSwitch> user) throws Exception {
+		httpClient.executeRequestSync(
+			"session/server-switch",
+			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.POST,
+				this.objectMapper.writeValueAsString(user.getModel())
+			)
+		);
+	}
 
-    @Override
-    public void serverDisconnect(String user) throws Exception {
-        httpClient.executeRequestSync(
-                "session/user-disconnect/" + user,
-                new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-                new CoreRequestOptions(
-                        RequestOptions.Type.GET,
-                        ""
-                )
-        );
-    }
+	@Override
+	public void serverDisconnect(String user) throws Exception {
+		httpClient.executeRequestSync(
+			"session/user-disconnect/" + user,
+			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
+			new CoreRequestOptions(
+				RequestOptions.Type.GET,
+				""
+			)
+		);
+	}
 
 }

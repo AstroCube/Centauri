@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CoreRenderedLobbyNametag extends SimpleRenderedNametag implements RenderedLobbyNametag {
 
-    public CoreRenderedLobbyNametag(LobbyNametag nametag, Set<Entity> spawnedEntities, Player viewer) {
-        super(nametag, spawnedEntities, viewer);
-    }
+	public CoreRenderedLobbyNametag(LobbyNametag nametag, Set<Entity> spawnedEntities, Player viewer) {
+		super(nametag, spawnedEntities, viewer);
+	}
 }

@@ -2,31 +2,31 @@ package net.astrocube.api.core.cloud;
 
 public interface CloudStatusProvider {
 
-    /**
-     * @return if has cloud service hooked
-     */
-    boolean hasCloudHooked();
+	/**
+	 * @return if has cloud service hooked
+	 */
+	boolean hasCloudHooked();
 
-    /**
-     * @return online number at the cloud
-     */
-    int getOnline();
+	/**
+	 * @return online number at the cloud
+	 */
+	int getOnline();
 
-    /**
-     * @return if player is online
-     */
-    boolean hasAliveSession(String player);
+	/**
+	 * @return if player is online
+	 */
+	boolean hasAliveSession(String player);
 
-    /**
-     * @param player to be checked
-     * @return server of the player
-     */
-    String getPlayerServer(String player);
+	/**
+	 * @param player to be checked
+	 * @return server of the player
+	 */
+	String getPlayerServer(String player);
 
-    void updateGameStatus(State state);
+	void updateGameStatus(State state);
 
-    enum State {
-        STARTING, ONLINE, OFFLINE, WAITING, RESTART, INGAME
-    }
+	enum State {
+		STARTING, ONLINE, OFFLINE, WAITING, RESTART, INGAME
+	}
 
 }

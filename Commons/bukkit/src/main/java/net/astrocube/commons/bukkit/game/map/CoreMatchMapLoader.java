@@ -17,19 +17,19 @@ import net.astrocube.slime.core.operative.CraftSlimeOperations;
 @Singleton
 public class CoreMatchMapLoader implements MatchMapLoader {
 
-    private @Inject GameMapProvider gameMapProvider;
-    private @Inject FindService<GameMap> findService;
-    private final SlimeOperations slimeOperations = new CraftSlimeOperations();
-    private final SlimeLoader dummyLoader = new MapDummyLoader();
+	private @Inject GameMapProvider gameMapProvider;
+	private @Inject FindService<GameMap> findService;
+	private final SlimeOperations slimeOperations = new CraftSlimeOperations();
+	private final SlimeLoader dummyLoader = new MapDummyLoader();
 
-    @Override
-    public SlimeWorld loadMatchMap(Match match) throws Exception {
-        GameMap map = findService.findSync(match.getMap());
-        GameMapProvider.MapFiles files = gameMapProvider.loadGameMap(map);
-        SlimeWorld world = LoaderUtils.deserializeWorld(dummyLoader, "match_" + match.getId(),
-                files.getMapFile(), new SlimePropertyMap(), true);
-        slimeOperations.generateWorld(world);
-        return world;
-    }
+	@Override
+	public SlimeWorld loadMatchMap(Match match) throws Exception {
+		GameMap map = findService.findSync(match.getMap());
+		GameMapProvider.MapFiles files = gameMapProvider.loadGameMap(map);
+		SlimeWorld world = LoaderUtils.deserializeWorld(dummyLoader, "match_" + match.getId(),
+			files.getMapFile(), new SlimePropertyMap(), true);
+		slimeOperations.generateWorld(world);
+		return world;
+	}
 
 }

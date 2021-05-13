@@ -9,39 +9,39 @@ import java.util.function.Consumer;
  */
 public interface Response<T> {
 
-    /**
-     * @return Async block status
-     */
-    Status getStatus();
+	/**
+	 * @return Async block status
+	 */
+	Status getStatus();
 
-    /**
-     * @return Response block status
-     */
-    Optional<T> getResponse();
+	/**
+	 * @return Response block status
+	 */
+	Optional<T> getResponse();
 
-    /**
-     * @return thrown exception when the async block fails
-     */
-    Optional<Exception> getThrownException();
+	/**
+	 * @return thrown exception when the async block fails
+	 */
+	Optional<Exception> getThrownException();
 
-    /**
-     * @return {@code true} if status is SUCCESS, otherwise {@code false}
-     */
-    boolean isSuccessful();
+	/**
+	 * @return {@code true} if status is SUCCESS, otherwise {@code false}
+	 */
+	boolean isSuccessful();
 
-    /**
-     * If response was successful, invoke the specified consumer with the value,
-     * otherwise do nothing.
-     * @param consumer block to be executed if a value is present
-     * @throws NullPointerException if value is present and {@code consumer} is null
-     */
-    void ifSuccessful(Consumer<? super T> consumer);
+	/**
+	 * If response was successful, invoke the specified consumer with the value,
+	 * otherwise do nothing.
+	 * @param consumer block to be executed if a value is present
+	 * @throws NullPointerException if value is present and {@code consumer} is null
+	 */
+	void ifSuccessful(Consumer<? super T> consumer);
 
-    /**
-     * Enum of the reponse status
-     */
-    enum Status {
-        SUCCESS, ERROR
-    }
+	/**
+	 * Enum of the reponse status
+	 */
+	enum Status {
+		SUCCESS, ERROR
+	}
 
 }

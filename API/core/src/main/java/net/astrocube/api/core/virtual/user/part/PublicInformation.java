@@ -2,24 +2,24 @@ package net.astrocube.api.core.virtual.user.part;
 
 public interface PublicInformation {
 
-    int getGender();
+	int getGender();
 
-    String getOccupation();
+	String getOccupation();
 
-    String getInterests();
+	String getInterests();
 
-    String getLocation();
+	String getLocation();
 
-    String getPublicMail();
+	String getPublicMail();
 
-    String getTwitter();
+	String getTwitter();
 
-    String getReddit();
+	String getReddit();
 
-    String getSteam();
+	String getSteam();
 
-    String getTwitch();
+	String getTwitch();
 
-    String getAbout();
+	String getAbout();
 
 }

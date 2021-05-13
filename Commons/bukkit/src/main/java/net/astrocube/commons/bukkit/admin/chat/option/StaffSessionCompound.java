@@ -17,48 +17,48 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Singleton
 public class StaffSessionCompound implements StaffOptionCompound {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject UpdateService<User, UserDoc.Partial> updateService;
+	private @Inject MessageHandler messageHandler;
+	private @Inject UpdateService<User, UserDoc.Partial> updateService;
 
-    @Override
-    public ItemStack getEnableItem(Player player) {
+	@Override
+	public ItemStack getEnableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.LETTER_GREEN);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.LETTER_GREEN);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.logs.enabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.logs.enabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.logs.enabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.logs.enabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public ItemStack getDisableItem(Player player) {
+	@Override
+	public ItemStack getDisableItem(Player player) {
 
-        ItemStack stack = MenuUtils.generateHead(HeadLibrary.LETTER_RED);
-        ItemMeta meta = stack.getItemMeta();
+		ItemStack stack = MenuUtils.generateHead(HeadLibrary.LETTER_RED);
+		ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.logs.disabled.title"));
-        meta.setLore(messageHandler.getMany(player, "channel.admin.settings.logs.disabled.lore"));
+		meta.setDisplayName(messageHandler.get(player, "channel.admin.settings.logs.disabled.title"));
+		meta.setLore(messageHandler.getMany(player, "channel.admin.settings.logs.disabled.lore"));
 
-        stack.setItemMeta(meta);
+		stack.setItemMeta(meta);
 
-        return stack;
+		return stack;
 
-    }
+	}
 
-    @Override
-    public AsyncResponse<User> updateOption(User user) {
+	@Override
+	public AsyncResponse<User> updateOption(User user) {
 
-        user.getSettings().getAdminChatSettings().setReadingLogs(
-                !user.getSettings().getAdminChatSettings().isReadingLogs()
-        );
+		user.getSettings().getAdminChatSettings().setReadingLogs(
+			!user.getSettings().getAdminChatSettings().isReadingLogs()
+		);
 
-        return updateService.update(user);
+		return updateService.update(user);
 
-    }
+	}
 
 }

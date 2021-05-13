@@ -21,70 +21,70 @@ import java.util.logging.Level;
 
 public class GoToCommand implements CommandClass {
 
-    private @Inject QueryService<User> queryService;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject MessageHandler messageHandler;
-    private @Inject SpectateRequestAssigner spectateRequestAssigner;
-    private @Inject ObjectMapper objectMapper;
-    private @Inject Plugin plugin;
+	private @Inject QueryService<User> queryService;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject MessageHandler messageHandler;
+	private @Inject SpectateRequestAssigner spectateRequestAssigner;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject Plugin plugin;
 
-    @Command(names = {"goto"}, permission = "commons.staff.goto")
-    public boolean onCommand(@Sender Player player, String target) {
-
-
-        ObjectNode nodes = objectMapper.createObjectNode();
-        nodes.put("username", target);
-
-        queryService.query(nodes).callback(usersCallback -> {
-
-            if (!usersCallback.isSuccessful()) {
-                messageHandler.sendIn(player, AlertModes.ERROR, "goto.error");
-            }
-
-            usersCallback.ifSuccessful(users -> {
-
-                Optional<User> foundUser = users.getFoundModels().stream().findAny();
-
-                if (!foundUser.isPresent()) {
-                    messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
-                }
-
-                foundUser.ifPresent(user -> {
-
-                    if (!user.getSession().isOnline()) {
-                        messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
-                        return;
-                    }
-
-                    try {
-
-                        Optional<Match> matchOptional = actualMatchCache.get(user.getId());
-
-                        if (matchOptional.isPresent()) {
-                            spectateRequestAssigner.assignRequestToPlayer(
-                                    matchOptional.get().getId(),
-                                    player.getDatabaseIdentifier(),
-                                    user.getId()
-                            );
-                            return;
-                        }
-
-                    } catch (Exception e) {
-                        plugin.getLogger().log(Level.SEVERE, "Error while obtaining match cache", e);
-                        messageHandler.sendIn(player, AlertModes.ERROR, "goto.error");
-                        return;
-                    }
-
-                    //TODO: Teleport to server without Control integration
-
-                });
-
-            });
-
-        });
+	@Command(names = {"goto"}, permission = "commons.staff.goto")
+	public boolean onCommand(@Sender Player player, String target) {
 
 
-        return true;
-    }
+		ObjectNode nodes = objectMapper.createObjectNode();
+		nodes.put("username", target);
+
+		queryService.query(nodes).callback(usersCallback -> {
+
+			if (!usersCallback.isSuccessful()) {
+				messageHandler.sendIn(player, AlertModes.ERROR, "goto.error");
+			}
+
+			usersCallback.ifSuccessful(users -> {
+
+				Optional<User> foundUser = users.getFoundModels().stream().findAny();
+
+				if (!foundUser.isPresent()) {
+					messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+				}
+
+				foundUser.ifPresent(user -> {
+
+					if (!user.getSession().isOnline()) {
+						messageHandler.sendIn(player, AlertModes.ERROR, "commands.unknown-player");
+						return;
+					}
+
+					try {
+
+						Optional<Match> matchOptional = actualMatchCache.get(user.getId());
+
+						if (matchOptional.isPresent()) {
+							spectateRequestAssigner.assignRequestToPlayer(
+								matchOptional.get().getId(),
+								player.getDatabaseIdentifier(),
+								user.getId()
+							);
+							return;
+						}
+
+					} catch (Exception e) {
+						plugin.getLogger().log(Level.SEVERE, "Error while obtaining match cache", e);
+						messageHandler.sendIn(player, AlertModes.ERROR, "goto.error");
+						return;
+					}
+
+					//TODO: Teleport to server without Control integration
+
+				});
+
+			});
+
+		});
+
+
+		return true;
+	}
 
 }

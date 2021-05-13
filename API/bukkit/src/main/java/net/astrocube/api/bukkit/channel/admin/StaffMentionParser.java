@@ -4,6 +4,6 @@ import java.util.Set;
 
 public interface StaffMentionParser {
 
-    Set<String> parseMentions(String rawMessage);
+	Set<String> parseMentions(String rawMessage);
 
 }

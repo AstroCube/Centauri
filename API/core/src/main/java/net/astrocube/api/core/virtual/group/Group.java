@@ -12,40 +12,40 @@ import java.util.stream.Collectors;
 @ModelProperties.RouteKey("group")
 public interface Group extends Model.Stamped {
 
-    String getName();
+	String getName();
 
-    short getPriority();
+	short getPriority();
 
-    @JsonProperty("html_color")
-    String getColor();
+	@JsonProperty("html_color")
+	String getColor();
 
-    @JsonProperty("minecraft_color")
-    String getMinecraftColor();
+	@JsonProperty("minecraft_color")
+	String getMinecraftColor();
 
-    @JsonProperty("minecraft_permissions")
-    Set<String> getPermissions();
+	@JsonProperty("minecraft_permissions")
+	Set<String> getPermissions();
 
-    @JsonProperty("badge_link")
-    String getLink();
+	@JsonProperty("badge_link")
+	String getLink();
 
-    boolean isStaff();
+	boolean isStaff();
 
-    @JsonProperty("discord_role")
-    String getDiscordRole();
+	@JsonProperty("discord_role")
+	String getDiscordRole();
 
-    static int getLowestPriority(Set<UserDoc.UserGroup> groups) {
+	static int getLowestPriority(Set<UserDoc.UserGroup> groups) {
 
-        Set<Group> groupSet = groups.stream().map(UserDoc.UserGroup::getGroup).collect(Collectors.toSet());
+		Set<Group> groupSet = groups.stream().map(UserDoc.UserGroup::getGroup).collect(Collectors.toSet());
 
-        int priority = -1;
+		int priority = -1;
 
-        for (Group group : groupSet) {
-            if (priority == -1 || group.getPriority() < priority) {
-                priority = group.getPriority();
-            }
-        }
+		for (Group group : groupSet) {
+			if (priority == -1 || group.getPriority() < priority) {
+				priority = group.getPriority();
+			}
+		}
 
-        return priority;
-    }
+		return priority;
+	}
 
 }

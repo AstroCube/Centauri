@@ -5,8 +5,8 @@ import net.astrocube.api.core.virtual.user.User;
 
 public interface UserMatcher {
 
-    void findUserByName(String name, Callback<User> callback);
+	void findUserByName(String name, Callback<User> callback);
 
-    User findUserByName(String name);
+	User findUserByName(String name);
 
 }

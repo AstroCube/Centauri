@@ -14,31 +14,31 @@ import org.bukkit.entity.Player;
 @Singleton
 public class CoreLobbyHotbarProvider implements LobbyHotbarProvider {
 
-    private @Inject MessageHandler messageHandler;
+	private @Inject MessageHandler messageHandler;
 
-    @Override
-    public void setup(User user, Player player) {
+	@Override
+	public void setup(User user, Player player) {
 
-        player.getInventory().setItem(0, GameGadgetStack.get(
-                messageHandler,
-                player
-        ));
+		player.getInventory().setItem(0, GameGadgetStack.get(
+			messageHandler,
+			player
+		));
 
-        player.getInventory().setItem(1, ProfileGadgetStack.get(
-                messageHandler,
-                player
-        ));
+		player.getInventory().setItem(1, ProfileGadgetStack.get(
+			messageHandler,
+			player
+		));
 
-        player.getInventory().setItem(7, HideGadgetStack.get(
-                messageHandler,
-                player,
-                user.getSettings().getGeneralSettings().isHidingPlayers()
-        ));
+		player.getInventory().setItem(7, HideGadgetStack.get(
+			messageHandler,
+			player,
+			user.getSettings().getGeneralSettings().isHidingPlayers()
+		));
 
-        player.getInventory().setItem(8, LobbyGadgetStack.get(
-                messageHandler,
-                player
-        ));
-    }
+		player.getInventory().setItem(8, LobbyGadgetStack.get(
+			messageHandler,
+			player
+		));
+	}
 
 }

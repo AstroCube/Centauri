@@ -17,50 +17,50 @@ import javax.inject.Inject;
 
 public class AdminGameModeSelectorMenu {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject QueryService<GameMode> gameModeQueryService;
-    private @Inject GameModeItemExtractor gameModeItemExtractor;
-    private @Inject GenericHeadHelper genericHeadHelper;
-    private @Inject AdminPanelMenu adminPanelMenu;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject QueryService<GameMode> gameModeQueryService;
+	private @Inject GameModeItemExtractor gameModeItemExtractor;
+	private @Inject GenericHeadHelper genericHeadHelper;
+	private @Inject AdminPanelMenu adminPanelMenu;
+	private @Inject Plugin plugin;
 
-    public void createGameModeSelectorMenu(Player player) {
+	public void createGameModeSelectorMenu(Player player) {
 
-        GUIBuilder guiBuilder = GUIBuilder
-                .builder(messageHandler.get(player, "admin-panel.gamemode.title"), 1);
+		GUIBuilder guiBuilder = GUIBuilder
+			.builder(messageHandler.get(player, "admin-panel.gamemode.title"), 1);
 
-        gameModeQueryService
-                .getAll()
-                .callback(response -> {
+		gameModeQueryService
+			.getAll()
+			.callback(response -> {
 
-                    response.ifSuccessful(modes -> {
+				response.ifSuccessful(modes -> {
 
-                        guiBuilder.addItem(
-                                ItemClickable.builder(0).setItemStack(genericHeadHelper.backButton(player))
-                                        .setAction(action -> {
+					guiBuilder.addItem(
+						ItemClickable.builder(0).setItemStack(genericHeadHelper.backButton(player))
+							.setAction(action -> {
 
-                                            if (action.getClick() == ClickType.LEFT) {
-                                                Bukkit.getScheduler()
-                                                        .runTask(plugin, () -> player.openInventory(adminPanelMenu.createAdminPanel(player)));
-                                            }
+								if (action.getClick() == ClickType.LEFT) {
+									Bukkit.getScheduler()
+										.runTask(plugin, () -> player.openInventory(adminPanelMenu.createAdminPanel(player)));
+								}
 
-                                            return true;
-                                        })
-                                .build()
-                        );
+								return true;
+							})
+							.build()
+					);
 
-                        for (GameMode gameMode : modes.getFoundModels()) {
+					for (GameMode gameMode : modes.getFoundModels()) {
 
-                            if (!plugin.getConfig()
-                                    .getStringList("admin.teleport.disabled").contains(gameMode.getId())
-                            ) {
-                                guiBuilder.addItem(gameModeItemExtractor.generateGameMode(gameMode, player));
-                            }
+						if (!plugin.getConfig()
+							.getStringList("admin.teleport.disabled").contains(gameMode.getId())
+						) {
+							guiBuilder.addItem(gameModeItemExtractor.generateGameMode(gameMode, player));
+						}
 
-                        }
+					}
 
-                        Bukkit.getScheduler().runTask(plugin, () -> player.openInventory(guiBuilder.build()));
-                    });
-                });
-    }
+					Bukkit.getScheduler().runTask(plugin, () -> player.openInventory(guiBuilder.build()));
+				});
+			});
+	}
 }

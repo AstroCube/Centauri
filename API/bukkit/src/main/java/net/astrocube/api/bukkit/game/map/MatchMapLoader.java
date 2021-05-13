@@ -5,6 +5,6 @@ import net.astrocube.slime.api.world.SlimeWorld;
 
 public interface MatchMapLoader {
 
-    SlimeWorld loadMatchMap(Match match) throws Exception;
+	SlimeWorld loadMatchMap(Match match) throws Exception;
 
 }

@@ -16,43 +16,43 @@ import java.util.Map;
 @Singleton
 public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
-    private @Inject ServerTeleportRetry serverTeleportRetry;
-    private final Map<String, Integer> scheduledTeleports = new HashMap<>();
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
+	private @Inject ServerTeleportRetry serverTeleportRetry;
+	private final Map<String, Integer> scheduledTeleports = new HashMap<>();
 
-    @Override
-    public void scheduleTeleport(Player player) {
+	@Override
+	public void scheduleTeleport(Player player) {
 
-        messageHandler.sendIn(player, AlertModes.MUTED, "game.return.schedule");
+		messageHandler.sendIn(player, AlertModes.MUTED, "game.return.schedule");
 
-        scheduledTeleports.put(player.getDatabaseIdentifier(),
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    serverTeleportRetry.attemptGroupTeleport(
-                            player.getName(),
-                            plugin.getConfig().getString("server.fallback", "main-lobby"),
-                            1,
-                            3
-                    );
-                    scheduledTeleports.remove(player.getDatabaseIdentifier());
-                }, 20*5L).getTaskId()
-        );
+		scheduledTeleports.put(player.getDatabaseIdentifier(),
+			Bukkit.getScheduler().runTaskLater(plugin, () -> {
+				serverTeleportRetry.attemptGroupTeleport(
+					player.getName(),
+					plugin.getConfig().getString("server.fallback", "main_lobby"),
+					1,
+					3
+				);
+				scheduledTeleports.remove(player.getDatabaseIdentifier());
+			}, 20 * 5L).getTaskId()
+		);
 
-    }
+	}
 
-    @Override
-    public void cancelTeleport(Player player) {
-        messageHandler.sendIn(player, AlertModes.MUTED, "game.return.cancel");
+	@Override
+	public void cancelTeleport(Player player) {
+		messageHandler.sendIn(player, AlertModes.MUTED, "game.return.cancel");
 
-        if (hasScheduledTeleport(player)) {
-            scheduledTeleports.get(player.getDatabaseIdentifier());
-            scheduledTeleports.remove(player.getDatabaseIdentifier());
-        }
-    }
+		if (hasScheduledTeleport(player)) {
+			scheduledTeleports.get(player.getDatabaseIdentifier());
+			scheduledTeleports.remove(player.getDatabaseIdentifier());
+		}
+	}
 
-    @Override
-    public boolean hasScheduledTeleport(Player player) {
-        return scheduledTeleports.get(player.getDatabaseIdentifier()) != null;
-    }
+	@Override
+	public boolean hasScheduledTeleport(Player player) {
+		return scheduledTeleports.get(player.getDatabaseIdentifier()) != null;
+	}
 
 }

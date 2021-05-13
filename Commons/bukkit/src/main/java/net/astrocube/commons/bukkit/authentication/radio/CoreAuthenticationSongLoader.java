@@ -20,56 +20,56 @@ import java.util.logging.Level;
 @Singleton
 public class CoreAuthenticationSongLoader implements AuthenticationSongLoader {
 
-    private final Plugin plugin;
-    private final Set<Song> songs;
-    private @Getter Broadcaster broadcaster;
+	private final Plugin plugin;
+	private final Set<Song> songs;
+	private @Getter Broadcaster broadcaster;
 
-    @Inject
-    public CoreAuthenticationSongLoader(Plugin plugin) {
-        this.plugin = plugin;
-        this.songs = new HashSet<>();
-    }
+	@Inject
+	public CoreAuthenticationSongLoader(Plugin plugin) {
+		this.plugin = plugin;
+		this.songs = new HashSet<>();
+	}
 
-    @Override
-    public void generateBroadcaster() {
+	@Override
+	public void generateBroadcaster() {
 
-        this.broadcaster = new RadioBroadcaster(plugin);
-        File file = new File("songs");
+		this.broadcaster = new RadioBroadcaster(plugin);
+		File file = new File("songs");
 
-        if (!plugin.getConfig().getBoolean("authentication.broadcast")) {
-            plugin.getLogger().log(Level.INFO, "Broadcaster disabled. Music will not be playing at register.");
-            return;
-        }
+		if (!plugin.getConfig().getBoolean("authentication.broadcast")) {
+			plugin.getLogger().log(Level.INFO, "Broadcaster disabled. Music will not be playing at register.");
+			return;
+		}
 
-        if (!file.exists() || !file.isDirectory()) {
-            plugin.getLogger().log(Level.INFO, "Creating empty folder for song broadcasting.");
-            file.mkdir();
-        }
+		if (!file.exists() || !file.isDirectory()) {
+			plugin.getLogger().log(Level.INFO, "Creating empty folder for song broadcasting.");
+			file.mkdir();
+		}
 
 
-        plugin.getLogger().log(Level.INFO, "Reading broadcast songs.");
-        for (File songFile : file.listFiles()) {
-            try {
+		plugin.getLogger().log(Level.INFO, "Reading broadcast songs.");
+		for (File songFile : file.listFiles()) {
+			try {
 
-                if (!FilenameUtils.getExtension(songFile.getName()).equalsIgnoreCase("nbs")) {
-                    throw new IOException("Invalid file format");
-                }
+				if (!FilenameUtils.getExtension(songFile.getName()).equalsIgnoreCase("nbs")) {
+					throw new IOException("Invalid file format");
+				}
 
-                Song song = NBSDecoder.decode(songFile);
-                songs.add(song);
-                broadcaster.queue(song);
+				Song song = NBSDecoder.decode(songFile);
+				songs.add(song);
+				broadcaster.queue(song);
 
-            } catch (IOException e) {
-                plugin.getLogger().log(Level.WARNING, "Could not decode {0} file. ({1})", new String[]{songFile.getName(), e.getMessage()});
-            }
-        }
+			} catch (IOException e) {
+				plugin.getLogger().log(Level.WARNING, "Could not decode {0} file. ({1})", new String[]{songFile.getName(), e.getMessage()});
+			}
+		}
 
-        plugin.getLogger().log(Level.INFO, "Loaded {0} broadcast songs", songs.size());
+		plugin.getLogger().log(Level.INFO, "Loaded {0} broadcast songs", songs.size());
 
-        if (broadcaster.getQueue().size() > 0) {
-            broadcaster.setLoop(true);
-        }
+		if (broadcaster.getQueue().size() > 0) {
+			broadcaster.setLoop(true);
+		}
 
-    }
+	}
 
 }

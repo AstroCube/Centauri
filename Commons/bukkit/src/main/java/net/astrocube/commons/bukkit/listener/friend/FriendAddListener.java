@@ -24,71 +24,71 @@ import org.bukkit.event.Listener;
 
 public class FriendAddListener implements Listener {
 
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<User> findService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<User> findService;
 
-    @EventHandler
-    public void onFriendshipAction(FriendshipActionEvent event) {
+	@EventHandler
+	public void onFriendshipAction(FriendshipActionEvent event) {
 
-        if (event.getAction().getActionType() != FriendshipAction.Action.ADD) {
-            return;
-        }
+		if (event.getAction().getActionType() != FriendshipAction.Action.ADD) {
+			return;
+		}
 
-        FriendshipDoc.Relation friendship = event.getAction().getFriendship();
+		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-        Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
+		Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
 
-        if (receiver == null) {
-            return;
-        }
+		if (receiver == null) {
+			return;
+		}
 
-        findService.find(friendship.getSender()).callback(senderResponse ->
-                senderResponse.ifSuccessful(sender -> {
+		findService.find(friendship.getSender()).callback(senderResponse ->
+			senderResponse.ifSuccessful(sender -> {
 
-                    TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(receiver, sender);
+				TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(receiver, sender);
 
-                    BaseComponent[] builder = new ComponentBuilder(
-                            messageHandler.get(receiver, "friend.request.holder")
-                    )
-                            .event(new ClickEvent(
-                                    ClickEvent.Action.RUN_COMMAND, "/friends accept -v" + sender.getUsername())
-                            )
-                            .event(
-                                    new HoverEvent(
-                                            HoverEvent.Action.SHOW_TEXT,
-                                            new ComponentBuilder(
-                                                    messageHandler.get(receiver, "friend.request.holder")
-                                            )
-                                                    .color(ChatColor.RED)
-                                                    .bold(true)
-                                                     .create()
-                                    )
-                            )
-                            .color(ChatColor.RED)
-                            .bold(true)
-                            .create();
+				BaseComponent[] builder = new ComponentBuilder(
+					messageHandler.get(receiver, "friend.request.holder")
+				)
+					.event(new ClickEvent(
+						ClickEvent.Action.RUN_COMMAND, "/friends accept -v" + sender.getUsername())
+					)
+					.event(
+						new HoverEvent(
+							HoverEvent.Action.SHOW_TEXT,
+							new ComponentBuilder(
+								messageHandler.get(receiver, "friend.request.holder")
+							)
+								.color(ChatColor.RED)
+								.bold(true)
+								.create()
+						)
+					)
+					.color(ChatColor.RED)
+					.bold(true)
+					.create();
 
 
-                    StringList list = messageHandler.replacingMany(
-                            receiver, "friend.request.received",
-                            "%sender%", flairFormat.getColor() + sender.getDisplay()
-                    );
+				StringList list = messageHandler.replacingMany(
+					receiver, "friend.request.received",
+					"%sender%", flairFormat.getColor() + sender.getDisplay()
+				);
 
-                    receiver.playSound(receiver.getLocation(), Sound.NOTE_PLING, 1f, 1f);
-                    list.forEach(component -> {
+				receiver.playSound(receiver.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+				list.forEach(component -> {
 
-                        if (component.equalsIgnoreCase("%holder%")) {
-                            receiver.spigot().sendMessage(builder);
-                        } else {
-                            receiver.sendMessage(component);
-                        }
+					if (component.equalsIgnoreCase("%holder%")) {
+						receiver.spigot().sendMessage(builder);
+					} else {
+						receiver.sendMessage(component);
+					}
 
-                    });
+				});
 
-                })
-        );
+			})
+		);
 
-    }
+	}
 
 }

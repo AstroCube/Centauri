@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 public interface DeleteRequest<Complete extends Model> extends ModelRequest<Complete> {
 
-    @Nullable
-    String getId();
+	@Nullable
+	String getId();
 
 }

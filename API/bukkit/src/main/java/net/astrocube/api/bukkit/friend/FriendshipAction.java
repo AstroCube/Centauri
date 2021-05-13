@@ -5,18 +5,18 @@ import net.astrocube.api.core.virtual.friend.FriendshipDoc;
 
 public interface FriendshipAction extends Message {
 
-    /**
-     * @return friendship.
-     */
-    FriendshipDoc.Creation getFriendship();
+	/**
+	 * @return friendship.
+	 */
+	FriendshipDoc.Creation getFriendship();
 
-    /**
-     * @return action type related to the friendship.
-     */
-    Action getActionType();
+	/**
+	 * @return action type related to the friendship.
+	 */
+	Action getActionType();
 
-    enum Action {
-        ADD, ACCEPT, FORCE, EXPIRE
-    }
+	enum Action {
+		ADD, ACCEPT, FORCE, EXPIRE
+	}
 
 }

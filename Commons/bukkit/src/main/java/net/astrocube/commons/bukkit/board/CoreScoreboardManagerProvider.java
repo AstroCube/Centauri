@@ -10,17 +10,17 @@ import team.unnamed.uboard.SimpleScoreboardManager;
 @Singleton
 public class CoreScoreboardManagerProvider implements ScoreboardManagerProvider {
 
-    private @Inject Plugin plugin;
-    private ScoreboardManager manager;
+	private @Inject Plugin plugin;
+	private ScoreboardManager manager;
 
-    @Override
-    public void setupManager() {
-        manager = new SimpleScoreboardManager(plugin);
-    }
+	@Override
+	public void setupManager() {
+		manager = new SimpleScoreboardManager(plugin);
+	}
 
-    @Override
-    public ScoreboardManager getScoreboard() {
-        return manager;
-    }
+	@Override
+	public ScoreboardManager getScoreboard() {
+		return manager;
+	}
 
 }

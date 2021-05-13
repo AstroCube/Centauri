@@ -9,18 +9,18 @@ import java.util.Set;
 @SuppressWarnings("UnstableApiUsage")
 public interface Channel<T extends Message> {
 
-    String getName();
+	String getName();
 
-    String getId();
+	String getId();
 
-    TypeToken<T> getType();
+	TypeToken<T> getType();
 
-    Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException;
+	Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException;
 
-    Channel<T> addHandler(MessageHandler<T> handler);
+	Channel<T> addHandler(MessageHandler<T> handler);
 
-    Channel<T> removeHandler(MessageHandler<T> handler);
+	Channel<T> removeHandler(MessageHandler<T> handler);
 
-    Set<MessageHandler<T>> getHandlers();
+	Set<MessageHandler<T>> getHandlers();
 
 }

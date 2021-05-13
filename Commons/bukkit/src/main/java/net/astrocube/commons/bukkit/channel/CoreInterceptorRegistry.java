@@ -8,15 +8,15 @@ import java.util.Set;
 
 public class CoreInterceptorRegistry implements InterceptorRegistry {
 
-    private final Set<ChatMessageInterceptor> interceptors = new HashSet<>();
+	private final Set<ChatMessageInterceptor> interceptors = new HashSet<>();
 
-    @Override
-    public Set<ChatMessageInterceptor> getInterceptors() {
-        return this.interceptors;
-    }
+	@Override
+	public Set<ChatMessageInterceptor> getInterceptors() {
+		return this.interceptors;
+	}
 
-    @Override
-    public void register(ChatMessageInterceptor interceptor) {
-        this.interceptors.add(interceptor);
-    }
+	@Override
+	public void register(ChatMessageInterceptor interceptor) {
+		this.interceptors.add(interceptor);
+	}
 }

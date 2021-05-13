@@ -10,16 +10,16 @@ import org.bukkit.event.HandlerList;
 @AllArgsConstructor
 public class MatchAssignationEvent extends Event {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
-    private final SingleMatchAssignation assignation;
+	private final static HandlerList HANDLER_LIST = new HandlerList();
+	private final SingleMatchAssignation assignation;
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
 }

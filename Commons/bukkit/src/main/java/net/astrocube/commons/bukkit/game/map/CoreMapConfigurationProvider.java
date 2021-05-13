@@ -11,10 +11,10 @@ import java.io.IOException;
 @Singleton
 public class CoreMapConfigurationProvider implements MapConfigurationProvider {
 
-    private @Inject ObjectMapper mapper;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws IOException {
-        return mapper.readValue(map, type);
-    }
+	@Override
+	public <T extends GameMapConfiguration> T parseConfiguration(String map, Class<T> type) throws IOException {
+		return mapper.readValue(map, type);
+	}
 }

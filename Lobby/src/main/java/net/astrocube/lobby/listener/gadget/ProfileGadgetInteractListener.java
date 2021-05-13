@@ -10,19 +10,19 @@ import javax.inject.Inject;
 
 public class ProfileGadgetInteractListener implements Listener {
 
-    @Inject private UserProfileDisplay userProfileDisplay;
+	@Inject private UserProfileDisplay userProfileDisplay;
 
-    @EventHandler
-    public void onProfileGadgetInteract(ActionableItemEvent event) {
-        if (
-                event.getAction().equals("profile_menu")
-                && (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
-        ) {
-            userProfileDisplay.openDisplay(
-                    event.getUser(),
-                    event.getPlayer()
-            );
-        }
-    }
+	@EventHandler
+	public void onProfileGadgetInteract(ActionableItemEvent event) {
+		if (
+			event.getAction().equals("profile_menu")
+				&& (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)
+		) {
+			userProfileDisplay.openDisplay(
+				event.getUser(),
+				event.getPlayer()
+			);
+		}
+	}
 
 }

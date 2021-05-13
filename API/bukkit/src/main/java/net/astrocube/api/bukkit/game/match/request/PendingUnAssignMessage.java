@@ -5,6 +5,6 @@ import net.astrocube.api.core.message.MessageDefaults;
 @MessageDefaults.ChannelName("gc-pending-unassign")
 public interface PendingUnAssignMessage extends MatchActionMessage {
 
-    String getUser();
+	String getUser();
 
 }

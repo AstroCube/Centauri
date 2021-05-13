@@ -8,14 +8,14 @@ import org.bukkit.Bukkit;
 
 public class FriendshipActionHandler implements MessageHandler<FriendshipAction> {
 
-    @Override
-    public Class<FriendshipAction> type() {
-        return FriendshipAction.class;
-    }
+	@Override
+	public Class<FriendshipAction> type() {
+		return FriendshipAction.class;
+	}
 
-    @Override
-    public void handleDelivery(FriendshipAction message, Metadata properties) {
-        Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(message));
-    }
+	@Override
+	public void handleDelivery(FriendshipAction message, Metadata properties) {
+		Bukkit.getPluginManager().callEvent(new FriendshipActionEvent(message));
+	}
 
 }

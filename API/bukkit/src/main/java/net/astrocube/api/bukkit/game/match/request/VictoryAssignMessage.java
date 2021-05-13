@@ -8,9 +8,9 @@ import java.util.Set;
 @MessageDefaults.ChannelName("gc-victory-assign")
 public interface VictoryAssignMessage extends MatchActionMessage {
 
-    /**
-     * @return {@link User} id to mark as winners.
-     */
-    Set<String> getWinners();
+	/**
+	 * @return {@link User} id to mark as winners.
+	 */
+	Set<String> getWinners();
 
 }

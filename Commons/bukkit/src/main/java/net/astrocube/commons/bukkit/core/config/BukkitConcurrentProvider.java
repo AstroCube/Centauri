@@ -8,17 +8,17 @@ import java.util.concurrent.Executors;
 
 public class BukkitConcurrentProvider implements ExecutorServiceProvider {
 
-    private ExecutorService executorService;
+	private ExecutorService executorService;
 
-    @Override
-    public ExecutorService getRegisteredService() {
-        if (executorService == null) this.executorService = Executors.newFixedThreadPool(getConfiguredThreads());
-        return executorService;
-    }
+	@Override
+	public ExecutorService getRegisteredService() {
+		if (executorService == null) this.executorService = Executors.newFixedThreadPool(getConfiguredThreads());
+		return executorService;
+	}
 
-    @Override
-    public int getConfiguredThreads() {
-        return Configuration.getInteger("api.threads", 2);
-    }
+	@Override
+	public int getConfiguredThreads() {
+		return Configuration.getInteger("api.threads", 2);
+	}
 
 }

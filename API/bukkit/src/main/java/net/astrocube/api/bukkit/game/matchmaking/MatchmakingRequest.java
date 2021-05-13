@@ -15,36 +15,36 @@ import java.util.Optional;
  */
 public interface MatchmakingRequest {
 
-    /**
-     * @return date when request was created.
-     */
-    Date getIssuedDate();
+	/**
+	 * @return date when request was created.
+	 */
+	Date getIssuedDate();
 
-    /**
-     * @return requested {@link GameMode} id.
-     */
-    String getGameMode();
+	/**
+	 * @return requested {@link GameMode} id.
+	 */
+	String getGameMode();
 
-    /**
-     * @return requested {@link SubGameMode} id.
-     */
-    String getSubGameMode();
+	/**
+	 * @return requested {@link SubGameMode} id.
+	 */
+	String getSubGameMode();
 
-    /**
-     * @return requested {@link GameMap} id.
-     */
-    Optional<String> getMap();
+	/**
+	 * @return requested {@link GameMap} id.
+	 */
+	Optional<String> getMap();
 
-    /**
-     * @return {@link MatchAssignable} of people to be paired
-     * at a certain match.
-     */
-    MatchAssignable getRequesters();
+	/**
+	 * @return {@link MatchAssignable} of people to be paired
+	 * at a certain match.
+	 */
+	MatchAssignable getRequesters();
 
-    /**
-     * @return JSON criteria where the available matches
-     * will be filtered.
-     */
-    Optional<ObjectNode> getCriteria();
+	/**
+	 * @return JSON criteria where the available matches
+	 * will be filtered.
+	 */
+	Optional<ObjectNode> getCriteria();
 
 }

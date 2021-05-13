@@ -9,16 +9,16 @@ import net.astrocube.api.core.http.resolver.RequestFactoryResolver;
 
 public class CoreRequestFactoryResolver implements RequestFactoryResolver {
 
-    private @Inject HttpFactoryConfig httpFactoryConfig;
-    private @Inject RequestExceptionHandler requestExceptionHandler;
+	private @Inject HttpFactoryConfig httpFactoryConfig;
+	private @Inject RequestExceptionHandler requestExceptionHandler;
 
-    public HttpRequestFactory configureFactory() {
-        return new NetHttpTransport().createRequestFactory(request -> {
-            request.setConnectTimeout(httpFactoryConfig.getConnectTimeout());
-            request.setReadTimeout(httpFactoryConfig.getReadTimeout());
-            request.setNumberOfRetries(httpFactoryConfig.getRetryNumber());
-            request.setIOExceptionHandler(requestExceptionHandler.getExceptionBackoff());
-        });
-    }
+	public HttpRequestFactory configureFactory() {
+		return new NetHttpTransport().createRequestFactory(request -> {
+			request.setConnectTimeout(httpFactoryConfig.getConnectTimeout());
+			request.setReadTimeout(httpFactoryConfig.getReadTimeout());
+			request.setNumberOfRetries(httpFactoryConfig.getRetryNumber());
+			request.setIOExceptionHandler(requestExceptionHandler.getExceptionBackoff());
+		});
+	}
 
 }

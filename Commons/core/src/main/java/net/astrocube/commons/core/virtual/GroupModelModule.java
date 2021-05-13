@@ -9,12 +9,13 @@ import net.astrocube.commons.core.service.RedisModelService;
 
 public class GroupModelModule extends ProtectedModule implements ModelBinderModule {
 
-    @Override
-    protected void configure() {
-        bindModel(Group.class, model -> {
-            TypeLiteral<RedisModelService<Group, Group>> serviceTypeLiteral =
-                    new ResolvableType<RedisModelService<Group, Group>>(){};
-            model.bind(serviceTypeLiteral);
-        });
-    }
+	@Override
+	protected void configure() {
+		bindModel(Group.class, model -> {
+			TypeLiteral<RedisModelService<Group, Group>> serviceTypeLiteral =
+				new ResolvableType<RedisModelService<Group, Group>>() {
+				};
+			model.bind(serviceTypeLiteral);
+		});
+	}
 }
