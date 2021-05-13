@@ -50,12 +50,14 @@ public class CorePunishmentHandler implements PunishmentHandler {
 		System.out.println("Expiration " + expiration);
 		LocalDateTime localDateTime = PunishmentHandler.generateFromExpiration(expiration);
 
+
+
 		PunishmentDoc.Partial partial = new PunishmentDoc.Creation() {
 
 			@Override
 			public @Nullable
 			LocalDateTime getExpiration() {
-				return localDateTime;
+				return expiration == 0 ? null : localDateTime;
 			}
 
 			@Override
