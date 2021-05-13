@@ -46,6 +46,7 @@ public class CoreWhisperManager implements WhisperManager {
 
 		// is online on other server
 		if (targetPlayer == null) {
+			System.out.println("not in same server");
 			messageHandler
 				.sendReplacing(sender, "whisper.sender",
 					"%sender%", senderUser.getDisplay(),
