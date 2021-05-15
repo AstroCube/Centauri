@@ -35,12 +35,11 @@ public class ServerConnectListener implements Listener {
 
 				if (cloudStatusProvider.hasCloudHooked()) {
 
-					ServerInfo connectable =
-						Optional.of(ProxyServer.getInstance().getServerInfo(
-							cloudTeleport.getServerFromGroup(
-								configuration.getString("redirect.authentication")
-							)
-						)).orElseThrow(() -> new Exception("Unable to connect"));
+					ServerInfo connectable = cloudTeleport.getServerFromGroup(
+						configuration.getString("redirect.authentication")
+					)
+						.map(ProxyServer.getInstance()::getServerInfo)
+						.orElseThrow(() -> new Exception("Unable to connect"));
 
 					event.setTarget(connectable);
 

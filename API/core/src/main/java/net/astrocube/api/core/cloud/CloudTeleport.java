@@ -1,5 +1,7 @@
 package net.astrocube.api.core.cloud;
 
+import java.util.Optional;
+
 public interface CloudTeleport {
 
 	/**
@@ -16,7 +18,7 @@ public interface CloudTeleport {
 	 */
 	void teleportToGroup(String group, String player);
 
-	String getServerFromGroup(String group);
+	Optional<String> getServerFromGroup(String group);
 
 	/**
 	 * Teleport player to actual server

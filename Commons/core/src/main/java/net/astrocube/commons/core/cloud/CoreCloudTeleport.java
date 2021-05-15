@@ -17,24 +17,19 @@ public class CoreCloudTeleport implements CloudTeleport {
 
 	@Override
 	public void teleportToGroup(String group, String player) {
-
-		String server = getServerFromGroup(group);
-
-		if (!server.equalsIgnoreCase("")) {
-			TimoCloudAPI.getUniversalAPI().getPlayer(player).sendToServer(
-				TimoCloudAPI.getUniversalAPI().getServer(getServerFromGroup(group)));
-		}
-
+		getServerFromGroup(group).ifPresent(name ->
+			TimoCloudAPI.getUniversalAPI().getPlayer(player)
+				.sendToServer(TimoCloudAPI.getUniversalAPI().getServer(name)));
 	}
 
 	@Override
-	public String getServerFromGroup(String group) {
+	public Optional<String> getServerFromGroup(String group) {
 		return TimoCloudAPI.getUniversalAPI()
 			.getServerGroups().stream()
 			.filter(g -> g.getName().equalsIgnoreCase(group))
 			.flatMap(g -> g.getServers().stream())
 			.map(s -> s.getName().toLowerCase())
-			.findAny().orElse("");
+			.findAny();
 	}
 
 	@Override

@@ -75,16 +75,8 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
 	@Override
 	public void attemptGroupTeleport(String player, String group, int attempt, int maxAttempt) {
-
-		String server = cloudTeleport.getServerFromGroup(group);
-
-		attemptTeleport(
-			player,
-			server,
-			attempt,
-			maxAttempt
-		);
-
+		cloudTeleport.getServerFromGroup(group)
+			.ifPresent(server -> attemptTeleport(player, server, attempt, maxAttempt));
 	}
 
 }
