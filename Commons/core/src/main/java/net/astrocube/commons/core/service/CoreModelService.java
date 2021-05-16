@@ -100,8 +100,6 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 	@Override
 	public Complete createSync(CreateRequest<Partial> request) throws Exception {
 
-		System.out.println(mapper.writeValueAsString(request.getModel()));
-
 		return this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey(), // https://perseus.astrocube.net/api/friend/
 			new CoreRequestCallable<>(getCompleteType(), mapper),

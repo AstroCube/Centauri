@@ -24,6 +24,7 @@ public interface UserMatchJoiner {
 		if (match.getSpectators().contains(user)) {
 			return Origin.SPECTATING;
 		}
+
 		if (match.getTeams().stream().anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
 			teamMember.getUser().equalsIgnoreCase(user)))
 		) {
