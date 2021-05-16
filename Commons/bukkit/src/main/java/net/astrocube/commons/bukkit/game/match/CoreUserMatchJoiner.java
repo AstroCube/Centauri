@@ -35,6 +35,9 @@ public class CoreUserMatchJoiner implements UserMatchJoiner {
 			}
 
 			Match match = findService.findSync(jedis.get("matchAssign:" + user.getId()));
+
+			System.out.println(jedis.get("matchAssign:" + user.getId()));
+
 			Origin origin = UserMatchJoiner.checkOrigin(user.getId(), match);
 			jedis.del("matchAssign:" + user.getId());
 
