@@ -33,7 +33,6 @@ public class CoreMatchRejoiner implements MatchRejoiner {
 
 			if (origin != UserMatchJoiner.Origin.WAITING) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "game.rejoin.not-active");
-				return;
 			}
 
 		} else {
