@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.commons.core.model.binder.ModelBinderModule;
+import net.astrocube.commons.core.service.DirectRedisModelService;
 import net.astrocube.commons.core.service.RedisModelService;
 
 public class MatchModelModule extends ProtectedModule implements ModelBinderModule {
@@ -13,8 +14,8 @@ public class MatchModelModule extends ProtectedModule implements ModelBinderModu
 	@Override
 	protected void configure() {
 		bindModel(Match.class, MatchDoc.Partial.class, model -> {
-			TypeLiteral<RedisModelService<Match, MatchDoc.Partial>> serviceTypeLiteral =
-				new ResolvableType<RedisModelService<Match, MatchDoc.Partial>>() {
+			TypeLiteral<DirectRedisModelService<Match, MatchDoc.Partial>> serviceTypeLiteral =
+				new ResolvableType<DirectRedisModelService<Match, MatchDoc.Partial>>() {
 				};
 			model.bind(serviceTypeLiteral);
 		});
