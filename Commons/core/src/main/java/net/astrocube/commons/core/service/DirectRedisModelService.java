@@ -1,9 +1,7 @@
 package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import net.astrocube.api.core.model.Model;
@@ -13,20 +11,19 @@ import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.delete.DeleteRequest;
 import net.astrocube.api.core.service.find.FindRequest;
-import net.astrocube.api.core.service.paginate.PaginateRequest;
 import net.astrocube.api.core.service.paginate.PaginateResult;
-import net.astrocube.api.core.service.query.QueryRequest;
 import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import redis.clients.jedis.Jedis;
 
+import java.io.IOException;
 import java.util.*;
 
 public class DirectRedisModelService<Complete extends Model, Partial extends PartialModel>
-	extends AsyncModelService<Complete, Partial> {
+	extends CoreModelService<Complete, Partial> {
 
 	private @Inject Redis redis;
-	protected final ObjectMapper mapper;
+	private @Inject ObjectMapper objectMapper;
 
 	protected ModelMeta<Complete, Partial> modelMeta;
 	protected JavaType queryResultTypeToken;
@@ -37,86 +34,35 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 		ObjectMapper mapper,
 		ModelMeta<Complete, Partial> modelMeta
 	) {
+		super(mapper, modelMeta);
 		this.modelMeta = modelMeta;
-		this.mapper = mapper;
 		this.queryResultTypeToken = mapper.getTypeFactory().constructParametricType(QueryResult.class, modelMeta.getCompleteType());
 		this.paginateResultTypeToken = mapper.getTypeFactory().constructParametricType(PaginateResult.class, modelMeta.getCompleteType());
 	}
 
 	@Override
-	public JavaType getCompleteType() {
-		return modelMeta.getCompleteType();
-	}
+	public Complete createSync(CreateRequest<Partial> request) throws Exception {
+		String id = UUID.randomUUID().toString();
+		ObjectNode node = (ObjectNode) mapper.readTree(
+			mapper.writeValueAsString(request.getModel())
+		);
 
-	@Override
-	public JavaType getPartialType() {
-		return modelMeta.getPartialType();
-	}
+		node.put("_id", id);
+		String json = node.asText();
 
-	@Override
-	public QueryResult<Complete> querySync(QueryRequest<Complete> request) throws Exception {
-		Set<Complete> found = new HashSet<>();
-		try (Jedis client = openResource()) {
-			for (String key : client.keys(modelMeta.getRouteKey() + ":*")) {
-				String json = client.get(key);
-				JsonNode node = mapper.readTree(json);
-				if (contains(node, request.getBsonQuery())) {
-					Complete value = mapper.readValue(
-						node.asText(),
-						modelMeta.getCompleteType()
-					);
-					found.add(value);
-				}
-			}
+		try (Jedis client = redis.getRawConnection().getResource()) {
+			client.set(
+				modelMeta.getRouteKey() + ':' + id,
+				json
+			);
 		}
-		return () -> found;
-	}
 
-	private boolean contains(JsonNode root, JsonNode node) {
-		if (root == null) {
-			return false;
-		} else if (root.isValueNode()) {
-			return node.isValueNode() && root.equals(node);
-		} else if (root.isArray()) {
-			if (node.isArray()) {
-				ArrayNode containerArray = (ArrayNode) root;
-				ArrayNode nodeArray = (ArrayNode) node;
-				Set<JsonNode> containedElements = new HashSet<>();
-				for (JsonNode content : containerArray) {
-					containedElements.add(content);
-				}
-				for (JsonNode element : nodeArray) {
-					if (!containedElements.contains(element)) {
-						return false;
-					}
-				}
-				return true;
-			} else {
-				return false;
-			}
-		}
-		Iterator<Map.Entry<String, JsonNode>> fields = node.fields();
-		while (fields.hasNext()) {
-			Map.Entry<String, JsonNode> field = fields.next();
-			String key = field.getKey();
-			JsonNode value = field.getValue();
-			JsonNode rootValue = root.get(key);
-
-			if (!contains(rootValue, value)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
-		throw new UnsupportedOperationException("Redis model service doesn't support pagination");
+		return getModel(json);
 	}
 
 	@Override
 	public Complete findSync(FindRequest<Complete> findModelRequest) throws Exception {
-		try (Jedis client = openResource()) {
+		try (Jedis client = redis.getRawConnection().getResource()) {
 			String json = client.get(modelMeta.getRouteKey() + ':' + findModelRequest.getId());
 			if (json == null) {
 				return null;
@@ -127,48 +73,35 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	}
 
 	@Override
-	public void deleteSync(DeleteRequest<Complete> deleteRequest) {
-		try (Jedis client = openResource()) {
+	public void deleteSync(DeleteRequest<Complete> deleteRequest) throws Exception {
+		try (Jedis client = redis.getRawConnection().getResource()) {
 			client.del(modelMeta.getRouteKey() + ':' + deleteRequest.getId());
 		}
 	}
 
 	@Override
 	public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
-		try (Jedis client = openResource()) {
+		try (Jedis client = redis.getRawConnection().getResource()) {
 			Partial partial = request.getModel();
 			String id = ((Model) partial).getId();
 
-			// TODO: Tomato me dijo que lo dejara asi, yo creo k no deberia ser asi pero weno -Yushu
+			String json = mapper.writeValueAsString(partial);
+
 			client.set(
 				modelMeta.getRouteKey() + ':' + id,
-				mapper.writeValueAsString(partial)
+				json
 			);
-			@SuppressWarnings("unchecked")
+
+			/*@SuppressWarnings("unchecked")
 			Complete value = (Complete) partial;
-			return value;
+			return value;*/
+
+			return getModel(json);
 		}
 	}
 
-	@Override
-	public Complete createSync(CreateRequest<Partial> request) throws Exception {
-		String id = UUID.randomUUID().toString();
-		ObjectNode node = (ObjectNode) mapper.readTree(
-			mapper.writeValueAsString(request.getModel())
-		);
-		node.put("_id", id);
-		try (Jedis client = openResource()) {
-			client.set(
-				modelMeta.getRouteKey() + ':' + id,
-				node.asText()
-			);
-		}
-		// TODO: Flex termina esta monda
-		return null;
-	}
-
-	private Jedis openResource() {
-		return redis.getRawConnection().getResource();
+	private <T extends Model> T getModel(String json) throws IOException {
+		return objectMapper.readValue(json, mapper.constructType(getCompleteType()));
 	}
 
 }

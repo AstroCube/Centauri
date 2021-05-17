@@ -14,6 +14,7 @@ import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.update.UpdateRequest;
+import net.astrocube.commons.core.http.CoreHttpClient;
 import net.astrocube.commons.core.http.CoreRequestOptions;
 import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 import redis.clients.jedis.Jedis;
