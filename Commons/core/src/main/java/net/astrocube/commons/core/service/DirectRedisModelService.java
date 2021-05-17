@@ -51,6 +51,9 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 		String json = node.asText();
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
+
+			System.out.println("Creating model json " + json);
+
 			client.set(
 				modelMeta.getRouteKey() + ':' + id,
 				json
