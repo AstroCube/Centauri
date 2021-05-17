@@ -92,6 +92,8 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 				json
 			);
 
+			System.out.println("Updating " + json);
+
 			/*@SuppressWarnings("unchecked")
 			Complete value = (Complete) partial;
 			return value;*/

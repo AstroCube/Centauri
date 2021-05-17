@@ -11,10 +11,12 @@ import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
@@ -38,11 +40,12 @@ public class CoreMatchAssigner implements MatchAssigner {
 	private final FindService<Server> serverFindService;
 	private final MatchService matchService;
 	private final Channel<SingleMatchAssignation> channel;
+	private final UpdateService<Match, MatchDoc.Partial> updateService;
 
 	@Inject
 	public CoreMatchAssigner(Redis redis, ActualMatchCache actualMatchProvider,
 													 Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
-													 FindService<User> findService, FindService<Server> serverFindService, MatchService matchService) {
+													 FindService<User> findService, FindService<Server> serverFindService, MatchService matchService, UpdateService<Match, MatchDoc.Partial> updateService) {
 		this.jedisPool = redis.getRawConnection();
 		this.plugin = plugin;
 		this.actualMatchCache = actualMatchProvider;
@@ -51,6 +54,8 @@ public class CoreMatchAssigner implements MatchAssigner {
 		this.matchService = matchService;
 		this.serverFindService = serverFindService;
 		this.findService = findService;
+		this.updateService = updateService;
+
 	}
 
 	@Override
@@ -66,6 +71,8 @@ public class CoreMatchAssigner implements MatchAssigner {
 			jedis.del("matchmaking:" + assignable.getResponsible());
 
 			match.getPending().add(assignable);
+			updateService.updateSync(match);
+
 			matchService.assignPending(assignable, match.getId());
 			this.setRecord(assignable.getResponsible(), match.getId(), matchServer.getSlug());
 
