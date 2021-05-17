@@ -43,11 +43,15 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	@Override
 	public Complete createSync(CreateRequest<Partial> request) throws Exception {
 		String id = UUID.randomUUID().toString();
+
+		System.out.println("test" + mapper.writeValueAsString(request.getModel()));
+
 		ObjectNode node = (ObjectNode) mapper.readTree(
 			mapper.writeValueAsString(request.getModel())
 		);
 
 		node.put("_id", id);
+
 		String json = node.asText();
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
