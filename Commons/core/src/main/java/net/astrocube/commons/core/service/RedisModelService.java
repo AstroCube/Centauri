@@ -105,7 +105,6 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 		@Override
 		public T call(HttpRequest request) throws Exception {
 
-
 			final HttpResponse response = request.execute();
 			final String json = response.parseAsString();
 
@@ -118,7 +117,10 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 					String key = modelMeta.getRouteKey() + ":" + model.getId();
 
 					jedis.set(key, json);
-					jedis.expire(key, modelMeta.getCache());
+
+					if (modelMeta.getCache() > 0) {
+						jedis.expire(key, modelMeta.getCache());
+					}
 
 					return model;
 				} catch (Exception exception) {

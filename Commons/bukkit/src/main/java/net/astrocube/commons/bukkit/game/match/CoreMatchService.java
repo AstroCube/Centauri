@@ -15,7 +15,6 @@ import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.astrocube.commons.core.http.CoreRequestOptions;
-import net.astrocube.commons.core.service.RedisRequestCallable;
 
 import java.util.HashMap;
 import java.util.Set;
