@@ -28,6 +28,8 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 	@Override
 	public void execute(Player player, String mode, String subMode) {
 
+		System.out.println("Execute");
+
 		findService.find(mode).callback(response -> {
 
 			response.ifSuccessful(gameMode -> {
@@ -53,6 +55,7 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 					subGameMode.ifPresent(subModeRecord -> {
 
 						try {
+							System.out.println("MatchmakingGenerator");
 							matchmakingGenerator.pairMatch(player, gameMode, subModeRecord);
 						} catch (Exception e) {
 							messageHandler.sendIn(player, AlertModes.ERROR, "selectors.error");
