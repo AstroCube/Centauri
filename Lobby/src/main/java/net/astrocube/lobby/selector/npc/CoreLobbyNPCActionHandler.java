@@ -28,8 +28,6 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 	@Override
 	public void execute(Player player, String mode, String subMode) {
 
-		System.out.println("Execute");
-
 		findService.find(mode).callback(response -> {
 
 			response.ifSuccessful(gameMode -> {

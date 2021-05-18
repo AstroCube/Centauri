@@ -52,6 +52,8 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 		criteria.put("private", false);
 		criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
+		System.out.println("MatchQueryService");
+
 		return matchQueryService.querySync(criteria).getFoundModels()
 			.stream()
 			.filter(match -> match.getStatus() == MatchDoc.Status.LOBBY &&

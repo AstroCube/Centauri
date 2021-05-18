@@ -1,7 +1,9 @@
 package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import net.astrocube.api.core.model.Model;
@@ -12,6 +14,7 @@ import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.delete.DeleteRequest;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.paginate.PaginateResult;
+import net.astrocube.api.core.service.query.QueryRequest;
 import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import redis.clients.jedis.Jedis;
@@ -83,6 +86,25 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	}
 
 	@Override
+	public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
+		Set<Complete> found = new HashSet<>();
+		try (Jedis client = redis.getRawConnection().getResource()) {
+			for (String key : client.keys(modelMeta.getRouteKey() + ":*")) {
+				String json = client.get(key);
+				JsonNode node = mapper.readTree(json);
+				if (contains(node, queryRequest.getBsonQuery())) {
+					Complete value = mapper.readValue(
+						node.toString(),
+						modelMeta.getCompleteType()
+					);
+					found.add(value);
+				}
+			}
+		}
+		return () -> found;
+	}
+
+	@Override
 	public Complete updateSync(UpdateRequest<Partial> request) throws Exception {
 		try (Jedis client = redis.getRawConnection().getResource()) {
 			Partial partial = request.getModel();
@@ -103,6 +125,43 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
 			return getModel(json);
 		}
+	}
+
+	private boolean contains(JsonNode root, JsonNode node) {
+		if (root == null) {
+			return false;
+		} else if (root.isValueNode()) {
+			return node.isValueNode() && root.equals(node);
+		} else if (root.isArray()) {
+			if (node.isArray()) {
+				ArrayNode containerArray = (ArrayNode) root;
+				ArrayNode nodeArray = (ArrayNode) node;
+				Set<JsonNode> containedElements = new HashSet<>();
+				for (JsonNode content : containerArray) {
+					containedElements.add(content);
+				}
+				for (JsonNode element : nodeArray) {
+					if (!containedElements.contains(element)) {
+						return false;
+					}
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+		Iterator<Map.Entry<String, JsonNode>> fields = node.fields();
+		while (fields.hasNext()) {
+			Map.Entry<String, JsonNode> field = fields.next();
+			String key = field.getKey();
+			JsonNode value = field.getValue();
+			JsonNode rootValue = root.get(key);
+
+			if (!contains(rootValue, value)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private <T extends Model> T getModel(String json) throws IOException {

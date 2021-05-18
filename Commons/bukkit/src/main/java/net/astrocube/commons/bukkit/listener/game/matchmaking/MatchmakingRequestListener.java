@@ -27,6 +27,8 @@ public class MatchmakingRequestListener implements Listener {
 	@EventHandler
 	public void onMatchmakingRequest(MatchmakingRequestEvent event) {
 
+		System.out.println("MatchMakingRequest");
+
 		try {
 
 			Optional<Match> match = idealMatchSelector.sortAvailableMatches(
