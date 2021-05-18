@@ -8,7 +8,6 @@ public interface GameServerStartManager {
 
 	String createGameServer(
 		String slug,
-		ServerDoc.Type type,
 		String cluster,
 		int maxRunning,
 		int maxTotal,
