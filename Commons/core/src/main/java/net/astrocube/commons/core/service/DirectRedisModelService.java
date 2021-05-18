@@ -45,6 +45,8 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
 		String json = mapper.writeValueAsString(request.getModel());
 
+		System.out.println("json " + json);
+
 		try (Jedis client = redis.getRawConnection().getResource()) {
 
 			client.set(
