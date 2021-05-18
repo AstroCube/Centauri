@@ -46,9 +46,11 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	@Override
 	public Complete createSync(CreateRequest<Partial> request) throws Exception {
 
-		ObjectNode node = (ObjectNode) mapper.readTree(
+		/*ObjectNode node = (ObjectNode) mapper.readTree(
 			mapper.writeValueAsString(request.getModel())
-		);
+		);*/
+
+		ObjectNode node = mapper.valueToTree(request.getModel());
 
 		node.put("_id", UUID.randomUUID().toString());
 		String json = node.toString();
