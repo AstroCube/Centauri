@@ -49,17 +49,19 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
 		node.put("_id", UUID.randomUUID().toString());
 
-		System.out.println("json > " + node);
+		String json = node.toString();
+
+		System.out.println("json > " + json);
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
 
 			client.set(
 				modelMeta.getRouteKey() + ':' + UUID.randomUUID(),
-				node.toString()
+				json
 			);
 		}
 
-		return getModel(node.toString());
+		return getModel(json);
 	}
 
 	@Override
