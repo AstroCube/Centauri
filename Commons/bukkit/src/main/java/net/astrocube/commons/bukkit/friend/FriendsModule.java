@@ -13,7 +13,7 @@ public class FriendsModule extends ProtectedModule implements ChannelBinder {
 		bind(FriendHelper.class).to(CoreFriendHelper.class);
 		bind(FriendshipHandler.class).to(CoreFriendshipHandler.class);
 		bindChannel(FriendshipAction.class)
-			.registerHandler(new FriendshipActionHandler());
+			.registerListener(FriendshipActionHandler.class);
 		expose(FriendshipHandler.class);
 		expose(FriendHelper.class);
 	}

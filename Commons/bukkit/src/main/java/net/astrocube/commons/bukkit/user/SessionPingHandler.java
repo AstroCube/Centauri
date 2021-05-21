@@ -3,9 +3,9 @@ package net.astrocube.commons.bukkit.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.core.message.Channel;
-import net.astrocube.api.core.message.MessageHandler;
+import net.astrocube.api.core.message.MessageListener;
 import net.astrocube.api.core.message.Messenger;
-import net.astrocube.api.core.message.Metadata;
+import net.astrocube.api.core.message.MessageMetadata;
 import net.astrocube.api.core.player.ProxyKickRequest;
 import net.astrocube.api.core.session.SessionPingMessage;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-public class SessionPingHandler implements MessageHandler<SessionPingMessage> {
+public class SessionPingHandler implements MessageListener<SessionPingMessage> {
 
 	private @Inject Plugin plugin;
 	private final Channel<SessionPingMessage> pingMessageChannel;
@@ -25,17 +25,11 @@ public class SessionPingHandler implements MessageHandler<SessionPingMessage> {
 	@Inject
 	SessionPingHandler(Messenger messenger) {
 		pingMessageChannel = messenger.getChannel(SessionPingMessage.class);
-		pingMessageChannel.addHandler(this);
 		proxyKickRequestChannel = messenger.getChannel(ProxyKickRequest.class);
 	}
 
 	@Override
-	public Class<SessionPingMessage> type() {
-		return SessionPingMessage.class;
-	}
-
-	@Override
-	public void handleDelivery(SessionPingMessage message, Metadata properties) {
+	public void handleDelivery(SessionPingMessage message, MessageMetadata properties) {
 
 
 		Player player = Bukkit.getPlayerByIdentifier(message.getUser());

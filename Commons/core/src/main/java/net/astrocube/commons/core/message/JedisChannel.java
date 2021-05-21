@@ -3,63 +3,42 @@ package net.astrocube.commons.core.message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.ChannelBinding;
 import net.astrocube.api.core.message.Message;
-import net.astrocube.api.core.message.MessageHandler;
-import net.astrocube.api.core.message.Metadata;
+import net.astrocube.api.core.message.MessageListener;
+import net.astrocube.api.core.message.MessageMetadata;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-@SuppressWarnings("UnstableApiUsage")
 public class JedisChannel<T extends Message> implements Channel<T> {
 
-	private final String name;
-	private final String id;
-	private final TypeToken<T> type;
+	private final ChannelBinding<T> channelBinding;
+	private final String id = UUID.randomUUID().toString();
 	private final JedisPool jedisPool;
-	private final Set<MessageHandler<T>> handlers = new HashSet<>();
 	private final ObjectMapper mapper;
+	private final Set<MessageListener<T>> listeners;
 
 	@Override
-	public Channel<T> sendMessage(T object, Map<String, Object> headers) throws JsonProcessingException {
+	public Channel<T> sendMessage(T object, Map<String, Object> headers)
+		throws JsonProcessingException {
 
-		Metadata metadata = new Metadata() {
-			@Override
-			public Map<String, Object> getHeaders() {
-				return headers;
-			}
-
-			@Override
-			public String getMessageId() {
-				return UUID.randomUUID().toString();
-			}
-
-			@Override
-			public String getAppId() {
-				return name;
-			}
-
-			@Override
-			public String getInstanceId() {
-				return id;
-			}
-
-			@Override
-			public LocalDateTime getTimestamp() {
-				return LocalDateTime.now();
-			}
-		};
+		MessageMetadata metadata = new MessageMetadata(
+			headers,
+			UUID.randomUUID().toString(),
+			channelBinding.getName(),
+			id,
+			LocalDateTime.now()
+		);
 
 		ObjectNode message = mapper.createObjectNode();
 
@@ -67,28 +46,23 @@ public class JedisChannel<T extends Message> implements Channel<T> {
 		message.putPOJO("message", object);
 
 		try (Jedis jedis = jedisPool.getResource()) {
-			jedis.publish("centauri_redis", mapper.writeValueAsString(message));
-		}
-
-		return this;
-	}
-
-	@Override
-	public Channel<T> addHandler(MessageHandler<T> handler) {
-		handlers.add(handler);
-		return this;
-	}
-
-	@Override
-	public Channel<T> removeHandler(MessageHandler<T> handler) {
-		while (handlers.contains(handler)) {
-			handlers.remove(handler);
+			jedis.publish(JedisMessenger.CHANNEL_NAME, mapper.writeValueAsString(message));
 		}
 		return this;
 	}
 
-	public void callListeners(T object, Metadata metadata) {
-		for (MessageHandler<T> listener : handlers) {
+	@Override
+	public String getName() {
+		return channelBinding.getName();
+	}
+
+	@Override
+	public Class<T> getType() {
+		return channelBinding.getType();
+	}
+
+	public void callListeners(T object, MessageMetadata metadata) {
+		for (MessageListener<T> listener : listeners) {
 			listener.handleDelivery(object, metadata);
 		}
 	}

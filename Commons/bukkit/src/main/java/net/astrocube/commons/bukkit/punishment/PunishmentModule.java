@@ -26,7 +26,7 @@ public class PunishmentModule extends ProtectedModule implements ChannelBinder {
 		bind(PresetPunishmentCache.class).to(CorePresetPunishmentCache.class);
 		bind(PunishmentHandler.class).to(CorePunishmentHandler.class);
 		bind(PunishmentKickProcessor.class).to(CorePunishmentKickProcessor.class);
-		bindChannel(Punishment.class).registerHandler(new PunishmentBroadcastHandler());
+		bindChannel(Punishment.class).registerListener(PunishmentBroadcastHandler.class);
 		bindChannel(ProxyKickRequest.class);
 	}
 

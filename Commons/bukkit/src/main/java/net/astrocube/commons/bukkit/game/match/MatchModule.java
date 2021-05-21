@@ -37,7 +37,8 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
 		bind(TeamBalancer.class).to(CoreTeamBalancer.class);
 		bind(MatchMapUpdater.class).to(CoreMatchMapUpdater.class);
 
-		bindChannel(SingleMatchAssignation.class).registerHandler(new MatchAssignationHandler());
+		bindChannel(SingleMatchAssignation.class)
+			.registerListener(MatchAssignationHandler.class);
 
 		bind(CountdownAlerter.class).to(CoreCountdownAlerter.class);
 		bind(CountdownScheduler.class).to(CoreCountdownScheduler.class);

@@ -25,7 +25,6 @@ public class UserModule extends ProtectedModule implements ChannelBinder {
 		bind(UserMatcher.class).to(CoreUserMatcher.class).in(Scopes.SINGLETON);
 		bind(OnlineStaffProvider.class).to(CoreOnlineStaffProvider.class).in(Scopes.SINGLETON);
 		bindChannel(SessionPingMessage.class);
-
 		expose(TranslatedGroupProvider.class);
 		expose(DisplayMatcher.class);
 		expose(UserMatcher.class);

@@ -8,7 +8,8 @@ public class WhisperModule extends ProtectedModule implements ChannelBinder {
 	@Override
 	public void configure() {
 		bind(WhisperManager.class).to(CoreWhisperManager.class);
-		bindChannel(WhisperMessage.class);
+		bindChannel(WhisperMessage.class)
+			.registerListener(WhisperListener.class);
 	}
 
 }

@@ -30,6 +30,7 @@ public class ChannelModelModule extends ProtectedModule implements ModelBinderMo
 			model.bind(serviceTypeLiteral);
 		});
 
-		bindChannel(ChatChannelMessage.class).registerHandler(new ChatChannelMessageHandler());
+		bindChannel(ChatChannelMessage.class)
+			.registerListener(ChatChannelMessageHandler.class);
 	}
 }

@@ -1,11 +1,11 @@
 package net.astrocube.commons.bukkit.whisper;
 
 import me.fixeddev.minecraft.player.Player;
-import net.astrocube.api.core.message.MessageHandler;
-import net.astrocube.api.core.message.Metadata;
+import net.astrocube.api.core.message.MessageListener;
+import net.astrocube.api.core.message.MessageMetadata;
 import org.bukkit.Bukkit;
 
-public class WhisperListener implements MessageHandler<WhisperMessage> {
+public class WhisperListener implements MessageListener<WhisperMessage> {
 
 	private final me.yushust.message.MessageHandler messageHandler;
 
@@ -14,12 +14,7 @@ public class WhisperListener implements MessageHandler<WhisperMessage> {
 	}
 
 	@Override
-	public Class<WhisperMessage> type() {
-		return WhisperMessage.class;
-	}
-
-	@Override
-	public void handleDelivery(WhisperMessage message, Metadata properties) {
+	public void handleDelivery(WhisperMessage message, MessageMetadata properties) {
 		Player target = Bukkit.getPlayerByIdentifier(message.getTargetId());
 
 		if (target == null) {

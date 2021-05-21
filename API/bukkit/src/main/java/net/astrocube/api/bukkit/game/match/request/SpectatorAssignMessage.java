@@ -1,9 +1,9 @@
 package net.astrocube.api.bukkit.game.match.request;
 
-import net.astrocube.api.core.message.MessageDefaults;
+import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.virtual.user.User;
 
-@MessageDefaults.ChannelName("gc-assign-spectator")
+@Message.ChannelName("gc-assign-spectator")
 public interface SpectatorAssignMessage extends MatchActionMessage {
 
 	/**
