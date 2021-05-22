@@ -7,6 +7,9 @@ import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 
 	@Override
@@ -24,7 +27,12 @@ public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.getGlobal().log(
+				Level.WARNING,
+				"An error occurred while getting online player count in "
+					+ " gamemode '" + gameMode.getName() + "'",
+				e
+			);
 		}
 
 		return compound;

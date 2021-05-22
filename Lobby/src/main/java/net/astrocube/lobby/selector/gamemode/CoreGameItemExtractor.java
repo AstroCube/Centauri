@@ -32,17 +32,12 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 		List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
 
 		baseLore.add(" ");
-		try {
-			baseLore.add(
-				messageHandler.replacing(
-					player, "lobby.gameSelector.gadget-playing",
-					"%players%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
-				)
-			);
-		} catch (Exception e) {
-			System.out.println("error while generating " + gameModeDoc.getName() + " item");
-			e.printStackTrace();
-		}
+		baseLore.add(
+			messageHandler.replacing(
+				player, "lobby.gameSelector.gadget-playing",
+				"%players%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
+			)
+		);
 
 		iconMeta.setDisplayName(
 			messageHandler.get(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".title")
