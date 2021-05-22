@@ -55,8 +55,8 @@ public class JedisSubscriber extends JedisPubSub {
 			MessageMetadata metadata = mapper.treeToValue(jsonMetadata, MessageMetadata.class);
 			JedisChannel<?> jedisChannel = channelsByName.get(metadata.getChannelName());
 
-			// if the channel exists and the we are not the senders, then call listeners
-			if (jedisChannel != null && metadata.getSenderId().equals(jedisChannel.getId())) {
+			// if the channel exists and we are not the senders, then call listeners
+			if (jedisChannel != null && !metadata.getSenderId().equals(jedisChannel.getId())) {
 				callListeners(metadata, jedisChannel, jsonMessage.get("message"));
 			}
 		} catch (Exception e) {
