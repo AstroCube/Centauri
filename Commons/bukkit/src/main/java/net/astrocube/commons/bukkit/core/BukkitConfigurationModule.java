@@ -13,8 +13,8 @@ public class BukkitConfigurationModule extends ProtectedModule {
 
 	@Override
 	public void configure() {
-		bind(HttpFactoryConfig.class).to(BukkitFactoryConfig.class);
-		bind(HttpClientConfig.class).to(BukkitClientConfig.class);
+		bind(HttpFactoryConfig.class).to(BukkitFactoryConfig.class).in(Scopes.SINGLETON);
+		bind(HttpClientConfig.class).to(BukkitClientConfig.class).in(Scopes.SINGLETON);
 		bind(ExecutorServiceProvider.class).to(BukkitConcurrentProvider.class).in(Scopes.SINGLETON);
 	}
 
