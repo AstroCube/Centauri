@@ -28,22 +28,10 @@ public class AliveInterceptorHandler implements MessageListener<ServerAliveMessa
 			String actual = serverService.getActual().getId();
 
 			if (message.getAction() == ServerAliveMessage.Action.REQUEST) {
-
 				channel.sendMessage(
-					new ServerAliveMessage() {
-						@Override
-						public String getServer() {
-							return actual;
-						}
-
-						@Override
-						public Action getAction() {
-							return Action.CONFIRM;
-						}
-					},
+					new ServerAliveMessage(actual, ServerAliveMessage.Action.CONFIRM),
 					new HashMap<>()
 				);
-
 			}
 
 		} catch (Exception e) {

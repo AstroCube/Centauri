@@ -2,6 +2,8 @@ package net.astrocube.api.core.player;
 
 import net.astrocube.api.core.message.Message;
 
+import java.beans.ConstructorProperties;
+
 /**
  * Represents a {@link Message} commonly sent
  * from Bukkit servers and handled by proxies.
@@ -15,6 +17,7 @@ public class ProxyKickRequest implements Message {
 	private final String name;
 	private final String reason;
 
+	@ConstructorProperties({"name", "reason"})
 	public ProxyKickRequest(String name, String reason) {
 		this.name = name;
 		this.reason = reason;
