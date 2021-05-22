@@ -1,6 +1,7 @@
 package net.astrocube.commons.core.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.http.HttpResponse;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import net.astrocube.api.core.http.HttpClient;
@@ -13,6 +14,7 @@ import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.server.ServerDoc.Partial;
 import net.astrocube.commons.core.http.CoreRequestCallable;
+import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 import redis.clients.jedis.Jedis;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -55,10 +57,7 @@ public class ServerModelService implements ServerService {
 	public Server getActual() throws Exception {
 
 		if (actual.isEmpty()) {
-			Server actual = fetchActual();
-			try (Jedis jedis = redis.getRawConnection().getResource()) {
-				cacheActual(jedis, actual);
-			}
+			Server actual = fetchAndCacheActual();
 			this.actual = actual.getId();
 			return actual;
 		}
@@ -66,30 +65,42 @@ public class ServerModelService implements ServerService {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
 			if (jedis.exists("server:" + actual)) {
 				return objectMapper.readValue(jedis.get("server:" + actual), Server.class);
-			} else {
-				Server actual = fetchActual();
-				cacheActual(jedis, actual);
-				return actual;
 			}
 		}
 
+		return fetchAndCacheActual();
 	}
 
-	private Server fetchActual() throws Exception {
+	private Server fetchAndCacheActual() throws Exception {
 		return httpClient.executeRequestSync(
-			this.modelMeta.getRouteKey() + "/view/me",
-			new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
+			modelMeta.getRouteKey() + "/view/me",
+			// creating a custom request callable so we can
+			// re-use the returned json object and set it in
+			// redis
+			request -> {
+				HttpResponse response = request.execute();
+				String json = response.parseAsString();
+				int statusCode = response.getStatusCode();
+
+				if (statusCode == 200) {
+					// parse the server
+					Server actual = objectMapper.readValue(json, Server.class);
+					// cache the server info
+					try (Jedis jedis = redis.getRawConnection().getResource()) {
+						String key = "server:" + actual.getId();
+						jedis.set(key, json);
+						jedis.expire(key, 600);
+					}
+					return actual;
+				} else {
+					throw RequestExceptionResolverUtil.generateException(json, statusCode);
+				}
+			},
 			new RequestOptions(
 				RequestOptions.Type.GET,
 				""
 			)
 		);
-	}
-
-	private void cacheActual(Jedis jedis, Server actual) throws Exception {
-		String key = "server:" + actual.getId();
-		jedis.set(key, objectMapper.writeValueAsString(actual));
-		jedis.expire(key, 600);
 	}
 
 }
