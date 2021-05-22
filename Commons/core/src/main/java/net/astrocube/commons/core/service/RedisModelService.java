@@ -14,8 +14,6 @@ import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.find.FindRequest;
 import net.astrocube.api.core.service.update.UpdateRequest;
-import net.astrocube.commons.core.http.CoreHttpClient;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 import redis.clients.jedis.Jedis;
 
@@ -48,7 +46,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 		return httpClient.executeRequestSync(
 			modelMeta.getRouteKey(),
 			redisRequestCallable,
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.PUT,
 				new HashMap<>(),
 				this.objectMapper.writeValueAsString(request.getModel()),
@@ -78,7 +76,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 		return httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
 			this.redisRequestCallable,
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.GET,
 				new HashMap<>(),
 				"",
@@ -92,11 +90,9 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 		return httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey(),
 			this.redisRequestCallable,
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
-				new HashMap<>(),
-				this.objectMapper.writeValueAsString(request.getModel()),
-				null
+				this.objectMapper.writeValueAsString(request.getModel())
 			)
 		);
 	}

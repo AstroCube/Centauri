@@ -7,7 +7,6 @@ import com.google.inject.Singleton;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.session.MojangValidate;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 import net.astrocube.commons.core.http.RawRequestCallable;
 
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class CoreMojangValidate implements MojangValidate {
 		String response = httpClient.executeRequestSync(
 			url,
 			new RawRequestCallable(),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.GET,
 				headers,
 				"",

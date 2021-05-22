@@ -13,7 +13,6 @@ import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.server.ServerDoc.Partial;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class ServerModelService implements ServerService {
 		return httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey(),
 			new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				new HashMap<>(),
 				this.objectMapper.writeValueAsString(request.getModel()),
@@ -44,7 +43,7 @@ public class ServerModelService implements ServerService {
 		httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey(),
 			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.DELETE,
 				""
 			)
@@ -79,7 +78,7 @@ public class ServerModelService implements ServerService {
 		Server actual = httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey() + "/view/me",
 			new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.GET,
 				""
 			)
