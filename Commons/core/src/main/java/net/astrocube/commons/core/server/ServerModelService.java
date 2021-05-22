@@ -15,8 +15,6 @@ import net.astrocube.api.core.virtual.server.ServerDoc.Partial;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 import redis.clients.jedis.Jedis;
 
-import java.util.HashMap;
-
 @SuppressWarnings("UnstableApiUsage")
 public class ServerModelService implements ServerService {
 
@@ -57,7 +55,10 @@ public class ServerModelService implements ServerService {
 	public Server getActual() throws Exception {
 
 		if (actual.isEmpty()) {
-			Server actual = getFromBackend();
+			Server actual = fetchActual();
+			try (Jedis jedis = redis.getRawConnection().getResource()) {
+				cacheActual(jedis, actual);
+			}
 			this.actual = actual.getId();
 			return actual;
 		}
@@ -65,15 +66,17 @@ public class ServerModelService implements ServerService {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
 			if (jedis.exists("server:" + actual)) {
 				return objectMapper.readValue(jedis.get("server:" + actual), Server.class);
+			} else {
+				Server actual = fetchActual();
+				cacheActual(jedis, actual);
+				return actual;
 			}
-			return getFromBackend();
 		}
 
 	}
 
-	private Server getFromBackend() throws Exception {
-
-		Server actual = httpClient.executeRequestSync(
+	private Server fetchActual() throws Exception {
+		return httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey() + "/view/me",
 			new CoreRequestCallable<>(TypeToken.of(Server.class), this.objectMapper),
 			new RequestOptions(
@@ -81,13 +84,12 @@ public class ServerModelService implements ServerService {
 				""
 			)
 		);
+	}
 
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.set("server:" + actual.getId(), objectMapper.writeValueAsString(actual));
-			jedis.expire("server:" + actual.getId(), 600);
-			return actual;
-		}
-
+	private void cacheActual(Jedis jedis, Server actual) throws Exception {
+		String key = "server:" + actual.getId();
+		jedis.set(key, objectMapper.writeValueAsString(actual));
+		jedis.expire(key, 600);
 	}
 
 }
