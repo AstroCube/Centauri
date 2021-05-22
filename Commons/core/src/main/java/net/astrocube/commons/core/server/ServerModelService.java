@@ -26,6 +26,7 @@ public class ServerModelService implements ServerService {
 	private @Inject Redis redis;
 	private String actual = "";
 
+	@Override
 	public String connect(CreateRequest<Partial> request) throws Exception {
 		return httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey(),

@@ -6,7 +6,7 @@ import net.astrocube.api.core.http.header.AuthorizationProcessor;
 @Singleton
 public class CoreAuthorizationProcessor implements AuthorizationProcessor {
 
-	private char[] authorization;
+	private char[] authorization = new char[0];
 
 	@Override
 	public char[] getAuthorizationToken() {
@@ -15,7 +15,7 @@ public class CoreAuthorizationProcessor implements AuthorizationProcessor {
 
 	@Override
 	public void authorizeBackend(char[] token) throws Exception {
-		if (this.authorization == null) {
+		if (this.authorization.length != 0) {
 			throw new Exception("You can not authorize server again");
 		}
 		this.authorization = token;
