@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.game.map;
 
+import lombok.Data;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.virtual.game.map.GameMap;
 import net.astrocube.slime.api.world.SlimeWorld;
@@ -18,11 +19,11 @@ public interface GameMapProvider {
 	 */
 	MapFiles loadGameMap(GameMap gameMap) throws IOException, GameControlException;
 
-	interface MapFiles {
+	@Data
+	class MapFiles {
 
-		byte[] getMapFile();
-
-		byte[] getMapConfig();
+		private final byte[] mapFile;
+		private final byte[] mapConfig;
 
 	}
 

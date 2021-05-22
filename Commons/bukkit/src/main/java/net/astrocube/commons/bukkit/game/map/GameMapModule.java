@@ -7,7 +7,7 @@ public class GameMapModule extends ProtectedModule {
 
 	@Override
 	public void configure() {
-		bind(GameMapCache.class).to(CoreGameMapCache.class);
+		bind(GameMapCache.class).to(RedisGameMapCache.class);
 		bind(GameMapProvider.class).to(CoreGameMapProvider.class);
 		bind(GameMapService.class).to(CoreGameMapService.class);
 		bind(MatchMapLoader.class).to(CoreMatchMapLoader.class);

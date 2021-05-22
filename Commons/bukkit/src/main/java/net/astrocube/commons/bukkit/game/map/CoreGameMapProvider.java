@@ -19,30 +19,22 @@ public class CoreGameMapProvider implements GameMapProvider {
 	@Override
 	public MapFiles loadGameMap(GameMap gameMap) throws IOException, GameControlException {
 
-		byte[] serializedMap = gameMapCache.exists(gameMap.getId()) ?
-			gameMapCache.getFile(gameMap.getId()) :
-			gameMapService.getMapWorld(gameMap.getId());
+		boolean cached = gameMapCache.exists(gameMap.getId());
 
-		byte[] serializedConfig = gameMapCache.exists(gameMap.getId()) ?
-			gameMapCache.getConfiguration(gameMap.getId()) :
-			gameMapService.getMapConfiguration(gameMap.getId());
+		byte[] serializedMap = cached
+			? gameMapCache.getFile(gameMap.getId())
+			: gameMapService.getMapWorld(gameMap.getId());
 
-		if (!gameMapCache.exists(gameMap.getId())) {
+		byte[] serializedConfig = cached
+			? gameMapCache.getConfiguration(gameMap.getId())
+			: gameMapService.getMapConfiguration(gameMap.getId());
+
+		if (!cached) {
 			gameMapCache.registerFile(gameMap.getId(), serializedMap);
 			gameMapCache.registerConfiguration(gameMap.getId(), serializedConfig);
 		}
 
-		return new MapFiles() {
-			@Override
-			public byte[] getMapFile() {
-				return serializedMap;
-			}
-
-			@Override
-			public byte[] getMapConfig() {
-				return serializedConfig;
-			}
-		};
+		return new MapFiles(serializedMap, serializedConfig);
 	}
 
 }

@@ -11,12 +11,12 @@ import redis.clients.jedis.JedisPool;
 import java.util.Base64;
 
 @Singleton
-public class CoreGameMapCache implements GameMapCache {
+public class RedisGameMapCache implements GameMapCache {
 
 	private final JedisPool jedisPool;
 
 	@Inject
-	public CoreGameMapCache(Redis redis) {
+	public RedisGameMapCache(Redis redis) {
 		this.jedisPool = redis.getRawConnection();
 	}
 
