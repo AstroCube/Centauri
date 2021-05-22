@@ -34,7 +34,7 @@ public class CoreMojangValidate implements MojangValidate {
 				RequestOptions.Type.GET,
 				headers,
 				"",
-				null
+				""
 			)
 		);
 

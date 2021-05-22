@@ -1,5 +1,7 @@
 package net.astrocube.api.core.http;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,12 @@ public class RequestOptions {
 	private final String body;
 	private final String query;
 
-	public RequestOptions(Type type, Map<String, String> headers, String body, String query) {
+	public RequestOptions(
+		Type type,
+		@Nullable Map<String, String> headers,
+		String body,
+		@Nonnull String query
+	) {
 		this.type = type;
 		this.headers = headers;
 		this.body = body;

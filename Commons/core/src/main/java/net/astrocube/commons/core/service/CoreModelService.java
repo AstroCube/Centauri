@@ -185,9 +185,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 			new CoreRequestCallable<>(getCompleteType(), mapper),
 			new RequestOptions(
 				RequestOptions.Type.GET,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}
@@ -199,9 +197,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 			new CoreRequestCallable<>(TypeToken.of(Void.class), this.mapper),
 			new RequestOptions(
 				RequestOptions.Type.DELETE,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}

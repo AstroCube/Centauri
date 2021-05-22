@@ -107,9 +107,7 @@ public class CoreMatchService implements MatchService {
 			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
 			new RequestOptions(
 				RequestOptions.Type.POST,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}

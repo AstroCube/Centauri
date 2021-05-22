@@ -34,9 +34,7 @@ public class CoreSignedSkinFetcher implements SignedSkinFetcher {
 				new CoreRequestCallable<>(TypeToken.of(MojangManifest.class), mapper),
 				new RequestOptions(
 					RequestOptions.Type.GET,
-					new HashMap<>(),
-					"",
-					null
+					""
 				)
 			);
 

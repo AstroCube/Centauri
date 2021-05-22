@@ -32,9 +32,7 @@ public class ServerModelService implements ServerService {
 			new CoreRequestCallable<>(TypeToken.of(String.class), this.objectMapper),
 			new RequestOptions(
 				RequestOptions.Type.POST,
-				new HashMap<>(),
-				this.objectMapper.writeValueAsString(request.getModel()),
-				null
+				this.objectMapper.writeValueAsString(request.getModel())
 			)
 		);
 	}

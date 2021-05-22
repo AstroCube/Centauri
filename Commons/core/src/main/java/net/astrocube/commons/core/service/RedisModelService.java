@@ -48,9 +48,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 			redisRequestCallable,
 			new RequestOptions(
 				RequestOptions.Type.PUT,
-				new HashMap<>(),
-				this.objectMapper.writeValueAsString(request.getModel()),
-				null
+				this.objectMapper.writeValueAsString(request.getModel())
 			)
 		);
 	}
@@ -78,9 +76,7 @@ public class RedisModelService<Complete extends Model, Partial extends PartialMo
 			this.redisRequestCallable,
 			new RequestOptions(
 				RequestOptions.Type.GET,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}
