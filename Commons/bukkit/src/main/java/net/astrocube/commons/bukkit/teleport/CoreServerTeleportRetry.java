@@ -43,17 +43,10 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
 		if (attempt > maxAttempt) {
 			try {
-				channel.sendMessage(new ProxyKickRequest() {
-					@Override
-					public String getName() {
-						return player;
-					}
-
-					@Override
-					public String getReason() {
-						return ChatColor.RED + "Giving up on server switch, please log-in again.";
-					}
-				}, new HashMap<>());
+				channel.sendMessage(new ProxyKickRequest(
+					player,
+					ChatColor.RED + "Giving up on server switch, please log-in again."
+				), new HashMap<>());
 			} catch (Exception ex) {
 				plugin.getLogger().log(Level.SEVERE, "Error while disconnecting on server switch give-up.");
 				online.kickPlayer(ChatColor.RED + "Giving up on server switch, please log-in again.");

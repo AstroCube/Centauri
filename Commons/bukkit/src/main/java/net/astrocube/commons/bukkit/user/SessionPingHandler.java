@@ -58,17 +58,10 @@ public class SessionPingHandler implements MessageListener<SessionPingMessage> {
 
 			if (message.getAction() == SessionPingMessage.Action.DISCONNECT) {
 				try {
-					proxyKickRequestChannel.sendMessage(new ProxyKickRequest() {
-						@Override
-						public String getName() {
-							return player.getName();
-						}
-
-						@Override
-						public String getReason() {
-							return ChatColor.RED + "Session invalidated due to lack of pingback";
-						}
-					}, new HashMap<>());
+					proxyKickRequestChannel.sendMessage(new ProxyKickRequest(
+						player.getName(),
+						ChatColor.RED + "Session invalidated due to lack of pingback"
+					), new HashMap<>());
 				} catch (JsonProcessingException e) {
 					plugin.getLogger().log(Level.SEVERE, "Error while sending session ping kick request", e);
 				}
