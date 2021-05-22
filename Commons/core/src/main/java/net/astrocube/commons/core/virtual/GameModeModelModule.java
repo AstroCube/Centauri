@@ -14,8 +14,7 @@ public class GameModeModelModule extends ProtectedModule implements ModelBinderM
 	protected void configure() {
 		bindModel(GameMode.class, GameModeDoc.Partial.class, model -> {
 			TypeLiteral<RedisModelService<GameMode, GameModeDoc.Partial>> serviceTypeLiteral =
-				new ResolvableType<RedisModelService<GameMode, GameModeDoc.Partial>>() {
-				};
+				new ResolvableType<RedisModelService<GameMode, GameModeDoc.Partial>>() {};
 			model.bind(serviceTypeLiteral);
 		});
 	}

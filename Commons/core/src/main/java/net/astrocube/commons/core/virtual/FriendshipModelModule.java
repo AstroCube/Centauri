@@ -14,8 +14,7 @@ public class FriendshipModelModule extends ProtectedModule implements ModelBinde
 	protected void configure() {
 		bindModel(Friendship.class, FriendshipDoc.Partial.class, model -> {
 			TypeLiteral<CoreModelService<Friendship, FriendshipDoc.Partial>> serviceTypeLiteral =
-				new ResolvableType<CoreModelService<Friendship, FriendshipDoc.Partial>>() {
-				};
+				new ResolvableType<CoreModelService<Friendship, FriendshipDoc.Partial>>() {};
 			model.bind(serviceTypeLiteral);
 		});
 	}

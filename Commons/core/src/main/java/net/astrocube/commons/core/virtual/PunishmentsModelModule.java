@@ -14,8 +14,7 @@ public class PunishmentsModelModule extends ProtectedModule implements ModelBind
 	protected void configure() {
 		bindModel(Punishment.class, PunishmentDoc.Partial.class, model -> {
 			TypeLiteral<CoreModelService<Punishment, PunishmentDoc.Partial>> punishmentTypeLiteral =
-				new ResolvableType<CoreModelService<Punishment, PunishmentDoc.Partial>>() {
-				};
+				new ResolvableType<CoreModelService<Punishment, PunishmentDoc.Partial>>() {};
 			model.bind(punishmentTypeLiteral);
 		});
 	}

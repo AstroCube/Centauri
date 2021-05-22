@@ -14,8 +14,7 @@ public class ServerModelModule extends ProtectedModule implements ModelBinderMod
 	protected void configure() {
 		bindModel(Server.class, ServerDoc.Partial.class, model -> {
 			TypeLiteral<CoreModelService<Server, ServerDoc.Partial>> serviceTypeLiteral =
-				new ResolvableType<CoreModelService<Server, ServerDoc.Partial>>() {
-				};
+				new ResolvableType<CoreModelService<Server, ServerDoc.Partial>>() {};
 			model.bind(serviceTypeLiteral);
 		});
 	}

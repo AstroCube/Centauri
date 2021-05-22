@@ -25,7 +25,7 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
 
 	private final TypeLiteral<Complete> completeTypeLiteral;
 	private final TypeLiteral<Partial> partialTypeLiteral;
-	private final Multibinder metas;
+	private final Multibinder<ModelMeta> metas;
 
 	private final OptionalBinder<CreateService<Complete, Partial>> createServiceBinder;
 	private final OptionalBinder<DeleteService<Complete>> deleteServiceBinder;
@@ -33,14 +33,6 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
 	private final OptionalBinder<PaginateService<Complete>> paginateServiceBinder;
 	private final OptionalBinder<QueryService<Complete>> queryServiceBinder;
 	private final OptionalBinder<UpdateService<Complete, Partial>> updateServiceBinder;
-
-	public static <M extends Model & PartialModel> ModelBind<M, M> of(Binder binder, Class<M> M) {
-		return of(binder, M, M);
-	}
-
-	public static <M extends Model & PartialModel> ModelBind<M, M> of(Binder binder, TypeLiteral<M> M) {
-		return of(binder, M, M);
-	}
 
 	public static <M extends Model, P extends PartialModel> ModelBind<M, P> of(Binder binder, Class<M> M, Class<P> P) {
 		return of(binder, TypeLiteral.get(M), TypeLiteral.get(P));
@@ -55,30 +47,54 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
 		this.partialTypeLiteral = partialTypeLiteral;
 
 		this.metas = Multibinder.newSetBinder(binder, ModelMeta.class);
-		this.createServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<CreateService<Complete, Partial>>() {
-			}.with(
-			new TypeArgument<Complete>(this.completeTypeLiteral) {
-			}, new TypeArgument<Partial>(this.partialTypeLiteral) {
-			})
+		this.createServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<CreateService<Complete, Partial>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {},
+					new TypeArgument<Partial>(this.partialTypeLiteral) {}
+				)
 		);
-		this.deleteServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<DeleteService<Complete>>() {
-		}.with(new TypeArgument<Complete>(this.completeTypeLiteral) {
-		}));
-		this.findServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<FindService<Complete>>() {
-		}.with(new TypeArgument<Complete>(this.completeTypeLiteral) {
-		}));
-		this.paginateServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<PaginateService<Complete>>() {
-		}.with(new TypeArgument<Complete>(this.completeTypeLiteral) {
-		}));
-		this.queryServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<QueryService<Complete>>() {
-		}.with(new TypeArgument<Complete>(this.completeTypeLiteral) {
-		}));
-		this.updateServiceBinder = OptionalBinder.newOptionalBinder(binder, new ResolvableType<UpdateService<Complete, Partial>>() {
-		}.with(
-			new TypeArgument<Complete>(this.completeTypeLiteral) {
-			}, new TypeArgument<Partial>(this.partialTypeLiteral) {
-			}
-		));
+
+		this.deleteServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<DeleteService<Complete>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {}
+				)
+		);
+
+		this.findServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<FindService<Complete>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {}
+				)
+		);
+
+		this.paginateServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<PaginateService<Complete>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {}
+				)
+		);
+
+		this.queryServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<QueryService<Complete>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {}
+				)
+		);
+		this.updateServiceBinder = OptionalBinder.newOptionalBinder(
+			binder,
+			new ResolvableType<UpdateService<Complete, Partial>>() {}
+				.with(
+					new TypeArgument<Complete>(this.completeTypeLiteral) {},
+					new TypeArgument<Partial>(this.partialTypeLiteral) {}
+				)
+		);
 
 		binder.install(new PerModel());
 	}
@@ -144,47 +160,59 @@ public class ModelBind<Complete extends Model, Partial extends PartialModel> {
 	private class PerModel extends ProtectedModule {
 		@Override
 		protected void configure() {
-			final TypeLiteral<ModelMeta<Complete, Partial>> meta = new ResolvableType<ModelMeta<Complete, Partial>>() {
-			}.with(
-				new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-				},
-				new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {
-				}
-			);
+			TypeLiteral<ModelMeta<Complete, Partial>> meta
+				= new ResolvableType<ModelMeta<Complete, Partial>>() {}
+						.with(
+							new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {},
+							new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
+						);
+
 			metas.addBinding().to(meta);
 			bind(meta).in(Scopes.SINGLETON);
-			bind(new ResolvableType<ModelMeta<Complete, ?>>() {
-			}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-			})).to(meta);
-			bind(new ResolvableType<ModelMeta<?, Partial>>() {
-			}.with(new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {
-			})).to(meta);
-			expose(new ResolvableType<DeleteService<Complete>>() {
-			}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-			}));
-			expose(new ResolvableType<FindService<Complete>>() {
-			}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-			}));
-			expose(new ResolvableType<PaginateService<Complete>>() {
-			}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-			}));
-			expose(new ResolvableType<QueryService<Complete>>() {
-			}.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-			}));
-			expose(new ResolvableType<CreateService<Complete, Partial>>() {
-			}.with(
-				new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-				},
-				new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {
-				}
-			));
-			expose(new ResolvableType<UpdateService<Complete, Partial>>() {
-			}.with(
-				new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {
-				},
-				new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {
-				}
-			));
+			bind(
+				new ResolvableType<ModelMeta<Complete, ?>>() {}
+					.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {})
+			).to(meta);
+
+			bind(new ResolvableType<ModelMeta<?, Partial>>() {}
+				.with(new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {})
+			).to(meta);
+
+			expose(
+				new ResolvableType<DeleteService<Complete>>() {}
+					.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {})
+			);
+
+			expose(
+				new ResolvableType<FindService<Complete>>() {}
+					.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {})
+			);
+
+			expose(
+				new ResolvableType<PaginateService<Complete>>() {}
+					.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {})
+			);
+
+			expose(
+				new ResolvableType<QueryService<Complete>>() {}
+					.with(new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {})
+			);
+
+			expose(
+				new ResolvableType<CreateService<Complete, Partial>>() {}
+					.with(
+						new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {},
+						new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
+					)
+			);
+
+			expose(
+				new ResolvableType<UpdateService<Complete, Partial>>() {}
+					.with(
+						new TypeArgument<Complete>(ModelBind.this.completeTypeLiteral) {},
+						new TypeArgument<Partial>(ModelBind.this.partialTypeLiteral) {}
+					)
+			);
 		}
 	}
 }

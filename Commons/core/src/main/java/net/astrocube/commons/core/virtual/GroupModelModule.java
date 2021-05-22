@@ -13,8 +13,7 @@ public class GroupModelModule extends ProtectedModule implements ModelBinderModu
 	protected void configure() {
 		bindModel(Group.class, model -> {
 			TypeLiteral<RedisModelService<Group, Group>> serviceTypeLiteral =
-				new ResolvableType<RedisModelService<Group, Group>>() {
-				};
+				new ResolvableType<RedisModelService<Group, Group>>() {};
 			model.bind(serviceTypeLiteral);
 		});
 	}
