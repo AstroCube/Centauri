@@ -10,6 +10,17 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+	<distributionManagement>
+		<repository>
+			<id>core-releases</id>
+			<url>https://repo.astrocube.net/repository/core-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>core-snapshots</id>
+			<url>https://repo.astrocube.net/repository/core-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<artifactId>Commons</artifactId>
 	<packaging>pom</packaging>
 

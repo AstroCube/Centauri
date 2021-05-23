@@ -10,7 +10,6 @@ import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.session.SessionService;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -50,7 +49,7 @@ public class CoreSessionService implements SessionService {
 		return httpClient.executeRequestSync(
 			"session/auth-session",
 			new CoreRequestCallable<>(TypeToken.of(SessionValidateDoc.Complete.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				this.objectMapper.writeValueAsString(validate.getModel())
 			)
@@ -62,7 +61,7 @@ public class CoreSessionService implements SessionService {
 		httpClient.executeRequestSync(
 			"session/server-switch",
 			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				this.objectMapper.writeValueAsString(user.getModel())
 			)
@@ -74,7 +73,7 @@ public class CoreSessionService implements SessionService {
 		httpClient.executeRequestSync(
 			"session/user-disconnect/" + user,
 			new CoreRequestCallable<>(TypeToken.of(Void.class), this.objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.GET,
 				""
 			)

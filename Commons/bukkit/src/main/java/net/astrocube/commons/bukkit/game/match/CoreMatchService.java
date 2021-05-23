@@ -14,7 +14,6 @@ import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -106,11 +105,9 @@ public class CoreMatchService implements MatchService {
 		httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey() + "/cleanup",
 			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}

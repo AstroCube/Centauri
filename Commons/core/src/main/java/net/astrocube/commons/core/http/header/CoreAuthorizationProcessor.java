@@ -15,8 +15,9 @@ public class CoreAuthorizationProcessor implements AuthorizationProcessor {
 
 	@Override
 	public void authorizeBackend(char[] token) throws Exception {
-		if (this.authorization.length != 0)
+		if (this.authorization.length != 0) {
 			throw new Exception("You can not authorize server again");
+		}
 		this.authorization = token;
 	}
 }

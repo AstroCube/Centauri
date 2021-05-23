@@ -31,54 +31,59 @@ public class BukkitStartResolver implements ServerStartResolver {
 	@Override
 	public void instantiateServer() {
 		try {
-
-			final ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
-
-			if (type != ServerDoc.Type.GAME) {
-				String token = serverConnectionManager.startConnection(
-					instanceNameProvider.getName(),
-					type,
-					plugin.getConfig().getString("server.cluster"),
-					plugin.getConfig().getBoolean("server.sandbox")
-				);
-				this.authorizationProcessor.authorizeBackend(token.toCharArray());
-				return;
+			ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+			if (type == ServerDoc.Type.GAME) {
+				instantiateGameServer();
+			} else {
+				instantiateNonGameServer(type);
 			}
-
-			GameMode gameModeDoc = this.gameModeFindService.findSync(
-				plugin.getConfig().getString("game.mode")
-			);
-
-			if (gameModeDoc.getSubTypes() == null)
-				throw new Exception("Not subModes inside GameMode");
-
-			Optional<SubGameMode> subGameMode =
-				Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
-					s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
-				).findAny();
-
-			if (!subGameMode.isPresent())
-				throw new Exception("Requested subGameMode not found");
-
-			String token = gameServerStartManager.createGameServer(
-				instanceNameProvider.getName(),
-				type,
-				plugin.getConfig().getString("server.cluster"),
-				plugin.getConfig().getInt("game.running"),
-				plugin.getConfig().getInt("game.total"),
-				gameModeDoc,
-				subGameMode.get(),
-				plugin.getConfig().getBoolean("server.sandbox")
-			);
-			this.authorizationProcessor.authorizeBackend(token.toCharArray());
-
-			gameControlPair.enablePairing();
-
 		} catch (Exception e) {
 			plugin.getLogger().log(Level.SEVERE, "There was an error initializing the server", e);
 			Bukkit.shutdown();
 		}
 	}
 
+	private void instantiateNonGameServer(
+		ServerDoc.Type type
+	) throws Exception {
+		String token = serverConnectionManager.startConnection(
+			instanceNameProvider.getName(),
+			type,
+			plugin.getConfig().getString("server.cluster"),
+			plugin.getConfig().getBoolean("server.sandbox")
+		);
+		this.authorizationProcessor.authorizeBackend(token.toCharArray());
+	}
+
+	private void instantiateGameServer() throws Exception {
+		GameMode gameModeDoc = this.gameModeFindService.findSync(
+			plugin.getConfig().getString("game.mode")
+		);
+
+		if (gameModeDoc.getSubTypes() == null) {
+			throw new Exception("Not subModes inside GameMode");
+		}
+
+		Optional<SubGameMode> subGameMode =
+			Objects.requireNonNull(gameModeDoc.getSubTypes()).stream().filter(s ->
+				s.getId().equalsIgnoreCase(plugin.getConfig().getString("game.subMode"))
+			).findAny();
+
+		if (!subGameMode.isPresent()) {
+			throw new Exception("Requested subGameMode not found");
+		}
+
+		String token = gameServerStartManager.createGameServer(
+			instanceNameProvider.getName(),
+			plugin.getConfig().getString("server.cluster"),
+			plugin.getConfig().getInt("game.running"),
+			plugin.getConfig().getInt("game.total"),
+			gameModeDoc,
+			subGameMode.get(),
+			plugin.getConfig().getBoolean("server.sandbox")
+		);
+		this.authorizationProcessor.authorizeBackend(token.toCharArray());
+		gameControlPair.enablePairing();
+	}
 
 }

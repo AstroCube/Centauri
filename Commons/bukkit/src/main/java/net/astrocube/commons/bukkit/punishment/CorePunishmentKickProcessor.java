@@ -65,17 +65,10 @@ public class CorePunishmentKickProcessor implements PunishmentKickProcessor {
 		if (plugin.getConfig().getBoolean("server.sandbox")) {
 			Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(finalMessage));
 		} else {
-			channel.sendMessage(new ProxyKickRequest() {
-				@Override
-				public String getName() {
-					return player.getName();
-				}
-
-				@Override
-				public String getReason() {
-					return finalMessage;
-				}
-			}, new HashMap<>());
+			channel.sendMessage(new ProxyKickRequest(
+				player.getName(),
+				finalMessage
+			), new HashMap<>());
 		}
 
 	}

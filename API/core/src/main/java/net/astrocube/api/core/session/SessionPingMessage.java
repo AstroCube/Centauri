@@ -2,9 +2,8 @@ package net.astrocube.api.core.session;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.message.Message;
-import net.astrocube.api.core.message.MessageDefaults;
 
-@MessageDefaults.ChannelName("session-user-pingback")
+@Message.ChannelName("session-user-pingback")
 public interface SessionPingMessage extends Message {
 
 	/**

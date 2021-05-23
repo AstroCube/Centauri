@@ -28,9 +28,7 @@ public class CoreWhisperManager implements WhisperManager {
 														 MessageHandler handler) {
 		this.executorServiceProvider = executorServiceProvider;
 		this.messageHandler = handler;
-
-		whisperMessageChannel = messenger.getChannel(WhisperMessage.class)
-			.addHandler(new WhisperListener(messageHandler));
+		whisperMessageChannel = messenger.getChannel(WhisperMessage.class);
 	}
 
 	@Override

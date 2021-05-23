@@ -12,7 +12,7 @@ public class CentauriGameStartManager implements GameServerStartManager {
 	private @Inject ServerService serverService;
 
 	@Override
-	public String createGameServer(String slug, ServerDoc.Type type, String cluster, int maxRunning, int maxTotal, GameMode gamemode, SubGameMode subGamemode, boolean sandbox) throws Exception {
+	public String createGameServer(String slug, String cluster, int maxRunning, int maxTotal, GameMode gamemode, SubGameMode subGamemode, boolean sandbox) throws Exception {
 
 		ServerDoc.Creation gameCreation = new ServerDoc.Creation() {
 			@Override
@@ -47,7 +47,7 @@ public class CentauriGameStartManager implements GameServerStartManager {
 
 			@Override
 			public ServerDoc.Type getServerType() {
-				return type;
+				return ServerDoc.Type.GAME;
 			}
 
 			@Override

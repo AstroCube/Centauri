@@ -10,6 +10,17 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+	<distributionManagement>
+		<repository>
+			<id>astro-releases</id>
+			<url>https://repo.astrocube.net/repository/astro-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>astro-snapshots</id>
+			<url>https://repo.astrocube.net/repository/astro-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<artifactId>API</artifactId>
 	<packaging>pom</packaging>
 

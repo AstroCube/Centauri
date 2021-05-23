@@ -7,29 +7,22 @@ import net.astrocube.api.bukkit.virtual.channel.ChatChannelDoc;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessageDoc;
 import net.astrocube.api.core.message.ChannelBinder;
-import net.astrocube.api.core.utils.ResolvableType;
 import net.astrocube.commons.bukkit.channel.ChatChannelMessageHandler;
-import net.astrocube.commons.core.model.binder.ModelBinderModule;
+import net.astrocube.commons.core.model.binder.ModelBinder;
 import net.astrocube.commons.core.service.CoreModelService;
 
-public class ChannelModelModule extends ProtectedModule implements ModelBinderModule, ChannelBinder {
+public class ChannelModelModule extends ProtectedModule implements ModelBinder, ChannelBinder {
 
 	@Override
 	protected void configure() {
-		bindModel(ChatChannel.class, ChatChannelDoc.Creation.class, model -> {
-			TypeLiteral<CoreModelService<ChatChannel, ChatChannelDoc.Creation>> serviceTypeLiteral =
-				new ResolvableType<CoreModelService<ChatChannel, ChatChannelDoc.Creation>>() {
-				};
-			model.bind(serviceTypeLiteral);
-		});
 
-		bindModel(ChatChannelMessage.class, ChatChannelMessageDoc.Creation.class, model -> {
-			TypeLiteral<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>> serviceTypeLiteral =
-				new ResolvableType<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>>() {
-				};
-			model.bind(serviceTypeLiteral);
-		});
+		bindModel(ChatChannel.class, ChatChannelDoc.Creation.class)
+			.toSingleService(new TypeLiteral<CoreModelService<ChatChannel, ChatChannelDoc.Creation>>() {});
 
-		bindChannel(ChatChannelMessage.class).registerHandler(new ChatChannelMessageHandler());
+		bindModel(ChatChannelMessage.class, ChatChannelMessageDoc.Creation.class)
+			.toSingleService(new TypeLiteral<CoreModelService<ChatChannelMessage, ChatChannelMessageDoc.Creation>>() {});
+
+		bindChannel(ChatChannelMessage.class)
+			.registerListener(ChatChannelMessageHandler.class);
 	}
 }

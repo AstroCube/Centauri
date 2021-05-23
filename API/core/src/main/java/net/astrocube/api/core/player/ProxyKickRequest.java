@@ -2,16 +2,35 @@ package net.astrocube.api.core.player;
 
 import net.astrocube.api.core.message.Message;
 
-public interface ProxyKickRequest extends Message {
+import java.beans.ConstructorProperties;
 
-	/**
-	 * @return name of the player to kick
-	 */
-	String getName();
+/**
+ * Represents a {@link Message} commonly sent
+ * from Bukkit servers and handled by proxies.
+ *
+ * <p>When this message is sent, all proxies
+ * try to kick the player with the given
+ * {@code name}</p>
+ */
+public class ProxyKickRequest implements Message {
 
-	/**
-	 * @return reason of the punishment
-	 */
-	String getReason();
+	private final String name;
+	private final String reason;
+
+	@ConstructorProperties({"name", "reason"})
+	public ProxyKickRequest(String name, String reason) {
+		this.name = name;
+		this.reason = reason;
+	}
+
+	/** Returns the name of the player to kick */
+	public String getName() {
+		return name;
+	}
+
+	/** Returns the reason of the kick */
+	public String getReason() {
+		return reason;
+	}
 
 }

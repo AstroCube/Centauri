@@ -22,7 +22,8 @@ public class GameModule extends ProtectedModule implements ChannelBinder {
 		install(new SpectatorModule());
 		install(new MatchModule());
 		install(new GameChannelModule());
-		bindChannel(MatchmakingError.class).registerHandler(new MatchmakingErrorHandler());
+		bindChannel(MatchmakingError.class)
+			.registerListener(MatchmakingErrorHandler.class);
 		bind(GameControlPair.class).to(CoreGameControlPair.class);
 		bind(PendingMatchFinder.class).to(CorePendingMatchFinder.class);
 		bind(RunningMatchBalancer.class).to(CoreRunningMatchBalancer.class);

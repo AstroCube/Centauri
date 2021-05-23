@@ -1,11 +1,11 @@
 package net.astrocube.api.bukkit.game.match.request;
 
-import net.astrocube.api.core.message.MessageDefaults;
+import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.virtual.user.User;
 
 import java.util.Set;
 
-@MessageDefaults.ChannelName("gc-victory-assign")
+@Message.ChannelName("gc-victory-assign")
 public interface VictoryAssignMessage extends MatchActionMessage {
 
 	/**

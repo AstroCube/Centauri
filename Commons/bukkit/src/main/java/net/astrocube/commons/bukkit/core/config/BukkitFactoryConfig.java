@@ -1,23 +1,26 @@
 package net.astrocube.commons.bukkit.core.config;
 
+import com.google.inject.Inject;
 import net.astrocube.api.core.http.config.HttpFactoryConfig;
-import org.bukkit.craftbukkit.libs.jline.internal.Configuration;
+import org.bukkit.plugin.Plugin;
 
 public class BukkitFactoryConfig implements HttpFactoryConfig {
 
+	@Inject private Plugin plugin;
+
 	@Override
 	public int getConnectTimeout() {
-		return Configuration.getInteger("api.connect", 1200);
+		return plugin.getConfig().getInt("api.connect", 1200);
 	}
 
 	@Override
 	public int getReadTimeout() {
-		return Configuration.getInteger("api.read", 1200);
+		return plugin.getConfig().getInt("api.read", 1200);
 	}
 
 	@Override
 	public int getRetryNumber() {
-		return Configuration.getInteger("api.retry", 3);
+		return plugin.getConfig().getInt("api.retry", 3);
 	}
 
 }

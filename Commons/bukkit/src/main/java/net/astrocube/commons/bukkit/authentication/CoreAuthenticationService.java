@@ -9,7 +9,6 @@ import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 
 @Singleton
 @SuppressWarnings("UnstableApiUsage")
@@ -23,7 +22,7 @@ public class CoreAuthenticationService implements AuthenticationService {
 		httpClient.executeRequestSync(
 			"authentication/register-server",
 			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				objectMapper.writeValueAsString(authorization)
 			)
@@ -35,7 +34,7 @@ public class CoreAuthenticationService implements AuthenticationService {
 		httpClient.executeRequestSync(
 			"authentication/login-server",
 			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				objectMapper.writeValueAsString(authorization)
 			)

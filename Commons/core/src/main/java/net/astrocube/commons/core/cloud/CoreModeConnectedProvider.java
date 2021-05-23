@@ -7,42 +7,46 @@ import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 
 	@Override
 	public int getGlobalOnline(GameMode gameMode) {
 
-		int compound = 0;
+		int count = 0;
 
 		try {
-
-			compound += getGroupOnline(gameMode.getLobby());
-
+			count += getGroupOnline(gameMode.getLobby());
 			if (gameMode.getSubTypes() != null) {
 				for (SubGameMode subGameMode : gameMode.getSubTypes()) {
-					compound += getGroupOnline(subGameMode.getGroup());
+					count += getGroupOnline(subGameMode.getGroup());
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.getGlobal().log(
+				Level.WARNING,
+				"An error occurred while getting online player count in "
+					+ " gamemode '" + gameMode.getName() + "'",
+				e
+			);
 		}
 
-		return compound;
+		return count;
 	}
 
 	@Override
 	public int getGroupOnline(String group) {
-
-		int compound = 0;
-
 		ServerGroupObject lobby = TimoCloudAPI.getUniversalAPI().getServerGroup(group);
-
-		for (ServerObject server : lobby.getServers()) {
-			compound += server.getOnlinePlayerCount();
+		if (lobby == null) {
+			return -1;
 		}
-
-		return compound;
-
+		int count = 0;
+		for (ServerObject server : lobby.getServers()) {
+			count += server.getOnlinePlayerCount();
+		}
+		return count;
 	}
 
 }

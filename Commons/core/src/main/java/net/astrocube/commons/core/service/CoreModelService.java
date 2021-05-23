@@ -20,7 +20,6 @@ import net.astrocube.api.core.service.query.QueryRequest;
 import net.astrocube.api.core.service.query.QueryResult;
 import net.astrocube.api.core.service.update.UpdateRequest;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,7 +57,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		QueryBaseResult queryResult = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
 			new CoreRequestCallable<>(TypeToken.of(QueryBaseResult.class), mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				new HashMap<>(),
 				queryRequest.getBsonQuery() == null ? "{}"
@@ -90,7 +89,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		return this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey(),
 			new CoreRequestCallable<>(getCompleteType(), mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.PUT,
 				this.mapper.writeValueAsString(request.getModel())
 			)
@@ -103,7 +102,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		return this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey(), // https://perseus.astrocube.net/api/friend/
 			new CoreRequestCallable<>(getCompleteType(), mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				this.mapper.writeValueAsString(request.getModel())
 			)
@@ -115,7 +114,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		PaginateBaseResult paginateResult = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
 			new CoreRequestCallable<>(TypeToken.of(PaginateBaseResult.class), mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.POST,
 				new HashMap<>(),
 				paginateRequest.getBsonQuery() == null ? "{}" :
@@ -184,11 +183,9 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		return this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/" + findModelRequest.getId(),
 			new CoreRequestCallable<>(getCompleteType(), mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.GET,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}
@@ -198,11 +195,9 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		this.httpClient.executeRequestSync(
 			this.modelMeta.getRouteKey() + "/" + deleteRequest.getId(),
 			new CoreRequestCallable<>(TypeToken.of(Void.class), this.mapper),
-			new CoreRequestOptions(
+			new RequestOptions(
 				RequestOptions.Type.DELETE,
-				new HashMap<>(),
-				"",
-				null
+				""
 			)
 		);
 	}

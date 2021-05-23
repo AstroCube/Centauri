@@ -11,7 +11,6 @@ import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.session.MojangManifest;
 import net.astrocube.commons.core.http.CoreRequestCallable;
-import net.astrocube.commons.core.http.CoreRequestOptions;
 import org.bukkit.plugin.Plugin;
 
 import java.security.PublicKey;
@@ -33,11 +32,9 @@ public class CoreSignedSkinFetcher implements SignedSkinFetcher {
 			MojangManifest response = httpClient.executeRequestSync(
 				"https://api.ashcon.app/mojang/v2/user/" + skin,
 				new CoreRequestCallable<>(TypeToken.of(MojangManifest.class), mapper),
-				new CoreRequestOptions(
+				new RequestOptions(
 					RequestOptions.Type.GET,
-					new HashMap<>(),
-					"",
-					null
+					""
 				)
 			);
 

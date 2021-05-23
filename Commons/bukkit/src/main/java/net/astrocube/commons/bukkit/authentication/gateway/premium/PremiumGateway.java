@@ -36,17 +36,10 @@ public class PremiumGateway implements AuthenticationGateway {
 
 				if (!jedis.exists("premium:" + user.getUsername())) {
 					try {
-						channel.sendMessage(new ProxyKickRequest() {
-							@Override
-							public String getName() {
-								return player.getName();
-							}
-
-							@Override
-							public String getReason() {
-								return ChatColor.RED + "Unable to verify premium stastus, if problem persists contact an administrator";
-							}
-						}, new HashMap<>());
+						channel.sendMessage(new ProxyKickRequest(
+							player.getName(),
+							ChatColor.RED + "Unable to verify premium status, if problem persists contact an administrator"
+						), new HashMap<>());
 					} catch (Exception ignore) {
 					}
 					return;

@@ -18,7 +18,8 @@ public class BukkitSessionModule extends ProtectedModule implements ChannelBinde
 		bind(SessionCacheInvalidator.class).to(CoreSessionCacheInvalidator.class);
 		bind(InvalidSessionMessageMatcher.class).to(CoreInvalidSessionMessageMatcher.class);
 
-		bindChannel(SessionSwitchWrapper.class).registerHandler(new AuthenticationSuccessHandler());
+		bindChannel(SessionSwitchWrapper.class)
+			.registerListener(AuthenticationSuccessHandler.class);
 	}
 
 }

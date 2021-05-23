@@ -1,9 +1,10 @@
 package net.astrocube.commons.core.message;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.reflect.TypeToken;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
+import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.message.*;
 import net.astrocube.api.core.redis.Redis;
 import redis.clients.jedis.Jedis;
@@ -11,84 +12,67 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@SuppressWarnings("All")
+@Singleton
 public class JedisMessenger implements Messenger {
+
+	public static final String CHANNEL_NAME = "centauri_redis";
 
 	private final ObjectMapper mapper;
 	private final JedisPool messengerPool;
 	private final Jedis listenerConnection;
-	private final JedisPubSub pubSub;
-	private final Map<Class<? extends Message>, JedisChannel<? extends Message>> channels;
 
-	public JedisMessenger(Redis redis,
-												ObjectMapper mapper,
-												ExecutorService executorService,
-												Set<ChannelMeta> channelMetas,
-												Set<MessageHandler> handlers
+	private final Map<String, JedisChannel<?>> channelsByName = new HashMap<>();
+	private final Map<Class<? extends Message>, JedisChannel<? extends Message>> channels = new HashMap<>();
+
+	@Inject
+	public JedisMessenger(
+		Injector injector,
+		Redis redis,
+		ObjectMapper mapper,
+		ExecutorServiceProvider executorServiceProvider,
+		Set<ChannelBinding<?>> channelBindings // multi-bound by ChannelBinder
 	) {
 		this.mapper = mapper;
 		this.listenerConnection = redis.getListenerConnection();
 		this.messengerPool = redis.getRawConnection();
-		this.channels = new HashMap<>();
-		this.pubSub = new JedisPubSub() {
-			@Override
-			public void onMessage(String channel, String message) {
-				try {
-					JsonNode jsonMessage = (ObjectNode) mapper.readTree(message);
 
-					if (jsonMessage.get("metadata") != null) {
-						Metadata metadata = mapper.readValue(jsonMessage.get("metadata").toString(), Metadata.class);
+		for (ChannelBinding<?> channelBinding : channelBindings) {
+			instantiateChannel(injector, channelBinding);
+		}
+		JedisPubSub subscriber = new JedisSubscriber(mapper, channelsByName);
+		executorServiceProvider.getRegisteredService()
+			.submit(() -> listenerConnection.subscribe(subscriber, CHANNEL_NAME));
+	}
 
-						Optional<JedisChannel<? extends Message>> channelOptional =
-							channels.values().stream()
-								.filter(meta -> metadata.getAppId().equals(meta.getName()))
-								.findFirst();
+	/**
+	 * Type-safe method responsible of instantiating all the
+	 * listeners bindings ({@link ChannelBinding#getListenerBindings()})
+	 * and creating and registering the real {@link Channel}
+	 */
+	private <T extends Message> void instantiateChannel(
+		Injector injector,
+		ChannelBinding<T> channelBinding
+	) {
 
-						if (!channelOptional.isPresent()) {
-							return;
-						}
+		// listener instantiation
+		Set<MessageListener<T>> listeners = new HashSet<>();
+		for (Class<? extends MessageListener<T>> listenerType
+			: channelBinding.getListenerBindings()) {
+			listeners.add(injector.getInstance(listenerType));
+		}
 
-						JedisChannel channelObject = channelOptional.get();
+		// channel creation
+		JedisChannel<T> channel = new JedisChannel<>(
+			channelBinding,
+			this.messengerPool,
+			this.mapper,
+			listeners
+		);
 
-						if (metadata.getInstanceId().equals(channelObject.getId())) {
-							return;
-						}
-
-						Message messageObject = (Message) mapper.readValue(
-							mapper.writeValueAsString(jsonMessage.get("message")),
-							channelObject.getType().getRawType()
-						);
-
-						channelObject.callListeners(messageObject, metadata);
-					}
-				} catch (Exception e) {
-					Logger.getGlobal().log(
-						Level.WARNING,
-						"Error while reading redis message",
-						e
-					);
-				}
-			}
-		};
-
-		channelMetas.forEach(channelMeta -> {
-			JedisChannel<?> channel = new JedisChannel<>(channelMeta.name(), UUID.randomUUID().toString(), TypeToken.of(channelMeta.type()), this.messengerPool, this.mapper);
-
-			this.channels.put(channelMeta.type(), channel);
-		});
-
-		handlers.forEach(handler -> {
-			JedisChannel channel = this.channels.get(handler.type());
-			if (channel != null) {
-				channel.addHandler(handler);
-			}
-		});
-
-		executorService.submit(() -> listenerConnection.subscribe(pubSub, "centauri_redis"));
+		// channel registration
+		channelsByName.put(channel.getName(), channel);
+		channels.put(channelBinding.getType(), channel);
 	}
 
 	@Override
