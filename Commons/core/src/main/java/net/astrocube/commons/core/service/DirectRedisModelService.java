@@ -86,8 +86,10 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	@Override
 	public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
 		Set<Complete> found = new HashSet<>();
+		System.out.println("querySync");
 		try (Jedis client = redis.getRawConnection().getResource()) {
 			for (String key : client.keys(modelMeta.getRouteKey() + ":*")) {
+				System.out.println("Key " + key);
 				String json = client.get(key);
 				JsonNode node = mapper.readTree(json);
 				if (contains(node, queryRequest.getBsonQuery())) {
