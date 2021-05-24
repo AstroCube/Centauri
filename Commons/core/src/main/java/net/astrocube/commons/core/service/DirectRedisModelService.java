@@ -130,22 +130,28 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
 	private boolean contains(JsonNode root, JsonNode node) {
 		if (root == null) {
+			System.out.println("Root null");
 			return false;
 		} else if (root.isValueNode()) {
+			System.out.println("2");
 			return node.isValueNode() && root.equals(node);
 		} else if (root.isArray()) {
 			if (node.isArray()) {
+				System.out.println("node is Array");
 				ArrayNode containerArray = (ArrayNode) root;
 				ArrayNode nodeArray = (ArrayNode) node;
 				Set<JsonNode> containedElements = new HashSet<>();
 				for (JsonNode content : containerArray) {
+					System.out.println("Content " + content.toString());
 					containedElements.add(content);
 				}
 				for (JsonNode element : nodeArray) {
 					if (!containedElements.contains(element)) {
+						System.out.println("No contained elements");
 						return false;
 					}
 				}
+				System.out.println("true");
 				return true;
 			} else {
 				return false;
