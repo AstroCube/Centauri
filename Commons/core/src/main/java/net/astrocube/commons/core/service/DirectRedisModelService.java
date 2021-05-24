@@ -93,6 +93,7 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 				String json = client.get(key);
 				JsonNode node = mapper.readTree(json);
 				if (contains(node, queryRequest.getBsonQuery())) {
+					System.out.println("The node read from the key '" + key + "' contains the given QueryRequest's bson query");
 					Complete value = mapper.readValue(
 						node.toString(),
 						modelMeta.getCompleteType()
