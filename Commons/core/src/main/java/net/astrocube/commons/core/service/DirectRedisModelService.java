@@ -93,7 +93,7 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 				String json = client.get(key);
 				JsonNode node = mapper.readTree(json);
 				if (contains(node, queryRequest.getBsonQuery())) {
-					System.out.println("The node read from the key '" + key + "' contains the given QueryRequest's bson query");
+					System.out.println("The node read from the key '" + key + "' contains the given QueryRequest's bson query, node " + node);
 					Complete value = mapper.readValue(
 						node.toString(),
 						modelMeta.getCompleteType()
@@ -130,7 +130,6 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 
 	private boolean contains(JsonNode root, JsonNode node) {
 		if (root == null) {
-			System.out.println("Root null");
 			return false;
 		/*} else if (root.isValueNode()) {
 			System.out.println("2");
