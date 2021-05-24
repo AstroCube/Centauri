@@ -22,7 +22,6 @@ public class BukkitConcurrentProvider implements ExecutorServiceProvider {
 
 	@Override
 	public int getConfiguredThreads() {
-		System.out.println("config is " + config);
 		return config.getInt("api.threads", 2);
 	}
 
