@@ -2,14 +2,14 @@ package net.astrocube.commons.bukkit.core.config;
 
 import com.google.inject.Inject;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BukkitConcurrentProvider implements ExecutorServiceProvider {
 
-	@Inject private Plugin plugin;
+	@Inject private FileConfiguration config;
 	private ExecutorService executorService;
 
 	@Override
@@ -22,9 +22,8 @@ public class BukkitConcurrentProvider implements ExecutorServiceProvider {
 
 	@Override
 	public int getConfiguredThreads() {
-		System.out.println("plugin is " + plugin);
-		System.out.println("config is " + plugin.getConfig());
-		return plugin.getConfig().getInt("api.threads", 2);
+		System.out.println("config is " + config);
+		return config.getInt("api.threads", 2);
 	}
 
 }
