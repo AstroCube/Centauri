@@ -101,7 +101,8 @@ public class CoreGameControlPair implements GameControlPair {
 
 		plugin.getLogger().log(Level.INFO, "Starting game pairing, the server will shut down if no game can be paired during grace time..");
 
-		this.repeatingSchedule = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> Bukkit.getPluginManager().callEvent(new GamePairEnableEvent()), 40L, 100L).getTaskId();
+		this.repeatingSchedule = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () ->
+			Bukkit.getPluginManager().callEvent(new GamePairEnableEvent()), 40L, 100L).getTaskId();
 
 		this.stopSchedule = Bukkit.getScheduler().runTaskLater(
 			plugin,
