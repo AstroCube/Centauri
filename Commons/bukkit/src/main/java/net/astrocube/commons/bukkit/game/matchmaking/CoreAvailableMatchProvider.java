@@ -33,7 +33,9 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 	public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
 
 		//ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
-		ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
+		ObjectNode criteria = request.getCriteria().isPresent()
+			? request.getCriteria().get()
+			: mapper.createObjectNode();
 
 		GameMode gameMode = findService.findSync(request.getGameMode());
 

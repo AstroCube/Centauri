@@ -40,7 +40,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 			mode.getId(),
 			subMode.getId(),
 			"",
-			mapper.createObjectNode()
+			null
 		);
 
 	}
