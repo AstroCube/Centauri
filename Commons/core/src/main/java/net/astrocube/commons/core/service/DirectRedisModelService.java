@@ -47,8 +47,9 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	public Complete createSync(CreateRequest<Partial> request) throws Exception {
 
 		ObjectNode node = mapper.valueToTree(request.getModel());
+		String id = UUID.randomUUID().toString();
 
-		node.put("_id", UUID.randomUUID().toString());
+		node.put("_id", id);
 		String json = node.toString();
 
 		Complete model = getModel(json);
@@ -56,7 +57,7 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 		try (Jedis client = redis.getRawConnection().getResource()) {
 
 			client.set(
-				modelMeta.getRouteKey() + ':' + UUID.randomUUID(),
+				modelMeta.getRouteKey() + ':' + id,
 				mapper.writeValueAsString(model)
 			);
 		}
