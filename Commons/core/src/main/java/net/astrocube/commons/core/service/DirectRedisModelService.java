@@ -140,9 +140,8 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 			return true;
 		} else if (root == null) {
 			return false;
-		/*} else if (root.isValueNode()) {
-			System.out.println("2");
-			return node.isValueNode() && root.equals(node);*/
+		} else if (root.isValueNode()) {
+			return node.isValueNode() && root.equals(node);
 		} else if (root.isArray()) {
 			if (node.isArray()) {
 				ArrayNode containerArray = (ArrayNode) root;
