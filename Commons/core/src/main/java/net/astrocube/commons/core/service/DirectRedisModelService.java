@@ -129,7 +129,9 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	}
 
 	private boolean contains(JsonNode root, JsonNode node) {
-		if (root == null) {
+		if (node.isNull()) {
+			return true;
+		} else if (root == null) {
 			return false;
 		/*} else if (root.isValueNode()) {
 			System.out.println("2");
