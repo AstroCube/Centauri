@@ -54,7 +54,8 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 		criteria.put("gamemode", gameMode.getId());
 		criteria.put("subGamemode", subGameModeOptional.get().getId());
 		criteria.put("private", false);
-		criteria.putPOJO("status", MatchDoc.Status.LOBBY);
+		// TODO: Use the enum constant, I didn't use it cuz it was causing issues (serializing as LOBBY and not as Lobby)
+		criteria.put("status", "Lobby");
 
 		System.out.println("MatchQueryService");
 
