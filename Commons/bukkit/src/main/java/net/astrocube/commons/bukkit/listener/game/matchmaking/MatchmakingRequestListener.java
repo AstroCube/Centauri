@@ -37,7 +37,6 @@ public class MatchmakingRequestListener implements Listener {
 			);
 
 			if (match.isPresent()) {
-				System.out.println("Found match");
 				matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
 			} else {
 				Bukkit.getScheduler().runTaskLater(plugin, () ->
