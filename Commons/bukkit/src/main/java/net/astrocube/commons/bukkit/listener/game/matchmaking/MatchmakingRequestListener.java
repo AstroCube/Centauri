@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class MatchmakingRequestListener implements Listener {
 
@@ -45,6 +46,7 @@ public class MatchmakingRequestListener implements Listener {
 			}
 
 		} catch (Exception e) {
+			Bukkit.getLogger().log(Level.WARNING, "An error occurred while creating match request", e);
 			Bukkit.getPluginManager().callEvent(new MatchmakingErrorEvent(
 				new MatchmakingError() {
 					@Override
