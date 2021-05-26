@@ -32,7 +32,7 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 	@Override
 	public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
 
-		ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
+		//ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
 		ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
 
 		GameMode gameMode = findService.findSync(request.getGameMode());
@@ -48,7 +48,9 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 			throw new GameControlException("There was no subMode matching this request at the database");
 		}
 
-		criteria.put("server", serverArray);
+		//criteria.put("server", serverArray);
+		criteria.put("gamemode", gameMode.getId());
+		criteria.put("subGamemode", subGameModeOptional.get().getId());
 		criteria.put("private", false);
 		criteria.putPOJO("status", MatchDoc.Status.LOBBY);
 
