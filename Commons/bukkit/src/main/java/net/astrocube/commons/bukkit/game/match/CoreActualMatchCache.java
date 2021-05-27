@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
+import net.astrocube.api.bukkit.game.match.MatchSubscription;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
@@ -34,10 +35,22 @@ public class CoreActualMatchCache implements ActualMatchCache {
 		resource.del("matchsub:" + userId);
 	}
 
-	private MatchSubscription getSubscription(String userId) throws Exception {
+	@Override
+	public void clearSubscription(String userId) {
+		try (Jedis resource = redis.getRawConnection().getResource()) {
+			clearSubscription(resource, userId);
+		}
+	}
+
+	@Override
+	public Optional<MatchSubscription> getSubscription(String userId) throws Exception {
 		try (Jedis resource = redis.getRawConnection().getResource()) {
 			String json = resource.get("matchsub:" + userId);
-			return objectMapper.readValue(json, MatchSubscription.class);
+			if (json == null) {
+				return Optional.empty();
+			} else {
+				return Optional.of(objectMapper.readValue(json, MatchSubscription.class));
+			}
 		}
 	}
 
@@ -55,7 +68,7 @@ public class CoreActualMatchCache implements ActualMatchCache {
 
 	@Override
 	public Optional<Match> get(String id) throws Exception {
-		MatchSubscription subscription = getSubscription(id);
+		MatchSubscription subscription = getSubscription(id).orElse(null);
 		// no subscription, no match
 		if (subscription == null) {
 			return Optional.empty();

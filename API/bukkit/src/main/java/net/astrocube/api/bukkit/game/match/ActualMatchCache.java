@@ -22,9 +22,18 @@ public interface ActualMatchCache {
 	Optional<Match> get(String id) throws Exception;
 
 	/**
+	 * Gets the actual user {@code id}'s match
+	 * subscription
+	 */
+	Optional<MatchSubscription> getSubscription(String id) throws Exception;
+
+	/**
 	 * Clears the subscription of all the involved
 	 * users in the given {@code match}
 	 */
 	void clearSubscriptions(Match match) throws Exception;
+
+	/** Removes the match subscription of the given user {@code id} */
+	void clearSubscription(String id) throws Exception;
 
 }

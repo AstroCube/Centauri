@@ -27,9 +27,11 @@ public class GameServerLeaveListener implements Listener {
 	@EventHandler
 	public void onGameUserDisconnect(GameUserDisconnectEvent event) {
 
-		System.out.println("=================\nDISQUALIFICATION\n");
+		System.out.println("=================");
+		System.out.println("DISQUALIFICATION");
 		System.out.println("MATCH: " + event.getMatch());
 		System.out.println("PLAYER: " + event.getPlayer().getName());
+		System.out.println("ORIGIN: " + event.getOrigin());
 		System.out.println("=================");
 
 		findService.find(event.getMatch()).callback(matchResponse -> {

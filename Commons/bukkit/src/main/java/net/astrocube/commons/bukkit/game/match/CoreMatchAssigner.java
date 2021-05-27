@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.match.MatchService;
+import net.astrocube.api.bukkit.game.match.MatchSubscription;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
@@ -85,34 +86,36 @@ public class CoreMatchAssigner implements MatchAssigner {
 	@Override
 	public void unAssign(Player player) throws Exception {
 
-		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
-
-		if (matchOptional.isPresent()) {
-
-			Match match = matchOptional.get();
-
-			if (match.getSpectators().contains(player.getDatabaseIdentifier())) {
-				matchService.assignSpectator(player.getDatabaseIdentifier(), match.getId(), false);
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.SPECTATING));
-			} else if (match.getPending().stream().anyMatch(pending ->
-				pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
-					pending.getInvolved().contains(player.getDatabaseIdentifier()))
-			) {
-
-				matchService.unAssignPending(player.getDatabaseIdentifier(), match.getId());
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.WAITING));
-
-			} else if (match.getTeams().stream()
-				.anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
-					teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
-				)
-			) {
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.PLAYING));
-			}
-
+		Optional<MatchSubscription> optSubscription = actualMatchCache.getSubscription(player.getDatabaseIdentifier());
+		if (!optSubscription.isPresent()) {
+			return;
 		}
 
+		MatchSubscription subscription = optSubscription.get();
+		UserMatchJoiner.Origin origin;
 
+		// TODO: I think we should update the Match too
+
+		switch (subscription.getType()) {
+			case SPECTATOR: {
+				matchService.assignSpectator(player.getDatabaseIdentifier(), subscription.getMatch(), false);
+				origin = UserMatchJoiner.Origin.SPECTATING;
+				break;
+			}
+			case ASSIGNATION_INVOLVED:
+			case ASSIGNATION_RESPONSIBLE: {
+				matchService.unAssignPending(player.getDatabaseIdentifier(), subscription.getMatch());
+				origin = UserMatchJoiner.Origin.WAITING;
+				break;
+			}
+			default: {
+				origin = UserMatchJoiner.Origin.PLAYING;
+				break;
+			}
+		}
+
+		Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(subscription.getMatch(), player, origin));
+		actualMatchCache.clearSubscription(player.getDatabaseIdentifier());
 	}
 
 	@Override
