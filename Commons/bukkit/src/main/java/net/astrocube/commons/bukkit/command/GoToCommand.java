@@ -58,7 +58,7 @@ public class GoToCommand implements CommandClass {
 
 					try {
 
-						Optional<Match> matchOptional = actualMatchCache.get(user);
+						Optional<Match> matchOptional = actualMatchCache.get(user.getId());
 
 						if (matchOptional.isPresent()) {
 							spectateRequestAssigner.assignRequestToPlayer(

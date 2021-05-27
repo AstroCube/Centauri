@@ -25,7 +25,7 @@ public class CoreMatchRejoiner implements MatchRejoiner {
 	@Override
 	public void rejoinMatch(User user, Player player) throws Exception {
 
-		Optional<Match> match = actualMatchCache.get(user);
+		Optional<Match> match = actualMatchCache.get(user.getId());
 
 		if (match.isPresent()) {
 

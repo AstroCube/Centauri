@@ -1,4 +1,4 @@
-package net.astrocube.api.core.virtual.user.part;
+package net.astrocube.commons.bukkit.game.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -15,13 +15,8 @@ public interface ActualMatchCache {
 	 */
 	void updateSubscription(Match match, MatchAssignable assignable) throws Exception;
 
-	/** Gets the actual {@code user}'s match */
-	Optional<Match> get(User user) throws Exception;
-
 	/**
 	 * Gets the actual user {@code id}'s match.
-	 * It gets the {@link User} and then calls
-	 * {@link ActualMatchCache#get(User)}
 	 * @param id to be placed
 	 */
 	Optional<Match> get(String id) throws Exception;
