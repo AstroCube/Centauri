@@ -27,23 +27,29 @@ public class GameServerLeaveListener implements Listener {
 	@EventHandler
 	public void onGameUserDisconnect(GameUserDisconnectEvent event) {
 
+		System.out.println("=================\nDISQUALIFICATION\n");
+		System.out.println("MATCH: " + event.getMatch());
+		System.out.println("PLAYER: " + event.getPlayer().getName());
+		System.out.println("=================");
+
 		findService.find(event.getMatch()).callback(matchResponse -> {
 
 			matchResponse.ifSuccessful(match -> {
 
 				if (event.getOrigin() == UserMatchJoiner.Origin.PLAYING) {
-
+					System.out.println("ORIGIN = PLAYING");
 					gameModeFindService.find(match.getGameMode()).callback(gamemodeResponse -> {
 
 						gamemodeResponse.ifSuccessful(mode -> {
 
 							if (mode.getSubTypes() != null) {
-
+								System.out.println("DISQUALIFYING");
 								mode.getSubTypes().stream().filter(sub -> sub.getId().equalsIgnoreCase(match.getSubMode()) && !sub.hasRejoin())
 									.findAny()
 									.ifPresent(sub -> {
 										try {
 											matchService.disqualify(match.getId(), event.getPlayer().getDatabaseIdentifier());
+											System.out.println("CALLED DISQUALIFICATION");
 										} catch (Exception exception) {
 											plugin.getLogger().log(Level.SEVERE, "Error while disqualifying player", exception);
 										}
