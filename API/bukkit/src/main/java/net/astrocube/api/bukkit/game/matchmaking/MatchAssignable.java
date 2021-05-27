@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class MatchAssignable {
 
-	private final String responsible;
+	private String responsible;
 	private final Set<String> involved;
 
 	@ConstructorProperties({"responsible", "involved"})
@@ -27,6 +27,10 @@ public class MatchAssignable {
 	 */
 	public String getResponsible() {
 		return responsible;
+	}
+
+	public void setResponsible(String responsible) {
+		this.responsible = responsible;
 	}
 
 	/**

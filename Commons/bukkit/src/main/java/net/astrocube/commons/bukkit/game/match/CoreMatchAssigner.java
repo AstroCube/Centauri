@@ -27,6 +27,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -38,6 +39,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 	@Inject private UserMatchJoiner userMatchJoiner;
 	@Inject private FindService<User> userFindService;
 	@Inject private FindService<Server> serverFindService;
+	@Inject private FindService<Match> matchFindService;
 	@Inject private MatchService matchService;
 	@Inject private UpdateService<Match, MatchDoc.Partial> updateService;
 
@@ -92,6 +94,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 		}
 
 		MatchSubscription subscription = optSubscription.get();
+		Match match = matchFindService.findSync(subscription.getMatch());
 		UserMatchJoiner.Origin origin;
 
 		// TODO: I think we should update the Match too
@@ -99,22 +102,46 @@ public class CoreMatchAssigner implements MatchAssigner {
 		switch (subscription.getType()) {
 			case SPECTATOR: {
 				matchService.assignSpectator(player.getDatabaseIdentifier(), subscription.getMatch(), false);
+				match.getSpectators().remove(player.getDatabaseIdentifier());
 				origin = UserMatchJoiner.Origin.SPECTATING;
 				break;
 			}
 			case ASSIGNATION_INVOLVED:
 			case ASSIGNATION_RESPONSIBLE: {
+				// TODO: Refactor this XD
+				match.getPending().removeIf(assignable -> {
+					boolean isResponsible = assignable.getResponsible().equals(player.getDatabaseIdentifier());
+					boolean isInvolved = assignable.getInvolved().contains(player.getDatabaseIdentifier());
+					if (isResponsible || isInvolved) {
+						if (isResponsible && assignable.getInvolved().isEmpty()) {
+							return true;
+						} else if (isResponsible) {
+							Iterator<String> involvedIterator = assignable.getInvolved().iterator();
+							String newResponsible = involvedIterator.next();
+							involvedIterator.remove();
+							assignable.setResponsible(newResponsible);
+							return false;
+						} else {
+							assignable.getInvolved().remove(player.getDatabaseIdentifier());
+							return false;
+						}
+					}
+					return false;
+				});
+
 				matchService.unAssignPending(player.getDatabaseIdentifier(), subscription.getMatch());
 				origin = UserMatchJoiner.Origin.WAITING;
 				break;
 			}
 			default: {
+				// TODO: REmove the player from the teams, algorithm should be similar to pending
 				origin = UserMatchJoiner.Origin.PLAYING;
 				break;
 			}
 		}
 
 		Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(subscription.getMatch(), player, origin));
+		updateService.updateSync(match);
 		actualMatchCache.clearSubscription(player.getDatabaseIdentifier());
 	}
 
