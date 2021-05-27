@@ -36,10 +36,10 @@ public class SpectateRequestListener implements Listener {
 		if (event.getState() == SpectateRequest.State.SUCCESS && event.getSpectateRequest() != null) {
 
 			SpectateRequest request = event.getSpectateRequest();
-			;
 
 			try {
 				matchService.assignSpectator(request.getRequester(), request.getMatch(), true);
+				// TODO: Bug found. The game server expects a Match with updated data so it can accept the spectator. But we aren't updating the Match so the spectators gets left on read
 				matchAssigner.setRecord(request.getRequester(), request.getMatch(), request.getServer());
 				messageHandler.send(event.getPlayer(), "game.spectator.request.success");
 			} catch (Exception e) {
