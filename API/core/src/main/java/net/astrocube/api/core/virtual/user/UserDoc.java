@@ -5,6 +5,7 @@ import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.part.GameOptions;
+import net.astrocube.api.core.virtual.user.part.MatchSubscription;
 import net.astrocube.api.core.virtual.user.part.PublicInformation;
 
 import javax.annotation.Nullable;
@@ -73,6 +74,11 @@ public interface UserDoc {
 		String getLastGame();
 
 		String getLastLobby();
+
+		@Nullable
+		MatchSubscription getMatchSubscription();
+
+		void setMatchSubscription(@Nullable MatchSubscription subscription);
 
 		@JsonProperty("authorize")
 		Authorization getAuthorizeMethod();

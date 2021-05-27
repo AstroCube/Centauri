@@ -8,13 +8,6 @@ import java.util.Set;
 public interface ActualMatchProvider {
 
 	/**
-	 * Retrieve actual user match.
-	 * @param id of user to be retrieved.
-	 * @return containing match.
-	 */
-	Optional<Match> provide(String id) throws Exception;
-
-	/**
 	 * Retrieve every match linked with an user.
 	 * @param id of the user to be retrieved.
 	 * @return match list.

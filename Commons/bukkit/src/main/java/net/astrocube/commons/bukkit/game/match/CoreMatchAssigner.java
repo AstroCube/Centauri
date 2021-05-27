@@ -32,35 +32,30 @@ import java.util.logging.Level;
 @Singleton
 public class CoreMatchAssigner implements MatchAssigner {
 
+	@Inject private Plugin plugin;
+	@Inject private ActualMatchCache actualMatchCache;
+	@Inject private UserMatchJoiner userMatchJoiner;
+	@Inject private FindService<User> userFindService;
+	@Inject private FindService<Server> serverFindService;
+	@Inject private MatchService matchService;
+	@Inject private UpdateService<Match, MatchDoc.Partial> updateService;
+
 	private final JedisPool jedisPool;
-	private final Plugin plugin;
-	private final ActualMatchCache actualMatchCache;
-	private final UserMatchJoiner userMatchJoiner;
-	private final FindService<User> findService;
-	private final FindService<Server> serverFindService;
-	private final MatchService matchService;
 	private final Channel<SingleMatchAssignation> channel;
-	private final UpdateService<Match, MatchDoc.Partial> updateService;
 
 	@Inject
-	public CoreMatchAssigner(Redis redis, ActualMatchCache actualMatchProvider,
-													 Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
-													 FindService<User> findService, FindService<Server> serverFindService, MatchService matchService, UpdateService<Match, MatchDoc.Partial> updateService) {
+	public CoreMatchAssigner(
+		Redis redis,
+		Messenger messenger
+	) {
 		this.jedisPool = redis.getRawConnection();
-		this.plugin = plugin;
-		this.actualMatchCache = actualMatchProvider;
-		this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
-		this.userMatchJoiner = userMatchJoiner;
-		this.matchService = matchService;
-		this.serverFindService = serverFindService;
-		this.findService = findService;
-		this.updateService = updateService;
-
+		this.channel = messenger.getChannel(SingleMatchAssignation.class);
 	}
 
 	@Override
 	public void assign(MatchAssignable assignable, Match match) throws Exception {
 
+		actualMatchCache.updateSubscription(match, assignable);
 		Server matchServer = serverFindService.findSync(match.getServer());
 
 		try (Jedis jedis = jedisPool.getResource()) {
@@ -127,7 +122,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 			jedis.expire("matchAssign:" + id, 30);
 			if (plugin.getConfig().getBoolean("server.sandbox")) {
 
-				User user = findService.findSync(id);
+				User user = userFindService.findSync(id);
 				Player player = Bukkit.getPlayer(user.getUsername());
 
 				userMatchJoiner.processJoin(user, player);
