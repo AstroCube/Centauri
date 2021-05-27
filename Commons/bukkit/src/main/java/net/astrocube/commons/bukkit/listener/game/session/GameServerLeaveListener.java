@@ -21,8 +21,7 @@ public class GameServerLeaveListener implements Listener {
 	private @Inject FindService<Match> findService;
 	private @Inject FindService<GameMode> gameModeFindService;
 	private @Inject MessageHandler messageHandler;
-	private @Inject
-	MatchService matchService;
+	private @Inject MatchService matchService;
 	private @Inject Plugin plugin;
 
 	@EventHandler
