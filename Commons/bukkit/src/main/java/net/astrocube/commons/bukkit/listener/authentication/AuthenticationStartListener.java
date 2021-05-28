@@ -46,37 +46,14 @@ public class AuthenticationStartListener implements Listener {
 						user.getSession().getAuthorizeMethod()
 					);
 
-				sessionRegistryManager.register(new SessionRegistry() {
-					@Override
-					public String getUser() {
-						return event.getRelated();
-					}
-
-					@Override
-					public String getVersion() {
-						return "1.8.8";
-					}
-
-					@Override
-					public LocalDateTime getAuthorizationDate() {
-						return LocalDateTime.now();
-					}
-
-					@Override
-					public String getAuthorization() {
-						return gateway.getName();
-					}
-
-					@Override
-					public boolean isPending() {
-						return true;
-					}
-
-					@Override
-					public String getAddress() {
-						return event.getPlayer().getAddress().getAddress().getHostAddress();
-					}
-				});
+				sessionRegistryManager.register(new SessionRegistry(
+						event.getRelated(),
+						"1.8.8",
+						LocalDateTime.now(),
+						gateway.getName(),
+						true,
+						event.getPlayer().getAddress().getAddress().getHostAddress()
+				));
 
 				if (!event.isRegistered()) {
 					gatewayMatcher.getRegisterGateway().startProcessing(user);

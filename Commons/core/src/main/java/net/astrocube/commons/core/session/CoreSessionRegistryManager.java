@@ -49,38 +49,11 @@ public class CoreSessionRegistryManager implements SessionRegistryManager {
 			if (!sessionRegistry.isPresent()) throw new AuthorizeException("Session authorization never pre-fetched");
 
 			SessionRegistry registry = sessionRegistry.get();
+			registry.setAuthorizationDate(LocalDateTime.now());
+			registry.setAuthorization(authorizationMethod);
+			registry.setPending(false);
 
-			jedis.set("session:" + id, objectMapper.writeValueAsString(new SessionRegistry() {
-				@Override
-				public String getUser() {
-					return registry.getUser();
-				}
-
-				@Override
-				public String getVersion() {
-					return registry.getVersion();
-				}
-
-				@Override
-				public LocalDateTime getAuthorizationDate() {
-					return LocalDateTime.now();
-				}
-
-				@Override
-				public String getAuthorization() {
-					return authorizationMethod;
-				}
-
-				@Override
-				public boolean isPending() {
-					return false;
-				}
-
-				@Override
-				public String getAddress() {
-					return registry.getAddress();
-				}
-			}));
+			jedis.set("session:" + id, objectMapper.writeValueAsString(registry));
 
 		} catch (Exception exception) {
 			throw new AuthorizeException("Unable to authorize session");
