@@ -42,17 +42,10 @@ public class ServerDisconnectListener implements Listener {
 			if (user.isPresent()) {
 				sessionService.serverDisconnect(user.get().getId());
 				sessionRegistryManager.unregister(user.get().getId());
-				channel.sendMessage(new SessionSwitchWrapper() {
-					@Override
-					public User getUser() {
-						return user.get();
-					}
-
-					@Override
-					public boolean isConnecting() {
-						return false;
-					}
-				}, new HashMap<>());
+				channel.sendMessage(new SessionSwitchWrapper(
+						user.get(),
+						false
+				), new HashMap<>());
 
 				try (Jedis jedis = redis.getRawConnection().getResource()) {
 					jedis.del("premium:" + user.get().getUsername());
