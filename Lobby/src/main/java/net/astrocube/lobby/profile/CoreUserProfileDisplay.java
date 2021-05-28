@@ -73,7 +73,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 		//#region Premium Mode
 		menuBuilder.addItem(ItemClickable.builder(20).setItemStack(ItemBuilder
 				.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
-				.setUrl(TEXTURES_URL + "")
+				.setUrl(TEXTURES_URL + "686d3c12cfcbea83a50292a77fc1f08f94c4e69e147f1de6de2e99e8d4efc635")
 				.setName(messageHandler.get(player, "lobby.profile.premium"))
 				.setLore(messageHandler.get(player, "lobby.profile.premium-lore"))
 				.build()
