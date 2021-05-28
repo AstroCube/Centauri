@@ -158,22 +158,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 				userMatchJoiner.processJoin(user, player);
 
 			} else {
-				channel.sendMessage(new SingleMatchAssignation() {
-					@Override
-					public String getUser() {
-						return id;
-					}
-
-					@Override
-					public String getMatch() {
-						return matchId;
-					}
-
-					@Override
-					public String getServer() {
-						return server;
-					}
-				}, new HashMap<>());
+				channel.sendMessage(new SingleMatchAssignation(id, matchId, server), new HashMap<>());
 			}
 		}
 	}
