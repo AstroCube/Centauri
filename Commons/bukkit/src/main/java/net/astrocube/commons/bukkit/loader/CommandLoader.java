@@ -16,6 +16,8 @@ import me.fixeddev.commandflow.translator.DefaultTranslator;
 import net.astrocube.api.bukkit.command.flow.CoreCommandLanguageProvider;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.command.*;
+import net.astrocube.commons.bukkit.command.authentication.LoginCommand;
+import net.astrocube.commons.bukkit.command.authentication.RegisterCommand;
 import net.astrocube.commons.bukkit.command.punishment.PunishmentCommand;
 import org.bukkit.plugin.Plugin;
 

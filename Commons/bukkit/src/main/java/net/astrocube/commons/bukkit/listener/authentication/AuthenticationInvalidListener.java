@@ -3,8 +3,7 @@ package net.astrocube.commons.bukkit.listener.authentication;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationInvalidEvent;
-import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
-import net.astrocube.api.bukkit.authentication.server.CooldownKick;
+import net.astrocube.api.bukkit.authentication.server.AuthenticationLimitValidator;
 import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
@@ -17,8 +16,7 @@ import java.util.logging.Level;
 
 public class AuthenticationInvalidListener implements Listener {
 
-	private @Inject CooldownKick cooldownKick;
-	private @Inject AuthenticationCooldown authenticationCooldown;
+	private @Inject AuthenticationLimitValidator authenticationLimitValidator;
 	private @Inject MessageHandler messageHandler;
 	private @Inject FindService<User> findService;
 	private @Inject Plugin plugin;
@@ -34,12 +32,12 @@ public class AuthenticationInvalidListener implements Listener {
 
 				User user = response.getResponse().get();
 
-				cooldownKick.addTry(user);
+				authenticationLimitValidator.addTry(user);
 
-				if (cooldownKick.getTries(user) > 2) {
-					authenticationCooldown.setCooldownLock(user.getId());
-					cooldownKick.checkAndKick(user, event.getPlayer());
-					cooldownKick.clearTries(user);
+				if (authenticationLimitValidator.getTries(user) > 2) {
+					authenticationLimitValidator.setCooldownLock(user.getId());
+					authenticationLimitValidator.checkAndKick(user, event.getPlayer());
+					authenticationLimitValidator.clearTries(user);
 				}
 
 			} catch (AuthorizeException exception) {

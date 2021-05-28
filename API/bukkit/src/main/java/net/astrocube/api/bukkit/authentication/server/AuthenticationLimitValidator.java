@@ -4,8 +4,33 @@ import net.astrocube.api.core.authentication.AuthorizeException;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
 
-public interface CooldownKick {
+import java.util.Date;
 
+public interface AuthenticationLimitValidator {
+
+	//#region Cooldown
+	/**
+	 * Will set an cooldown lock for a certain user login
+	 * @param id of user to be locked
+	 */
+	void setCooldownLock(String id);
+
+	/**
+	 * Check if user has a cooldown preventing his login
+	 * @param id of cooldown user
+	 * @return cooldown status
+	 */
+	boolean hasCooldown(String id);
+
+	/**
+	 * Obtain the date where cooldown will expire
+	 * @param id of cooldown user
+	 * @return remaining time expiration
+	 */
+	Date getRemainingTime(String id);
+	//#endregion
+
+	//#region Tries limit
 	/**
 	 * Check if user has a cooldown and eject him
 	 * @param user   to be kicked
@@ -31,5 +56,6 @@ public interface CooldownKick {
 	 * @return user interval
 	 */
 	int getTries(User user);
+	//#endregion
 
 }
