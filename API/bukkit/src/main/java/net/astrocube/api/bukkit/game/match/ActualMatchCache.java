@@ -15,6 +15,9 @@ public interface ActualMatchCache {
 	 */
 	void updateSubscription(Match match, MatchAssignable assignable) throws Exception;
 
+	/** Updates the subscription of the given user {@code id} */
+	void updateSubscription(String id, MatchSubscription subscription) throws Exception;
+
 	/**
 	 * Gets the actual user {@code id}'s match.
 	 * @param id to be placed

@@ -25,14 +25,21 @@ public class CoreActualMatchCache implements ActualMatchCache {
 		Jedis resource,
 		String userId,
 		MatchSubscription.Type type,
-		Match match
+		String match
 	) throws Exception {
-		MatchSubscription subscription = new MatchSubscription(match.getId(), type);
+		MatchSubscription subscription = new MatchSubscription(match, type);
 		resource.set("matchsub:" + userId, objectMapper.writeValueAsString(subscription));
 	}
 
 	private void clearSubscription(Jedis resource, String userId) {
 		resource.del("matchsub:" + userId);
+	}
+
+	@Override
+	public void updateSubscription(String id, MatchSubscription subscription) throws Exception {
+		try (Jedis resource = redis.getRawConnection().getResource()) {
+			updateSubscription(resource, id, subscription.getType(), subscription.getMatch());
+		}
 	}
 
 	@Override
@@ -58,10 +65,10 @@ public class CoreActualMatchCache implements ActualMatchCache {
 	public void updateSubscription(Match match, MatchAssignable assignable) throws Exception {
 		try (Jedis resource = redis.getRawConnection().getResource()) {
 			// update the responsible
-			updateSubscription(resource, assignable.getResponsible(), MatchSubscription.Type.ASSIGNATION_RESPONSIBLE, match);
+			updateSubscription(resource, assignable.getResponsible(), MatchSubscription.Type.ASSIGNATION_RESPONSIBLE, match.getId());
 			// update the involved users
 			for (String involvedId : assignable.getInvolved()) {
-				updateSubscription(resource, involvedId, MatchSubscription.Type.ASSIGNATION_INVOLVED, match);
+				updateSubscription(resource, involvedId, MatchSubscription.Type.ASSIGNATION_INVOLVED, match.getId());
 			}
 		}
 	}

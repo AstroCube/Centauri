@@ -71,6 +71,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 			match.getPending().add(assignable);
 			updateService.updateSync(match);
 
+			// TODO: This call is probably not necessary, since we already called updateSubscription(...)
 			matchService.assignPending(assignable, match.getId());
 			this.setRecord(assignable.getResponsible(), match.getId(), matchServer.getSlug());
 
@@ -147,17 +148,12 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 	@Override
 	public void setRecord(String id, String matchId, String server) throws Exception {
-		try (Jedis jedis = jedisPool.getResource()) {
-			jedis.set("matchAssign:" + id, matchId);
-			jedis.expire("matchAssign:" + id, 30);
-			if (plugin.getConfig().getBoolean("server.sandbox")) {
-				System.out.println("AYO BRO THIS IS A SANDBOX SERVER");
-				User user = userFindService.findSync(id);
-				Player player = Bukkit.getPlayer(user.getUsername());
-				userMatchJoiner.processJoin(user, player);
-			} else {
-				channel.sendMessage(new SingleMatchAssignation(id, matchId, server), new HashMap<>());
-			}
+		if (plugin.getConfig().getBoolean("server.sandbox")) {
+			User user = userFindService.findSync(id);
+			Player player = Bukkit.getPlayer(user.getUsername());
+			userMatchJoiner.processJoin(user, player);
+		} else {
+			channel.sendMessage(new SingleMatchAssignation(id, matchId, server), new HashMap<>());
 		}
 	}
 
