@@ -5,14 +5,14 @@ import org.bukkit.entity.Player;
 
 import java.beans.ConstructorProperties;
 
-public class BasicAuthorization {
+public class UserAuthorization {
 
 	private final String id;
 	private final String password;
 	private final String address;
 
 	@ConstructorProperties({"id", "password", "address"})
-	public BasicAuthorization(
+	public UserAuthorization(
 			String id,
 			String password,
 			String address
@@ -47,8 +47,8 @@ public class BasicAuthorization {
 		return address;
 	}
 
-	public static BasicAuthorization withPassword(Player player, String password) {
-		return new BasicAuthorization(
+	public static UserAuthorization withPassword(Player player, String password) {
+		return new UserAuthorization(
 				player.getDatabaseIdentifier(),
 				password,
 				player.getAddress().getAddress().toString().replace("/", "")

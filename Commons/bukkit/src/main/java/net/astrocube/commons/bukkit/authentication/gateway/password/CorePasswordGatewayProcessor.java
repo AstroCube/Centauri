@@ -4,7 +4,7 @@ import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.authentication.BasicAuthorization;
+import net.astrocube.api.bukkit.authentication.UserAuthorization;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationInvalidEvent;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
@@ -32,7 +32,7 @@ public class CorePasswordGatewayProcessor implements PasswordGatewayProcessor {
 		try {
 
 			authenticationValidator.validateAuthenticationAttempt(player);
-			authenticationService.login(BasicAuthorization.withPassword(player, password));
+			authenticationService.login(UserAuthorization.withPassword(player, password));
 
 			Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
 				gatewayMatcher.getUserAuthentication(UserDoc.Session.Authorization.PASSWORD),
