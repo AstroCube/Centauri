@@ -151,12 +151,10 @@ public class CoreMatchAssigner implements MatchAssigner {
 			jedis.set("matchAssign:" + id, matchId);
 			jedis.expire("matchAssign:" + id, 30);
 			if (plugin.getConfig().getBoolean("server.sandbox")) {
-
+				System.out.println("AYO BRO THIS IS A SANDBOX SERVER");
 				User user = userFindService.findSync(id);
 				Player player = Bukkit.getPlayer(user.getUsername());
-
 				userMatchJoiner.processJoin(user, player);
-
 			} else {
 				channel.sendMessage(new SingleMatchAssignation(id, matchId, server), new HashMap<>());
 			}
