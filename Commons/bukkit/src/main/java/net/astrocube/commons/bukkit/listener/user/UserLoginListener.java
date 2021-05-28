@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.authentication.server.AuthenticationLimitValidat
 import net.astrocube.api.bukkit.punishment.PunishmentKickProcessor;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
-import net.astrocube.commons.core.utils.PrettyTimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -49,19 +48,12 @@ public class UserLoginListener implements Listener {
 
 		if (plugin.getConfig().getBoolean("authentication.enabled")) {
 
-			if (authenticationLimitValidator.hasCooldown(event.getPlayer().getDatabaseIdentifier())) {
-				event.setKickMessage(
-					messageHandler.get(
-						event.getPlayer(),
-						"cooldown-await"
-					).replace(
-						"%time%",
-						PrettyTimeUtils.getHumanDate(
-							authenticationLimitValidator.getRemainingTime(event.getPlayer().getDatabaseIdentifier()),
-							"en"
-						)
-					)
-				);
+			long remaining = authenticationLimitValidator.getRemainingTime(event.getPlayer().getDatabaseIdentifier());
+			if (remaining > 0) {
+				event.setKickMessage(messageHandler.replacing(
+						event.getPlayer(), "authentication.cooldown-await",
+						"%time%", remaining / 1000 // TODO: Format the time
+				));
 				event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
 				return;
 			}

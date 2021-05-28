@@ -1,61 +1,22 @@
 package net.astrocube.api.bukkit.authentication.server;
 
-import net.astrocube.api.core.authentication.AuthorizeException;
-import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.entity.Player;
-
-import java.util.Date;
 
 public interface AuthenticationLimitValidator {
 
-	//#region Cooldown
 	/**
-	 * Will set an cooldown lock for a certain user login
-	 * @param id of user to be locked
+	 * Obtain the remaining time in milliseconds
+	 * for the next login attempt
 	 */
-	void setCooldownLock(String id);
+	long getRemainingTime(String id);
 
 	/**
-	 * Check if user has a cooldown preventing his login
-	 * @param id of cooldown user
-	 * @return cooldown status
+	 * Accumulates a failed attempt to cache and
+	 * checks if the player exceeded the max
+	 * attempts, if it does, the player gets
+	 * kicked and must wait "X" seconds for its next
+	 * login.
 	 */
-	boolean hasCooldown(String id);
-
-	/**
-	 * Obtain the date where cooldown will expire
-	 * @param id of cooldown user
-	 * @return remaining time expiration
-	 */
-	Date getRemainingTime(String id);
-	//#endregion
-
-	//#region Tries limit
-	/**
-	 * Check if user has a cooldown and eject him
-	 * @param user   to be kicked
-	 * @param player to be kicked
-	 */
-	void checkAndKick(User user, Player player) throws AuthorizeException;
-
-	/**
-	 * Add one try to the cache when invalid authentication performed
-	 * @param user to be added
-	 */
-	void addTry(User user);
-
-	/**
-	 * Clear cached tries of user
-	 * @param user to be cleared
-	 */
-	void clearTries(User user);
-
-	/**
-	 * Check actual authorization attempts in a 5 minutes interval
-	 * @param user to be checked
-	 * @return user interval
-	 */
-	int getTries(User user);
-	//#endregion
+	void handleFailedAttempt(Player player);
 
 }

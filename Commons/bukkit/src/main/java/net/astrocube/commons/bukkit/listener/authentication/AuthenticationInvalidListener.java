@@ -26,20 +26,9 @@ public class AuthenticationInvalidListener implements Listener {
 
 		findService.find(event.getPlayer().getDatabaseIdentifier()).callback(response -> {
 			try {
-
 				if (!response.isSuccessful() || !response.getResponse().isPresent())
 					throw new AuthorizeException("Could not find requested user");
-
-				User user = response.getResponse().get();
-
-				authenticationLimitValidator.addTry(user);
-
-				if (authenticationLimitValidator.getTries(user) > 2) {
-					authenticationLimitValidator.setCooldownLock(user.getId());
-					authenticationLimitValidator.checkAndKick(user, event.getPlayer());
-					authenticationLimitValidator.clearTries(user);
-				}
-
+				authenticationLimitValidator.handleFailedAttempt(event.getPlayer());
 			} catch (AuthorizeException exception) {
 				plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);
 				event.getPlayer().kickPlayer(

@@ -5,78 +5,58 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.server.AuthenticationLimitValidator;
 import net.astrocube.api.core.redis.Redis;
-import net.astrocube.api.core.virtual.user.User;
-import net.astrocube.commons.bukkit.utils.TimeUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
-import java.util.Date;
-
-
 @Singleton
 public class CoreAuthenticationLimitValidator implements AuthenticationLimitValidator {
+
+	private static final int MAX_ATTEMPTS = 3;
+	private static final int COOL_DOWN = 300;
+	private static final long COOL_DOWN_MS = COOL_DOWN * 1000L;
 
 	private @Inject MessageHandler messageHandler;
 	private @Inject Plugin plugin;
 	private @Inject Redis redis;
 
-	//#region Cooldown
 	@Override
-	public void setCooldownLock(String id) {
+	public long getRemainingTime(String id) {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.set("authCooldown:" + id, TimeUtils.addMinutes(new Date(), 5).toInstant().toEpochMilli() + "");
-			jedis.expire("authCooldown:" + id, 300);
+			String passStr = jedis.get("authCooldown:" + id);
+			if (passStr == null) {
+				return 0L;
+			} else {
+				return Long.parseLong(passStr) - System.currentTimeMillis();
+			}
 		}
 	}
 
 	@Override
-	public boolean hasCooldown(String id) {
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			return jedis.exists("authCooldown:" + id);
-		}
-	}
+	public void handleFailedAttempt(Player player) {
 
-	@Override
-	public Date getRemainingTime(String id) {
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			if (jedis.exists("authCooldown:" + id))
-				return new Date(Long.parseLong(jedis.get("authCooldown:" + id)));
-			return new Date();
-		}
-	}
-	//#endregion
+		String attemptsKey = "authAttempts:" + player.getDatabaseIdentifier();
+		String cooldownKey = "authCooldown:" + player.getDatabaseIdentifier();
 
-	@Override
-	public void checkAndKick(User user, Player player) {
-		if (hasCooldown(user.getId())) {
-			Bukkit.getScheduler().runTask(plugin, () -> player.kickPlayer(
-				ChatColor.RED + messageHandler.get(player, "authentication.attempts")
-			));
-		}
-	}
-
-	@Override
-	public void addTry(User user) {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.set("authAttempts:" + user.getId(), getTries(user) + 1 + "");
-		}
-	}
 
-	@Override
-	public void clearTries(User user) {
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.del("authAttempts:" + user.getId());
-		}
-	}
+			String triesStr = jedis.get(attemptsKey);
+			int attempts = triesStr == null ? 0 : Integer.parseInt(triesStr) + 1;
 
-	@Override
-	public int getTries(User user) {
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			return jedis.exists("authAttempts:" + user.getId()) ?
-				Integer.parseInt(jedis.get("authAttempts:" + user.getId())) : 0;
+			if (attempts > MAX_ATTEMPTS) {
+				// remove the attempts counter
+				jedis.del(attemptsKey);
+				// set the player to the cooldown
+				jedis.set(cooldownKey, System.currentTimeMillis() + COOL_DOWN_MS + "");
+				jedis.expire(cooldownKey, COOL_DOWN);
+				// kick the player
+				Bukkit.getScheduler().runTask(plugin, () ->
+						player.kickPlayer(messageHandler.get(player, "authentication.attempts")));
+			} else {
+				// update the attempts counter
+				jedis.set(attemptsKey, attempts + "");
+			}
 		}
 	}
 
