@@ -27,7 +27,7 @@ public class AuthenticationModule extends ProtectedModule {
 		bind(GatewayMatcher.class).to(CoreGatewayMatcher.class);
 		bind(AuthenticationValidator.class).to(CoreAuthenticationValidator.class);
 		bind(RegisterGatewayProcessor.class).to(CoreRegisterGatewayProcessor.class);
-		bind(AuthenticationService.class).to(CoreAuthenticationService.class);
+		bind(AuthenticationService.class).to(HttpAuthenticationService.class);
 		bind(PasswordGatewayProcessor.class).to(CorePasswordGatewayProcessor.class);
 	}
 

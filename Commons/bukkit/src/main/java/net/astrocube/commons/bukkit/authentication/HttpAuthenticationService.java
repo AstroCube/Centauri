@@ -12,7 +12,7 @@ import net.astrocube.commons.core.http.CoreRequestCallable;
 
 @Singleton
 @SuppressWarnings("UnstableApiUsage")
-public class CoreAuthenticationService implements AuthenticationService {
+public class HttpAuthenticationService implements AuthenticationService {
 
 	private @Inject HttpClient httpClient;
 	private @Inject ObjectMapper objectMapper;
