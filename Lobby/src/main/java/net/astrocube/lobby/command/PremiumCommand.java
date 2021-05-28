@@ -18,34 +18,13 @@ import org.bukkit.entity.Player;
 )
 public class PremiumCommand implements CommandClass {
 
-	private @Inject FindService<User> findService;
-	private @Inject MessageHandler messageHandler;
-	private @Inject PremiumSelectBook premiumSelectBook;
 	private @Inject PremiumConfirmationMenu premiumConfirmationMenu;
+	private @Inject PremiumSelectBook premiumSelectBook;
 
 	@Command(names = {""})
 	public boolean onPremiumCommand(@Sender Player player) {
-
-		findService.find(player.getDatabaseIdentifier()).callback(response -> {
-
-			if (!response.isSuccessful()) {
-				messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");
-			}
-
-			response.ifSuccessful(user -> {
-
-				if (user.getSession().getAuthorizeMethod() == UserDoc.Session.Authorization.PREMIUM) {
-					premiumSelectBook.displayDisable(player);
-				} else {
-					premiumSelectBook.displayEnable(player);
-				}
-
-			});
-
-		});
-
+		premiumSelectBook.matchDisplay(player);
 		return true;
-
 	}
 
 	@Command(names = {"confirm"})

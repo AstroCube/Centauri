@@ -3,6 +3,7 @@ package net.astrocube.lobby.profile;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.lobby.premium.PremiumSelectBook;
 import net.astrocube.api.bukkit.lobby.profile.UserProfileDisplay;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Material;
@@ -19,6 +20,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 
 	private @Inject MessageHandler messageHandler;
 	private @Inject CoreLanguageSelectorDisplay languageSelectorDisplay;
+	private @Inject PremiumSelectBook premiumSelectBook;
 
 	@Override
 	public void openDisplay(User user, Player player) {
@@ -63,8 +65,21 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			.setLore(messageHandler.getMany(player, "lobby.profile.language-lore"))
 			.build()
 		).setAction(event -> {
-			event.getWhoClicked().closeInventory();
 			languageSelectorDisplay.openDisplay(user, player);
+			return true;
+		}).build());
+		//#endregion
+
+		//#region Premium Mode
+		menuBuilder.addItem(ItemClickable.builder(20).setItemStack(ItemBuilder
+				.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+				.setUrl(TEXTURES_URL + "")
+				.setName(messageHandler.get(player, "lobby.profile.premium"))
+				.setLore(messageHandler.get(player, "lobby.profile.premium-lore"))
+				.build()
+		).setAction(event -> {
+			event.getWhoClicked().closeInventory();
+			premiumSelectBook.matchDisplay(player);
 			return true;
 		}).build());
 		//#endregion
