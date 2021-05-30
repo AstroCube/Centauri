@@ -50,15 +50,17 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 	@Override
 	public AsyncResponse<PaginateResult<Friendship>> paginate(String userId, int page, int perPage) {
 
+		ObjectNode objectId = objectMapper.createObjectNode()
+				.put("$oid", userId);
 		ObjectNode filter = objectMapper.createObjectNode();
 		filter.putArray("$or")
 			.add(
 				objectMapper.createObjectNode()
-					.put("sender", userId)
+					.set("sender", objectId)
 			)
 			.add(
 				objectMapper.createObjectNode()
-					.put("receiver", userId)
+					.set("receiver", objectId)
 			);
 
 		return paginateService.paginate("?page=" + page + "&perPage=" + perPage, filter);
