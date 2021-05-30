@@ -111,6 +111,9 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
 	@Override
 	public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
+		System.out.println("===============");
+		System.out.println("PAGINATING");
+
 		PaginateBaseResult paginateResult = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
 			new CoreRequestCallable<>(TypeToken.of(PaginateBaseResult.class), mapper),
@@ -122,6 +125,11 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 				paginateRequest.getPaginateQuery()
 			)
 		);
+
+		System.out.println("===========================");
+		System.out.println("PAGINATED");
+		System.out.println("DATA: " + paginateResult.getData());
+		System.out.println("===========================");
 
 		return new PaginateResult<Complete>() {
 			@Override
