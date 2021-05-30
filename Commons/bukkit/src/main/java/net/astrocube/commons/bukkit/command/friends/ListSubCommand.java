@@ -46,7 +46,7 @@ public class ListSubCommand implements CommandClass {
 				}
 
 
-				messageHandler.send(player, "friend-list.header");
+				messageHandler.send(player, "friend.list.header");
 				for (Friendship friendship : friendships) {
 
 					String id = friendship.getIssuer();
@@ -69,7 +69,7 @@ public class ListSubCommand implements CommandClass {
 					}
 
 					player.sendMessage(
-						messageHandler.get(player, "friend-list.element")
+						messageHandler.get(player, "friend.list.element")
 							.replace("%friend_name%", user.getUsername())
 							.replace("%status%", messageHandler.get(player,
 								user.getSession().isOnline() ? "online" : "offline"
@@ -80,7 +80,7 @@ public class ListSubCommand implements CommandClass {
 				TextComponent clickableComponents = new TextComponent();
 
 				if (pagination.hasPrevPage()) {
-					String message = messageHandler.get(player, "friends-previous-page");
+					String message = messageHandler.get(player, "friend.list.previous");
 					clickableComponents.setText(message);
 					clickableComponents.setHoverEvent(new HoverEvent(
 						HoverEvent.Action.SHOW_TEXT,
@@ -90,7 +90,7 @@ public class ListSubCommand implements CommandClass {
 
 				if (pagination.hasNextPage()) {
 					clickableComponents.addExtra("        "); // just add space to separate that shit
-					String message = messageHandler.get(player, "friends-next-page");
+					String message = messageHandler.get(player, "friend.list.next");
 					TextComponent component = new TextComponent(message);
 					component.setHoverEvent(new HoverEvent(
 						HoverEvent.Action.SHOW_TEXT,
