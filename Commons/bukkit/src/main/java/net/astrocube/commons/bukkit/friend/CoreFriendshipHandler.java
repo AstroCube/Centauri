@@ -56,11 +56,11 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 		filter.putArray("$or")
 			.add(
 				objectMapper.createObjectNode()
-					.set("sender", objectId)
+					.put("sender", userId)
 			)
 			.add(
 				objectMapper.createObjectNode()
-					.set("receiver", objectId)
+					.put("receiver", userId)
 			);
 
 		return paginateService.paginate(/*"?page=" + page + "&perPage=" + perPage*/ "", filter);
