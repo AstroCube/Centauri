@@ -114,6 +114,7 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 	public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
 		System.out.println("===============");
 		System.out.println("PAGINATING");
+		System.out.println("QUERY: " + paginateRequest.getBsonQuery());
 		ObjectNode response = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
 			new CoreRequestCallable<>(TypeToken.of(ObjectNode.class), mapper),
