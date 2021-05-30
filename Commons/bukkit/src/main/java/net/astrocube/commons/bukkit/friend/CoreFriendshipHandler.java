@@ -9,8 +9,6 @@ import net.astrocube.api.bukkit.friend.FriendshipAction;
 import net.astrocube.api.bukkit.friend.FriendshipActionEvent;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.concurrent.AsyncResponse;
-import net.astrocube.api.core.concurrent.Callback;
-import net.astrocube.api.core.concurrent.Response;
 import net.astrocube.api.core.friend.FriendshipHandler;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
@@ -20,7 +18,6 @@ import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.service.paginate.PaginateService;
 import net.astrocube.api.core.virtual.friend.Friendship;
 import net.astrocube.api.core.virtual.friend.FriendshipDoc;
-import net.astrocube.commons.core.utils.Callbacks;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -61,7 +58,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 					.put("receiver", userId)
 			);
 
-		return paginateService.paginate("?page=" + page + "&perPage=" + perPage, filter);
+		return paginateService.paginate(/*"?page=" + page + "&perPage=" + perPage*/ "", filter);
 	}
 
 	@Override

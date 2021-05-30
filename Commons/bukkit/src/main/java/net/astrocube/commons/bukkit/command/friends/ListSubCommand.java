@@ -37,7 +37,7 @@ public class ListSubCommand implements CommandClass {
 				Set<Friendship> friendships = paginateResult.getData();
 				PaginateResult.Pagination pagination = paginateResult.getPagination();
 
-				int pageIndicator = pagination.page().orElse(-1);
+				int pageIndicator = pagination.getPage().orElse(-1);
 
 				if (friendships.size() == 0 && pageIndicator == -1
 					&& !pagination.hasNextPage() && !pagination.hasPrevPage()) {

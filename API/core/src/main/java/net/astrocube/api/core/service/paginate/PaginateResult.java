@@ -4,30 +4,94 @@ import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.model.Document;
 import net.astrocube.api.core.model.Model;
 
-import java.util.Optional;
+import java.beans.ConstructorProperties;
+import java.util.OptionalInt;
 import java.util.Set;
 
-public interface PaginateResult<Complete extends Model> extends Message {
+/**
+ * Represents a model pagination result
+ * @param <Complete> The model type
+ */
+public class PaginateResult<Complete extends Model>
+		implements Message {
 
-	Set<Complete> getData();
+	private final Set<Complete> data;
+	private final Pagination pagination;
 
-	Pagination getPagination();
+	@ConstructorProperties({"data", "pagination"})
+	public PaginateResult(Set<Complete> data, Pagination pagination) {
+		this.data = data;
+		this.pagination = pagination;
+	}
 
-	interface Pagination extends Document {
+	public Set<Complete> getData() {
+		return data;
+	}
 
-		int perPage();
+	public Pagination getPagination() {
+		return pagination;
+	}
 
-		boolean hasPrevPage();
+	public static class Pagination implements Document {
 
-		boolean hasNextPage();
+		private final int perPage;
+		private final boolean hasPrevPage;
+		private final boolean hasNextPage;
 
-		Optional<Integer> prevPage();
+		private final Integer prevPage;
+		private final Integer nextPage;
+		private final Integer page;
+		private final Integer totalPages;
 
-		Optional<Integer> nextPage();
+		@ConstructorProperties({
+				"perPage", "hasPrevPage", "hasNextPage",
+				"prevPage", "nextPage", "page", "totalPages"
+		})
+		public Pagination(
+				int perPage,
+				boolean hasPrevPage,
+				boolean hasNextPage,
+				Integer prevPage,
+				Integer nextPage,
+				Integer page,
+				Integer totalPages
+		) {
+			this.perPage = perPage;
+			this.hasPrevPage = hasPrevPage;
+			this.hasNextPage = hasNextPage;
+			this.prevPage = prevPage;
+			this.nextPage = nextPage;
+			this.page = page;
+			this.totalPages = totalPages;
+		}
 
-		Optional<Integer> page();
+		public int getPerPage() {
+			return perPage;
+		}
 
-		Optional<Integer> totalPages();
+		public boolean hasPrevPage() {
+			return hasPrevPage;
+		}
+
+		public boolean hasNextPage() {
+			return hasNextPage;
+		}
+
+		public int getPrevPage() {
+			return hasPrevPage ? prevPage : -1;
+		}
+
+		public int getNextPage() {
+			return hasNextPage ? nextPage : -1;
+		}
+
+		public OptionalInt getPage() {
+			return page == null ? OptionalInt.empty() : OptionalInt.of(page);
+		}
+
+		public OptionalInt getTotalPages() {
+			return totalPages == null ? OptionalInt.empty() : OptionalInt.of(totalPages);
+		}
 
 	}
 

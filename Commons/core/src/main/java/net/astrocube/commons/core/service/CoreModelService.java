@@ -1,6 +1,7 @@
 package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
@@ -13,7 +14,6 @@ import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.service.create.CreateRequest;
 import net.astrocube.api.core.service.delete.DeleteRequest;
 import net.astrocube.api.core.service.find.FindRequest;
-import net.astrocube.api.core.service.paginate.PaginateBaseResult;
 import net.astrocube.api.core.service.paginate.PaginateRequest;
 import net.astrocube.api.core.service.paginate.PaginateResult;
 import net.astrocube.api.core.service.query.QueryBaseResult;
@@ -25,7 +25,6 @@ import net.astrocube.commons.core.http.CoreRequestCallable;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -133,25 +132,21 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 		//System.out.println("DATA: " + paginateResult.getData());
 		System.out.println("===========================");
 
-		return new PaginateResult<Complete>() {
-			@Override
-			public Set<Complete> getData() {
-				//try {
-				//	return mapper.readValue(
-				//		paginateResult.getData().toString(),
-				//		mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
-				//	);
-				//} catch (IOException e) {
-					return new HashSet<>();
-				//}
-			}
+		PaginateResult.Pagination pagination = mapper.treeToValue(response.get("pagination"), PaginateResult.Pagination.class);
+		JsonNode dataJson = response.get("data");
+		Set<Complete> data = new HashSet<>();
 
-			@Override
-			public Pagination getPagination() {
-				return null;
-				//return paginateResult.getPagination();
+		if (dataJson != null) {
+			for (JsonNode element : dataJson) {
+				// TODO: I think this can be optimized
+				data.add(mapper.readValue(element.toString(), getCompleteType()));
 			}
-		};
+		}
+
+		return new PaginateResult<Complete>(
+				data,
+				pagination
+		);
 	}
 
 	@Override
