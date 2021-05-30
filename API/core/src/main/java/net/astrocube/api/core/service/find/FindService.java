@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
 
-@SuppressWarnings("UnstableApiUsage")
 public interface FindService<Complete extends Model> {
 
 	/**

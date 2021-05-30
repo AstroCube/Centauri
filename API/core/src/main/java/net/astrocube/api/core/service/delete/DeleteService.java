@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
 
-@SuppressWarnings("UnstableApiUsage")
 public interface DeleteService<Complete extends Model> {
 
 	/**
@@ -15,7 +14,7 @@ public interface DeleteService<Complete extends Model> {
 
 	/**
 	 * Default delete request to be called from service
-	 * @param id of item taht will be deleted
+	 * @param id of item that will be deleted
 	 * @return update request
 	 */
 	default DeleteRequest<Complete> deleteRequest(String id) {
@@ -24,8 +23,7 @@ public interface DeleteService<Complete extends Model> {
 
 	/**
 	 * Default delete request to be called from service
-	 * @param id of item taht will be deleted
-	 * @return update request
+	 * @param id of item that will be deleted
 	 */
 	default void deleteSync(String id) throws Exception {
 		deleteSync(deleteRequest(id));
@@ -39,7 +37,7 @@ public interface DeleteService<Complete extends Model> {
 
 	/**
 	 * Default delete request to be called from service
-	 * @param id of item taht will be deleted
+	 * @param id of item that will be deleted
 	 * @return update request
 	 */
 	default AsyncResponse<Void> delete(String id) {
