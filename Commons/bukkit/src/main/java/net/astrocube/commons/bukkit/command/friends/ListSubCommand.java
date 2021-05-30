@@ -41,7 +41,7 @@ public class ListSubCommand implements CommandClass {
 
 				if (friendships.size() == 0 && pageIndicator == -1
 					&& !pagination.hasNextPage() && !pagination.hasPrevPage()) {
-					messageHandler.send(player, "no-friends");
+					messageHandler.send(player, "friend.error.empty");
 					return;
 				}
 
