@@ -60,6 +60,8 @@ public class GameTimerOutListener implements Listener {
 						throw new GameControlException("Unable to assign a map for this match");
 					}
 
+					System.out.println("Id " + gameMap.get().getId() + " Map Name " + gameMap.get().getName());
+
 					match.setMap(gameMap.get().getId());
 					updateService.update(match);
 				}
