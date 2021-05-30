@@ -24,7 +24,7 @@ public class CoreMatchMapLoader implements MatchMapLoader {
 
 	@Override
 	public SlimeWorld loadMatchMap(Match match) throws Exception {
-		System.out.println(match.getMap());
+		System.out.println("map" + match.getMap());
 		GameMap map = findService.findSync(match.getMap());
 		GameMapProvider.MapFiles files = gameMapProvider.loadGameMap(map);
 		SlimeWorld world = LoaderUtils.deserializeWorld(dummyLoader, "match_" + match.getId(),
