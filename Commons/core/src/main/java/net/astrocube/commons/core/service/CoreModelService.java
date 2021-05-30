@@ -2,6 +2,7 @@ package net.astrocube.commons.core.service;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import net.astrocube.api.core.http.HttpClient;
@@ -113,10 +114,9 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 	public PaginateResult<Complete> paginateSync(PaginateRequest<Complete> paginateRequest) throws Exception {
 		System.out.println("===============");
 		System.out.println("PAGINATING");
-
-		PaginateBaseResult paginateResult = this.httpClient.executeRequestSync(
+		ObjectNode response = this.httpClient.executeRequestSync(
 			modelMeta.getRouteKey() + "/list",
-			new CoreRequestCallable<>(TypeToken.of(PaginateBaseResult.class), mapper),
+			new CoreRequestCallable<>(TypeToken.of(ObjectNode.class), mapper),
 			new RequestOptions(
 				RequestOptions.Type.POST,
 				new HashMap<>(),
@@ -128,60 +128,27 @@ public class CoreModelService<Complete extends Model, Partial extends PartialMod
 
 		System.out.println("===========================");
 		System.out.println("PAGINATED");
-		System.out.println("DATA: " + paginateResult.getData());
+		System.out.println("RESPONSE: " + response);
+		//System.out.println("DATA: " + paginateResult.getData());
 		System.out.println("===========================");
 
 		return new PaginateResult<Complete>() {
 			@Override
 			public Set<Complete> getData() {
-				try {
-					return mapper.readValue(
-						paginateResult.getData().toString(),
-						mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
-					);
-				} catch (IOException e) {
+				//try {
+				//	return mapper.readValue(
+				//		paginateResult.getData().toString(),
+				//		mapper.getTypeFactory().constructParametricType(Set.class, getCompleteType())
+				//	);
+				//} catch (IOException e) {
 					return new HashSet<>();
-				}
+				//}
 			}
 
 			@Override
 			public Pagination getPagination() {
-				return new Pagination() {
-					@Override
-					public int perPage() {
-						return paginateResult.getPagination().perPage();
-					}
-
-					@Override
-					public boolean hasPrevPage() {
-						return paginateResult.getPagination().hasPrevPage();
-					}
-
-					@Override
-					public boolean hasNextPage() {
-						return paginateResult.getPagination().hasNextPage();
-					}
-
-					@Override
-					public Optional<Integer> prevPage() {
-						return paginateResult.getPagination().prevPage();
-					}
-
-					@Override
-					public Optional<Integer> nextPage() {
-						return paginateResult.getPagination().nextPage();
-					}
-
-					@Override
-					public Optional<Integer> page() {
-						return paginateResult.getPagination().page();
-					}
-
-					@Override
-					public Optional<Integer> totalPages() {
-						return paginateResult.getPagination().totalPages();
-					}
-				};
+				return null;
+				//return paginateResult.getPagination();
 			}
 		};
 	}
