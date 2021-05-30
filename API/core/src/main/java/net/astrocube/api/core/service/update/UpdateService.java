@@ -5,7 +5,6 @@ import net.astrocube.api.core.concurrent.AsyncResponse;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.PartialModel;
 
-@SuppressWarnings("UnstableApiUsage")
 public interface UpdateService<Complete extends Model, Partial extends PartialModel> {
 
 	/**

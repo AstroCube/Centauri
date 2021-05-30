@@ -7,7 +7,6 @@ import net.astrocube.api.core.model.Model;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("UnstableApiUsage")
 public interface QueryService<Complete extends Model> {
 
 	/**
