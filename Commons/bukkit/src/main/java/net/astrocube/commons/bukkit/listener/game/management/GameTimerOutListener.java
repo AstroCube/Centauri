@@ -52,7 +52,7 @@ public class GameTimerOutListener implements Listener {
 				Match match = matchCallback.getResponse().get();
 
 				System.out.println("-----------------------------------------------");
-				if (match.getMap() == null) {
+				if (match.getMap() == null || match.getMap().isEmpty()) {
 
 					System.out.println("match map es null");
 
