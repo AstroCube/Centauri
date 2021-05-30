@@ -47,8 +47,9 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	public Complete createSync(CreateRequest<Partial> request) throws Exception {
 
 		ObjectNode node = mapper.valueToTree(request.getModel());
+		String id = UUID.randomUUID().toString();
 
-		node.put("_id", UUID.randomUUID().toString());
+		node.put("_id", id);
 		String json = node.toString();
 
 		Complete model = getModel(json);
@@ -56,7 +57,7 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 		try (Jedis client = redis.getRawConnection().getResource()) {
 
 			client.set(
-				modelMeta.getRouteKey() + ':' + UUID.randomUUID(),
+				modelMeta.getRouteKey() + ':' + id,
 				mapper.writeValueAsString(model)
 			);
 		}
@@ -86,22 +87,28 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	@Override
 	public QueryResult<Complete> querySync(QueryRequest<Complete> queryRequest) throws Exception {
 		Set<Complete> found = new HashSet<>();
-		System.out.println("querySync");
+		System.out.println("======================================================");
+		System.out.println("QUERYING: '" + modelMeta.getCompleteType() + "'");
+		System.out.println("QUERY: " + queryRequest.getBsonQuery());
 		try (Jedis client = redis.getRawConnection().getResource()) {
 			for (String key : client.keys(modelMeta.getRouteKey() + ":*")) {
-				System.out.println("Key " + key);
+				System.out.println("\n>>>");
+				System.out.println(">>> KEY: '" + key + "'");
 				String json = client.get(key);
+				System.out.println(">>> JSON: " + json);
 				JsonNode node = mapper.readTree(json);
 				if (contains(node, queryRequest.getBsonQuery())) {
-					System.out.println("The node read from the key '" + key + "' contains the given QueryRequest's bson query, node " + node);
+					System.out.println(">>> CONTAINED!");
 					Complete value = mapper.readValue(
 						node.toString(),
 						modelMeta.getCompleteType()
 					);
 					found.add(value);
 				}
+				System.out.println(">>>");
 			}
 		}
+		System.out.println("======================================================");
 		return () -> found;
 	}
 
@@ -129,28 +136,29 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	}
 
 	private boolean contains(JsonNode root, JsonNode node) {
-		if (root == null) {
+		if (node.isNull()) {
+			return true;
+		} else if (root == null) {
 			return false;
 		} else if (root.isValueNode()) {
+<<<<<<< HEAD
 			System.out.println("2");
+=======
+>>>>>>> d1d9618e09c0911eb2f699255ebd298d0c0bf4f2
 			return node.isValueNode() && root.equals(node);
 		} else if (root.isArray()) {
 			if (node.isArray()) {
-				System.out.println("node is Array");
 				ArrayNode containerArray = (ArrayNode) root;
 				ArrayNode nodeArray = (ArrayNode) node;
 				Set<JsonNode> containedElements = new HashSet<>();
 				for (JsonNode content : containerArray) {
-					System.out.println("Content " + content.toString());
 					containedElements.add(content);
 				}
 				for (JsonNode element : nodeArray) {
 					if (!containedElements.contains(element)) {
-						System.out.println("No contained elements");
 						return false;
 					}
 				}
-				System.out.println("true");
 				return true;
 			} else {
 				return false;

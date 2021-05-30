@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.match.MatchService;
+import net.astrocube.api.bukkit.game.match.MatchSubscription;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.game.matchmaking.SingleMatchAssignation;
@@ -26,41 +27,38 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.logging.Level;
 
 @Singleton
 public class CoreMatchAssigner implements MatchAssigner {
 
+	@Inject private Plugin plugin;
+	@Inject private ActualMatchCache actualMatchCache;
+	@Inject private UserMatchJoiner userMatchJoiner;
+	@Inject private FindService<User> userFindService;
+	@Inject private FindService<Server> serverFindService;
+	@Inject private FindService<Match> matchFindService;
+	@Inject private MatchService matchService;
+	@Inject private UpdateService<Match, MatchDoc.Partial> updateService;
+
 	private final JedisPool jedisPool;
-	private final Plugin plugin;
-	private final ActualMatchCache actualMatchCache;
-	private final UserMatchJoiner userMatchJoiner;
-	private final FindService<User> findService;
-	private final FindService<Server> serverFindService;
-	private final MatchService matchService;
 	private final Channel<SingleMatchAssignation> channel;
-	private final UpdateService<Match, MatchDoc.Partial> updateService;
 
 	@Inject
-	public CoreMatchAssigner(Redis redis, ActualMatchCache actualMatchProvider,
-													 Plugin plugin, Messenger jedisMessenger, UserMatchJoiner userMatchJoiner,
-													 FindService<User> findService, FindService<Server> serverFindService, MatchService matchService, UpdateService<Match, MatchDoc.Partial> updateService) {
+	public CoreMatchAssigner(
+		Redis redis,
+		Messenger messenger
+	) {
 		this.jedisPool = redis.getRawConnection();
-		this.plugin = plugin;
-		this.actualMatchCache = actualMatchProvider;
-		this.channel = jedisMessenger.getChannel(SingleMatchAssignation.class);
-		this.userMatchJoiner = userMatchJoiner;
-		this.matchService = matchService;
-		this.serverFindService = serverFindService;
-		this.findService = findService;
-		this.updateService = updateService;
-
+		this.channel = messenger.getChannel(SingleMatchAssignation.class);
 	}
 
 	@Override
 	public void assign(MatchAssignable assignable, Match match) throws Exception {
 
+		actualMatchCache.updateSubscription(match, assignable);
 		Server matchServer = serverFindService.findSync(match.getServer());
 
 		try (Jedis jedis = jedisPool.getResource()) {
@@ -73,6 +71,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 			match.getPending().add(assignable);
 			updateService.updateSync(match);
 
+			// TODO: This call is probably not necessary, since we already called updateSubscription(...)
 			matchService.assignPending(assignable, match.getId());
 			this.setRecord(assignable.getResponsible(), match.getId(), matchServer.getSlug());
 
@@ -90,66 +89,71 @@ public class CoreMatchAssigner implements MatchAssigner {
 	@Override
 	public void unAssign(Player player) throws Exception {
 
-		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
-
-		if (matchOptional.isPresent()) {
-
-			Match match = matchOptional.get();
-
-			if (match.getSpectators().contains(player.getDatabaseIdentifier())) {
-				matchService.assignSpectator(player.getDatabaseIdentifier(), match.getId(), false);
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.SPECTATING));
-			} else if (match.getPending().stream().anyMatch(pending ->
-				pending.getResponsible().equalsIgnoreCase(player.getDatabaseIdentifier()) ||
-					pending.getInvolved().contains(player.getDatabaseIdentifier()))
-			) {
-
-				matchService.unAssignPending(player.getDatabaseIdentifier(), match.getId());
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.WAITING));
-
-			} else if (match.getTeams().stream()
-				.anyMatch(m -> m.getMembers().stream().anyMatch(teamMember ->
-					teamMember.getUser().equalsIgnoreCase(player.getDatabaseIdentifier()))
-				)
-			) {
-				Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(match.getId(), player, UserMatchJoiner.Origin.PLAYING));
-			}
-
+		Optional<MatchSubscription> optSubscription = actualMatchCache.getSubscription(player.getDatabaseIdentifier());
+		if (!optSubscription.isPresent()) {
+			return;
 		}
 
+		MatchSubscription subscription = optSubscription.get();
+		Match match = matchFindService.findSync(subscription.getMatch());
+		UserMatchJoiner.Origin origin;
 
+		// TODO: I think we should update the Match too
+
+		switch (subscription.getType()) {
+			case SPECTATOR: {
+				matchService.assignSpectator(player.getDatabaseIdentifier(), subscription.getMatch(), false);
+				match.getSpectators().remove(player.getDatabaseIdentifier());
+				origin = UserMatchJoiner.Origin.SPECTATING;
+				break;
+			}
+			case ASSIGNATION_INVOLVED:
+			case ASSIGNATION_RESPONSIBLE: {
+				// TODO: Refactor this XD
+				match.getPending().removeIf(assignable -> {
+					boolean isResponsible = assignable.getResponsible().equals(player.getDatabaseIdentifier());
+					boolean isInvolved = assignable.getInvolved().contains(player.getDatabaseIdentifier());
+					if (isResponsible || isInvolved) {
+						if (isResponsible && assignable.getInvolved().isEmpty()) {
+							return true;
+						} else if (isResponsible) {
+							Iterator<String> involvedIterator = assignable.getInvolved().iterator();
+							String newResponsible = involvedIterator.next();
+							involvedIterator.remove();
+							assignable.setResponsible(newResponsible);
+							return false;
+						} else {
+							assignable.getInvolved().remove(player.getDatabaseIdentifier());
+							return false;
+						}
+					}
+					return false;
+				});
+
+				matchService.unAssignPending(player.getDatabaseIdentifier(), subscription.getMatch());
+				origin = UserMatchJoiner.Origin.WAITING;
+				break;
+			}
+			default: {
+				// TODO: REmove the player from the teams, algorithm should be similar to pending
+				origin = UserMatchJoiner.Origin.PLAYING;
+				break;
+			}
+		}
+
+		Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(subscription.getMatch(), player, origin));
+		updateService.updateSync(match);
+		actualMatchCache.clearSubscription(player.getDatabaseIdentifier());
 	}
 
 	@Override
 	public void setRecord(String id, String matchId, String server) throws Exception {
-		try (Jedis jedis = jedisPool.getResource()) {
-			jedis.set("matchAssign:" + id, matchId);
-			jedis.expire("matchAssign:" + id, 30);
-			if (plugin.getConfig().getBoolean("server.sandbox")) {
-
-				User user = findService.findSync(id);
-				Player player = Bukkit.getPlayer(user.getUsername());
-
-				userMatchJoiner.processJoin(user, player);
-
-			} else {
-				channel.sendMessage(new SingleMatchAssignation() {
-					@Override
-					public String getUser() {
-						return id;
-					}
-
-					@Override
-					public String getMatch() {
-						return matchId;
-					}
-
-					@Override
-					public String getServer() {
-						return server;
-					}
-				}, new HashMap<>());
-			}
+		if (plugin.getConfig().getBoolean("server.sandbox")) {
+			User user = userFindService.findSync(id);
+			Player player = Bukkit.getPlayer(user.getUsername());
+			userMatchJoiner.processJoin(user, player);
+		} else {
+			channel.sendMessage(new SingleMatchAssignation(id, matchId, server), new HashMap<>());
 		}
 	}
 

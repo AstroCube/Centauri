@@ -32,7 +32,6 @@ public class CoreLanguageSelectorDisplay {
 			.setUrl(CoreUserProfileDisplay.TEXTURES_URL + "37aee9a75bf0df7897183015cca0b2a7d755c63388ff01752d5f4419fc645")
 			.build()
 		).setAction(event -> {
-			event.getWhoClicked().closeInventory();
 			userProfileDisplay.openDisplay(user, player);
 			return true;
 		}).build());

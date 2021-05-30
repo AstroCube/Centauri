@@ -37,17 +37,10 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 			return;
 		}
 
-		MatchAssignable assignable = new MatchAssignable() {
-			@Override
-			public String getResponsible() {
-				return player.getDatabaseIdentifier();
-			}
-
-			@Override
-			public Set<String> getInvolved() {
-				return new HashSet<>();
-			}
-		};
+		MatchAssignable assignable = new MatchAssignable(
+			player.getDatabaseIdentifier(),
+			new HashSet<>()
+		);
 
 		ObjectNode node = mapper.createObjectNode();
 		node.put("server", server.getId());

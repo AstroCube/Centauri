@@ -3,11 +3,10 @@ package net.astrocube.commons.bukkit.listener.user;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationStartEvent;
-import net.astrocube.api.bukkit.authentication.server.AuthenticationCooldown;
+import net.astrocube.api.bukkit.authentication.server.AuthenticationLimitValidator;
 import net.astrocube.api.bukkit.punishment.PunishmentKickProcessor;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;
 import net.astrocube.api.core.virtual.session.SessionValidateDoc;
-import net.astrocube.commons.core.utils.PrettyTimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -21,8 +20,8 @@ import java.util.logging.Level;
 public class UserLoginListener implements Listener {
 
 	private @Inject SessionValidatorHandler sessionValidatorHandler;
+	private @Inject AuthenticationLimitValidator authenticationLimitValidator;
 	private @Inject MessageHandler messageHandler;
-	private @Inject AuthenticationCooldown authenticationCooldown;
 	private @Inject PunishmentKickProcessor punishmentKickProcessor;
 	private @Inject Plugin plugin;
 
@@ -49,20 +48,12 @@ public class UserLoginListener implements Listener {
 
 		if (plugin.getConfig().getBoolean("authentication.enabled")) {
 
-			if (authenticationCooldown.hasCooldown(event.getPlayer().getDatabaseIdentifier())) {
-				event.setKickMessage(
-					messageHandler.get(
-						event.getPlayer(),
-						"cooldown-await"
-					).replace(
-						"%time%",
-						PrettyTimeUtils.getHumanDate(
-							authenticationCooldown.getRemainingTime(
-								event.getPlayer().getDatabaseIdentifier()),
-							"en"
-						)
-					)
-				);
+			long remaining = authenticationLimitValidator.getRemainingTime(event.getPlayer().getDatabaseIdentifier());
+			if (remaining > 0) {
+				event.setKickMessage(messageHandler.replacing(
+						event.getPlayer(), "authentication.cooldown-await",
+						"%time%", remaining / 1000 // TODO: Format the time
+				));
 				event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
 				return;
 			}

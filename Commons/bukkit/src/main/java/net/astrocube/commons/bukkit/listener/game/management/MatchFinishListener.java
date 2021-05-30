@@ -55,7 +55,7 @@ public class MatchFinishListener implements Listener {
 				matchService.assignVictory(event.getMatch(), event.getWinners());
 				Set<Player> players = MatchParticipantsProvider.getInvolved(match);
 				ghostEffectControl.clearMatch(match.getId());
-				MatchParticipantsProvider.getInvolved(match).forEach(p -> actualMatchCache.remove(p.getDatabaseIdentifier()));
+				actualMatchCache.clearSubscriptions(match);
 				Bukkit.getScheduler().runTaskLater(
 					plugin, () -> players.forEach(
 						player -> serverTeleportRetry.attemptTeleport(

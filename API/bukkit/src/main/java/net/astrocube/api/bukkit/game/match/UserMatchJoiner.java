@@ -19,6 +19,14 @@ public interface UserMatchJoiner {
 		WAITING, PLAYING, SPECTATING
 	}
 
+	static Origin convertSubscriptionToOrigin(MatchSubscription.Type subscriptionType) {
+		switch (subscriptionType) {
+			case SPECTATOR: return Origin.SPECTATING;
+			case PLAYER: return Origin.PLAYING;
+			default: return Origin.WAITING;
+		}
+	}
+
 	static Origin checkOrigin(String user, Match match) throws GameControlException {
 
 		if (match.getSpectators().contains(user)) {

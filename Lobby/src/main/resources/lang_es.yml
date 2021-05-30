@@ -6,6 +6,13 @@ lobby:
       - "%gray%Aquí puedes cambiar múltiples"
       - "%gray%opciones pasa personalizar tu"
       - "%gray%estadía en el servidor."
+    language: "%aqua%Idioma (Language)"
+    language-lore:
+      - "%gray%Aquí podrás cambiar tu idioma"
+      - "%gray%para una mejor experiencia"
+      - ""
+      - "%gray%Here you can change your language"
+      - "%gray%for a better experience"
     stats: "%aqua%Estadísticas"
     stats-lore:
       - "%gray%Al darle clic podrás ver"
@@ -21,6 +28,16 @@ lobby:
       - "%gray%Al darle clic derecho podrás ver"
       - "%gray%un todas las opciones disponibles"
       - "%gray%de tu perfil de juego."
+    premium: "%aqua%Modo Premium"
+    premium-lore:
+      - "%gray%Al darle clic podrás activar"
+      - "%gray%o desactivar el modo premium."
+      - ""
+      - "%gray%Siendo un usuario premium, podrás"
+      - "%gray%saltear el inicio de sesión."
+      - ""
+      - "%gray%Si activas el modo premium, %red%no"
+      - "%red%podras usar lanzadores no-oficiales"
   scoreboard:
     title: "%blue%%bold%AstroCube"
     lore:

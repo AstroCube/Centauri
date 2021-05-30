@@ -21,8 +21,8 @@ public class PremiumGateway implements AuthenticationGateway {
 	private final Channel<ProxyKickRequest> channel;
 
 	@Inject
-	public PremiumGateway(Messenger jedisMessenger) {
-		channel = jedisMessenger.getChannel(ProxyKickRequest.class);
+	public PremiumGateway(Messenger messenger) {
+		channel = messenger.getChannel(ProxyKickRequest.class);
 	}
 
 	@Override
@@ -30,38 +30,34 @@ public class PremiumGateway implements AuthenticationGateway {
 
 		Player player = Bukkit.getPlayerByIdentifier(user.getId());
 
-		if (player != null) {
-
-			try (Jedis jedis = redis.getRawConnection().getResource()) {
-
-				if (!jedis.exists("premium:" + user.getUsername())) {
-					try {
-						channel.sendMessage(new ProxyKickRequest(
-							player.getName(),
-							ChatColor.RED + "Unable to verify premium status, if problem persists contact an administrator"
-						), new HashMap<>());
-					} catch (Exception ignore) {
-					}
-					return;
-				}
-
-				Bukkit.getPluginManager().callEvent(
-					new AuthenticationSuccessEvent(
-						this,
-						Bukkit.getPlayerByIdentifier(user.getId())
-					)
-				);
-
-			}
-
+		if (player == null) {
+			return;
 		}
 
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			if (!jedis.exists("premium:" + user.getUsername())) {
+				try {
+					channel.sendMessage(new ProxyKickRequest(
+						player.getName(),
+						ChatColor.RED + "Unable to verify premium status, if problem persists contact an administrator"
+					), new HashMap<>());
+				} catch (Exception ignore) {
+				}
+				return;
+			}
+		}
+
+		Bukkit.getPluginManager().callEvent(
+				new AuthenticationSuccessEvent(
+						this,
+						player
+				)
+		);
 	}
 
 	@Override
 	public String getName() {
 		return "Premium";
 	}
-
 
 }

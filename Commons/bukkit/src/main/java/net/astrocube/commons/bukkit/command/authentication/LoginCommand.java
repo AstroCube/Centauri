@@ -1,4 +1,4 @@
-package net.astrocube.commons.bukkit.command;
+package net.astrocube.commons.bukkit.command.authentication;
 
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;

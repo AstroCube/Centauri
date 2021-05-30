@@ -32,8 +32,10 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 	@Override
 	public Set<Match> getCriteriaAvailableMatches(MatchmakingRequest request) throws Exception {
 
-		ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
-		ObjectNode criteria = request.getCriteria().isPresent() ? request.getCriteria().get() : mapper.createObjectNode();
+		//ArrayNode serverArray = availableMatchServerProvider.getPairableServers(request);
+		ObjectNode criteria = request.getCriteria().isPresent()
+			? request.getCriteria().get()
+			: mapper.createObjectNode();
 
 		GameMode gameMode = findService.findSync(request.getGameMode());
 
@@ -48,15 +50,18 @@ public class CoreAvailableMatchProvider implements AvailableMatchProvider {
 			throw new GameControlException("There was no subMode matching this request at the database");
 		}
 
-		criteria.put("server", serverArray);
+		//criteria.put("server", serverArray);
+		criteria.put("gamemode", gameMode.getId());
+		criteria.put("subGamemode", subGameModeOptional.get().getId());
 		criteria.put("private", false);
-		criteria.putPOJO("status", MatchDoc.Status.LOBBY);
+		// TODO: Use the enum constant, I didn't use it cuz it was causing issues (serializing as LOBBY and not as Lobby)
+		criteria.put("status", "Lobby");
 
 		System.out.println("MatchQueryService");
 
 		return matchQueryService.querySync(criteria).getFoundModels()
 			.stream()
-			.filter(match -> match.getStatus() == MatchDoc.Status.LOBBY &&
+			.filter(match ->
 				(subGameModeOptional.get().getMaxPlayers() - CoreAvailableMatchProvider.getRemainingSpace(match)) >=
 					(request.getRequesters().getInvolved().size() + 1))
 			.collect(Collectors.toSet());

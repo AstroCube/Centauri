@@ -13,26 +13,26 @@ import java.util.Map;
 
 public class CoreGatewayMatcher implements GatewayMatcher {
 
-	private final Map<UserDoc.Session.Authorization, AuthenticationGateway> types;
+	private final Map<UserDoc.Session.Authorization, AuthenticationGateway> gateways = new HashMap<>();
+
 	private final AuthenticationGateway registerGateway;
+	private final AuthenticationGateway passwordGateway;
 
 	@Inject
 	public CoreGatewayMatcher(
-		PasswordGateway passwordGateway,
-		RegisterGateway registerGateway,
-		PremiumGateway premiumGateway
+			RegisterGateway registerGateway,
+			PasswordGateway passwordGateway,
+			PremiumGateway premiumGateway
 	) {
 		this.registerGateway = registerGateway;
-		this.types = new HashMap<>();
-		types.put(UserDoc.Session.Authorization.PASSWORD, passwordGateway);
-		types.put(UserDoc.Session.Authorization.PREMIUM, premiumGateway);
+		this.passwordGateway = passwordGateway;
+		gateways.put(UserDoc.Session.Authorization.PASSWORD, passwordGateway);
+		gateways.put(UserDoc.Session.Authorization.PREMIUM, premiumGateway);
 	}
 
 	@Override
 	public AuthenticationGateway getUserAuthentication(UserDoc.Session.Authorization authorizationType) {
-		return types.containsKey(authorizationType) ?
-			types.get(authorizationType) :
-			types.get(UserDoc.Session.Authorization.PASSWORD);
+		return gateways.getOrDefault(authorizationType, passwordGateway);
 	}
 
 	@Override

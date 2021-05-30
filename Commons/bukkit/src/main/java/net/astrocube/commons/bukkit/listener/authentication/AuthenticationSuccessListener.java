@@ -67,17 +67,10 @@ public class AuthenticationSuccessListener implements Listener {
 				throw new AuthorizeException("Unable to get available register server.");
 			}
 
-			channel.sendMessage(new SessionSwitchWrapper() {
-				@Override
-				public User getUser() {
-					return user;
-				}
-
-				@Override
-				public boolean isConnecting() {
-					return true;
-				}
-			}, new HashMap<>());
+			channel.sendMessage(new SessionSwitchWrapper(
+					user,
+					true
+			), new HashMap<>());
 
 		} catch (Exception exception) {
 			plugin.getLogger().log(Level.WARNING, "Error authorizing player session", exception);

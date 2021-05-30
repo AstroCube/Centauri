@@ -3,6 +3,7 @@ package net.astrocube.commons.bukkit.authentication.gateway.register;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.authentication.UserAuthorization;
 import net.astrocube.api.bukkit.authentication.GatewayMatcher;
 import net.astrocube.api.bukkit.authentication.event.AuthenticationSuccessEvent;
 import net.astrocube.api.bukkit.authentication.gateway.AuthenticationService;
@@ -27,7 +28,7 @@ public class CoreRegisterGatewayProcessor implements RegisterGatewayProcessor {
 
 		try {
 			authenticationValidator.validateAuthenticationAttempt(player);
-			authenticationService.register(AuthorizationUtils.build(player, password));
+			authenticationService.register(UserAuthorization.withPassword(player, password));
 
 			Bukkit.getPluginManager().callEvent(new AuthenticationSuccessEvent(
 				gatewayMatcher.getRegisterGateway(),

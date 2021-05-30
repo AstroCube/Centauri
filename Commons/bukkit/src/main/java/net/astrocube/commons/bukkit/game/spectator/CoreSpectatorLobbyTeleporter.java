@@ -43,10 +43,9 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 	@Override
 	public void cancelTeleport(Player player) {
 		messageHandler.sendIn(player, AlertModes.MUTED, "game.return.cancel");
-
-		if (hasScheduledTeleport(player)) {
-			scheduledTeleports.get(player.getDatabaseIdentifier());
-			scheduledTeleports.remove(player.getDatabaseIdentifier());
+		Integer taskId = scheduledTeleports.remove(player.getDatabaseIdentifier());
+		if (taskId != null) {
+			Bukkit.getScheduler().cancelTask(taskId);
 		}
 	}
 

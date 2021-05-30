@@ -3,16 +3,31 @@ package net.astrocube.api.core.session;
 import net.astrocube.api.core.message.Message;
 import net.astrocube.api.core.virtual.user.User;
 
-public interface SessionSwitchWrapper extends Message {
+import java.beans.ConstructorProperties;
+
+public class SessionSwitchWrapper implements Message {
+
+	private final User user;
+	private final boolean connecting;
+
+	@ConstructorProperties({"user", "connecting"})
+	public SessionSwitchWrapper(User user, boolean connecting) {
+		this.user = user;
+		this.connecting = connecting;
+	}
 
 	/**
 	 * @return user who is switching status
 	 */
-	User getUser();
+	public User getUser() {
+		return user;
+	}
 
 	/**
 	 * @return if is connecting or disconnecting
 	 */
-	boolean isConnecting();
+	public boolean isConnecting() {
+		return connecting;
+	}
 
 }
