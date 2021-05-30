@@ -75,7 +75,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 				.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
 				.setUrl(TEXTURES_URL + "686d3c12cfcbea83a50292a77fc1f08f94c4e69e147f1de6de2e99e8d4efc635")
 				.setName(messageHandler.get(player, "lobby.profile.premium"))
-				.setLore(messageHandler.get(player, "lobby.profile.premium-lore"))
+				.setLore(messageHandler.getMany(player, "lobby.profile.premium-lore"))
 				.build()
 		).setAction(event -> {
 			event.getWhoClicked().closeInventory();
