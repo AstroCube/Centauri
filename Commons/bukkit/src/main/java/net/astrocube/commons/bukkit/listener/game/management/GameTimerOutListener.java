@@ -51,7 +51,10 @@ public class GameTimerOutListener implements Listener {
 
 				Match match = matchCallback.getResponse().get();
 
+				System.out.println("-----------------------------------------------");
 				if (match.getMap() == null) {
+
+					System.out.println("match map es null");
 
 					Optional<GameMap> gameMap = gameMapService
 						.getRandomMap(match.getGameMode(), match.getSubMode());
@@ -65,6 +68,8 @@ public class GameTimerOutListener implements Listener {
 					match.setMap(gameMap.get().getId());
 					updateService.update(match);
 				}
+
+				System.out.println("-----------------------------------------");
 
 				matchMapLoader.loadMatchMap(match);
 
