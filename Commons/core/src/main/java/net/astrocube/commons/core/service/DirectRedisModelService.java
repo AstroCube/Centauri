@@ -131,9 +131,9 @@ public class DirectRedisModelService<Complete extends Model, Partial extends Par
 	private boolean contains(JsonNode root, JsonNode node) {
 		if (root == null) {
 			return false;
-		/*} else if (root.isValueNode()) {
+		} else if (root.isValueNode()) {
 			System.out.println("2");
-			return node.isValueNode() && root.equals(node);*/
+			return node.isValueNode() && root.equals(node);
 		} else if (root.isArray()) {
 			if (node.isArray()) {
 				System.out.println("node is Array");
