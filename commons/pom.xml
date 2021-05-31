@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>Centauri</artifactId>
+		<artifactId>centauri</artifactId>
 		<groupId>net.astrocube</groupId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -12,21 +12,21 @@
 
 	<distributionManagement>
 		<repository>
-			<id>astro-releases</id>
-			<url>https://repo.astrocube.net/repository/astro-releases/</url>
+			<id>core-releases</id>
+			<url>https://repo.astrocube.net/repository/core-releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>astro-snapshots</id>
-			<url>https://repo.astrocube.net/repository/astro-snapshots/</url>
+			<id>core-snapshots</id>
+			<url>https://repo.astrocube.net/repository/core-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
-	<artifactId>API</artifactId>
+	<artifactId>commons</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>bukkit</module>
 		<module>core</module>
+		<module>bukkit</module>
 		<module>bungee</module>
 	</modules>
 

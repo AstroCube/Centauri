@@ -10,7 +10,7 @@
 	</properties>
 
 	<groupId>net.astrocube</groupId>
-	<artifactId>Centauri</artifactId>
+	<artifactId>centauri</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -30,9 +30,9 @@
 	</repositories>
 
 	<modules>
-		<module>API</module>
-		<module>Commons</module>
-		<module>Lobby</module>
+		<module>api</module>
+		<module>commons</module>
+		<module>lobby</module>
 	</modules>
 
 	<build>

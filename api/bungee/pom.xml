@@ -4,27 +4,26 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>Centauri</artifactId>
+		<artifactId>api</artifactId>
 		<groupId>net.astrocube</groupId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>lobby</artifactId>
+	<artifactId>api-bungee</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>net.astrocube</groupId>
-			<artifactId>api-bukkit</artifactId>
-			<version>${project.version}</version>
+			<groupId>io.github.waterfallmc</groupId>
+			<artifactId>waterfall-api</artifactId>
+			<version>1.16-R0.5-20210427.004902-4</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.astrocube</groupId>
-			<artifactId>gammaspigot</artifactId>
-			<version>1.8-SNAPSHOT</version>
-			<scope>provided</scope>
+			<artifactId>api-core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
