@@ -6,6 +6,7 @@ import net.astrocube.api.core.model.PartialModel;
 import net.astrocube.api.core.virtual.user.User;
 
 import javax.annotation.Nullable;
+import java.beans.ConstructorProperties;
 
 public interface SessionValidateDoc {
 
@@ -44,17 +45,35 @@ public interface SessionValidateDoc {
 
 	}
 
-	interface ServerSwitch extends Partial {
+	class ServerSwitch implements Partial {
 
-		@JsonProperty("user")
-		String getUser();
+		private final String user;
+		private final String server;
+		private final String lobby;
 
-		@JsonProperty("server")
-		String getServer();
+		@ConstructorProperties({"user", "server", "lobby"})
+		public ServerSwitch(
+				String user,
+				String server,
+				@Nullable String lobby
+		) {
+			this.user = user;
+			this.server = server;
+			this.lobby = lobby;
+		}
 
-		@JsonProperty("lobby")
+		public String getUser() {
+			return user;
+		}
+
+		public String getServer() {
+			return server;
+		}
+
 		@Nullable
-		String getLobby();
+		public String getLobby() {
+			return lobby;
+		}
 
 	}
 

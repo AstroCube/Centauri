@@ -31,7 +31,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -82,23 +81,11 @@ public class UserJoinListener implements Listener {
 				User user = response.getResponse().get();
 				String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
-				sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch() {
-					@Override
-					public String getUser() {
-						return user.getId();
-					}
-
-					@Override
-					public String getServer() {
-						return instanceNameProvider.getName();
-					}
-
-					@Nullable
-					@Override
-					public String getLobby() {
-						return plugin.getConfig().getString("server.fallback", "main_lobby");
-					}
-				});
+				sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch(
+						user.getId(),
+						instanceNameProvider.getName(),
+						plugin.getConfig().getString("server.fallback", "main_lobby")
+				));
 
 				playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
 
