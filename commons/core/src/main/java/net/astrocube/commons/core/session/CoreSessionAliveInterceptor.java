@@ -24,6 +24,7 @@ public class CoreSessionAliveInterceptor implements SessionAliveInterceptor {
 		try {
 
 			if (!cloudStatusProvider.hasAliveSession(user.getUsername())) {
+				System.out.println("CLOUD STATUS PROVIDER RETURNED FALSE FOR hasAliveSession FOR PLAYER " + user.getUsername());
 				return Optional.empty();
 			}
 
