@@ -21,7 +21,6 @@ public class InjectionLoaderModule extends ProtectedModule {
 
 	@Override
 	public void configure() {
-		install(new LoaderModule());
 		install(new ScoreboardModule());
 		install(new NametagModule());
 		install(new TranslationModule());
