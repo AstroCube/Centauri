@@ -3,7 +3,6 @@ package net.astrocube.lobby.board;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
-import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 import net.astrocube.api.bukkit.lobby.board.ScoreboardProcessor;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
@@ -15,6 +14,7 @@ import org.bukkit.entity.Player;
 import team.unnamed.uboard.ScoreboardObjective;
 import team.unnamed.uboard.builder.ScoreboardBuilder;
 
+import java.util.List;
 import java.util.Optional;
 
 @Singleton
@@ -36,7 +36,7 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
 
 		TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
 
-		StringList scoreTranslation = messageHandler.replacingMany(
+		List<String> scoreTranslation = messageHandler.replacingMany(
 			player, "lobby.scoreboard.lore",
 			"%player%", user.getDisplay(),
 			"%rank%", flairFormat.getColor() + flairFormat.getName(),
@@ -45,7 +45,7 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
 		);
 
 		if (!objectiveOptional.isPresent()) {
-			ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard(player.getDatabaseIdentifier());
+			ScoreboardBuilder builder = scoreboardManagerProvider.getScoreboard().newScoreboard("lobby_" + player.getDatabaseIdentifier());
 			scoreTranslation.forEach(builder::addLine);
 			builder.setTitle(messageHandler.get(player, "lobby.scoreboard.title"));
 			scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
