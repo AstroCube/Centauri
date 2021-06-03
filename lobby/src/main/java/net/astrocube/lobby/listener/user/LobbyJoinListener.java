@@ -2,7 +2,6 @@ package net.astrocube.lobby.listener.user;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.lobby.board.ScoreboardProcessor;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
 import net.astrocube.api.bukkit.lobby.hide.HideJoinProcessor;
 import net.astrocube.api.bukkit.lobby.hotbar.LobbyHotbarProvider;
@@ -22,14 +21,12 @@ import org.bukkit.potion.PotionEffectType;
 import redis.clients.jedis.Jedis;
 
 import java.util.Locale;
-import java.util.logging.Level;
 
 public class LobbyJoinListener implements Listener {
 
 	private @Inject HideJoinProcessor hideJoinProcessor;
 	private @Inject LobbyHotbarProvider lobbyHotbarProvider;
 	private @Inject LobbyNametagHandler lobbyNametagHandler;
-	private @Inject ScoreboardProcessor scoreboardProcessor;
 	private @Inject SelectorRegistry selectorRegistry;
 	private @Inject MessageHandler messageHandler;
 	private @Inject Plugin plugin;
@@ -55,14 +52,6 @@ public class LobbyJoinListener implements Listener {
 		);
 
 		Bukkit.getScheduler().runTask(plugin, () -> {
-
-			try {
-				if (plugin.getConfig().getBoolean("board")) {
-					scoreboardProcessor.generateBoard(player);
-				}
-			} catch (Exception e) {
-				plugin.getLogger().log(Level.SEVERE, "Could not process user board", e);
-			}
 
 			plugin.getConfig().getStringList("ambiental.effects").forEach(effect -> {
 
