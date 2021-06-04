@@ -27,6 +27,10 @@
 			<id>codemc-snapshots</id>
 			<url>https://repo.codemc.io/repository/maven-snapshots/</url>
 		</repository>
+		<repository>
+			<id>unnamed-snapshots</id>
+			<url>https://repo.unnamed.team/repository/unnamed-snapshots/</url>
+		</repository>
 	</repositories>
 
 	<modules>
