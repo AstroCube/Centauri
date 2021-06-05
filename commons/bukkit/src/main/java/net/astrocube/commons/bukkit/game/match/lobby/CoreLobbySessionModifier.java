@@ -55,7 +55,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 			if (waitingIds.contains(online.getDatabaseIdentifier())) {
 				online.sendMessage(
 					messageHandler.getMessage("game.lobby-leave")
-						.replace("%player%", online.getDisplayName())
+						.replace("%player%", player.getDisplayName())
 						.replace("%actual%", waitingIds.size() + "")
 						.replace("%max%", subGameMode.getMaxPlayers() + "")
 				);
