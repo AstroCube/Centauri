@@ -3,6 +3,7 @@ package net.astrocube.lobby.listener.user;
 import com.google.inject.Inject;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,11 @@ public class PlayerDamageListener implements Listener {
 	@EventHandler
 	public void onPlayerQuit(EntityDamageEvent event) {
 
-		Player player = (Player) event.getEntity();
+		Entity entity = event.getEntity();
+		if (!(entity instanceof Player)) {
+			return;
+		}
+		Player player = (Player) entity;
 
 		if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
 
