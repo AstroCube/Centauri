@@ -1,20 +1,23 @@
 package net.astrocube.api.bukkit.menu;
 
 import com.google.inject.Inject;
+
 import me.yushust.message.MessageHandler;
+
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.core.virtual.user.User;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+
 import team.unnamed.gui.abstraction.item.ItemClickable;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class GenericHeadHelper {
 
@@ -43,13 +46,14 @@ public class GenericHeadHelper {
 	}
 
 	public ItemStack generateSkull(Player player, User user, List<String> lore) {
-		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-		SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		meta.setOwner(user.getUsername());
-		meta.setLore(lore);
-		meta.setDisplayName(displayMatcher.getDisplay(player, user).getPrefix() + ChatColor.WHITE + " " + user.getDisplay());
-		skull.setItemMeta(meta);
-		return skull;
+		return ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+			.setName(
+				displayMatcher.getDisplay(player, user).getPrefix() +
+					ChatColor.WHITE + " " + user.getDisplay()
+			)
+			.setLore(lore)
+			.setOwner(user.getUsername())
+			.build();
 	}
 
 	private ItemStack getPageStack(Player player, HeadLibrary head, String translation, int page) {
@@ -62,20 +66,31 @@ public class GenericHeadHelper {
 		);
 	}
 
-	public ItemClickable generateDefaultClickable(ItemStack stack, int slot, ClickType type, Consumer<Player> playerConsumer) {
+	public ItemClickable generateItem(ItemStack stack,
+									  int slot,
+									  ClickType type,
+									  Runnable action) {
 		return ItemClickable.builder(slot)
 			.setItemStack(stack)
 			.setAction(event -> {
 				if (event.getClick() == type) {
-					playerConsumer.accept((Player) event.getWhoClicked());
+					action.run();
 				}
+
 				return true;
 			})
 			.build();
 	}
 
+	public ItemClickable generateItemCancellingEvent(ItemStack stack,
+													 int slot,
+													 ClickType type) {
+		return generateItem(stack, slot, type, () -> {
+		});
+	}
+
 	public ItemClickable generateDecorator(ItemStack stack, int slot) {
-		return ItemClickable.builder(slot)
+		return ItemClickable.builderCancellingEvent(slot)
 			.setItemStack(stack)
 			.build();
 	}

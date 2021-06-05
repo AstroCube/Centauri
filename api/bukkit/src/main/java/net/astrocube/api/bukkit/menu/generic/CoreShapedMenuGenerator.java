@@ -2,110 +2,66 @@ package net.astrocube.api.bukkit.menu.generic;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.MenuUtils;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
-import net.astrocube.api.core.utils.Pagination;
-import net.astrocube.api.core.utils.SimplePagination;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
+
+import org.jetbrains.annotations.Nullable;
+
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 
-import javax.annotation.Nullable;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Singleton
 public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
 
 	private @Inject GenericHeadHelper genericHeadHelper;
 
-
 	@Override
-	public Inventory generate(Player player, String title, @Nullable Consumer<Player> backClick, Set<BaseClickable> items) {
-		return generate(player, title, backClick, items, 1);
+	public <E> Inventory generate(Player player,
+								  String title,
+								  @Nullable Runnable backClick,
+								  Class<E> entityClass, Set<E> entities,
+								  Function<E, ItemClickable> parser) {
+		return GUIBuilder.builderPaginated(entityClass, title)
+			.fillBorders(ItemClickable.builderCancellingEvent()
+				.setItemStack(MenuUtils.generateStainedPane())
+				.build()
+			)
+			.setEntities(entities)
+			.setItemParser(parser)
+			.setItemsPerRow(7)
+			.setItemIfNotEntities(genericHeadHelper.generateDecorator(
+				genericHeadHelper.getEmptyHead(player, "menus.empty"),
+				22
+			))
+			.setItemIfNotPreviousPage(genericHeadHelper.generateItem(
+				genericHeadHelper.backButton(player),
+				45,
+				ClickType.LEFT,
+				backClick
+			))
+			.setPreviousPageItem(page -> genericHeadHelper.generateItemCancellingEvent(
+				genericHeadHelper.getPreviousHead(player, page),
+				48,
+				ClickType.LEFT
+			))
+			.setNextPageItem(page -> genericHeadHelper.generateItemCancellingEvent(
+				genericHeadHelper.getNextHead(player, page),
+				50,
+				ClickType.LEFT
+			))
+			.addItemReplacingPage(page -> genericHeadHelper.generateDecorator(
+				genericHeadHelper.getActual(player, page),
+				49
+			))
+			.build();
 	}
-
-	@Override
-	public Inventory generate(Player player, String title, @Nullable Consumer<Player> backClick, Set<BaseClickable> items, int page) {
-
-
-		Pagination<BaseClickable> pagination = new SimplePagination<>(28, items);
-
-		GUIBuilder builder = GUIBuilder.builder(title);
-
-		MenuUtils.generateFrame(builder);
-
-		int index = 10;
-		for (BaseClickable stack : pagination.getPage(page)) {
-
-			while (MenuUtils.isMarkedSlot(index)) {
-				index++;
-			}
-
-			builder.addItem(generateClick(stack, index));
-			index++;
-		}
-
-		if (pagination.pageExists(page - 1) && (page - 1) != 0) {
-			builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-					genericHeadHelper.getPreviousHead(player, page),
-					48,
-					ClickType.LEFT,
-					clicker -> clicker.openInventory(generate(clicker, title, backClick, items, (page - 1)))
-				)
-			);
-		}
-
-		if (items.isEmpty()) {
-			builder.addItem(
-				genericHeadHelper.generateDecorator(
-					genericHeadHelper.getEmptyHead(player, "menus.empty"),
-					22
-				)
-			);
-		}
-
-		builder.addItem(
-			genericHeadHelper.generateDecorator(genericHeadHelper.getActual(player, page), 49)
-		);
-
-		if (backClick != null) {
-			builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-					genericHeadHelper.backButton(player),
-					45,
-					ClickType.LEFT,
-					backClick
-				)
-			);
-		}
-
-		if (pagination.pageExists(page + 1)) {
-			builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-					genericHeadHelper.getNextHead(player, page),
-					50,
-					ClickType.LEFT,
-					clicker -> clicker.openInventory(generate(clicker, title, backClick, items, (page + 1)))
-				)
-			);
-		}
-
-		return builder.build();
-
-	}
-
-	private ItemClickable generateClick(BaseClickable baseClickable, int slot) {
-		return genericHeadHelper.generateDefaultClickable(
-			baseClickable.getStack(),
-			slot,
-			ClickType.LEFT,
-			baseClickable.getClick()
-		);
-	}
-
 }
