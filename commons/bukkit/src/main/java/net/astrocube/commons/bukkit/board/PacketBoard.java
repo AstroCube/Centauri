@@ -123,7 +123,8 @@ public class PacketBoard implements Board {
 		// remove extras
 		TIntObjectIterator<String> iterator = this.lines.iterator();
 		while (iterator.hasNext()) {
-			if (iterator.key() < lines.size()) {
+			iterator.advance();
+			if (iterator.key() > lines.size()) {
 				scoreboard.resetScores(iterator.value());
 				iterator.remove();
 			}
