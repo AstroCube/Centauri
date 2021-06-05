@@ -77,6 +77,7 @@ public class PacketBoard implements Board {
 			// don't do anything if title is equal
 			return;
 		}
+		this.title = title;
 		objective.setDisplayName(title);
 		sendObjective(objective, ObjectiveUpdateMode.UPDATE);
 	}
