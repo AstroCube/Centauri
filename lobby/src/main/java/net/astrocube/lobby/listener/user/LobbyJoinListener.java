@@ -43,9 +43,9 @@ public class LobbyJoinListener implements Listener {
 		player.teleport(
 			new Location(
 				Bukkit.getWorlds().get(0),
-				plugin.getConfig().getInt("spawn.x", 0),
-				plugin.getConfig().getInt("spawn.y", 0),
-				plugin.getConfig().getInt("spawn.z", 0),
+				plugin.getConfig().getInt("spawn.x", 0) + 0.5,
+				plugin.getConfig().getInt("spawn.y", 0) + 0.2,
+				plugin.getConfig().getInt("spawn.z", 0) + 0.5,
 				plugin.getConfig().getInt("spawn.yaw", 0),
 				plugin.getConfig().getInt("spawn.pitch", 0)
 			)
