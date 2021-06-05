@@ -45,55 +45,20 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 
 		for (Object section : plugin.getConfig().getList("selector")) {
 
-
+			@SuppressWarnings("unchecked")
 			Map<String, Object> linkedKey = (Map<String, Object>) section;
 
-			LobbyNPCSelector selector = new LobbyNPCSelector() {
-				@Override
-				public String getMode() {
-					return (String) linkedKey.get("mode");
-				}
-
-				@Override
-				public String getSubMode() {
-					return (String) linkedKey.get("subMode");
-				}
-
-				@Override
-				public String getValue() {
-					return (String) linkedKey.get("value");
-				}
-
-				@Override
-				public String getSignature() {
-					return (String) linkedKey.get("signature");
-				}
-
-				@Override
-				public double getX() {
-					return (double) linkedKey.get("x");
-				}
-
-				@Override
-				public double getY() {
-					return (double) linkedKey.get("y");
-				}
-
-				@Override
-				public double getZ() {
-					return (double) linkedKey.get("z");
-				}
-
-				@Override
-				public int getYaw() {
-					return (int) linkedKey.get("yaw");
-				}
-
-				@Override
-				public int getPitch() {
-					return (int) linkedKey.get("pitch");
-				}
-			};
+			LobbyNPCSelector selector = new LobbyNPCSelector(
+					(String) linkedKey.get("mode"),
+					(String) linkedKey.get("subMode"),
+					(String) linkedKey.get("value"),
+					(String) linkedKey.get("signature"),
+					(double) linkedKey.get("x"),
+					(double) linkedKey.get("y"),
+					(double) linkedKey.get("z"),
+					(int) linkedKey.get("yaw"),
+					(int) linkedKey.get("pitch")
+			);
 
 			PlayerPuppetEntity playerPuppetEntity = PlayerPuppetEntityBuilder.create(
 				new CoreLocation(
