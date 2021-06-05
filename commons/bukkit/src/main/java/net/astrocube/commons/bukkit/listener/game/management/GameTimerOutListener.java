@@ -22,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -58,7 +59,6 @@ public class GameTimerOutListener implements Listener {
 
 					Optional<GameMap> gameMap = gameMapService
 						.getRandomMap(match.getGameMode(), match.getSubMode());
-
 					if (!gameMap.isPresent()) {
 						throw new GameControlException("Unable to assign a map for this match");
 					}
