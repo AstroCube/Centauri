@@ -33,6 +33,9 @@ public class PunishmentExpirationChooserMenu {
 	public Inventory createPunishmentExpirationChooserMenu(Player player, PunishmentBuilder punishmentBuilder, String criteria, boolean search) {
 
 		GUIBuilder guiBuilder = GUIBuilder.builder(messageHandler.get(player, "punishment-expiration-menu.title"), 6)
+			.fillBorders(ItemClickable.builderCancellingEvent()
+				.setItemStack(MenuUtils.generateStainedPane())
+				.build())
 			.addItem(
 				genericHeadHelper.generateDecorator(
 					genericHeadHelper.generateSkull(
@@ -71,8 +74,6 @@ public class PunishmentExpirationChooserMenu {
 				})
 				.build()
 			);
-
-		MenuUtils.generateFrame(guiBuilder);
 
 		if (punishmentBuilder.getType() == PunishmentDoc.Identity.Type.BAN) {
 			guiBuilder.addItem(ItemClickable.builder(20)
@@ -117,13 +118,13 @@ public class PunishmentExpirationChooserMenu {
 			);
 		}
 
-		guiBuilder.addItem(genericHeadHelper.generateDefaultClickable(
+		guiBuilder.addItem(genericHeadHelper.generateItem(
 			genericHeadHelper.backButton(player),
 			45,
 			ClickType.LEFT,
-			p -> p.openInventory(search ?
-				punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, criteria, 1) :
-				punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1))
+			() -> player.openInventory(search ?
+				punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, criteria) :
+				punishmentReasonChooserMenu.createFilter(player, punishmentBuilder))
 		));
 
 		return guiBuilder.build();

@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.admin.punishment;
 
 import me.yushust.message.MessageHandler;
+
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.HeadLibrary;
 import net.astrocube.api.bukkit.menu.MenuUtils;
@@ -11,7 +12,9 @@ import net.astrocube.api.core.punishment.PunishmentBuilder;
 import net.astrocube.api.core.virtual.punishment.PunishmentDoc;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.core.punishment.CorePunishmentBuilder;
+
 import net.wesjd.anvilgui.AnvilGUI;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -19,6 +22,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
@@ -49,9 +53,9 @@ public class PunishmentChooserMenu {
 					.setName(messageHandler.replacing(player, "punish-menu.items.ban.name", "%punished_name%", resumedName))
 					.setLore(messageHandler.replacingMany(player, "punish-menu.items.ban.lore", "%punished_name%", resumedName))
 					.build())
-				.setAction(inventoryClickEvent -> {
+				.setAction(event -> {
 					PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.BAN);
-					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1));
+					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder));
 					return true;
 				})
 				.build()
@@ -67,7 +71,7 @@ public class PunishmentChooserMenu {
 					.build())
 				.setAction(inventoryClickEvent -> {
 					PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.KICK);
-					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1));
+					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder));
 					return true;
 				})
 				.build()
@@ -83,7 +87,7 @@ public class PunishmentChooserMenu {
 					.build())
 				.setAction(inventoryClickEvent -> {
 					PunishmentBuilder punishmentBuilder = CorePunishmentBuilder.newBuilder(issuer, target, PunishmentDoc.Identity.Type.WARN);
-					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder, 1));
+					player.openInventory(punishmentReasonChooserMenu.createFilter(player, punishmentBuilder));
 					return true;
 				})
 				.build()
@@ -107,26 +111,24 @@ public class PunishmentChooserMenu {
 
 		if (availability) {
 			builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
+				genericHeadHelper.generateItem(
 					generateSearchItem(player),
 					26,
 					ClickType.LEFT,
-					p -> {
-						new AnvilGUI.Builder()
-							.title(messageHandler.get(player, "punish-menu.search.title"))
-							.text(messageHandler.get(player, "punish-menu.search.write"))
-							.onClose(close ->
-								player.openInventory(createPunishmentChooserMenu(player, issuer, target))
-							)
-							.onComplete((playerIgnored, text) -> {
-								PunishmentBuilder punishmentBuilder =
-									CorePunishmentBuilder.newBuilder(issuer, target, null);
-								player.openInventory(punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, text, 1));
-								return AnvilGUI.Response.close();
-							})
-							.plugin(plugin)
-							.open(player);
-					}
+					() -> new AnvilGUI.Builder()
+						.title(messageHandler.get(player, "punish-menu.search.title"))
+						.text(messageHandler.get(player, "punish-menu.search.write"))
+						.onClose(close ->
+							player.openInventory(createPunishmentChooserMenu(player, issuer, target))
+						)
+						.onComplete((playerIgnored, text) -> {
+							PunishmentBuilder punishmentBuilder =
+								CorePunishmentBuilder.newBuilder(issuer, target, null);
+							player.openInventory(punishmentReasonChooserMenu.createSearch(player, punishmentBuilder, text));
+							return AnvilGUI.Response.close();
+						})
+						.plugin(plugin)
+						.open(player)
 				)
 			);
 		}

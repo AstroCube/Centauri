@@ -38,7 +38,6 @@ public interface PunishmentHandler {
 	AsyncResponse<Void> updatePunishment(Punishment punishment);
 
 	static LocalDateTime generateFromExpiration(long expiration) {
-
 		if (expiration == -1) {
 			return null;
 		}

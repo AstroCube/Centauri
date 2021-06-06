@@ -1,20 +1,23 @@
 package net.astrocube.commons.bukkit.admin.staff;
 
 import com.google.inject.Inject;
+
 import me.yushust.message.MessageHandler;
+
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
+import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.user.staff.OnlineStaffProvider;
 import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.commons.bukkit.admin.AdminPanelMenu;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Consumer;
+import team.unnamed.gui.abstraction.item.ItemClickable;
+import team.unnamed.gui.core.item.type.ItemBuilder;
+
+import java.util.function.Function;
 
 public class AdminOnlineStaffMenu {
 
@@ -25,52 +28,35 @@ public class AdminOnlineStaffMenu {
 	private @Inject AdminOnlineGroupMenu adminOnlineGroupMenu;
 
 	public Inventory createOnlineStaffMenu(Player player) throws Exception {
-
 		return shapedMenuGenerator.generate(
 			player,
 			playerMessageHandler.get(player, "admin-panel.online-staff.title"),
-			(p) -> p.openInventory(adminPanelMenu.createAdminPanel(player)),
-			getCategories(player)
+			() -> player.openInventory(adminPanelMenu.createAdminPanel(player)),
+			Group.class,
+			onlineStaffProvider.getGroups(),
+			generateParser(player)
 		);
-
 	}
 
-	private Set<ShapedMenuGenerator.BaseClickable> getCategories(Player player) throws Exception {
-
-		Set<ShapedMenuGenerator.BaseClickable> clickables = new HashSet<>();
-
-		for (Group group : onlineStaffProvider.getGroups()) {
-
-			ItemStack stack = new ItemStack(Material.PAPER);
-			ItemMeta meta = stack.getItemMeta();
-
-			meta.setDisplayName(playerMessageHandler.get(player, "groups." + group.getId() + ".name"));
-			meta.setLore(playerMessageHandler.getMany(player, "admin-panel.online-staff.category"));
-
-			stack.setItemMeta(meta);
-
-			clickables.add(new ShapedMenuGenerator.BaseClickable() {
-				@Override
-				public Consumer<Player> getClick() {
-					return (p) -> {
-						try {
-							p.openInventory(adminOnlineGroupMenu.createOnlineStaffMenu(player, group.getId()));
-						} catch (Exception e) {
-							playerMessageHandler.send(player, "admin-panel.online-staff.error");
-							p.closeInventory();
-						}
-					};
+	private Function<Group, ItemClickable> generateParser(Player player) {
+		return group -> ItemClickable.builder()
+			.setItemStack(ItemBuilder.newBuilder(Material.PAPER)
+				.setName(playerMessageHandler.get(player, "groups." + group.getId() + ".name"))
+				.setLore(playerMessageHandler.getMany(player, "admin-panel.online-staff.category"))
+				.build()
+			)
+			.setAction(event -> {
+				try {
+					player.openInventory(adminOnlineGroupMenu.createOnlineStaffMenu(player, group.getId()));
+				} catch (Exception e) {
+					player.closeInventory();
+					playerMessageHandler.sendIn(player, AlertModes.ERROR, "admin-panel.online-staff.error");
+					e.printStackTrace();
 				}
 
-				@Override
-				public ItemStack getStack() {
-					return stack;
-				}
-			});
-		}
-
-		return clickables;
-
+				return true;
+			})
+			.build();
 	}
 
 }

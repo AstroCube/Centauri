@@ -74,7 +74,9 @@ public class GenericHeadHelper {
 			.setItemStack(stack)
 			.setAction(event -> {
 				if (event.getClick() == type) {
-					action.run();
+					if (action != null) {
+						action.run();
+					}
 				}
 
 				return true;

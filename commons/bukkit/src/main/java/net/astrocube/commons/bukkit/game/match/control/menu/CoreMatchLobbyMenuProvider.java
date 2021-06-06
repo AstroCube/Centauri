@@ -81,7 +81,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	}
 
 	private ItemClickable generateActivateButton(Player player) {
-		return genericHeadHelper.generateDefaultClickable(
+		return genericHeadHelper.generateItem(
 			genericHeadHelper.generateMetaAndPlace(
 				new ItemStack(Material.REDSTONE_BLOCK),
 				messageHandler.get(player, "game.admin.lobby.icons.private.enable.title"),
@@ -89,7 +89,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 			),
 			13,
 			ClickType.LEFT,
-			(p) -> {
+			() -> {
 				try {
 					matchPrivatizeSwitcher.switchPrivatization(player);
 					create(player);
@@ -102,7 +102,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	}
 
 	private ItemClickable generateDeactivateButton(Player player) {
-		return genericHeadHelper.generateDefaultClickable(
+		return genericHeadHelper.generateItem(
 			genericHeadHelper.generateMetaAndPlace(
 				new ItemStack(Material.EMERALD_BLOCK),
 				messageHandler.get(player, "game.admin.lobby.icons.private.disable.title"),
@@ -110,7 +110,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 			),
 			13,
 			ClickType.LEFT,
-			(p) -> {
+			() -> {
 				try {
 					matchPrivatizeSwitcher.switchPrivatization(player);
 					create(player);
@@ -123,7 +123,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	}
 
 	private ItemClickable generateMapSelectorButton(Player player, Match match, String map) {
-		return genericHeadHelper.generateDefaultClickable(
+		return genericHeadHelper.generateItem(
 			genericHeadHelper.generateMetaAndPlace(
 				new ItemStack(Material.MAP),
 				messageHandler.get(player, "game.admin.lobby.icons.map.title"),
@@ -134,7 +134,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 			),
 			11,
 			ClickType.LEFT,
-			(p) -> {
+			() -> {
 				try {
 					matchMapSwitcher.openMapMenu(player, match);
 				} catch (Exception e) {
@@ -146,17 +146,14 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	}
 
 	private ItemClickable generateSummonButton(Player player) {
-		return genericHeadHelper.generateDefaultClickable(
+		return genericHeadHelper.generateItemCancellingEvent(
 			genericHeadHelper.generateMetaAndPlace(
 				new ItemStack(Material.EYE_OF_ENDER),
 				messageHandler.get(player, "game.admin.lobby.icons.summon.title"),
 				messageHandler.getMany(player, "game.admin.lobby.icons.summon.lore")
 			),
 			15,
-			ClickType.LEFT,
-			(p) -> {
-
-			}
+			ClickType.LEFT
 		);
 	}
 

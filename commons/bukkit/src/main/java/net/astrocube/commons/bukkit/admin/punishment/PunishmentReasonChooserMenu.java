@@ -22,18 +22,17 @@ public class PunishmentReasonChooserMenu {
 	private @Inject MessageHandler messageHandler;
 	private @Inject ShapedMenuGenerator shapedMenuGenerator;
 
-	public Inventory createFilter(Player player, PunishmentBuilder builder, int page) {
+	public Inventory createFilter(Player player, PunishmentBuilder builder) {
 		return createChooser(
 			player,
 			builder,
 			presetPunishmentCache.getPunishments(builder.getType()),
 			"",
-			false,
-			page
+			false
 		);
 	}
 
-	public Inventory createSearch(Player player, PunishmentBuilder builder, String search, int page) {
+	public Inventory createSearch(Player player, PunishmentBuilder builder, String search) {
 		return createChooser(
 			player,
 			builder,
@@ -49,21 +48,24 @@ public class PunishmentReasonChooserMenu {
 				.filter(p -> player.hasPermission("commons.staff.punish.warn") && p.getType() == PunishmentDoc.Identity.Type.WARN)
 				.collect(Collectors.toSet()),
 			search,
-			true,
-			page
+			true
 		);
 	}
 
-	private Inventory createChooser(Player player, PunishmentBuilder builder, Set<PresetPunishment> preset, String criteria, boolean search, int page) {
+	private Inventory createChooser(Player player,
+									PunishmentBuilder builder, Set<PresetPunishment> preset,
+									String criteria, boolean search) {
 		return shapedMenuGenerator.generate(
 			player,
 			messageHandler.get(player, "punishment-expiration-menu.title"),
-			p -> p.openInventory(punishmentChooserMenu.createPunishmentChooserMenu(
+			() -> player.openInventory(punishmentChooserMenu.createPunishmentChooserMenu(
 				player,
 				builder.getIssuer(),
 				builder.getTarget()
 			)),
-			punishClickableGenerator.buildPunishReasons(player, builder, preset, criteria, search)
+			PresetPunishment.class,
+			preset,
+			punishClickableGenerator.buildParser(player, builder, criteria, search)
 		);
 	}
 

@@ -12,11 +12,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import team.unnamed.gui.abstraction.item.ItemClickable;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Inject;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class PunishClickableGenerator {
@@ -24,58 +27,47 @@ public class PunishClickableGenerator {
 	private @Inject PunishmentExpirationChooserMenu punishmentExpirationChooserMenu;
 	private @Inject MessageHandler messageHandler;
 
-	public Set<ShapedMenuGenerator.BaseClickable> buildPunishReasons
-		(Player player, PunishmentBuilder punishmentBuilder, Set<PresetPunishment> punishments, String criteria, boolean search) {
-		return punishments.stream()
-			.map(punishment -> {
-
-				String translated = messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".reason");
-				ItemStack paper = new ItemStack(Material.PAPER);
-				ItemMeta meta = paper.getItemMeta();
-
-				meta.setDisplayName(
-					ChatColor.AQUA +
-						messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".title") +
-						ChatColor.GRAY + (search ? " - " + messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase()) : "")
-				);
-
-				meta.setLore(
-					messageHandler.replacingMany(
+	public Function<PresetPunishment, ItemClickable> buildParser(Player player,
+																 PunishmentBuilder punishmentBuilder,
+																 String criteria,
+																 boolean search) {
+		return punishment -> {
+			String translated = messageHandler.get(player, "punish-menu.reasons." + punishment.getId() + ".reason");
+			return ItemClickable.builder()
+				.setItemStack(ItemBuilder.newBuilder(Material.PAPER)
+					.setName(
+						ChatColor.AQUA + messageHandler.get(
+							player, "punish-menu.reasons." + punishment.getId() + ".title"
+						) + ChatColor.GRAY + (search ? " - " + messageHandler.get(
+							player, "punish-menu.type." + punishment.getType().toString().toLowerCase()
+						) : "")
+					)
+					.setLore(messageHandler.replacingMany(
 						player, "punish-menu.lore",
 						"%reason%", translated,
-						"%expire%", punishment.getExpiration() == -1 ? messageHandler.get(player, "punishment-expiration.never") :
-							PrettyTimeUtils.getHumanDate(
-								Objects.requireNonNull(PunishmentHandler.generateFromExpiration(
-									punishment.getExpiration()
-								)),
-								punishmentBuilder.getIssuer().getLanguage()
-							)
-					)
-				);
-
-				paper.setItemMeta(meta);
-
-				return new ShapedMenuGenerator.BaseClickable() {
-					@Override
-					public Consumer<Player> getClick() {
-						return (p) -> {
-							if (search) {
-								punishmentBuilder.setType(punishment.getType());
-							}
-							punishmentBuilder.setReason(translated);
-							punishmentBuilder.setDuration(punishment.getExpiration());
-							player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(player, punishmentBuilder, criteria, search));
-						};
+						"%expire%", punishment.getExpiration() == -1 ? messageHandler.get(
+							player, "punishment-expiration.never"
+						) : PrettyTimeUtils.getHumanDate(PunishmentHandler.generateFromExpiration(
+							punishment.getExpiration()
+						), punishmentBuilder.getIssuer().getLanguage())
+					))
+					.build()
+				)
+				.setAction(event -> {
+					if (search) {
+						punishmentBuilder.setType(punishment.getType());
 					}
 
-					@Override
-					public ItemStack getStack() {
-						return paper;
-					}
-				};
+					punishmentBuilder.setReason(translated);
+					punishmentBuilder.setDuration(punishment.getExpiration());
+					player.openInventory(punishmentExpirationChooserMenu.createPunishmentExpirationChooserMenu(
+						player, punishmentBuilder, criteria, search
+					));
 
-
-			}).collect(Collectors.toSet());
+					return true;
+				})
+				.build();
+		};
 	}
 
 }
