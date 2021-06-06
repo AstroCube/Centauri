@@ -44,7 +44,6 @@ public class PunishmentStaffChatListener implements Listener {
 					if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
 
 						findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
-							plugin.getLogger().info("Player founded");
 							String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
 								+ issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 
@@ -53,11 +52,7 @@ public class PunishmentStaffChatListener implements Listener {
 
 							playerResponse.ifSuccessful(user -> {
 
-								plugin.getLogger().info("Player response is successful");
-
 								if (user.getSettings().getAdminChatSettings().isReadingPunishments()) {
-
-									plugin.getLogger().info("Sending message");
 
 									messageHandler.sendReplacing(
 										player, "channel.admin.punish",
