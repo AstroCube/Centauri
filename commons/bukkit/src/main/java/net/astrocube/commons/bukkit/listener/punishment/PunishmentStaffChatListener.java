@@ -10,25 +10,27 @@ import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 public class PunishmentStaffChatListener implements Listener {
 
 	private @Inject FindService<User> findService;
 	private @Inject DisplayMatcher matcher;
 	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
 	@EventHandler
 	public void onPunishmentIssue(PunishmentIssueEvent event) {
 
 		if (!event.getPunishment().isSilent()) {
 
+			plugin.getLogger().info("Executing punishment message");
+
 			if (event.getPunishment().isAutomatic()) {
 				executeFixedPunishment(event.getPunishment(), null);
 			}
 
-			findService.find(event.getPunishment().getIssuer()).callback(issuerResponse -> {
-				issuerResponse.ifSuccessful(issuer -> executeFixedPunishment(event.getPunishment(), issuer));
-			});
+			findService.find(event.getPunishment().getIssuer()).callback(issuerResponse -> issuerResponse.ifSuccessful(issuer -> executeFixedPunishment(event.getPunishment(), issuer)));
 
 		}
 
@@ -38,11 +40,11 @@ public class PunishmentStaffChatListener implements Listener {
 		findService.find(punishment.getPunished()).callback(punishedResponse ->
 			punishedResponse.ifSuccessful(punished ->
 				Bukkit.getOnlinePlayers().forEach(player -> {
-
+					plugin.getLogger().info("Player " + player.getName());
 					if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
 
 						findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
-
+							plugin.getLogger().info("Player founded");
 							String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
 								+ issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 
@@ -51,7 +53,11 @@ public class PunishmentStaffChatListener implements Listener {
 
 							playerResponse.ifSuccessful(user -> {
 
+								plugin.getLogger().info("Player response is successful");
+
 								if (user.getSettings().getAdminChatSettings().isReadingPunishments()) {
+
+									plugin.getLogger().info("Sending message");
 
 									messageHandler.sendReplacing(
 										player, "channel.admin.punish",
