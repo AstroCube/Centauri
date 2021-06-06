@@ -24,7 +24,7 @@ public class CoreMojangValidate implements MojangValidate {
 	public boolean validateUUID(String user, UUID uniqueId) throws Exception {
 
 		Map<String, String> headers = new HashMap<>();
-		String url = "https://api.minetools.eu/uuid/" + uniqueId.toString().toLowerCase(Locale.ROOT);
+		String url = "https://api.ashcon.app/mojang/v2/user/" + uniqueId.toString().toLowerCase(Locale.ROOT);
 		headers.put("Referer", url);
 
 		String response = httpClient.executeRequestSync(
@@ -40,8 +40,7 @@ public class CoreMojangValidate implements MojangValidate {
 
 		JsonNode node = this.mapper.readTree(response);
 
-		return node.get("name").toString().replace("\"", "").equalsIgnoreCase(user) &&
-			node.get("status").toString().replace("\"", "").equalsIgnoreCase("OK");
+		return node.get("username").toString().replace("\"", "").equalsIgnoreCase(user);
 
 	}
 
