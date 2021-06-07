@@ -2,7 +2,6 @@ package net.astrocube.commons.core.session;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ValueNode;
 import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
