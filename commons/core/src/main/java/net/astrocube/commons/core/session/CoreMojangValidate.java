@@ -2,12 +2,14 @@ package net.astrocube.commons.core.session;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpResponse;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.session.MojangValidate;
-import net.astrocube.commons.core.http.RawRequestCallable;
+import net.astrocube.commons.core.http.resolver.RequestExceptionResolverUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -27,20 +29,29 @@ public class CoreMojangValidate implements MojangValidate {
 		String url = "https://api.ashcon.app/mojang/v2/user/" + uniqueId.toString().toLowerCase(Locale.ROOT);
 		headers.put("Referer", url);
 
-		String response = httpClient.executeRequestSync(
-			url,
-			new RawRequestCallable(),
-			new RequestOptions(
-				RequestOptions.Type.GET,
-				headers,
-				"",
-				""
-			)
+		HttpResponse response = httpClient.executeRequestSync(
+				url,
+				HttpRequest::execute,
+				new RequestOptions(
+						RequestOptions.Type.GET,
+						headers,
+						"",
+						""
+				)
 		);
 
-		JsonNode node = this.mapper.readTree(response);
+		int statusCode = response.getStatusCode();
+		String json = response.parseAsString();
 
-		return node.get("username").toString().replace("\"", "").equalsIgnoreCase(user);
+		if (statusCode == 400) {
+			// The api returns 400 if an invalid premium unique id was given
+			return false;
+		} else if (statusCode == 200) {
+			JsonNode node = this.mapper.readTree(json);
+			return node.get("username").toString().equalsIgnoreCase(user);
+		} else {
+			throw RequestExceptionResolverUtil.generateException(json, statusCode);
+		}
 
 	}
 
