@@ -2,6 +2,7 @@ package net.astrocube.commons.core.session;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ValueNode;
 import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -52,7 +53,7 @@ public class CoreMojangValidate implements MojangValidate {
 		}
 
 		JsonNode node = this.mapper.readTree(json);
-		return node.get("username").toString().equalsIgnoreCase(user);
+		return node.get("username").textValue().equalsIgnoreCase(user);
 	}
 
 }
