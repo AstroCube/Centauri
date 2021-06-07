@@ -2,6 +2,8 @@ package net.astrocube.commons.core.session;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ValueNode;
+import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.core.http.HttpClient;
@@ -26,22 +28,32 @@ public class CoreMojangValidate implements MojangValidate {
 		Map<String, String> headers = new HashMap<>();
 		String url = "https://api.ashcon.app/mojang/v2/user/" + uniqueId.toString().toLowerCase(Locale.ROOT);
 		headers.put("Referer", url);
+		String json;
 
-		String response = httpClient.executeRequestSync(
-			url,
-			new RawRequestCallable(),
-			new RequestOptions(
-				RequestOptions.Type.GET,
-				headers,
-				"",
-				""
-			)
-		);
+		try {
+			json = httpClient.executeRequestSync(
+					url,
+					new RawRequestCallable(),
+					new RequestOptions(
+							RequestOptions.Type.GET,
+							headers,
+							"",
+							""
+					)
+			);
+		} catch (HttpResponseException e) {
+			// I'm sure we don't have a bad request, but
+			// it returns 400 if the unique id isn't a valid
+			// premium uuid
+			if (e.getStatusCode() == 400) {
+				return false;
+			} else {
+				throw e;
+			}
+		}
 
-		JsonNode node = this.mapper.readTree(response);
-
-		return node.get("username").toString().replace("\"", "").equalsIgnoreCase(user);
-
+		JsonNode node = this.mapper.readTree(json);
+		return node.get("username").textValue().equalsIgnoreCase(user);
 	}
 
 }
