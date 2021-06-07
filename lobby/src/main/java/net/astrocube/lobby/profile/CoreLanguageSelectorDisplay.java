@@ -59,7 +59,7 @@ public class CoreLanguageSelectorDisplay {
 			String displayName = messageHandler.get(player, "lobby.profile.language-type." + abbreviation + ".displayname");
 
 			if (currentLanguage.equals(abbreviation)) {
-				itemLorePath.append("already-lore");
+				itemLorePath.append("lore-already");
 				itemClickableBuilder.setAction(event -> true);
 			} else {
 				itemLorePath.append("lore");
