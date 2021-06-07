@@ -55,11 +55,11 @@ public class CoreLanguageSelectorDisplay {
 			String abbreviation = languageType.getAbbreviation();
 
 			ItemClickableBuilder itemClickableBuilder = ItemClickable.builder(AVAILABLE_SLOTS[index]);
-			StringBuilder itemLorePath = new StringBuilder("lobby.profile.language-type." + abbreviation);
+			StringBuilder itemLorePath = new StringBuilder("lobby.profile.language-type." + abbreviation + ".");
 			String displayName = messageHandler.get(player, "lobby.profile.language-type." + abbreviation + ".displayname");
 
 			if (currentLanguage.equals(abbreviation)) {
-				itemLorePath.append("already-lore");
+				itemLorePath.append("lore-already");
 				itemClickableBuilder.setAction(event -> true);
 			} else {
 				itemLorePath.append("lore");
