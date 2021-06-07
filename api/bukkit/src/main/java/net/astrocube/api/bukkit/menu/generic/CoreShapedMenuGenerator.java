@@ -37,6 +37,7 @@ public class CoreShapedMenuGenerator implements ShapedMenuGenerator {
 			)
 			.setEntities(entities)
 			.setItemParser(parser)
+			.setBounds(10, 43)
 			.setItemsPerRow(7)
 			.setItemIfNotEntities(genericHeadHelper.generateDecorator(
 				genericHeadHelper.getEmptyHead(player, "menus.empty"),
