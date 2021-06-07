@@ -40,7 +40,7 @@ public class CoreModeConnectedProvider implements CloudModeConnectedProvider {
 	public int getGroupOnline(String group) {
 		ServerGroupObject lobby = TimoCloudAPI.getUniversalAPI().getServerGroup(group);
 		if (lobby == null) {
-			return -1;
+			return 0;
 		}
 		int count = 0;
 		for (ServerObject server : lobby.getServers()) {
