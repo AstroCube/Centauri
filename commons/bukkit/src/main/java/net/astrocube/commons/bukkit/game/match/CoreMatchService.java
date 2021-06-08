@@ -1,7 +1,5 @@
 package net.astrocube.commons.bukkit.game.match;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchService;
@@ -9,19 +7,12 @@ import net.astrocube.api.bukkit.game.match.MatchSubscription;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
-import net.astrocube.api.core.http.HttpClient;
-import net.astrocube.api.core.http.RequestOptions;
-import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.update.UpdateService;
-import net.astrocube.commons.core.http.CoreRequestCallable;
 
 import java.util.Set;
 
 public class CoreMatchService implements MatchService {
 
-	private @Inject ObjectMapper objectMapper;
-	private @Inject HttpClient httpClient;
-	private @Inject ModelMeta<Match, MatchDoc.Partial> modelMeta;
 	private @Inject UpdateService<Match, MatchDoc.Partial> matchUpdateService;
 	private @Inject ActualMatchCache actualMatchCache;
 
@@ -73,14 +64,7 @@ public class CoreMatchService implements MatchService {
 
 	@Override
 	public void matchCleanup() throws Exception {
-		httpClient.executeRequestSync(
-			this.modelMeta.getRouteKey() + "/cleanup",
-			new CoreRequestCallable<>(TypeToken.of(Void.class), objectMapper),
-			new RequestOptions(
-				RequestOptions.Type.POST,
-				""
-			)
-		);
+		// TODO: (redis) Check what matches are assigned to current server, if its status is LOBBY, delete, else, set status to INVALIDATED and update
 	}
 
 	@Override
