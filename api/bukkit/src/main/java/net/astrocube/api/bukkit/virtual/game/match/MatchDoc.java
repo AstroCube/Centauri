@@ -76,6 +76,8 @@ public interface MatchDoc {
 		 */
 		Set<Team> getTeams();
 
+		void setTeams(Set<Team> teams);
+
 		/**
 		 * @return set of {@link User} ids who are identified as match winners.
 		 */

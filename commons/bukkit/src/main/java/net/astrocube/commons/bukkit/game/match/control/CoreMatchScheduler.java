@@ -91,6 +91,10 @@ public class CoreMatchScheduler implements MatchScheduler {
 			}
 
 			@Override
+			public void setTeams(Set<MatchDoc.Team> teams) {
+			}
+
+			@Override
 			public Set<String> getWinner() {
 				return new HashSet<>();
 			}
