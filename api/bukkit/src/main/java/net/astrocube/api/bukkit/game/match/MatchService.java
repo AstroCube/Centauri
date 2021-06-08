@@ -15,7 +15,7 @@ public interface MatchService {
 	 * @param join  or leave
 	 * @throws Exception when a backend error is thrown
 	 */
-	void assignSpectator(String user, String match, boolean join) throws Exception;
+	void assignSpectator(Match match, String user, boolean join) throws Exception;
 
 	/**
 	 * Assign a set of teams after a match has started
@@ -54,7 +54,7 @@ public interface MatchService {
 	 * @param match   to be updated
 	 * @param winners to be listed
 	 */
-	void assignVictory(String match, Set<String> winners) throws Exception;
+	void assignVictory(Match match, Set<String> winners) throws Exception;
 
 	/**
 	 * Disqualify a user from a match marking him as "not active".
@@ -63,6 +63,6 @@ public interface MatchService {
 	 */
 	void disqualify(String match, String user) throws Exception;
 
-	void privatizeMatch(String requester, String match) throws Exception;
+	void privatizeMatch(Match match, String requester) throws Exception;
 
 }

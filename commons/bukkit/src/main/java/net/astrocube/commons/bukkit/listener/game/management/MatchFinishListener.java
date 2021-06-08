@@ -52,7 +52,7 @@ public class MatchFinishListener implements Listener {
 					return;
 				}
 
-				matchService.assignVictory(event.getMatch(), event.getWinners());
+				matchService.assignVictory(match, event.getWinners());
 				Set<Player> players = MatchParticipantsProvider.getInvolved(match);
 				ghostEffectControl.clearMatch(match.getId());
 				actualMatchCache.clearSubscriptions(match);

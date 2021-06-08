@@ -102,7 +102,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 		switch (subscription.getType()) {
 			case SPECTATOR: {
-				matchService.assignSpectator(player.getDatabaseIdentifier(), subscription.getMatch(), false);
+				matchService.assignSpectator(match, player.getDatabaseIdentifier(), false);
 				match.getSpectators().remove(player.getDatabaseIdentifier());
 				origin = UserMatchJoiner.Origin.SPECTATING;
 				break;

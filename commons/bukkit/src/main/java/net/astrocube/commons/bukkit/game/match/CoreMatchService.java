@@ -6,19 +6,15 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.MatchSubscription;
-import net.astrocube.api.bukkit.game.match.request.*;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.RequestOptions;
-import net.astrocube.api.core.message.Channel;
-import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.commons.core.http.CoreRequestCallable;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class CoreMatchService implements MatchService {
@@ -29,32 +25,23 @@ public class CoreMatchService implements MatchService {
 	private @Inject UpdateService<Match, MatchDoc.Partial> matchUpdateService;
 	private @Inject ActualMatchCache actualMatchCache;
 
-	private final Messenger messenger;
-
-	@Inject
-	public CoreMatchService(Messenger messenger) {
-		this.messenger = messenger;
-	}
-
 	@Override
-	public void assignSpectator(String user, String match, boolean join) throws Exception {
-		Channel<SpectatorAssignMessage> spectatorAssignMessageChannel = messenger.getChannel(SpectatorAssignMessage.class);
-		spectatorAssignMessageChannel.sendMessage(new SpectatorAssignMessage() {
-			@Override
-			public String getUser() {
-				return user;
-			}
-
-			@Override
-			public boolean isJoin() {
-				return join;
-			}
-
-			@Override
-			public String getMatch() {
-				return match;
-			}
-		}, new HashMap<>());
+	public void assignSpectator(Match match, String requester, boolean join) throws Exception {
+		// TODO: This should probably be two separate methods!
+		if (join) {
+			// update requester subscription
+			actualMatchCache.updateSubscription(
+					requester,
+					new MatchSubscription(
+							match.getId(),
+							MatchSubscription.Type.SPECTATOR
+					)
+			);
+			match.getSpectators().add(requester);
+		} else {
+			match.getSpectators().remove(requester);
+		}
+		matchUpdateService.updateSync(match);
 	}
 
 	@Override
@@ -71,7 +58,7 @@ public class CoreMatchService implements MatchService {
 			}
 		}
 		match.setTeams(teams);
-		matchUpdateService.update(match);
+		matchUpdateService.updateSync(match);
 	}
 
 	@Override
@@ -97,52 +84,30 @@ public class CoreMatchService implements MatchService {
 	}
 
 	@Override
-	public void assignVictory(String match, Set<String> winners) throws Exception {
-		Channel<VictoryAssignMessage> victoryAssignMessageChannel = messenger.getChannel(VictoryAssignMessage.class);
-		victoryAssignMessageChannel.sendMessage(new VictoryAssignMessage() {
-			@Override
-			public Set<String> getWinners() {
-				return winners;
-			}
-
-			@Override
-			public String getMatch() {
-				return match;
-			}
-		}, new HashMap<>());
+	public void assignVictory(Match match, Set<String> winners) throws Exception {
+		match.getTeams().forEach(team ->
+			team.getMembers().forEach(member ->
+				member.setActive(false)));
+		match.setWinner(winners);
+		match.setStatus(MatchDoc.Status.FINISHED);
+		matchUpdateService.updateSync(match);
 	}
 
 	@Override
 	public void disqualify(String match, String user) throws Exception {
 		// TODO: This calls the backend disqualification, but the method caller already does it. We should move the caller logic here
-		/*Channel<MatchDisqualifyMessage> matchDisqualifyMessageChannel = messenger.getChannel(MatchDisqualifyMessage.class);
-		matchDisqualifyMessageChannel.sendMessage(new MatchDisqualifyMessage() {
-			@Override
-			public String getUser() {
-				return user;
-			}
-
-			@Override
-			public String getMatch() {
-				return match;
-			}
-		}, new HashMap<>());*/
 	}
 
 	@Override
-	public void privatizeMatch(String requester, String match) throws Exception {
-		Channel<MatchPrivatizeMessage> matchPrivatizeMessageChannel = messenger.getChannel(MatchPrivatizeMessage.class);
-		matchPrivatizeMessageChannel.sendMessage(new MatchPrivatizeMessage() {
-			@Override
-			public String getRequester() {
-				return requester;
-			}
-
-			@Override
-			public String getMatch() {
-				return match;
-			}
-		}, new HashMap<>());
+	public void privatizeMatch(Match match, String requester) throws Exception {
+		if (match.isPrivate()) {
+			match.setPrivate(false);
+			match.setPrivatizedBy(null);
+		} else {
+			match.setPrivate(true);
+			match.setPrivatizedBy(requester);
+		}
+		matchUpdateService.updateSync(match);
 	}
 
 }

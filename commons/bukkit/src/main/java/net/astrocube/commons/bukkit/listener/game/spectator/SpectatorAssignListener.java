@@ -38,7 +38,7 @@ public class SpectatorAssignListener implements Listener {
 				Player player = event.getPlayer();
 				Match match = response.getResponse().get();
 
-				matchService.assignSpectator(event.getPlayer().getDatabaseIdentifier(), event.getMatch(), true);
+				matchService.assignSpectator(match, event.getPlayer().getDatabaseIdentifier(), true);
 
 				if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
 					matchService.disqualify(match.getId(), player.getDatabaseIdentifier());
