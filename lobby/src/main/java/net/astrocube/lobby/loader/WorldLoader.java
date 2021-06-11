@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
-
 @Singleton
 public class WorldLoader implements Loader {
 
@@ -29,6 +28,15 @@ public class WorldLoader implements Loader {
 		world.setGameRuleValue("mobGriefing", "false");
 
 		world.setTime(plugin.getConfig().getInt("ambiental.time", 1000));
+
+		// yaw and pitch aren't set, this could be an issue
+		// plugin.getConfig().getInt("spawn.yaw", 0),
+		// plugin.getConfig().getInt("spawn.pitch", 0)
+		world.setSpawnLocation(
+				plugin.getConfig().getInt("spawn.x", 0),
+				plugin.getConfig().getInt("spawn.y", 0),
+				plugin.getConfig().getInt("spawn.z", 0)
+		);
 
 	}
 
