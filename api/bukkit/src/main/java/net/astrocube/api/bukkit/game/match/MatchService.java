@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.game.match;
 
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
+import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 
 import java.util.Set;
@@ -14,15 +15,15 @@ public interface MatchService {
 	 * @param join  or leave
 	 * @throws Exception when a backend error is thrown
 	 */
-	void assignSpectator(String user, String match, boolean join) throws Exception;
+	void assignSpectator(Match match, String user, boolean join) throws Exception;
 
 	/**
 	 * Assign a set of teams after a match has started
 	 * @param teams to be assigned
-	 * @param match id to be added
+	 * @param match to be added
 	 * @throws Exception when a backend error is thrown
 	 */
-	void assignTeams(Set<MatchDoc.Team> teams, String match) throws Exception;
+	void assignTeams(Match match, Set<MatchDoc.Team> teams) throws Exception;
 
 	/**
 	 * UnAssign a pending user from its {@link MatchAssignable} and perform
@@ -53,7 +54,7 @@ public interface MatchService {
 	 * @param match   to be updated
 	 * @param winners to be listed
 	 */
-	void assignVictory(String match, Set<String> winners) throws Exception;
+	void assignVictory(Match match, Set<String> winners) throws Exception;
 
 	/**
 	 * Disqualify a user from a match marking him as "not active".
@@ -62,6 +63,6 @@ public interface MatchService {
 	 */
 	void disqualify(String match, String user) throws Exception;
 
-	void privatizeMatch(String requester, String match) throws Exception;
+	void privatizeMatch(Match match, String requester) throws Exception;
 
 }

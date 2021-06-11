@@ -33,7 +33,7 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
 
 		Match match = matchOptional.get();
 
-		matchService.privatizeMatch(player.getDatabaseIdentifier(), match.getId());
+		matchService.privatizeMatch(match, player.getDatabaseIdentifier());
 
 		String translation = !match.isPrivate() ?
 			"game.admin.lobby.privatizing.enabled" : "game.admin.lobby.privatizing.disabled";

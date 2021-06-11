@@ -124,6 +124,10 @@ public class CoreTeamBalancer implements TeamBalancer {
 			}
 
 			@Override
+			public void setActive(boolean active) {
+			}
+
+			@Override
 			public Date getJoinedAt() {
 				return joinedAt;
 			}

@@ -78,7 +78,7 @@ public class GameTimerOutListener implements Listener {
 
 				Set<MatchDoc.Team> balanced = teamBalancer.balanceTeams(match, match.getPending());
 
-				matchService.assignTeams(balanced, match.getId());
+				matchService.assignTeams(match, balanced);
 
 				Bukkit.getScheduler().runTask(plugin, () -> {
 					balanced.stream().flatMap(p -> p.getMembers().stream().map(MatchDoc.TeamMember::getUser)).forEach(player -> {

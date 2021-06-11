@@ -12,28 +12,14 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CoreTagPacketHandler extends AbstractTagPacketHandler {
 
-	private static Field SPAWN_ID_FIELD;
-	private static Field DESTROY_ID_FIELD;
-
 	public CoreTagPacketHandler(NametagRegistry renderedRegistry, Plugin plugin) {
 		super(renderedRegistry, plugin);
-
-		try {
-			SPAWN_ID_FIELD = PacketPlayOutNamedEntitySpawn.class.getDeclaredField("a");
-			SPAWN_ID_FIELD.setAccessible(true);
-
-			DESTROY_ID_FIELD = PacketPlayOutEntityDestroy.class.getDeclaredField("a");
-			DESTROY_ID_FIELD.setAccessible(true);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
 	}
 
 	@Override
@@ -49,7 +35,7 @@ public class CoreTagPacketHandler extends AbstractTagPacketHandler {
 				public void write(ChannelHandlerContext channelHandlerContext, Object packetObject, ChannelPromise channelPromise) throws Exception {
 					if (packetObject instanceof PacketPlayOutNamedEntitySpawn) {
 						PacketPlayOutNamedEntitySpawn spawnPacket = (PacketPlayOutNamedEntitySpawn) packetObject;
-						int id = (int) SPAWN_ID_FIELD.get(spawnPacket);
+						int id = spawnPacket.a;
 						renderedRegistry.getRenderedForPlayer(player).values().forEach(rendered -> {
 							if (id == rendered.getRecipient().getEntityId()) {
 								Bukkit.getScheduler().runTaskLater(plugin, rendered::show, 5L);
@@ -59,7 +45,7 @@ public class CoreTagPacketHandler extends AbstractTagPacketHandler {
 					} else if (packetObject instanceof PacketPlayOutEntityDestroy) {
 						PacketPlayOutEntityDestroy destroyPacket = (PacketPlayOutEntityDestroy) packetObject;
 
-						int[] rawIds = (int[]) DESTROY_ID_FIELD.get(destroyPacket);
+						int[] rawIds = destroyPacket.getEntityIds();
 						List<Integer> ids = Arrays.stream(rawIds).boxed().collect(Collectors.toList());
 
 						renderedRegistry.getRenderedForPlayer(player).values().forEach(rendered -> {
