@@ -5,7 +5,6 @@ import net.astrocube.api.bukkit.server.ListenerLoader;
 import net.astrocube.commons.bukkit.game.spectator.LobbyActionListener;
 import net.astrocube.commons.bukkit.listener.game.session.LobbyUserDisconnectListener;
 import net.astrocube.commons.bukkit.listener.game.spectator.LobbyReturnListener;
-import net.astrocube.commons.bukkit.listener.lobby.LobbyCropBreakingListener;
 import net.astrocube.commons.bukkit.listener.lobby.LobbyJoinAssignFlyListener;
 import org.bukkit.plugin.Plugin;
 
@@ -17,7 +16,6 @@ public class LobbyListenerLoader implements ListenerLoader {
 	private @Inject LobbyReturnListener lobbyReturnListener;
 	private @Inject LobbyActionListener lobbyActionListener;
 	private @Inject LobbyJoinAssignFlyListener lobbyJoinAssignFlyListener;
-	private @Inject LobbyCropBreakingListener lobbyCropBreakingListener;
 
 	@Override
 	public void registerEvents() {
@@ -26,8 +24,7 @@ public class LobbyListenerLoader implements ListenerLoader {
 			lobbyUserDisconnectListener,
 			lobbyReturnListener,
 			lobbyActionListener,
-			lobbyJoinAssignFlyListener,
-			lobbyCropBreakingListener
+			lobbyJoinAssignFlyListener
 		);
 	}
 }
