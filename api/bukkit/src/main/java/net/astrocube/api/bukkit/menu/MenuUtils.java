@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.menu;
 
+import com.google.common.collect.ImmutableSet;
 import net.astrocube.api.bukkit.user.profile.AbstractGameProfile;
 import net.astrocube.api.bukkit.user.profile.CoreGameProfile;
 import net.astrocube.api.bukkit.user.profile.CoreProperty;
@@ -14,10 +15,14 @@ import team.unnamed.gui.core.gui.factory.GUIFactory;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import java.lang.reflect.Field;
+import java.util.Set;
 import java.util.UUID;
 
 public class MenuUtils {
 
+	private static final Set<Integer> MARKED_SLOTS = ImmutableSet.of(
+			9, 17, 18, 26, 27, 35, 36, 44
+	);
 	private static final Field PROFILE_FIELD;
 	private static final boolean PROFILE_FIELD_ACCESSIBLE;
 
@@ -30,6 +35,12 @@ public class MenuUtils {
 		} catch (ClassNotFoundException | NoSuchFieldException e) {
 			throw new IllegalStateException("Cannot get the SkullMeta profile field!", e);
 		}
+	}
+
+	public static boolean isMarkedSlot(int slot) {
+		return (slot >= 0 && slot < 9) ||
+				(slot > 44 && slot < 54) ||
+				MARKED_SLOTS.contains(slot);
 	}
 
 	public static ItemStack generateStainedPane() {
