@@ -12,13 +12,13 @@ import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
 import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Singleton
 public class CoreSpectatorSessionManager implements SpectatorSessionManager {
@@ -52,14 +52,19 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 		lobbyItemProvider.provideBackButton(player, 8);
 		ghostEffectControl.addPlayer(match.getId(), player);
 
-		Bukkit.getOnlinePlayers().forEach(online -> {
-			if (!MatchParticipantsProvider.getSpectatingPlayers(match).contains(online)) {
+		Set<Player> spectatingPlayers =
+			MatchParticipantsProvider.getSpectatingPlayers(match);
+
+		for (Player online : Bukkit.getOnlinePlayers()) {
+
+			if (!spectatingPlayers.contains(online)) {
 				online.hidePlayer(player);
-				if (!MatchParticipantsProvider.getOnlinePlayers(match, MatchDoc.TeamMember::isActive).contains(online)) {
-					player.hidePlayer(online);
-				}
+				continue;
 			}
-		});
+
+			player.showPlayer(online);
+			online.showPlayer(player);
+		}
 
 
 		player.setHealth(20);
@@ -68,7 +73,5 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 		player.teleport(new Location(world, configuration.getX(), configuration.getY(), configuration.getZ()));
 		player.setAllowFlight(true);
 		player.setFlying(true);
-
 	}
-
 }

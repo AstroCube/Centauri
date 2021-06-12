@@ -100,5 +100,4 @@ public interface MatchParticipantsProvider {
 			.filter(Objects::nonNull)
 			.collect(Collectors.toSet());
 	}
-
 }
