@@ -53,7 +53,7 @@ public class MatchFinishListener implements Listener {
 				}
 
 				matchService.assignVictory(match, event.getWinners());
-				Set<Player> players = MatchParticipantsProvider.getInvolved(match);
+				Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match, teamMember -> true);
 				ghostEffectControl.clearMatch(match.getId());
 				actualMatchCache.clearSubscriptions(match);
 				Bukkit.getScheduler().runTaskLater(

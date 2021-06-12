@@ -12,6 +12,7 @@ import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
 import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.game.spectator.SpectatorSessionManager;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -54,7 +55,7 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 		Bukkit.getOnlinePlayers().forEach(online -> {
 			if (!MatchParticipantsProvider.getSpectatingPlayers(match).contains(online)) {
 				online.hidePlayer(player);
-				if (!MatchParticipantsProvider.getOnlinePlayers(match).contains(online)) {
+				if (!MatchParticipantsProvider.getOnlinePlayers(match, MatchDoc.TeamMember::isActive).contains(online)) {
 					player.hidePlayer(online);
 				}
 			}
