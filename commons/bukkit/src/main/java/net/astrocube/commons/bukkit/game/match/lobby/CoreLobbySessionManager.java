@@ -55,7 +55,6 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 				Bukkit.getScheduler().runTask(plugin, () ->
 					lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
 
-
 				if (waitingIds.size() >= subMode.get().getMinPlayers()) {
 					countdownScheduler.scheduleMatchCountdown(match);
 				}
