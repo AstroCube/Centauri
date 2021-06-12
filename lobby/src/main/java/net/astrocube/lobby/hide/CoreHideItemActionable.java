@@ -36,7 +36,7 @@ public class CoreHideItemActionable implements HideItemActionable {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
 
 			if (jedis.exists("COOL-DOWN:HIDE" + id)) {
-				messageHandler.send(player, "no-finished-cool-down");
+				messageHandler.send(player, "lobby.hiding.no-finished-cool-down");
 				return;
 			}
 
