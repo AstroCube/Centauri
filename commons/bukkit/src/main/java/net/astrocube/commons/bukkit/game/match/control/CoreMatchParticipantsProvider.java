@@ -54,5 +54,4 @@ public class CoreMatchParticipantsProvider implements MatchParticipantsProvider 
 			})
 			.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
-
 }
