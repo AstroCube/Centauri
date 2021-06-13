@@ -1,5 +1,7 @@
 package net.astrocube.api.core.cloud;
 
+import lombok.Data;
+
 import java.util.Set;
 
 public interface CloudInstanceProvider {
@@ -8,37 +10,34 @@ public interface CloudInstanceProvider {
 
 	boolean isAvailable(String slug);
 
-	interface Instance {
+	@Data
+	class Instance {
 
 		/**
-		 * Obtain name of the wrapper
-		 * @return string containing name
+		 * The name of the wrapper
 		 */
-		String getName();
+		private final String name;
 
 		/**
-		 * Obtain actual connected users
-		 * @return indicator of connected users
+		 * Actual connected users
 		 */
-		int getConnected();
+		private final int connected;
 
 		/**
-		 * Obtain max allowed users at a certain lobby
-		 * @return indicator of max users
+		 * Max allowed users at a certain
+		 * lobby
 		 */
-		int getMax();
+		private final int max;
 
 		/**
 		 * Check if lobby is full
-		 * @return indicator of connected users
 		 */
-		boolean isFull();
+		private final boolean full;
 
 		/**
-		 * Obtain lobby number
-		 * @return lobby number to be shown
+		 * Lobby number
 		 */
-		int getNumber();
+		private final int number;
 
 	}
 

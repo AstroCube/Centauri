@@ -24,34 +24,13 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 		}
 
 		for (ServerObject server : groupObject.getServers()) {
-
-			instances.add(new Instance() {
-				@Override
-				public String getName() {
-					return server.getName();
-				}
-
-				@Override
-				public int getConnected() {
-					return server.getOnlinePlayerCount();
-				}
-
-				@Override
-				public int getMax() {
-					return server.getMaxPlayerCount();
-				}
-
-				@Override
-				public boolean isFull() {
-					return server.getOnlinePlayerCount() >= server.getMaxPlayerCount();
-				}
-
-				@Override
-				public int getNumber() {
-					return 1;
-				}
-			});
-
+			instances.add(new Instance(
+					server.getName(),
+					server.getOnlinePlayerCount(),
+					server.getMaxPlayerCount(),
+					server.getOnlinePlayerCount() >= server.getMaxPlayerCount(),
+					1
+			));
 		}
 
 		return instances;
