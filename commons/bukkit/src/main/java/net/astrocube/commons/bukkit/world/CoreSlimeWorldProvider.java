@@ -32,7 +32,8 @@ public class CoreSlimeWorldProvider implements SlimeWorldProvider {
 	}
 
 	@Override
-	public SlimeWorld loadWorld(String name, boolean editable) throws NewerFormatException, CorruptedWorldException, WorldInUseException, UnknownWorldException, IOException {
+	public SlimeWorld loadWorld(String name, boolean editable)
+			throws NewerFormatException, CorruptedWorldException, WorldInUseException, UnknownWorldException, WorldTooBigException, IOException {
 
 		SlimeWorld world = slimeWorldManager.loadWorld(name, editable, new SlimePropertyMap());
 		slimeWorldManager.generateWorld(world);

@@ -1,0 +1,34 @@
+subprojects {
+
+	apply plugin: "java"
+	apply plugin: "maven-publish"
+
+	repositories {
+		mavenLocal()
+		maven { url "https://repo.astrocube.net/repository/maven-snapshots/" }
+		maven { url "https://maven.timo.cloud/repository/TimoCloud-API/" }
+		maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
+		maven { url "https://repo.unnamed.team/repository/unnamed-snapshots/" }
+		mavenCentral()
+
+		["astro-releases", "astro-snapshots", "core-releases", "core-snapshots", "maven-releases"].forEach { repo ->
+			maven {
+				url = "https://repo.astrocube.net/repository/$repo/"
+				credentials {
+					username = project.properties["ASTRO_REPO_USER"]
+					password = project.properties["ASTRO_REPO_PWD"]
+				}
+			}
+		}
+	}
+
+	compileJava {
+		options.compilerArgs << "-parameters"
+	}
+
+	dependencies {
+		compileOnly "org.projectlombok:lombok:$lombokVersion"
+		annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+	}
+
+}

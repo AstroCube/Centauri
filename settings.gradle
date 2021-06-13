@@ -1,0 +1,18 @@
+rootProject.name = "centauri"
+
+// api subprojects
+include "api"
+["bukkit", "bungee", "core"].forEach {
+	include "api-$it"
+	project(":api-$it").projectDir = file("api/$it")
+}
+
+// commons subprojects
+include "commons"
+["bukkit", "bungee", "core"].forEach {
+	include "commons-$it"
+	project(":commons-$it").projectDir = file("commons/$it")
+}
+
+// lobby
+include "lobby"

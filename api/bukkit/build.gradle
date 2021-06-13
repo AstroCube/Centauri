@@ -1,0 +1,23 @@
+plugins {
+	id "java-library"
+}
+
+dependencies {
+
+	api project(":api-core")
+
+	api "team.unnamed.gui:core:2.2.6-SNAPSHOT"
+	api "team.unnamed:uboard:1.0-SNAPSHOT"
+	api "me.yushust.message:core:6.0.17"
+	api "me.yushust.message:sourcetype-bukkit-yml:6.0.17"
+	api "me.fixeddev:commandflow-bukkit:0.4.0"
+
+	api "xyz.upperlevel.spigot.book:spigot-book-api:1.4.2"
+
+	api "net.astrocube:slime:2.0.0"
+	api "net.astrocube:apollo-api:1.0"
+	api "net.astrocube:Puppets:1.1"
+
+	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+
+}

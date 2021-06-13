@@ -1,0 +1,13 @@
+// relocate com.google.common to net.astrocube.lib
+
+dependencies {
+	implementation project(":api-bukkit")
+	implementation project(":commons-core")
+
+	implementation "team.unnamed.gui:core:2.2.6-SNAPSHOT"
+	implementation "net.wesjd:anvilgui:1.4.0-SNAPSHOT"
+
+	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+	compileOnly "cloud.timo.TimoCloud:TimoCloud-API:$timocloudVersion"
+
+}
