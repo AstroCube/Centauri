@@ -1,4 +1,6 @@
-// relocate com.google.common to net.astrocube.lib
+shadowJar {
+	relocate "com.google.common", "net.astrocube.lib"
+}
 
 dependencies {
 	implementation project(":api-bukkit")
