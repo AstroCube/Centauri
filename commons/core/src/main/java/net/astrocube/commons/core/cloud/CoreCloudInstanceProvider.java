@@ -31,7 +31,7 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
 			// matches the first number in the server name
 			Matcher matcher = FIRST_NUMBER_PATTERN.matcher(server.getName());
-			int number = matcher.find() ? Integer.parseInt(matcher.group()) : 1;
+			int number = matcher.find() ? Integer.parseInt(matcher.group(1)) : 1;
 
 			instances.add(new Instance(
 					server.getName(),
