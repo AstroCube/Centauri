@@ -26,6 +26,10 @@ subprojects {
 		options.compilerArgs << "-parameters"
 	}
 
+	jar {
+		archiveFileName = "${project.name}.jar"
+	}
+
 	dependencies {
 		compileOnly "org.projectlombok:lombok:$lombokVersion"
 		annotationProcessor "org.projectlombok:lombok:$lombokVersion"
