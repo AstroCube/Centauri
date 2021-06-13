@@ -17,15 +17,10 @@ public class CoreLobbyCloudWrapperGenerator implements LobbyCloudWrapperGenerato
 
 	private @Inject CloudInstanceProvider cloudInstanceProvider;
 
-	private static final Pattern FIRST_NUMBER_PATTERN = Pattern.compile("[^0-9]*([0-9]+).*");
-
 	@Override
 	public List<CloudInstanceProvider.Instance> getGameModeLobbies(GameMode gameMode) {
 		return cloudInstanceProvider.getGroupInstances(gameMode.getLobby()).stream()
-			.sorted(Comparator.comparingInt(value -> {
-				Matcher matcher = FIRST_NUMBER_PATTERN.matcher(value.getName());
-				return matcher.find() ? Integer.parseInt(matcher.group()) : 1;
-			}))
+			.sorted(Comparator.comparingInt(CloudInstanceProvider.Instance::getNumber))
 			.collect(Collectors.toList());
 	}
 }
