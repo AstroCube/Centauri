@@ -1,7 +1,12 @@
+plugins {
+	id 'com.github.johnrengelman.shadow' version '7.0.0' apply false
+}
+
 subprojects {
 
 	apply plugin: "java"
 	apply plugin: "maven-publish"
+	apply plugin: "com.github.johnrengelman.shadow"
 
 	repositories {
 		mavenLocal()
@@ -26,8 +31,12 @@ subprojects {
 		options.compilerArgs << "-parameters"
 	}
 
-	jar {
+	shadowJar {
 		archiveFileName = "${project.name}.jar"
+	}
+
+	jar {
+		archiveFileName = "original-${project.name}.jar"
 	}
 
 	dependencies {

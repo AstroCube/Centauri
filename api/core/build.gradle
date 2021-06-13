@@ -11,7 +11,6 @@ dependencies {
 	api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7"
 	api "com.fasterxml.jackson.module:jackson-module-mrbean:2.11.2"
 
-
 	compileOnly "com.google.inject:guice:4.2.3"
 	compileOnly "com.google.guava:guava:29.0-jre"
 }
