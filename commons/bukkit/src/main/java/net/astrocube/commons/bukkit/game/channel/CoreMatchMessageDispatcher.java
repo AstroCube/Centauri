@@ -120,6 +120,8 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
 			if (sender != null) {
 
+				plugin.getLogger().log(Level.INFO, "{0}: {1}", new String[]{sender.getName(), message});
+
 				listeners.forEach(spectator -> {
 
 					Player player = Bukkit.getPlayerByIdentifier(spectator);
@@ -133,7 +135,6 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 							prefix = flairFormat.getColor() + flairFormat.getPrefix() + " " + ChatColor.WHITE + userResponse.getResponse().get().getDisplay();
 						}
 
-						plugin.getLogger().log(Level.INFO, "{0}: {1}", new String[]{player.getName(), message});
 						messageHandler.sendReplacing(
 							player,
 							translation,

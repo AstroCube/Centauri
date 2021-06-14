@@ -13,6 +13,7 @@ import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -76,10 +77,14 @@ public interface MatchDoc {
 		 */
 		Set<Team> getTeams();
 
+		void setTeams(Set<Team> teams);
+
 		/**
 		 * @return set of {@link User} ids who are identified as match winners.
 		 */
 		Set<String> getWinner();
+
+		void setWinner(Set<String> winner);
 
 		/**
 		 * @return set of {@link User} ids who are actually spectating the match
@@ -117,7 +122,10 @@ public interface MatchDoc {
 		/**
 		 * @return user who privatized the match
 		 */
+		@Nullable
 		String getPrivatizedBy();
+
+		void setPrivatizedBy(@Nullable String user);
 
 		/**
 		 * @return certain {@link Status} of the match
@@ -148,6 +156,8 @@ public interface MatchDoc {
 		String getUser();
 
 		boolean isActive();
+
+		void setActive(boolean active);
 
 		Date getJoinedAt();
 

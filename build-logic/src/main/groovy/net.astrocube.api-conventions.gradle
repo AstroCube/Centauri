@@ -1,0 +1,16 @@
+plugins {
+	id "net.astrocube.shared-conventions"
+}
+
+publishing {
+	repositories {
+		maven {
+			def snapshot = project.version.toString().endsWith("-SNAPSHOT")
+			url = project.properties.get(snapshot ? "apiSnapshotRepo" : "apiReleaseRepo")
+			credentials {
+				username = project.properties["ASTRO_REPO_USER"]
+				password = project.properties["ASTRO_REPO_PWD"]
+			}
+		}
+	}
+}

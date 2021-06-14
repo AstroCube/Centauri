@@ -27,32 +27,13 @@ public class DummyCloudInstanceProvider implements CloudInstanceProvider {
 	}
 
 	private Instance generateTestLobbies(int connected, int max, int pos, boolean same) {
-		return new Instance() {
-			@Override
-			public String getName() {
-				return "Test Lobby";
-			}
-
-			@Override
-			public int getConnected() {
-				return connected;
-			}
-
-			@Override
-			public int getMax() {
-				return max;
-			}
-
-			@Override
-			public boolean isFull() {
-				return connected >= max;
-			}
-
-			@Override
-			public int getNumber() {
-				return pos;
-			}
-		};
+		return new Instance(
+				"Test Lobby",
+				connected,
+				max,
+				connected >= max,
+				pos
+		);
 	}
 
 }

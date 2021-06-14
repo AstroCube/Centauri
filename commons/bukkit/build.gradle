@@ -1,0 +1,18 @@
+plugins {
+	id "net.astrocube.commons-conventions"
+}
+
+shadowJar {
+	relocate "com.google.common", "net.astrocube.lib"
+}
+
+dependencies {
+	implementation project(":api-bukkit")
+	implementation project(":commons-core")
+
+	implementation "net.wesjd:anvilgui:1.4.0-SNAPSHOT"
+
+	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+	compileOnly "cloud.timo.TimoCloud:TimoCloud-API:$timocloudVersion"
+
+}

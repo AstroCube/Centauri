@@ -1,0 +1,11 @@
+plugins {
+	id "net.astrocube.commons-conventions"
+}
+
+dependencies {
+	implementation project(":api-bungee")
+	implementation project(":commons-core")
+
+	compileOnly "cloud.timo.TimoCloud:TimoCloud-API:$timocloudVersion"
+	compileOnly "io.github.waterfallmc:waterfall-api:$waterfallVersion"
+}

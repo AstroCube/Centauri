@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,7 +36,7 @@ public interface MatchParticipantsProvider {
 	Set<User> getMatchUsers(Match match);
 
 	static Set<Player> getInvolved(Match match) {
-		Set<Player> players = getOnlinePlayers(match);
+		Set<Player> players = getOnlinePlayers(match, MatchDoc.TeamMember::isActive);
 		players.addAll(getSpectatingPlayers(match));
 		return players;
 	}
@@ -50,12 +51,23 @@ public interface MatchParticipantsProvider {
 		return getPlayers(match.getSpectators().stream());
 	}
 
-	static Set<Player> getOnlinePlayers(Match match) {
+	static Set<Player> getOnlinePlayers(Match match, Predicate<MatchDoc.TeamMember> teamMemberPredicate) {
 		return getPlayers(match.getTeams()
 			.stream()
 			.flatMap(teams ->
 				teams.getMembers().stream()
-					.filter(MatchDoc.TeamMember::isActive)
+					.filter(teamMemberPredicate)
+					.map(MatchDoc.TeamMember::getUser)
+			)
+		);
+	}
+
+	static Set<Player> getPlayersWithFilter(Match match, Predicate<MatchDoc.TeamMember> teamMemberPredicate) {
+		return getPlayers(match.getTeams()
+			.stream()
+			.flatMap(teams ->
+				teams.getMembers().stream()
+					.filter(teamMemberPredicate)
 					.map(MatchDoc.TeamMember::getUser)
 			)
 		);
@@ -88,5 +100,4 @@ public interface MatchParticipantsProvider {
 			.filter(Objects::nonNull)
 			.collect(Collectors.toSet());
 	}
-
 }

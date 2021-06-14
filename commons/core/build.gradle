@@ -1,0 +1,12 @@
+plugins {
+	id "net.astrocube.commons-conventions"
+}
+
+dependencies {
+	api project(":api-core")
+	api "org.ocpsoft.prettytime:prettytime:3.2.7.Final"
+
+	compileOnly "cloud.timo.TimoCloud:TimoCloud-API:$timocloudVersion"
+	compileOnly "me.fixeddev:Spigot-BungeeBridge:$spigotVersion"
+
+}

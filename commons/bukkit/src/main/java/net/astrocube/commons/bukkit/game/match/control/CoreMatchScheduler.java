@@ -91,8 +91,16 @@ public class CoreMatchScheduler implements MatchScheduler {
 			}
 
 			@Override
+			public void setTeams(Set<MatchDoc.Team> teams) {
+			}
+
+			@Override
 			public Set<String> getWinner() {
 				return new HashSet<>();
+			}
+
+			@Override
+			public void setWinner(Set<String> winner) {
 			}
 
 			@Override
@@ -127,6 +135,10 @@ public class CoreMatchScheduler implements MatchScheduler {
 			@Override
 			public String getPrivatizedBy() {
 				return null;
+			}
+
+			@Override
+			public void setPrivatizedBy(@Nullable String user) {
 			}
 
 			@Override

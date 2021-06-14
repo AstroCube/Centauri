@@ -27,5 +27,4 @@ public class LobbyListenerLoader implements ListenerLoader {
 			lobbyJoinAssignFlyListener
 		);
 	}
-
 }

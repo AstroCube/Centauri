@@ -1,37 +1,46 @@
 package net.astrocube.api.bukkit.game.spectator;
 
+import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.message.Message;
-import net.astrocube.api.core.virtual.gamemode.GameMode;
-import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
-public interface SpectateRequest extends Message {
+public class SpectateRequest implements Message {
 
-	/**
-	 * @return {@link GameMode} id of the request.
-	 */
-	String getMode();
+	private final String requester;
+	private final Match match;
+	private final String server;
 
-	/**
-	 * @return {@link SubGameMode} id of the request.
-	 */
-	String getSubMode();
+	public SpectateRequest(
+			String requester,
+			Match match,
+			String server
+	) {
+		this.requester = requester;
+		this.match = match;
+		this.server = server;
+	}
 
 	/**
 	 * @return requester id
 	 */
-	String getRequester();
+	public String getRequester() {
+		return requester;
+	}
 
 	/**
 	 * @return match id
 	 */
-	String getMatch();
+	public Match getMatch() {
+		return match;
+	}
 
 	/**
 	 * @return server id
 	 */
-	String getServer();
+	public String getServer() {
+		return server;
+	}
 
-	enum State {
+	public enum State {
 		SUCCESS, ERROR, VOIDED
 	}
 

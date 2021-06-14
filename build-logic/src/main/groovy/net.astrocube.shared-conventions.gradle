@@ -1,0 +1,51 @@
+plugins {
+	id "java-library"
+	id "maven-publish"
+	id "com.github.johnrengelman.shadow"
+}
+
+repositories {
+	mavenLocal()
+
+	// for slime
+	maven { url "https://libraries.minecraft.net" }
+	maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+	maven { url "https://repo.glaremasters.me/repository/concuncan/" }
+
+	maven { url "https://repo.astrocube.net/repository/maven-snapshots/" }
+	maven { url "https://maven.timo.cloud/repository/TimoCloud-API/" }
+	maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
+	maven { url "https://repo.unnamed.team/repository/unnamed-snapshots/" }
+	mavenCentral()
+
+	["astro-releases", "astro-snapshots", "core-releases", "core-snapshots", "maven-releases"].forEach { repo ->
+		maven {
+			url = "https://repo.astrocube.net/repository/$repo/"
+			credentials {
+				username = project.properties["ASTRO_REPO_USER"]
+				password = project.properties["ASTRO_REPO_PWD"]
+			}
+		}
+	}
+}
+
+publishing {
+	publications {
+		api(MavenPublication) {
+			from components.java
+		}
+	}
+}
+
+compileJava {
+	options.compilerArgs << "-parameters"
+}
+
+jar {
+	archiveFileName = "original-${project.name}.jar"
+}
+
+dependencies {
+	compileOnly "org.projectlombok:lombok:$lombokVersion"
+	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+}

@@ -1,31 +1,19 @@
-# Maven generated files
-target
-*.jar
-dependency-reduced-pom.xml
-
-# Mac OSX generated files
-.DS_Store
-
-# Eclipse generated files
-.classpath
-.project
-.settings
-
-# IntelliJ IDEA
+# editor files
 .idea
 *.iml
 
-# Vim generated files
-*~
-*.swp
+# gradle files
+.gradle
 
-# XCode 3 and 4 generated files
-*.mode1
-*.mode1v3
-*.mode2v3
-*.perspective
-*.perspectivev3
-*.pbxuser
-*.xcworkspace
-xcuserdata
-*class
+# output files
+/build-logic/build/
+/build/
+/commons/build/
+/commons/core/build/
+/commons/bukkit/build/
+/commons/bungee/build/
+/api/build/
+/api/core/build/
+/api/bukkit/build/
+/api/bungee/build/
+/lobby/build/

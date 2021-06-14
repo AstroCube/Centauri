@@ -1,0 +1,8 @@
+plugins {
+	id "net.astrocube.shared-conventions"
+}
+
+dependencies {
+	compileOnly project(":api-bukkit")
+	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+}

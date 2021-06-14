@@ -105,32 +105,11 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 					Bukkit.getPluginManager().callEvent(
 						new SpectateRequestEvent(
 							player,
-							new SpectateRequest() {
-								@Override
-								public String getMode() {
-									return match.getGameMode();
-								}
-
-								@Override
-								public String getSubMode() {
-									return match.getSubMode();
-								}
-
-								@Override
-								public String getRequester() {
-									return requester;
-								}
-
-								@Override
-								public String getMatch() {
-									return match.getId();
-								}
-
-								@Override
-								public String getServer() {
-									return server.getSlug();
-								}
-							},
+							new SpectateRequest(
+									requester,
+									match,
+									server.getSlug()
+							),
 							SpectateRequest.State.SUCCESS
 						)
 					)

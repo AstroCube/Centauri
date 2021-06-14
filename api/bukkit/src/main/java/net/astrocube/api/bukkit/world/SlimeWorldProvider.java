@@ -34,6 +34,6 @@ public interface SlimeWorldProvider {
 	 * @throws UnknownWorldException   when the world is not known at the loader folder.
 	 * @throws IOException             when can not parse world correctly.
 	 */
-	SlimeWorld loadWorld(String name, boolean editable) throws NewerFormatException, CorruptedWorldException, WorldInUseException, UnknownWorldException, IOException;
+	SlimeWorld loadWorld(String name, boolean editable) throws NewerFormatException, CorruptedWorldException, WorldInUseException, UnknownWorldException, WorldTooBigException, IOException;
 
 }

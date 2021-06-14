@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,9 +39,9 @@ public class SpectatorAssignListener implements Listener {
 				Player player = event.getPlayer();
 				Match match = response.getResponse().get();
 
-				matchService.assignSpectator(event.getPlayer().getDatabaseIdentifier(), event.getMatch(), true);
+				matchService.assignSpectator(match, event.getPlayer().getDatabaseIdentifier(), true);
 
-				if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+				if (MatchParticipantsProvider.getOnlinePlayers(match, MatchDoc.TeamMember::isActive).contains(player)) {
 					matchService.disqualify(match.getId(), player.getDatabaseIdentifier());
 				}
 

@@ -1,0 +1,8 @@
+plugins {
+	id "net.astrocube.api-conventions"
+}
+
+dependencies {
+	api project(":api-core")
+	compileOnly "io.github.waterfallmc:waterfall-api:$waterfallVersion"
+}

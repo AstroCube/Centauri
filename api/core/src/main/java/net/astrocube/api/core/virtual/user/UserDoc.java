@@ -57,6 +57,8 @@ public interface UserDoc {
 
 		String getLanguage();
 
+		void setLanguage(String language);
+
 		PublicInformation getPublicInfo();
 
 		GameOptions getSettings();

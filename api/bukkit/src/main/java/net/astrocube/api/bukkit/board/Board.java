@@ -1,5 +1,7 @@
 package net.astrocube.api.bukkit.board;
 
+import gnu.trove.map.TIntObjectMap;
+
 import java.util.List;
 
 /**
@@ -27,6 +29,12 @@ public interface Board {
 	 * Sets the line at the specified {@code index}
 	 */
 	void set(int index, String line);
+
+	/**
+	 * Returns a copy of the internal map
+	 * containing the board lines
+	 */
+	TIntObjectMap<String> getLines();
 
 	/**
 	 * Sets all the lines to this board

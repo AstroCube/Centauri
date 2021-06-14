@@ -138,6 +138,11 @@ public class PacketBoard implements Board {
 	}
 
 	@Override
+	public TIntObjectMap<String> getLines() {
+		return new TIntObjectHashMap<>(lines);
+	}
+
+	@Override
 	public void remove(int index) {
 		checkNotDeleted();
 		String text = lines.get(index);

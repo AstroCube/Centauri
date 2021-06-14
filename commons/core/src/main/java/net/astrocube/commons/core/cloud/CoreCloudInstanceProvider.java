@@ -8,9 +8,13 @@ import net.astrocube.api.core.cloud.CloudInstanceProvider;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Singleton
 public class CoreCloudInstanceProvider implements CloudInstanceProvider {
+
+	private static final Pattern FIRST_NUMBER_PATTERN = Pattern.compile("[^0-9]*([0-9]+).*");
 
 	@Override
 	public Set<Instance> getGroupInstances(String name) {
@@ -25,33 +29,17 @@ public class CoreCloudInstanceProvider implements CloudInstanceProvider {
 
 		for (ServerObject server : groupObject.getServers()) {
 
-			instances.add(new Instance() {
-				@Override
-				public String getName() {
-					return server.getName();
-				}
+			// matches the first number in the server name
+			Matcher matcher = FIRST_NUMBER_PATTERN.matcher(server.getName());
+			int number = matcher.find() ? Integer.parseInt(matcher.group(1)) : 1;
 
-				@Override
-				public int getConnected() {
-					return server.getOnlinePlayerCount();
-				}
-
-				@Override
-				public int getMax() {
-					return server.getMaxPlayerCount();
-				}
-
-				@Override
-				public boolean isFull() {
-					return server.getOnlinePlayerCount() >= server.getMaxPlayerCount();
-				}
-
-				@Override
-				public int getNumber() {
-					return 1;
-				}
-			});
-
+			instances.add(new Instance(
+					server.getName(),
+					server.getOnlinePlayerCount(),
+					server.getMaxPlayerCount(),
+					server.getOnlinePlayerCount() >= server.getMaxPlayerCount(),
+					number
+			));
 		}
 
 		return instances;

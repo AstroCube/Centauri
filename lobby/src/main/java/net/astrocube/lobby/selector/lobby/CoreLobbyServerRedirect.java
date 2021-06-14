@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySwitchStatus;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @Singleton
@@ -26,6 +27,7 @@ public class CoreLobbyServerRedirect implements LobbyServerRedirect {
 			}
 			case CYCLIC: {
 				messageHandler.sendIn(player, AlertModes.ERROR, "lobby.lobby-selector.error.cyclic");
+				player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 				break;
 			}
 			default: {

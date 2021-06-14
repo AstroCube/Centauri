@@ -11,7 +11,6 @@ import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,17 +38,6 @@ public class LobbyJoinListener implements Listener {
 
 		hideJoinProcessor.process(event.getUser());
 		lobbyHotbarProvider.setup(event.getUser(), player);
-
-		player.teleport(
-			new Location(
-				Bukkit.getWorlds().get(0),
-				plugin.getConfig().getInt("spawn.x", 0) + 0.5,
-				plugin.getConfig().getInt("spawn.y", 0) + 0.2,
-				plugin.getConfig().getInt("spawn.z", 0) + 0.5,
-				plugin.getConfig().getInt("spawn.yaw", 0),
-				plugin.getConfig().getInt("spawn.pitch", 0)
-			)
-		);
 
 		Bukkit.getScheduler().runTask(plugin, () -> {
 
