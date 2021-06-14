@@ -15,7 +15,10 @@ repositories {
 	maven { url "https://repo.astrocube.net/repository/maven-snapshots/" }
 	maven { url "https://maven.timo.cloud/repository/TimoCloud-API/" }
 	maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
+
 	maven { url "https://repo.unnamed.team/repository/unnamed-snapshots/" }
+	maven { url "https://repo.unnamed.team/repository/unnamed-releases/" }
+
 	mavenCentral()
 
 	["astro-releases", "astro-snapshots", "core-releases", "core-snapshots", "maven-releases"].forEach { repo ->
