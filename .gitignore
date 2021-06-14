@@ -6,6 +6,7 @@
 .gradle
 
 # output files
+/build-logic/build/
 /build/
 /commons/build/
 /commons/core/build/

@@ -1,3 +1,7 @@
+plugins {
+	id "net.astrocube.commons-conventions"
+}
+
 shadowJar {
 	relocate "com.google.common", "net.astrocube.lib"
 }

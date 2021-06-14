@@ -1,5 +1,8 @@
 rootProject.name = "centauri"
 
+// build-logic
+includeBuild("build-logic")
+
 // api subprojects
 include "api"
 ["bukkit", "bungee", "core"].forEach {
