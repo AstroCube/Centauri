@@ -14,9 +14,9 @@ import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
-import org.apache.commons.codec.Charsets;
 import redis.clients.jedis.Jedis;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class PreLoginListener implements Listener {
 				connection.setOnlineMode(false);
 				connection
 					.setUniqueId(UUID.nameUUIDFromBytes(("OfflinePlayer:" + connection.getName())
-						.getBytes(Charsets.UTF_8)));
+						.getBytes(StandardCharsets.UTF_8)));
 			}
 
 

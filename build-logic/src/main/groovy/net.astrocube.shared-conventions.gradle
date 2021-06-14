@@ -10,6 +10,7 @@ repositories {
 	// for slime
 	maven { url "https://libraries.minecraft.net" }
 	maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 	maven { url "https://repo.glaremasters.me/repository/concuncan/" }
 
 	maven { url "https://repo.astrocube.net/repository/maven-snapshots/" }
