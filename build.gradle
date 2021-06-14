@@ -8,6 +8,24 @@ subprojects {
 	apply plugin: "maven-publish"
 	apply plugin: "com.github.johnrengelman.shadow"
 
+	publishing {
+		repositories {
+			maven {
+				def snapshot = project.version.toString().endsWith("-SNAPSHOT")
+				if ("commons" in project.name) {
+					url = project.properties.get(snapshot ? "commonsSnapshotRepo" : "commonsReleaseRepo")
+				} else {
+					url = project.properties.get(snapshot ? "apiSnapshotRepo" : "apiReleaseRepo")
+				}
+			}
+		}
+		publications {
+			maven(MavenPublication) {
+				from components.java
+			}
+		}
+	}
+
 	repositories {
 		mavenLocal()
 
