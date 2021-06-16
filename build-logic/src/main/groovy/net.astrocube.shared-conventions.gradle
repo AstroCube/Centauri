@@ -9,17 +9,46 @@ repositories {
 
 	// for slime
 	maven { url "https://libraries.minecraft.net" }
-	maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
-	maven { url "https://repo.glaremasters.me/repository/concuncan/" }
+	maven {
+		name "spigot-repo"
+		url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+	}
+	maven {
+		name "sonatype"
+		url "https://oss.sonatype.org/content/repositories/snapshots"
+	}
+	maven {
+		name "glaremasters-concuncan"
+		url "https://repo.glaremasters.me/repository/concuncan/"
+	}
 
-	maven { url "https://repo.astrocube.net/repository/maven-snapshots/" }
-	maven { url "https://maven.timo.cloud/repository/TimoCloud-API/" }
-	maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
-	maven { url "https://repo.unnamed.team/repository/unnamed-snapshots/" }
+	maven {
+		name "maven-snapshots"
+		url "https://repo.astrocube.net/repository/maven-snapshots/"
+	}
+	maven {
+		name "TimoCloud-API"
+		url "https://maven.timo.cloud/repository/TimoCloud-API/"
+	}
+	maven {
+		name "maven-snapshots"
+		url "https://repo.codemc.io/repository/maven-snapshots/"
+	}
+
+	maven {
+		name "unnamed-snapshots"
+		url "https://repo.unnamed.team/repository/unnamed-snapshots/"
+	}
+	maven {
+		name "unnamed-releases"
+		url "https://repo.unnamed.team/repository/unnamed-releases/"
+	}
+
 	mavenCentral()
 
 	["astro-releases", "astro-snapshots", "core-releases", "core-snapshots", "maven-releases"].forEach { repo ->
 		maven {
+			name = repo
 			url = "https://repo.astrocube.net/repository/$repo/"
 			credentials {
 				username = project.properties["ASTRO_REPO_USER"]
@@ -31,8 +60,19 @@ repositories {
 
 publishing {
 	publications {
-		api(MavenPublication) {
+		maven(MavenPublication) {
 			from components.java
+
+			pom.withXml {
+				def repos = asNode().appendNode("repositories")
+				project.repositories.withType(MavenArtifactRepository).all { MavenArtifactRepository repository ->
+					if (!("MavenLocal" in repository.name) && !("MavenRepo" in repository.name)) {
+						def repo = repos.appendNode("repository")
+						repo.appendNode("id", repository.name)
+						repo.appendNode("url", repository.url)
+					}
+				}
+			}
 		}
 	}
 }
