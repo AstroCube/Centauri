@@ -1,6 +1,0 @@
-name: Commons
-main: net.astrocube.commons.bukkit.CommonsBukkit
-version: 1.0-SNAPSHOT
-loadbefore: [Lobby]
-softdepend: [TimoCloud]
-author: Astrocube Network

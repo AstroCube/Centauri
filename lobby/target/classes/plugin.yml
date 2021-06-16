@@ -1,5 +1,0 @@
-name: Lobby
-main: net.astrocube.lobby.Lobby
-version: ${project.version}
-depend: [Commons]
-author: Astrocube Network

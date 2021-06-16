@@ -1,4 +1,0 @@
-name: Commons
-main: net.astrocube.commons.bungee.CommonsBungee
-version: ${project.version}
-author: Astrocube Network
