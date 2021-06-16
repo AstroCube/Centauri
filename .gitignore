@@ -8,7 +8,6 @@
 # output files
 /build-logic/build/
 /build/
-/target/
 /commons/build/
 /commons/core/build/
 /commons/bukkit/build/
