@@ -19,7 +19,6 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 	private @Inject MessageHandler messageHandler;
-	private @Inject Plugin plugin;
 
 	@Override
 	public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
