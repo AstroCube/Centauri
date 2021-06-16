@@ -1,0 +1,128 @@
+lobby:
+    scoreboard:
+        title: "%blue%%bold%AstroCube"
+        lore:
+            - "%green%"
+            - "  %aqua%%bold%Tu perfil"
+            - "    %dark_aqua%Nombre%dark_gray%: %white%%player%"
+            - "    %dark_aqua%Rango%dark_gray%: %white%%rank%"
+            - "%aqua%"
+            - "  %aqua%%bold%Información"
+            - "    %dark_aqua%Lobby%dark_gray%: %white%#%lobby%"
+            - "    %dark_aqua%Conectados%dark_gray%: %white%%online%"
+            - "%gray%"
+            - "%aqua%astrocube.net"
+    hiding:
+        active-gadget: "%light_purple%Mostrar jugadores %gray%(Click derecho)"
+        disabled-gadget: "%blue%Ocultar jugadores %gray%(Click derecho)"
+        enabled: "%aqua%Ahora todos los jugadores están %red%ocultos%aqua%."
+        disabled: "%aqua%Ahora todos los jugadores están %green%visibles%aqua%."
+        gadget-lore:
+            - "%gray%Al darle clic derecho cambiarás el estado"
+            - "%gray%de visibilidad de tus jugadores."
+        error: "%red%Ha ocurrido un error al actualizar la visibilidad de tus jugadores."
+    lobby-selector:
+        title: "%blue%Selector de lobby %gray%(Click derecho)"
+        gadget-title: "%dark_gray%Seleccionar Lobby"
+        error:
+            not-detected: "%red%Ha ocurrido un error al detectar la modalidad del lobby. Por favor intentalo nuevamente o contacta a un administrador si el problema persiste."
+            full: "%red%¡El lobby al que querías ingresar ya está lleno!"
+            cyclic: "%red%Ya te encuentras en este lobby. Te hemos teletransportado el spawn."
+        indicators:
+            connected: "%gray%Usuarios conectados: %users%/%total%"
+            connect: "¡Haz click para conectarte!"
+            full: "¡El lobby se encuentra lleno!"
+            already: "¡Ya te encuentras en este lobby!"
+        gadget-lore:
+            - "%gray%Elige el lobby en el que quieres estar"
+    gameSelector:
+        title: "%dark_gray%Menú de juegos"
+        gadget: "%blue%Menú de juegos %gray%(Click derecho)"
+        gadget-playing: "%yellow%\u25B6 Actualmente hay %players% jugando \u25C0"
+        error: "%red%Ha ocurrido un error al obtener la lista de modalidades."
+        gadget-lore:
+            - "%gray%Al darle click derecho encontrarás"
+            - "%gray%nuestra nueva colección de juegos."
+        games:
+            5d586f5634a44a74e4826045:
+                title: "%aqua%Lobby principal"
+                lore:
+                    - "%gray%Vuelve al menú principal"
+            5d5a11f35f1de46c232babae:
+                title: "%aqua%SkyWars"
+                lore:
+                    - "%dark_gray%Juego Clásico"
+                    - " "
+                    - "%gray%Disfruta del clásico juego SkyWars"
+                    - "%gray%en AstroCube. Recuerda que se"
+                    - "%gray%actualizará constantemente para una"
+                    - "%gray%experiencia única."
+            5db64666df034f2e9a3b4800:
+                title: "%aqua%Juegos TNT"
+                lore:
+                    - "%dark_gray%Juego Rápidos"
+                    - " "
+                    - "%gray%Divertidos minijuegos con %red%TNT%gray%."
+            5e14f49eff6607e52a32ed02:
+                title: "%aqua%The Dungeon"
+                lore:
+                    - "%dark_gray%Larga Duración"
+                    - " "
+                    - "%gray%Juega en nuestra modalidad"
+                    - "%aqua%FFA %gray%personalizada y lucha en"
+                    - "%gray%nuestra mazmorra para ganar."
+            5e14f4e5ff6607e52a32ed48:
+                title: "%aqua%BedWars"
+                lore:
+                    - "%dark_gray%Juego por Equipos"
+                    - " "
+                    - "%gray%Protege la cama junto a tus"
+                    - "%gray%compañeros y destruye las"
+                    - "%gray%camas enemigas para ganar."
+prefix: "%color%%bold%%prefix%%reset% %dark_gray%> %reset%"
+selectors:
+    error: "%red%Ha ocurrido un error al emparejarte con una partida."
+    title:
+        - "%title%"
+        - ""
+        - "%blue%%bold%¡Juega junto a %white%%bold%%players%%blue%%bold% más!"
+    5db64666df034f2e9a3b4800: "TNT Games"
+    5db645eea534664c62702cbe: "TNT Run"
+    5e7c266e2e25d63c747474e7: "Bow Spleef"
+    5e14f4e5ff6607e52a32ed48: "Bed Wars"
+    5d5a11f35f1de46c232babae: "SkyWars"
+    5e2dd6b99536bff847f528af: "SkyWars SOLO"
+    603b0d83969dda3de98f260e: "1 vs 1"
+    606e7dab1fb922deba381e66: "2 vs 2"
+    606e7e15dbd01cb0b1480531: "3 vs 3"
+    606e7e32493c5090ec68f568: "4 vs 4"
+premium:
+    error: "Ha ocurrido un error al actualizar el estado del modo premium."
+    reminder: "%aqua%Tip: %gray%Como eres un jugador premium, puedes saltarte el inicio de sesión utilizando el comando %blue%/premium%gray%."
+    confirmation:
+        title: "¿Estás seguro?"
+        accept: "%green%Si, deseo activar modo premium"
+        decline: "%red%No, quiero seguir utilizando contraseña"
+    enable:
+        book: "%blue%%bold%Activar %gold%%bold%PREMIUM\n\nSi tu cuenta de Minecraft es original, puedes saltarte el inicio de sesión activando esta función (No podrás volver a entrar con lanzadores piratas)."
+        button: "%dark_green%%bold%Click para activar"
+        hover: "¡Activar modo premium!"
+        alert: "%green%Se ha activado el modo %yellow%%bold%PREMIUM%green%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."
+    disable:
+        book: "%blue%%bold%Activar %gold%%bold%PREMIUM\n\nDesactivarás el modo premium e iniciarás nuevamente con la contraseña que registraste."
+        button: "%dark_red%%bold%Click para desactivar"
+        hover: "¡Desactivar modo premium!"
+        alert: "%red%Se ha desactivado el modo %yellow%%bold%PREMIUM%red%. Los cambios surtirán efecto cuando vuelvas a entrar al servidor."
+commands:
+    unknown-player: "%red%No se encuentra el usuario solicitado o está desconectado."
+    translation:
+        argument:
+            no-more: "%red%Uso correcto:"
+        command:
+            subcommand-invalid: "%red%Ejecutaste inválidamente este comando."
+            no-permission: "%red%No tienes permisos para realizar esta acción"
+        sender:
+            unknown: "Unknown sender"
+            only-player: "Solo puede realizar esto un jugador"
+        player:
+            offline: "%red%El jugador que solicitaste se encuentra desconectado."

@@ -1,0 +1,22 @@
+spawn:
+  x: 0
+  y: 0
+  z: 0
+  yaw: 0
+  pitch: 0
+gamemode: ""
+board: false
+ambiental:
+  time: 1000
+  effects:
+    - "NIGHT_VISION"
+selector:
+    - mode: ""
+      subMode: ""
+      value: ""
+      signature: ""
+      x: ""
+      y: ""
+      z: ""
+      yaw: ""
+      pitch: ""

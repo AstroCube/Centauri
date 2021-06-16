@@ -18,7 +18,7 @@ public class ChatCenter {
 		boolean isBold = false;
 
 		for (char c : message.toCharArray()) {
-			if (c == '§') {
+			if (c == ChatColor.COLOR_CHAR) {
 				previousCode = true;
 			} else if (previousCode) {
 				previousCode = false;
