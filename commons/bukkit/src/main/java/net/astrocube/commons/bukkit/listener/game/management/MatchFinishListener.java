@@ -58,7 +58,7 @@ public class MatchFinishListener implements Listener {
 				actualMatchCache.clearSubscriptions(match);
 				Bukkit.getScheduler().runTaskLater(
 					plugin, () -> players.forEach(
-						player -> serverTeleportRetry.attemptTeleport(
+						player -> serverTeleportRetry.attemptGroupTeleport(
 							player.getName(),
 							plugin.getConfig().getString("server.fallback"),
 							1,
