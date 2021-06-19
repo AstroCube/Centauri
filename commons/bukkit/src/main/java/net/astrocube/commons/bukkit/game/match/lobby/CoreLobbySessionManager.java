@@ -16,6 +16,7 @@ import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProv
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
@@ -60,6 +61,11 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 				}
 
 				player.getInventory().clear();
+				// i just copy & pasted existing code
+				player.getInventory().setHelmet(null);
+				player.getInventory().setChestplate(null);
+				player.getInventory().setLeggings(null);
+				player.getInventory().setBoots(null);
 
 				lobbyItemProvider.provideBackButton(player, 8);
 
