@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.game.countdown;
 
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 
 public interface CountdownScheduler {
 
@@ -8,8 +9,8 @@ public interface CountdownScheduler {
 	 * Schedule a countdown for a certain {@link Match}.
 	 * @param match to be started
 	 */
-	default void scheduleMatchCountdown(Match match) {
-		scheduleMatchCountdown(match, 30, false);
+	default void scheduleMatchCountdown(Match match, SubGameMode subGameMode) {
+		scheduleMatchCountdown(match, 30, false, subGameMode);
 	}
 
 	/**
@@ -18,7 +19,7 @@ public interface CountdownScheduler {
 	 * @param seconds before the match starts
 	 * @param force   if the countdown was forced
 	 */
-	void scheduleMatchCountdown(Match match, int seconds, boolean force);
+	void scheduleMatchCountdown(Match match, int seconds, boolean force, SubGameMode subGameMode);
 
 	/**
 	 * Cancel match countdown until the minimum
@@ -33,4 +34,5 @@ public interface CountdownScheduler {
 	 * @return if the match has an active countdown
 	 */
 	boolean hasActiveCountdown(Match match);
+
 }

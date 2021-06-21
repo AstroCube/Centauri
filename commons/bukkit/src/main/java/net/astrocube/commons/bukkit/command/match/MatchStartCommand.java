@@ -10,7 +10,11 @@ import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.virtual.gamemode.GameMode;
+import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.game.match.lobby.LobbySessionInvalidatorHelper;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -22,7 +26,7 @@ public class MatchStartCommand implements CommandClass {
 	private @Inject CountdownScheduler countdownScheduler;
 	private @Inject MatchParticipantsProvider matchParticipantsProvider;
 	private @Inject MatchMessageHelper matchMessageHelper;
-
+	private @Inject FindService<GameMode> findService;
 
 	@Command(names = {"start"}, permission = "commons.match.admin")
 	public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
@@ -49,9 +53,15 @@ public class MatchStartCommand implements CommandClass {
 			return true;
 		}
 
-		countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true);
-		involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
-		matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.force");
+		findService.find(matchOptional.get().getGameMode())
+			.callback(gameModeResponse -> {
+				Optional<SubGameMode> subMode = LobbySessionInvalidatorHelper.retrieveSubMode(gameModeResponse, matchOptional.get());
+
+				countdownScheduler.scheduleMatchCountdown(matchOptional.get(), secondsFixed, true, subMode.get());
+				involved.addAll(matchParticipantsProvider.getMatchSpectators(matchOptional.get()));
+				matchMessageHelper.alertInvolved(involved, matchOptional.get(), player, "game.admin.force");
+
+			});
 
 		return true;
 	}

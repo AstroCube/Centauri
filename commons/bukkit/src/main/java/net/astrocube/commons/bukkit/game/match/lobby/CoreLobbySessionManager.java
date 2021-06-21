@@ -56,7 +56,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 					lobbySessionModifier.ensureJoin(user, player, match, subMode.get()));
 
 				if (waitingIds.size() >= subMode.get().getMinPlayers()) {
-					countdownScheduler.scheduleMatchCountdown(match);
+					countdownScheduler.scheduleMatchCountdown(match, subMode.get());
 				}
 
 				player.getInventory().clear();
