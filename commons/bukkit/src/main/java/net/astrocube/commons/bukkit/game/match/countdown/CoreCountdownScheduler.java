@@ -6,10 +6,12 @@ import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
 import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
+import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.util.CountdownTimer;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
@@ -21,14 +23,16 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 	private final Plugin plugin;
 	private final LobbyAssignerScoreboard lobbyAssignerScoreboard;
 	private final Map<String, Integer> scheduledTimers;
+	private final MatchParticipantsProvider matchParticipantsProvider;
 	private final CountdownAlerter countdownAlerter;
 
 	@Inject
-	public CoreCountdownScheduler(Plugin plugin, LobbyAssignerScoreboard lobbyAssignerScoreboard, CountdownAlerter countdownAlerter) {
+	public CoreCountdownScheduler(Plugin plugin, LobbyAssignerScoreboard lobbyAssignerScoreboard, CountdownAlerter countdownAlerter, MatchParticipantsProvider matchParticipantsProvider) {
 		this.plugin = plugin;
 		this.scheduledTimers = new HashMap<>();
 		this.countdownAlerter = countdownAlerter;
 		this.lobbyAssignerScoreboard = lobbyAssignerScoreboard;
+		this.matchParticipantsProvider = matchParticipantsProvider;
 	}
 
 	@Override
@@ -46,7 +50,10 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 					if (sec.isImportantSecond()) {
 						countdownAlerter.alertCountdownSecond(match, sec.getSecondsLeft());
 					}
-					Bukkit.getOnlinePlayers().forEach(player -> lobbyAssignerScoreboard.assignLobbyScoreboardStarting(player, match, seconds, subGameMode));
+					matchParticipantsProvider.getMatchPending(match).forEach(user -> {
+						Player player = Bukkit.getPlayer(user.getUsername());
+						lobbyAssignerScoreboard.assignLobbyScoreboardStarting(player, match, sec.getSecondsLeft(), subGameMode);
+					});
 				},
 				() -> Bukkit.getPluginManager().callEvent(new GameTimerOutEvent(match.getId()))
 			);
