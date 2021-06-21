@@ -37,7 +37,7 @@ public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
 
 	private Board findBoard(Player player, String titlePath) {
 		return boardProvider.get(player)
-			.orElse(boardProvider.create(player, messageHandler.get(player, titlePath)));
+			.orElseGet(() -> boardProvider.create(player, messageHandler.get(player, titlePath)));
 	}
 
 }
