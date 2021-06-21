@@ -28,11 +28,6 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 	}
 
 	@Override
-	public void scheduleMatchCountdown(Match match) {
-		scheduleMatchCountdown(match, 30, false);
-	}
-
-	@Override
 	public void scheduleMatchCountdown(Match match, int seconds, boolean force) {
 
 		if (force && hasActiveCountdown(match)) {

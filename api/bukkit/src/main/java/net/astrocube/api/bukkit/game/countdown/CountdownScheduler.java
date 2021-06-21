@@ -8,7 +8,9 @@ public interface CountdownScheduler {
 	 * Schedule a countdown for a certain {@link Match}.
 	 * @param match to be started
 	 */
-	void scheduleMatchCountdown(Match match);
+	default void scheduleMatchCountdown(Match match) {
+		scheduleMatchCountdown(match, 30, false);
+	}
 
 	/**
 	 * Schedule a countdown for a certain {@link Match}.

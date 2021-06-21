@@ -3,15 +3,16 @@ package net.astrocube.commons.bukkit.game.match.lobby;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import net.astrocube.commons.bukkit.utils.TeleportUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 	private @Inject MessageHandler messageHandler;
+	private @Inject LobbyAssignerScoreboard lobbyAssignerScoreboard;
 
 	@Override
 	public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
@@ -31,6 +33,10 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 		Bukkit.getOnlinePlayers().forEach(online -> {
 			if (waitingIds.contains(online.getDatabaseIdentifier())) {
+
+				if (match.getStatus() == MatchDoc.Status.LOBBY) {
+					lobbyAssignerScoreboard.assignLobbyScoreboard(player, match, subGameMode);
+				}
 
 				online.sendMessage(
 					messageHandler.getMessage("game.lobby-join")
