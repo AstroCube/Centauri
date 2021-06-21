@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.listener.game.management;
 
 import com.google.inject.Inject;
+import net.astrocube.api.bukkit.board.BoardProvider;
 import net.astrocube.api.bukkit.game.event.game.GameReadyEvent;
 import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
@@ -22,7 +23,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -37,6 +37,7 @@ public class GameTimerOutListener implements Listener {
 	private @Inject MatchMapLoader matchMapLoader;
 	private @Inject GameMapCache gameMapCache;
 	private @Inject GameMapService gameMapService;
+	private @Inject BoardProvider boardProvider;
 	private @Inject Plugin plugin;
 
 	@EventHandler
@@ -87,6 +88,7 @@ public class GameTimerOutListener implements Listener {
 
 						if (online != null) {
 							online.getInventory().clear();
+							boardProvider.delete(online);
 						}
 
 					});
