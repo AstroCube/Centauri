@@ -33,6 +33,8 @@ public class CoreTeamBalancer implements TeamBalancer {
 			throw new GameControlException("Not maximum players can be parsed");
 		}
 
+		System.out.println(new String(gameMapCache.getConfiguration(match.getMap())));
+
 		List<SizedTeam> teams = mapConfigurationProvider.parseConfiguration(
 			new String(gameMapCache.getConfiguration(match.getMap())),
 			GameMapConfiguration.class

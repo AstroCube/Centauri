@@ -58,6 +58,10 @@ repositories {
 	}
 }
 
+shadowJar {
+	archiveFileName = "${project.name}.jar"
+}
+
 publishing {
 	publications {
 		maven(MavenPublication) {
@@ -79,6 +83,8 @@ publishing {
 
 compileJava {
 	options.compilerArgs << "-parameters"
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
 }
 
 jar {
