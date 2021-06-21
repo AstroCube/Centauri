@@ -13,7 +13,6 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 @Singleton
