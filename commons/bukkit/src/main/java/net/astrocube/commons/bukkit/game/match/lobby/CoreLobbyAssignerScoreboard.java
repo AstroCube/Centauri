@@ -31,7 +31,8 @@ public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
 		Board board = findBoard(player, "game.scoreboard.starting.title");
 
 		board.setLines(
-			messageHandler.replacingMany(player, "game.scoreboard.starting.content", "%actual%", match.getPending().size(), "%max%", subGameMode.getMaxPlayers())
+			messageHandler.replacingMany(player, "game.scoreboard.starting.content", "%actual%", match.getPending().size(), "%max%", subGameMode.getMaxPlayers(),
+				"%seconds%", seconds)
 		);
 	}
 
