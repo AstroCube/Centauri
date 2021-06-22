@@ -13,6 +13,7 @@ import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProv
 import net.astrocube.commons.bukkit.utils.TeleportUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
@@ -21,10 +22,11 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 	private @Inject MessageHandler messageHandler;
 	private @Inject LobbyAssignerScoreboard lobbyAssignerScoreboard;
+	private @Inject Plugin plugin;
 
 	@Override
 	public void ensureJoin(User user, Player player, Match match, SubGameMode subGameMode) {
-		TeleportUtils.loadChunkAndTeleport(player, LobbyLocationParser.getLobby());
+		TeleportUtils.loadChunkAndTeleport(player, LobbyLocationParser.getLobby(), plugin);
 		player.setGameMode(org.bukkit.GameMode.ADVENTURE);
 		player.setHealth(20);
 		player.setFoodLevel(20);
