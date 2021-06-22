@@ -10,6 +10,8 @@ import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.virtual.user.UserDoc;
+import net.astrocube.commons.bukkit.game.match.lobby.LobbyLocationParser;
+import net.astrocube.commons.bukkit.utils.TeleportUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +40,8 @@ public class LobbyJoinListener implements Listener {
 
 		hideJoinProcessor.process(event.getUser());
 		lobbyHotbarProvider.setup(event.getUser(), player);
+
+		TeleportUtils.loadChunkAndTeleport(player, LobbyLocationParser.getLobby());
 
 		Bukkit.getScheduler().runTask(plugin, () -> {
 
