@@ -26,8 +26,8 @@ public class LobbyListenerLoader implements ListenerLoader {
 			lobbyUserDisconnectListener,
 			lobbyReturnListener,
 			lobbyActionListener,
-			lobbyJoinAssignFlyListener,
-			lobbyJoinTeleportListener
+			lobbyJoinAssignFlyListener
+			//lobbyJoinTeleportListener
 		);
 	}
 }

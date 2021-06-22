@@ -73,6 +73,10 @@ public class UserJoinListener implements Listener {
 		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 		event.setJoinMessage("");
 
+		if (type == ServerDoc.Type.LOBBY || type == ServerDoc.Type.SPECIAL) {
+			player.teleport(LobbyLocationParser.getLobby());
+		}
+
 		this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
 			try {
 
@@ -83,9 +87,9 @@ public class UserJoinListener implements Listener {
 				String address = event.getPlayer().getAddress().getAddress().getHostAddress();
 
 				sessionService.serverSwitch(() -> new SessionValidateDoc.ServerSwitch(
-						user.getId(),
-						instanceNameProvider.getName(),
-						plugin.getConfig().getString("server.fallback", "main_lobby")
+					user.getId(),
+					instanceNameProvider.getName(),
+					plugin.getConfig().getString("server.fallback", "main_lobby")
 				));
 
 				playerField.set(player, new CorePermissible(player, userFindService, permissionBalancer));
