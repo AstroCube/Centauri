@@ -69,7 +69,6 @@ public class UserJoinListener implements Listener {
 	public void onUserJoin(PlayerJoinEvent event) {
 
 		Player player = event.getPlayer();
-		plugin.getLogger().info("Player join");
 
 		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 		event.setJoinMessage("");
