@@ -317,7 +317,7 @@ staff:
 fly:
   no-in-lobby: "%red%El vuelo está desactivado en este servidor."
 
-prefix: "%bold%%blue%AstroCube %white%> %red%"
+prefix: "%blue%%bold%AstroCube %white%> %red%"
 
 commands:
   unknown: "%red%El jugador que buscas no existe."
