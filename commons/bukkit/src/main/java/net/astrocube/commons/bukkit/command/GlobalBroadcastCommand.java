@@ -1,5 +1,6 @@
 package net.astrocube.commons.bukkit.command;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
@@ -20,7 +21,7 @@ public class GlobalBroadcastCommand implements CommandClass {
 	private GlobalBroadcaster globalBroadcaster;
 
 	@Command(names = "")
-	public void main(@Sender Player player, @Text String content) {
+	public void main(@Sender Player player, @Text String content) throws JsonProcessingException {
 		globalBroadcaster.broadcastMessage(content);
 	}
 
