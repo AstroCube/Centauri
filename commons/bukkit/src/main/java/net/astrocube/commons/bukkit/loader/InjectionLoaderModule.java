@@ -20,6 +20,7 @@ import net.astrocube.commons.bukkit.party.PartyModule;
 import net.astrocube.commons.bukkit.perk.PerkModule;
 import net.astrocube.commons.bukkit.punishment.PunishmentModule;
 import net.astrocube.commons.bukkit.server.ServerModule;
+import net.astrocube.commons.bukkit.server.broadcast.BroadcastModule;
 import net.astrocube.commons.bukkit.session.BukkitSessionModule;
 import net.astrocube.commons.bukkit.tablist.TablistModule;
 import net.astrocube.commons.bukkit.teleport.CoreServerTeleportRetry;
@@ -54,6 +55,7 @@ public class InjectionLoaderModule extends ProtectedModule {
 		install(new UserModule());
 		install(new ChatChannelModule());
 		install(new NametagModule());
+		install(new BroadcastModule());
 		install(new TablistModule());
 		install(new MenuModule());
 		install(new PartyModule());
