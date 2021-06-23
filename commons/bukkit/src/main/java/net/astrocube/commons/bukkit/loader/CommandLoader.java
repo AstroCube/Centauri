@@ -43,6 +43,7 @@ public class CommandLoader implements Loader {
 	private @Inject WhisperCommands whisperCommands;
 	private @Inject PunishmentCommand punishmentCommand;
 	private @Inject FlyCommand flyCommand;
+	private @Inject GlobalBroadcastCommand globalBroadcastCommand;
 
 	private @Inject TestCommand testCommand;
 
@@ -78,7 +79,8 @@ public class CommandLoader implements Loader {
 			partyCommand,
 			punishmentCommand,
 			flyCommand,
-			testCommand
+			testCommand,
+			globalBroadcastCommand
 		);
 
 		if (this.plugin.getConfig().getBoolean("authentication.enabled")) {
