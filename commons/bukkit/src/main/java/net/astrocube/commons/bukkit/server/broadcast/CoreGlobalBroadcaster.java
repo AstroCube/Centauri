@@ -11,16 +11,20 @@ import java.util.HashMap;
 public class CoreGlobalBroadcaster implements GlobalBroadcaster {
 
 	private final Channel<BroadcastMessage> broadcastMessageChannel;
+	private final GlobalBroadcaster globalBroadcaster;
 
 	@Inject
-	public CoreGlobalBroadcaster(Messenger messenger) {
+	public CoreGlobalBroadcaster(Messenger messenger, GlobalBroadcaster globalBroadcaster) {
 		broadcastMessageChannel = messenger.getChannel(BroadcastMessage.class);
+		this.globalBroadcaster = globalBroadcaster;
 	}
 
 	@Override
 	public void broadcastMessage(String message) throws JsonProcessingException {
 		broadcastMessageChannel
 			.sendMessage(new BroadcastMessage(message), new HashMap<>());
+		globalBroadcaster
+			.broadcastMessage(message);
 	}
 
 }

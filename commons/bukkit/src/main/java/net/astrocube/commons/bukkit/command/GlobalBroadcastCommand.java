@@ -10,8 +10,8 @@ import net.astrocube.api.bukkit.server.broadcast.GlobalBroadcaster;
 import org.bukkit.entity.Player;
 
 @Command(names = {
-	"globalbroadcast",
-	"gb"
+	"global",
+	"g"
 },
 	permission = "admin.broadcast"
 )
