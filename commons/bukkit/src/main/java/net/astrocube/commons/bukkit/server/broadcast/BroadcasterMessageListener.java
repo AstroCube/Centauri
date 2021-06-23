@@ -7,12 +7,8 @@ import net.astrocube.api.core.message.MessageMetadata;
 
 public class BroadcasterMessageListener implements MessageListener<BroadcastMessage> {
 
-	@Inject
-	private GlobalBroadcaster globalBroadcaster;
-
 	@Override
 	public void handleDelivery(BroadcastMessage message, MessageMetadata properties) {
-		globalBroadcaster.broadcastMessageInServer(message.getMessage());
 	}
 
 }
