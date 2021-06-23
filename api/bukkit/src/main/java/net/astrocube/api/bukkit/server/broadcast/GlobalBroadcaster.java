@@ -6,4 +6,6 @@ public interface GlobalBroadcaster {
 
 	void broadcastMessage(String message) throws JsonProcessingException;
 
+	void broadcastMessageInServer(String message);
+
 }
