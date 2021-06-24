@@ -52,7 +52,7 @@ public class FriendAddListener implements Listener {
 					messageHandler.get(receiver, "friend.request.holder")
 				)
 					.event(new ClickEvent(
-						ClickEvent.Action.RUN_COMMAND, "/friends accept -v" + sender.getUsername())
+						ClickEvent.Action.RUN_COMMAND, "/friends accept " + sender.getUsername())
 					)
 					.event(
 						new HoverEvent(
