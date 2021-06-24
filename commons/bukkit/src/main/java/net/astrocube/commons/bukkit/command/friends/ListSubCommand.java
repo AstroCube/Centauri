@@ -16,6 +16,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ public class ListSubCommand implements CommandClass {
 	private @Inject MessageHandler messageHandler;
 	private @Inject FriendshipHandler friendshipHandler;
 	private @Inject FindService<User> userFindService;
+	private @Inject Plugin plugin;
 
 	@Command(names = "")
 	public boolean execute(@Sender Player player, @OptArg Integer providedPage) {
@@ -35,6 +37,7 @@ public class ListSubCommand implements CommandClass {
 			Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
 
 				Set<Friendship> friendships = paginateResult.getData();
+
 				PaginateResult.Pagination pagination = paginateResult.getPagination();
 
 				int pageIndicator = pagination.getPage().orElse(-1);
@@ -45,7 +48,7 @@ public class ListSubCommand implements CommandClass {
 					return;
 				}
 
-
+				plugin.getLogger().info("Friends " + friendships.size());
 				messageHandler.send(player, "friend.list.header");
 				for (Friendship friendship : friendships) {
 
