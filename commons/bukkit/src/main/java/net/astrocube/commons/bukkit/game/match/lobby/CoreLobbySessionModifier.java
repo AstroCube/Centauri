@@ -33,12 +33,16 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
+		System.out.println("WAITING ID'S SIZE '" + waitingIds.size() + "'");
+
 		Bukkit.getOnlinePlayers().forEach(online -> {
 			if (waitingIds.contains(online.getDatabaseIdentifier())) {
 
 				if (match.getStatus() == MatchDoc.Status.LOBBY) {
 					lobbyAssignerScoreboard.assignLobbyScoreboard(player, match, subGameMode);
 				}
+
+				System.out.println("INVOLVED SIZE '" + match.getPending().size() + "'");
 
 				online.sendMessage(
 					messageHandler.getMessage("game.lobby-join")
