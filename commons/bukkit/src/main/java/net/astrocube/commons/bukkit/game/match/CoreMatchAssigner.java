@@ -20,6 +20,7 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.server.Server;
 import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -70,6 +71,12 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 			match.getPending().add(assignable);
 			updateService.updateSync(match);
+
+			System.out.println("Updated match, and added a match assignable");
+			System.out.println("---- USERS ----");
+
+			CoreMatchParticipantsProvider.getPendingIds(match)
+				.forEach(id -> System.out.println("User " + id));
 
 			// TODO: This call is probably not necessary, since we already called updateSubscription(...)
 			matchService.assignPending(assignable, match.getId());
