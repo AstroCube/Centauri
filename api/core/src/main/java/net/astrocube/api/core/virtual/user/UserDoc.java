@@ -76,9 +76,9 @@ public interface UserDoc {
 
 		String getLastLobby();
 
-		String getLastReplyId();
+		String getLastReplyById();
 
-		void setLastReplyId(String lastReplyId);
+		void setLastReplyById(String lastReplyById);
 
 		@JsonProperty("authorize")
 		Authorization getAuthorizeMethod();
