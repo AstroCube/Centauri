@@ -32,7 +32,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			.addItem(ItemClickable.builder(4)
 				.setItemStack(ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
 					.setOwner(player.getName())
-					.setName(messageHandler.get(player, "lobby.profile.head"))
+					.setName(messageHandler.replacing(player, "lobby.profile.head", "%player_name%", player.getName()))
 					.setLore(messageHandler.getMany(player, "lobby.profile.head-lore"))
 					.build()
 				)
