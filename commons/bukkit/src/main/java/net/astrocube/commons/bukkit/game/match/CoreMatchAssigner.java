@@ -69,8 +69,12 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 			jedis.del("matchmaking:" + assignable.getResponsible());
 
+			System.out.println("Mach pending size " + match.getPending().size());
+
 			match.getPending().add(assignable);
 			updateService.updateSync(match);
+
+			ystem.out.println("Mach pending size " + match.getPending().size());
 
 			System.out.println("Updated match, and added a match assignable");
 			System.out.println("---- USERS ----");
