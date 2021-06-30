@@ -1,3 +1,30 @@
+########
+# Time #
+########
+time:
+  millis: "0.%tenths% segundos"
+  year:
+    single: "año"
+    plural: "años"
+  month:
+    single: "mes"
+    plural: "meses"
+  week:
+    single: "semana"
+    plural: "semanas"
+  day:
+    single: "día"
+    plural: "días"
+  hour:
+    single: "hora"
+    plural: "horas"
+  minute:
+    single: "minutos"
+    plural: "minutos"
+  second:
+    single: "segundo"
+    plural: "segundos"
+
 ####################
 # Parties messages #
 ####################
