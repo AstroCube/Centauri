@@ -32,7 +32,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 				return;
 			}
 
-			jedis.set("Cooldown-Request-Game:" + id, "true");
+			jedis.set("Cool-down-Request-Game:" + id, "true");
 			jedis.expire("Cool-down-Request-Game:" + id, 5);
 		}
 
