@@ -44,6 +44,9 @@ public class CoreWhisperManager implements WhisperManager {
 
 		// is online on other server
 		if (targetPlayer == null) {
+
+			senderUser.getSession().setLastReplyById(target.getId());
+
 			messageHandler
 				.sendReplacing(sender, "whisper.sender",
 					"%sender%", senderUser.getDisplay(),
