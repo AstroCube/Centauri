@@ -186,6 +186,7 @@ game:
   play:
     error: "%red%Ha ocurrido un error al obtener la lista de modos de juegos. Intenta nuevamente."
     unknown: "%green%Para jugar, ingresa a una partida desde el %aqua%Selector de Juegos%green%."
+    matchmaking-request-cool-down: "%red%Debes esperar para solicitar nuevamente una partida!"
   return:
     schedule: "%aqua%%bold%Serás redireccionado al lobby en 5 segundos... Presiona de nuevo para cancelar."
     cancel: "%red%%bold%Petición de redireccionamiento cancelada."
