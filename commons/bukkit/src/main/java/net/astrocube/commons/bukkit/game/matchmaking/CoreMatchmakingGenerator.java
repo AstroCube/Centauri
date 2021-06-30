@@ -33,7 +33,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 			}
 
 			jedis.set("Cool-down-Request-Game:" + id, "true");
-			jedis.expire("Cool-down-Request-Game:" + id, 5);
+			jedis.expire("Cool-down-Request-Game:" + id, 3);
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
