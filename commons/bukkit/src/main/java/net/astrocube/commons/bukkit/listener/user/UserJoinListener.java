@@ -73,10 +73,6 @@ public class UserJoinListener implements Listener {
 		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 		event.setJoinMessage("");
 
-		if (type == ServerDoc.Type.LOBBY || type == ServerDoc.Type.SPECIAL) {
-			player.teleport(LobbyLocationParser.getLobby());
-		}
-
 		this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
 			try {
 

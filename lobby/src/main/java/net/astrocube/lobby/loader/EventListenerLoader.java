@@ -8,10 +8,7 @@ import net.astrocube.lobby.listener.gadget.GameGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.HideGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.LobbySelectorGadgetInteractListener;
 import net.astrocube.lobby.listener.gadget.ProfileGadgetInteractListener;
-import net.astrocube.lobby.listener.user.LobbyJoinListener;
-import net.astrocube.lobby.listener.user.PlayerDamageListener;
-import net.astrocube.lobby.listener.user.PlayerQuitListener;
-import net.astrocube.lobby.listener.user.UserBasicActionsListener;
+import net.astrocube.lobby.listener.user.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -26,6 +23,7 @@ public class EventListenerLoader implements Loader {
 	private @Inject PlayerDamageListener playerDamageListener;
 
 	private @Inject LobbyJoinListener lobbyJoinListener;
+	private @Inject LobbyJoinTeleportListener lobbyJoinTeleportListener;
 	private @Inject PlayerQuitListener playerQuitListener;
 	private @Inject UserBasicActionsListener userBasicActionsListener;
 
@@ -45,6 +43,7 @@ public class EventListenerLoader implements Loader {
 		registerEvent(playerDamageListener);
 
 		registerEvent(lobbyJoinListener);
+		registerEvent(lobbyJoinTeleportListener);
 		registerEvent(playerQuitListener);
 		registerEvent(userBasicActionsListener);
 
