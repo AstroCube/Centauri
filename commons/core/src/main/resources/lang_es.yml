@@ -175,6 +175,7 @@ friend:
 
 whisper:
   error: "%red%Ha ocurrido un error al enviar un mensaje."
+  no-has-player-to-reply: "%red%No tienes ningún jugador para responderle"
   sender: "%blue%[%sender% %gray%-> %target%%blue%] %message%"
   target: "%blue%[%sender% %gray%-> %target%%blue%] %message%"
 

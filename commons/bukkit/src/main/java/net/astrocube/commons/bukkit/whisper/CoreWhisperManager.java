@@ -6,6 +6,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
+import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.Bukkit;
@@ -19,15 +20,17 @@ public class CoreWhisperManager implements WhisperManager {
 
 	private final Channel<WhisperMessage> whisperMessageChannel;
 	private final ExecutorServiceProvider executorServiceProvider;
+	private final UpdateService<User, UserDoc.Partial> updateService;
 
 	private final MessageHandler messageHandler;
 
 	@Inject
 	private CoreWhisperManager(Messenger messenger,
 														 ExecutorServiceProvider executorServiceProvider,
-														 MessageHandler handler) {
+														 MessageHandler handler, UpdateService<User, UserDoc.Partial> updateService) {
 		this.executorServiceProvider = executorServiceProvider;
 		this.messageHandler = handler;
+		this.updateService = updateService;
 		whisperMessageChannel = messenger.getChannel(WhisperMessage.class);
 	}
 
@@ -44,6 +47,10 @@ public class CoreWhisperManager implements WhisperManager {
 
 		// is online on other server
 		if (targetPlayer == null) {
+
+			senderUser.getSession().setLastReplyById(target.getId());
+			updateService.update(senderUser);
+
 			messageHandler
 				.sendReplacing(sender, "whisper.sender",
 					"%sender%", senderUser.getDisplay(),

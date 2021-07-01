@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
-@Command(names = {"match"})
+@Command(names = {"match"}, permission = "commons.staff.match")
 @SubCommandClasses({
 	MatchStartCommand.class,
 	MatchDebugCommand.class,

@@ -13,6 +13,7 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.whisper.WhisperManager;
 import net.astrocube.commons.bukkit.whisper.WhisperResponse;
+import net.astrocube.commons.bukkit.whisper.WhisperSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,7 @@ public class WhisperCommands implements CommandClass {
 	private @Inject QueryService<User> userQueryService;
 	private @Inject FindService<User> userFindService;
 
-	private @Inject WhisperManager whisperManager;
+	private @Inject WhisperSender whisperSender;
 
 	private @Inject ObjectMapper mapper;
 	private @Inject MessageHandler messageHandler;
@@ -66,22 +67,7 @@ public class WhisperCommands implements CommandClass {
 							return;
 						}
 
-						whisperManager.sendWhisper(sender, targetUser, user, message)
-							.whenComplete((whisperResponse, error) -> {
-								try {
-									if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
-										messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-									} else if (whisperResponse.result() == WhisperResponse.Result.FAILED_ERROR) {
-										whisperResponse.errors().forEach(e ->
-											Bukkit.getLogger().log(Level.WARNING, "Failed to send message", e));
-									}
-									// handle more errors!
-								} catch (Exception e) {
-									//TODO: remove this
-									e.printStackTrace();
-								}
-							});
-
+						whisperSender.sendWhisper(sender, targetUser, user, message);
 					});
 			});
 
