@@ -7,14 +7,23 @@ import net.astrocube.api.bukkit.game.match.MatchSubscription;
 import net.astrocube.api.bukkit.game.matchmaking.MatchAssignable;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
+import net.astrocube.api.core.redis.Redis;
+import net.astrocube.api.core.server.ServerService;
+import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.update.UpdateService;
+import net.astrocube.api.core.virtual.server.Server;
+import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
 public class CoreMatchService implements MatchService {
 
+	private @Inject FindService<Match> matchFindService;
 	private @Inject UpdateService<Match, MatchDoc.Partial> matchUpdateService;
 	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject ServerService serverService;
+
+	private @Inject Redis redis;
 
 	@Override
 	public void assignSpectator(Match match, String requester, boolean join) throws Exception {
@@ -64,7 +73,24 @@ public class CoreMatchService implements MatchService {
 
 	@Override
 	public void matchCleanup() throws Exception {
-		// TODO: (redis) Check what matches are assigned to current server, if its status is LOBBY, delete, else, set status to INVALIDATED and update
+		Server server = serverService.getActual();
+		try (Jedis connection = redis.getRawConnection().getResource()) {
+			for (String key : connection.keys(Match.ROUTE_KEY + ":*")) {
+				String id = key.substring(Match.ROUTE_KEY.length() + 1);
+				Match match = matchFindService.findSync(id);
+
+				if (match.getServer().equals(server.getId())
+						&& match.getGameMode().equals(server.getGameMode())
+						&& match.getSubMode().equals(server.getSubGameMode())) {
+					if (match.getStatus() == MatchDoc.Status.LOBBY) {
+						connection.del(id);
+					} else {
+						match.setStatus(MatchDoc.Status.INVALIDATED);
+						matchUpdateService.updateSync(match);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
