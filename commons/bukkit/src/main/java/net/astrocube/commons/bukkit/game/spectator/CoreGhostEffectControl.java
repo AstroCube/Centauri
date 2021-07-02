@@ -1,7 +1,10 @@
 package net.astrocube.commons.bukkit.game.spectator;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
+import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.core.service.delete.DeleteService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,6 +15,9 @@ import java.util.Map;
 
 @Singleton
 public class CoreGhostEffectControl implements GhostEffectControl {
+
+	@Inject
+	private DeleteService<Match> deleteService;
 
 	private final Map<String, String> teamAssignation = new HashMap<>();
 
@@ -65,6 +71,8 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(assigned);
 		team.unregister();
 		teamAssignation.remove(match);
+		deleteService.delete(match);
+
 	}
 
 }
