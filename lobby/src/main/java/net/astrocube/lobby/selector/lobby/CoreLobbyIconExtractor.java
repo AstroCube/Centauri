@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
-import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyServerRedirect;
-import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySwitchStatus;
+import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
+import net.astrocube.api.bukkit.lobby.selector.redirect.ServerSwitchStatus;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,27 +22,27 @@ import java.util.List;
 public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
 	private @Inject MessageHandler messageHandler;
-	private @Inject LobbyServerRedirect lobbyServerRedirect;
+	private @Inject ServerRedirect serverRedirect;
 
 	@Override
 	public ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position) {
 
 		ChatColor color = ChatColor.YELLOW;
-		LobbySwitchStatus status = LobbySwitchStatus.SUCCESS;
+		ServerSwitchStatus status = ServerSwitchStatus.SUCCESS;
 		String translation = "connect";
 		ItemStack itemStack = new ItemStack(Material.QUARTZ_BLOCK, wrapper.getNumber());
 
 		if (wrapper.isFull()) {
 			color = ChatColor.RED;
 			translation = "full";
-			status = LobbySwitchStatus.FULL;
+			status = ServerSwitchStatus.FULL;
 			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 14);
 		}
 
 		if (wrapper.getName().equalsIgnoreCase(Bukkit.getServerName())) {
 			color = ChatColor.GREEN;
 			translation = "already";
-			status = LobbySwitchStatus.CYCLIC;
+			status = ServerSwitchStatus.CYCLIC;
 			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 13);
 		}
 
@@ -64,12 +64,12 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 		meta.setLore(loreArray);
 		itemStack.setItemMeta(meta);
 
-		LobbySwitchStatus finalStatus = status;
+		ServerSwitchStatus finalStatus = status;
 		return ItemClickable.builder(position)
 			.setItemStack(itemStack)
 			.setAction((event) -> {
 				event.getWhoClicked().closeInventory();
-				lobbyServerRedirect.redirectPlayer(player, wrapper, finalStatus);
+				serverRedirect.redirectPlayer(player, wrapper.getName(), finalStatus);
 				return true;
 			}).build();
 	}

@@ -1,15 +1,22 @@
 package net.astrocube.lobby.selector.gamemode;
 
 import com.google.inject.Inject;
+
 import me.yushust.message.MessageHandler;
+
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
-import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorRedirect;
+import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
+import net.astrocube.api.bukkit.lobby.selector.redirect.ServerSwitchStatus;
 import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import team.unnamed.gui.abstraction.item.ItemClickable;
 
 import java.util.ArrayList;
@@ -18,7 +25,7 @@ import java.util.List;
 public class CoreGameItemExtractor implements GameItemExtractor {
 
 	private @Inject MessageHandler messageHandler;
-	private @Inject GameSelectorRedirect gameSelectorRedirect;
+	private @Inject ServerRedirect serverRedirect;
 	private @Inject CloudModeConnectedProvider cloudModeConnectedProvider;
 
 	@Override
@@ -45,12 +52,25 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 		iconMeta.setLore(
 			baseLore
 		);
+
 		icon.setItemMeta(iconMeta);
 
+		iconMeta.addItemFlags(ItemFlag.values());
+
+		ServerSwitchStatus status = ServerSwitchStatus.SUCCESS;
+
+		// TODO: 06/07/2021 check if the game-mode lobby is full
+
+		if (gameModeDoc.getLobby().equalsIgnoreCase(Bukkit.getServerName())) {
+			status = ServerSwitchStatus.CYCLIC;
+		}
+
+		ServerSwitchStatus finalStatus = status;
 		return ItemClickable.builder(gameModeDoc.getSlot())
 			.setItemStack(icon)
-			.setAction((block) -> {
-				gameSelectorRedirect.redirectPlayer(gameModeDoc, player);
+			.setAction(event -> {
+				event.getWhoClicked().closeInventory();
+				serverRedirect.redirectPlayer(player, gameModeDoc.getLobby(), finalStatus);
 				return true;
 			}).build();
 	}
