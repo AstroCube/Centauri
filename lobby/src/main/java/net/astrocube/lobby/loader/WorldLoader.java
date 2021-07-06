@@ -29,6 +29,9 @@ public class WorldLoader implements Loader {
 
 		world.setTime(plugin.getConfig().getInt("ambiental.time", 1000));
 
+		world.setWeatherDuration(0);
+		world.setThundering(false);
+
 		// yaw and pitch aren't set, this could be an issue
 		// plugin.getConfig().getInt("spawn.yaw", 0),
 		// plugin.getConfig().getInt("spawn.pitch", 0)
