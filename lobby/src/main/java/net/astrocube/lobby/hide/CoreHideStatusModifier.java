@@ -37,7 +37,6 @@ public class CoreHideStatusModifier implements HideStatusModifier {
 
 		if (player != null) {
 			Bukkit.getOnlinePlayers().forEach(online -> {
-				Bukkit.getScheduler().runTask(plugin, () -> player.hidePlayer(online));
 				if (!online.getDatabaseIdentifier().equals(user.getId())) {
 					findService.find(online.getDatabaseIdentifier()).callback(userResponse -> {
 						if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
@@ -61,13 +60,11 @@ public class CoreHideStatusModifier implements HideStatusModifier {
 
 		if (player != null && targetPlayer != null) {
 			Bukkit.getScheduler().runTask(plugin, () -> {
-				player.hidePlayer(targetPlayer);
 				if (compound.friends()) staffHide.apply(user, player, target, targetPlayer);
 				if (compound.permission()) permissionHide.apply(user, player, target, targetPlayer);
 				if (compound.staff()) friendHide.apply(user, player, target, targetPlayer);
 			});
 		}
-
 	}
 
 	@Override
@@ -77,5 +74,4 @@ public class CoreHideStatusModifier implements HideStatusModifier {
 			Bukkit.getOnlinePlayers().forEach(player::showPlayer);
 		}
 	}
-
 }
