@@ -61,10 +61,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
 				player.getInventory().clear();
 				// i just copy & pasted existing code
-				player.getInventory().setHelmet(null);
-				player.getInventory().setChestplate(null);
-				player.getInventory().setLeggings(null);
-				player.getInventory().setBoots(null);
+				player.getInventory().setArmorContents(null);
 
 				lobbyItemProvider.provideBackButton(player, 8);
 
