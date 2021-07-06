@@ -11,5 +11,5 @@ public interface ServerRedirect {
 	 * @param serverName where validations will be done
 	 * @param status     to decide user switching
 	 */
-	void redirectPlayer(Player player, String serverName, ServerSwitchStatus status);
+	void redirectPlayer(Player player, String serverName, ServerSwitchStatus status, boolean group);
 }
