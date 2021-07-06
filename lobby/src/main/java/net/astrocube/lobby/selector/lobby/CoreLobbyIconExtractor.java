@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import team.unnamed.gui.abstraction.item.ItemClickable;
@@ -62,6 +63,8 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 		);
 
 		meta.setLore(loreArray);
+		meta.addItemFlags(ItemFlag.values());
+
 		itemStack.setItemMeta(meta);
 
 		ServerSwitchStatus finalStatus = status;

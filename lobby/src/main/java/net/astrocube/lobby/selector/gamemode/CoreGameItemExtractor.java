@@ -53,9 +53,9 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 			baseLore
 		);
 
-		icon.setItemMeta(iconMeta);
-
 		iconMeta.addItemFlags(ItemFlag.values());
+
+		icon.setItemMeta(iconMeta);
 
 		ServerSwitchStatus status = ServerSwitchStatus.SUCCESS;
 
