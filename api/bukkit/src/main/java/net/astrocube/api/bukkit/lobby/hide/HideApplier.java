@@ -1,6 +1,7 @@
 package net.astrocube.api.bukkit.lobby.hide;
 
 import net.astrocube.api.core.virtual.user.User;
+
 import org.bukkit.entity.Player;
 
 public interface HideApplier {
@@ -13,5 +14,4 @@ public interface HideApplier {
 	 * @param targetPlayer to be provided
 	 */
 	void apply(User user, Player player, User target, Player targetPlayer);
-
 }
