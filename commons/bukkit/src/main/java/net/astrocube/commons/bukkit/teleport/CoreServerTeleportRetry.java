@@ -70,5 +70,4 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 		cloudTeleport.getServerFromGroup(group)
 			.ifPresent(server -> attemptTeleport(player, server, attempt, maxAttempt));
 	}
-
 }
