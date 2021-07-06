@@ -72,7 +72,7 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 			.setItemStack(itemStack)
 			.setAction((event) -> {
 				event.getWhoClicked().closeInventory();
-				serverRedirect.redirectPlayer(player, wrapper.getName(), finalStatus);
+				serverRedirect.redirectPlayer(player, wrapper.getName(), finalStatus, false);
 				return true;
 			}).build();
 	}

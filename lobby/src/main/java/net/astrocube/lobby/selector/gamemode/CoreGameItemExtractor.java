@@ -70,7 +70,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 			.setItemStack(icon)
 			.setAction(event -> {
 				event.getWhoClicked().closeInventory();
-				serverRedirect.redirectPlayer(player, gameModeDoc.getName(), finalStatus);
+				serverRedirect.redirectPlayer(player, gameModeDoc.getLobby(), finalStatus, true);
 				return true;
 			}).build();
 	}
