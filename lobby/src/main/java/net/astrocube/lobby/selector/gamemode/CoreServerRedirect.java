@@ -2,12 +2,10 @@ package net.astrocube.lobby.selector.gamemode;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerSwitchStatus;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -19,7 +17,7 @@ public class CoreServerRedirect implements ServerRedirect {
 	private ServerTeleportRetry serverTeleportRetry;
 
 	@Override
-	public void redirectPlayer(Player player, String serverName, ServerSwitchStatus status) {
+	public void redirectPlayer(Player player, String serverName, ServerSwitchStatus status, boolean group) {
 		switch (status) {
 			case FULL: {
 				messageHandler.sendIn(player, AlertModes.ERROR, "lobby.error.full");
@@ -31,8 +29,11 @@ public class CoreServerRedirect implements ServerRedirect {
 				break;
 			}
 			default: {
-				serverTeleportRetry.attemptTeleport(player.getName(), serverName, 1, 3);
-				break;
+				if (group) {
+					serverTeleportRetry.attemptGroupTeleport(player.getName(), serverName, 1, 3);
+				} else {
+					serverTeleportRetry.attemptTeleport(player.getName(), serverName, 1, 3);
+				}
 			}
 		}
 	}
