@@ -61,8 +61,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 
 		// TODO: 06/07/2021 check if the game-mode lobby is full
 
-		System.out.println(gameModeDoc.getName() + " : " + gameModeDoc.getLobby() + " : " + Bukkit.getServerName());
-		if (gameModeDoc.getName().equalsIgnoreCase(Bukkit.getServerName())) {
+		if (Bukkit.getServerName().contains(gameModeDoc.getLobby())) {
 			status = ServerSwitchStatus.CYCLIC;
 		}
 
