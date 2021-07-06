@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.board.BoardProvider;
 import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.entity.Player;
 
 public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
@@ -22,7 +23,7 @@ public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
 		Board board = findBoard(player, "game.scoreboard.waiting.title");
 
 		board.setLines(
-			messageHandler.replacingMany(player, "game.scoreboard.waiting.content", "%actual%", match.getPending().size(), "%max%", subGameMode.getMaxPlayers())
+			messageHandler.replacingMany(player, "game.scoreboard.waiting.content", "%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(), "%max%", subGameMode.getMaxPlayers())
 		);
 	}
 
@@ -31,7 +32,7 @@ public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
 		Board board = findBoard(player, "game.scoreboard.starting.title");
 
 		board.setLines(
-			messageHandler.replacingMany(player, "game.scoreboard.starting.content", "%actual%", match.getPending().size(), "%max%", subGameMode.getMaxPlayers(),
+			messageHandler.replacingMany(player, "game.scoreboard.starting.content", "%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(), "%max%", subGameMode.getMaxPlayers(),
 				"%seconds%", seconds)
 		);
 	}
