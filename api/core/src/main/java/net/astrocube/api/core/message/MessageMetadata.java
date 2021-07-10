@@ -1,5 +1,6 @@
 package net.astrocube.api.core.message;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.astrocube.api.core.model.Document;
 
 import java.beans.ConstructorProperties;
@@ -19,7 +20,7 @@ public class MessageMetadata implements Document {
 	private final String senderId;
 	private final LocalDateTime timestamp;
 
-	@ConstructorProperties({"headers", "messageId", "channelName", "senderId", "timestamp"})
+	@ConstructorProperties({"headers", "messageId", "appId", "instanceId", "timestamp"})
 	public MessageMetadata(
 		Map<String, Object> headers,
 	 	String messageId,
@@ -45,11 +46,13 @@ public class MessageMetadata implements Document {
 	}
 
 	/** Returns the channel name */
+	@JsonProperty("appId")
 	public String getChannelName() {
 		return channelName;
 	}
 
 	/** Returns the instance identifier */
+	@JsonProperty("instanceId")
 	public String getSenderId() {
 		return senderId;
 	}
