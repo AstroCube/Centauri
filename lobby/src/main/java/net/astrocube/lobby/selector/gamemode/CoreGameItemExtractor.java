@@ -36,13 +36,13 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 		if (exchangeableMaterial != null) icon = new ItemStack(exchangeableMaterial);
 
 		ItemMeta iconMeta = icon.getItemMeta();
-		List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore").getContents());
+		List<String> baseLore = new ArrayList<>(messageHandler.getMany(player, "lobby.gameSelector.games." + gameModeDoc.getId() + ".lore"));
 
 		baseLore.add(" ");
 		baseLore.add(
 			messageHandler.replacing(
 				player, "lobby.gameSelector.gadget-playing",
-				"%players%", cloudModeConnectedProvider.getGlobalOnline(gameModeDoc)
+				"%players%", cloudModeConnectedProvider.getGroupOnline(gameModeDoc.getLobby())
 			)
 		);
 
