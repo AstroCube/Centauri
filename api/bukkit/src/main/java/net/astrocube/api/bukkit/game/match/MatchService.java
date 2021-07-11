@@ -44,12 +44,6 @@ public interface MatchService {
 	void assignPending(MatchAssignable pendingRequest, String match) throws Exception;
 
 	/**
-	 * Clears every match still waiting or invalidate active ones if the server shut down.
-	 * @throws Exception when a backend error is thrown
-	 */
-	void matchCleanup() throws Exception;
-
-	/**
 	 * Performs a victory state and updates the match with final winners.
 	 * @param match   to be updated
 	 * @param winners to be listed

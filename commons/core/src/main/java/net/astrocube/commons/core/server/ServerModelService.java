@@ -47,11 +47,6 @@ public class ServerModelService implements ServerService {
 				""
 			)
 		);
-
-		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.del("server:" + actual);
-		}
-
 	}
 
 	@Override
