@@ -28,7 +28,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
 			if (jedis.exists("Cool-down-Request-Game:" + id)) {
-				messageHandler.send(player, "play.matchmaking-request-cool-down");
+				messageHandler.send(player, "game.play.matchmaking-request-cool-down");
 				return;
 			}
 
