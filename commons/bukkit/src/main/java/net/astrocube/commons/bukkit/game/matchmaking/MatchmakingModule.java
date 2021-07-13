@@ -16,7 +16,6 @@ public class MatchmakingModule extends ProtectedModule {
 		bind(IdealMatchSelector.class).to(CoreIdealMatchSelector.class);
 		bind(MatchmakingErrorBroadcaster.class).to(CoreMatchmakingErrorBroadcaster.class);
 		bind(AvailableMatchProvider.class).to(CoreAvailableMatchProvider.class);
-		bind(MatchmakingRequester.class).to(CoreMatchmakingRequester.class);
 		expose(MatchmakingGenerator.class);
 	}
 

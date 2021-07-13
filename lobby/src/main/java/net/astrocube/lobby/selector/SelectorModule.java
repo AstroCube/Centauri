@@ -9,7 +9,6 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.lobby.LobbySelectorDisplay;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
-import net.astrocube.commons.bukkit.game.matchmaking.CoreMatchmakingRequester;
 import net.astrocube.lobby.selector.gamemode.CoreGameItemExtractor;
 import net.astrocube.lobby.selector.gamemode.CoreGameSelectorDisplay;
 import net.astrocube.lobby.selector.gamemode.CoreServerRedirect;
@@ -29,6 +28,5 @@ public class SelectorModule extends ProtectedModule {
 		bind(ServerRedirect.class).to(CoreServerRedirect.class);
 		bind(LobbyCloudWrapperGenerator.class).to(CoreLobbyCloudWrapperGenerator.class);
 		bind(SelectorRegistry.class).to(CoreSelectorRegistry.class);
-		bind(MatchmakingRequester.class).to(CoreMatchmakingRequester.class);
 	}
 }
