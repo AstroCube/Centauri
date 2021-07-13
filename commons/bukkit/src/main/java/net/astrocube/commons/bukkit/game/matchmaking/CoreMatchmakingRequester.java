@@ -1,10 +1,10 @@
-package net.astrocube.lobby.selector.npc;
+package net.astrocube.commons.bukkit.game.matchmaking;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
-import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCActionHandler;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequester;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 @Singleton
-public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
+public class CoreMatchmakingRequester implements MatchmakingRequester {
 
 	private @Inject MatchmakingGenerator matchmakingGenerator;
 	private @Inject Plugin plugin;
@@ -27,7 +27,6 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 
 	@Override
 	public void execute(Player player, String mode, String subMode) {
-
 		findService.find(mode).callback(response -> {
 
 			response.ifSuccessful(gameMode -> {
@@ -67,7 +66,6 @@ public class CoreLobbyNPCActionHandler implements LobbyNPCActionHandler {
 			});
 
 		});
-
 	}
 
 }

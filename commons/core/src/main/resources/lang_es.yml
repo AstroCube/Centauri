@@ -217,6 +217,7 @@ game:
     matchmaking-request-cool-down: "%red%Debes esperar para solicitar nuevamente una partida!"
   return:
     schedule: "%aqua%%bold%Serás redireccionado al lobby en 5 segundos... Presiona de nuevo para cancelar."
+    finish-match: "%aqua%%bold%La partida ha finalizado, serás movido al lobby en %white%%seconds%"
     cancel: "%red%%bold%Petición de redireccionamiento cancelada."
   lobby-join: "%yellow%¡%player% %yellow%ha ingresado a la partida (%aqua%%actual%%yellow%/%aqua%%max%%yellow%)!"
   lobby-leave: "%yellow%¡%player% %yellow%ha salido de la partida (%aqua%%actual%%yellow%/%aqua%%max%%yellow%)!"
@@ -228,6 +229,12 @@ game:
   shout-solo: "%red%No puedes utilizar este comando en una partida en solitario."
   rejoin:
     not-active: "%red%Tu partida no ha empezado para poder re-ingresar."
+  game-again:
+      title: "%aqua%Jugar de nuevo"
+      lore:
+          - "%white%Clickame para"
+          - "%whiteJugar de nuevo"
+          - "%white%"
   matchmaking:
     timeout: "%red%No se ha encontrado una partida disponible para tí."
     error: "%red%Ha ocurrido un error al emparejarte con una partida, por favor intenta nuevamente."

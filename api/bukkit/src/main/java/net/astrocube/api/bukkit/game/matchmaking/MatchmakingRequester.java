@@ -1,15 +1,16 @@
-package net.astrocube.api.bukkit.lobby.selector.npc;
+package net.astrocube.api.bukkit.game.matchmaking;
 
 import org.bukkit.entity.Player;
 
-public interface LobbyNPCActionHandler {
+public interface MatchmakingRequester {
 
 	/**
-	 * Executes click of lobby
+	 * Executes and request new game with mode and subMode
 	 * @param player  player
 	 * @param mode    id
 	 * @param subMode id
 	 */
 	void execute(Player player, String mode, String subMode);
+
 
 }

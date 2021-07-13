@@ -43,4 +43,17 @@ public class CoreLobbyItemProvider implements LobbyItemProvider {
 		player.getInventory().setItem(slot, stack);
 	}
 
+	@Override
+	public void provideGameAgainButton(Player player, int slot) {
+		ItemStack stack = NBTUtils.addString(new ItemStack(Material.PAPER, 1), "actionable", "gc_game_again");
+		ItemMeta meta = stack.getItemMeta();
+
+		meta.setDisplayName(messageHandler.get(player, "game.game-again.title"));
+		meta.setLore(messageHandler.getMany(player, "game.game-again.lore"));
+
+		stack.setItemMeta(meta);
+
+		player.getInventory().setItem(slot, stack);
+	}
+
 }
