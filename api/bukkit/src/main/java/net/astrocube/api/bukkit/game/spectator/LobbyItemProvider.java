@@ -18,4 +18,12 @@ public interface LobbyItemProvider {
 	 */
 	void provideAdminButton(Player player, int slot);
 
+	/**
+	 * Provide the item for game again
+	 * @param player where item will be placed
+	 * @param slot to be held
+	 */
+
+	void provideGameAgainButton(Player player, int slot);
+
 }

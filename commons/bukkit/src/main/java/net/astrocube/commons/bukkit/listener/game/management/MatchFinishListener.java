@@ -1,6 +1,7 @@
 package net.astrocube.commons.bukkit.listener.game.management;
 
 import com.google.inject.Inject;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.match.MatchControlSanitizeEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchFinishEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchInvalidateEvent;
@@ -11,10 +12,14 @@ import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.game.scheduler.RunningMatchBalancer;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
+import net.astrocube.api.bukkit.util.CountdownTimer;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.commons.bukkit.game.GameControlHelper;
+import net.astrocube.commons.bukkit.utils.MessageUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,6 +39,7 @@ public class MatchFinishListener implements Listener {
 	private @Inject RunningMatchBalancer runningMatchBalancer;
 	private @Inject GameControlHelper gameControlHelper;
 	private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject MessageHandler messageHandler;
 	private @Inject Plugin plugin;
 
 	@EventHandler
@@ -56,17 +62,20 @@ public class MatchFinishListener implements Listener {
 				Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match, teamMember -> true);
 				ghostEffectControl.clearMatch(match.getId());
 				actualMatchCache.clearSubscriptions(match);
-				Bukkit.getScheduler().runTaskLater(
-					plugin, () -> players.forEach(
+
+				CountdownTimer timer =
+					new CountdownTimer(plugin, 10, (countdownTimer) -> players.forEach(
+						player -> MessageUtils.sendActionBar(player, messageHandler.get(player, "game.return.finish-match", "%seconds%", countdownTimer.getSecondsLeft()))
+					), () -> players.forEach(
 						player -> serverTeleportRetry.attemptGroupTeleport(
 							player.getName(),
 							plugin.getConfig().getString("server.fallback"),
 							1,
 							3
-						)
-					),
-					200L
-				);
+						)));
+
+				timer.scheduleTimer();
+
 				runningMatchBalancer.releaseMatch(event.getMatch());
 
 				Optional<GameControlHelper.ModeCompound> compound =

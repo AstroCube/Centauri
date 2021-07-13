@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.util.StringList;
-import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCActionHandler;
+import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequester;
 import net.astrocube.api.bukkit.lobby.selector.npc.LobbyNPCSelector;
 import net.astrocube.api.bukkit.lobby.selector.npc.SelectorRegistry;
 import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
@@ -35,7 +35,7 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 	private @Inject PuppetRegistry puppetRegistry;
 	private @Inject CloudModeConnectedProvider cloudModeConnectedProvider;
 	private @Inject FindService<GameMode> findService;
-	private @Inject LobbyNPCActionHandler lobbyNPCActionHandler;
+	private @Inject MatchmakingRequester matchmakingRequester;
 
 	private final Set<SelectorCompound> registries = new HashSet<>();
 	private final Multimap<String, Integer> assignedTasks = MultimapBuilder.hashKeys().hashSetValues().build();
@@ -74,7 +74,7 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 			)
 				.setClickType(ClickAction.Type.RIGHT)
 				.setSkin(new CorePuppetSkin(selector.getValue(), selector.getSignature()))
-				.setAction((p) -> lobbyNPCActionHandler.execute(p.getPlayer(), selector.getMode(), selector.getSubMode()))
+				.setAction((p) -> matchmakingRequester.execute(p.getPlayer(), selector.getMode(), selector.getSubMode()))
 				.build();
 
 			registries.add(new SelectorCompound(playerPuppetEntity, selector));
