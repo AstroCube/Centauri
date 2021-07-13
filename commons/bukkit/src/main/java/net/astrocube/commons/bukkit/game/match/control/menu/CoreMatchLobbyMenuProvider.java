@@ -40,7 +40,6 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	@Override
 	public void create(Player player) throws Exception {
 
-
 		if (!plugin.getConfig().getBoolean("server.sandbox")) {
 			matchAvailabilityChecker.clearLegitMatches(player.getDatabaseIdentifier());
 		}
@@ -61,10 +60,9 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 
 		String actualMap = messageHandler.get(player, "game.admin.lobby.map.none");
 
-		if (match.getMap() != null) {
+		if (match.getMap() != null && match.getMap().length() != 0) {
 			actualMap = findService.findSync(match.getMap()).getName();
 		}
-
 
 		builder.addItem(generateMapSelectorButton(player, match, actualMap));
 
@@ -156,5 +154,4 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 			ClickType.LEFT
 		);
 	}
-
 }
