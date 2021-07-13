@@ -59,10 +59,6 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 					countdownScheduler.scheduleMatchCountdown(match, subMode.get());
 				}
 
-				player.getInventory().clear();
-				// i just copy & pasted existing code
-				player.getInventory().setArmorContents(null);
-
 				lobbyItemProvider.provideBackButton(player, 8);
 
 				if (player.hasPermission("commons.game.admin")) {
