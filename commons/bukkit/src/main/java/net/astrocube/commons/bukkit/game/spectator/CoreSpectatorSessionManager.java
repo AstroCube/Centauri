@@ -43,12 +43,6 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 			throw new GameControlException("Match world could not be found");
 		}
 
-		player.getInventory().clear();
-		player.getInventory().setHelmet(null);
-		player.getInventory().setChestplate(null);
-		player.getInventory().setLeggings(null);
-		player.getInventory().setBoots(null);
-
 		lobbyItemProvider.provideBackButton(player, 8);
 		ghostEffectControl.addPlayer(match.getId(), player);
 
