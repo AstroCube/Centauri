@@ -27,6 +27,5 @@ public class SelectorModule extends ProtectedModule {
 		bind(ServerRedirect.class).to(CoreServerRedirect.class);
 		bind(LobbyCloudWrapperGenerator.class).to(CoreLobbyCloudWrapperGenerator.class);
 		bind(SelectorRegistry.class).to(CoreSelectorRegistry.class);
-		bind(LobbyNPCActionHandler.class).to(CoreLobbyNPCActionHandler.class);
 	}
 }
