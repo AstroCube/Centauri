@@ -79,7 +79,7 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
 			return ItemClickable.builder()
 				.setItemStack(ItemBuilder.newBuilder(Material.PAPER)
 					.setName(messageHandler.replacing(
-						player, "game-admin.lobby.map.select.title",
+						player, "game.admin.lobby.map.select.title",
 						"%map%", gameMap.getName()
 					))
 					.setLore(messageHandler.getMany(
