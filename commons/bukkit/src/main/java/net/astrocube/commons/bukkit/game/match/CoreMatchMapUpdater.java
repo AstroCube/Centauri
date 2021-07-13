@@ -26,7 +26,7 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
 		findService.find(match).callback(matchCallback -> {
 
 			if (!matchCallback.isSuccessful()) {
-				alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
+				alertMessage(requester, "", AlertModes.ERROR, "game.admin.lobby.map.error");
 			}
 
 			matchCallback.ifSuccessful(matchResponse -> {
@@ -34,16 +34,16 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
 				updateService.update(matchResponse).callback(updateCallback -> {
 
 					if (!updateCallback.isSuccessful()) {
-						alertMessage(requester, AlertModes.ERROR, "game.admin.lobby.map.error");
+						alertMessage(requester, "", AlertModes.ERROR, "game.admin.lobby.map.error");
 					}
 
-					alertMessage(requester, AlertModes.INFO, "game.admin.lobby.map.success");
+					alertMessage(requester, map, AlertModes.INFO, "game.admin.lobby.map.success");
 				});
 			});
 		});
 	}
 
-	private void alertMessage(String id, String mode, String translation) {
+	private void alertMessage(String id, String map, String mode, String translation) {
 
 		Player player = Bukkit.getPlayerByIdentifier(id);
 
@@ -51,10 +51,9 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
 			Bukkit.getScheduler().runTask(
 				plugin,
 				() -> {
-					messageHandler.sendIn(player, mode, translation);
+					messageHandler.sendReplacingIn(player, mode, translation, "%map%", map);
 					player.closeInventory();
 				});
 		}
 	}
-
 }
