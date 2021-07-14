@@ -26,7 +26,10 @@ public class GameAgainListener implements Listener {
 
 		if (event.getAction().equalsIgnoreCase("gc_game_again") && (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)) {
 			System.out.println("Check Game Again");
-			actualMatchCache.get(player.getDatabaseIdentifier()).ifPresent(match -> matchmakingRequester.execute(player, match.getGameMode(), match.getSubMode()));
+			actualMatchCache.get(player.getDatabaseIdentifier()).ifPresent(match -> {
+				System.out.println("Execute requester in match" + match.getId());
+				matchmakingRequester.execute(player, match.getGameMode(), match.getSubMode())
+			});
 		}
 	}
 
