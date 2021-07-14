@@ -22,11 +22,13 @@ public class MatchmakingRequester {
 	private @Inject ServerTeleportRetry serverTeleportRetry;
 
 	public void execute(Player player, String mode, String subMode) {
+		System.out.println("Matchmaking requester");
 		findService.find(mode).callback(response -> {
 
 			response.ifSuccessful(gameMode -> {
 
 				if (subMode.isEmpty()) {
+					System.out.println("SubMode is empty");
 					serverTeleportRetry.attemptGroupTeleport(
 						player.getName(),
 						gameMode.getLobby(),
@@ -38,7 +40,7 @@ public class MatchmakingRequester {
 
 
 				if (gameMode.getSubTypes() != null) {
-
+					System.out.println("Subtypes is null");
 					Optional<SubGameMode> subGameMode = gameMode.getSubTypes()
 						.stream()
 						.filter(g -> g.getId().equalsIgnoreCase(subMode))
