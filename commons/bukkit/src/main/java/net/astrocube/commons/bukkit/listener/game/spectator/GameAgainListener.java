@@ -28,7 +28,7 @@ public class GameAgainListener implements Listener {
 			System.out.println("Check Game Again");
 			actualMatchCache.get(player.getDatabaseIdentifier()).ifPresent(match -> {
 				System.out.println("Execute requester in match" + match.getId());
-				matchmakingRequester.execute(player, match.getGameMode(), match.getSubMode())
+				matchmakingRequester.execute(player, match.getGameMode(), match.getSubMode());
 			});
 		}
 	}
