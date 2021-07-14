@@ -84,8 +84,10 @@ public class CoreActualMatchCache implements ActualMatchCache {
 			if (match == null
 				|| match.getStatus() == MatchDoc.Status.FINISHED
 				|| match.getStatus() == MatchDoc.Status.INVALIDATED) {
+				System.out.println("Match not found");
 				return Optional.empty();
 			} else {
+				System.out.println("Match found");
 				return Optional.of(match);
 			}
 		}
