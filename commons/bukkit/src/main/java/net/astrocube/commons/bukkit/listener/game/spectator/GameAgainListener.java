@@ -20,9 +20,12 @@ public class GameAgainListener implements Listener {
 	@EventHandler
 	public void onGameGadgetInteract(ActionableItemEvent event) throws Exception {
 
+		System.out.println("Game Again");
+
 		Player player = event.getPlayer();
 
-		if (event.getAction().equals("gc_game_again") && (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)) {
+		if (event.getAction().equalsIgnoreCase("gc_game_again") && (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)) {
+			System.out.println("Check Game Again");
 			actualMatchCache.get(player.getDatabaseIdentifier()).ifPresent(match -> matchmakingRequester.execute(player, match.getGameMode(), match.getSubMode()));
 		}
 	}
