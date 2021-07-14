@@ -40,7 +40,7 @@ public class MatchmakingRequester {
 
 
 				if (gameMode.getSubTypes() != null) {
-					System.out.println("Subtypes is null");
+					System.out.println("Subtypes no is null");
 					Optional<SubGameMode> subGameMode = gameMode.getSubTypes()
 						.stream()
 						.filter(g -> g.getId().equalsIgnoreCase(subMode))
