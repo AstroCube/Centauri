@@ -39,6 +39,7 @@ public class MatchmakingRequestListener implements Listener {
 			if (match.isPresent()) {
 				matchAssigner.assign(event.getMatchmakingRequest().getRequesters(), match.get());
 			} else {
+				System.out.println("NO MATCH PRESENT");
 				Bukkit.getScheduler().runTaskLater(plugin, () ->
 					Bukkit.getPluginManager().callEvent(
 						new MatchmakingTimeoutEvent(event.getMatchmakingRequest())), 20 * 30);
