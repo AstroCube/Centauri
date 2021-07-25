@@ -33,7 +33,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 
 	@Override
 	public void addPlayer(Player player) {
-		if (spectators.contains(player.getUniqueId())) {
+		if (!spectators.contains(player.getUniqueId())) {
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 			team.addPlayer(player);
 			spectators.add(player.getUniqueId());
