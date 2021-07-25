@@ -29,7 +29,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		scoreboardTeam
 			= new ScoreboardTeam(scoreboard, TEAM_NAME);
 
-		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
+		scoreboardTeam.setCanSeeFriendlyInvisibles(false);
 
 	}
 
