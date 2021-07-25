@@ -29,20 +29,21 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		}
 
 		team.setCanSeeFriendlyInvisibles(true);
+		System.out.println("Team " + team.getName() + "created");
 	}
 
 	@Override
 	public void addPlayer(Player player) {
 		if (!spectators.contains(player.getUniqueId())) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 			team.addPlayer(player);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 			spectators.add(player.getUniqueId());
 		}
 	}
 
 	@Override
 	public void removePlayer(Player player) {
-		if (!spectators.contains(player.getUniqueId())) {
+		if (spectators.contains(player.getUniqueId())) {
 			player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			team.removePlayer(player);
 			spectators.remove(player.getUniqueId());
