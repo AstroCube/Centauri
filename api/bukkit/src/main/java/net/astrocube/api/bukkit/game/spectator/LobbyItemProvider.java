@@ -26,4 +26,12 @@ public interface LobbyItemProvider {
 
 	void provideGameAgainButton(Player player, int slot);
 
+	/**
+	 * Provide the item for view players in the game
+	 * @param player where item will be palced
+	 * @param slot to be held
+	 */
+
+	void provideSpectatorTeleportButton(Player player, int slot);
+
 }
