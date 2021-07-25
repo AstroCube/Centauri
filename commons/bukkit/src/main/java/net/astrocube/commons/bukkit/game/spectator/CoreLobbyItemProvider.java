@@ -56,4 +56,9 @@ public class CoreLobbyItemProvider implements LobbyItemProvider {
 		player.getInventory().setItem(slot, stack);
 	}
 
+	@Override
+	public void provideSpectatorTeleportButton(Player player, int slot) {
+
+	}
+
 }
