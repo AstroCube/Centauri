@@ -2,59 +2,62 @@ package net.astrocube.commons.bukkit.game.spectator;
 
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
+import net.minecraft.server.v1_8_R3.Scoreboard;
+import net.minecraft.server.v1_8_R3.ScoreboardTeam;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
 @Singleton
 public class CoreGhostEffectControl implements GhostEffectControl {
 
-	private final static String TEAM_NAME = "GHOST";
+	private static final String TEAM_NAME = "GHOST";
 
-	private Team team;
-	private final Set<UUID> spectators = new HashSet<>();
+	private final Scoreboard scoreboard = new Scoreboard();
+	private ScoreboardTeam scoreboardTeam;
+
+	private final Set<String> players = new HashSet<>();
 
 	@Override
 	public void createTeam() {
-		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-		team = scoreboard.getTeam(TEAM_NAME);
 
-		if (team == null) {
-			team = scoreboard.registerNewTeam(TEAM_NAME);
-		}
+		scoreboardTeam
+			= new ScoreboardTeam(scoreboard, TEAM_NAME);
 
-		team.setCanSeeFriendlyInvisibles(true);
-		System.out.println("Team " + team.getName() + " created");
+		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
+
 	}
 
 	@Override
 	public void addPlayer(Player player) {
-		if (!spectators.contains(player.getUniqueId())) {
-			System.out.println("Add player");
-			team.addPlayer(player);
-
-			//player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-			spectators.add(player.getUniqueId());
+		System.out.println("InternalGhostEffectControl");
+		if (!players.contains(player.getName())) {
+			players.add(player.getName());
+			sendPacket(player, new PacketPlayOutScoreboardTeam(scoreboardTeam, players, 3));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 		}
 	}
 
 	@Override
 	public void removePlayer(Player player) {
-		if (spectators.contains(player.getUniqueId())) {
-			player.removePotionEffect(PotionEffectType.INVISIBILITY);
-			team.removePlayer(player);
-			spectators.remove(player.getUniqueId());
-		}
+
 	}
 
 	@Override
 	public boolean isGhost(Player player) {
-		return spectators.contains(player.getUniqueId());
+		return players.contains(player.getName());
+	}
+
+	private void sendPacket(Player player, Packet<?> packet) {
+		((CraftPlayer) player)
+			.getHandle()
+			.playerConnection
+			.sendPacket(packet);
 	}
 
 }
