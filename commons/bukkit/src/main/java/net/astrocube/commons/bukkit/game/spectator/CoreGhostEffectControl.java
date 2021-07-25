@@ -21,7 +21,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 
 	@Override
 	public void createTeam() {
-		Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		team = scoreboard.getTeam(TEAM_NAME);
 
 		if (team == null) {
@@ -35,8 +35,10 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 	@Override
 	public void addPlayer(Player player) {
 		if (!spectators.contains(player.getUniqueId())) {
+			System.out.println("Add player");
 			team.addPlayer(player);
-			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+
+			//player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 			spectators.add(player.getUniqueId());
 		}
 	}
