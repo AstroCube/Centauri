@@ -19,7 +19,8 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 	private Team team;
 	private final Set<UUID> spectators = new HashSet<>();
 
-	private void createTeam() {
+	@Override
+	public void createTeam() {
 		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		team = scoreboard.getTeam(TEAM_NAME);
 

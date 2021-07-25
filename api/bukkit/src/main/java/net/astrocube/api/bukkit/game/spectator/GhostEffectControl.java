@@ -6,6 +6,12 @@ import org.bukkit.entity.Player;
 public interface GhostEffectControl {
 
 	/**
+	 * Create the team
+	 */
+
+	void createTeam();
+
+	/**
 	 * Adds a player to a ghost {@link MatchDoc.Team}
 	 * @param player to be applied the effect
 	 */

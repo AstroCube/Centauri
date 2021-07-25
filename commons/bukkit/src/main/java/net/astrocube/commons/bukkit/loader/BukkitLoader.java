@@ -21,6 +21,8 @@ public class BukkitLoader implements Loader {
 	private @Inject
 	@Named("channels")
 	Loader channelLoader;
+	@Named("game-control")
+	Loader gameControlLoader;
 	private @Inject Plugin plugin;
 
 
@@ -30,6 +32,7 @@ public class BukkitLoader implements Loader {
 		this.eventLoader.load();
 		this.commandLoader.load();
 		this.channelLoader.load();
+		this.gameControlLoader.load();
 
 		if (plugin.getConfig().getBoolean("authentication.enabled")) {
 			AuthenticationUtils.createSpaceEffect();
