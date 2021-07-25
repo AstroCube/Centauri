@@ -21,7 +21,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 
 	@Override
 	public void createTeam() {
-		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+		Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
 		team = scoreboard.getTeam(TEAM_NAME);
 
 		if (team == null) {
@@ -29,7 +29,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		}
 
 		team.setCanSeeFriendlyInvisibles(true);
-		System.out.println("Team " + team.getName() + "created");
+		System.out.println("Team " + team.getName() + " created");
 	}
 
 	@Override
