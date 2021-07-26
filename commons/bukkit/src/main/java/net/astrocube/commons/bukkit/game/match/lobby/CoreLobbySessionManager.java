@@ -6,6 +6,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
+import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
 import net.astrocube.api.bukkit.game.spectator.LobbyItemProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
@@ -31,6 +32,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 	private @Inject LobbySessionModifier lobbySessionModifier;
 	private @Inject LobbyItemProvider lobbyItemProvider;
 	private @Inject MessageHandler messageHandler;
+	private @Inject GhostEffectControl ghostEffectControl;
 	private @Inject Plugin plugin;
 
 	@Override
@@ -59,6 +61,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 					countdownScheduler.scheduleMatchCountdown(match, subMode.get());
 				}
 
+				ghostEffectControl.removePlayer(player);
 				lobbyItemProvider.provideBackButton(player, 8);
 
 				if (player.hasPermission("commons.game.admin")) {

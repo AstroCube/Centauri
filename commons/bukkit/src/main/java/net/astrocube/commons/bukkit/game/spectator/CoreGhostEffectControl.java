@@ -29,7 +29,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		scoreboardTeam
 			= new ScoreboardTeam(scoreboard, TEAM_NAME);
 
-		scoreboardTeam.setCanSeeFriendlyInvisibles(false);
+		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
 
 	}
 
@@ -45,7 +45,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 
 	@Override
 	public void removePlayer(Player player) {
-
+		player.removePotionEffect(PotionEffectType.INVISIBILITY);
 	}
 
 	@Override
