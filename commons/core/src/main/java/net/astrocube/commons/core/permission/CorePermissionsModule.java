@@ -13,4 +13,5 @@ public class CorePermissionsModule extends ProtectedModule {
 		bind(PermissionBalancer.class).to(CorePermissionBalancer.class);
 		bind(PermissionEvaluator.class).to(CorePermissionEvaluator.class);
 	}
+
 }

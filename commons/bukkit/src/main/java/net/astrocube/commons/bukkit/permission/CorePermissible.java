@@ -2,12 +2,14 @@ package net.astrocube.commons.bukkit.permission;
 
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.api.core.virtual.group.Group;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
 
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -25,14 +27,16 @@ public class CorePermissible extends PermissibleBase {
 	}
 
 	@Override
-	public boolean hasPermission(String s) {
+	public boolean hasPermission(String permission) {
 		try {
 			User user = findService.findSync(player.getDatabaseIdentifier());
-			return balancer.evaluate(
+			return balancer.evaluateSorted(
 				user.getGroups().stream()
 					.map(UserDoc.UserGroup::getGroup)
 					.filter(g -> !g.getPermissions().isEmpty())
-					.collect(Collectors.toSet()), s
+					.sorted(Comparator.comparing(Group::getPriority))
+					.collect(Collectors.toList()),
+				permission
 			);
 		} catch (Exception exception) {
 			Bukkit.getLogger().log(Level.SEVERE, "An exception occurred while getting player " + player.getName() + " permissions", exception);
