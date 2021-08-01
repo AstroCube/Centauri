@@ -1,78 +1,63 @@
 package net.astrocube.commons.bukkit.game.spectator;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
-import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.api.core.service.delete.DeleteService;
-import org.apache.commons.lang.RandomStringUtils;
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
+import net.minecraft.server.v1_8_R3.Scoreboard;
+import net.minecraft.server.v1_8_R3.ScoreboardTeam;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Singleton
 public class CoreGhostEffectControl implements GhostEffectControl {
 
-	@Inject
-	private DeleteService<Match> deleteService;
+	private static final String TEAM_NAME = "GHOST";
 
-	private final Map<String, String> teamAssignation = new HashMap<>();
+	private final Scoreboard scoreboard = new Scoreboard();
+	private ScoreboardTeam scoreboardTeam;
 
-	@Override
-	public void addPlayer(String match, Player player) {
-
-		String assigned = teamAssignation.get(match);
-
-		Team team = assigned == null ? createTeam(match) :
-			Bukkit.getScoreboardManager().getMainScoreboard().getTeam(assigned);
-
-		team.addPlayer(player);
-	}
-
-	private Team createTeam(String match) {
-		String id = "s_" + RandomStringUtils.random(8);
-		Team team = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(id);
-		teamAssignation.put(match, id);
-		team.setCanSeeFriendlyInvisibles(true);
-		return team;
-	}
+	private final Set<String> players = new HashSet<>();
 
 	@Override
-	public void removePlayer(String match, Player player) {
+	public void createTeam() {
 
-		String assigned = teamAssignation.get(match);
+		scoreboardTeam
+			= new ScoreboardTeam(scoreboard, TEAM_NAME);
 
-		if (assigned == null) {
-			return;
-		}
-
-		Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(assigned);
-
-		if (team == null) {
-			return;
-		}
-
-		team.getPlayers().remove(player);
+		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
 
 	}
 
 	@Override
-	public void clearMatch(String match) {
-
-		String assigned = teamAssignation.get(match);
-
-		if (assigned == null) {
-			return;
+	public void addPlayer(Player player) {
+		System.out.println("InternalGhostEffectControl");
+		if (!players.contains(player.getName())) {
+			players.add(player.getName());
+			sendPacket(player, new PacketPlayOutScoreboardTeam(scoreboardTeam, players, 3));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 		}
+	}
 
-		Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(assigned);
-		team.unregister();
-		teamAssignation.remove(match);
-		deleteService.delete(match);
+	@Override
+	public void removePlayer(Player player) {
+		player.removePotionEffect(PotionEffectType.INVISIBILITY);
+	}
 
+	@Override
+	public boolean isGhost(Player player) {
+		return players.contains(player.getName());
+	}
+
+	private void sendPacket(Player player, Packet<?> packet) {
+		((CraftPlayer) player)
+			.getHandle()
+			.playerConnection
+			.sendPacket(packet);
 	}
 
 }

@@ -45,7 +45,7 @@ public class CoreSpectatorSessionManager implements SpectatorSessionManager {
 
 		lobbyItemProvider.provideBackButton(player, 8);
 		lobbyItemProvider.provideGameAgainButton(player, 3);
-		ghostEffectControl.addPlayer(match.getId(), player);
+		ghostEffectControl.addPlayer(player);
 
 		Set<Player> spectatingPlayers =
 			MatchParticipantsProvider.getSpectatingPlayers(match);

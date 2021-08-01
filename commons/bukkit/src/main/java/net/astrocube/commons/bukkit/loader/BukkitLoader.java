@@ -23,7 +23,6 @@ public class BukkitLoader implements Loader {
 	Loader channelLoader;
 	private @Inject Plugin plugin;
 
-
 	@Override
 	public void load() {
 		this.serverLoader.load();
