@@ -40,10 +40,12 @@ public class CoreWhisperManager implements WhisperManager {
 		UserDoc.Session session = target.getSession();
 
 		if (!session.isOnline()) {
-			return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
+			return CompletableFuture.completedFuture(new WhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
 		}
 
 		Player targetPlayer = Bukkit.getPlayerByIdentifier(target.getId());
+
+		WhisperMessage whisperMessage = new WhisperMessage(senderUser, target, message);
 
 		// is online on other server
 		if (targetPlayer == null) {
@@ -57,14 +59,12 @@ public class CoreWhisperManager implements WhisperManager {
 					"%target%", target.getDisplay(),
 					"%message%", message);
 
-			WhisperMessage whisperMessage = new CoreWhisperMessage(senderUser, target, message);
-
 			return CompletableFuture.supplyAsync(() -> {
 				try {
 					whisperMessageChannel.sendMessage(whisperMessage, new HashMap<>());
-					return new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage);
+					return new WhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage);
 				} catch (JsonProcessingException e) {
-					return new CoreWhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
+					return new WhisperResponse(WhisperResponse.Result.FAILED_ERROR, Collections.singletonList(e));
 				}
 			}, executorServiceProvider.getRegisteredService());
 		}
@@ -82,7 +82,7 @@ public class CoreWhisperManager implements WhisperManager {
 				"%message%", message);
 
 
-		return CompletableFuture.completedFuture(new CoreWhisperResponse(WhisperResponse.Result.SUCCESS, new CoreWhisperMessage(senderUser, target, message)));
+		return CompletableFuture.completedFuture(new WhisperResponse(WhisperResponse.Result.SUCCESS, whisperMessage));
 	}
 
 }

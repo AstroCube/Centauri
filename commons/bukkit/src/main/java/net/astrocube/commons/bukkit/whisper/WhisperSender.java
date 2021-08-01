@@ -18,10 +18,10 @@ public class WhisperSender {
 		whisperManager.sendWhisper(sender, targetUser, user, message)
 			.whenComplete((whisperResponse, error) -> {
 				try {
-					if (whisperResponse.result() == WhisperResponse.Result.FAILED_OFFLINE) {
+					if (whisperResponse.getResult() == WhisperResponse.Result.FAILED_OFFLINE) {
 						messageHandler.sendIn(sender, AlertModes.ERROR, "commands.player.offline");
-					} else if (whisperResponse.result() == WhisperResponse.Result.FAILED_ERROR) {
-						whisperResponse.errors().forEach(e ->
+					} else if (whisperResponse.getResult() == WhisperResponse.Result.FAILED_ERROR) {
+						whisperResponse.getErrors().forEach(e ->
 							Bukkit.getLogger().log(Level.WARNING, "Failed to send message", e));
 					}
 					// handle more errors!
