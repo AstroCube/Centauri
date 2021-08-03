@@ -11,6 +11,7 @@ import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.party.PartyDoc;
 import net.astrocube.commons.bukkit.utils.UserUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
@@ -20,7 +21,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** Common default implementation of {@link PartyService} */
+/**
+ * Common default implementation of {@link PartyService}
+ */
 public class CorePartyService implements PartyService {
 
 	private static final int INVITATION_EXPIRY = 60 * 2;
@@ -47,12 +50,20 @@ public class CorePartyService implements PartyService {
 	}
 
 	@Override
-	public void handleInvitation(Player inviter, Party party, Player invited) {
-		if (UserUtils.checkSamePlayer(inviter, invited, messageHandler)) {
-			return;
-		} else if (!inviter.getDatabaseIdentifier().equals(party.getLeader())) {
+	public void handleInvitation(Player inviter, Party party, String target) {
+
+		Player playerTarget = Bukkit.getPlayer(target);
+
+		if (playerTarget != null) {
+			if (UserUtils.checkSamePlayer(inviter, playerTarget, messageHandler)) {
+				return;
+		}
+
+		if(!inviter.getDatabaseIdentifier().equals(party.getLeader())){
 			messageHandler.send(inviter, "cannot-invite.not-leader");
 			return;
+		}
+
 		} else if (
 			getPartyOf(invited.getDatabaseIdentifier()).isPresent()
 				|| getPartyInviter(invited.getDatabaseIdentifier())

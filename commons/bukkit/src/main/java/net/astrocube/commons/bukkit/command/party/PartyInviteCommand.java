@@ -8,6 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.commons.bukkit.utils.UserUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @Command(names = {"invite", "add"})
@@ -19,10 +20,15 @@ public class PartyInviteCommand implements CommandClass {
 	@Command(names = "")
 	public void invite(
 		@Sender Player player,
-		Player target
+		String target
 	) {
-		if (UserUtils.checkSamePlayer(player, target, messageHandler)) {
-			return;
+
+		Player playerTarget = Bukkit.getPlayer(target);
+
+		if (playerTarget != null) {
+			if (UserUtils.checkSamePlayer(player, playerTarget, messageHandler)) {
+				return;
+			}
 		}
 
 		String id = player.getDatabaseIdentifier();

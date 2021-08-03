@@ -33,9 +33,9 @@ public interface PartyService {
 	 * @param inviter The inviter player, must be the leader of the
 	 *                specified {@code party}
 	 * @param party   The party
-	 * @param invited The invited player
+	 * @param target The invited player in name
 	 */
-	void handleInvitation(Player inviter, Party party, Player invited);
+	void handleInvitation(Player inviter, Party party, String target);
 
 	/**
 	 * Fetches the party of the given {@code userId}
