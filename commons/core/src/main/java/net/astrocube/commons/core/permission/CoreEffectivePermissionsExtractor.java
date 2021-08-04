@@ -15,17 +15,16 @@ public class CoreEffectivePermissionsExtractor implements EffectivePermissionsEx
 
 		Map<String, Boolean> effectivePermissions = new HashMap<>();
 
-		for (String permissions : group.getPermissions()) {
+		for (String permission : group.getPermissions()) {
 
-			if (permissions.isEmpty()) {
+			if (permission.isEmpty()) {
 				continue;
 			}
 
+			boolean negated = permission.charAt(0) == '-';
 			effectivePermissions.put(
-				permissions.charAt(0) == '-' ?
-					permissions.replaceFirst("-", "") :
-					permissions,
-				permissions.charAt(0) != '-'
+				negated ? permission.substring(1) : permission,
+				negated
 			);
 		}
 

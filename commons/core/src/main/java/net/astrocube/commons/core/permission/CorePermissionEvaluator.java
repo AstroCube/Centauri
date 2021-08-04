@@ -23,23 +23,29 @@ public class CorePermissionEvaluator implements PermissionEvaluator {
 			this.effectivePermissionsExtractor.extractFromGroup(group).entrySet()
 		) {
 
-			if (entry.getKey().equalsIgnoreCase(permission))
-				return new boolean[]{entry.getValue(), entry.getValue()};
+			if (entry.getKey().equalsIgnoreCase(permission)) {
+				boolean value = entry.getValue();
+				return new boolean[]{ value, value};
+			}
 
 			int scanningLength = requestedPermissionTree.length;
 			String[] permissionTree = entry.getKey().split("\\.");
 
-			if (permissionTree.length < scanningLength) scanningLength = permissionTree.length;
+			if (permissionTree.length < scanningLength) {
+				scanningLength = permissionTree.length;
+			}
 
 			for (int i = 0; i < scanningLength; i++) {
-				if (permissionTree[i].equalsIgnoreCase("*"))
-					return new boolean[]{entry.getValue(), entry.getValue()};
-				if (!requestedPermissionTree[i].equalsIgnoreCase(permissionTree[i])) break;
+				if (permissionTree[i].equals("*")) {
+					boolean value = entry.getValue();
+					return new boolean[]{ value, value };
+				} else if (!requestedPermissionTree[i].equalsIgnoreCase(permissionTree[i])) {
+					break;
+				}
 			}
 		}
 
-		return new boolean[]{false, false};
-
+		return new boolean[]{ false, false };
 	}
 
 }
