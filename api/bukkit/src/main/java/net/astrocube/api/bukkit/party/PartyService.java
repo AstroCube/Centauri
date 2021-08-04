@@ -4,6 +4,7 @@ import net.astrocube.api.core.virtual.party.Party;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service of {@link Party} handle
@@ -17,13 +18,15 @@ public interface PartyService {
 	 */
 	void removeInvite(String playerName);
 
+	void cleanupInvitations(Player player);
+
 	/**
 	 * Fetches the current invite for the specified {@code playerName}
 	 *
 	 * @param playerName The player that you're checking for
 	 * @return The current inviter id of the user
 	 */
-	Optional<String> getPartyInviter(String playerName);
+	Set<String> getInvitations(String playerName);
 
 	/**
 	 * Handles the invitation made by {@code inviter}
@@ -49,6 +52,13 @@ public interface PartyService {
 	 */
 
 	void handleRequestInvitation(String inviter, Player invited);
+
+	/**
+	 * Handle the accept invitation
+	 * @param invited the player invited
+	 */
+
+	void handleAcceptInvitation(Player invited, String inviter);
 
 	/**
 	 * Send all players the party to server is the leader party

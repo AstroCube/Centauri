@@ -12,6 +12,7 @@ import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
+import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.party.PartyDoc;
 import net.astrocube.api.core.virtual.server.ServerDoc;
@@ -49,6 +50,8 @@ public class CorePartyService implements PartyService {
 	private @Inject Redis redis;
 	private @Inject UserProvideHelper userProvideHelper;
 
+	private @Inject UpdateService<Party, PartyDoc.Partial> updateService;
+
 	private @Inject MessageHandler messageHandler;
 	private @Inject PartyMessenger partyMessenger;
 
@@ -63,11 +66,35 @@ public class CorePartyService implements PartyService {
 	}
 
 	@Override
+	public void cleanupInvitations(Player player) {
+		try (Jedis jedis = redis.getRawConnection().getResource()) {
+			jedis.keys("party-invitations: " + player.getDatabaseIdentifier() + ":*").forEach(jedis::del);
+		}
+	}
+
+	@Override
+	public Set<String> getInvitations(String playerName) {
+
+		Set<String> invitations = new HashSet<>();
+		Optional<User> optional = userProvideHelper.getUserByName(playerName);
+
+		if (optional.isPresent()) {
+			User user = optional.get();
+
+			try (Jedis jedis = redis.getRawConnection().getResource()) {
+				invitations.addAll(jedis.keys("party-invitations:" + user.getId() + "*"));
+			}
+		}
+
+		return invitations;
+	}
+
+	/*@Override
 	public Optional<String> getPartyInviter(String playerName) {
 		try (Jedis client = redis.getRawConnection().getResource()) {
 			return Optional.ofNullable(client.get("party-invites:" + playerName));
 		}
-	}
+	}*/
 
 	@Override
 	public void handleInvitation(Player inviter, Party party, String target) {
@@ -93,7 +120,7 @@ public class CorePartyService implements PartyService {
 		}
 		User userInvited = userOptionalTarget.get();
 
-		if (getPartyOf(userInvited.getId()).isPresent() || getPartyInviter(userInvited.getId()).isPresent()) {
+		if (getPartyOf(userInvited.getId()).isPresent()) {
 			messageHandler.sendReplacing(
 				inviter, "cannot-invite.already-invited",
 				"%target%", userInvited.getUsername()
@@ -101,8 +128,8 @@ public class CorePartyService implements PartyService {
 		}
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
-			String key = "party-invites:" + userInvited.getUsername();
-			client.set(key, inviter.getDatabaseIdentifier());
+			String key = "party-invitations:" + userInvited.getId() + ":" + inviter.getDatabaseIdentifier();
+			client.set(key, inviter.getName().toLowerCase());
 			client.expire(key, INVITATION_EXPIRY);
 		}
 
@@ -138,6 +165,30 @@ public class CorePartyService implements PartyService {
 				).create());
 	}
 
+	@Override
+	public void handleAcceptInvitation(Player invited, String inviter) {
+		if (!getPartyOf(invited.getDatabaseIdentifier()).isPresent()) {
+			messageHandler.send(invited, "");
+			return;
+		}
+
+		Set<String> invitations = getInvitations(invited.getName());
+
+		if (invitations.isEmpty() || invitations.contains(inviter)) {
+			messageHandler.send(invited, "no-party-invitation");
+			return;
+		}
+
+		userProvideHelper.getUserByName(inviter).flatMap(userInvited -> getPartyOf(userInvited.getId())).ifPresent(party -> {
+			party.getMembers().add(invited.getDatabaseIdentifier());
+			messageHandler.send(invited, "joined-party");
+			updateService.update(party);
+
+			partyMessenger.sendMessage(party, "join-party", "%player%", invited.getName());
+		});
+
+		cleanupInvitations(invited);
+	}
 
 	@Override
 	public void warp(Player player, Party party) {

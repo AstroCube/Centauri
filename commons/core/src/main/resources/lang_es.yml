@@ -52,6 +52,7 @@ already-in-party:
 no-party-invitation: "%red%No tienes invitaciones a grupos pendientes."
 no-party-now: "%red%El jugador ya no tiene un grupo."
 joined-party: "%yellow%Te has unido a un grupo"
+join-party: "&bFiesta %white%> %player% se ha unido a la fiesta"
 other-joined-party: "%gold%%player%%yellow% se ha unido a tu grupo"
 party-invited:
   - "%gold%============================"
