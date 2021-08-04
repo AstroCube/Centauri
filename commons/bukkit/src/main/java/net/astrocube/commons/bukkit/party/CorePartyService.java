@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.redis.Redis;
@@ -43,6 +44,7 @@ public class CorePartyService implements PartyService {
 	private @Inject UserProvideHelper userProvideHelper;
 
 	private @Inject MessageHandler messageHandler;
+	private @Inject PartyMessenger partyMessenger;
 	private @Inject Channel<PartyInvitationMessage> partyInvitationMessageChannel;
 
 	@Override
@@ -106,6 +108,11 @@ public class CorePartyService implements PartyService {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+
+		if (!party.getMembers().isEmpty()) {
+			partyMessenger.sendMessage(party, "party.player-invited-notification", "%invited%", userInvited.getUsername());
+		}
+
 	}
 
 	@Override

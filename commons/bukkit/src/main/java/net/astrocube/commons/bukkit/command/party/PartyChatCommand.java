@@ -5,7 +5,7 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.Text;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import net.astrocube.api.bukkit.party.PartyChatHandler;
+import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.virtual.party.Party;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public class PartyChatCommand implements CommandClass {
 	private PartyService partyService;
 
 	@Inject
-	private PartyChatHandler partyChatHandler;
+	private PartyMessenger partyChatHandler;
 
 	@Command(names = "")
 	public void main(@Sender Player player, @Text String message) {

@@ -6,31 +6,33 @@ import java.beans.ConstructorProperties;
 
 public class PartyMessage implements Message {
 
-	private final String senderMessage;
-	private final String message;
+	private final String path;
 	private final String partyId;
+	private final String[] replacements;
 
-	@ConstructorProperties({
-		"senderMessage",
-		"message",
-		"partyId"
-	})
-	public PartyMessage(String senderMessage, String message, String partyId) {
-		this.senderMessage = senderMessage;
-		this.message = message;
+	@ConstructorProperties(
+		{
+			"path",
+			"partyId",
+			"replacements"
+		}
+	)
+	public PartyMessage(String path, String partyId, String[] replacements) {
+		this.path = path;
 		this.partyId = partyId;
+		this.replacements = replacements;
 	}
 
-	public String getSenderMessage() {
-		return senderMessage;
-	}
-
-	public String getMessage() {
-		return message;
+	public String getPath() {
+		return path;
 	}
 
 	public String getPartyId() {
 		return partyId;
+	}
+
+	public String[] getReplacements() {
+		return replacements;
 	}
 
 }
