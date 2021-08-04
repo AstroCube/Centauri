@@ -1,5 +1,7 @@
 package net.astrocube.commons.bukkit.listener.game.management;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.game.event.match.MatchControlSanitizeEvent;
@@ -15,9 +17,12 @@ import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.util.CountdownTimer;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
+import net.astrocube.api.core.http.HttpClient;
+import net.astrocube.api.core.http.RequestOptions;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.commons.bukkit.game.GameControlHelper;
 import net.astrocube.commons.bukkit.utils.MessageUtils;
+import net.astrocube.commons.core.http.CoreRequestCallable;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -41,6 +46,8 @@ public class MatchFinishListener implements Listener {
 	private @Inject ServerTeleportRetry serverTeleportRetry;
 	private @Inject MessageHandler messageHandler;
 	private @Inject Plugin plugin;
+	private @Inject HttpClient httpClient;
+	private @Inject ObjectMapper mapper;
 
 	@EventHandler
 	public void onMatchFinish(MatchFinishEvent event) {
@@ -91,6 +98,13 @@ public class MatchFinishListener implements Listener {
 				if (runningMatchBalancer.getTotalMatches() == 1 && runningMatchBalancer.isNeedingRestart()) {
 					Bukkit.shutdown();
 				}
+
+				httpClient.executeRequestSync("/match/",
+					new CoreRequestCallable<>(TypeToken.of(Match.class), mapper),
+					new RequestOptions(
+						RequestOptions.Type.POST,
+						mapper.writeValueAsString(match)
+					));
 
 			} catch (Exception e) {
 				plugin.getLogger().log(Level.SEVERE, "Error while adjudicating match victory", e);
