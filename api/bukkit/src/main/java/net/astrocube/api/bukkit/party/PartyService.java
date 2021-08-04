@@ -51,6 +51,14 @@ public interface PartyService {
 	void handleRequestInvitation(String inviter, Player invited);
 
 	/**
+	 * Send all players the party to server is the leader party
+	 * @param player
+	 * @param party
+	 */
+
+	void warp(Player player, Party party);
+
+	/**
 	 * Fetches the party by party id
 	 * @param partyId The identifier party
 	 * @return The found party, empty if the party no exists

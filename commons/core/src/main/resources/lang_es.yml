@@ -43,7 +43,12 @@ party-offline-inviter: "%red%No puedes unirte a este grupo porque el lider no es
 party-invited-hover: "%blue%Clic para aceptar"
 party-chat: "%player%%blue%: %white%%message%"
 created-party: "Has creado un nuevo grupo"
-already-in-party: "%red%Ya estás en un grupo."
+already-in-party:
+    - "%gold%============================"
+    - ""
+    - "%red%Ya estas en una fiesta"
+    - ""
+    - "%gold%============================"
 no-party-invitation: "%red%No tienes invitaciones a grupos pendientes."
 no-party-now: "%red%El jugador ya no tiene un grupo."
 joined-party: "%yellow%Te has unido a un grupo"

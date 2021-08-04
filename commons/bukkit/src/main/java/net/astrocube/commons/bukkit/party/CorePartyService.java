@@ -14,8 +14,10 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.party.PartyDoc;
+import net.astrocube.api.core.virtual.server.ServerDoc;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.commons.bukkit.party.channel.message.PartyInvitationMessage;
+import net.astrocube.commons.bukkit.party.channel.message.PartyWarpMessage;
 import net.astrocube.commons.bukkit.utils.UserProvideHelper;
 import net.astrocube.commons.bukkit.utils.UserUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -23,6 +25,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashSet;
@@ -36,6 +39,8 @@ public class CorePartyService implements PartyService {
 
 	private static final int INVITATION_EXPIRY = 60 * 2;
 
+	private @Inject Plugin plugin;
+
 	private @Inject QueryService<Party> partyQueryService;
 	private @Inject FindService<Party> findService;
 	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
@@ -45,7 +50,9 @@ public class CorePartyService implements PartyService {
 
 	private @Inject MessageHandler messageHandler;
 	private @Inject PartyMessenger partyMessenger;
+
 	private @Inject Channel<PartyInvitationMessage> partyInvitationMessageChannel;
+	private @Inject Channel<PartyWarpMessage> partyWarpMessageChannel;
 
 	@Override
 	public void removeInvite(String playerName) {
@@ -128,6 +135,32 @@ public class CorePartyService implements PartyService {
 							).create()
 					)
 				).create());
+	}
+
+
+	@Override
+	public void warp(Player player, Party party) {
+		if (!party.getLeader().equals(player.getDatabaseIdentifier())) {
+			messageHandler.send(player, "");
+			return;
+		}
+		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
+
+		if (type != ServerDoc.Type.LOBBY) {
+			messageHandler.send(player, "");
+			return;
+		}
+
+		if (party.getMembers().isEmpty()) {
+			messageHandler.send(player, "");
+			return;
+		}
+
+		try {
+			partyWarpMessageChannel.sendMessage(new PartyWarpMessage(party.getId(), party.getMembers()), null);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
