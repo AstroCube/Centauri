@@ -12,11 +12,14 @@ import java.util.Optional;
  */
 public interface PartyService {
 
-	/** Removes the invite of the specified {@code playerName} */
+	/**
+	 * Removes the invite of the specified {@code playerName}
+	 */
 	void removeInvite(String playerName);
 
 	/**
 	 * Fetches the current invite for the specified {@code playerName}
+	 *
 	 * @param playerName The player that you're checking for
 	 * @return The current inviter id of the user
 	 */
@@ -30,15 +33,26 @@ public interface PartyService {
 	 * player. Checks that the invited player is available
 	 * (isn't in a party and it's not invited to another party).
 	 * Checks party max member count.
+	 *
 	 * @param inviter The inviter player, must be the leader of the
 	 *                specified {@code party}
 	 * @param party   The party
-	 * @param target The invited player in name
+	 * @param target  The invited player in name
 	 */
 	void handleInvitation(Player inviter, Party party, String target);
 
 	/**
+	 * Handle the request invitation when is send to player
+	 *
+	 * @param inviter the inviter player at String
+	 * @param invited the invited player at String
+	 */
+
+	void handleRequestInvitation(String inviter, Player invited);
+
+	/**
 	 * Fetches the party of the given {@code userId}
+	 *
 	 * @param userId The member or leader of the
 	 *               searched party
 	 * @return The found party, empty if user isn't member
@@ -50,6 +64,7 @@ public interface PartyService {
 	 * Creates a new party using the given {@code leaderId}
 	 * the method doesn't check if the player is already in a
 	 * party so, it must be made by the invoker
+	 *
 	 * @param leaderId The party leader
 	 * @return The created party
 	 */

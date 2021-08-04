@@ -1,16 +1,24 @@
 package net.astrocube.commons.bukkit.party;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
+import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.party.PartyDoc;
+import net.astrocube.api.core.virtual.user.User;
+import net.astrocube.commons.bukkit.party.channel.message.PartyInvitationMessage;
+import net.astrocube.commons.bukkit.utils.UserProvideHelper;
 import net.astrocube.commons.bukkit.utils.UserUtils;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
@@ -21,9 +29,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Common default implementation of {@link PartyService}
- */
 public class CorePartyService implements PartyService {
 
 	private static final int INVITATION_EXPIRY = 60 * 2;
@@ -32,8 +37,10 @@ public class CorePartyService implements PartyService {
 	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
 	private @Inject ObjectMapper objectMapper;
 	private @Inject Redis redis;
+	private @Inject UserProvideHelper userProvideHelper;
 
 	private @Inject MessageHandler messageHandler;
+	private @Inject Channel<PartyInvitationMessage> partyInvitationMessageChannel;
 
 	@Override
 	public void removeInvite(String playerName) {
@@ -57,35 +64,60 @@ public class CorePartyService implements PartyService {
 		if (playerTarget != null) {
 			if (UserUtils.checkSamePlayer(inviter, playerTarget, messageHandler)) {
 				return;
+			}
 		}
 
-		if(!inviter.getDatabaseIdentifier().equals(party.getLeader())){
+		if (!inviter.getDatabaseIdentifier().equals(party.getLeader())) {
 			messageHandler.send(inviter, "cannot-invite.not-leader");
 			return;
 		}
 
-		} else if (
-			getPartyOf(invited.getDatabaseIdentifier()).isPresent()
-				|| getPartyInviter(invited.getDatabaseIdentifier())
-				.isPresent()
-		) {
-			messageHandler.sendReplacing(
-				inviter, "cannot-invite.already-invited",
-				"%target%", invited.getName()
-			);
+		Optional<User> userOptionalTarget = userProvideHelper.getUserByName(target);
+
+		if (!userOptionalTarget.isPresent()) {
+			messageHandler.send(inviter, "");
 			return;
 		}
+		User userInvited = userOptionalTarget.get();
 
-		messageHandler.sendReplacing(
-			invited, "party-invited",
-			"%inviter%", inviter.getName()
-		);
+		if (getPartyOf(userInvited.getId()).isPresent() || getPartyInviter(userInvited.getId()).isPresent()) {
+			messageHandler.sendReplacing(
+				inviter, "cannot-invite.already-invited",
+				"%target%", userInvited.getUsername()
+			);
+		}
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
-			String key = "party-invites:" + invited.getName();
+			String key = "party-invites:" + userInvited.getUsername();
 			client.set(key, inviter.getDatabaseIdentifier());
 			client.expire(key, INVITATION_EXPIRY);
 		}
+
+		if (playerTarget != null) {
+			handleRequestInvitation(inviter.getName(), playerTarget);
+			return;
+		}
+
+		try {
+			partyInvitationMessageChannel.sendMessage(new PartyInvitationMessage(inviter.getName(), userInvited.getUsername()), null);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleRequestInvitation(String inviter, Player invited) {
+		invited.sendMessage(
+			new ComponentBuilder(messageHandler.replacing("party-invited", "%inviter%", inviter))
+				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/"))
+				.event(new HoverEvent(
+						HoverEvent.Action.SHOW_TEXT,
+						new ComponentBuilder
+							(
+								messageHandler.get(invited, "party-invited-hover")
+							).create()
+					)
+				).create());
 	}
 
 	@Override
