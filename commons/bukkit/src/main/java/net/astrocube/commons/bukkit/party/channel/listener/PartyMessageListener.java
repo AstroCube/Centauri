@@ -13,7 +13,7 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 
 	@Override
 	public void handleDelivery(PartyMessage message, MessageMetadata properties) {
-		partyChatHandler.chatServer(message.getSenderMessage(), message.getMessage());
+		partyChatHandler.chatServer(message.getPartyId(), message.getSenderMessage(), message.getMessage());
 	}
 
 }

@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;
+import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.party.PartyDoc;
@@ -26,6 +27,7 @@ import redis.clients.jedis.Jedis;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,7 @@ public class CorePartyService implements PartyService {
 	private static final int INVITATION_EXPIRY = 60 * 2;
 
 	private @Inject QueryService<Party> partyQueryService;
+	private @Inject FindService<Party> findService;
 	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
 	private @Inject ObjectMapper objectMapper;
 	private @Inject Redis redis;
@@ -118,6 +121,19 @@ public class CorePartyService implements PartyService {
 							).create()
 					)
 				).create());
+	}
+
+	@Override
+	public Optional<Party> getParty(String partyId) {
+
+		AtomicReference<Optional<Party>> optional = new AtomicReference<>();
+		findService.find(partyId).callback(response -> {
+			if (response != null && response.getResponse().isPresent()) {
+				optional.set(response.getResponse());
+			}
+		});
+
+		return optional.get();
 	}
 
 	@Override

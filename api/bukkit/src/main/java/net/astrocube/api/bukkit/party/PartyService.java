@@ -51,6 +51,14 @@ public interface PartyService {
 	void handleRequestInvitation(String inviter, Player invited);
 
 	/**
+	 * Fetches the party by party id
+	 * @param partyId The identifier party
+	 * @return The found party, empty if the party no exists
+	 */
+
+	Optional<Party> getParty(String partyId);
+
+	/**
 	 * Fetches the party of the given {@code userId}
 	 *
 	 * @param userId The member or leader of the

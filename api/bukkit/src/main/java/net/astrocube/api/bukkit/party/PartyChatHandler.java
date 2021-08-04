@@ -1,5 +1,6 @@
 package net.astrocube.api.bukkit.party;
 
+import net.astrocube.api.core.virtual.party.Party;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,14 +15,15 @@ public interface PartyChatHandler {
 	 * @param message the message
 	 */
 
-	void chatGlobal(Player player, String message);
+	void chatParty(Party party, Player player, String message);
 
 	/**
-	 * Send the message to server
+	 *
+	 * @param partyId the party id
 	 * @params sender the player that sent message
 	 * @param message the message
 	 */
 
-	void chatServer(String sender, String message);
+	void chatServer(String partyId, String sender, String message);
 
 }
