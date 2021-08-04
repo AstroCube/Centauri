@@ -43,6 +43,7 @@ public class CorePartyService implements PartyService {
 
 	private @Inject QueryService<Party> partyQueryService;
 	private @Inject FindService<Party> findService;
+	private @Inject FindService<User> userFindService;
 	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
 	private @Inject ObjectMapper objectMapper;
 	private @Inject Redis redis;
@@ -126,7 +127,7 @@ public class CorePartyService implements PartyService {
 	public void handleRequestInvitation(String inviter, Player invited) {
 		invited.sendMessage(
 			new ComponentBuilder(messageHandler.replacing("party-invited", "%inviter%", inviter))
-				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/"))
+				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept "))
 				.event(new HoverEvent(
 						HoverEvent.Action.SHOW_TEXT,
 						new ComponentBuilder
@@ -156,11 +157,18 @@ public class CorePartyService implements PartyService {
 			return;
 		}
 
-		try {
-			partyWarpMessageChannel.sendMessage(new PartyWarpMessage(party.getId(), party.getMembers()), null);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+		userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
+			if (response != null && response.getResponse().isPresent()) {
+				String serverName = response.getResponse().get().getSession().getLastLobby();
+
+				try {
+					partyWarpMessageChannel.sendMessage(new PartyWarpMessage(party.getId(), party.getMembers(), serverName), null);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 	}
 
 	@Override
