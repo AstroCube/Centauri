@@ -153,7 +153,7 @@ public class CorePartyService implements PartyService {
 	@Override
 	public void handleRequestInvitation(String inviter, Player invited) {
 		invited.sendMessage(
-			new ComponentBuilder(messageHandler.replacing("party-invited", "%inviter%", inviter))
+			new ComponentBuilder(messageHandler.replacing(invited, "party-invited", "%inviter%", inviter))
 				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + inviter))
 				.event(new HoverEvent(
 						HoverEvent.Action.SHOW_TEXT,
