@@ -68,7 +68,7 @@ public class CorePartyService implements PartyService {
 							ObjectMapper objectMapper,
 							Redis redis,
 							UserProvideHelper userProvideHelper,
-							Messenger messenger,
+							//Messenger messenger,
 							PartyMessenger partyMessenger,
 							UpdateService<Party, PartyDoc.Partial> updateService,
 							MessageHandler messageHandler) {
@@ -85,8 +85,8 @@ public class CorePartyService implements PartyService {
 		this.updateService = updateService;
 		this.messageHandler = messageHandler;
 
-		partyInvitationMessageChannel = messenger.getChannel(PartyInvitationMessage.class);
-		partyWarpMessageChannel = messenger.getChannel(PartyWarpMessage.class);
+		//partyInvitationMessageChannel = messenger.getChannel(PartyInvitationMessage.class);
+		//partyWarpMessageChannel = messenger.getChannel(PartyWarpMessage.class);
 
 	}
 

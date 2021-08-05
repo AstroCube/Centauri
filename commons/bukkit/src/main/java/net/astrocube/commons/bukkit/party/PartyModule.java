@@ -13,6 +13,7 @@ public class PartyModule extends ProtectedModule {
 		install(new PartyChannelModule());
 		bind(PartyMessenger.class).to(CorePartyMessenger.class);
 		bind(PartyService.class).to(CorePartyService.class);
-		//expose(PartyService.class);
+		expose(PartyService.class);
+
 	}
 }
