@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.Optional;
+import java.util.Set;
 
 @Command(names = "reject")
 public class PartyRejectCommand implements CommandClass {
@@ -21,7 +22,8 @@ public class PartyRejectCommand implements CommandClass {
 	public void reject(
 		@Sender Player player
 	) {
-		Optional<String> optInviter = partyService.getPartyInviter(player.getName());
+		Set<String> invitations = partyService.getInvitations(player.getName());
+		/*
 		if (!optInviter.isPresent()) {
 			messageHandler.send(player, "no-party-invitation");
 			return;
@@ -37,6 +39,7 @@ public class PartyRejectCommand implements CommandClass {
 
 		messageHandler.send(player, "rejected-invitation");
 		partyService.removeInvite(player.getName());
+		 */
 	}
 
 }
