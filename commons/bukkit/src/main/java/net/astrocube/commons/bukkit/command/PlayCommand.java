@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.MatchAssigner;
 import net.astrocube.api.bukkit.game.match.MatchAvailabilityChecker;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingGenerator;
+import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
@@ -16,11 +17,14 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.service.query.QueryService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.api.core.virtual.server.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class PlayCommand implements CommandClass {
@@ -33,6 +37,7 @@ public class PlayCommand implements CommandClass {
 	private @Inject CloudStatusProvider cloudStatusProvider;
 	private @Inject MatchAvailabilityChecker matchAvailabilityChecker;
 	private @Inject MatchAssigner matchAssigner;
+	private @Inject PartyService partyService;
 	private @Inject Plugin plugin;
 
 	@Command(names = {"play"})
@@ -73,6 +78,14 @@ public class PlayCommand implements CommandClass {
 
 				Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 
+				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+				Set<String> involved = new HashSet<>();
+
+				if (optional.isPresent()) {
+					involved = optional.get().getMembers();
+				}
+
+				Set<String> finalInvolved = involved;
 				match.ifPresent(value -> findService.find(value.getServer()).callback(serverResponse -> {
 
 					if (!serverResponse.isSuccessful()) {
@@ -89,7 +102,7 @@ public class PlayCommand implements CommandClass {
 
 						try {
 							matchAssigner.unAssign(player);
-							matchmakingGenerator.pairMatch(player, foundMode.get(), foundSubMode.get());
+							matchmakingGenerator.pairMatch(player, finalInvolved, foundMode.get(), foundSubMode.get());
 						} catch (Exception e) {
 							messageHandler.sendIn(player, AlertModes.MUTED, "game.play.error");
 							plugin.getLogger().log(Level.SEVERE, "Error while obtaining actual match", e);
@@ -99,7 +112,7 @@ public class PlayCommand implements CommandClass {
 
 				}));
 
-				matchmakingGenerator.pairMatch(player, foundMode.get(), foundSubMode.get());
+				matchmakingGenerator.pairMatch(player, involved, foundMode.get(), foundSubMode.get());
 
 			} catch (Exception e) {
 				messageHandler.sendIn(player, AlertModes.MUTED, "game.play.error");

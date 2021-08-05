@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashSet;
+import java.util.Set;
 
 @Singleton
 public class CoreMatchmakingGenerator implements MatchmakingGenerator {
@@ -24,7 +25,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 	private @Inject MessageHandler messageHandler;
 
 	@Override
-	public void pairMatch(Player player, GameMode mode, SubGameMode subMode) throws Exception {
+	public void pairMatch(Player player, Set<String> involved, GameMode mode, SubGameMode subMode) throws Exception {
 
 		String id = player.getUniqueId().toString();
 
@@ -40,7 +41,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
 		MatchAssignable assignable = new MatchAssignable(
 			player.getDatabaseIdentifier(),
-			new HashSet<>() // TODO: Get party
+			involved
 		);
 
 		matchmakingRegistryHandler.generateRequest(

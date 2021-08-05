@@ -12,7 +12,9 @@ import net.astrocube.api.core.virtual.party.Party;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class MatchmakingRequester {
@@ -42,12 +44,14 @@ public class MatchmakingRequester {
 				}
 
 				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+				Set<String> involved = new HashSet<>();
 
 				if (optional.isPresent()) {
 					if (!optional.get().getLeader().equals(player.getDatabaseIdentifier())) {
 						messageHandler.send(player, "no-leader-party-for-select-game");
 						return;
 					}
+					involved = optional.get().getMembers();
 				}
 
 				if (gameMode.getSubTypes() != null) {
@@ -57,11 +61,12 @@ public class MatchmakingRequester {
 						.filter(g -> g.getId().equalsIgnoreCase(subMode))
 						.findAny();
 
+					Set<String> finalInvolved = involved;
 					subGameMode.ifPresent(subModeRecord -> {
 
 						try {
 							System.out.println("MatchmakingGenerator");
-							matchmakingGenerator.pairMatch(player, gameMode, subModeRecord);
+							matchmakingGenerator.pairMatch(player, finalInvolved, gameMode, subModeRecord);
 						} catch (Exception e) {
 							messageHandler.sendIn(player, AlertModes.ERROR, "selectors.error");
 							plugin.getLogger().log(Level.SEVERE, "There was an error pairing to match", e);

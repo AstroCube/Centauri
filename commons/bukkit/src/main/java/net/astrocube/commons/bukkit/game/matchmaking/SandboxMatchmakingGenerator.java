@@ -55,7 +55,7 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 	}
 
 	@Override
-	public void pairMatch(Player player, GameMode gameMode, SubGameMode subMode) throws Exception {
+	public void pairMatch(Player player, Set<String> involved, GameMode gameMode, SubGameMode subMode) throws Exception {
 		pairMatch(player);
 	}
 }
