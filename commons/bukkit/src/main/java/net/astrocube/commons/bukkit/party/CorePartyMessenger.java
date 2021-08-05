@@ -10,15 +10,14 @@ import net.astrocube.commons.bukkit.party.channel.message.PartyMessage;
 
 public class CorePartyMessenger implements PartyMessenger {
 
-	private final Channel<PartyMessage> partyMessageChannel;
-
 	@Inject
-	public CorePartyMessenger(Messenger messenger) {
-		partyMessageChannel = messenger.getChannel(PartyMessage.class);
-	}
+	private Messenger messenger;
 
 	@Override
 	public void sendMessage(Party party, String path, String... replacements) {
+
+		Channel<PartyMessage> partyMessageChannel = messenger.getChannel(PartyMessage.class);
+
 		try {
 			partyMessageChannel.sendMessage(new PartyMessage(path, party.getId(), replacements), null);
 		} catch (JsonProcessingException e) {
