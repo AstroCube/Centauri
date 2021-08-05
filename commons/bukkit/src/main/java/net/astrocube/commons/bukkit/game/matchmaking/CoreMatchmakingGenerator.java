@@ -17,6 +17,8 @@ import java.util.HashSet;
 @Singleton
 public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 
+	private static final String COOL_DOWN_KEY = "cool-down-request-game:";
+
 	private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
 	private @Inject Redis redis;
 	private @Inject MessageHandler messageHandler;
@@ -27,13 +29,13 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 		String id = player.getUniqueId().toString();
 
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			if (jedis.exists("cool-down-request-game:" + id)) {
+			if (jedis.exists(COOL_DOWN_KEY + id)) {
 				messageHandler.send(player, "game.play.matchmaking-request-cool-down");
 				return;
 			}
 
-			jedis.set("cool-down-request-game:" + id, "true");
-			jedis.expire("cool-down-request-Game:" + id, 3);
+			jedis.set(COOL_DOWN_KEY + id, "true");
+			jedis.expire(COOL_DOWN_KEY + id, 3);
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
