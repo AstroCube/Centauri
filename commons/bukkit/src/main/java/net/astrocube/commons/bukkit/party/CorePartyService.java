@@ -68,10 +68,10 @@ public class CorePartyService implements PartyService {
 							ObjectMapper objectMapper,
 							Redis redis,
 							UserProvideHelper userProvideHelper,
+							Messenger messenger,
 							PartyMessenger partyMessenger,
 							UpdateService<Party, PartyDoc.Partial> updateService,
-							MessageHandler messageHandler,
-							Messenger messenger) {
+							MessageHandler messageHandler) {
 
 		this.plugin = plugin;
 		this.partyQueryService = partyQueryService;

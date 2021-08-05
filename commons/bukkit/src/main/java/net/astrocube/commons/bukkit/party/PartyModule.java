@@ -9,8 +9,8 @@ public class PartyModule extends ProtectedModule {
 
 	@Override
 	protected void configure() {
-		bind(PartyService.class).to(CorePartyService.class);
 		bind(PartyMessenger.class).to(CorePartyMessenger.class);
+		bind(PartyService.class).to(CorePartyService.class);
 		expose(PartyService.class);
 
 		install(new PartyChannelModule());
