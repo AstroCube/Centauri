@@ -56,8 +56,8 @@ public class CorePartyService implements PartyService {
 	private final MessageHandler messageHandler;
 	private final PartyMessenger partyMessenger;
 
-	private final  Channel<PartyInvitationMessage> partyInvitationMessageChannel;
-	private final Channel<PartyWarpMessage> partyWarpMessageChannel;
+	private final  Channel<PartyInvitationMessage> partyInvitationMessageChannel = null;
+	private final Channel<PartyWarpMessage> partyWarpMessageChannel = null;
 
 	@Inject
 	public CorePartyService(Plugin plugin,
