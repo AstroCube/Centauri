@@ -41,54 +41,22 @@ public class CorePartyService implements PartyService {
 
 	private static final int INVITATION_EXPIRY = 60 * 2;
 
-	private final Plugin plugin;
+	private @Inject Plugin plugin;
 
-	private final QueryService<Party> partyQueryService;
-	private final FindService<Party> findService;
-	private final FindService<User> userFindService;
-	private final CreateService<Party, PartyDoc.Partial> partyCreateService;
-	private final ObjectMapper objectMapper;
-	private final Redis redis;
-	private final UserProvideHelper userProvideHelper;
+	private @Inject QueryService<Party> partyQueryService;
+	private @Inject FindService<Party> findService;
+	private @Inject FindService<User> userFindService;
+	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
+	private @Inject ObjectMapper objectMapper;
+	private @Inject Redis redis;
+	private @Inject UserProvideHelper userProvideHelper;
 
-	private final UpdateService<Party, PartyDoc.Partial> updateService;
+	private @Inject UpdateService<Party, PartyDoc.Partial> updateService;
 
-	private final MessageHandler messageHandler;
-	private final PartyMessenger partyMessenger;
+	private @Inject MessageHandler messageHandler;
+	private @Inject PartyMessenger partyMessenger;
 
-	private final  Channel<PartyInvitationMessage> partyInvitationMessageChannel = null;
-	private final Channel<PartyWarpMessage> partyWarpMessageChannel = null;
-
-	@Inject
-	public CorePartyService(Plugin plugin,
-							QueryService<Party> partyQueryService,
-							FindService<Party> findService,
-							FindService<User> userFindService,
-							CreateService<Party, PartyDoc.Partial> partyCreateService,
-							ObjectMapper objectMapper,
-							Redis redis,
-							UserProvideHelper userProvideHelper,
-							//Messenger messenger,
-							PartyMessenger partyMessenger,
-							UpdateService<Party, PartyDoc.Partial> updateService,
-							MessageHandler messageHandler) {
-
-		this.plugin = plugin;
-		this.partyQueryService = partyQueryService;
-		this.findService = findService;
-		this.userFindService = userFindService;
-		this.partyCreateService = partyCreateService;
-		this.objectMapper = objectMapper;
-		this.partyMessenger = partyMessenger;
-		this.redis = redis;
-		this.userProvideHelper = userProvideHelper;
-		this.updateService = updateService;
-		this.messageHandler = messageHandler;
-
-		//partyInvitationMessageChannel = messenger.getChannel(PartyInvitationMessage.class);
-		//partyWarpMessageChannel = messenger.getChannel(PartyWarpMessage.class);
-
-	}
+	private @Inject Messenger messenger;
 
 	@Override
 	public void removeInvite(String playerName) {
@@ -171,7 +139,7 @@ public class CorePartyService implements PartyService {
 		}
 
 		try {
-			partyInvitationMessageChannel.sendMessage(new PartyInvitationMessage(inviter.getName(), userInvited.getUsername()), null);
+			messenger.getChannel(PartyInvitationMessage.class).sendMessage(new PartyInvitationMessage(inviter.getName(), userInvited.getUsername()), null);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -245,7 +213,7 @@ public class CorePartyService implements PartyService {
 				String serverName = response.getResponse().get().getSession().getLastLobby();
 
 				try {
-					partyWarpMessageChannel.sendMessage(new PartyWarpMessage(party.getId(), party.getMembers(), serverName), null);
+					messenger.getChannel(PartyWarpMessage.class).sendMessage(new PartyWarpMessage(party.getId(), party.getMembers(), serverName), null);
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
