@@ -167,8 +167,8 @@ public class CorePartyService implements PartyService {
 
 	@Override
 	public void handleAcceptInvitation(Player invited, String inviter) {
-		if (!getPartyOf(invited.getDatabaseIdentifier()).isPresent()) {
-			messageHandler.send(invited, "");
+		if (getPartyOf(invited.getDatabaseIdentifier()).isPresent()) {
+			messageHandler.send(invited, "already-in-party");
 			return;
 		}
 
