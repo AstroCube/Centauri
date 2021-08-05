@@ -2,11 +2,13 @@ package net.astrocube.api.bukkit.game.matchmaking;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
+import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.bukkit.teleport.ServerTeleportRetry;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.api.core.virtual.party.Party;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -20,6 +22,7 @@ public class MatchmakingRequester {
 	private @Inject FindService<GameMode> findService;
 	private @Inject MessageHandler messageHandler;
 	private @Inject ServerTeleportRetry serverTeleportRetry;
+	private @Inject PartyService partyService;
 
 	public void execute(Player player, String mode, String subMode) {
 		System.out.println("Matchmaking requester");
@@ -38,6 +41,14 @@ public class MatchmakingRequester {
 					return;
 				}
 
+				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+
+				if (optional.isPresent()) {
+					if (!optional.get().getLeader().equals(player.getDatabaseIdentifier())) {
+						messageHandler.send(player, "no-leader-party-for-select-game");
+						return;
+					}
+				}
 
 				if (gameMode.getSubTypes() != null) {
 					System.out.println("Subtypes no is null");
