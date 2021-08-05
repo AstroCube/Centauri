@@ -145,7 +145,7 @@ public class CorePartyService implements PartyService {
 		}
 
 		if (!party.getMembers().isEmpty()) {
-			partyMessenger.sendMessage(party, "party.player-invited-notification", "%invited%", userInvited.getUsername());
+			partyMessenger.sendMessage(party, "party-player-invited-notification", "%leader%", inviter.getName(), "%invited%", userInvited.getUsername());
 		}
 
 	}
@@ -154,7 +154,7 @@ public class CorePartyService implements PartyService {
 	public void handleRequestInvitation(String inviter, Player invited) {
 		invited.sendMessage(
 			new ComponentBuilder(messageHandler.replacing("party-invited", "%inviter%", inviter))
-				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept "))
+				.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + inviter))
 				.event(new HoverEvent(
 						HoverEvent.Action.SHOW_TEXT,
 						new ComponentBuilder
