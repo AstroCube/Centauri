@@ -8,6 +8,7 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;
 import net.astrocube.api.core.service.find.FindService;
@@ -40,23 +41,54 @@ public class CorePartyService implements PartyService {
 
 	private static final int INVITATION_EXPIRY = 60 * 2;
 
-	private @Inject Plugin plugin;
+	private final Plugin plugin;
 
-	private @Inject QueryService<Party> partyQueryService;
-	private @Inject FindService<Party> findService;
-	private @Inject FindService<User> userFindService;
-	private @Inject CreateService<Party, PartyDoc.Partial> partyCreateService;
-	private @Inject ObjectMapper objectMapper;
-	private @Inject Redis redis;
-	private @Inject UserProvideHelper userProvideHelper;
+	private final QueryService<Party> partyQueryService;
+	private final FindService<Party> findService;
+	private final FindService<User> userFindService;
+	private final CreateService<Party, PartyDoc.Partial> partyCreateService;
+	private final ObjectMapper objectMapper;
+	private final Redis redis;
+	private final UserProvideHelper userProvideHelper;
 
-	private @Inject UpdateService<Party, PartyDoc.Partial> updateService;
+	private final UpdateService<Party, PartyDoc.Partial> updateService;
 
-	private @Inject MessageHandler messageHandler;
-	private @Inject PartyMessenger partyMessenger;
+	private final MessageHandler messageHandler;
+	private final PartyMessenger partyMessenger;
 
-	private @Inject Channel<PartyInvitationMessage> partyInvitationMessageChannel;
-	private @Inject Channel<PartyWarpMessage> partyWarpMessageChannel;
+	private final  Channel<PartyInvitationMessage> partyInvitationMessageChannel;
+	private final Channel<PartyWarpMessage> partyWarpMessageChannel;
+
+	@Inject
+	public CorePartyService(Plugin plugin,
+							QueryService<Party> partyQueryService,
+							FindService<Party> findService,
+							FindService<User> userFindService,
+							CreateService<Party, PartyDoc.Partial> partyCreateService,
+							ObjectMapper objectMapper,
+							Redis redis,
+							UserProvideHelper userProvideHelper,
+							PartyMessenger partyMessenger,
+							UpdateService<Party, PartyDoc.Partial> updateService,
+							MessageHandler messageHandler,
+							Messenger messenger) {
+
+		this.plugin = plugin;
+		this.partyQueryService = partyQueryService;
+		this.findService = findService;
+		this.userFindService = userFindService;
+		this.partyCreateService = partyCreateService;
+		this.objectMapper = objectMapper;
+		this.partyMessenger = partyMessenger;
+		this.redis = redis;
+		this.userProvideHelper = userProvideHelper;
+		this.updateService = updateService;
+		this.messageHandler = messageHandler;
+
+		partyInvitationMessageChannel = messenger.getChannel(PartyInvitationMessage.class);
+		partyWarpMessageChannel = messenger.getChannel(PartyWarpMessage.class);
+
+	}
 
 	@Override
 	public void removeInvite(String playerName) {

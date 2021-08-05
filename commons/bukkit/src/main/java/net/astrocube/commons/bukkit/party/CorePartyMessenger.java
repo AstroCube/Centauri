@@ -4,13 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.core.message.Channel;
+import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.commons.bukkit.party.channel.message.PartyMessage;
 
 public class CorePartyMessenger implements PartyMessenger {
 
+	private final Channel<PartyMessage> partyMessageChannel;
+
 	@Inject
-	private Channel<PartyMessage> partyMessageChannel;
+	public CorePartyMessenger(Messenger messenger) {
+		partyMessageChannel = messenger.getChannel(PartyMessage.class);
+	}
 
 	@Override
 	public void sendMessage(Party party, String path, String... replacements) {
