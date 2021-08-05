@@ -27,13 +27,13 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 		String id = player.getUniqueId().toString();
 
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			if (jedis.exists("Cool-down-Request-Game:" + id)) {
+			if (jedis.exists("cool-down-request-game:" + id)) {
 				messageHandler.send(player, "game.play.matchmaking-request-cool-down");
 				return;
 			}
 
-			jedis.set("Cool-down-Request-Game:" + id, "true");
-			jedis.expire("Cool-down-Request-Game:" + id, 3);
+			jedis.set("cool-down-request-game:" + id, "true");
+			jedis.expire("cool-down-request-Game:" + id, 3);
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
