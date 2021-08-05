@@ -20,12 +20,7 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
 	private @Inject CloudTeleport cloudTeleport;
 	private @Inject Plugin plugin;
-	private final Channel<ProxyKickRequest> channel;
-
-	@Inject
-	public CoreServerTeleportRetry(Messenger jedisMessenger) {
-		channel = jedisMessenger.getChannel(ProxyKickRequest.class);
-	}
+	private @Inject Messenger messenger;
 
 	@Override
 	public void attemptTeleport(String player, String server, int attempt, int maxAttempt) {
@@ -43,7 +38,7 @@ public class CoreServerTeleportRetry implements ServerTeleportRetry {
 
 		if (attempt > maxAttempt) {
 			try {
-				channel.sendMessage(new ProxyKickRequest(
+				messenger.getChannel(ProxyKickRequest.class).sendMessage(new ProxyKickRequest(
 					player,
 					ChatColor.RED + "Giving up on server switch, please log-in again."
 				), new HashMap<>());
