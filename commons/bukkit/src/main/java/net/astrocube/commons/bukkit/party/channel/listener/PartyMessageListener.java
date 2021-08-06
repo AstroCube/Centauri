@@ -26,6 +26,7 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 
 		if (optional == null) {
 			System.out.println("Optional es null Party Id  " + message.getPartyId());
+			return;
 		}
 
 		if (optional.isPresent()) {
