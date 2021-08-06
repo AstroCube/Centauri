@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
-import net.astrocube.api.core.message.Channel;
 import net.astrocube.api.core.message.Messenger;
 import net.astrocube.api.core.redis.Redis;
 import net.astrocube.api.core.service.create.CreateService;

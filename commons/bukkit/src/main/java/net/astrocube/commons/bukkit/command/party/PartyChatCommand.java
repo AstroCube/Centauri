@@ -5,6 +5,7 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.Text;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
+import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.virtual.party.Party;
@@ -21,12 +22,15 @@ public class PartyChatCommand implements CommandClass {
 	@Inject
 	private PartyMessenger partyMessenger;
 
+	@Inject
+	private MessageHandler messageHandler;
+
 	@Command(names = "")
 	public void main(@Sender Player sender, @Text String message) {
 		Optional<Party> optional = partyService.getPartyOf(sender.getDatabaseIdentifier());
 
 		if (!optional.isPresent()) {
-			//send message "you no has a party"
+			messageHandler.send(sender, "no-party-now");
 			return;
 		}
 

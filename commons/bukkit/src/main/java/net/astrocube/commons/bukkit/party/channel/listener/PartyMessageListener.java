@@ -18,6 +18,7 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 
 	@Override
 	public void handleDelivery(PartyMessage message, MessageMetadata properties) {
+		System.out.println("Received PartyMessageListener");
 		partyService.getParty(message.getPartyId())
 			.ifPresent(party -> Bukkit.getOnlinePlayers().forEach(player -> {
 				if (party.getMembers().contains(player.getDatabaseIdentifier()) || party.getLeader().equals(player.getDatabaseIdentifier())) {
