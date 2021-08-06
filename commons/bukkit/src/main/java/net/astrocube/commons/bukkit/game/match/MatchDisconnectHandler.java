@@ -24,23 +24,28 @@ public class MatchDisconnectHandler implements ServerDisconnectHandler {
 
 	@Override
 	public void execute() {
+		/*Runtime.getRuntime()
+			.addShutdownHook(new Thread(() -> {*/
+				try {
+					Server server = serverService.getActual();
 
-		try {
-			Server server = serverService.getActual();
+					System.out.println("Server " + server.getId());
 
-			queryService.getAll()
-				.callback(response -> response.getResponse().ifPresent(matchQueryResult -> matchQueryResult.getFoundModels()
-					.forEach(match -> {
-						if (match.getServer().equals(server.getId())) {
-							try (Jedis jedis = redis.getRawConnection().getResource()) {
-								jedis.del(MATCH_KEY + match.getId());
-							}
-						}
-					})));
+					queryService.getAll()
+						.callback(response -> response.getResponse().ifPresent(matchQueryResult -> matchQueryResult.getFoundModels()
+							.forEach(match -> {
+								System.out.println("Match id " + match.getId());
+								System.out.println("Server " + match.getServer());
+								if (match.getServer().equals(server.getId())) {
+									try (Jedis jedis = redis.getRawConnection().getResource()) {
+										jedis.del(MATCH_KEY + match.getId());
+									}
+								}
+							})));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			//}));
 	}
 }
