@@ -5,8 +5,12 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.api.core.message.MessageListener;
 import net.astrocube.api.core.message.MessageMetadata;
+import net.astrocube.api.core.virtual.party.Party;
 import net.astrocube.commons.bukkit.party.channel.message.PartyMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 public class PartyMessageListener implements MessageListener<PartyMessage> {
 
@@ -18,8 +22,35 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 
 	@Override
 	public void handleDelivery(PartyMessage message, MessageMetadata properties) {
-		System.out.println("Received PartyMessageListener");
-		partyService.getParty(message.getPartyId())
+		Optional<Party> optional = partyService.getParty(message.getPartyId());
+
+		if (optional.isPresent()) {
+			System.out.println("Si existe la party");
+			Party party = optional.get();
+
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				if (party.getMembers().contains(player.getDatabaseIdentifier()) || party.getLeader().equals(player.getDatabaseIdentifier())) {
+					System.out.println("Si es un usuario de la party");
+
+					if (message.getReplacements() != null) {
+						messageHandler.sendReplacing(player, message.getPath(), (Object) message.getReplacements());
+					} else {
+						messageHandler.send(player, message.getPath());
+					}
+
+					System.out.println("Mensaje enviado");
+
+				}
+			}
+
+		} else {
+			System.out.println("No existe la party");
+		}
+
+	}
+
+	/*
+			partyService.getParty(message.getPartyId())
 			.ifPresent(party -> Bukkit.getOnlinePlayers().forEach(player -> {
 				if (party.getMembers().contains(player.getDatabaseIdentifier()) || party.getLeader().equals(player.getDatabaseIdentifier())) {
 					if (message.getReplacements() != null) {
@@ -29,6 +60,6 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 					}
 				}
 			}));
-	}
+	 */
 
 }
