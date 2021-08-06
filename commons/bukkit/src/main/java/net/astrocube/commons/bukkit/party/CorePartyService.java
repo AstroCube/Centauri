@@ -224,14 +224,17 @@ public class CorePartyService implements PartyService {
 	@Override
 	public Optional<Party> getParty(String partyId) {
 
-		AtomicReference<Optional<Party>> optional = new AtomicReference<>();
+		PartyWrapper partyWrapper = new PartyWrapper();
 		findService.find(partyId).callback(response -> {
 			if (response != null && response.getResponse().isPresent()) {
-				optional.set(response.getResponse());
+				System.out.println("Party found");
+				partyWrapper.setParty(response.getResponse().get());
+			} else {
+				System.out.println("Party not found");
 			}
 		});
 
-		return optional.get();
+		return partyWrapper.getParty();
 	}
 
 	@Override
@@ -284,6 +287,20 @@ public class CorePartyService implements PartyService {
 				e
 			);
 		}
+	}
+
+	static class PartyWrapper {
+
+		private Party party;
+
+		public void setParty(Party party) {
+			this.party = party;
+		}
+
+		public Optional<Party> getParty() {
+			return Optional.ofNullable(party);
+		}
+
 	}
 
 }
