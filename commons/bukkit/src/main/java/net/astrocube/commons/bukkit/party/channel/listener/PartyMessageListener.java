@@ -24,6 +24,10 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 	public void handleDelivery(PartyMessage message, MessageMetadata properties) {
 		Optional<Party> optional = partyService.getParty(message.getPartyId());
 
+		if (optional == null) {
+			System.out.println("Optional es null Party Id  " + message.getPartyId());
+		}
+
 		if (optional.isPresent()) {
 			System.out.println("Si existe la party");
 			Party party = optional.get();
