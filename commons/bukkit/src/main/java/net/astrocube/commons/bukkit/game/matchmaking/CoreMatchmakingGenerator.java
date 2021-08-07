@@ -13,32 +13,35 @@ import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashSet;
+import java.util.Set;
 
 @Singleton
 public class CoreMatchmakingGenerator implements MatchmakingGenerator {
+
+	private static final String COOL_DOWN_KEY = "cool-down-request-game:";
 
 	private @Inject MatchmakingRegistryHandler matchmakingRegistryHandler;
 	private @Inject Redis redis;
 	private @Inject MessageHandler messageHandler;
 
 	@Override
-	public void pairMatch(Player player, GameMode mode, SubGameMode subMode) throws Exception {
+	public void pairMatch(Player player, Set<String> involved, GameMode mode, SubGameMode subMode) throws Exception {
 
 		String id = player.getUniqueId().toString();
 
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			if (jedis.exists("Cool-down-Request-Game:" + id)) {
+			if (jedis.exists(COOL_DOWN_KEY + id)) {
 				messageHandler.send(player, "game.play.matchmaking-request-cool-down");
 				return;
 			}
 
-			jedis.set("Cool-down-Request-Game:" + id, "true");
-			jedis.expire("Cool-down-Request-Game:" + id, 3);
+			jedis.set(COOL_DOWN_KEY + id, "true");
+			jedis.expire(COOL_DOWN_KEY + id, 3);
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
 			player.getDatabaseIdentifier(),
-			new HashSet<>() // TODO: Get party
+			involved
 		);
 
 		matchmakingRegistryHandler.generateRequest(

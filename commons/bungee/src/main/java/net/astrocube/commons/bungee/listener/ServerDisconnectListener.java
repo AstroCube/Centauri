@@ -41,6 +41,7 @@ public class ServerDisconnectListener implements Listener {
 
 			if (user.isPresent()) {
 				sessionService.serverDisconnect(user.get().getId());
+				System.out.println("Unregister session... ");
 				sessionRegistryManager.unregister(user.get().getId());
 				channel.sendMessage(new SessionSwitchWrapper(
 						user.get(),
