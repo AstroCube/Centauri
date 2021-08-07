@@ -70,6 +70,8 @@ public class UserJoinListener implements Listener {
 
 		Player player = event.getPlayer();
 
+		System.out.println("DEBUG " + player.getName() + " PROTOCOL VERSION -> " + player.getProtocolVersion());
+
 		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 		event.setJoinMessage("");
 
