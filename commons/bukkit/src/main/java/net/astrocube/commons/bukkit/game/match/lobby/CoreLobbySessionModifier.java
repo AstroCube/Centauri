@@ -21,7 +21,7 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 	private @Inject MessageHandler messageHandler;
-	private @Inject LobbyScoreboardAssigner lobbyAssignerScoreboard;
+	private @Inject LobbyScoreboardAssigner lobbyScoreboardAssigner;
 	private @Inject Plugin plugin;
 
 	@Override
@@ -37,7 +37,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 			if (waitingIds.contains(online.getDatabaseIdentifier())) {
 
 				if (match.getStatus() == MatchDoc.Status.LOBBY) {
-					lobbyAssignerScoreboard.assignLobbyScoreboard(player, match, subGameMode);
+					lobbyScoreboardAssigner.scheduleLobbyScoreboardUpdate(player, match, subGameMode);
 				}
 
 				online.sendMessage(
@@ -63,6 +63,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 		Bukkit.getOnlinePlayers().forEach(online -> {
 			if (waitingIds.contains(online.getDatabaseIdentifier())) {
+				lobbyScoreboardAssigner.cancelLobbyScoreboardUpdate(player);
 				online.sendMessage(
 					messageHandler.getMessage("game.lobby-leave")
 						.replace("%player%", player.getDisplayName())

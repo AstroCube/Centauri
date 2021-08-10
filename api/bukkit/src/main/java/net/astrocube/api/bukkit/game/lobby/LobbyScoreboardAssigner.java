@@ -8,11 +8,17 @@ import org.bukkit.entity.Player;
 public interface LobbyScoreboardAssigner {
 
 	/**
-	 * Assign or update the lobby scoreboard in state waiting
-	 * @param player the player that assign scoreboard
-	 * @param match the match game
+	 * Starts scheduling the lobby scoreboard update
+	 * for the given {@code player} playing in the
+	 * specified {@code match} and {@code subGameMode}
 	 */
-	void assignLobbyScoreboard(Player player, Match match, SubGameMode subGameMode);
+	void scheduleLobbyScoreboardUpdate(Player player, Match match, SubGameMode subGameMode);
+
+	/**
+	 * Stops updating the lobby scoreboard to the
+	 * specified {@code player}
+	 */
+	void cancelLobbyScoreboardUpdate(Player player);
 
 	/**
 	 * Assign or update the lobby scoreboard in state starting

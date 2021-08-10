@@ -21,7 +21,7 @@ import java.util.Map;
 public class CoreCountdownScheduler implements CountdownScheduler {
 
 	private final Plugin plugin;
-	private final LobbyScoreboardAssigner lobbyAssignerScoreboard;
+	private final LobbyScoreboardAssigner lobbyScoreboardAssigner;
 	private final Map<String, Integer> scheduledTimers;
 	private final MatchParticipantsProvider matchParticipantsProvider;
 	private final CountdownAlerter countdownAlerter;
@@ -31,7 +31,7 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 		this.plugin = plugin;
 		this.scheduledTimers = new HashMap<>();
 		this.countdownAlerter = countdownAlerter;
-		this.lobbyAssignerScoreboard = lobbyAssignerScoreboard;
+		this.lobbyScoreboardAssigner = lobbyAssignerScoreboard;
 		this.matchParticipantsProvider = matchParticipantsProvider;
 	}
 
@@ -43,6 +43,10 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 		}
 
 		if (force || !scheduledTimers.containsKey(match.getId())) {
+			matchParticipantsProvider.getMatchPending(match).forEach(user -> {
+				Player player = Bukkit.getPlayer(user.getUsername());
+				lobbyScoreboardAssigner.cancelLobbyScoreboardUpdate(player);
+			});
 			CountdownTimer runnable = new CountdownTimer(
 				plugin,
 				seconds,
@@ -52,7 +56,7 @@ public class CoreCountdownScheduler implements CountdownScheduler {
 					}
 					matchParticipantsProvider.getMatchPending(match).forEach(user -> {
 						Player player = Bukkit.getPlayer(user.getUsername());
-						lobbyAssignerScoreboard.assignLobbyScoreboardStarting(player, match, sec.getSecondsLeft(), subGameMode);
+						lobbyScoreboardAssigner.assignLobbyScoreboardStarting(player, match, sec.getSecondsLeft(), subGameMode);
 					});
 				},
 				() -> Bukkit.getPluginManager().callEvent(new GameTimerOutEvent(match.getId()))
