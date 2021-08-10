@@ -12,29 +12,30 @@ import org.bukkit.entity.Player;
 
 public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
 
-	@Inject
-	private MessageHandler messageHandler;
-
-	@Inject
-	private BoardProvider boardProvider;
+	@Inject private MessageHandler messageHandler;
+	@Inject private BoardProvider boardProvider;
 
 	@Override
 	public void assignLobbyScoreboard(Player player, Match match, SubGameMode subGameMode) {
 		Board board = findBoard(player, "game.scoreboard.waiting.title");
 
-		board.setLines(
-			messageHandler.replacingMany(player, "game.scoreboard.waiting.content", "%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(), "%max%", subGameMode.getMaxPlayers())
-		);
+		board.setLines(messageHandler.replacingMany(
+			player, "game.scoreboard.waiting.content",
+			"%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(),
+			"%max%", subGameMode.getMaxPlayers()
+		));
 	}
 
 	@Override
 	public void assignLobbyScoreboardStarting(Player player, Match match, int seconds, SubGameMode subGameMode) {
 		Board board = findBoard(player, "game.scoreboard.starting.title");
 
-		board.setLines(
-			messageHandler.replacingMany(player, "game.scoreboard.starting.content", "%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(), "%max%", subGameMode.getMaxPlayers(),
-				"%seconds%", seconds)
-		);
+		board.setLines(messageHandler.replacingMany(
+			player, "game.scoreboard.starting.content",
+			"%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(),
+			"%max%", subGameMode.getMaxPlayers(),
+			"%seconds%", seconds
+		));
 	}
 
 	private Board findBoard(Player player, String titlePath) {
