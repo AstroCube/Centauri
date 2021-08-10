@@ -3,7 +3,7 @@ package net.astrocube.commons.bukkit.game.match;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
-import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
+import net.astrocube.api.bukkit.game.lobby.LobbyScoreboardAssigner;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionManager;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
 import net.astrocube.api.bukkit.game.match.*;
@@ -32,7 +32,7 @@ public class MatchModule extends ProtectedModule implements ChannelBinder {
 
 		bind(ActualMatchProvider.class).to(CoreActualMatchProvider.class);
 		bind(LobbySessionManager.class).to(CoreLobbySessionManager.class);
-		bind(LobbyAssignerScoreboard.class).to(CoreLobbyAssignerScoreboard.class);
+		bind(LobbyScoreboardAssigner.class).to(CoreLobbyAssignerScoreboard.class);
 		bind(LobbySessionModifier.class).to(CoreLobbySessionModifier.class);
 		bind(AvailableMatchServerProvider.class).to(CoreAvailableMatchServerProvider.class);
 		bind(MatchAvailabilityChecker.class).to(CoreMatchAvailabilityChecker.class);

@@ -3,7 +3,7 @@ package net.astrocube.commons.bukkit.game.match.lobby;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
+import net.astrocube.api.bukkit.game.lobby.LobbyScoreboardAssigner;
 import net.astrocube.api.bukkit.game.lobby.LobbySessionModifier;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class CoreLobbySessionModifier implements LobbySessionModifier {
 
 	private @Inject MessageHandler messageHandler;
-	private @Inject LobbyAssignerScoreboard lobbyAssignerScoreboard;
+	private @Inject LobbyScoreboardAssigner lobbyAssignerScoreboard;
 	private @Inject Plugin plugin;
 
 	@Override

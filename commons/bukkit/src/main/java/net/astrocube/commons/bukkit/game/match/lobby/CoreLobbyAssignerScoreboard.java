@@ -4,13 +4,13 @@ import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.board.Board;
 import net.astrocube.api.bukkit.board.BoardProvider;
-import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
+import net.astrocube.api.bukkit.game.lobby.LobbyScoreboardAssigner;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
 import net.astrocube.commons.bukkit.game.match.control.CoreMatchParticipantsProvider;
 import org.bukkit.entity.Player;
 
-public class CoreLobbyAssignerScoreboard implements LobbyAssignerScoreboard {
+public class CoreLobbyAssignerScoreboard implements LobbyScoreboardAssigner {
 
 	@Inject private MessageHandler messageHandler;
 	@Inject private BoardProvider boardProvider;

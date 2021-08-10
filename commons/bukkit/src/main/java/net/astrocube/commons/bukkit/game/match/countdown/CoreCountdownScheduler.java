@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.event.game.GameTimerOutEvent;
-import net.astrocube.api.bukkit.game.lobby.LobbyAssignerScoreboard;
+import net.astrocube.api.bukkit.game.lobby.LobbyScoreboardAssigner;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.util.CountdownTimer;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -21,13 +21,13 @@ import java.util.Map;
 public class CoreCountdownScheduler implements CountdownScheduler {
 
 	private final Plugin plugin;
-	private final LobbyAssignerScoreboard lobbyAssignerScoreboard;
+	private final LobbyScoreboardAssigner lobbyAssignerScoreboard;
 	private final Map<String, Integer> scheduledTimers;
 	private final MatchParticipantsProvider matchParticipantsProvider;
 	private final CountdownAlerter countdownAlerter;
 
 	@Inject
-	public CoreCountdownScheduler(Plugin plugin, LobbyAssignerScoreboard lobbyAssignerScoreboard, CountdownAlerter countdownAlerter, MatchParticipantsProvider matchParticipantsProvider) {
+	public CoreCountdownScheduler(Plugin plugin, LobbyScoreboardAssigner lobbyAssignerScoreboard, CountdownAlerter countdownAlerter, MatchParticipantsProvider matchParticipantsProvider) {
 		this.plugin = plugin;
 		this.scheduledTimers = new HashMap<>();
 		this.countdownAlerter = countdownAlerter;
