@@ -37,8 +37,9 @@ public class CoreLobbyScoreboardAssigner implements LobbyScoreboardAssigner {
 			Bukkit.getScheduler().cancelTask(previousTask);
 		}
 
+		Board board = findBoard(player, "game.scoreboard.waiting.title");
+
 		int taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
-			Board board = findBoard(player, "game.scoreboard.waiting.title");
 			board.setLines(messageHandler.replacingMany(
 				player, "game.scoreboard.waiting.content",
 				"%actual%", CoreMatchParticipantsProvider.getPendingIds(match).size(),
