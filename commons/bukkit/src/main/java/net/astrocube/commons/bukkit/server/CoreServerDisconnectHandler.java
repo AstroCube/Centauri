@@ -18,12 +18,13 @@ public class CoreServerDisconnectHandler implements ServerDisconnectHandler {
 
 	@Override
 	public void execute() {
+
+		matchDisconnectHandler.execute();
+
 		try {
 			this.serverConnectionManager.endConnection();
 		} catch (Exception exception) {
 			plugin.getLogger().log(Level.SEVERE, "There was an error while performing server disconnection", exception);
 		}
-
-		matchDisconnectHandler.execute();
 	}
 }
