@@ -83,8 +83,8 @@ publishing {
 
 compileJava {
 	options.compilerArgs << "-parameters"
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
+	sourceCompatibility = 16
+	targetCompatibility = 16
 }
 
 jar {
