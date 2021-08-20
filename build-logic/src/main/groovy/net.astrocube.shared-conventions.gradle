@@ -27,10 +27,6 @@ repositories {
 		url "https://repo.astrocube.net/repository/maven-snapshots/"
 	}
 	maven {
-		name "TimoCloud-API"
-		url "https://maven.timo.cloud/repository/TimoCloud-API/"
-	}
-	maven {
 		name "maven-snapshots"
 		url "https://repo.codemc.io/repository/maven-snapshots/"
 	}

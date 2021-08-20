@@ -1,6 +1,6 @@
 package net.astrocube.commons.core.redis;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.redis.Redis;
 
 public class RedisModule extends ProtectedModule {

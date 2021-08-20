@@ -45,7 +45,7 @@ public class MenuUtils {
 
 	public static ItemStack generateStainedPane() {
 		return ItemBuilder.newDyeItemBuilder(
-			Material.STAINED_GLASS_PANE,
+			Material.GRAY_STAINED_GLASS_PANE,
 			DyeColor.GRAY
 		)
 			.setName(" ")
@@ -53,7 +53,7 @@ public class MenuUtils {
 	}
 
 	public static ItemStack generateHead(HeadLibrary library) {
-		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
 		SkullMeta meta = (SkullMeta) head.getItemMeta();
 
 		AbstractGameProfile profile = new CoreGameProfile(UUID.randomUUID(), "head");

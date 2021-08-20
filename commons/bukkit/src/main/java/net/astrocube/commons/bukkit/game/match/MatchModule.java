@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.match;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.countdown.CountdownAlerter;
 import net.astrocube.api.bukkit.game.countdown.CountdownScheduler;
 import net.astrocube.api.bukkit.game.lobby.LobbyScoreboardAssigner;

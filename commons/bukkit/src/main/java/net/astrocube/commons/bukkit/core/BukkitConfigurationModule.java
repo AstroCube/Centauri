@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.core;
 
 import com.google.inject.Scopes;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.http.config.HttpClientConfig;
 import net.astrocube.api.core.http.config.HttpFactoryConfig;

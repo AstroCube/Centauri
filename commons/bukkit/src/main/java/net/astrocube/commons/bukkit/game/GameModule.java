@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.GameControlPair;
 import net.astrocube.api.bukkit.game.match.control.PendingMatchFinder;
 import net.astrocube.api.bukkit.game.matchmaking.error.MatchmakingError;

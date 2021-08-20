@@ -1,7 +1,7 @@
 package net.astrocube.commons.bungee;
 
 import com.google.inject.Inject;
-import me.fixeddev.inject.ProtectedBinder;
+import net.astrocube.inject.ProtectedBinder;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.server.ServerConnectionManager;
 import net.astrocube.commons.bungee.loader.InjectionModule;

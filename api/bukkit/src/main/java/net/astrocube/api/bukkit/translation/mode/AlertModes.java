@@ -16,9 +16,9 @@ public final class AlertModes {
 	public static final String VOID = "default";
 
 	public static final Map<String, Sound> SOUNDS = ImmutableMap.<String, Sound>builder()
-		.put(INFO, Sound.NOTE_PLING)
-		.put(ERROR, Sound.NOTE_BASS)
-		.put(MUTED, Sound.NOTE_SNARE_DRUM)
+		.put(INFO, Sound.BLOCK_NOTE_BLOCK_PLING)
+		.put(ERROR, Sound.BLOCK_NOTE_BLOCK_BASS)
+		.put(MUTED, Sound.BLOCK_NOTE_BLOCK_SNARE)
 		.build();
 
 }

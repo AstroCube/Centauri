@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.map;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.map.*;
 
 public class GameMapModule extends ProtectedModule {

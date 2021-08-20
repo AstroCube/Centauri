@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.user;
 
 import com.google.inject.Scopes;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.user.UserMatcher;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.user.display.TranslatedGroupProvider;

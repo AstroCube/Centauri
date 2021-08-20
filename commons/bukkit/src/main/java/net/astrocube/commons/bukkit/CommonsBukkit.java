@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit;
 
 import com.google.inject.Inject;
-import me.fixeddev.inject.ProtectedBinder;
+import net.astrocube.inject.ProtectedBinder;
 import net.astrocube.api.bukkit.server.ServerDisconnectHandler;
 import net.astrocube.api.core.loader.Loader;
 import net.astrocube.commons.bukkit.loader.InjectionLoaderModule;

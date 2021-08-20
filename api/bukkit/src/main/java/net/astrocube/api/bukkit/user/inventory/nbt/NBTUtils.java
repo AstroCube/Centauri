@@ -1,19 +1,19 @@
 package net.astrocube.api.bukkit.user.inventory.nbt;
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTUtils {
 
 	private static NBTTagCompound getTag(org.bukkit.inventory.ItemStack item) {
-		net.minecraft.server.v1_8_R3.ItemStack itemNms = CraftItemStack.asNMSCopy(item);
+		net.minecraft.world.item.ItemStack itemNms = CraftItemStack.asNMSCopy(item);
 
 		return itemNms.hasTag() ? itemNms.getTag() : new NBTTagCompound();
 	}
 
 	private static ItemStack setTag(ItemStack item, NBTTagCompound tag) {
-		net.minecraft.server.v1_8_R3.ItemStack itemNms = CraftItemStack.asNMSCopy(item);
+		net.minecraft.world.item.ItemStack itemNms = CraftItemStack.asNMSCopy(item);
 		itemNms.setTag(tag);
 
 		return CraftItemStack.asBukkitCopy(itemNms);

@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.admin;
 
 import com.google.inject.Scopes;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.admin.chat.StaffChatOptionsMenu;
 import net.astrocube.commons.bukkit.admin.chat.CoreStaffChatOptionsMenu;
 import net.astrocube.commons.bukkit.admin.punishment.PunishmentChooserMenu;

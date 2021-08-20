@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.channel;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.channel.MatchChannelProvider;
 import net.astrocube.api.bukkit.game.channel.MatchMessageBroadcaster;
 import net.astrocube.api.bukkit.game.channel.MatchMessageDispatcher;

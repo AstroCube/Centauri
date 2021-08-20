@@ -1,19 +1,18 @@
 package net.astrocube.commons.bukkit.board;
 
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.astrocube.api.bukkit.board.Board;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardDisplayObjective;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardObjective;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardScore;
-import net.minecraft.server.v1_8_R3.ScoreboardObjective;
-import net.minecraft.server.v1_8_R3.ScoreboardScore;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.PacketPlayOutScoreboardDisplayObjective;
+import net.minecraft.network.protocol.game.PacketPlayOutScoreboardObjective;
+import net.minecraft.network.protocol.game.PacketPlayOutScoreboardScore;
+import net.minecraft.world.scores.ScoreboardObjective;
+import net.minecraft.world.scores.ScoreboardScore;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.scoreboard.CraftObjective;
-import org.bukkit.craftbukkit.v1_8_R3.scoreboard.CraftScoreboard;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -31,33 +30,47 @@ import java.util.Map;
  */
 public class PacketBoard implements Board {
 
-	/** Content of the scoreboard, contains all the entries */
-	private final TIntObjectMap<String> lines
-			= new TIntObjectHashMap<>();
+	/**
+	 * Content of the scoreboard, contains all the entries
+	 */
+	private final Int2ObjectMap<String> lines
+		= new Int2ObjectOpenHashMap<>();
 
-	/** Reference to the spigot scoreboard object */
+	/**
+	 * Reference to the spigot scoreboard object
+	 */
 	private final Scoreboard scoreboard;
 
-	/** The linked player, the viewer of this board */
+	/**
+	 * The linked player, the viewer of this board
+	 */
 	private final Player viewer;
 
-	/** Determines if the scoreboard has been deleted */
+	/**
+	 * Determines if the scoreboard has been deleted
+	 */
 	private boolean deleted;
 
-	/** The title of the scoreboard */
+	/**
+	 * The title of the scoreboard
+	 */
 	private String title;
 
-	/** The buffer objective (hidden) */
+	/**
+	 * The buffer objective (hidden)
+	 */
 	private Objective buffer;
 
-	/** The shown objective */
+	/**
+	 * The shown objective
+	 */
 	private Objective objective;
 
 	public PacketBoard(
-			Scoreboard scoreboard,
-			Player viewer,
-			Objective objective,
-			Objective buffer
+		Scoreboard scoreboard,
+		Player viewer,
+		Objective objective,
+		Objective buffer
 	) {
 		this.scoreboard = scoreboard;
 		this.viewer = viewer;
@@ -121,11 +134,12 @@ public class PacketBoard implements Board {
 	public void setLines(List<String> lines) {
 
 		// remove extras
-		TIntObjectIterator<String> iterator = this.lines.iterator();
+		ObjectIterator<Int2ObjectMap.Entry<String>> iterator
+			= this.lines.int2ObjectEntrySet().iterator();
 		while (iterator.hasNext()) {
-			iterator.advance();
-			if (iterator.key() > lines.size()) {
-				scoreboard.resetScores(iterator.value());
+			Int2ObjectMap.Entry<String> entry = iterator.next();
+			if (entry.getIntKey() > lines.size()) {
+				scoreboard.resetScores(entry.getValue());
 				iterator.remove();
 			}
 		}
@@ -138,8 +152,8 @@ public class PacketBoard implements Board {
 	}
 
 	@Override
-	public TIntObjectMap<String> getLines() {
-		return new TIntObjectHashMap<>(lines);
+	public Int2ObjectMap<String> getLines() {
+		return new Int2ObjectOpenHashMap<>(lines);
 	}
 
 	@Override
@@ -164,9 +178,7 @@ public class PacketBoard implements Board {
 
 	@Override
 	public void clear() {
-		// should not throw an exception since
-		// keys() returns an array copy
-		for (int score : lines.keys()) {
+		for (int score : lines.keySet()) {
 			remove(score);
 		}
 		lines.clear();
@@ -189,30 +201,30 @@ public class PacketBoard implements Board {
 		// CraftObjective is exposed by GammaSpigot, use it!
 		ScoreboardObjective handle = ((CraftObjective) objective).getHandle();
 		((CraftPlayer) viewer).getHandle()
-				.playerConnection
-				.sendPacket(new PacketPlayOutScoreboardDisplayObjective(
-						1,
-						handle
-				));
+			.b
+			.sendPacket(new PacketPlayOutScoreboardDisplayObjective(
+				1,
+				handle
+			));
 	}
 
 	private void sendScoreUpdate(
-			Objective objective,
-			String name,
-			int index,
-			boolean remove
+		Objective objective,
+		String name,
+		int index,
+		boolean remove
 	) {
-		net.minecraft.server.v1_8_R3.Scoreboard handle =
-				((CraftScoreboard) scoreboard).getHandle();
+		net.minecraft.world.scores.Scoreboard handle =
+			((CraftScoreboard) scoreboard).getHandle();
 		ScoreboardObjective objectiveHandle = ((CraftObjective) objective)
-				.getHandle();
+			.getHandle();
 
 		ScoreboardScore score = new ScoreboardScore(handle, objectiveHandle, name);
 		score.setScore(index);
 
 
 		Map<String, Map<ScoreboardObjective, ScoreboardScore>> scores =
-				handle.getPlayerScoresMap();
+			handle.getPlayerScoresMap();
 
 		Packet<?> packet;
 
@@ -224,14 +236,14 @@ public class PacketBoard implements Board {
 			packet = new PacketPlayOutScoreboardScore(name, objectiveHandle);
 		} else {
 			scores.computeIfAbsent(name, n -> new HashMap<>())
-					.put(objectiveHandle, score);
+				.put(objectiveHandle, score);
 
 			packet = new PacketPlayOutScoreboardScore(score);
 		}
 
 		((CraftPlayer) viewer).getHandle()
-				.playerConnection
-				.sendPacket(packet);
+			.b
+			.sendPacket(packet);
 	}
 
 	private void addScore(String line, int score) {
@@ -248,17 +260,17 @@ public class PacketBoard implements Board {
 
 	private void sendObjective(Objective objective, ObjectiveUpdateMode mode) {
 		ScoreboardObjective handle = ((CraftObjective) objective).getHandle();
-		((CraftPlayer) viewer).getHandle().playerConnection
-				.sendPacket(new PacketPlayOutScoreboardObjective(
-						handle,
-						mode.ordinal()
-				));
+		((CraftPlayer) viewer).getHandle().b
+			.sendPacket(new PacketPlayOutScoreboardObjective(
+				handle,
+				mode.ordinal()
+			));
 	}
 
 	private void checkNotDeleted() {
 		if (deleted) {
 			throw new IllegalStateException("You can't use a scoreboard"
-					+ " that has been deleted!");
+				+ " that has been deleted!");
 		}
 	}
 
@@ -298,8 +310,8 @@ public class PacketBoard implements Board {
 	 * exist, the method registers it.
 	 */
 	private static Objective getObjective(
-			Scoreboard scoreboard,
-			String name
+		Scoreboard scoreboard,
+		String name
 	) {
 		Objective objective = scoreboard.getObjective(name);
 		if (objective == null) {
@@ -310,16 +322,16 @@ public class PacketBoard implements Board {
 	}
 
 	public static Board create(
-			Player player,
-			String title
+		Player player,
+		String title
 	) {
 		// get the player scoreboard or create a new one
 		Scoreboard scoreboard = getScoreboard(player);
 
 		// use the player name to create the objectives
 		String subName = player.getName().length() <= 14
-				? player.getName()
-				: player.getName().substring(0, 14);
+			? player.getName()
+			: player.getName().substring(0, 14);
 
 		// get or register the objectives
 		Objective objective = getObjective(scoreboard, "m-" + subName);

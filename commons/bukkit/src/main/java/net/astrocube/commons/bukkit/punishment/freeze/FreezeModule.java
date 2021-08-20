@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.punishment.freeze;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.punishment.freeze.FrozenUserProvider;
 

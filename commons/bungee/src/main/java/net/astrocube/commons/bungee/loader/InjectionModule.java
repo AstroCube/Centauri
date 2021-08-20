@@ -1,6 +1,6 @@
 package net.astrocube.commons.bungee.loader;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.commons.bungee.cloud.CloudModule;
 import net.astrocube.commons.bungee.configuration.ConfigurationModule;
 import net.astrocube.commons.bungee.player.PlayerModule;

@@ -1,6 +1,6 @@
 package net.astrocube.commons.core.server;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.server.GameServerStartManager;
 import net.astrocube.api.core.server.ServerAliveMessage;

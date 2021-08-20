@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.punishment;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.punishment.PresetPunishmentCache;
 import net.astrocube.api.bukkit.punishment.PunishmentKickProcessor;
 import net.astrocube.api.bukkit.punishment.lookup.PunishmentIconGenerator;

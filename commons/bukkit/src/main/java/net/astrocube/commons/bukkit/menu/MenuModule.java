@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.menu;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.menu.generic.CoreShapedMenuGenerator;
 import net.astrocube.commons.bukkit.admin.AdminMenuModule;

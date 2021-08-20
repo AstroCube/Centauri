@@ -1,6 +1,6 @@
 package net.astrocube.commons.core.permission;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.permission.EffectivePermissionsExtractor;
 import net.astrocube.api.core.permission.PermissionBalancer;
 import net.astrocube.api.core.permission.PermissionEvaluator;

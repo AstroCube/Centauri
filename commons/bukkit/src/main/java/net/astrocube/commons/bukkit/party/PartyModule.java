@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.party;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.party.PartyMessenger;
 import net.astrocube.api.bukkit.party.PartyService;
 import net.astrocube.commons.bukkit.party.channel.PartyChannelModule;

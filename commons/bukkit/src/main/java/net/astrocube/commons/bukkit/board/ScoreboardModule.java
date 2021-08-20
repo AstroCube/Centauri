@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.board;
 
 import com.google.inject.Scopes;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.board.BoardProvider;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 

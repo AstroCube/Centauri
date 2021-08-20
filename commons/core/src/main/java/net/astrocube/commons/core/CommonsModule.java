@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.mrbean.MrBeanModule;
 import com.google.inject.Scopes;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.commons.core.http.HttpModule;
 import net.astrocube.commons.core.message.MessengerModule;
 import net.astrocube.commons.core.permission.CorePermissionsModule;

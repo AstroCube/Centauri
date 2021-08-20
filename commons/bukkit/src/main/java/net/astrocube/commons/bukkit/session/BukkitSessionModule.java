@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.session;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.session.InvalidSessionMessageMatcher;
 import net.astrocube.api.bukkit.session.SessionCacheInvalidator;
 import net.astrocube.api.bukkit.session.SessionValidatorHandler;

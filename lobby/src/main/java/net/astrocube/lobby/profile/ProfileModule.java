@@ -1,6 +1,6 @@
 package net.astrocube.lobby.profile;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.lobby.profile.UserProfileDisplay;
 
 public class ProfileModule extends ProtectedModule {

@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.friend;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.friend.FriendHelper;
 import net.astrocube.api.bukkit.friend.FriendshipAction;
 import net.astrocube.api.core.friend.FriendshipHandler;

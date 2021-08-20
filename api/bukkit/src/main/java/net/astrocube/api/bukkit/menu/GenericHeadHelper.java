@@ -46,7 +46,7 @@ public class GenericHeadHelper {
 	}
 
 	public ItemStack generateSkull(Player player, User user, List<String> lore) {
-		return ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+		return ItemBuilder.newSkullBuilder(Material.PLAYER_HEAD)
 			.setName(
 				displayMatcher.getDisplay(player, user).getPrefix() +
 					ChatColor.WHITE + " " + user.getDisplay()

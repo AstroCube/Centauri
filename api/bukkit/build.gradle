@@ -18,6 +18,8 @@ dependencies {
 	api "net.astrocube:apollo-api:1.0"
 	api "net.astrocube:Puppets:1.1"
 
-	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion-api:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion:$spigotVersion"
+	compileOnly "com.google.inject:guice:5.0.1"
 
 }

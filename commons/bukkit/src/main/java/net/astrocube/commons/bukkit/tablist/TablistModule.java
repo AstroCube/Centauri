@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.tablist;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.tablist.TablistCompoundApplier;
 import net.astrocube.api.bukkit.tablist.TablistGenerator;
 

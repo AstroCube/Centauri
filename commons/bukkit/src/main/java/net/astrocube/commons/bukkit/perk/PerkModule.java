@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.perk;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.perk.PerkManifestProvider;
 
 public class PerkModule extends ProtectedModule {

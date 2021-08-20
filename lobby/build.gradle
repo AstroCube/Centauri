@@ -4,5 +4,7 @@ plugins {
 
 dependencies {
 	compileOnly project(":api-bukkit")
-	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion-api:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion:$spigotVersion"
+	compileOnly "com.google.inject:guice:5.0.1"
 }

@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.whisper;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.message.ChannelBinder;
 
 public class WhisperModule extends ProtectedModule implements ChannelBinder {

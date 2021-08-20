@@ -1,6 +1,6 @@
 package net.astrocube.commons.bungee.player;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.message.ChannelBinder;
 import net.astrocube.api.core.player.ProxyKickRequest;
 

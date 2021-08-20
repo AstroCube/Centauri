@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.server;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.server.ServerDisconnectHandler;
 
 import net.astrocube.api.core.message.ChannelBinder;

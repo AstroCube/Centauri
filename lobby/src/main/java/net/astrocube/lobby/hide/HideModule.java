@@ -1,7 +1,7 @@
 package net.astrocube.lobby.hide;
 
 import com.google.inject.name.Names;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.lobby.hide.*;
 import net.astrocube.lobby.hide.applier.FriendHideApplier;
 import net.astrocube.lobby.hide.applier.PermissionHideApplier;

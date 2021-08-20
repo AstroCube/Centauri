@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.authentication.radio;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationRadio;
 import net.astrocube.api.bukkit.authentication.radio.AuthenticationSongLoader;
 

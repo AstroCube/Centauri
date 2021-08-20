@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.spectator;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.spectator.*;
 
 public class SpectatorModule extends ProtectedModule {

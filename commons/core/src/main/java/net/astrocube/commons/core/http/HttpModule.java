@@ -1,6 +1,6 @@
 package net.astrocube.commons.core.http;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.http.HttpClient;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.http.resolver.RequestExceptionHandler;

@@ -1,6 +1,6 @@
 package net.astrocube.commons.bungee.server;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.server.ServerStartResolver;
 
 public class ServerModule extends ProtectedModule {

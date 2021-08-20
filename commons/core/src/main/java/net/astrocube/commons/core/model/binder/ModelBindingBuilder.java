@@ -8,7 +8,7 @@ import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;
 import com.google.inject.util.Types;
-import me.fixeddev.inject.ProtectedBinder;
+import net.astrocube.inject.ProtectedBinder;
 import net.astrocube.api.core.model.Model;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.model.PartialModel;

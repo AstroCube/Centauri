@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.game.match.control.menu;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchLobbyMenuProvider;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchMapSwitcher;
 import net.astrocube.api.bukkit.game.match.control.menu.MatchPrivatizeSwitcher;

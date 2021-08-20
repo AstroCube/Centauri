@@ -2,7 +2,7 @@ package net.astrocube.api.bukkit.translation;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.MessageProvider;
 import me.yushust.message.bukkit.BukkitMessageAdapt;

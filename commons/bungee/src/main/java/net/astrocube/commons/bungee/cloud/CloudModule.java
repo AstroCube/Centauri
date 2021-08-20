@@ -1,6 +1,6 @@
 package net.astrocube.commons.bungee.cloud;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.core.cloud.CloudStatusProvider;
 import net.astrocube.api.core.cloud.CloudTeleport;
 import net.astrocube.api.core.cloud.InstanceNameProvider;

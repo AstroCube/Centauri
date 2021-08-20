@@ -1,6 +1,6 @@
 package net.astrocube.lobby.premium;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.lobby.premium.PremiumConfirmationMenu;
 import net.astrocube.api.bukkit.lobby.premium.PremiumSelectBook;
 import net.astrocube.api.bukkit.lobby.premium.PremiumStatusSwitcher;

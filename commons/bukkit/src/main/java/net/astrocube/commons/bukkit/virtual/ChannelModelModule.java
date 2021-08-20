@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.virtual;
 
 import com.google.inject.TypeLiteral;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannel;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelDoc;
 import net.astrocube.api.bukkit.virtual.channel.ChatChannelMessage;

@@ -12,7 +12,9 @@ dependencies {
 
 	implementation "net.wesjd:anvilgui:1.4.0-SNAPSHOT"
 
-	compileOnly "net.astrocube:gammaspigot:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion-api:$spigotVersion"
+	compileOnly "net.astrocube.orion:orion:$spigotVersion"
 	compileOnly "cloud.timo.TimoCloud:TimoCloud-API:$timocloudVersion"
+	compileOnly "com.google.inject:guice:5.0.1"
 
 }

@@ -1,6 +1,6 @@
 package net.astrocube.lobby.selector;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.game.matchmaking.MatchmakingRequester;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.gamemode.GameSelectorDisplay;

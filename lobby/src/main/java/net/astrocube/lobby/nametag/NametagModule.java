@@ -3,7 +3,7 @@ package net.astrocube.lobby.nametag;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.lobby.nametag.LobbyNametagHandler;
 import net.astrocube.api.bukkit.nametag.NametagRegistry;
 import net.astrocube.api.bukkit.nametag.packet.CoreTagPacketHandler;

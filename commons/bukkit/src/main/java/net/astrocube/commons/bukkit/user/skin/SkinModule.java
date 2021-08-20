@@ -1,6 +1,6 @@
 package net.astrocube.commons.bukkit.user.skin;
 
-import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.inject.ProtectedModule;
 import net.astrocube.api.bukkit.user.skin.CustomSkinRegistry;
 import net.astrocube.api.bukkit.user.skin.SignedSkinFetcher;
 
