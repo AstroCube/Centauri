@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
 	api project(":api-core")
-	compileOnly "io.github.waterfallmc:waterfall-api:$waterfallVersion"
+	compileOnly "net.astrocube.waterfall:waterfall-api:$waterfallVersion"
 }
