@@ -37,7 +37,7 @@ public class WhisperCommands implements CommandClass {
 		ObjectNode query = mapper.createObjectNode();
 		query.put("username", target);
 
-		userFindService.find(sender.getDatabaseIdentifier())
+		userFindService.find(sender.getDatabaseId())
 			.callback(userResponse -> {
 				if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
 					messageHandler.sendIn(sender, AlertModes.ERROR, "whisper.error");

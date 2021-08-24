@@ -29,7 +29,7 @@ public class CorePermissible extends PermissibleBase {
 	@Override
 	public boolean hasPermission(String permission) {
 		try {
-			User user = findService.findSync(player.getDatabaseIdentifier());
+			User user = findService.findSync(player.getDatabaseId());
 			return balancer.evaluateSorted(
 				user.getGroups().stream()
 					.map(UserDoc.UserGroup::getGroup)

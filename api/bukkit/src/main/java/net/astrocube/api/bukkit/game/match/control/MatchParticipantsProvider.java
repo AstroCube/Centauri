@@ -96,7 +96,7 @@ public interface MatchParticipantsProvider {
 	}
 
 	static Set<Player> getPlayers(Stream<String> ids) {
-		return ids.map(Bukkit::getPlayerByIdentifier)
+		return ids.map(Bukkit::getPlayerByDatabaseId)
 			.filter(Objects::nonNull)
 			.collect(Collectors.toSet());
 	}

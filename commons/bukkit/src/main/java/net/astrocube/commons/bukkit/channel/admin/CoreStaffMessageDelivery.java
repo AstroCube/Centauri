@@ -32,7 +32,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
 				Bukkit.getOnlinePlayers().forEach(player -> {
 					if (player.hasPermission("commons.staff.chat")) {
-						this.findService.find(player.getDatabaseIdentifier()).callback(response -> response.ifSuccessful(onlineUser -> {
+						this.findService.find(player.getDatabaseId()).callback(response -> response.ifSuccessful(onlineUser -> {
 
 							String prefix = displayMatcher.getDisplay(player, sender).getPrefix() + ChatColor.RESET + " " + sender.getDisplay();
 
@@ -47,7 +47,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 
 								mentions.forEach(mention -> {
 									if (mention.equalsIgnoreCase(onlineUser.getDisplay())) {
-										player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
+										player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1f);
 									}
 								});
 
@@ -57,7 +57,7 @@ public class CoreStaffMessageDelivery implements StaffMessageDelivery {
 										prefix + ChatColor.WHITE + ": " +
 										this.formatMessage(message.getMessage(), mentions)
 								);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 2f);
+								player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
 							}
 						}));
 					}

@@ -38,7 +38,7 @@ public class ForceSubCommand implements CommandClass {
 			return true;
 		}
 
-		String issuer = player.getDatabaseIdentifier();
+		String issuer = player.getDatabaseId();
 
 		if (second != null && second.getName().equalsIgnoreCase(player.getName())) {
 			second = null;

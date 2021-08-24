@@ -36,12 +36,12 @@ public class PlayerDamageListener implements Listener {
 		Player damager = (Player) event.getDamager();
 
 		try {
-			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 			matchOptional.ifPresent(match -> {
 				try {
 
-					if (UserMatchJoiner.checkOrigin(damager.getDatabaseIdentifier(), match)
+					if (UserMatchJoiner.checkOrigin(damager.getDatabaseId(), match)
 						== UserMatchJoiner.Origin.SPECTATING) {
 						event.setCancelled(true);
 						return;
@@ -67,12 +67,12 @@ public class PlayerDamageListener implements Listener {
 		Player player = (Player) entity;
 
 		try {
-			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 			matchOptional.ifPresent(match -> {
 				try {
 
-					if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) ==
+					if (UserMatchJoiner.checkOrigin(player.getDatabaseId(), match) ==
 						UserMatchJoiner.Origin.SPECTATING) {
 
 						if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {

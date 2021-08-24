@@ -42,7 +42,7 @@ public class AdminChatCommand implements CommandClass {
 			return true;
 		}
 
-		this.findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+		this.findService.find(player.getDatabaseId()).callback(userResponse -> {
 
 			if (!userResponse.isSuccessful()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "channel.admin.error");

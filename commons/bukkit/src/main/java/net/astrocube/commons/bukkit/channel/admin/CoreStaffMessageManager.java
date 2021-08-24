@@ -50,7 +50,7 @@ public class CoreStaffMessageManager implements StaffMessageManager {
 	@Override
 	public void sendMessage(String message, User sender, boolean important) {
 
-		Player player = Bukkit.getPlayerByIdentifier(sender.getId());
+		Player player = Bukkit.getPlayerByDatabaseId(sender.getId());
 
 		try {
 			Set<User> onlineStaff = this.staffProvider.provide();

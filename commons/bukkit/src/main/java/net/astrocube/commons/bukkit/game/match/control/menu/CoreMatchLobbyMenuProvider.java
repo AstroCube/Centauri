@@ -41,10 +41,10 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	public void create(Player player) throws Exception {
 
 		if (!plugin.getConfig().getBoolean("server.sandbox")) {
-			matchAvailabilityChecker.clearLegitMatches(player.getDatabaseIdentifier());
+			matchAvailabilityChecker.clearLegitMatches(player.getDatabaseId());
 		}
 
-		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 		if (!matchOptional.isPresent()) {
 			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
@@ -146,7 +146,7 @@ public class CoreMatchLobbyMenuProvider implements MatchLobbyMenuProvider {
 	private ItemClickable generateSummonButton(Player player) {
 		return genericHeadHelper.generateItemCancellingEvent(
 			genericHeadHelper.generateMetaAndPlace(
-				new ItemStack(Material.EYE_OF_ENDER),
+				new ItemStack(Material.ENDER_EYE),
 				messageHandler.get(player, "game.admin.lobby.icons.summon.title"),
 				messageHandler.getMany(player, "game.admin.lobby.icons.summon.lore")
 			),

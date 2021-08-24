@@ -33,7 +33,7 @@ public class ListSubCommand implements CommandClass {
 	@Command(names = "")
 	public boolean execute(@Sender Player player, @OptArg Integer providedPage) {
 		int page = providedPage == null ? 0 : providedPage - 1;
-		friendshipHandler.paginate(player.getDatabaseIdentifier(), page, FRIENDS_PER_PAGE).callback(
+		friendshipHandler.paginate(player.getDatabaseId(), page, FRIENDS_PER_PAGE).callback(
 			Callbacks.applyCommonErrorHandler("Paginate friends", paginateResult -> {
 
 				Set<Friendship> friendships = paginateResult.getData();
@@ -54,7 +54,7 @@ public class ListSubCommand implements CommandClass {
 
 					String id = friendship.getIssuer();
 
-					if (player.getDatabaseIdentifier().equals(id)) {
+					if (player.getDatabaseId().equals(id)) {
 						id = friendship.getReceiver();
 					}
 

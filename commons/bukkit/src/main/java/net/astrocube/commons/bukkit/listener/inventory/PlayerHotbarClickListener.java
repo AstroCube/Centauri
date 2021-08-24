@@ -31,7 +31,7 @@ public class PlayerHotbarClickListener implements Listener {
 				stack.getData().getItemType() != Material.AIR &&
 				NBTUtils.hasString(stack, "actionable")
 		) {
-			findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userResponse -> {
+			findService.find(event.getPlayer().getDatabaseId()).callback(userResponse -> {
 				if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
 					Bukkit.getPluginManager().callEvent(new ActionableItemEvent(
 						event.getPlayer(),

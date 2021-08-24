@@ -31,7 +31,7 @@ public class MatchStartCommand implements CommandClass {
 	@Command(names = {"start"}, permission = "commons.match.admin")
 	public boolean onCommand(@Sender Player player, @OptArg(value = "30") String seconds) {
 
-		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseId());
 
 		if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
 			return true;

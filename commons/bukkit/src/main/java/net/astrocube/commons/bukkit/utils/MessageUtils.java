@@ -4,11 +4,11 @@ import net.kyori.text.Component;
 import net.kyori.text.serializer.gson.GsonComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
-import net.minecraft.server.v1_8_R3.ChatMessage;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import net.minecraft.network.chat.ChatMessage;
+import net.minecraft.network.chat.ChatMessageType;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.PacketPlayOutChat;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public final class MessageUtils {
@@ -28,15 +28,14 @@ public final class MessageUtils {
 
 	public static void sendActionBar(Player player, String message) {
 		sendPacket(
-			player, new PacketPlayOutChat(new ChatMessage(message), (byte) 2)
+			player, new PacketPlayOutChat(new ChatMessage(message), ChatMessageType.c, null)
 		);
 	}
 
 	private static void sendPacket(Player player, Packet<?> packet) {
 		((CraftPlayer) player)
 			.getHandle()
-			.playerConnection
-			.sendPacket(packet);
+			.b.sendPacket(packet);
 	}
 
 }

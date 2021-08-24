@@ -2,9 +2,19 @@ package net.astrocube.commons.bukkit.nametag;
 
 import net.astrocube.api.bukkit.nametag.Nametag;
 import net.astrocube.api.bukkit.nametag.types.AbstractRenderedNametag;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.network.chat.ChatMessage;
+import net.minecraft.network.protocol.game.PacketPlayOutAttachEntity;
+import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
+import net.minecraft.network.protocol.game.PacketPlayOutEntityMetadata;
+import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.network.syncher.DataWatcher;
+import net.minecraft.network.syncher.DataWatcherObject;
+import net.minecraft.network.syncher.DataWatcherRegistry;
+import net.minecraft.server.network.PlayerConnection;
+import net.minecraft.world.entity.decoration.EntityArmorStand;
+import net.minecraft.world.entity.monster.EntitySlime;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -31,12 +41,12 @@ public class SimpleRenderedNametag extends AbstractRenderedNametag {
 
 		EntityArmorStand armorStand = (EntityArmorStand) standEntity.getEntityObject();
 		armorStand.setCustomNameVisible(!tag.isEmpty());
-		armorStand.setCustomName(tag);
+		armorStand.setCustomName(new ChatMessage(tag));
 
 		DataWatcher dataWatcher = new DataWatcher(null);
-		dataWatcher.a(2, tag);
+		dataWatcher.register(new DataWatcherObject<>(2, DataWatcherRegistry.f), Optional.of(new ChatMessage(tag)));
 
-		((CraftPlayer) this.getViewer()).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityMetadata(
+		((CraftPlayer) this.getViewer()).getHandle().b.sendPacket(new PacketPlayOutEntityMetadata(
 			armorStand.getId(),
 			dataWatcher,
 			true
@@ -45,7 +55,7 @@ public class SimpleRenderedNametag extends AbstractRenderedNametag {
 
 	@Override
 	public void hide() {
-		PlayerConnection connection = ((CraftPlayer) this.viewer).getHandle().playerConnection;
+		PlayerConnection connection = ((CraftPlayer) this.viewer).getHandle().b;
 		this.spawnedEntities.forEach(entity -> connection.sendPacket(new PacketPlayOutEntityDestroy(entity.getEntityId())));
 	}
 
@@ -85,10 +95,10 @@ public class SimpleRenderedNametag extends AbstractRenderedNametag {
 			location.getZ()
 		);
 
-		PlayerConnection playerConnection = ((CraftPlayer) this.viewer).getHandle().playerConnection;
+		PlayerConnection playerConnection = ((CraftPlayer) this.viewer).getHandle().b;
 		playerConnection.sendPacket(new PacketPlayOutSpawnEntityLiving(slime));
 		playerConnection.sendPacket(new PacketPlayOutSpawnEntityLiving(armorstand));
-		playerConnection.sendPacket(new PacketPlayOutAttachEntity(0, slime, ((CraftPlayer) this.getRecipient()).getHandle()));
-		playerConnection.sendPacket(new PacketPlayOutAttachEntity(0, armorstand, slime));
+		playerConnection.sendPacket(new PacketPlayOutAttachEntity(slime, ((CraftPlayer) this.getRecipient()).getHandle()));
+		playerConnection.sendPacket(new PacketPlayOutAttachEntity(armorstand, slime));
 	}
 }

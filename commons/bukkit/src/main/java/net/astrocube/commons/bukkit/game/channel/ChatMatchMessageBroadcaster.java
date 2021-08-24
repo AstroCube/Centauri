@@ -37,7 +37,7 @@ public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
 	@Override
 	public void sendMessage(String message, Player player, boolean shout, boolean all) throws Exception {
 
-		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 		if (!matchOptional.isPresent()) {
 			messageHandler.sendIn(player, AlertModes.ERROR, "game.spectator.error");
@@ -47,7 +47,7 @@ public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
 		Match match = matchOptional.get();
 
 		UserMatchJoiner.Origin origin =
-			UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match);
+			UserMatchJoiner.checkOrigin(player.getDatabaseId(), match);
 
 		Optional<ChatChannel> channel = matchChannelProvider.retrieveChannel(match.getId());
 
@@ -59,7 +59,7 @@ public class ChatMatchMessageBroadcaster implements MatchMessageBroadcaster {
 		ChatChannelMessageDoc.Creation channelMessage = new ChatChannelMessageDoc.Creation() {
 			@Override
 			public String getSender() {
-				return player.getDatabaseIdentifier();
+				return player.getDatabaseId();
 			}
 
 			@Override

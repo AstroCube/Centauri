@@ -41,9 +41,9 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
 
 		Bukkit.getOnlinePlayers().forEach(online -> {
 
-			if (!online.getDatabaseIdentifier().equals(player.getDatabaseIdentifier())) {
+			if (!online.getDatabaseId().equals(player.getDatabaseId())) {
 
-				findService.find(online.getDatabaseIdentifier()).callback(onlineCallback -> {
+				findService.find(online.getDatabaseId()).callback(onlineCallback -> {
 
 					onlineCallback.ifSuccessful(onlineUser -> {
 
@@ -74,7 +74,7 @@ public class CoreLobbyNametagHandler implements LobbyNametagHandler {
 
 	@Override
 	public void remove(Player player) {
-		nametagRegistry.delete(player.getDatabaseIdentifier());
+		nametagRegistry.delete(player.getDatabaseId());
 	}
 
 	private String getTranslatedTag(Player viewer, User user) {

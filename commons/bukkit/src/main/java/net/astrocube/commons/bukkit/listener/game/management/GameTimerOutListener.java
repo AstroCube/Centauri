@@ -84,7 +84,7 @@ public class GameTimerOutListener implements Listener {
 				Bukkit.getScheduler().runTask(plugin, () -> {
 					balanced.stream().flatMap(p -> p.getMembers().stream().map(MatchDoc.TeamMember::getUser)).forEach(player -> {
 
-						Player online = Bukkit.getPlayerByIdentifier(player);
+						Player online = Bukkit.getPlayerByDatabaseId(player);
 
 						if (online != null) {
 							online.getInventory().clear();

@@ -41,10 +41,10 @@ public class AuthenticationSuccessListener implements Listener {
 	public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
 		try {
 
-			User user = findService.findSync(event.getPlayer().getDatabaseIdentifier());
+			User user = findService.findSync(event.getPlayer().getDatabaseId());
 
 			sessionRegistryManager.authorizeSession(
-				event.getPlayer().getDatabaseIdentifier(),
+				event.getPlayer().getDatabaseId(),
 				event.getGateway().getName()
 			);
 

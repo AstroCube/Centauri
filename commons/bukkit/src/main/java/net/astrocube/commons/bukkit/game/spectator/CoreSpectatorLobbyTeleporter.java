@@ -26,7 +26,7 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 
 		messageHandler.sendIn(player, AlertModes.MUTED, "game.return.schedule");
 
-		scheduledTeleports.put(player.getDatabaseIdentifier(),
+		scheduledTeleports.put(player.getDatabaseId(),
 			Bukkit.getScheduler().runTaskLater(plugin, () -> {
 				serverTeleportRetry.attemptGroupTeleport(
 					player.getName(),
@@ -34,7 +34,7 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 					1,
 					3
 				);
-				scheduledTeleports.remove(player.getDatabaseIdentifier());
+				scheduledTeleports.remove(player.getDatabaseId());
 			}, 20 * 5L).getTaskId()
 		);
 
@@ -43,7 +43,7 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 	@Override
 	public void cancelTeleport(Player player) {
 		messageHandler.sendIn(player, AlertModes.MUTED, "game.return.cancel");
-		Integer taskId = scheduledTeleports.remove(player.getDatabaseIdentifier());
+		Integer taskId = scheduledTeleports.remove(player.getDatabaseId());
 		if (taskId != null) {
 			Bukkit.getScheduler().cancelTask(taskId);
 		}
@@ -51,7 +51,7 @@ public class CoreSpectatorLobbyTeleporter implements SpectatorLobbyTeleporter {
 
 	@Override
 	public boolean hasScheduledTeleport(Player player) {
-		return scheduledTeleports.get(player.getDatabaseIdentifier()) != null;
+		return scheduledTeleports.get(player.getDatabaseId()) != null;
 	}
 
 }

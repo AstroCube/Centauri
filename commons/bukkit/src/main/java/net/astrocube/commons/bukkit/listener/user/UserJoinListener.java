@@ -23,7 +23,7 @@ import net.astrocube.commons.bukkit.permission.CorePermissible;
 import net.astrocube.puppets.packet.PacketHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -75,7 +75,7 @@ public class UserJoinListener implements Listener {
 		ServerDoc.Type type = ServerDoc.Type.valueOf(plugin.getConfig().getString("server.type"));
 		event.setJoinMessage("");
 
-		this.userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
+		this.userFindService.find(player.getDatabaseId()).callback(response -> {
 			try {
 
 				if (!response.isSuccessful() || !response.getResponse().isPresent())

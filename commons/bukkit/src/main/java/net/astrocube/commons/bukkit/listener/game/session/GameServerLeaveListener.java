@@ -50,7 +50,7 @@ public class GameServerLeaveListener implements Listener {
 									.findAny()
 									.ifPresent(sub -> {
 										try {
-											matchService.disqualify(match.getId(), event.getPlayer().getDatabaseIdentifier());
+											matchService.disqualify(match.getId(), event.getPlayer().getDatabaseId());
 											System.out.println("CALLED DISQUALIFICATION");
 										} catch (Exception exception) {
 											plugin.getLogger().log(Level.SEVERE, "Error while disqualifying player", exception);

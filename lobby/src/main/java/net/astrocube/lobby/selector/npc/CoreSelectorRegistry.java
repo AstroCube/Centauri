@@ -103,7 +103,7 @@ public class CoreSelectorRegistry implements SelectorRegistry {
 			20 * 30L
 		).getTaskId();
 
-		assignedTasks.put(player.getDatabaseIdentifier(), task);
+		assignedTasks.put(player.getDatabaseId(), task);
 	}
 
 	private void updateHolograms(Player player) {

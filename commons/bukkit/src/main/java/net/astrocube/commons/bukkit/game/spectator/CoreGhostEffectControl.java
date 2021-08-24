@@ -2,11 +2,11 @@ package net.astrocube.commons.bukkit.game.spectator;
 
 import com.google.inject.Singleton;
 import net.astrocube.api.bukkit.game.spectator.GhostEffectControl;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
-import net.minecraft.server.v1_8_R3.Scoreboard;
-import net.minecraft.server.v1_8_R3.ScoreboardTeam;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam;
+import net.minecraft.world.scores.Scoreboard;
+import net.minecraft.world.scores.ScoreboardTeam;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -38,7 +38,20 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 		System.out.println("InternalGhostEffectControl");
 		if (!players.contains(player.getName())) {
 			players.add(player.getName());
-			sendPacket(player, new PacketPlayOutScoreboardTeam(scoreboardTeam, players, 3));
+
+			// TODO: Modify spigot so we don't have to do this trick
+			Iterator<String> iterator = players.iterator();
+			PacketPlayOutScoreboardTeam packet = PacketPlayOutScoreboardTeam.a(
+				scoreboardTeam,
+				iterator.next(),
+				PacketPlayOutScoreboardTeam.a.a
+			);
+
+			while (iterator.hasNext()) {
+				packet.e().add(iterator.next());
+			}
+
+			sendPacket(player, packet);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
 		}
 	}
@@ -55,8 +68,7 @@ public class CoreGhostEffectControl implements GhostEffectControl {
 
 	private void sendPacket(Player player, Packet<?> packet) {
 		((CraftPlayer) player)
-			.getHandle()
-			.playerConnection
+			.getHandle().b
 			.sendPacket(packet);
 	}
 

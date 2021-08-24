@@ -31,7 +31,7 @@ public class PartyInviteCommand implements CommandClass {
 			}
 		}
 
-		String id = player.getDatabaseIdentifier();
+		String id = player.getDatabaseId();
 		Party party = partyService.getPartyOf(id)
 			.orElseGet(() -> {
 				messageHandler.send(player, "created-party");

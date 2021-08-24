@@ -43,11 +43,11 @@ public class MatchmakingRequester {
 					return;
 				}
 
-				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseId());
 				Set<String> involved = new HashSet<>();
 
 				if (optional.isPresent()) {
-					if (!optional.get().getLeader().equals(player.getDatabaseIdentifier())) {
+					if (!optional.get().getLeader().equals(player.getDatabaseId())) {
 						messageHandler.send(player, "no-leader-party-for-select-game");
 						return;
 					}

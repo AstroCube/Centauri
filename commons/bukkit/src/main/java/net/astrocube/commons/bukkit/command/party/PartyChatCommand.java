@@ -27,7 +27,7 @@ public class PartyChatCommand implements CommandClass {
 
 	@Command(names = "")
 	public void main(@Sender Player sender, @Text String message) {
-		Optional<Party> optional = partyService.getPartyOf(sender.getDatabaseIdentifier());
+		Optional<Party> optional = partyService.getPartyOf(sender.getDatabaseId());
 
 		if (!optional.isPresent()) {
 			messageHandler.send(sender, "no-party-now");

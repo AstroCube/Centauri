@@ -49,7 +49,7 @@ public class UserAuthorization {
 
 	public static UserAuthorization withPassword(Player player, String password) {
 		return new UserAuthorization(
-				player.getDatabaseIdentifier(),
+				player.getDatabaseId(),
 				password,
 				player.getAddress().getAddress().toString().replace("/", "")
 		);

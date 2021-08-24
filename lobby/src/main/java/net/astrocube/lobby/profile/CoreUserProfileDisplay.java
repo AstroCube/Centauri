@@ -9,7 +9,6 @@ import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 import team.unnamed.gui.core.item.type.ItemBuilder;
@@ -30,7 +29,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			4
 		)
 			.addItem(ItemClickable.builder(4)
-				.setItemStack(ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+				.setItemStack(ItemBuilder.newSkullBuilder(Material.PLAYER_HEAD)
 					.setOwner(player.getName())
 					.setName(messageHandler.replacing(player, "lobby.profile.head", "%player_name%", player.getName()))
 					.setLore(messageHandler.getMany(player, "lobby.profile.head-lore"))
@@ -57,7 +56,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			)
 			.addItem(ItemClickable.builderCancellingEvent(13)
 				.setItemStack(ItemBuilder
-					.newBuilder(Material.REDSTONE_COMPARATOR)
+					.newBuilder(Material.COMPARATOR)
 					.setName(messageHandler.get(player, "lobby.profile.options"))
 					.setLore(messageHandler.getMany(player, "lobby.profile.options-lore"))
 					.build()
@@ -65,7 +64,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			)
 			.addItem(ItemClickable.builder(14)
 				.setItemStack(ItemBuilder
-					.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+					.newSkullBuilder(Material.PLAYER_HEAD)
 					.setUrl(TEXTURES_URL + "c69196b330c6b8962f23ad5627fb6ecce472eaf5c9d44f791f6709c7d0f4dece")
 					.setName(messageHandler.get(player, "lobby.profile.language"))
 					.setLore(messageHandler.getMany(player, "lobby.profile.language-lore"))
@@ -77,7 +76,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			)
 			.addItem(ItemClickable.builder(20)
 				.setItemStack(ItemBuilder
-					.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+					.newSkullBuilder(Material.PLAYER_HEAD)
 					.setUrl(TEXTURES_URL + "686d3c12cfcbea83a50292a77fc1f08f94c4e69e147f1de6de2e99e8d4efc635")
 					.setName(messageHandler.get(player, "lobby.profile.premium"))
 					.setLore(messageHandler.getMany(player, "lobby.profile.premium-lore"))
@@ -89,7 +88,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 				}).build()
 			).addItem(ItemClickable.builderCancellingEvent(21)
 				.setItemStack(ItemBuilder
-					.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+					.newSkullBuilder(Material.PLAYER_HEAD)
 					.setUrl(TEXTURES_URL + "deb46126904463f07ecfc972aaa37373a22359b5ba271821b689cd5367f75762")
 					.setName(messageHandler.get(player, "lobby.profile.social"))
 					.setLore(messageHandler.getMany(player, "lobby.profile.social-lore"))
@@ -105,7 +104,7 @@ public class CoreUserProfileDisplay implements UserProfileDisplay {
 			)
 			.addItem(ItemClickable.builderCancellingEvent(24)
 				.setItemStack(ItemBuilder
-					.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+					.newSkullBuilder(Material.PLAYER_HEAD)
 					.setUrl(TEXTURES_URL + "4d42337be0bdca2128097f1c5bb1109e5c633c17926af5fb6fc20000011aeb53")
 					.setName(messageHandler.get(player, "lobby.profile.discord"))
 					.setLore(messageHandler.get(player, "lobby.profile.discord-lore"))

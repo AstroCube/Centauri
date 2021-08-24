@@ -30,7 +30,7 @@ public class CoreScoreboardProcessor implements ScoreboardProcessor {
 		Board board = boardProvider.get(player)
 				.orElseGet(() -> boardProvider.create(player, messageHandler.get(player, "lobby.scoreboard.title")));
 
-		User user = findService.findSync(player.getDatabaseIdentifier());
+		User user = findService.findSync(player.getDatabaseId());
 
 		TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, user);
 

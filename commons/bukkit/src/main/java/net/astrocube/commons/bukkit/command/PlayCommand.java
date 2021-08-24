@@ -74,11 +74,11 @@ public class PlayCommand implements CommandClass {
 
 			try {
 
-				matchAvailabilityChecker.clearLegitMatches(player.getDatabaseIdentifier());
+				matchAvailabilityChecker.clearLegitMatches(player.getDatabaseId());
 
-				Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
+				Optional<Match> match = actualMatchCache.get(player.getDatabaseId());
 
-				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+				Optional<Party> optional = partyService.getPartyOf(player.getDatabaseId());
 				Set<String> involved = new HashSet<>();
 
 				if (optional.isPresent()) {

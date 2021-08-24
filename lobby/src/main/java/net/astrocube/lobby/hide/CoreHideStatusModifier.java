@@ -37,8 +37,8 @@ public class CoreHideStatusModifier implements HideStatusModifier {
 
 		if (player != null) {
 			Bukkit.getOnlinePlayers().forEach(online -> {
-				if (!online.getDatabaseIdentifier().equals(user.getId())) {
-					findService.find(online.getDatabaseIdentifier()).callback(userResponse -> {
+				if (!online.getDatabaseId().equals(user.getId())) {
+					findService.find(online.getDatabaseId()).callback(userResponse -> {
 						if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
 							individualApply(
 								user,

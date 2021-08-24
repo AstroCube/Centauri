@@ -32,9 +32,9 @@ public class FriendForceListener implements Listener {
 
 		FriendshipDoc.Creation friendship = event.getAction().getFriendship();
 
-		Player issuer = Bukkit.getPlayerByIdentifier(friendship.getIssuer());
-		Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
-		Player sender = Bukkit.getPlayerByIdentifier(friendship.getSender());
+		Player issuer = Bukkit.getPlayerByDatabaseId(friendship.getIssuer());
+		Player receiver = Bukkit.getPlayerByDatabaseId(friendship.getReceiver());
+		Player sender = Bukkit.getPlayerByDatabaseId(friendship.getSender());
 
 		if (issuer != null) {
 			alertForced(issuer.getPlayer(), friendship);
@@ -56,7 +56,7 @@ public class FriendForceListener implements Listener {
 
 		if (simple) {
 
-			boolean sender = player.getDatabaseIdentifier().equalsIgnoreCase(relation.getIssuer());
+			boolean sender = player.getDatabaseId().equalsIgnoreCase(relation.getIssuer());
 
 			String target = sender ?
 				relation.getSender() : relation.getReceiver();
@@ -83,7 +83,7 @@ public class FriendForceListener implements Listener {
 
 		} else {
 
-			if (player.getDatabaseIdentifier().equalsIgnoreCase(relation.getIssuer())) {
+			if (player.getDatabaseId().equalsIgnoreCase(relation.getIssuer())) {
 				sendMultiForceMessage(
 					player,
 					relation.getSender(),
@@ -94,7 +94,7 @@ public class FriendForceListener implements Listener {
 				sendMultiForceMessage(
 					player,
 					relation.getIssuer(),
-					player.getDatabaseIdentifier().equalsIgnoreCase(relation.getSender()) ?
+					player.getDatabaseId().equalsIgnoreCase(relation.getSender()) ?
 						relation.getIssuer() : relation.getSender(),
 					relation.isAlerted() ? "friend.request.forced.multi.target" : "friend.request.forced.multi.silent"
 				);

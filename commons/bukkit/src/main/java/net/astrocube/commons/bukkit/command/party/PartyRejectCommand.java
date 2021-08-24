@@ -29,7 +29,7 @@ public class PartyRejectCommand implements CommandClass {
 			return;
 		}
 
-		Player inviter = Bukkit.getPlayerByIdentifier(optInviter.get());
+		Player inviter = Bukkit.getPlayerByDatabaseId(optInviter.get());
 		if (inviter != null) {
 			messageHandler.sendReplacing(
 				inviter, "rejected-party-invitation",

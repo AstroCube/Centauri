@@ -45,7 +45,7 @@ public class CoreMatchMapUpdater implements MatchMapUpdater {
 
 	private void alertMessage(String id, String map, String mode, String translation) {
 
-		Player player = Bukkit.getPlayerByIdentifier(id);
+		Player player = Bukkit.getPlayerByDatabaseId(id);
 
 		if (player != null) {
 			Bukkit.getScheduler().runTask(

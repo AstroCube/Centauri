@@ -23,7 +23,7 @@ public class ReplyCommand implements CommandClass {
 
 	@Command(names = "")
 	public void execute(@Sender Player player, @Text String message) {
-		userFindService.find(player.getDatabaseIdentifier())
+		userFindService.find(player.getDatabaseId())
 			.callback(userResponse -> {
 
 				if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {

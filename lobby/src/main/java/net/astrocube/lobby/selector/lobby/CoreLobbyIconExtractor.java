@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.spigotmc.SpigotConfig;
 import team.unnamed.gui.abstraction.item.ItemClickable;
 
 import java.util.ArrayList;
@@ -37,14 +38,14 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 			color = ChatColor.RED;
 			translation = "full";
 			status = ServerSwitchStatus.FULL;
-			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 14);
+			itemStack = new ItemStack(Material.RED_STAINED_GLASS, wrapper.getNumber());
 		}
 
-		if (wrapper.getName().equalsIgnoreCase(Bukkit.getServerName())) {
+		if (wrapper.getName().equalsIgnoreCase()) {
 			color = ChatColor.GREEN;
 			translation = "already";
 			status = ServerSwitchStatus.CYCLIC;
-			itemStack = new ItemStack(Material.STAINED_GLASS, wrapper.getNumber(), (short) 13);
+			itemStack = new ItemStack(Material.GREEN_STAINED_GLASS, wrapper.getNumber());
 		}
 
 		ItemMeta meta = itemStack.getItemMeta();

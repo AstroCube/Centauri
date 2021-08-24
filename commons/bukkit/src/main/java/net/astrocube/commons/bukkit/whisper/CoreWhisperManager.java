@@ -1,7 +1,6 @@
 package net.astrocube.commons.bukkit.whisper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import me.fixeddev.minecraft.player.Player;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.core.concurrent.ExecutorServiceProvider;
 import net.astrocube.api.core.message.Channel;
@@ -10,6 +9,7 @@ import net.astrocube.api.core.service.update.UpdateService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.api.core.virtual.user.UserDoc;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class CoreWhisperManager implements WhisperManager {
 			return CompletableFuture.completedFuture(new WhisperResponse(WhisperResponse.Result.FAILED_OFFLINE));
 		}
 
-		Player targetPlayer = Bukkit.getPlayerByIdentifier(target.getId());
+		Player targetPlayer = Bukkit.getPlayerByDatabaseId(target.getId());
 
 		WhisperMessage whisperMessage = new WhisperMessage(senderUser, target, message);
 

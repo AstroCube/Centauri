@@ -28,7 +28,7 @@ public class PremiumGateway implements AuthenticationGateway {
 	@Override
 	public void startProcessing(User user) {
 
-		Player player = Bukkit.getPlayerByIdentifier(user.getId());
+		Player player = Bukkit.getPlayerByDatabaseId(user.getId());
 
 		if (player == null) {
 			return;

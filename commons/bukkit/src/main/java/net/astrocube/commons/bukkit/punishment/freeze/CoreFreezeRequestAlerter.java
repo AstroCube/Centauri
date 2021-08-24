@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.punishment.freeze.FreezeRequestAlerter;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.github.paperspigot.Title;
 
 @Singleton
 public class CoreFreezeRequestAlerter implements FreezeRequestAlerter {
@@ -17,13 +16,14 @@ public class CoreFreezeRequestAlerter implements FreezeRequestAlerter {
 	@Override
 	public void alert(Player player) {
 
-		Title title = new Title(
+		player.sendTitle(
 			messageHandler.get(player, "punish.freeze.alert.title"),
-			messageHandler.get(player, "punish.freeze.alert.sub")
+			messageHandler.get(player, "punish.freeze.alert.sub"),
+			5,
+			40,
+			10
 		);
-
-		player.sendTitle(title);
-		player.playSound(player.getLocation(), Sound.WITHER_SPAWN, 1f, 1f);
+		player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1f, 1f);
 		messageHandler.send(player, "punish.freeze.alert.text");
 
 	}

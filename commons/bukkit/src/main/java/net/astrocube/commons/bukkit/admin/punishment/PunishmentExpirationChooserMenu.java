@@ -77,7 +77,7 @@ public class PunishmentExpirationChooserMenu {
 
 		if (punishmentBuilder.getType() == PunishmentDoc.Identity.Type.BAN) {
 			guiBuilder.addItem(ItemClickable.builder(20)
-				.setItemStack(ItemBuilder.newBuilder(Material.WORKBENCH)
+				.setItemStack(ItemBuilder.newBuilder(Material.CRAFTING_TABLE)
 					.setName(messageHandler.get(player, "punishment-expiration-menu.items.edit.name"))
 					.setLore(
 						messageHandler.replacingMany(

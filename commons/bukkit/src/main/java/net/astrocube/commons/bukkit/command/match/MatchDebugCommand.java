@@ -31,7 +31,7 @@ public class MatchDebugCommand implements CommandClass {
 
 		try {
 
-			Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> match = actualMatchCache.get(player.getDatabaseId());
 
 			if (match.isPresent()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "game.matchmaking.already");

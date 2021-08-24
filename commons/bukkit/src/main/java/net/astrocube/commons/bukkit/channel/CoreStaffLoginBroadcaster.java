@@ -25,7 +25,7 @@ public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
 			if (!player.hasPermission("commons.staff.chat")) {
 				return;
 			}
-			findService.find(player.getDatabaseIdentifier()).callback(userCallback ->
+			findService.find(player.getDatabaseId()).callback(userCallback ->
 				userCallback.ifSuccessful(user -> {
 
 					String prefix = displayMatcher.getDisplay(player, session).getPrefix()
@@ -47,7 +47,7 @@ public class CoreStaffLoginBroadcaster implements StaffLoginBroadcaster {
 							"%player%", prefix
 						);
 
-						player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 2f);
+						player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 2f);
 
 					}
 

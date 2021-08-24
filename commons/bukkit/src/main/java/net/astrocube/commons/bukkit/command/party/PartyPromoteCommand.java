@@ -27,8 +27,8 @@ public class PartyPromoteCommand
 		@Sender Player player,
 		Player target
 	) {
-		String playerId = player.getDatabaseIdentifier();
-		String targetId = target.getDatabaseIdentifier();
+		String playerId = player.getDatabaseId();
+		String targetId = target.getDatabaseId();
 
 		Optional<Party> optParty = partyService.getPartyOf(playerId);
 		Party party;

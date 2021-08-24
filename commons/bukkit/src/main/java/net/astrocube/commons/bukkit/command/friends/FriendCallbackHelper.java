@@ -26,7 +26,7 @@ public class FriendCallbackHelper {
 
 	public void findUsers(Player player, OfflinePlayer target, BiConsumer<User, User> callback) {
 
-		userFindService.find(player.getDatabaseIdentifier())
+		userFindService.find(player.getDatabaseId())
 			.callback(Callbacks.applyCommonErrorHandler("Find userdata of " + player.getName(),
 				user -> {
 

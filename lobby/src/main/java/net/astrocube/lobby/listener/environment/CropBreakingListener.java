@@ -11,7 +11,7 @@ public class CropBreakingListener implements Listener {
 	@EventHandler
 	public void onCropBreak(PlayerInteractEvent event) {
 		if (event.getAction() == Action.PHYSICAL
-			&& event.getClickedBlock().getType() == Material.SOIL) {
+			&& event.getClickedBlock().getType() == Material.FARMLAND) {
 			event.setCancelled(true);
 		}
 	}

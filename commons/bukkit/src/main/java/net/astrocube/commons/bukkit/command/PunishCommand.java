@@ -32,7 +32,7 @@ public class PunishCommand implements CommandClass {
 		ObjectNode nodes = objectMapper.createObjectNode();
 		nodes.put("username", punished);
 
-		findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+		findService.find(player.getDatabaseId()).callback(userResponse -> {
 
 			if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");

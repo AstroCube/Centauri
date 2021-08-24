@@ -25,20 +25,20 @@ public class PartyLeaveCommand implements CommandClass {
 	public void leave(
 		@Sender Player player
 	) {
-		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
+		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseId());
 		if (!optParty.isPresent()) {
 			messageHandler.send(player, "cannot-leave.not-in-party");
 		} else {
 			Party party = optParty.get();
-			if (party.getLeader().equals(player.getDatabaseIdentifier())) {
+			if (party.getLeader().equals(player.getDatabaseId())) {
 				messageHandler.send(player, "cannot-leave.leader");
 				return;
 			}
-			party.getMembers().remove(player.getDatabaseIdentifier());
+			party.getMembers().remove(player.getDatabaseId());
 			partyUpdateService.update(party);
 			messageHandler.send(player, "left-party");
 			for (String memberId : party.getMembers()) {
-				Player member = Bukkit.getPlayerByIdentifier(memberId);
+				Player member = Bukkit.getPlayerByDatabaseId(memberId);
 				if (member != null) {
 					messageHandler.sendReplacing(
 						member, "other-left-party",

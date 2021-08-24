@@ -11,7 +11,7 @@ public class ProfileGadgetStack {
 
 	public static ItemStack get(MessageHandler provider, Player player) {
 		return NBTUtils.addString(
-			ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+			ItemBuilder.newSkullBuilder(Material.PLAYER_HEAD)
 				.setOwner(player.getName())
 				.setName(provider.get(player, "lobby.profile.gadget"))
 				.setLore(provider.getMany(player, "lobby.profile.gadget-lore"))

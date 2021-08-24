@@ -22,7 +22,7 @@ public class MatchInvalidateCommand implements CommandClass {
 	@Command(names = {"invalidate"}, permission = "commons.match.invalidate")
 	public boolean onCommand(@Sender Player player) {
 
-		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseId());
 
 		if (!matchOptional.isPresent()) {
 			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");

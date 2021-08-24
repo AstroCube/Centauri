@@ -45,14 +45,14 @@ public class GameControlHelper {
 	public static Set<Player> getPlayersFromRequest(MatchmakingRequest request) {
 		Set<Player> players = new HashSet<>();
 
-		Player requester = Bukkit.getPlayerByIdentifier(request.getRequesters().getResponsible());
+		Player requester = Bukkit.getPlayerByDatabaseId(request.getRequesters().getResponsible());
 
 		if (requester != null) {
 			players.add(requester);
 		}
 
 		request.getRequesters().getInvolved().forEach(user -> {
-			Player involved = Bukkit.getPlayerByIdentifier(user);
+			Player involved = Bukkit.getPlayerByDatabaseId(user);
 
 			if (involved != null) {
 				players.add(involved);

@@ -29,8 +29,8 @@ public class CoreHideJoinProcessor implements HideJoinProcessor {
 		Player userPlayer = Bukkit.getPlayer(user.getUsername());
 
 		Bukkit.getOnlinePlayers().forEach(player -> {
-			if (!player.getDatabaseIdentifier().equalsIgnoreCase(user.getId())) {
-				findService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+			if (!player.getDatabaseId().equalsIgnoreCase(user.getId())) {
+				findService.find(player.getDatabaseId()).callback(userResponse -> {
 
 					if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
 						User target = userResponse.getResponse().get();

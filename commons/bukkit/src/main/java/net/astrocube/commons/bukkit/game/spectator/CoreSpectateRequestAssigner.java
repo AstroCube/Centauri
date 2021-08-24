@@ -31,7 +31,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 	@Override
 	public void assignRequest(String gameMode, @Nullable String subMode, String requester) {
 
-		Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByDatabaseId(requester);
 
 		if (player != null) {
 			ObjectNode node = mapper.createObjectNode();
@@ -67,7 +67,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 	@Override
 	public void assignRequestToPlayer(String match, String requester, String target) {
 
-		Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByDatabaseId(requester);
 
 		if (player != null) {
 			try {
@@ -90,7 +90,7 @@ public class CoreSpectateRequestAssigner implements SpectateRequestAssigner {
 
 	private void successAssignSpectate(Match match, String requester, String serverId) {
 
-		Player player = Bukkit.getPlayerByIdentifier(requester);
+		Player player = Bukkit.getPlayerByDatabaseId(requester);
 
 		if (player != null) {
 

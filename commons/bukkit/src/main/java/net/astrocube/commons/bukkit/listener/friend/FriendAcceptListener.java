@@ -39,8 +39,8 @@ public class FriendAcceptListener implements Listener {
 
 		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-		Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
-		Player sender = Bukkit.getPlayerByIdentifier(friendship.getSender());
+		Player receiver = Bukkit.getPlayerByDatabaseId(friendship.getReceiver());
+		Player sender = Bukkit.getPlayerByDatabaseId(friendship.getSender());
 
 		if (receiver != null) {
 			alertFriendship(receiver, friendship);
@@ -54,7 +54,7 @@ public class FriendAcceptListener implements Listener {
 
 	private void alertFriendship(Player player, FriendshipDoc.Relation relation) {
 
-		String related = player.getDatabaseIdentifier().equalsIgnoreCase(relation.getSender())
+		String related = player.getDatabaseId().equalsIgnoreCase(relation.getSender())
 			? relation.getReceiver() : relation.getSender();
 
 		findService.find(related).callback(userResponse ->

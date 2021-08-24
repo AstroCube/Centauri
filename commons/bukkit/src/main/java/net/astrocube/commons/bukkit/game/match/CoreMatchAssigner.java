@@ -100,7 +100,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 	@Override
 	public void unAssign(Player player) throws Exception {
 
-		Optional<MatchSubscription> optSubscription = actualMatchCache.getSubscription(player.getDatabaseIdentifier());
+		Optional<MatchSubscription> optSubscription = actualMatchCache.getSubscription(player.getDatabaseId());
 		if (!optSubscription.isPresent()) {
 			return;
 		}
@@ -113,8 +113,8 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 		switch (subscription.getType()) {
 			case SPECTATOR: {
-				matchService.assignSpectator(match, player.getDatabaseIdentifier(), false);
-				match.getSpectators().remove(player.getDatabaseIdentifier());
+				matchService.assignSpectator(match, player.getDatabaseId(), false);
+				match.getSpectators().remove(player.getDatabaseId());
 				origin = UserMatchJoiner.Origin.SPECTATING;
 				break;
 			}
@@ -122,8 +122,8 @@ public class CoreMatchAssigner implements MatchAssigner {
 			case ASSIGNATION_RESPONSIBLE: {
 				// TODO: Refactor this XD
 				match.getPending().removeIf(assignable -> {
-					boolean isResponsible = assignable.getResponsible().equals(player.getDatabaseIdentifier());
-					boolean isInvolved = assignable.getInvolved().contains(player.getDatabaseIdentifier());
+					boolean isResponsible = assignable.getResponsible().equals(player.getDatabaseId());
+					boolean isInvolved = assignable.getInvolved().contains(player.getDatabaseId());
 					if (isResponsible || isInvolved) {
 						if (isResponsible && assignable.getInvolved().isEmpty()) {
 							return true;
@@ -134,14 +134,14 @@ public class CoreMatchAssigner implements MatchAssigner {
 							assignable.setResponsible(newResponsible);
 							return false;
 						} else {
-							assignable.getInvolved().remove(player.getDatabaseIdentifier());
+							assignable.getInvolved().remove(player.getDatabaseId());
 							return false;
 						}
 					}
 					return false;
 				});
 
-				matchService.unAssignPending(player.getDatabaseIdentifier(), subscription.getMatch());
+				matchService.unAssignPending(player.getDatabaseId(), subscription.getMatch());
 				origin = UserMatchJoiner.Origin.WAITING;
 				break;
 			}
@@ -154,7 +154,7 @@ public class CoreMatchAssigner implements MatchAssigner {
 
 		Bukkit.getPluginManager().callEvent(new GameUserDisconnectEvent(subscription.getMatch(), player, origin));
 		updateService.updateSync(match);
-		actualMatchCache.clearSubscription(player.getDatabaseIdentifier());
+		actualMatchCache.clearSubscription(player.getDatabaseId());
 	}
 
 	@Override

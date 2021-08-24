@@ -39,10 +39,10 @@ public class SpectatorAssignListener implements Listener {
 				Player player = event.getPlayer();
 				Match match = response.getResponse().get();
 
-				matchService.assignSpectator(match, event.getPlayer().getDatabaseIdentifier(), true);
+				matchService.assignSpectator(match, event.getPlayer().getDatabaseId(), true);
 
 				if (MatchParticipantsProvider.getOnlinePlayers(match, MatchDoc.TeamMember::isActive).contains(player)) {
-					matchService.disqualify(match.getId(), player.getDatabaseIdentifier());
+					matchService.disqualify(match.getId(), player.getDatabaseId());
 				}
 
 				Bukkit.getPluginManager().callEvent(

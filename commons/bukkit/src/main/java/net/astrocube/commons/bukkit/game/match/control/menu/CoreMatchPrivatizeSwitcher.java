@@ -24,7 +24,7 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
 	@Override
 	public void switchPrivatization(Player player) throws Exception {
 
-		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 		if (!matchOptional.isPresent()) {
 			messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
@@ -33,7 +33,7 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
 
 		Match match = matchOptional.get();
 
-		matchService.privatizeMatch(match, player.getDatabaseIdentifier());
+		matchService.privatizeMatch(match, player.getDatabaseId());
 
 		String translation = !match.isPrivate() ?
 			"game.admin.lobby.privatizing.enabled" : "game.admin.lobby.privatizing.disabled";
@@ -41,7 +41,7 @@ public class CoreMatchPrivatizeSwitcher implements MatchPrivatizeSwitcher {
 		MatchParticipantsProvider.getWaitingIds(match).forEach(
 			p -> {
 
-				Player recordPlayer = Bukkit.getPlayerByIdentifier(p);
+				Player recordPlayer = Bukkit.getPlayerByDatabaseId(p);
 
 				if (recordPlayer != null) {
 					messageHandler.sendReplacingIn(

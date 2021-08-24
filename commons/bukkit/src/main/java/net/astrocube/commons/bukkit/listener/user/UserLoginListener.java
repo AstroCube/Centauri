@@ -37,7 +37,7 @@ public class UserLoginListener implements Listener {
 			return;
 		}
 
-		event.getPlayer().setDatabaseIdentifier(validator.getUser().getId());
+		event.getPlayer().setDatabaseId(validator.getUser().getId());
 
 		try {
 			punishmentKickProcessor.validateKick(event.getPlayer(), validator.getUser());
@@ -48,7 +48,7 @@ public class UserLoginListener implements Listener {
 
 		if (plugin.getConfig().getBoolean("authentication.enabled")) {
 
-			long remaining = authenticationLimitValidator.getRemainingTime(event.getPlayer().getDatabaseIdentifier());
+			long remaining = authenticationLimitValidator.getRemainingTime(event.getPlayer().getDatabaseId());
 			if (remaining > 0) {
 				event.setKickMessage(messageHandler.replacing(
 						event.getPlayer(), "authentication.cooldown-await",

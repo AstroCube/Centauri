@@ -25,7 +25,7 @@ public class PlayerQuitListener implements Listener {
 
 			punishmentHandler.createPunishment(
 				"",
-				event.getPlayer().getDatabaseIdentifier(),
+				event.getPlayer().getDatabaseId(),
 				messageHandler.get(event.getPlayer(), "punish.freeze.disconnect"),
 				PunishmentDoc.Identity.Type.BAN,
 				-1,

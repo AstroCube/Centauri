@@ -13,7 +13,7 @@ public final class ChatAlertLibrary {
 	}
 
 	public static void alertChatError(Player player, @Nullable String message) {
-		player.playSound(player.getLocation(), Sound.NOTE_BASS, 1f, 1f);
+		player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
 		if (message == null) {
 			message = "Error executing the last action, please contact an administrator.";
 		}

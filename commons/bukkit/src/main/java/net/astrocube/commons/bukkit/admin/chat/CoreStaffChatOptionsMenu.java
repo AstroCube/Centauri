@@ -38,7 +38,7 @@ public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
 
 	@Override
 	public void generateMenu(Player player) {
-		findService.find(player.getDatabaseIdentifier()).callback(userCallback -> {
+		findService.find(player.getDatabaseId()).callback(userCallback -> {
 			if (!userCallback.isSuccessful()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "channel.admin.settings.error");
 			}
@@ -98,7 +98,7 @@ public class CoreStaffChatOptionsMenu implements StaffChatOptionsMenu {
 				}
 
 				updatedUserCallback.ifSuccessful(updatedUser -> {
-					player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 1f);
+					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
 					player.closeInventory();
 					generateMenu(player);
 				});

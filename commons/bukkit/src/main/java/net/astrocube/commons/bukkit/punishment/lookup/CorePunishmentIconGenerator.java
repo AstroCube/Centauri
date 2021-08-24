@@ -30,23 +30,24 @@ public class CorePunishmentIconGenerator implements PunishmentIconGenerator {
 	@Override
 	public ItemStack generateFromPunishment(Punishment punishment, Player player, User user) {
 
-		short id = 5;
+		Material material;
 
 		switch (punishment.getType()) {
 			case KICK: {
-				id = 4;
+				material = Material.YELLOW_STAINED_GLASS;
 				break;
 			}
 			case BAN: {
-				id = 14;
+				material = Material.RED_STAINED_GLASS;
 				break;
 			}
 			default: {
+				material = Material.GREEN_STAINED_GLASS;
 				break;
 			}
 		}
 
-		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, id);
+		ItemStack stack = new ItemStack(material);
 		ItemMeta meta = stack.getItemMeta();
 		String title = messageHandler.get(player, "punish-menu.type." + punishment.getType().toString().toLowerCase());
 

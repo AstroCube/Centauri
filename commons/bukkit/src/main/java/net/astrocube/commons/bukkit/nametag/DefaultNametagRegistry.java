@@ -25,7 +25,7 @@ public class DefaultNametagRegistry implements NametagRegistry {
 			.stream()
 			.filter(entry -> type.isAssignableFrom(entry.getClass()))
 			.map(o -> (T) o)
-			.collect(MultimapCollector.toHashMultiMap(t -> t.getRecipient().getDatabaseIdentifier(), Function.identity()));
+			.collect(MultimapCollector.toHashMultiMap(t -> t.getRecipient().getDatabaseId(), Function.identity()));
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class DefaultNametagRegistry implements NametagRegistry {
 		return this.renderedCharacters
 			.values()
 			.stream()
-			.filter(entry -> entry.getViewer().getDatabaseIdentifier().equals(player.getDatabaseIdentifier()))
-			.collect(MultimapCollector.toHashMultiMap(rendered -> rendered.getRecipient().getDatabaseIdentifier(), Function.identity()));
+			.filter(entry -> entry.getViewer().getDatabaseId().equals(player.getDatabaseId()))
+			.collect(MultimapCollector.toHashMultiMap(rendered -> rendered.getRecipient().getDatabaseId(), Function.identity()));
 	}
 
 	@Override
@@ -43,14 +43,14 @@ public class DefaultNametagRegistry implements NametagRegistry {
 			.values()
 			.stream()
 			.filter(entry -> type.isAssignableFrom(entry.getClass()) &&
-				entry.getViewer().getDatabaseIdentifier().equals(player.getDatabaseIdentifier()))
+				entry.getViewer().getDatabaseId().equals(player.getDatabaseId()))
 			.map(o -> (T) o)
-			.collect(MultimapCollector.toHashMultiMap(t -> t.getRecipient().getDatabaseIdentifier(), Function.identity()));
+			.collect(MultimapCollector.toHashMultiMap(t -> t.getRecipient().getDatabaseId(), Function.identity()));
 	}
 
 	@Override
 	public void submit(Nametag.Rendered rendered) {
-		this.renderedCharacters.put(rendered.getRecipient().getDatabaseIdentifier(), rendered);
+		this.renderedCharacters.put(rendered.getRecipient().getDatabaseId(), rendered);
 	}
 
 	@Override

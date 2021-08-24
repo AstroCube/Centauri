@@ -1,7 +1,7 @@
 package net.astrocube.commons.bukkit.whisper;
 
-import me.fixeddev.minecraft.player.Player;
 import net.astrocube.api.core.virtual.user.User;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
 

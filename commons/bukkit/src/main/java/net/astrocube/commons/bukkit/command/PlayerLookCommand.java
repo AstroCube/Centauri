@@ -34,7 +34,7 @@ public class PlayerLookCommand implements CommandClass {
 		ObjectNode nodes = objectMapper.createObjectNode();
 		nodes.put("username", offlineTarget.getName());
 
-		userFindService.find(player.getDatabaseIdentifier()).callback(userResponse -> {
+		userFindService.find(player.getDatabaseId()).callback(userResponse -> {
 
 			if (!userResponse.isSuccessful() || !userResponse.getResponse().isPresent()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "punish-menu.error");

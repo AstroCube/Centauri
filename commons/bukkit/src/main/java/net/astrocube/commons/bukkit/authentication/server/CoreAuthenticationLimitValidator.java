@@ -36,8 +36,8 @@ public class CoreAuthenticationLimitValidator implements AuthenticationLimitVali
 	@Override
 	public void handleFailedAttempt(Player player) {
 
-		String attemptsKey = "authAttempts:" + player.getDatabaseIdentifier();
-		String cooldownKey = "authCooldown:" + player.getDatabaseIdentifier();
+		String attemptsKey = "authAttempts:" + player.getDatabaseId();
+		String cooldownKey = "authCooldown:" + player.getDatabaseId();
 
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
 

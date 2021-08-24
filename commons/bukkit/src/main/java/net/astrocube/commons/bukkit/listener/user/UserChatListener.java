@@ -22,7 +22,7 @@ public class UserChatListener implements Listener {
 	public void onPlayerAsyncChat(AsyncPlayerChatEvent event) {
 
 		if (!event.isCancelled()) {
-			findService.find(event.getPlayer().getDatabaseIdentifier()).callback(userCallback -> {
+			findService.find(event.getPlayer().getDatabaseId()).callback(userCallback -> {
 
 				if (!userCallback.isSuccessful()) {
 					Bukkit.getOnlinePlayers().forEach(player ->

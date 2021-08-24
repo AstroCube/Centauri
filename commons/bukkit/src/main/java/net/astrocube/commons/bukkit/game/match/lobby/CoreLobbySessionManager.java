@@ -50,7 +50,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 
 			User user;
 			try {
-				user = userFindService.findSync(player.getDatabaseIdentifier());
+				user = userFindService.findSync(player.getDatabaseId());
 
 				Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
@@ -93,7 +93,7 @@ public class CoreLobbySessionManager implements LobbySessionManager {
 			User user;
 			try {
 
-				user = userFindService.findSync(player.getDatabaseIdentifier());
+				user = userFindService.findSync(player.getDatabaseId());
 
 				Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 				Bukkit.getScheduler().runTask(plugin, () ->

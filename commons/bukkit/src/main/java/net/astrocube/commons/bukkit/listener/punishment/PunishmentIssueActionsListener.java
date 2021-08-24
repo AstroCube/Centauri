@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.github.paperspigot.Title;
 
 import java.util.logging.Level;
 
@@ -28,30 +27,31 @@ public class PunishmentIssueActionsListener implements Listener {
 	@EventHandler
 	public void onPunishmentIssue(PunishmentIssueEvent event) {
 
-		Player player = Bukkit.getPlayerByIdentifier(event.getPunishment().getPunished());
+		Player player = Bukkit.getPlayerByDatabaseId(event.getPunishment().getPunished());
 
 		if (player != null) {
 
 			try {
 
-				User user = findService.findSync(player.getDatabaseIdentifier());
+				User user = findService.findSync(player.getDatabaseId());
 
 				if (event.getPunishment().getType() == PunishmentDoc.Identity.Type.WARN) {
 
-					Title title = new Title(
+					player.sendTitle(
 						messageHandler.get(player, "punish.warn.title"),
 						messageHandler.replacing(
 							player, "punish.warn.sub",
 							"%reason%", event.getPunishment().getReason()
-						)
+						),
+						10,
+						40,
+						10
 					);
-
-					player.sendTitle(title);
 					messageHandler.sendReplacing(
 						player, "punish.warn.chat",
 						"%reason%", event.getPunishment().getReason()
 					);
-					player.playSound(player.getLocation(), Sound.WITHER_DEATH, 1f, 1f);
+					player.playSound(player.getLocation(), Sound.ENTITY_WITHER_DEATH, 1f, 1f);
 
 					return;
 				}

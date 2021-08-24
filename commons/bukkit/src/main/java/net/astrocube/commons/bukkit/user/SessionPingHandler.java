@@ -32,7 +32,7 @@ public class SessionPingHandler implements MessageListener<SessionPingMessage> {
 	public void handleDelivery(SessionPingMessage message, MessageMetadata properties) {
 
 
-		Player player = Bukkit.getPlayerByIdentifier(message.getUser());
+		Player player = Bukkit.getPlayerByDatabaseId(message.getUser());
 
 		if (player != null) {
 
@@ -42,7 +42,7 @@ public class SessionPingHandler implements MessageListener<SessionPingMessage> {
 					pingMessageChannel.sendMessage(new SessionPingMessage() {
 						@Override
 						public String getUser() {
-							return player.getDatabaseIdentifier();
+							return player.getDatabaseId();
 						}
 
 						@Override

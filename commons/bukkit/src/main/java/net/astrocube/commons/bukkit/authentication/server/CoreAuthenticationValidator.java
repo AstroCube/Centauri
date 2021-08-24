@@ -19,7 +19,7 @@ public class CoreAuthenticationValidator implements AuthenticationValidator {
 	public void validateAuthenticationAttempt(Player player) throws AuthorizeException {
 
 		Optional<SessionRegistry> registryOptional =
-			sessionRegistryManager.getRegistry(player.getDatabaseIdentifier());
+			sessionRegistryManager.getRegistry(player.getDatabaseId());
 
 		if (!registryOptional.isPresent())
 			throw new AuthorizeException("Authorization pre-fetching never performed.");

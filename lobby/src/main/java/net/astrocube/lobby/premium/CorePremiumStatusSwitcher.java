@@ -19,7 +19,7 @@ public class CorePremiumStatusSwitcher implements PremiumStatusSwitcher {
 	@Override
 	public void switchStatus(Player player) {
 
-		findService.find(player.getDatabaseIdentifier()).callback(response -> {
+		findService.find(player.getDatabaseId()).callback(response -> {
 
 			if (!response.isSuccessful()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");

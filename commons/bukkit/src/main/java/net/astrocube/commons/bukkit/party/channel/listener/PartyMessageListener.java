@@ -34,7 +34,7 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 			Party party = optional.get();
 
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				if (party.getMembers().contains(player.getDatabaseIdentifier()) || party.getLeader().equals(player.getDatabaseIdentifier())) {
+				if (party.getMembers().contains(player.getDatabaseId()) || party.getLeader().equals(player.getDatabaseId())) {
 					System.out.println("Si es un usuario de la party");
 
 					if (message.getReplacements() != null) {
@@ -57,7 +57,7 @@ public class PartyMessageListener implements MessageListener<PartyMessage> {
 	/*
 			partyService.getParty(message.getPartyId())
 			.ifPresent(party -> Bukkit.getOnlinePlayers().forEach(player -> {
-				if (party.getMembers().contains(player.getDatabaseIdentifier()) || party.getLeader().equals(player.getDatabaseIdentifier())) {
+				if (party.getMembers().contains(player.getDatabaseId()) || party.getLeader().equals(player.getDatabaseId())) {
 					if (message.getReplacements() != null) {
 						messageHandler.sendReplacing(player, message.getPath(), (Object) message.getReplacements());
 					} else {

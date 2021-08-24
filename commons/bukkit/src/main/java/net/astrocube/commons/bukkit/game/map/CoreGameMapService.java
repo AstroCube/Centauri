@@ -10,7 +10,7 @@ import net.astrocube.api.core.http.config.HttpClientConfig;
 import net.astrocube.api.core.http.header.AuthorizationProcessor;
 import net.astrocube.api.core.model.ModelMeta;
 import net.astrocube.api.core.service.query.QueryService;
-import org.apache.commons.io.IOUtils;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

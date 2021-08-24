@@ -8,7 +8,7 @@ import net.astrocube.apollo.api.Broadcaster;
 import net.astrocube.apollo.api.Song;
 import net.astrocube.apollo.api.internal.RadioBroadcaster;
 import net.astrocube.apollo.api.util.NBSDecoder;
-import org.apache.commons.io.FilenameUtils;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.FilenameUtils;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;

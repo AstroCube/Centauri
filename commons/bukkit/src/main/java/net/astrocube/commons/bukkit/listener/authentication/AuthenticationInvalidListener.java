@@ -24,7 +24,7 @@ public class AuthenticationInvalidListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onInvalidAuthentication(AuthenticationInvalidEvent event) {
 
-		findService.find(event.getPlayer().getDatabaseIdentifier()).callback(response -> {
+		findService.find(event.getPlayer().getDatabaseId()).callback(response -> {
 			try {
 				if (!response.isSuccessful() || !response.getResponse().isPresent())
 					throw new AuthorizeException("Could not find requested user");

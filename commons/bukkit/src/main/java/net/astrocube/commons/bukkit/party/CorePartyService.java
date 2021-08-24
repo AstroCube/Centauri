@@ -66,7 +66,7 @@ public class CorePartyService implements PartyService {
 	@Override
 	public void cleanupInvitations(Player player) {
 		try (Jedis jedis = redis.getRawConnection().getResource()) {
-			jedis.keys("party-invitations: " + player.getDatabaseIdentifier() + ":*").forEach(jedis::del);
+			jedis.keys("party-invitations: " + player.getDatabaseId() + ":*").forEach(jedis::del);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class CorePartyService implements PartyService {
 			}
 		}
 
-		if (!inviter.getDatabaseIdentifier().equals(party.getLeader())) {
+		if (!inviter.getDatabaseId().equals(party.getLeader())) {
 			messageHandler.send(inviter, "cannot-invite.not-leader");
 			return;
 		}
@@ -126,7 +126,7 @@ public class CorePartyService implements PartyService {
 		}
 
 		try (Jedis client = redis.getRawConnection().getResource()) {
-			String key = "party-invitations:" + userInvited.getId() + ":" + inviter.getDatabaseIdentifier();
+			String key = "party-invitations:" + userInvited.getId() + ":" + inviter.getDatabaseId();
 			client.set(key, inviter.getName().toLowerCase());
 			client.expire(key, INVITATION_EXPIRY);
 		}
@@ -165,7 +165,7 @@ public class CorePartyService implements PartyService {
 
 	@Override
 	public void handleAcceptInvitation(Player invited, String inviter) {
-		if (getPartyOf(invited.getDatabaseIdentifier()).isPresent()) {
+		if (getPartyOf(invited.getDatabaseId()).isPresent()) {
 			messageHandler.send(invited, "already-in-party");
 			return;
 		}
@@ -178,7 +178,7 @@ public class CorePartyService implements PartyService {
 		}
 
 		userProvideHelper.getUserByName(inviter).flatMap(userInvited -> getPartyOf(userInvited.getId())).ifPresent(party -> {
-			party.getMembers().add(invited.getDatabaseIdentifier());
+			party.getMembers().add(invited.getDatabaseId());
 			messageHandler.send(invited, "joined-party");
 			updateService.update(party);
 
@@ -190,7 +190,7 @@ public class CorePartyService implements PartyService {
 
 	@Override
 	public void warp(Player player, Party party) {
-		if (!party.getLeader().equals(player.getDatabaseIdentifier())) {
+		if (!party.getLeader().equals(player.getDatabaseId())) {
 			messageHandler.send(player, "");
 			return;
 		}
@@ -206,7 +206,7 @@ public class CorePartyService implements PartyService {
 			return;
 		}
 
-		userFindService.find(player.getDatabaseIdentifier()).callback(response -> {
+		userFindService.find(player.getDatabaseId()).callback(response -> {
 			if (response != null && response.getResponse().isPresent()) {
 				String serverName = response.getResponse().get().getSession().getLastLobby();
 

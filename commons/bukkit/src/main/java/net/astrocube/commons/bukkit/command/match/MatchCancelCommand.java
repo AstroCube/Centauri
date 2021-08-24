@@ -23,7 +23,7 @@ public class MatchCancelCommand implements CommandClass {
 	@Command(names = {"cancel"}, permission = "commons.match.cancel")
 	public boolean onCommand(@Sender Player player) {
 
-		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseIdentifier());
+		Optional<Match> matchOptional = matchMessageHelper.checkInvolvedMatch(player.getDatabaseId());
 
 		if (matchMessageHelper.getCountAvailability(matchOptional, player)) {
 			return true;

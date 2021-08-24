@@ -34,7 +34,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 
 		Bukkit.getOnlinePlayers().forEach(online -> {
-			if (waitingIds.contains(online.getDatabaseIdentifier())) {
+			if (waitingIds.contains(online.getDatabaseId())) {
 
 				if (match.getStatus() == MatchDoc.Status.LOBBY) {
 					lobbyScoreboardAssigner.scheduleLobbyScoreboardUpdate(player, match, subGameMode);
@@ -62,7 +62,7 @@ public class CoreLobbySessionModifier implements LobbySessionModifier {
 	public void ensureDisconnect(User user, Player player, Match match, SubGameMode subGameMode) {
 		Set<String> waitingIds = CoreMatchParticipantsProvider.getPendingIds(match);
 		Bukkit.getOnlinePlayers().forEach(online -> {
-			if (waitingIds.contains(online.getDatabaseIdentifier())) {
+			if (waitingIds.contains(online.getDatabaseId())) {
 				lobbyScoreboardAssigner.cancelLobbyScoreboardUpdate(player);
 				online.sendMessage(
 					messageHandler.getMessage("game.lobby-leave")

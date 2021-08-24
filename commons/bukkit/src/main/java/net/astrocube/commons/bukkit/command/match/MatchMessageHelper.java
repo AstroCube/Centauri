@@ -54,7 +54,7 @@ public class MatchMessageHelper {
 	public void alertInvolved(Set<User> involved, Match match, Player player, String message) {
 		involved.addAll(matchParticipantsProvider.getMatchSpectators(match));
 
-		findService.find(player.getDatabaseIdentifier()).callback(involvedUser -> {
+		findService.find(player.getDatabaseId()).callback(involvedUser -> {
 
 			involved.forEach(user -> {
 

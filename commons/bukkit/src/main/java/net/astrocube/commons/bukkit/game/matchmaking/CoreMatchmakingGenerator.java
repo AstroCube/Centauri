@@ -40,7 +40,7 @@ public class CoreMatchmakingGenerator implements MatchmakingGenerator {
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
-			player.getDatabaseIdentifier(),
+			player.getDatabaseId(),
 			involved
 		);
 

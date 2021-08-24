@@ -31,14 +31,14 @@ public class ShoutCommand implements CommandClass {
 	public boolean onShoutCommand(@Sender Player player, @Switch("g") boolean global, @Text String message) {
 
 		try {
-			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 			if (!matchOptional.isPresent()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.not-active");
 				return true;
 			}
 
-			boolean spectating = UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), matchOptional.get()) == UserMatchJoiner.Origin.SPECTATING;
+			boolean spectating = UserMatchJoiner.checkOrigin(player.getDatabaseId(), matchOptional.get()) == UserMatchJoiner.Origin.SPECTATING;
 
 			if ((global || spectating) && !player.hasPermission("commands.staff.shout")) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "commands.command.no-permission");
@@ -46,7 +46,7 @@ public class ShoutCommand implements CommandClass {
 			}
 
 			if (!global && !player.hasPermission("commands.staff.shout") &&
-				matchShoutoutCooldown.hasCooldown(player.getDatabaseIdentifier())) {
+				matchShoutoutCooldown.hasCooldown(player.getDatabaseId())) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "game.shout-cooldown");
 				return true;
 			}

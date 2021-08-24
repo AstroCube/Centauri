@@ -21,7 +21,7 @@ public class CorePremiumSelectBook implements PremiumSelectBook {
 
 	@Override
 	public void matchDisplay(Player player) {
-		findService.find(player.getDatabaseIdentifier()).callback(response -> {
+		findService.find(player.getDatabaseId()).callback(response -> {
 
 			if (!response.isSuccessful()) {
 				messageHandler.sendIn(player, AlertModes.ERROR, "premium.error");

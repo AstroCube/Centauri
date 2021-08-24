@@ -37,7 +37,7 @@ public class FriendExpireListener implements Listener {
 
 		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-		Player player = Bukkit.getPlayerByIdentifier(friendship.getSender());
+		Player player = Bukkit.getPlayerByDatabaseId(friendship.getSender());
 
 		if (player == null) {
 			return;

@@ -14,17 +14,17 @@ public class CoreFrozenUserProvider implements FrozenUserProvider {
 
 	@Override
 	public void freeze(Player player) {
-		registry.add(player.getDatabaseIdentifier());
+		registry.add(player.getDatabaseId());
 	}
 
 	@Override
 	public void unFreeze(Player player) {
-		registry.remove(player.getDatabaseIdentifier());
+		registry.remove(player.getDatabaseId());
 	}
 
 	@Override
 	public boolean isFrozen(Player player) {
-		return registry.contains(player.getDatabaseIdentifier());
+		return registry.contains(player.getDatabaseId());
 	}
 
 }

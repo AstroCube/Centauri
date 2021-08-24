@@ -1,8 +1,8 @@
 package net.astrocube.commons.bukkit.game.match.lobby;
 
 import com.google.inject.Inject;
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.board.Board;
 import net.astrocube.api.bukkit.board.BoardProvider;
@@ -14,14 +14,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public class CoreLobbyScoreboardAssigner implements LobbyScoreboardAssigner {
 
 	private static final long UPDATE_RATE = 10L; // half second
-	private final TObjectIntMap<UUID> tasks = new TObjectIntHashMap<>();
+	private final Object2IntMap<UUID> tasks = new Object2IntOpenHashMap<>();
 
 	@Inject private MessageHandler messageHandler;
 	@Inject private BoardProvider boardProvider;

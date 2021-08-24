@@ -20,7 +20,7 @@ public class CoreLanguageProvider implements Linguist<Player> {
 		User user;
 
 		try {
-			user = this.userFindService.findSync(player.getDatabaseIdentifier());
+			user = this.userFindService.findSync(player.getDatabaseId());
 		} catch (Exception ex) {
 			Bukkit.getLogger().log(Level.SEVERE, "Error while finding user data for " + player.getName(), ex);
 			return null;

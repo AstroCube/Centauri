@@ -70,12 +70,12 @@ public class LobbyActionListener implements Listener {
 
 		try {
 
-			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseId());
 
 			if (matchOptional.isPresent()) {
 
 				UserMatchJoiner.Origin origin =
-					UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), matchOptional.get());
+					UserMatchJoiner.checkOrigin(player.getDatabaseId(), matchOptional.get());
 
 				return origin == UserMatchJoiner.Origin.SPECTATING || origin == UserMatchJoiner.Origin.WAITING;
 

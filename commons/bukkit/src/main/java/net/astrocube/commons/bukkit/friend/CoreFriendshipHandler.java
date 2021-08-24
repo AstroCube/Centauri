@@ -175,7 +175,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 		createService.create(creation).callback(response -> {
 
 			if (!response.isSuccessful()) {
-				Player player = Bukkit.getPlayerByIdentifier(issuer);
+				Player player = Bukkit.getPlayerByDatabaseId(issuer);
 				if (issuer != null) {
 					messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");
 				}
@@ -247,7 +247,7 @@ public class CoreFriendshipHandler implements FriendshipHandler {
 
 			if (!friendshipResponse.isSuccessful()) {
 
-				Player player = Bukkit.getPlayerByIdentifier(sender);
+				Player player = Bukkit.getPlayerByDatabaseId(sender);
 
 				if (player != null) {
 					messageHandler.sendIn(player, AlertModes.ERROR, "friend.error.internal");

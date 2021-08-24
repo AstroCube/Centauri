@@ -27,7 +27,7 @@ public class PartyKickOfflineCommand
 	public void execute(
 		@Sender Player player
 	) {
-		String playerId = player.getDatabaseIdentifier();
+		String playerId = player.getDatabaseId();
 		Optional<Party> optParty = partyService.getPartyOf(playerId);
 		Party party;
 
@@ -41,7 +41,7 @@ public class PartyKickOfflineCommand
 		Iterator<String> memberIdsIterator = party.getMembers().iterator();
 		while (memberIdsIterator.hasNext()) {
 			String memberId = memberIdsIterator.next();
-			Player member = Bukkit.getPlayerByIdentifier(memberId);
+			Player member = Bukkit.getPlayerByDatabaseId(memberId);
 			if (member == null) {
 				memberIdsIterator.remove();
 			} else {

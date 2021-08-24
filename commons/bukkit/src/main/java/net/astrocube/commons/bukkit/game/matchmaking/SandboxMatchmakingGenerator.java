@@ -38,7 +38,7 @@ public class SandboxMatchmakingGenerator implements MatchmakingGenerator {
 		}
 
 		MatchAssignable assignable = new MatchAssignable(
-			player.getDatabaseIdentifier(),
+			player.getDatabaseId(),
 			new HashSet<>()
 		);
 

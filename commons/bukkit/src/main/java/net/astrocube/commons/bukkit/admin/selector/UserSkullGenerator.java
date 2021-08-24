@@ -17,12 +17,11 @@ public class UserSkullGenerator {
 
 	public ItemStack generateSkull(User user, Player player) {
 
-		ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
 
 		SkullMeta meta = (SkullMeta) stack.getItemMeta();
 
-		meta.setOwner(user.getSkin());
-
+		meta.setOwningPlayer(player);
 		meta.setDisplayName(displayMatcher.getDisplay(player, user).getColor() + user.getDisplay());
 
 		meta.setLore(

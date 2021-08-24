@@ -53,7 +53,7 @@ public class UserBasicActionsListener implements Listener {
 
 		Block soilBlock = event.getPlayer().getLocation().getBlock();
 		if ((event.getAction() == Action.PHYSICAL)) {
-			if (soilBlock.getType() == Material.SOIL) {
+			if (soilBlock.getType() == Material.FARMLAND) {
 				event.setCancelled(true);
 				return;
 			}
@@ -62,12 +62,12 @@ public class UserBasicActionsListener implements Listener {
 		if (event.getClickedBlock() != null) {
 			Material material = event.getClickedBlock().getType();
 			if (
-				(material == Material.WORKBENCH) ||
+				(material == Material.CRAFTING_TABLE) ||
 					(material.toString().toLowerCase(Locale.ROOT).contains("door")) ||
 					(material == Material.ANVIL) ||
-					(material == Material.FURNACE || material == Material.BURNING_FURNACE) ||
+					(material == Material.FURNACE || material == Material.BLAST_FURNACE) ||
 					(material == Material.CHEST) ||
-					(material == Material.STONE_BUTTON || material == Material.WOOD_BUTTON) ||
+					(material.name().endsWith("_BUTTON")) ||
 					(material.toString().toLowerCase(Locale.ROOT).contains("trap")) ||
 					(material.toString().toLowerCase(Locale.ROOT).contains("minecart"))
 			) {

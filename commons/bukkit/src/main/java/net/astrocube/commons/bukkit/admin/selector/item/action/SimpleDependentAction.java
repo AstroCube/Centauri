@@ -41,7 +41,7 @@ public class SimpleDependentAction implements DependentAction {
 
 				SubGameMode subGameMode = gameModes.get(i);
 
-				spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseIdentifier());
+				spectateRequestAssigner.assignRequest(gameMode.getId(), subGameMode.getId(), player.getDatabaseId());
 
 				return true;
 

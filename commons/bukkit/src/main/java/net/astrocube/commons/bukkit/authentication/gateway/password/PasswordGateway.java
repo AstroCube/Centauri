@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.github.paperspigot.Title;
 
 import javax.annotation.Nullable;
 
@@ -22,13 +21,14 @@ public class PasswordGateway implements AuthenticationGateway {
 
 		if (player != null) {
 			player.sendTitle(
-				new Title(
-					messageHandler.replacing(
-							player, "authentication.password-title",
-							"%player%", user.getDisplay()
-					),
-					messageHandler.get(player, "authentication.password-sub")
-				)
+				messageHandler.replacing(
+					player, "authentication.password-title",
+					"%player%", user.getDisplay()
+				),
+				messageHandler.get(player, "authentication.password-sub"),
+				10,
+				40,
+				10
 			);
 		}
 	}

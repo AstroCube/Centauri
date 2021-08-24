@@ -17,7 +17,7 @@ public class PartyUtil {
 	private MessageHandler messageHandler;
 
 	public Party getPartyOrSendError(Player player) {
-		Optional<Party> optional = partyService.getPartyOf(player.getDatabaseIdentifier());
+		Optional<Party> optional = partyService.getPartyOf(player.getDatabaseId());
 
 		if (!optional.isPresent()) {
 			messageHandler.send(player, "cannot-disband.not-in-party");

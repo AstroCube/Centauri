@@ -24,20 +24,20 @@ public class PartyDisbandCommand implements CommandClass {
 	public void disband(
 		@Sender Player player
 	) {
-		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseIdentifier());
+		Optional<Party> optParty = partyService.getPartyOf(player.getDatabaseId());
 		if (!optParty.isPresent()) {
 			messageHandler.send(player, "cannot-disband.not-in-party");
 			return;
 		}
 
 		Party party = optParty.get();
-		if (!player.getDatabaseIdentifier().equals(party.getLeader())) {
+		if (!player.getDatabaseId().equals(party.getLeader())) {
 			messageHandler.send(player, "cannot-disband.not-leader");
 			return;
 		}
 
 		for (String memberId : party.getMembers()) {
-			Player member = Bukkit.getPlayerByIdentifier(memberId);
+			Player member = Bukkit.getPlayerByDatabaseId(memberId);
 			if (member != null) {
 				messageHandler.sendReplacing(
 					member, "party-disbanded",

@@ -36,7 +36,7 @@ public class UserDisconnectListener implements Listener {
 
 			boardProvider.delete(player);
 
-			scoreboardManagerProvider.getScoreboard().getScoreboard(event.getPlayer().getDatabaseIdentifier()).ifPresent(board -> {
+			scoreboardManagerProvider.getScoreboard().getScoreboard(event.getPlayer().getDatabaseId()).ifPresent(board -> {
 				scoreboardManagerProvider.getScoreboard().removeScoreboard(player);
 				scoreboardManagerProvider.getScoreboard().removeScoreboard(board);
 			});

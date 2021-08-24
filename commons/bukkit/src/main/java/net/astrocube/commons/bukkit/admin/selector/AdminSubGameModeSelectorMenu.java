@@ -50,7 +50,7 @@ public class AdminSubGameModeSelectorMenu {
 					spectateRequestAssigner.assignRequest(
 						gameMode.getId(),
 						subGameMode.getId(),
-						player.getDatabaseIdentifier()
+						player.getDatabaseId()
 					);
 
 					return true;

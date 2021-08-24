@@ -22,7 +22,7 @@ public class PartyWarpCommand implements CommandClass {
 
 	@Command(names = "")
 	public void main(@Sender Player sender) {
-		Optional<Party> optional = partyService.getPartyOf(sender.getDatabaseIdentifier());
+		Optional<Party> optional = partyService.getPartyOf(sender.getDatabaseId());
 
 		if (!optional.isPresent()) {
 			messageHandler.send(sender, "already-in-party");

@@ -116,7 +116,7 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
 		userFindService.find(senderId).callback(userResponse -> {
 
-			Player sender = Bukkit.getPlayerByIdentifier(senderId);
+			Player sender = Bukkit.getPlayerByDatabaseId(senderId);
 
 			if (sender != null) {
 
@@ -124,11 +124,11 @@ public class CoreMatchMessageDispatcher implements MatchMessageDispatcher {
 
 				listeners.forEach(spectator -> {
 
-					Player player = Bukkit.getPlayerByIdentifier(spectator);
+					Player player = Bukkit.getPlayerByDatabaseId(spectator);
 
 					if (player != null) {
 
-						String prefix = sender.getDisguisedName();
+						String prefix = sender.getName();
 
 						if (userResponse.isSuccessful() && userResponse.getResponse().isPresent()) {
 							TranslatedFlairFormat flairFormat = displayMatcher.getDisplay(player, userResponse.getResponse().get());

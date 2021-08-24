@@ -90,12 +90,12 @@ public class CoreMatchMapSwitcher implements MatchMapSwitcher {
 				)
 				.setAction(event -> {
 					if (selected) {
-						matchMapUpdater.updateMatch(match.getId(), gameMap.getId(), player.getDatabaseIdentifier());
+						matchMapUpdater.updateMatch(match.getId(), gameMap.getId(), player.getDatabaseId());
 					} else {
 						messageHandler.sendIn(player, AlertModes.ERROR, "game.admin.lobby.map.error");
 					}
 
-					Bukkit.getScheduler().runTask(plugin, player::closeInventory);
+					Bukkit.getScheduler().runTask(plugin, (Runnable) player::closeInventory);
 
 					return true;
 				})

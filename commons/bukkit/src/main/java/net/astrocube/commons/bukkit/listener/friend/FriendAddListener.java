@@ -37,7 +37,7 @@ public class FriendAddListener implements Listener {
 
 		FriendshipDoc.Relation friendship = event.getAction().getFriendship();
 
-		Player receiver = Bukkit.getPlayerByIdentifier(friendship.getReceiver());
+		Player receiver = Bukkit.getPlayerByDatabaseId(friendship.getReceiver());
 
 		if (receiver == null) {
 			return;
@@ -75,7 +75,7 @@ public class FriendAddListener implements Listener {
 					"%sender%", flairFormat.getColor() + sender.getDisplay()
 				);
 
-				receiver.playSound(receiver.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+				receiver.playSound(receiver.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
 				list.forEach(component -> {
 
 					if (component.equalsIgnoreCase("%holder%")) {

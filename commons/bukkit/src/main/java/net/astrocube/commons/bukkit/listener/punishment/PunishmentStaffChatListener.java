@@ -41,9 +41,9 @@ public class PunishmentStaffChatListener implements Listener {
 			punishedResponse.ifSuccessful(punished ->
 				Bukkit.getOnlinePlayers().forEach(player -> {
 					plugin.getLogger().info("Player " + player.getName());
-					if (player.hasPermission("commons.staff.chat") && !player.getDatabaseIdentifier().equalsIgnoreCase(punished.getId())) {
+					if (player.hasPermission("commons.staff.chat") && !player.getDatabaseId().equalsIgnoreCase(punished.getId())) {
 
-						findService.find(player.getDatabaseIdentifier()).callback(playerResponse -> {
+						findService.find(player.getDatabaseId()).callback(playerResponse -> {
 							String issuerPrefix = issuer != null ? matcher.getDisplay(player, issuer).getColor()
 								+ issuer.getDisplay() : messageHandler.get(player, "channel.admin.auto");
 

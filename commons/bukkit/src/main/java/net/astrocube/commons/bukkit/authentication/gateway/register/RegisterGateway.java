@@ -7,7 +7,6 @@ import net.astrocube.api.bukkit.authentication.AuthenticationGateway;
 import net.astrocube.api.core.virtual.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.github.paperspigot.Title;
 
 import javax.annotation.Nullable;
 
@@ -23,10 +22,11 @@ public class RegisterGateway implements AuthenticationGateway {
 
 		if (player != null) {
 			player.sendTitle(
-				new Title(
-					messageHandler.get(player, "authentication.register-title"),
-					messageHandler.get(player, "authentication.register-sub")
-				)
+				messageHandler.get(player, "authentication.register-title"),
+				messageHandler.get(player, "authentication.register-sub"),
+				10,
+				40,
+				10
 			);
 		}
 	}

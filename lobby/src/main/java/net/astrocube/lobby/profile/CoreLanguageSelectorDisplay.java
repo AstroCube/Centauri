@@ -82,7 +82,7 @@ public class CoreLanguageSelectorDisplay {
 					return true;
 				});
 			}
-			itemClickableBuilder.setItemStack(ItemBuilder.newSkullBuilder(Material.SKULL_ITEM, 1, (byte) 3)
+			itemClickableBuilder.setItemStack(ItemBuilder.newSkullBuilder(Material.PLAYER_HEAD)
 				.setUrl(CoreUserProfileDisplay.TEXTURES_URL + languageType.getSkullUrl())
 				.setName(messageHandler.replacing(player, "lobby.profile.language-type." + abbreviation + ".name"))
 				.setLore(messageHandler.getMany(player, itemLorePath.toString()))
