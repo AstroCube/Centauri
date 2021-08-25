@@ -11,6 +11,8 @@ public interface PartyMessenger {
 
 	void sendMessage(Party party, String path, String... replacements);
 
+	void sendMessageServer(Party party, String path, String... replacements);
+
 	default void chat(Player sender, String message, Party party) {
 		sendMessage(party, "chat-party",
 			"%sender%", sender.getName(),
