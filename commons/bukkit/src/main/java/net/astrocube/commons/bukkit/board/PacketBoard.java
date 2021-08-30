@@ -8,10 +8,12 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.PacketPlayOutScoreboardDisplayObjective;
 import net.minecraft.network.protocol.game.PacketPlayOutScoreboardObjective;
 import net.minecraft.network.protocol.game.PacketPlayOutScoreboardScore;
+import net.minecraft.server.ScoreboardServer;
 import net.minecraft.world.scores.ScoreboardObjective;
 import net.minecraft.world.scores.ScoreboardScore;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.scoreboard.CraftObjective;
 import org.bukkit.craftbukkit.v1_17_R1.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -198,7 +200,7 @@ public class PacketBoard implements Board {
 	}
 
 	private void sendObjectiveDisplaySet(Objective objective) {
-		// CraftObjective is exposed by GammaSpigot, use it!
+		// CraftObjective is exposed by Orion, use it!
 		ScoreboardObjective handle = ((CraftObjective) objective).getHandle();
 		((CraftPlayer) viewer).getHandle()
 			.b
@@ -224,7 +226,7 @@ public class PacketBoard implements Board {
 
 
 		Map<String, Map<ScoreboardObjective, ScoreboardScore>> scores =
-			handle.getPlayerScoresMap();
+			handle.getPlayerScoreMap();
 
 		Packet<?> packet;
 
@@ -233,12 +235,12 @@ public class PacketBoard implements Board {
 			if (scoresByObjective != null) {
 				scoresByObjective.remove(objectiveHandle);
 			}
-			packet = new PacketPlayOutScoreboardScore(name, objectiveHandle);
+			packet = new PacketPlayOutScoreboardScore(ScoreboardServer.Action.b, objectiveHandle.getName(), name, 0);
 		} else {
 			scores.computeIfAbsent(name, n -> new HashMap<>())
 				.put(objectiveHandle, score);
 
-			packet = new PacketPlayOutScoreboardScore(score);
+			packet = new PacketPlayOutScoreboardScore(ScoreboardServer.Action.a, objectiveHandle.getName(), name, score.getScore());
 		}
 
 		((CraftPlayer) viewer).getHandle()
@@ -296,7 +298,7 @@ public class PacketBoard implements Board {
 		Scoreboard mainScoreboard = scoreboardManager.getMainScoreboard();
 		Scoreboard scoreboard = player.getScoreboard();
 
-		if (scoreboard == null || scoreboard == mainScoreboard) {
+		if (scoreboard == mainScoreboard) {
 			return scoreboardManager.getNewScoreboard();
 		} else {
 			return player.getScoreboard();

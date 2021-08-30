@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.lobby.selector.gamemode.GameItemExtractor;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerSwitchStatus;
 import net.astrocube.api.core.cloud.CloudModeConnectedProvider;
+import net.astrocube.api.core.cloud.InstanceNameProvider;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 
 import org.bukkit.Bukkit;
@@ -27,6 +28,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 	private @Inject MessageHandler messageHandler;
 	private @Inject ServerRedirect serverRedirect;
 	private @Inject CloudModeConnectedProvider cloudModeConnectedProvider;
+	private @Inject InstanceNameProvider nameProvider;
 
 	@Override
 	public ItemClickable generate(GameMode gameModeDoc, Player player) {
@@ -61,7 +63,7 @@ public class CoreGameItemExtractor implements GameItemExtractor {
 
 		// TODO: 06/07/2021 check if the game-mode lobby is full
 
-		if (Bukkit.getServerName().contains(gameModeDoc.getLobby())) {
+		if (nameProvider.getName().contains(gameModeDoc.getLobby())) {
 			status = ServerSwitchStatus.CYCLIC;
 		}
 

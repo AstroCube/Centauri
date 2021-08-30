@@ -31,7 +31,7 @@ public class CloudNameProvider implements InstanceNameProvider {
 			if (cloudStatusProvider.hasCloudHooked()) {
 				this.name = TimoCloudAPI.getBukkitAPI().getThisServer().getId();
 			} else {
-				this.name = Bukkit.getServerName();
+				this.name = "Candice";
 			}
 
 		}

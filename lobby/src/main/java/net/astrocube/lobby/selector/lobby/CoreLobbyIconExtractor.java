@@ -7,6 +7,7 @@ import net.astrocube.api.bukkit.lobby.selector.lobby.LobbyIconExtractor;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerRedirect;
 import net.astrocube.api.bukkit.lobby.selector.redirect.ServerSwitchStatus;
 import net.astrocube.api.core.cloud.CloudInstanceProvider;
+import net.astrocube.api.core.cloud.InstanceNameProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,6 +26,7 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 
 	private @Inject MessageHandler messageHandler;
 	private @Inject ServerRedirect serverRedirect;
+	private @Inject InstanceNameProvider nameProvider;
 
 	@Override
 	public ItemClickable getLobbyIcon(CloudInstanceProvider.Instance wrapper, Player player, int position) {
@@ -41,7 +43,7 @@ public class CoreLobbyIconExtractor implements LobbyIconExtractor {
 			itemStack = new ItemStack(Material.RED_STAINED_GLASS, wrapper.getNumber());
 		}
 
-		if (wrapper.getName().equalsIgnoreCase()) {
+		if (wrapper.getName().equalsIgnoreCase(nameProvider.getName())) {
 			color = ChatColor.GREEN;
 			translation = "already";
 			status = ServerSwitchStatus.CYCLIC;
